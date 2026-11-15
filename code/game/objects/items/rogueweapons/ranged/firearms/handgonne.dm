@@ -8,21 +8,6 @@
 	item_state = "handgonne"
 
 /obj/item/gun/ballistic/firearm/handgonne/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	var/accident_chance = 0
-	var/firearm_skill = (user.get_skill_level(/datum/skill/combat/firearms))
-	var/turf/knockback = get_ranged_target_turf(user, turn(user.dir, 180), rand(1,2))
-	spread = (spread_num - firearm_skill)
-	if(firearm_skill < 1)
-		accident_chance =80
-
-	if(firearm_skill < 2)
-		accident_chance =50
-	if(firearm_skill >= 2 && firearm_skill < 5)
-		accident_chance =10
-	if(firearm_skill >= 5)
-		accident_chance =0
-	if(HAS_TRAIT(user, TRAIT_FUSILIER))//Regardless of skill, we force it to 0 if you're trained properly.
-		accident_chance =0
 	if(user.client)
 		if(user.client.chargedprog >= 100)
 			spread = 0
@@ -37,33 +22,9 @@
 
 	playsound(src, "modular_helmsguard/sound/arquebus/fuse.ogg", 100)
 
+	var/released_spread = spread
 	spawn(rand(10,20))
-		..()
-		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 1)
-		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 2), 5)
-		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 12)
-
-		for(var/mob/M in range(5, user))
-			if(!M.stat)
-				shake_camera(M, 3, 1)
-
-		if(prob(accident_chance))
-			user.fullscreen_redflash("whiteflash")
-			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
-			user.visible_message(span_danger("[user] accidentally burnt themselves while firing the [src]."))
-			user.emote("painscream")
-			if(prob(60))
-				user.dropItemToGround(src)
-				user.Knockdown(rand(15,30))
-				user.Immobilize(30)
-
-		if(prob(accident_chance))
-			user.visible_message(span_danger("[user] is knocked back by the recoil!"))
-			user.throw_at(knockback, rand(1,2), 7)
-			if(prob(accident_chance))
-				user.dropItemToGround(src)
-				user.Knockdown(rand(15,30))
-				user.Immobilize(30)
+		..(target, user, message, params, zone_override, bonus_spread, released_spread)
 
 /obj/item/gun/ballistic/firearm/flintgonne
 	name = "flintgonne"
@@ -77,21 +38,6 @@
 
 //Handgonne, but quicker. Much quicker. But still not point and fire.
 /obj/item/gun/ballistic/firearm/flintgonne/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	var/accident_chance = 0
-	var/firearm_skill = (user.get_skill_level(/datum/skill/combat/firearms))
-	var/turf/knockback = get_ranged_target_turf(user, turn(user.dir, 180), rand(1,2))
-	spread = (spread_num - firearm_skill)
-	if(firearm_skill < 1)
-		accident_chance =80
-
-	if(firearm_skill < 2)
-		accident_chance =50
-	if(firearm_skill >= 2 && firearm_skill < 5)
-		accident_chance =10
-	if(firearm_skill >= 5)
-		accident_chance =0
-	if(HAS_TRAIT(user, TRAIT_FUSILIER))//Regardless of skill, we force it to 0 if you're trained properly.
-		accident_chance =0
 	if(user.client)
 		if(user.client.chargedprog >= 100)
 			spread = 0
@@ -106,33 +52,9 @@
 
 	playsound(src, "sound/items/flint.ogg", 100)
 
+	var/released_spread = spread
 	spawn(fire_delay)
-		..()
-		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 1)
-		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 2), 5)
-		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 12)
-
-		for(var/mob/M in range(5, user))
-			if(!M.stat)
-				shake_camera(M, 3, 1)
-
-		if(prob(accident_chance))
-			user.fullscreen_redflash("whiteflash")
-			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
-			user.visible_message(span_danger("[user] accidentally burnt themselves while firing the [src]."))
-			user.emote("painscream")
-			if(prob(60))
-				user.dropItemToGround(src)
-				user.Knockdown(rand(15,30))
-				user.Immobilize(30)
-
-		if(prob(accident_chance))
-			user.visible_message(span_danger("[user] is knocked back by the recoil!"))
-			user.throw_at(knockback, rand(1,2), 7)
-			if(prob(accident_chance))
-				user.dropItemToGround(src)
-				user.Knockdown(rand(15,30))
-				user.Immobilize(30)
+		..(target, user, message, params, zone_override, bonus_spread, released_spread)
 
 /obj/item/gun/ballistic/firearm/flintgonne/fusil
 	name = "fusil"

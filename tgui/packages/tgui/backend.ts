@@ -217,12 +217,8 @@ export const backendMiddleware = (store) => {
 
     if (type === 'backend/update') {
       const fancy = payload.config?.window?.fancy;
-      // Initialize fancy state
-      if (fancyState === undefined) {
-        fancyState = fancy;
-      }
-      // React to changes in fancy
-      else if (fancyState !== fancy) {
+      // Match the client's window style on the first update as well.
+      if (fancy !== undefined && fancyState !== fancy) {
         logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
         Byond.winset(Byond.windowId, {

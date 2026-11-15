@@ -662,7 +662,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry
 	seed = null
-	name = "swampweed"
+	name = "dried swampweed"
 	desc = "A prepared pipeweed prized for its foggy effects."
 	icon_state = "swampweedd"
 	dry = TRUE

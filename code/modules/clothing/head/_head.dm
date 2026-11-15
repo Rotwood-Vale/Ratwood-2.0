@@ -32,6 +32,10 @@
 	if(ismob(our_parent.loc))
 		var/mob/parent_mob = our_parent.loc
 		parent_mob.update_inv_head()
+		if(iscarbon(parent_mob))
+			var/mob/living/carbon/C = parent_mob
+			if(C.wear_mask == our_parent)
+				C.update_inv_wear_mask()
 
 /datum/component/storage/concrete/roguetown/hat/can_be_inserted(obj/item/storing, stop_messages, mob/user, worn_check = FALSE, params, storage_click = FALSE)
 	// we only want aesthetically head items, like flowercrowns, to be addable

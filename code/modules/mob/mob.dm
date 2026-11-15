@@ -151,7 +151,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 /**
  * Show a message to this mob (visual or audible)
  */
-/mob/proc/show_message(msg, type, alt_msg, alt_type, allow_sleeping = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt_msg, alt_type, allow_unconscious = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)
 		return
 
@@ -174,7 +174,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 				if(type & MSG_VISUAL && eye_blind)
 					return
 	// voice muffling
-	if(stat == UNCONSCIOUS && !(allow_sleeping && IsSleeping()))
+	if(stat == UNCONSCIOUS && !allow_unconscious)
 		if(type & MSG_AUDIBLE) //audio
 			if(findtext(msg, "snores.")) //No spamming people with their own snoring.
 				return
@@ -247,7 +247,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs, allow_sleeping = FALSE)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs, allow_unconscious = FALSE)
 	var/list/hearers = hearers(hearing_distance, src) // get_hearers_in_view is slower because we don't care about SCOMs and etc here
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
@@ -255,7 +255,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
-		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL, allow_sleeping = allow_sleeping)
+		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL, allow_unconscious = allow_unconscious)
 		if(runechat_message && M.can_see_runechat(src) && M.can_hear())
 			M.create_chat_message(src, raw_message = runechat_message, spans = list("emote"))
 	if(log_seen)
@@ -331,10 +331,10 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  */
-/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs, allow_sleeping = FALSE)
-	. = ..(message, deaf_message, hearing_distance, self_message, runechat_message, log_seen, log_seen_msg, ignored_mobs, allow_sleeping)
+/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs, allow_unconscious = FALSE)
+	. = ..(message, deaf_message, hearing_distance, self_message, runechat_message, log_seen, log_seen_msg, ignored_mobs, allow_unconscious)
 	if(self_message)
-		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL, allow_sleeping = allow_sleeping)
+		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL, allow_unconscious = allow_unconscious)
 
 ///Get the item on the mob in the storage slot identified by the id passed in
 /mob/proc/get_item_by_slot(slot_id)

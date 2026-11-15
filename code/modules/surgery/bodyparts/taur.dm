@@ -44,9 +44,14 @@
 	// "r" = reptilian (drake, noodle, sloog)
 	// "d" = deer
 	// "s" = saiga
+	// "h" = horse
 	// null = no taur-specific clothing support
 	var/taur_clothing_category = null
+	/// Separate artwork allows horse fittings without changing existing taur sprites.
+	var/taur_clothing_icon = 'icons/roguetown/clothing/special/onmob/taur_clothing.dmi'
 	var/has_barding_tassets = TRUE
+	/// Removable cloth currently fitted to this body.
+	var/obj/item/caparison/applied_caparison
 	// Customizable colors for plate tasset overlays (like detail_color on clothing)
 	var/tasset1_color = null
 	var/tasset2_color = null
@@ -69,23 +74,31 @@
 	if(clip_mask_legs_state)
 		clip_mask_legs = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_legs_state)
 
+/obj/item/bodypart/taur/drop_limb(special)
+	applied_caparison?.remove_from_taur()
+	return ..()
+
+/obj/item/bodypart/taur/Destroy()
+	applied_caparison?.remove_from_taur()
+	return ..()
+
 /obj/item/bodypart/taur/proc/get_barding_state(obj/item/clothing/clothing)
 	if(!taur_clothing_category || !clothing)
 		return null
-	if(taur_clothing_category == "s")
+	if(taur_clothing_category in list("s", "h"))
 		if(istype(clothing, /obj/item/clothing/cloak/psydontabard) || istype(clothing, /obj/item/clothing/cloak/templar/psydon) || istype(clothing, /obj/item/clothing/cloak/tabard/crusader/psydon))
 			return "psydon"
 		if(istype(clothing, /obj/item/clothing/cloak/templar/astrata) || istype(clothing, /obj/item/clothing/cloak/tabard/crusader/astrata))
 			return "astrata"
-	if(istype(clothing, /obj/item/clothing/cloak/tabard))
-		return taur_clothing_category == "s" ? "caparison" : "caparison-tabard"
 	if(istype(clothing, /obj/item/clothing/cloak/stabard))
 		return "caparison"
+	if(istype(clothing, /obj/item/clothing/cloak))
+		return (taur_clothing_category in list("s", "h")) ? "caparison" : "caparison-tabard"
 	switch(clothing.armor_class)
 		if(ARMOR_CLASS_LIGHT)
 			if(istype(clothing, /obj/item/clothing/suit/roguetown/armor/chainmail))
 				return "chainmail"
-			if(taur_clothing_category == "s" && istype(clothing, /obj/item/clothing/suit/roguetown/armor/gambeson))
+			if((taur_clothing_category in list("s", "h")) && istype(clothing, /obj/item/clothing/suit/roguetown/armor/gambeson))
 				return "padded"
 			return "leather"
 		if(ARMOR_CLASS_MEDIUM)
@@ -98,16 +111,51 @@
 	var/taur_state = get_barding_state(clothing)
 	if(!taur_state)
 		return null
-	var/mutable_appearance/barding = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "[taur_state]_[taur_clothing_category]", -worn_layer)
+	var/mutable_appearance/barding = mutable_appearance(taur_clothing_icon, "[taur_state]_[taur_clothing_category]", -worn_layer)
 	barding.pixel_x = offset_x
 	if(clothing.color && (taur_state == "padded" || istype(clothing, /obj/item/clothing/cloak)))
 		barding.color = clothing.color
-	if(taur_clothing_category == "s" && taur_state == "caparison")
-		var/mutable_appearance/detail = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "caparison-tabard_s")
+	if((taur_clothing_category in list("s", "h")) && taur_state == "caparison")
+		var/mutable_appearance/detail = mutable_appearance(taur_clothing_icon, "caparison-tabard_[taur_clothing_category]")
 		detail.appearance_flags = RESET_COLOR
 		detail.color = clothing.get_detail_color()
 		barding.overlays += detail
 	return barding
+
+/obj/item/bodypart/taur/proc/get_caparison_state(obj/item/caparison/cloth)
+	if(!taur_clothing_category || !cloth)
+		return null
+	var/state
+	switch(cloth.caparison_state)
+		if("caparison")
+			state = "caparison"
+		if("psy_caparison")
+			state = "psydon"
+		if("astra_caparison")
+			state = "astrata"
+	if(state && ("[state]_[taur_clothing_category]" in icon_states(taur_clothing_icon)))
+		return state
+	return null
+
+/obj/item/bodypart/taur/proc/get_applied_caparison_overlay()
+	var/state = get_caparison_state(applied_caparison)
+	if(!state)
+		return null
+	var/mutable_appearance/cloth = mutable_appearance(taur_clothing_icon, "[state]_[taur_clothing_category]", -(SHIRT_LAYER + 0.1))
+	cloth.pixel_x = offset_x
+	cloth.color = applied_caparison.color
+	if(state == "caparison" && (taur_clothing_category in list("s", "h")))
+		var/mutable_appearance/detail = mutable_appearance(taur_clothing_icon, "caparison-tabard_[taur_clothing_category]")
+		detail.appearance_flags = RESET_COLOR
+		detail.color = applied_caparison.get_detail_color()
+		cloth.overlays += detail
+	return cloth
+
+/// The legacy deer sheet calls its second detail plate-tasset_d.
+/obj/item/bodypart/taur/proc/get_tasset_state(index)
+	if(taur_clothing_category == "d" && index == 2)
+		return "plate-tasset_d"
+	return "plate-tasset[index]_[taur_clothing_category]"
 
 /obj/item/bodypart/taur/generate_limb_cache_key(dropped, hideaux)
 	. = ..()
@@ -123,6 +171,9 @@
 		taur_clothing_category,
 		tasset1_color,
 		tasset2_color,
+		applied_caparison?.type,
+		applied_caparison?.color,
+		applied_caparison?.detail_color,
 		clip_mask_icon,
 		clip_mask_state,
 		clip_mask_legs_state), "-")
@@ -164,6 +215,8 @@
 	. += working
 	. += markings
 	. += tertiary
+	if(!dropped && applied_caparison)
+		. += get_applied_caparison_overlay()
 
 /*********************************/
 /* TAUR TYPES                   */
@@ -500,3 +553,86 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	taur_tertiary_state = "insect_markings_2"
 
 	has_taur_color = TRUE
+
+// Keep /taur/horse as the existing Saiga Body for saved characters.
+/obj/item/bodypart/taur/equine
+	name = "Horse Body"
+	icon = 'icons/mob/horse_taur.dmi'
+	taur_icon_state = "Horse_S"
+	taur_markings_state = "Horse_Markings_2nd"
+	taur_tertiary_state = "Markings_3rd"
+	has_taur_color = TRUE
+	color_blend_mode = ICON_MULTIPLY
+	taur_clothing_category = "h"
+	taur_clothing_icon = 'icons/roguetown/clothing/special/onmob/horse_clothing.dmi'
+	clip_mask_icon = 'icons/mob/taurs.dmi'
+	clip_mask_state = "clip_mask_saiga"
+
+/obj/item/bodypart/taur/equine/generate_limb_cache_key(dropped, hideaux)
+	return "[..()]-[json_encode(markings)]"
+
+/obj/item/bodypart/taur/equine/get_limb_icon(dropped, hideaux = FALSE)
+	. = ..()
+	// Only the authored South strip sits behind the normal genital layer.
+	// All other directions in this state are transparent.
+	var/icon/front_below_icon = icon(icon, "Horse_front_bellow", dropped ? SOUTH : 0)
+	front_below_icon.Blend(taur_color, color_blend_mode)
+	var/image/front_below = image(front_below_icon)
+	front_below.pixel_x = offset_x
+	front_below.layer = -(BODY_BEHIND_LAYER + 0.1)
+	. += front_below
+	// These optional leg markings use their own wide sprites and color controls.
+	for(var/marking_name in markings)
+		var/datum/body_marking/marking = GLOB.body_markings[marking_name]
+		if(marking?.taur_body_type != /obj/item/bodypart/taur/equine)
+			continue
+		var/icon/marking_icon = icon(marking.icon, marking.icon_state, dropped ? SOUTH : 0)
+		marking_icon.Blend("#[markings[marking_name]]", ICON_MULTIPLY)
+		var/image/overlay = image(marking_icon)
+		overlay.pixel_x = offset_x
+		overlay.layer = -BODY_ADJ_LAYER + (marking.icon_state == "Hooves_markings" ? 0.2 : 0.1)
+		. += overlay
+
+/// Hide only clothing pixels covered by the horse silhouette when facing north.
+/// Clone cached appearances, including their detail overlays, before changing any icons.
+/obj/item/bodypart/taur/equine/proc/occlude_north_clothing(list/appearances, parent_x = 0, parent_y = 0)
+	for(var/index in 1 to length(appearances))
+		var/mutable_appearance/appearance = new(appearances[index])
+		var/clothing_x = parent_x + appearance.pixel_x
+		var/clothing_y = parent_y + appearance.pixel_y
+		if(appearance.icon)
+			var/icon/clothing_icon = icon(appearance.icon, appearance.icon_state)
+			clothing_icon.AddAlphaMask(get_north_clothing_mask(clothing_icon.Width(), clothing_icon.Height(), clothing_x, clothing_y))
+			appearance.icon = clothing_icon
+			appearance.icon_state = ""
+		if(length(appearance.overlays))
+			var/list/details = appearance.overlays.Copy()
+			occlude_north_clothing(details, clothing_x, clothing_y)
+			appearance.overlays = details
+		if(length(appearance.underlays))
+			var/list/background_details = appearance.underlays.Copy()
+			occlude_north_clothing(background_details, clothing_x, clothing_y)
+			appearance.underlays = background_details
+		appearances[index] = appearance
+
+/// An inverse body silhouette in North, fully opaque in the other directions.
+/obj/item/bodypart/taur/equine/proc/get_north_clothing_mask(width, height, clothing_x, clothing_y)
+	var/static/list/clothing_masks = list()
+	var/key = "[icon]-[taur_icon_state]-[taur_markings_state]-[taur_tertiary_state]-[offset_x]-[width]-[height]-[clothing_x]-[clothing_y]"
+	if(!clothing_masks[key])
+		var/icon/mask = icon(icon, taur_icon_state)
+		for(var/state in list(taur_markings_state, taur_tertiary_state))
+			if(state)
+				mask.Blend(icon(icon, state), ICON_OVERLAY)
+		// Translate the wide body into the clothing canvas, including species offsets.
+		mask.Crop(1 + clothing_x - offset_x, 1 + clothing_y, width + clothing_x - offset_x, height + clothing_y)
+		mask.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,0, 1,1,1,1)
+		mask.Opaque(COLOR_WHITE)
+		mask.BecomeAlphaMask()
+		var/icon/unchanged = icon(mask, "", NORTH)
+		unchanged.Opaque(COLOR_WHITE)
+		for(var/direction in list(SOUTH, EAST, WEST))
+			mask.Insert(unchanged, "", direction)
+		clothing_masks[key] = mask
+		trim_cache(clothing_masks, SPRITE_ACCESSORY_ICON_CACHE_LEN)
+	return clothing_masks[key]

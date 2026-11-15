@@ -8,6 +8,8 @@
 	var/denominator = 20
 	/// The antag flag to be used
 	var/antag_flag
+	/// Role bans to check when this event can assign several antagonist roles.
+	var/list/candidate_role_bans
 	/// The antag datum to be applied
 	var/antag_datum
 	/// Prompt players for consent to turn them into antags before doing so. Dont allow this for roundstart.
@@ -46,7 +48,7 @@
 	var/living_players_arg = round_started ? TRUE : FALSE
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 
-	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
+	var/list/candidates = SSgamemode.get_candidates(antag_flag, candidate_role_bans || antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
 													restricted_roles = restricted_roles, required_roles = exclusive_roles)
 	candidates = trim_candidates(candidates)
 	return candidates

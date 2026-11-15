@@ -16,6 +16,27 @@
 		return "Licker"
 	return ..()
 
+/datum/quirk/amphibious
+	name = "Amphibious"
+	point_cost = 1
+	desc = "Through some quirk of my heritage, I can breathe in water just as readily as in air."
+	custom_text = "Allows breathing underwater."
+	added_traits = list(TRAIT_WATERBREATHING)
+
+/datum/quirk/fat_knot
+	name = "Fat Knot"
+	point_cost = 0
+	desc = "My knot is thick enough to always keep partners stuck on it."
+	custom_text = "Counts as Large cock size for movement retention. This lets you always drag knotted people behind you hands-free."
+	added_traits = list(TRAIT_FAT_KNOT)
+
+/datum/quirk/high_production
+	name = "High Production"
+	point_cost = 0
+	desc = "My body produces a larger volume of seed than average."
+	custom_text = "Counts as having Large testicle size for how much cum you can store and release."
+	added_traits = list(TRAIT_HIGH_PRODUCTION)
+
 /datum/quirk/acquiredtastes
 	name = "Acquired Tastes"
 	desc = "Despite my unorthodox tastes, I'm always prepared to handle a guest with the toys, assorted gear and emberwine I keep stashed."
@@ -28,6 +49,13 @@
 	custom_text = "Adds a Bag of Cursed Fetish Gear containing a cursed collar and chastity cage, a blindfold, a rope leash, emberwine, a wooden dildo, cloth, a chain, a whip, and a branding iron to your stash."
 	added_stashed_items = list("Bag of Cursed Fetish Gear" = /obj/item/storage/roguebag/cursed_keepsakes)
 	incompatible_quirks = list(/datum/quirk/acquiredtastes)
+
+/datum/quirk/saccharine_keepsake
+	name = "Saccharine Keepsake"
+	point_cost = 1
+	desc = "I keep a pink crayon imbued with Baotha's saccharine blessing."
+	custom_text = "Adds a reusable magical crayon to your stash. Any holder can use it to draw Baotha's fertility mark on a character's exposed lower abdomen. It enables pregnancy without the usual reproductive anatomy."
+	added_stashed_items = list("Saccharine Crayon" = /obj/item/baotha_crayon)
 
 /datum/quirk/dream_dust
 	name = "Dream Dust"
@@ -141,6 +169,7 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
 /datum/quirk/largeframe
+	added_traits = list(TRAIT_LARGE_FRAME)
 	name = "Large Frame"
 	desc = "I'm simply built bigger than most. My strength and hardiness has nothing to show for my size, though."
 	custom_text = "This quirk increases your sprite size. Incompatible with the Giant virtue."

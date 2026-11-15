@@ -4,6 +4,7 @@
 	icon_state = "decap"
 	ambush_mobs = list(
 				new /datum/ambush_config/pair_of_direbear = 10,
+				new /datum/ambush_config/direvolf_pack = 8,
 				new /datum/ambush_config/trio_of_highwaymen = 10,
 				new /datum/ambush_config/singular_minotaur = 10,
 				new /datum/ambush_config/duo_minotaur = 5,

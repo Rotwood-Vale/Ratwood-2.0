@@ -224,7 +224,7 @@
 /datum/virtue/background/artificer
 	name = "Artificer's Apprentice"
 	desc = "In my youth, I worked under a skilled artificer, studying construction and engineering."
-	background_desc = "Tinkerer comes with cogs and bronze ingots. Mason comes with a blowrod and bricks."
+	background_desc = "Tinkerer comes with cogs and bronze ingots. Mason comes with a blowrod, a chisel, and bricks."
 	added_traits = list(TRAIT_SMITHING_EXPERT)
 	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
 						list(/datum/skill/craft/carpentry, 2, 2),
@@ -678,6 +678,7 @@
 /obj/item/storage/roguebag/artificermason
 	populate_contents = list(
 		/obj/item/rogueweapon/blowrod,
+		/obj/item/rogueweapon/chisel,
 		/obj/item/natural/bundle/brick,
 		/obj/item/natural/bundle/brick,
 		/obj/item/natural/bundle/brick,

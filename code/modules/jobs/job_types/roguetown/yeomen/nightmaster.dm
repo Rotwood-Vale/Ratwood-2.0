@@ -12,7 +12,7 @@
 	outfit = /datum/outfit/job/roguetown/niteman
 	display_order = JDO_NITEMASTER
 	give_bank_account = 20
-	min_pq = 1
+	min_pq = 5
 	max_pq = null
 	bypass_lastclass = TRUE
 	round_contrib_points = 3

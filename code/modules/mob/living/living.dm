@@ -1176,27 +1176,53 @@
 	visible_message(span_notice(span_name("[src]") + " points at [A]."), span_notice("I point at [A]."))
 	return TRUE
 
+/mob/living/var/necra_embrace_pending = FALSE
+
+/// Keep the existing succumb requirements shared by the verb and delayed prompts.
+/mob/living/proc/can_succumb()
+	return stat != DEAD && (InCritical() || health <= 0 || blood_volume < BLOOD_VOLUME_SURVIVE)
+
+/mob/living/verb/welcome_necras_embrace()
+	set name = "Embrace Necra"
+	set category = "IC"
+	set desc = "Give up and die while in critical condition."
+	if(!client || client.mob != src || necra_embrace_pending)
+		return
+	if(!can_succumb())
+		to_chat(src, span_warning("I can only welcome Necra's embrace while dying."))
+		return
+	var/client/requester = client
+	var/datum/mind/original_mind = mind
+	necra_embrace_pending = TRUE
+	var/confirmation = alert(src, "Give up and die?", "Embrace Necra", "No", "Yes")
+	if(QDELETED(src))
+		return
+	if(confirmation == "Yes" && requester && client == requester && requester.mob == src && mind == original_mind && can_succumb())
+		succumb(reaper = TRUE)
+	if(!QDELETED(src))
+		necra_embrace_pending = FALSE
+
 /mob/living/verb/succumb(whispered as null, reaper as null)
 	set hidden = TRUE
-	if(stat == DEAD)
+	if(!reaper || !can_succumb())
 		return
-	if(!reaper)
+	var/client/requester = client
+	var/datum/mind/original_mind = mind
+	var/word_input = stripped_input(src, "Your parting words? Leave empty if you will.", "Last Words")
+	if(QDELETED(src) || !can_succumb())
 		return
-	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE))
-		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
+	if(client != requester || (requester && requester.mob != src) || mind != original_mind)
+		return
+	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 
-		if(istype(src.loc, /turf/open/water) && !HAS_TRAIT(src, TRAIT_NOBREATH) && lying && client)
-			record_round_statistic(STATS_PEOPLE_DROWNED)
+	if(istype(loc, /turf/open/water) && !HAS_TRAIT(src, TRAIT_NOBREATH) && lying && client)
+		record_round_statistic(STATS_PEOPLE_DROWNED)
 
-		adjustOxyLoss(201)
-		updatehealth()
-//		if(!whispered)
-//			to_chat(src, span_userdanger("I have given up life and succumbed to death."))
-
-		var/word_input = stripped_input(src, "Your parting words? Leave empty if you will.", "Last Words")
-		if(word_input)
-			say(word_input)
-		death()
+	adjustOxyLoss(201)
+	updatehealth()
+	if(word_input)
+		say(word_input)
+	death()
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = TRUE, check_immobilized = FALSE, ignore_stasis = FALSE)
 	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (!ignore_restraints && restrained(ignore_grab)))

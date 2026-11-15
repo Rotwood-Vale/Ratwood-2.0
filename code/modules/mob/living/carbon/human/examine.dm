@@ -57,6 +57,23 @@
 		label = "<u><font color='#add8e6'>[display_name]</font></u>"
 	return "<span data-component=\"TooltipHTML\" data-position=\"bottom-start\" data-html=\"[html_encode(tooltip_html)]\">[label]</span>"
 
+/// A visible bodily mark, independent of genital anatomy or recognition of the bearer.
+/mob/living/carbon/human/proc/get_baotha_mark_examine_line(mob/user)
+	if(!HAS_TRAIT(src, TRAIT_BAOTHA_FERTILITY_BOON) && !has_flaw(/datum/charflaw/marked_by_baotha))
+		return null
+	// Match explicit crotch exposure, but otherwise check visual coverage, not surgical access.
+	if(!sexcon?.bottom_exposed)
+		if(underwear || !is_human_part_visible(src, HIDECROTCH))
+			return null
+		for(var/obj/item/covering in get_equipped_items(include_pockets = FALSE, include_beltslots = FALSE))
+			if(!istype(covering) || (covering in held_items))
+				continue
+			if(covering.body_parts_covered_dynamic & GROIN)
+				return null
+	var/mark_label = "<font color='[COLOR_HERESYSEVERITY_SUSPICIOUS]'>[EXAMINEHIGHLIGHT_SYMBOL_HERESYSEVERITY_SUSPICIOUS] mark of Baotha [EXAMINEHIGHLIGHT_SYMBOL_HERESYSEVERITY_SUSPICIOUS]</font>"
+	var/mark_tooltip = "<font color='[COLOR_HERESYSEVERITY_SUSPICIOUS]'><b>HERETICAL: IT BEARS THE MARK OF BAOTHA.</b></font><br>A supernatural brand associated with Baotha's fertility blessing. Its presence does not reveal whether the bearer accepted it willingly."
+	return span_info("[p_they(TRUE)] [p_have()] a [SPAN_TOOLTIP_DANGEROUS_HTML(mark_tooltip, mark_label)] adorning [p_their()] lower abdomen.")
+
 /mob/living/carbon/human/examine(mob/user)
 	. = list()
 	var/observer_privilege = isobserver(user)
@@ -119,6 +136,7 @@
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
 	. += get_redolent_examine_lines(user)
+	. += stuffed_examine_line(user)
 	var/gaze_examine = hypnotic_gaze_examine(user)
 	if(gaze_examine)
 		. += gaze_examine
@@ -799,6 +817,10 @@
 	for(var/line in lines)
 		. += span_info(line)
 
+	var/baotha_mark_line = get_baotha_mark_examine_line(user)
+	if(baotha_mark_line)
+		. += baotha_mark_line
+
 	// Keep covered self-examine feedback, and describe exposed devices without an inline genital note.
 	var/chastity_exposed = modular_chastity_exposed(src)
 	var/show_chastity_fallback = user == src && !chastity_exposed
@@ -1187,8 +1209,9 @@
 				if (istype(H.patron, /datum/patron/old_god))
 					. += span_userdanger("HEATHEN! SHAME!")
 */
-		if(name in GLOB.outlawed_players)
-			. += span_userdanger("OUTLAW!")
+		var/outlaw_status_text = get_outlaw_status_text()
+		if(outlaw_status_text)
+			. += outlaw_status_text
 
 		if(HAS_TRAIT(user, TRAIT_JUSTICARSIGHT) && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 			for(var/datum/bounty/b in GLOB.head_bounties) //I hate this.
@@ -1430,6 +1453,21 @@
 
 	return inquisition_text
 
+/// A worn, active Castifico collar is the authoritative penance state.
+/mob/living/proc/is_serving_penance()
+	var/obj/item/clothing/neck/roguetown/collar/prisoner/collar = get_item_by_slot(SLOT_NECK)
+	return istype(collar) && !QDELETED(collar) && collar.active_item && collar.collar_wearer == src
+
+/mob/living/proc/get_outlaw_status_text()
+	if(is_serving_penance())
+		return span_notice("SERVING PENANCE")
+	if(name in GLOB.outlawed_players)
+		return get_outlaw_label()
+
+/mob/living/proc/get_outlaw_label()
+	var/datum/castifico_penance_record/record = get_castifico_penance_record()
+	return span_userdanger(record && record.escaped ? "ESCAPED OUTLAW!" : "OUTLAW!")
+
 /// Returns antagonist-related examine text for the mob, if any. Can return null.
 /mob/living/proc/get_villain_text(mob/examiner)
 	var/villain_text
@@ -1437,8 +1475,9 @@
 		if(mind.special_role == "Bandit")
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
 				villain_text = span_notice("Free man!")
-			if(HAS_TRAIT(src,TRAIT_KNOWNCRIMINAL))
-				villain_text = span_userdanger("OUTLAW!")
+			if(HAS_TRAIT(src, TRAIT_KNOWNCRIMINAL) && HAS_TRAIT(src, TRAIT_OUTLAW))
+				// Penance replaces the label; the public list supplies it otherwise.
+				villain_text = (is_serving_penance() || (name in GLOB.outlawed_players)) ? null : get_outlaw_label()
 		if(mind.special_role == "Vampire Lord")
 			var/datum/antagonist/vampire/VD = mind.has_antag_datum(/datum/antagonist/vampire)
 			if(!SEND_SIGNAL(VD.owner, COMSIG_DISGUISE_STATUS))

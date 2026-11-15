@@ -391,6 +391,8 @@
 	if(icon && (icon_state in icon_states(icon)))
 		var/icon_html = icon2base64html(src)
 		if(icon_html)
+			// Keep live sprites, but let saved chat omit their embedded image data.
+			icon_html = replacetext(icon_html, "<img ", "<img data-examine-icon ")
 			. = "[icon_html] [.]"
 
 ///Generate the full examine string of this atom (including icon for goonchat)

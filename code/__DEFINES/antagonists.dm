@@ -1,3 +1,6 @@
+/// Player-facing conduct guidance shared by Wretches and the Unknightly Journey.
+#define ANTAGONIST_CONFLICT_GUIDANCE "You are an outlaw, heretic or other troublemaker whose actions give others a story to take part in. Pursue your ambitions, make enemies and stir up trouble. Your goal is to create engaging conflict. Give others reasons to fear, pursue, bargain with or oppose you.<br><br>Combat is welcome, but try to give opponents room to retreat, recover or surrender, and use threats, demands, bargains and captures to carry encounters into scenes.<br><br>Be a memorable villain people enjoy opposing."
+
 // This flag disables certain checks that presume antagonist datums mean 'baddie'.
 #define FLAG_FAKE_ANTAG					(1 << 0)
 //The storyteller will ignore this antag datum as counting against the antag cap.

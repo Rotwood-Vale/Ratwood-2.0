@@ -149,7 +149,7 @@
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "quiet_chastity", "label" = "Enable Quiet Chastity", "enabled" = !!owner.prefs.quiet_chastity, "disabled" = !owner.prefs.chastenable, "desc" = "Requires Enabled Chastity Content. Mutes automatic device sounds and notifications, including to yourself."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
-		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
+		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allows injury-causing ERP effects, extreme tailmaw actions, spiked chastity devices, and viewing nearby related messages."),
 		list("id" = "accept_oviposition", "label" = "Accept Egg Implantation", "enabled" = !!owner.prefs.accept_oviposition, "desc" = "Allow partners with an ovipositor to implant eggs in you."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 		list("id" = "free_use_default", "label" = "Toggle Free Use Default", "enabled" = !!owner.prefs.free_use_default, "desc" = "Start with Free Use enabled by default. You can manually disable it at any point in the ERP panel."),
@@ -159,9 +159,10 @@
 		list("id" = "pits", "label" = "Enable Armpit Hair Descriptors", "enabled" = !!owner.prefs.pits, "desc" = "See armpit hair descriptors on examining someone with exposed underarms (if present)."),
 		list("id" = "descriptor_color", "label" = "Enable Colored Descriptors", "enabled" = !!owner.prefs.descriptor_color, "desc" = "Color genital descriptors based on arousal and body hair descriptors based on hair color."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
-		list("id" = "milkable", "label" = "Enable Breast Milking", "enabled" = !!owner.prefs.milkable, "desc" = "Allow other players to milk your breasts if lactating. You can still milk yourself when disabled. Only applies to clicking chest with a reagent container, NOT lactation during sex actions."),
+		list("id" = "milkable", "label" = "Enable Breast Milking", "enabled" = !!owner.prefs.milkable, "desc" = "Allow other players to milk your breasts if lactating. Also allow milk release during the Hands actions \"Rub breasts\" and \"Rub their breasts\", including when used on yourself. Direct self-milking with a container remains available when disabled."),
 		list("id" = "manticore_tail_messages", "label" = "Tailmaws", "enabled" = !!owner.prefs.manticore_tail_messages, "desc" = "Show flavor messages from your manticore tail when moving or during intimate actions, and see tail maw descriptions when examining others."),
 		list("id" = "hypnosis_content", "label" = "Enable Hypnosis Content", "enabled" = !!owner.prefs.hypnosis_content, "desc" = "Show hypnosis examine text and allow casting and receiving hypnotic spells. Disabling clears your current hypnosis effect."),
+		list("id" = "cumflation_content", "label" = "Enable Cumflation Content", "enabled" = !!owner.prefs.cumflation_content, "desc" = "Enable the Stuffed effect from accumulated leakage or Erotic Fluid, and see its examine text. Disabling clears your current Stuffed effect."),
 	)
 
 	data["categories"] = list(
@@ -287,6 +288,8 @@
 				owner.toggle_cursed_collars()
 			if("milkable")
 				owner.toggle_milkable()
+			if("cumflation_content")
+				owner.toggle_cumflation_content()
 			if("hypnosis_content")
 				owner.toggle_hypnosis_content()
 			if("manticore_tail_messages")

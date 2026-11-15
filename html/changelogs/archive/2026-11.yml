@@ -307,3 +307,187 @@
 2026-11-10:
   _Rarity:
   - rscadd: Restored Xylix Pink as a delectable dye color.
+2026-11-11:
+  Khanivore:
+  - rscadd: Added a separate Horse Body and Horse ears with customizable colors.
+  - rscadd: Added optional Horse Socks and Horse Hooves markings.
+  - rscadd: Added removable caparisons for compatible taur bodies.
+  - image: Added original horse body and ear sprites, plus fitted horse clothing and
+      equipment sprites.
+  - bugfix: Taur cloth remains visible beneath armor when tucked under.
+  - bugfix: Corrected horse directional layering for underwear, anatomy, tails, and
+      humanoid chest and belt equipment.
+  - sound: Horse Body now uses hoofbeats when walking and galloping sounds when running.
+  _Rarity:
+  - qol: Chat now saves up to 2,500 vs 1,000 messages across round restarts/reconnects.
+  - rscadd: Added Direvolfs to Rotwood Coast and Mount Decapitation ambushes.
+  - rscadd: "(zydras) Dendor\u2019s Beast Form miracle now lets you turn into a Direvolf."
+  - rscadd: (zydras) Bloodbait has a rare chance to attract Direvolfs.
+  - balance: (zydras) Wild Beast contracts now spawn Volfs and Direvolfs.
+  - bugfix: Leash chains reappear when both characters are back on the same floor.
+  - bugfix: Character customization arrows now cycle through every style in the affected
+      ear, snout, and hair pickers.
+  - bugfix: Loadout items with the same name can now be claimed separately from the
+      stash.
+  - qol: The ahelp notice now directs players to open a ticket in discord when no
+      active admins are online.
+  - qol: Added configurable keybindings for closing your eyes to fall asleep or closing
+      them while staying awake.
+  - config: Dun World is now a map vote option.
+  - map: (Port) Updated Dun World's garrison entrance, Eoran shrine locks, ministry
+      bureau, keep tea supplies, and dungeon loot.
+  mypingishuge:
+  - bugfix: Handgonnes, flintgonnes and fusils retain their aimed accuracy through
+      their firing delay.
+  - bugfix: Delayed firearms no longer duplicate firing effects and accident checks,
+      and safely cancel pending shots if the shooter is deleted.
+  - bugfix: The ztratocaster now shows its heretical warning, red highlight and tooltip
+      explanation.
+  - qol: Getting Started now explains how to light torches and lampterns and clarifies
+      how to access backpacks.
+  - qol: Familiars can adjust their darkness visibility with Nighteyes.
+  - qol: Javelins can now be twirled using Polearms skill.
+  - qol: Hypnotic Gaze and Presence descriptions explain where to customize their
+      examine text.
+  - rscadd: Added Amphibious, a 1-QP quirk that allows breathing underwater.
+  - qol: Pouches can be equipped in either back slot or the bracer slot.
+  - qol: Metal armor movement clanging now plays every twelve steps instead of four.
+  - bugfix: Hear Instruments now blocks initial instrument and music-box playback
+      before sending it to players who disabled it.
+  - bugfix: Enchanted bounty scrolls refresh their listings every time they are read.
+  - bugfix: Middle-clicking hoods correctly toggles hair and related features without
+      unexpectedly concealing your identity.
+  - qol: Darkness is now slightly transparent while remaining almost completely black.
+  - qol: Your personal visibility in darkness reaches 50% farther, with the same brightness.
+  - bugfix: Shapeshifting preserves role identity and Rosewall listings, and roleplay
+      ad edits update the original character's advertisement.
+  - bugfix: Hover labels, including debuff names, stay within the game viewport near
+      screen edges.
+  - rscadd: Glut can now be worn around the neck or displayed in existing helmet and
+      mask cosmetic slots.
+  - qol: See nearby characters tense or relax while in combat mode without Combat
+      Aware, and see your own cues when switching combat mode on or off.
+  - rscadd: A polishing brush is available in the loadout menu for 1 point.
+  - rscadd: Polishing brushes can brush exposed body parts in Use intent.
+  - bugfix: Green tracking highlights now follow your selected target correctly, without
+      showing unrelated or outdated footprints.
+  - balance: 'Transformed werewolves have Verevolf Nymphomaniac: 15 minutes before
+      the first penalty and 30 minutes of relief after satisfaction. Solo actions
+      cannot satisfy it.'
+  - qol: Transformed werewolves understand Imperial without being able to speak it.
+  - bugfix: Credits portraits consistently show headshots with masks, headgear and
+      neck items hidden.
+  - qol: "Giving up while dying is now under IC \u2192 Embrace Necra. Clicking the\
+      \ central skull shows instructions instead."
+  - bugfix: Fully charged Wolkenmaw shots now follow the ranged mouse-release path,
+      preventing valid shots from losing their charge before firing.
+  - code_imp: Remove examine item icons from saved chat history and exported logs
+      while keeping live icons visible.
+  - code_imp: Avoid duplicate AI tracking-window queries when their bounds match;
+      local gameplay testing required.
+  - code_imp: Skip unnecessary regeneration work for healthy, unwounded deadites.
+2026-11-12:
+  GarrusVakarian:
+  - rscdel: Removed the bandit mid-round event, admins can still trigger the migrant
+      wave if needed.
+  - balance: Wretches now have access to the bandit camp.
+  - balance: The dragon hoard in the bandit camp now has 99999 integrity walls, effectively
+      making them unbreakable (up from 1000 integrity).
+  - map: ' The baron on Smollhill is now a duke in disguise.'
+  - map: All of the banners on Smollhill are now duchy banners, allowing the duke-baron
+      to set their color.
+  - map: Added a few RCOMs to Smollhill.
+  - map: Fixed a door with invalid key ID on Smollhill.
+  - map: Added a head physician to Smollhill.
+  Khanivore.:
+  - sound: Added LizBellow, LizHiss, LizSqueal, LizThump, and Gnash for all species
+      through chat and the Noises menu.
+  mypingishuge:
+  - rscadd: Oozes can choose Digitigrade Big Legs and Digitigrade Big Legs, Stanced.
+  - qol: Liquid containers can be set at the base of a pillory, visibly in front of
+      its occupant.
+  - qol: Wretches receive a new role guidance message before choosing their class.
+  - balance: Rebalanced role PQ requirements.
+  - qol: "PQ-blocked late-join roles remain visible in darker red, while roles disabled\
+      \ on the current map stay hidden. PQ errors explain how to earn PQ, with a Towner\
+      \ suggestion whenever a player at 0 PQ falls below a role\u2019s minimum."
+  - rscadd: Added optional Cumflation Content, with intake tracking, a washable Stuffed
+      debuff and consent-gated examine text.
+  - bugfix: Unconscious and dying players can follow nearby speech, whispers, emotes
+      and subtles.
+  - bugfix: Unconscious and dying players can be selected as named SLOOC targets.
+  - qol: Erotic Fluid collected in containers gains 5/10/30 extra units by donor size,
+      or 7/15/45 for taur donors.
+  - qol: Erotic FLuid leakage duration scales with donor size, stacks up to one hour,
+      and pauses while clothing blocks dripping.
+  - bugfix: Collection by containers on the floor now use the size-scaled amount for
+      donors with both anatomy options, matching held collection.
+2026-11-13:
+  GarrusVakarian:
+  - map: Smollhill now has a single public SCOM.
+  _Rarity:
+  - map: fix stage after some monster left holes in it
+  - qol: Dried swampweed now has a distinct name from the raw item
+  - admin: "The Spawn\u2026 type picker is now searchable and resizable, and opens\
+      \ 500 pixels wide."
+  - qol: Failed crafting attempts now list missing ingredients and quantities in chat,
+      with an uncorking hint when a nearby corked bottle contains a missing reagent.
+  - bugfix: Fixed how pillories, attached buckets, and nearby characters draw over
+      each other when players pixel-shift.
+  - bugfix: "The Artificer\u2019s Apprentice Mason loadout now includes a chisel."
+  - balance: Weak stance now deals 20% of calculated weapon damage instead of only
+      -1 STR
+  mypingishuge:
+  - bugfix: Tennite Radical clergy, including Churchlings, can no longer access Inhumen
+      miracle research, relations or their trait bonuses.
+  - bugfix: Lupians now have one snout selector containing all their previous snout
+      styles.
+  - rscadd: 'Added free Fat Knot and High Production quirks. Fat Knot: counts as Large
+      cock size for movement retention. This lets you always drag knotted people behind
+      you hands-free. High Production: counts as having Large testicle size for how
+      much cum you can store and release.'
+  - bugfix: Wolkenmaw can once again be put into pouches and other storage by clicking
+      them while holding it.
+  - rscadd: Exposed Baotha marks appear in character examine text with a heretical
+      highlight and tooltip.
+  - balance: "Extra oral nutrition is now shared across a climax\u2019s bursts instead\
+      \ of being added again for every burst."
+  - balance: Raised the base oral intake threshold for Stuffed from over 45 to over
+      60 units.
+  - bugfix: Flail Sweep now applies its crowd effects reliably at high target counts,
+      counts each target once and uses the correct throw distance.
+  - rscadd: Breast-rubbing panel actions can release milk when lactating, if Enable
+      Breast Milking is enabled.
+  - bugfix: Open liquid containers can collect floor fluids regardless of their container
+      subtype; closed or full containers no longer block collection.
+  - bugfix: Fully collected floor fluids no longer leave a floor decal, and direct
+      milking rechecks the available milk and container space after its delay.
+  - qol: The Enable Breast Milking tooltip explains its effect on both breast-rubbing
+      panel actions.
+2026-11-14:
+  _Rarity:
+  - bugfix: Fixed a roundstart stall caused by an unresponsive client during a lobby-panel
+      refresh.
+  - bugfix: Fixed Gnoll latejoins being sent to town arrival points by Virtues on
+      the player's regular character slot.
+  - rscadd: (7erracotta) Added 28 whittling recipes for wooden carvings and a corkable
+      wooden bottle that survives being thrown.
+  - admin: The storyteller now checks role bans before selecting antagonists.
+  mypingishuge:
+  - rscadd: LOOC typing, including Subtle LOOC, displays a blue typing bubble.
+  - spellcheck: Clarified the Enable Extreme ERP Content tooltip.
+  - rscadd: Adds the Saccharine Keepsake quirk, that provides a reusable pink crayon
+      that can grant Baotha's fertility marks.
+  - rscadd: Added one saccharine crayon to each gnoll-cave equipment chest in the
+      Wretch Grotto on Neuhill and Smollhill.
+  - rscadd: Added a saccharine crayon to each of the two pillows at Baotha's Wretch
+      Grotto shrine on Neuhill and Smollhill.
+  - bugfix: Half-Kin's race description now correctly names its +1 Willpower bonus
+      instead of Endurance.
+  - rscadd: "Claimed crimes remain visible as REWARD CLAIMED \u2014 PENANCE INCOMPLETE\
+      \ until penance is completed, without paying again on recapture."
+  - bugfix: Pillories now recognize matching keys inside keyrings for locking and
+      unlocking.
+  - bugfix: Races with inherent Critical Weakness can no longer select the same vice
+      for free quirk points and loadout points, including through saved character
+      setups.

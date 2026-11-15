@@ -71,6 +71,47 @@
 //For highlighting tracks
 /mob/living/carbon/human
 	var/mob/living/current_mark
+	var/datum/tracking_mark_observer/tracking_mark_observer
+
+/mob/living/carbon/human/proc/set_tracking_mark(mob/living/mark)
+	if(!istype(mark) || QDELETED(mark))
+		mark = null
+	if(current_mark == mark)
+		return
+	if(tracking_mark_observer)
+		qdel(tracking_mark_observer)
+	current_mark = mark
+	if(current_mark)
+		tracking_mark_observer = new(src, current_mark)
+	SEND_SIGNAL(src, COMSIG_HUMAN_TRACKING_MARK_CHANGED)
+
+/// Own the target-deletion signal separately from the mob's enemy and other signal handlers.
+/datum/tracking_mark_observer
+	var/mob/living/carbon/human/tracker
+	var/mob/living/target
+
+/datum/tracking_mark_observer/New(mob/living/carbon/human/new_tracker, mob/living/new_target)
+	tracker = new_tracker
+	target = new_target
+	RegisterSignal(tracker, COMSIG_QDELETING, PROC_REF(on_mob_deleted))
+	if(target != tracker)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_mob_deleted))
+
+/datum/tracking_mark_observer/proc/on_mob_deleted(datum/source)
+	SIGNAL_HANDLER
+	if(source == tracker)
+		qdel(src)
+	else
+		tracker.set_tracking_mark(null)
+
+/datum/tracking_mark_observer/Destroy(force)
+	UnregisterSignal(tracker, COMSIG_QDELETING)
+	UnregisterSignal(target, COMSIG_QDELETING)
+	if(tracker && tracker.tracking_mark_observer == src)
+		tracker.tracking_mark_observer = null
+	tracker = null
+	target = null
+	return ..()
 
 //Analysis levels depending on skillcheck during reveal.
 #define ANALYSIS_TERRIBLE 1
@@ -89,11 +130,14 @@
 	///The visible state for those that know this.
 	var/real_icon_state = "tracks"
 	///The image knowers see.
-	var/real_image
+	var/image/real_image
 	///List of mobs aware of this track.
 	var/list/mob/living/known_by = list()
 	///When this was created. Adjusts difficulty of locating / analyzing.
 	var/creation_time = 0
+	/// Distinguishes pooled uses even when they occur in the same tick.
+	var/track_generation = 0
+	var/in_track_pool = FALSE
 	///What kind of foot, or footwear, created this.
 	var/track_type = "codersock tracks"
 	///Like above, except what you get if you are not good.
@@ -112,8 +156,9 @@
 	var/overwrites = 0
 	///The world.time when this track should expire (used by subsystem)
 	var/expiry_time
-	///For determining if it's been highlighted for marked person purposes
-	var/list/highlighted = list()
+	///Each viewer owns a distinct image and the client receiving it.
+	var/list/viewer_images = list()
+	var/list/viewer_clients = list()
 	///A preserved dir for the highlights
 	var/original_dir
 	///Whether this track allows its owner to be Marked
@@ -126,19 +171,20 @@
 	real_image = image(icon, src, real_icon_state, ABOVE_OPEN_TURF_LAYER) //Default image in case manually created.
 
 /obj/effect/track/Destroy(force)
-	real_image = null
-	for(var/knowing_one as anything in known_by)
+	for(var/knowing_one as anything in known_by.Copy())
 		remove_knower(knowing_one)
 	if(creator)
 		clear_creator_reference(creator)
 	known_by = null
+	real_image = null
 	SStracks.remove_track(src)
 	return ..()
 
 /// Resets track state for reuse from pool - called before recycling
 /obj/effect/track/proc/soft_reset()
+	track_generation++
 	// Clear all knowers
-	for(var/knowing_one as anything in known_by)
+	for(var/knowing_one as anything in known_by.Copy())
 		remove_knower(knowing_one)
 	known_by = list()
 
@@ -157,9 +203,8 @@
 	special_movement = null
 	tracking_modifier = 0
 	overwrites = 0
-	LAZYCLEARLIST(highlighted)
 	original_dir = null
-	markable = TRUE
+	markable = initial(markable)
 
 	// Reset image
 	real_image = null
@@ -231,7 +276,7 @@
 //Handles value settings done for a track that need to be done.
 /obj/effect/track/proc/handle_creation(mob/living/track_source)
 	creator = track_source
-	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(clear_creator_reference), TRUE)
+	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(on_related_mob_deleted), TRUE)
 	creation_time = world.time
 	track_source.get_track_info(src)
 	if(track_source.m_intent == MOVE_INTENT_SNEAK)
@@ -260,36 +305,72 @@
 	expiry_time = world.time + 15 MINUTES //Tracks naturally expire after 15 minutes
 	SStracks.add_track(src)
 
-///Adds a new person to the list of people who can see this track.
+///Adds a viewer without sharing their highlight state with other viewers.
 /obj/effect/track/proc/add_knower(mob/living/tracker, competence = 1)
 	known_by[tracker] = competence
-	if(ishuman(tracker))
-		var/mob/living/carbon/human/H = tracker
-		if(H.current_mark == creator && (H.get_skill_level(/datum/skill/misc/tracking) >= SKILL_LEVEL_EXPERT || HAS_TRAIT(H, TRAIT_PERFECT_TRACKER)))
-			if(!(tracker in highlighted))
-				real_icon_state = "tracks_marked"
-				real_image = image(icon, src, real_icon_state, ABOVE_OPEN_TURF_LAYER, original_dir)
-				LAZYADD(highlighted, tracker)
-		if(tracker.client)
-			tracker.client.images += real_image
-	RegisterSignal(tracker, COMSIG_QDELETING, PROC_REF(remove_knower), override = TRUE)
+	RegisterSignal(tracker, COMSIG_QDELETING, PROC_REF(on_related_mob_deleted), override = TRUE)
+	if(markable)
+		RegisterSignal(tracker, COMSIG_HUMAN_TRACKING_MARK_CHANGED, PROC_REF(update_viewer_image), override = TRUE)
+	RegisterSignal(tracker, COMSIG_MOB_LOGIN, PROC_REF(update_viewer_image), override = TRUE)
+	RegisterSignal(tracker, COMSIG_MOB_LOGOUT, PROC_REF(clear_viewer_image), override = TRUE)
+	update_viewer_image(tracker)
 
-///Removes a knower from the known ones. Usually only done when qdeleted.
+/obj/effect/track/proc/should_highlight(mob/living/tracker)
+	if(!markable || !creator || !ishuman(tracker))
+		return FALSE
+	var/mob/living/carbon/human/H = tracker
+	return H.current_mark == creator && (H.get_skill_level(/datum/skill/misc/tracking) >= SKILL_LEVEL_EXPERT || HAS_TRAIT(H, TRAIT_PERFECT_TRACKER))
+
+/obj/effect/track/proc/clear_viewer_image(mob/living/tracker)
+	SIGNAL_HANDLER
+	var/client/viewer = viewer_clients[tracker]
+	if(viewer)
+		viewer.images -= viewer_images[tracker]
+	viewer_images -= tracker
+	viewer_clients -= tracker
+
+/obj/effect/track/proc/update_viewer_image(mob/living/tracker)
+	SIGNAL_HANDLER
+	if(!(tracker in known_by) || !tracker.client || !real_image)
+		clear_viewer_image(tracker)
+		return
+	var/desired_state = should_highlight(tracker) ? "tracks_marked" : real_image.icon_state
+	var/image/view_image = viewer_images[tracker]
+	if(view_image && viewer_clients[tracker] == tracker.client)
+		if(view_image.icon_state != desired_state)
+			view_image.icon_state = desired_state
+		return
+	clear_viewer_image(tracker)
+	view_image = image(real_image)
+	view_image.loc = src
+	view_image.icon_state = desired_state
+	viewer_images[tracker] = view_image
+	viewer_clients[tracker] = tracker.client
+	tracker.client.images += view_image
+
 /obj/effect/track/proc/remove_knower(mob/living/tracker)
 	SIGNAL_HANDLER
-	UnregisterSignal(tracker, COMSIG_QDELETING)
-	if(tracker.client)
-		tracker.client.images -= real_image
-	LAZYREMOVE(highlighted, tracker)
+	clear_viewer_image(tracker)
+	UnregisterSignal(tracker, list(COMSIG_HUMAN_TRACKING_MARK_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
 	known_by -= tracker
-	if(creator == tracker)
-		creator = null
+	if(tracker != creator)
+		UnregisterSignal(tracker, COMSIG_QDELETING)
 
-///Clears the reference to the creator. Is replaced by the above proc if the creator analyzes it.
+/// A creator can also be a viewer; keep both deletion responsibilities on one signal handler.
+/obj/effect/track/proc/on_related_mob_deleted(mob/living/source)
+	SIGNAL_HANDLER
+	if(source == creator)
+		clear_creator_reference(source)
+	if(source in known_by)
+		remove_knower(source)
+
 /obj/effect/track/proc/clear_creator_reference(mob/living/creator_arg)
 	SIGNAL_HANDLER
-	UnregisterSignal(creator, COMSIG_QDELETING)
+	if(!(creator in known_by))
+		UnregisterSignal(creator, COMSIG_QDELETING)
 	creator = null
+	for(var/mob/living/tracker as anything in known_by)
+		update_viewer_image(tracker)
 
 ///Called when the track's time expires, at which point it becomes indistinguishable (aka, deleted)
 /obj/effect/track/proc/track_expire()
@@ -300,15 +381,8 @@
 	var/knowledge = known_by[user]
 	if(!knowledge)
 		return //Huh?
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!isnull(H.current_mark))
-			if(H.current_mark == creator && !(H in highlighted))
-				real_icon_state = "tracks_marked"
-				real_image = image(icon, src, real_icon_state, ABOVE_OPEN_TURF_LAYER, original_dir)
-				LAZYADD(highlighted, H)
-				if(H.client)
-					H.client.images += real_image
+	if(isliving(user))
+		update_viewer_image(user)
 	. += knowledge_readout(user, knowledge)
 
 /obj/effect/track/proc/knowledge_readout(mob/user, knowledge)
@@ -337,11 +411,12 @@
 			. += "[span_warning("There are traces of many older tracks here, too..")]<br>"
 		else if(overwrites >= 2)
 			. += "[span_warning("There are traces of around [overwrites] older tracks here, too..")]<br>"
-		var/mob/living/carbon/human/H = user
-		if(!isnull(H.current_mark) && H.current_mark == creator)
-			. += span_nicegreen("This track belongs to your mark.")
-		if(H.get_skill_level(/datum/skill/misc/tracking) >= SKILL_LEVEL_EXPERT)
-			. += span_nicegreen("<i><font size = 2>Right-click this track to Mark its owner.</font></i>")
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.current_mark && H.current_mark == creator)
+				. += span_nicegreen("This track belongs to your mark.")
+			if(H.get_skill_level(/datum/skill/misc/tracking) >= SKILL_LEVEL_EXPERT)
+				. += span_nicegreen("<i><font size = 2>Right-click this track to Mark its owner.</font></i>")
 	return .
 
 ///Gets special info for a track relative to a mob, such as type and depth. Override if desiring tracking modifier adjustment.
@@ -477,7 +552,7 @@
 
 /obj/effect/track/structure/handle_creation(mob/living/track_source)
 	creator = track_source
-	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(clear_creator_reference))
+	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(on_related_mob_deleted))
 	creation_time = world.time
 	track_source.get_track_info(src)
 	real_image = image(icon, src, real_icon_state, ABOVE_OPEN_TURF_LAYER, track_source.dir)
@@ -519,10 +594,15 @@
 		if(H.get_skill_level(/datum/skill/misc/tracking) > SKILL_LEVEL_JOURNEYMAN)	//Expert+
 			if(!markable)
 				to_chat(H, span_warning("This is not enough to Mark them. I need proper tracks."))
+				return
 			to_chat(H, span_info("You start taking note of the person's gait, weight and other distinct features."))
+			var/mob/living/marked_creator = creator
+			var/mark_generation = track_generation
 			if(do_after(user, (50 - H.STAPER*2)))
-				H.current_mark = creator
-				to_chat(H, span_warning("You've marked this person. You'll notice their tracks if you find any new ones."))
+				if(QDELETED(src) || QDELETED(H) || QDELETED(marked_creator) || !marked_creator || !markable || creator != marked_creator || track_generation != mark_generation)
+					return
+				H.set_tracking_mark(marked_creator)
+				to_chat(H, span_warning("You've marked this person. Previously discovered tracks have been updated, and you'll notice their new tracks."))
 		else
 			to_chat(H, span_info("I am not skilled enough for this! (Expert level required)"))
 
@@ -541,7 +621,7 @@
 
 /obj/effect/track/thievescant/handle_creation(mob/living/track_source, thiefmessage)
 	creator = track_source
-	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(clear_creator_reference))
+	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(on_related_mob_deleted))
 	creation_time = world.time
 	track_source.get_track_info(src)
 	real_image = image(icon, src, real_icon_state, BULLET_HOLE_LAYER, track_source.dir)

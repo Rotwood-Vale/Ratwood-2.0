@@ -639,6 +639,8 @@
 //Javelins - Basically spears, but to get them working as proper javelins and able to fit in a bag, they are 'ammo'. (Maybe make an atlatl later?)
 //Only ammo casing, no 'projectiles'. You throw the casing, as weird as it is.
 /obj/item/ammo_casing/caseless/rogue/javelin
+	twirly = SKILL_LEVEL_JOURNEYMAN
+	twirl_speed = 6
 	force = 14
 	throw_speed = 3		//1 lower than throwing knives, it hits harder + embeds more.
 	name = "iron javelin"
@@ -659,6 +661,10 @@
 	associated_skill = /datum/skill/combat/polearms
 	heavy_metal = FALSE						//Stops spin animation, maybe.
 	thrown_damage_flag = "piercing"			//Checks peircing protection.
+
+/obj/item/ammo_casing/caseless/rogue/javelin/examine(mob/user)
+	. = ..()
+	. += span_info("Right-click it in your hand, or use Alt-grip / Twirl (default Alt+G), to twirl it one-handed. Safe at Journeyman Polearms skill.")
 
 /obj/item/ammo_casing/caseless/rogue/javelin/getonmobprop(tag)
 	. = ..()

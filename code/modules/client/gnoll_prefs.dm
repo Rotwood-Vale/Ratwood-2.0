@@ -362,8 +362,9 @@
 	roleplay_ad = length(trim(new_ad)) ? new_ad : null
 	P.save_character()
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.roleplay_ad_is_gnoll && H.roleplay_ad_slot == ad_slot && H.roleplay_ad_owner == P.parent?.ckey)
+		var/mob/living/carbon/human/actor = user
+		var/mob/living/carbon/human/H = actor.get_shapeshift_owner()
+		if(H && H.roleplay_ad_is_gnoll && H.roleplay_ad_slot == ad_slot && H.roleplay_ad_owner == P.parent?.ckey)
 			H.roleplay_ad = roleplay_ad
 			H.publish_roleplay_ad()
 	to_chat(user, span_notice(roleplay_ad ? "Gnoll roleplay ad saved." : "Saved gnoll roleplay ad cleared."))

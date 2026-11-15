@@ -18,6 +18,8 @@
 	var/gender_only_chest = FALSE
 	/// Whether the chest marking covers the chest, for purposes of color derriving for features
 	var/covers_chest = FALSE
+	/// If set, this marking is rendered by the matching taur body only.
+	var/taur_body_type
 
 /datum/body_marking/New()
 	if(!default_color)
@@ -432,3 +434,21 @@
 	icon_state = "hleg"
 	affected_bodyparts = LEG_LEFT | LEG_RIGHT
 	default_color = DEFAULT_SECONDARY
+
+/datum/body_marking/horse_socks
+	name = "Horse Socks (HorseTaur)"
+	icon = 'icons/mob/horse_taur.dmi'
+	icon_state = "Horse_Socks"
+	affected_bodyparts = LEG_LEFT
+	gendered = FALSE
+	taur_body_type = /obj/item/bodypart/taur/equine
+	default_color = "FFF0D4"
+
+/datum/body_marking/horse_hooves
+	name = "Horse Hooves (HorseTaur)"
+	icon = 'icons/mob/horse_taur.dmi'
+	icon_state = "Hooves_markings"
+	affected_bodyparts = LEG_LEFT
+	gendered = FALSE
+	taur_body_type = /obj/item/bodypart/taur/equine
+	default_color = "282630"

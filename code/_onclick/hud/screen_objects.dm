@@ -951,33 +951,15 @@
 
 	L.playsound_local(L, 'sound/misc/click.ogg', 100)
 	if(modifiers["shift"] && modifiers["left"])
-		if(L.stat != CONSCIOUS || L.IsSleeping())
-			return
-		L.stay_awake = !L.stay_awake
-		L.fallingas = 0
-		L.eyesclosed = L.stay_awake
-		if(L.stay_awake)
-			L.become_blind("eyelids")
-			to_chat(L, span_notice("I close my eyes and stay awake."))
-		else
-			L.cure_blind("eyelids")
-			to_chat(L, span_notice("I open my eyes."))
-		update_icon()
+		toggle_eyelids(L, keep_awake = TRUE)
 		return
 
-	if(L.eyesclosed)
-		L.eyesclosed = FALSE
-		L.stay_awake = FALSE
-		L.cure_blind("eyelids")
-		// Clicking the eyelid again keeps the normal sleep countdown running.
-		if(!clicked_eyelid)
-			L.fallingas = 0
-
-	if(modifiers["left"])
-		if(clicked_eyelid)
-			L.eyesclosed = TRUE
-			L.become_blind("eyelids")
-		else
+	if(clicked_eyelid)
+		set_eyelids(L, TRUE)
+	else
+		if(L.eyesclosed)
+			set_eyelids(L, FALSE)
+		if(modifiers["left"])
 			toggle(usr)
 
 	if(modifiers["middle"])
@@ -986,6 +968,26 @@
 
 	if(modifiers["right"])
 		L.look_around()
+
+/atom/movable/screen/eye_intent/proc/set_eyelids(mob/living/user, closed, keep_awake = FALSE)
+	if(!closed || user.stay_awake != keep_awake)
+		user.fallingas = 0
+	user.eyesclosed = closed
+	user.stay_awake = keep_awake
+	if(closed)
+		user.become_blind("eyelids")
+	else
+		user.cure_blind("eyelids")
+
+/atom/movable/screen/eye_intent/proc/toggle_eyelids(mob/living/user, keep_awake = FALSE)
+	if(user.stat != CONSCIOUS || user.IsSleeping())
+		return
+	var/closed = !user.eyesclosed || user.stay_awake != keep_awake
+	set_eyelids(user, closed, closed && keep_awake)
+	if(keep_awake)
+		var/message = closed ? "I close my eyes and stay awake." : "I open my eyes."
+		to_chat(user, span_notice(message))
+	update_icon()
 
 /atom/movable/screen/eye_intent/update_icon_state()
 	. = ..()

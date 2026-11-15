@@ -10,14 +10,16 @@
 	drift                  = generator("circle", 0, 3) // Some random movement for variation
 	friction               = 0.3  // shed 30% of velocity and drift every 0.1s
 	//Weather effects, max values
-	maxSpawning           = 35
+	maxSpawning           = 18
 	wind                   = 5
 
 /particles/weather/fog/bloodfog
+	maxSpawning            = 35 // Retain the variant's original rate rather than inheriting ordinary fog's reduction.
 	gradient               = list(0,"#5e0101",100,"#230000","loop")
 
 //Fog
 /particles/weather/fog/swamp
+	maxSpawning            = 35
 	gradient               = list(0,"#3f5e0fe3",100,"#158832e3","loop")
 
 //straight up darkness

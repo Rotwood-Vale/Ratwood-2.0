@@ -136,6 +136,13 @@
 	color_keys = 2
 	color_key_names = list("Ears", "Inner")
 
+/datum/sprite_accessory/ears/horse
+	name = "Horse"
+	icon = 'icons/mob/sprite_accessory/ears/horse.dmi'
+	icon_state = "horse"
+	color_keys = 2
+	color_key_names = list("Ears", "Inner")
+
 /datum/sprite_accessory/ears/jellyfish
 	name = "Jellyfish"
 	icon_state = "jellyfish"

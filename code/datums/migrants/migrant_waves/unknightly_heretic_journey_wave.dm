@@ -11,4 +11,4 @@
 		/datum/migrant_role/ukj_dark_chaplain = 1,
 	)
 	min_optional_fills = 0
-	greet_text = "A knight who broke their oath has come to these lands with their varlet, sworn now to the Ascendants. The tennites and psydonites can pray all they like. It won't save them."
+	greet_text = "A knight who broke their oath has come to these lands with their varlet, sworn now to the Ascendants. The tennites and psydonites can pray all they like. It won't save them." + "<br><br>" + span_danger(ANTAGONIST_CONFLICT_GUIDANCE)

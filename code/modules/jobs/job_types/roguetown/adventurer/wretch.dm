@@ -12,7 +12,7 @@
 	outfit_female = null
 	display_order = JDO_WRETCH
 	show_in_credits = FALSE
-	min_pq = 30//60>50>30. What a world. Fingers crossed that folks aren't as bad with it now.
+	min_pq = 5
 	max_pq = null
 	quirk_restrictions = list(/datum/quirk/assassintarget)
 
@@ -31,7 +31,7 @@
 	same_job_respawn_delay = 1 MINUTES
 	virtue_restrictions = list(/datum/virtue/utility/zchurch_keyholder) //all wretch classes automatically get this
 	carebox_table = /datum/carebox_table/wretch
-	job_traits = list(TRAIT_STEELHEARTED, TRAIT_OUTLAW, TRAIT_HERESIARCH, TRAIT_SELF_SUSTENANCE, TRAIT_ZURCH)
+	job_traits = list(TRAIT_STEELHEARTED, TRAIT_OUTLAW, TRAIT_HERESIARCH, TRAIT_SELF_SUSTENANCE, TRAIT_ZURCH, TRAIT_BANDITCAMP)
 	job_subclasses = list(
 		/datum/advclass/wretch/licker,
 		/datum/advclass/wretch/deserter,
@@ -101,5 +101,4 @@
 	if (!my_crime)
 		my_crime = "crimes against the Crown"
 	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
-	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Wretch, you are expected to actively create conflict with other players. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
 	H.playsound_local(get_turf(H), 'sound/music/traitor.ogg', 60, FALSE, pressure_affected = FALSE)

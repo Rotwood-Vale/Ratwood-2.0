@@ -17,7 +17,7 @@
 	advclass_cat_rolls = list(CTAG_COURTPHYS = 2)
 	social_rank = SOCIAL_RANK_NOBLE
 	give_bank_account = 30
-	min_pq = 3 //Please don't kill the duke by operating on strong intent. Play apothecary until you're deserving of the great white beak of doom
+	min_pq = 5
 	max_pq = null
 	round_contrib_points = 5
 

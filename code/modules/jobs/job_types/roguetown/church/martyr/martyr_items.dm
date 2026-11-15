@@ -713,7 +713,6 @@
 	boobed = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
-	var/overarmor = TRUE
 	sellprice = 300
 
 /obj/item/clothing/cloak/holysee/ComponentInitialize()
@@ -729,6 +728,9 @@
 			STR.remove_from_storage(I, get_turf(src))
 
 /obj/item/clothing/cloak/holysee/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	wear_over_taur = FALSE
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
 	if(overarmor)

@@ -199,6 +199,71 @@
 		name = "fine brush"
 	icon_state = "brush_[roughness]"
 
+/// Surgery access permits some covered areas; brushing requires physically exposed skin/fur.
+/obj/item/armor_brush/proc/brushing_area_exposed(mob/living/carbon/human/target, zone)
+	for(var/obj/item/covering as anything in target.get_equipped_items(include_pockets = FALSE, include_beltslots = FALSE))
+		if(!istype(covering) || (covering in target.held_items))
+			continue
+		if(zone2covered(zone, covering.body_parts_covered_dynamic) || (zone == BODY_ZONE_TAUR && (covering.body_parts_covered_dynamic & (LEG_LEFT|LEG_RIGHT|GROIN))))
+			return FALSE
+	var/obj/item/undies/underwear = target.underwear
+	if(istype(underwear))
+		if(zone == BODY_ZONE_PRECISE_GROIN || zone == BODY_ZONE_TAUR || (zone == BODY_ZONE_CHEST && underwear.covers_breasts))
+			return FALSE
+		if(zone == BODY_ZONE_PRECISE_STOMACH && (istype(underwear, /obj/item/undies/leotard) || istype(underwear, /obj/item/undies/athletic_leotard)))
+			return FALSE
+	var/body_zone = check_zone(zone)
+	if(target.legwear_socks && (body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG || body_zone == BODY_ZONE_TAUR))
+		return FALSE
+	if(target.chastity_device && (zone == BODY_ZONE_PRECISE_GROIN || zone == BODY_ZONE_TAUR))
+		return FALSE
+	return TRUE
+
+/obj/item/armor_brush/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return
+	if(!ishuman(A) || !isliving(user) || !istype(user.a_intent, /datum/intent/use))
+		return FALSE
+	// A handled grooming attempt must never fall through into an ordinary attack.
+	if(QDELETED(src) || QDELETED(user) || QDELETED(A) || user.doing || user.incapacitated() || user.get_active_held_item() != src)
+		return TRUE
+	var/mob/living/carbon/human/target = A
+	if(user != target && !user.Adjacent(target))
+		return TRUE
+	var/zone = user.zone_selected
+	if(!zone)
+		zone = BODY_ZONE_CHEST
+	if(zone == BODY_ZONE_PRECISE_L_INHAND)
+		zone = BODY_ZONE_PRECISE_L_HAND
+	else if(zone == BODY_ZONE_PRECISE_R_INHAND)
+		zone = BODY_ZONE_PRECISE_R_HAND
+	var/obj/item/bodypart/part = target.get_bodypart(check_zone(zone))
+	if(!istype(part) || QDELETED(part))
+		to_chat(user, span_warning("There is no [parse_zone(zone)] to brush."))
+		return TRUE
+	var/exposure_zone = part.body_zone == BODY_ZONE_TAUR ? BODY_ZONE_TAUR : zone
+	var/area_name = parse_zone(zone, part)
+	var/personal_area = user == target ? "my [area_name]" : "[target]'s [area_name]"
+	if(!brushing_area_exposed(target, exposure_zone))
+		to_chat(user, span_warning("I can't brush [personal_area]; that part isn't exposed."))
+		return TRUE
+	var/public_area = user == target ? "[user.p_their()] own [area_name]" : "[target]'s [area_name]"
+	var/style = roughness ? "roughly" : "gently"
+	user.visible_message(span_info("[user] starts [style] brushing [public_area]..."), span_info("I start [style] brushing [personal_area]..."))
+	playsound(get_turf(target), "sound/foley/scrubbing[pick(1,2)].ogg", 100, TRUE)
+	if(!do_after(user, max(1, 50 - user.STASTR * 1.5), target = target))
+		return TRUE
+	if(QDELETED(src) || QDELETED(user) || QDELETED(target) || QDELETED(part))
+		return TRUE
+	if(user.incapacitated() || user.get_active_held_item() != src || (user != target && !user.Adjacent(target)) || target.get_bodypart(check_zone(zone)) != part)
+		return TRUE
+	if(!brushing_area_exposed(target, exposure_zone))
+		to_chat(user, span_warning("I can't brush [personal_area]; that part isn't exposed."))
+		return TRUE
+	user.visible_message(span_info("[user] finishes [style] brushing [public_area]."), span_info("I finish [style] brushing [personal_area]."))
+	return TRUE
+
 /obj/item/armor_brush/attack_obj(obj/O, mob/living/user)
 	if(!isitem(O))
 		return ..()

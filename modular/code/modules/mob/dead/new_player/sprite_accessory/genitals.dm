@@ -50,20 +50,19 @@
 		appearance.icon = cache_entry[2]
 		appearance.icon_state = ""
 
-/// Reorders testicle layers when a cage-type device is worn so they sit beneath the cage overlay.
-/// Upstream adjust_appearance_list handles the generic offset; this fires after and only adjusts layers
-/// when the wearer's device has a cage sprite that intentionally shows the sack through the bars.
+/// Replaces the upstream adjustment with local exposure and device handling.
+/// Apply body-specific rear ordering last so these layer changes cannot override it.
 /datum/sprite_accessory/testicles/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
 	adjust_exposed_genital_layers(appearance_list, owner)
 	if(owner?.sexcon?.bottom_exposed && (owner.underwear || !is_human_part_visible(owner, HIDEJUMPSUIT|HIDECROTCH)))
 		hide_clothed_rear_view(appearance_list)
-	if(!chastity_shows_testicles(owner))
-		return
-
-	// Keep exposed testicles under cage/flat-cage overlays while still above body base.
-	for(var/mutable_appearance/appearance as anything in appearance_list)
-		appearance.layer = min(appearance.layer, owner?.sexcon?.bottom_exposed ? -BODY_FRONT_LAYER - 0.1 : -44.6)
+	if(chastity_shows_testicles(owner))
+		// Keep exposed testicles under cage/flat-cage overlays while still above body base.
+		for(var/mutable_appearance/appearance as anything in appearance_list)
+			appearance.layer = min(appearance.layer, owner?.sexcon?.bottom_exposed ? -BODY_FRONT_LAYER - 0.1 : -44.6)
+	// This override replaces the upstream proc; apply the horse rear ordering last.
+	adjust_taur_rear_layer(appearance_list, organ, owner)
 
 /// Returns TRUE if the wearer's chastity device has a cage or flat-cage sprite that renders the sack visible.
 /// Used to gate both layer reordering in adjust_appearance_list and the is_visible cage-blocked exception.

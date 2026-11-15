@@ -85,6 +85,8 @@
 /datum/preferences/proc/check_vice_pick_conflict(vice_type, show_message = FALSE, mob/user = null)
 	if(!vice_type)
 		return FALSE
+	if(vice_conflicts_with_species(vice_type, pref_species))
+		return TRUE
 	var/list/held = list()
 	if(virtue)
 		held += virtue
@@ -347,6 +349,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	vice4 = snapshot["vice4"]
 	vice5 = snapshot["vice5"]
 	vice6 = snapshot["vice6"]
+	fix_duplicate_vices()
 	redolent_type = snapshot["redolent_type"]
 	redolent_scent = snapshot["redolent_scent"]
 	hypnotic_gaze_text = sanitize_hypnotic_gaze_text(snapshot["hypnotic_gaze_text"])
@@ -557,6 +560,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vice6 = new vice6_type()
 	else
 		vice6 = null
+	fix_duplicate_vices()
 	redolent_type = preset["redolent_type"] || "Neutral"
 	redolent_scent = preset["redolent_scent"] || ""
 	var/gaze_text = preset["hypnotic_gaze_text"]
@@ -743,7 +747,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	if(!user || !user.client)
 		return
 	
-	// Clean up duplicate vices/virtues (one-time fix for existing characters)
+	// Normalize saved vices before displaying their points.
 	fix_duplicate_vices()
 	refresh_customization_size_preview()
 	
@@ -751,11 +755,17 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	user << browse(html_content, "window=character_custom;size=750x500")
 
 /datum/preferences/proc/fix_duplicate_vices()
-	// Remove duplicate vices across slots
+	// Clear redundant racial flaws as well as duplicate vice slots.
+	var/innate_weakness = istype(pref_species) && (TRAIT_CRITICAL_WEAKNESS in pref_species.inherent_traits)
+	if(innate_weakness && istype(charflaw, /datum/charflaw/critweakness))
+		charflaw = null
 	var/list/seen_vices = list()
 	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
+			if(innate_weakness && istype(vice, /datum/charflaw/critweakness))
+				vars["vice[i]"] = (i == 1) ? new /datum/charflaw/eznoflaw() : null
+				continue
 			if(vice.type in seen_vices)
 				// Duplicate found, clear this slot
 				vars["vice[i]"] = null
@@ -2083,10 +2093,16 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					vices_available[vice_name] = vice_type
 				
 				vices_available = sort_list(vices_available)
-				var/choice = tgui_input_list(usr, "Select a vice for slot [slot]:", "Vice Selection", vices_available, option_details = get_customization_picker_details(vices_available, slot))
+				var/mob/editor = usr
+				var/editing_slot = default_slot
+				var/choice = tgui_input_list(editor, "Select a vice for slot [slot]:", "Vice Selection", vices_available, option_details = get_customization_picker_details(vices_available, slot))
 			
 				if(choice)
+					if(!editor || editor.client != parent || default_slot != editing_slot)
+						return
 					var/datum/charflaw/selected = vices_available[choice]
+					if(!ispath(selected, /datum/charflaw) || vice_conflicts_with_species(selected, pref_species))
+						return
 					// Create new vice and set in preferences
 					vars[slot_var] = new selected()
 					var/datum/charflaw/new_vice = vars[slot_var]

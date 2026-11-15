@@ -28,3 +28,9 @@
 		/mob/living/carbon/human/species/skeleton/npc/medium = 1,
 		/mob/living/carbon/human/species/skeleton/npc/hard = 2
 	)
+
+/datum/ambush_config/direvolf_pack
+	mob_types = list(
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/dire = 2,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 4,
+	)

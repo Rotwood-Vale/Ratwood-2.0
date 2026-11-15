@@ -71,6 +71,7 @@ PROCESSING_SUBSYSTEM_DEF(tracks)
 	if(length(pool))
 		T = pool[pool.len]
 		pool.len--
+		T.in_track_pool = FALSE
 		T.moveToNullspace()
 		T.forceMove(location)
 		tracks_recycled++
@@ -81,8 +82,9 @@ PROCESSING_SUBSYSTEM_DEF(tracks)
 	return T
 
 /datum/controller/subsystem/processing/tracks/proc/recycle_track(obj/effect/track/T)
-	if(!T || QDELETED(T))
+	if(!T || QDELETED(T) || T.in_track_pool)
 		return
+	remove_track(T)
 
 	var/list/pool
 
@@ -99,5 +101,6 @@ PROCESSING_SUBSYSTEM_DEF(tracks)
 		return
 
 	T.soft_reset()
+	T.in_track_pool = TRUE
 	T.moveToNullspace()
 	pool += T

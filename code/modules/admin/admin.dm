@@ -1136,7 +1136,7 @@
 	if(preparsed.len > 1)
 		amount = CLAMP(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
 
-	var/chosen = pick_closest_path(path)
+	var/chosen = pick_closest_path(path, resizable = TRUE)
 	if(!chosen)
 		return
 	var/turf/T = get_turf(usr)

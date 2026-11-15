@@ -195,6 +195,28 @@
 	else
 		L.def_intent_change(INTENT_DODGE)
 
+/datum/keybinding/living/close_eyes
+	hotkey_keys = list("Unbound")
+	name = "close_eyes"
+	full_name = "Close Eyes"
+	description = "Close your eyes to try to fall asleep. Press again to open them."
+	var/keep_awake = FALSE
+
+/datum/keybinding/living/close_eyes/down(client/user)
+	var/mob/living/living_user = user.mob
+	if(!istype(living_user))
+		return FALSE
+	for(var/atom/movable/screen/eye_intent/eye in living_user.hud_used?.static_inventory)
+		eye.toggle_eyelids(living_user, keep_awake)
+		return TRUE
+	return FALSE
+
+/datum/keybinding/living/close_eyes/stay_awake
+	name = "close_eyes_stay_awake"
+	full_name = "Close Eyes (Stay Awake)"
+	description = "Close your eyes while staying awake. Press again to open them."
+	keep_awake = TRUE
+
 /datum/keybinding/living/restd
 	hotkey_keys = list("V")
 	name = "standrest"

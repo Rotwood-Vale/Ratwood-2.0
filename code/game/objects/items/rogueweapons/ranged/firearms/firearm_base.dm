@@ -240,7 +240,9 @@ At least, it should. Fingers crossed.
 			to_chat(user, span_warning("There's already a [R.name] inside of the [name]."))
 			return
 
-/obj/item/gun/ballistic/firearm/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/firearm/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, released_spread = null)
+	if(QDELETED(user))
+		return
 	var/accident_chance = 0
 	var/firearm_skill = (user.get_skill_level(/datum/skill/combat/firearms))
 	var/turf/knockback = get_ranged_target_turf(user, turn(user.dir, 180), rand(1,2))
@@ -256,7 +258,9 @@ At least, it should. Fingers crossed.
 		accident_chance =0
 	if(HAS_TRAIT(user, TRAIT_FUSILIER))//Regardless of skill, we force it to 0 if you're trained properly.
 		accident_chance =0
-	if(user.client)
+	if(!isnull(released_spread))
+		spread = released_spread
+	else if(user.client)
 		if(user.client.chargedprog >= 100)
 			spread = 0
 			adjust_experience(user, /datum/skill/combat/firearms, user.STAINT * 4)
@@ -266,9 +270,10 @@ At least, it should. Fingers crossed.
 		spread = 0
 	gunpowder = FALSE
 	reloaded = FALSE
-	spark_act()
+	if(isnull(released_spread))
+		spark_act()
 
-	..()
+	..(target, user, message, params, zone_override, bonus_spread)
 
 	//Why must I do this? If we don't do this... I weep...
 	for(var/obj/item/ammo_casing/MB in get_ammo_list(FALSE, TRUE))

@@ -99,7 +99,7 @@
 	contains = list(/obj/item/alch/transisdust)
 
 /datum/supply_pack/rogue/drugs/swampleaf
-	name = "Swampweeed leaf (dried)"
+	name = "Dried swampweed"
 	cost = 5
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry)
 

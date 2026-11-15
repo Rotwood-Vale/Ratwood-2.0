@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	debris = list(/obj/item/natural/glass_shard = 1)
 	dropshrink = 0.8
 	var/desc_uncorked = "An open bottle. Hopefully the cork is nearby."
+	var/shatters_on_impact = TRUE
 	var/fancy		// for bottles with custom descriptors that you don't want to change when bottle manipulated
 
 /obj/item/reagent_containers/glass/bottle/update_icon(dont_fill=FALSE)
@@ -52,8 +53,9 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 		add_overlay("[icon_state]cork")
 
 /obj/item/reagent_containers/glass/bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
-	playsound(loc, 'sound/combat/hits/onglass/glassbreak (4).ogg', 100)
-	shatter(get_turf(src))
+	if(shatters_on_impact)
+		playsound(loc, 'sound/combat/hits/onglass/glassbreak (4).ogg', 100)
+		shatter(get_turf(src))
 	..()
 
 /obj/item/reagent_containers/glass/bottle/bullet_act(obj/projectile/P)
@@ -66,6 +68,8 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	shatter(get_turf(src))
 
 /obj/item/reagent_containers/glass/bottle/proc/shatter(turf/T)
+	if(!shatters_on_impact)
+		return
 	if(istransparentturf(T))
 		shatter(GET_TURF_BELOW(T))
 		return 
@@ -158,3 +162,18 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	if(icon_state == "clear_bottle1")
 		icon_state = "clear_bottle[rand(1,4)]"
 	update_icon()
+
+/obj/item/reagent_containers/glass/bottle/wood
+	name = "wooden bottle"
+	desc = "A bottle carved out of wood."
+	icon_state = "bottle_wood"
+	fancy = TRUE
+	shatters_on_impact = FALSE
+	debris = null
+
+/obj/item/reagent_containers/glass/bottle/wood/update_icon(dont_fill = FALSE)
+	if(dont_fill)
+		return
+	cut_overlays()
+	if(closed)
+		add_overlay("bottle_wood_cork")

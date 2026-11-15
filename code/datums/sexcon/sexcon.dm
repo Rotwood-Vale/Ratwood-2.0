@@ -475,8 +475,7 @@
 	log_combat(user, effective_target, "Came onto the target")
 	if(effective_target)
 		playsound(effective_target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
-	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-	add_cum_floor(get_turf(effective_target || user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+	add_cum_floor(get_turf(effective_target || user), do_big_puddle = get_production_testicle_size() > DEFAULT_TESTICLES_SIZE)
 	if(splashed_user)
 		if(cum_on_face)
 			var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
@@ -503,7 +502,7 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, source_part = SEX_PART_NULL)
+/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, source_part = SEX_PART_NULL, oral_extra_volume = null)
 	// Later bursts belong to an already completed climax.
 	if(consume_charge && try_deny_panel_climax())
 		return
@@ -540,7 +539,7 @@
 				to_chat(splashed_user, span_love("I take another load down my throat..."))
 		if(oral && splashed_user.reagents) //cum fills hunger if taking it orally
 			if(user.getorganslot(ORGAN_SLOT_PENIS) && !(source_part & SEX_PART_TAIL_MAW))
-				add_oral_intake_reagent(splashed_user, /datum/reagent/erpjuice/cum, get_semen_volume(), repeat_intake = !!splashed_type)
+				add_oral_intake_reagent(splashed_user, /datum/reagent/erpjuice/cum, get_semen_volume(), repeat_intake = !!splashed_type, extra_volume = oral_extra_volume)
 			else
 				add_oral_intake_reagent(splashed_user, /datum/reagent/erpjuice/femcum, 2)
 			apply_cum_consumed_buff(splashed_user)
@@ -554,9 +553,8 @@
 			splashed_user.redolent_apply_contact_stink(user)
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
-			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-			if((orifice & SEX_PART_TAIL_MAW) || !is_receiver_actively_knotted_to_user)
-				apply_creampie_drip(splashed_user, orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+			if(consume_charge && ((orifice & SEX_PART_TAIL_MAW) || !is_receiver_actively_knotted_to_user))
+				apply_creampie_drip(splashed_user, orifice, use_long = get_production_testicle_size() > DEFAULT_TESTICLES_SIZE, added_duration = get_leakage_duration())
 	if(consume_charge)
 		modular_try_oviposit(splashed_user, oral, orifice)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
@@ -570,26 +568,38 @@
 		after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
-/proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
-	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
-	if(existing)
+/proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE, added_duration = 60 SECONDS)
+	if(!ishuman(target) || QDELETED(target) || !isnum(added_duration) || added_duration <= 0)
+		return FALSE
+	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long)
+	if(!istype(existing))
+		existing = target.has_status_effect(/datum/status_effect/creampie_leak)
+	if(istype(existing))
+		existing.sync_leak_clock()
 		existing.orifice |= orifice
 		to_chat(target, span_love("I feel another warmth beginning to leak out of me."))
-		existing.duration = world.time + initial(existing.duration) // refresh timer
-		return
-	if(use_long)
-		target.apply_status_effect(/datum/status_effect/creampie_leak/long, orifice)
-	else
-		target.apply_status_effect(/datum/status_effect/creampie_leak, orifice)
+		existing.duration = world.time + min(max(existing.duration - world.time, 0) + added_duration, 60 MINUTES)
+		target.check_stuffed_input(TRUE)
+		return existing
+	var/leak_type = use_long ? /datum/status_effect/creampie_leak/long : /datum/status_effect/creampie_leak
+	var/datum/status_effect/creampie_leak/created = target.apply_status_effect(leak_type, orifice, min(added_duration, 60 MINUTES))
+	if(istype(created))
+		target.check_stuffed_input(TRUE)
+	return created
 
 /// Announce the incoming flavor directly so every successful intake has feedback.
-/datum/sex_controller/proc/add_oral_intake_reagent(mob/living/carbon/human/consumer, reagent_type, amount, repeat_intake = FALSE)
+/datum/sex_controller/proc/add_oral_intake_reagent(mob/living/carbon/human/consumer, reagent_type, amount, repeat_intake = FALSE, extra_volume = null)
 	if(!ishuman(consumer) || QDELETED(consumer) || !consumer.reagents || !ispath(reagent_type, /datum/reagent/erpjuice))
 		return FALSE
 	if(!isnum(amount) || amount <= 0)
 		return FALSE
 	if(reagent_type == /datum/reagent/erpjuice/cum)
-		amount += get_oral_intake_extra_volume(repeat_intake)
+		// Burst callers divide one climax's allowance before the first delivery.
+		if(isnull(extra_volume))
+			extra_volume = get_oral_intake_extra_volume(repeat_intake)
+		if(!isnum(extra_volume) || extra_volume < 0)
+			return FALSE
+		amount += extra_volume
 	if(!consumer.reagents.add_reagent(reagent_type, amount))
 		return FALSE
 	if(consumer.get_taste_sensitivity() <= 100)
@@ -597,15 +607,26 @@
 		to_chat(consumer, span_info("I can taste [initial(fluid.taste_description)]."))
 	return TRUE
 
-/// Extra volume for oral intake only; repeated intake grants half the amount.
-/datum/sex_controller/proc/get_oral_intake_extra_volume(repeat_intake = FALSE)
+/// Match the container bonus at one unit per twelve seconds; missing donor organs retain the old minimum.
+/datum/sex_controller/proc/get_leakage_duration()
+	return max(60 SECONDS, floor(get_oral_intake_extra_volume()) * (12 SECONDS))
+
+/// Calculation-only size override; visible anatomy remains untouched.
+/datum/sex_controller/proc/get_production_testicle_size()
 	if(!ishuman(user) || QDELETED(user))
-		return 0
+		return null
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	if(!istype(testes) || !isnum(testes.ball_size))
+		return null
+	return HAS_TRAIT(user, TRAIT_HIGH_PRODUCTION) ? MAX_TESTICLES_SIZE : testes.ball_size
+
+/// Size-based bonus shared with container collection; oral repeats grant half the amount.
+/datum/sex_controller/proc/get_oral_intake_extra_volume(repeat_intake = FALSE)
+	var/production_size = get_production_testicle_size()
+	if(!isnum(production_size))
 		return 0
 	var/extra_volume = 10
-	switch(clamp(testes.ball_size, MIN_TESTICLES_SIZE, MAX_TESTICLES_SIZE))
+	switch(clamp(production_size, MIN_TESTICLES_SIZE, MAX_TESTICLES_SIZE))
 		if(MIN_TESTICLES_SIZE)
 			extra_volume = 5
 		if(MAX_TESTICLES_SIZE)
@@ -633,6 +654,7 @@
 	if(!drip)
 		return FALSE
 
+	drip.sync_leak_clock()
 	if(last_oral_drip_consume_time + 3 SECONDS > world.time)
 		return FALSE
 	last_oral_drip_consume_time = world.time
@@ -685,10 +707,43 @@
 	duration = 60 SECONDS
 	var/contents_to_drip = /datum/reagent/erpjuice/cum
 	var/orifice = SEX_PART_NULL
+	var/last_leak_clock
+	var/next_clothing_check = 0
+	var/clothing_allows_dripping = FALSE
 
-/datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL)
+/datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL, added_duration = null)
 	orifice = orifice_in
+	if(isnum(added_duration))
+		duration = clamp(added_duration, 1, 60 MINUTES)
+	last_leak_clock = world.time
 	return ..(new_owner)
+
+/// Advance the absolute expiry and next-drip clocks only while actual leakage is blocked.
+/datum/status_effect/creampie_leak/proc/sync_leak_clock()
+	var/elapsed = max(world.time - last_leak_clock, 0)
+	last_leak_clock = world.time
+	if(elapsed && !can_drip())
+		duration += elapsed
+		tick_interval += elapsed
+
+/datum/status_effect/creampie_leak/process(wait)
+	if(QDELETED(owner))
+		qdel(src)
+		return
+	sync_leak_clock()
+	return ..()
+
+/datum/status_effect/creampie_leak/proc/can_drip(force_clothing_check = FALSE)
+	if(QDELETED(owner) || !isturf(get_turf(owner)))
+		return FALSE
+	var/tailmaw_leaking = (orifice & SEX_PART_TAIL_MAW) && get_manticore_tail(owner)
+	if(tailmaw_leaking || owner.sexcon?.bottom_exposed)
+		return TRUE
+	// Limit routine equipment scans; a real drip always requests a fresh check.
+	if(force_clothing_check || world.time >= next_clothing_check)
+		clothing_allows_dripping = get_location_accessible(owner, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE)
+		next_clothing_check = world.time + 1 SECONDS
+	return !!clothing_allows_dripping
 
 /datum/status_effect/creampie_leak/long
 	id = "creampie_leak_long"
@@ -735,18 +790,13 @@
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/tick()
-	var/tailmaw_leaking = (orifice & SEX_PART_TAIL_MAW) && get_manticore_tail(owner)
-	if(!tailmaw_leaking && !owner?.sexcon?.bottom_exposed && !get_location_accessible(owner, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+	if(!can_drip(TRUE))
 		return
 	var/cur_loc = get_turf(owner)
 	if(!cur_loc || !isturf(cur_loc))
 		return
-	add_cum_floor(cur_loc)
 	playsound(owner, pick('sound/misc/bleed (1).ogg', 'sound/misc/bleed (2).ogg', 'sound/misc/bleed (3).ogg'), 20, TRUE, -2, ignore_walls = FALSE)
-	var/obj/item/reagent_containers/glass/cum_chalice = locate() in cur_loc
-	if(!cum_chalice?.spillable) // leak contents underneath the first found open container
-		return
-	cum_chalice.reagents.add_reagent(contents_to_drip,1)
+	spill_floor_fluid(cur_loc, contents_to_drip, 1)
 
 /datum/sex_controller/proc/ejaculate(climax_part = SEX_PART_NULL)
 	var/from_tailmaw = get_manticore_tail(user) && ((climax_part & SEX_PART_TAIL_MAW) || (!user.getorganslot(ORGAN_SLOT_TESTICLES) && !user.getorganslot(ORGAN_SLOT_VAGINA)))
@@ -779,21 +829,17 @@
 		user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/semen_vol = get_semen_volume()
-	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+	var/do_big_puddle = get_production_testicle_size() > DEFAULT_TESTICLES_SIZE
 	modular_lay_eggs_on_climax()
 	after_ejaculation()
 
 	var/cur_loc = get_turf(user)
 	if(!cur_loc || !isturf(cur_loc))
 		return
-	var/obj/item/reagent_containers/glass/cum_chalice = locate() in cur_loc
-	if(!cum_chalice?.spillable) // leak contents underneath the first found open container
-		return
-	if(from_tailmaw || user.getorganslot(ORGAN_SLOT_VAGINA))
-		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
+	if(from_tailmaw || (!user.getorganslot(ORGAN_SLOT_PENIS) && user.getorganslot(ORGAN_SLOT_VAGINA)))
+		spill_floor_fluid(cur_loc, /datum/reagent/erpjuice/femcum, 1, do_big_puddle)
 	else
-		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
+		spill_floor_fluid(cur_loc, /datum/reagent/erpjuice/cum, semen_vol + floor(get_oral_intake_extra_volume()), do_big_puddle)
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
 	if(try_resist_orgasm())
@@ -803,17 +849,17 @@
 		user.visible_message(span_love("[user] spills into [C]!"))
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		if(user.getorganslot(ORGAN_SLOT_PENIS))
-			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
+			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume() + floor(get_oral_intake_extra_volume()))
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 	after_ejaculation()
 
 /datum/sex_controller/proc/get_semen_volume()
-	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-	if(!testes)
+	var/production_size = get_production_testicle_size()
+	if(!isnum(production_size))
 		return 0
 	var/volume
-	switch(testes.ball_size)
+	switch(production_size)
 		if(MIN_TESTICLES_SIZE)
 			volume = 2
 		if(MAX_TESTICLES_SIZE)
@@ -847,11 +893,13 @@
 			return 1
 
 /datum/sex_controller/proc/get_max_loads()
+	if(!ishuman(user) || QDELETED(user))
+		return 0
 	var/con = user.STACON
 	var/minimum_loads = 3
-	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-	if(testes)
-		switch(testes.ball_size)
+	var/production_size = get_production_testicle_size()
+	if(isnum(production_size))
+		switch(production_size)
 			if(MIN_TESTICLES_SIZE)
 				minimum_loads = 2
 			if(MAX_TESTICLES_SIZE)
@@ -899,6 +947,39 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	if(ishuman(panel_triumph_target) && !QDELETED(panel_triumph_target) && panel_triumph_target.sexcon)
 		LAZYREMOVE(panel_triumph_target.sexcon.panel_triumph_actions, src)
 	panel_triumph_target = null
+
+/// A selected target alone does not qualify; require a live partnered action.
+/datum/sex_controller/proc/has_partnered_vice_action()
+	if(!ishuman(user) || QDELETED(user))
+		return FALSE
+	if(current_action)
+		var/datum/sex_action/own_action = SEX_ACTION(current_action)
+		if(istype(own_action) && own_action.solo)
+			return FALSE
+	var/list/active_actions = panel_triumph_actions ? panel_triumph_actions.Copy() : list()
+	if(panel_triumph_target)
+		active_actions |= src
+	for(var/datum/sex_controller/action_controller in active_actions)
+		if(QDELETED(action_controller))
+			continue
+		action_controller.expire_panel_action()
+		if(!action_controller.current_action || action_controller.desire_stop)
+			continue
+		var/mob/living/carbon/human/actor = action_controller.user
+		var/mob/living/carbon/human/recipient = action_controller.panel_triumph_target
+		if(!ishuman(actor) || QDELETED(actor) || !ishuman(recipient) || QDELETED(recipient) || actor == recipient || actor.sexcon != action_controller || action_controller.target != recipient)
+			continue
+		if(user != actor && user != recipient)
+			continue
+		var/mob/living/carbon/human/partner = user == actor ? recipient : actor
+		if(!partner.client)
+			continue
+		var/datum/sex_action/action = SEX_ACTION(action_controller.current_action)
+		if(!istype(action) || action.solo)
+			continue
+		if(action_controller.can_perform_action(action_controller.current_action, actor.incapacitated()))
+			return TRUE
+	return FALSE
 
 /// A climax qualifies while participating in a valid partnered panel action, regardless of its cause.
 /datum/sex_controller/proc/reward_active_panel_climax()

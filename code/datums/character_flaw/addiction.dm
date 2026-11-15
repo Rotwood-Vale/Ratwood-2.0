@@ -30,6 +30,9 @@
 
 	if(!A)
 		return
+	if(istype(A, /datum/charflaw/addiction/lovefiend/werewolf))
+		if(sexcon?.user != src || !sexcon.has_partnered_vice_action())
+			return
 
 	if(!A.sated)
 		to_chat(src, span_blue(A.sated_text))
@@ -78,6 +81,8 @@
 		return
 	if(user.mind?.antag_datums)
 		for(var/datum/antagonist/D in user.mind?.antag_datums)
+			if(istype(D, /datum/antagonist/werewolf) && istype(user, /mob/living/carbon/human/species/werewolf) && istype(src, /datum/charflaw/addiction/lovefiend/werewolf))
+				continue
 			if(istype(D, /datum/antagonist/vampire/lord) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie) || istype(D, /datum/antagonist/lich))
 				return
 	var/mob/living/carbon/human/H = user
@@ -275,10 +280,29 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/addiction/nympho
 	effectedstats = list(STATKEY_WIL = -1, STATKEY_LCK = -1)
 
+/datum/charflaw/addiction/lovefiend/werewolf
+	name = "Verevolf Nymphomaniac"
+	desc = "My urge is too strong to be sated alone."
+	time = 30 MINUTES
+	needsate_text = "My urge is too strong to be sated alone."
+	debuff = /datum/status_effect/debuff/addiction/nympho/werewolf
+
+/datum/charflaw/addiction/lovefiend/werewolf/New()
+	..()
+	time = initial(time)
+	next_sate = world.time + 15 MINUTES
+
+/datum/status_effect/debuff/addiction/nympho/werewolf
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/addiction/nympho/werewolf
+
 /atom/movable/screen/alert/status_effect/debuff/addiction/nympho
 	name = "Nymphomania"
 	desc = "I must make love. My loins burn with unsated desire."
 	icon_state = "nymphomaniac"
+
+/atom/movable/screen/alert/status_effect/debuff/addiction/nympho/werewolf
+	name = "Verevolf Nymphomania"
+	desc = "My urge is too strong to be sated alone."
 
 /// For sex freaks. Manually raising their arousal prevents their vices from being sated. Try jerking off.
 /datum/status_effect/debuff/false_sensation

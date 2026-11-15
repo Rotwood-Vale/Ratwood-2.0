@@ -46,9 +46,10 @@
 /datum/book_entry/getting_started/equipment/inner_book_html(mob/user)
 	return {"
 		<p>Select the hand you want to use, click to pick up an item, then click a compatible equipment slot to wear it. Not every item fits every slot.</p>
-		<p>Storage differs by container. Satchels can be accessed while worn with RMB; backpacks generally need taking off first, and swapping to an empty hand.</p>
+		<p>To light up a torch or lamptern (this is essential to your survival if you can't see in the dark), first check your bag. Right-click your satchel, then click the torch or lamptern if it's inside. Some classes start with them equipped by their belt: click them to pick them up. Then, click on a source of light, like a fire sconce nearby.</p>
+		<p>Storage differs by container. Satchels can be accessed while worn with RMB; backpacks generally need taking off first, and swapping to an empty hand, before using RMB on them.</p>
 		<p>Clicking a wieldable weapon in your active hand can grip it with both hands when the other hand is free.</p>
-		<p>Use the appropriate draw/stow binding for a weapon&#39;s equipment slot. Slot bindings and the weapon&#39;s own interactions are listed in <strong>Keybinds</strong>.</p>
+		<p>Use the appropriate draw/stow binding for a weapon’s equipment slot. Slot bindings and the weapon’s own interactions are listed in <strong>Keybinds</strong>.</p>
 		<p>Bows, crossbows and slings need matching ammunition. Compatible quivers and pouches support quick loading; examine the weapon and ammunition container for their controls. A crossbow must also be cocked before loading.</p>
 	"}
 

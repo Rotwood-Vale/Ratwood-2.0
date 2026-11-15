@@ -52,7 +52,7 @@
 				if(!istype(wound, /datum/wound/slash/incision))
 					wound.heal_wound(0.4)
 
-	if(!stat && HAS_TRAIT(src, TRAIT_DEADITE))
+	if(!stat && HAS_TRAIT(src, TRAIT_DEADITE) && has_deadite_regeneration_work())
 		if(!has_status_effect(/datum/status_effect/fire_handler/fire_stacks) && \
 			!has_status_effect(/datum/status_effect/fire_handler/fire_stacks/divine) && \
 			!has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) && \
@@ -144,6 +144,10 @@
 				extinguish_mob()
 			return
 	. =..()
+
+/// Non-carbon healing overrides retain their existing behavior.
+/mob/living/proc/has_deadite_regeneration_work()
+	return TRUE
 
 /mob/living/proc/DeadLife()
 	set invisibility = 0

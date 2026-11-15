@@ -185,9 +185,7 @@
 	var/mob/living/L = usr
 	if(L.stat == DEAD)
 		return
-	if(alert("Are you done living?", "", "Yes", "No") == "No")
-		return
-	L.succumb(reaper = TRUE)
+	to_chat(L, span_notice("To give up and die, select <b>Embrace Necra</b> in the <b>IC</b> tab."))
 
 /atom/movable/screen/fullscreen/crit/death
 	icon_state = "DD"
@@ -339,6 +337,11 @@
 	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
+
+/atom/movable/screen/fullscreen/see_through_darkness/update_for_view(client_view)
+	..()
+	var/list/actualview = getviewsize(client_view)
+	transform = matrix(1.5 * actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, 1.5 * actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
 
 /atom/movable/screen/fullscreen/dreaming
 	icon = 'icons/roguetown/maniac/fullscreen_wakeup_lossy_compression.dmi'

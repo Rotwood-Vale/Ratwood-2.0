@@ -108,7 +108,11 @@
 	// This is a mild waste of cpu time. Consider optimizing by adding a new helper function to get just the space between two bounds
 	// Assuming it ever becomes a real problem
 	var/list/datum/spatial_grid_cell/inner_window = get_tracking_cells(center, inner_window_x_radius, inner_window_y_radius)
-	var/list/datum/spatial_grid_cell/outer_window = get_tracking_cells(center, outer_window_x_radius, outer_window_y_radius)
+	// AI normally uses a ratio of one: both queries would return the same cells.
+	// Reuse only within this call, so movement, multiz changes and new levels stay fresh.
+	var/list/datum/spatial_grid_cell/outer_window = inner_window
+	if(inner_window_x_radius != outer_window_x_radius || inner_window_y_radius != outer_window_y_radius)
+		outer_window = get_tracking_cells(center, outer_window_x_radius, outer_window_y_radius)
 
 	var/list/datum/spatial_grid_cell/new_cells = inner_window - member_cells
 	// The outer window may contain cells we don't actually have, so we do it like this

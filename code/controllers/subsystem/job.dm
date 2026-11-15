@@ -916,7 +916,8 @@ SUBSYSTEM_DEF(job)
 	var/atom/destination
 	var/forcetowner=FALSE
 	var/datum/preferences/p=M.client?.prefs
-	if(p)
+	// Gnolls use separate preferences. The regular character's virtues should never redirect their spawn.
+	if(p && M.mind?.assigned_role != "Gnoll")
 		if(p &&istype(p.virtue, /datum/virtue/utility/resident)||istype(p.virtuetwo, /datum/virtue/utility/resident)||istype(p.virtue, /datum/virtue/pack/pubman)||istype(p.virtuetwo, /datum/virtue/pack/pubman)||istype(p.virtue, /datum/virtue/pack/hobbyist)||istype(p.virtuetwo, /datum/virtue/pack/hobbyist)||istype(p.virtue, /datum/virtue/pack/patchjob)||istype(p.virtuetwo, /datum/virtue/pack/patchjob)||istype(p.virtue, /datum/virtue/pack/pitfighter)||istype(p.virtuetwo, /datum/virtue/pack/pitfighter)||istype(p.virtue, /datum/virtue/pack/volfsheep)||istype(p.virtuetwo, /datum/virtue/pack/volfsheep)||istype(p.virtue, /datum/virtue/pack/streetfencer)||istype(p.virtuetwo, /datum/virtue/pack/streetfencer)||istype(p.virtue, /datum/virtue/pack/collector)||istype(p.virtuetwo, /datum/virtue/pack/collector)||istype(p.virtue, /datum/virtue/pack/oneinthedrawstring)||istype(p.virtuetwo, /datum/virtue/pack/oneinthedrawstring)||istype(p.virtue, /datum/virtue/pack/knightstale)||istype(p.virtuetwo, /datum/virtue/pack/knightstale)||istype(p.virtue, /datum/virtue/pack/logger)||istype(p.virtuetwo, /datum/virtue/pack/logger)||istype(p.virtue, /datum/virtue/pack/butcher)||istype(p.virtuetwo, /datum/virtue/pack/butcher)||istype(p.virtue, /datum/virtue/pack/locksmith)||istype(p.virtuetwo, /datum/virtue/pack/locksmith)||istype(p.virtue, /datum/virtue/pack/citizen_militia)||istype(p.virtuetwo, /datum/virtue/pack/citizen_militia)||istype(p.virtue, /datum/virtue/pack/coal_runner)||istype(p.virtuetwo, /datum/virtue/pack/coal_runner))
 			forcetowner = TRUE
 	if(ishuman(M))

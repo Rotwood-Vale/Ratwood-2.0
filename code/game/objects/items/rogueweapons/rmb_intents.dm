@@ -15,7 +15,13 @@
 		addtimer(CALLBACK(src, PROC_REF(purge_bait)), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		addtimer(CALLBACK(src, PROC_REF(expire_peel)), 60 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
-		filtered_balloon_alert(TRAIT_COMBAT_AWARE, (cmode ? ("<i><font color = '#831414'>Tense</font></i>") : ("<i><font color = '#c7c6c6'>Relaxed</font></i>")), y_offset = 32)
+		var/text = cmode ? "<i><font color = '#831414'>Tense</font></i>" : "<i><font color = '#c7c6c6'>Relaxed</font></i>"
+		for(var/mob/living/viewer in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src, RECURSIVE_CONTENTS_CLIENT_MOBS))
+			if(viewer != src && !viewer.cmode)
+				continue
+			if(is_blind(viewer))
+				continue
+			balloon_alert(viewer, text, y_offset = 32)
 
 /datum/rmb_intent/proc/special_attack(mob/living/user, atom/target)
 	return
@@ -257,5 +263,5 @@
 
 /datum/rmb_intent/weak
 	name = "weak"
-	desc = "Your attacks have -1 strength and will never critically-hit. Useful for longer punishments, play-fighting, and bloodletting."
+	desc = "Your weapon attacks deal 20% damage and will never critically-hit. Useful for longer punishments, play-fighting, and bloodletting."
 	icon_state = "rmbweak"

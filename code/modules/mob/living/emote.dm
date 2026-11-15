@@ -1585,6 +1585,11 @@
 
 /mob/living/carbon/human/proc/update_tongue_noise_verbs()
 	var/static/list/all_tongue_noise_verbs = list(
+		/mob/living/carbon/human/verb/emote_gnash,
+		/mob/living/carbon/human/verb/emote_lizard_bellow,
+		/mob/living/carbon/human/verb/emote_lizard_hiss,
+		/mob/living/carbon/human/verb/emote_lizard_squeal,
+		/mob/living/carbon/human/verb/emote_lizard_thump,
 		/mob/living/carbon/human/verb/emote_construct_tick,
 		/mob/living/carbon/human/verb/emote_construct_creak,
 		/mob/living/carbon/human/verb/emote_construct_spark,
@@ -1696,7 +1701,13 @@
 
 	var/obj/item/organ/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/wings/wings = getorganslot(ORGAN_SLOT_WINGS)
-	var/list/allowed_verbs = list()
+	var/list/allowed_verbs = list(
+		/mob/living/carbon/human/verb/emote_gnash,
+		/mob/living/carbon/human/verb/emote_lizard_bellow,
+		/mob/living/carbon/human/verb/emote_lizard_hiss,
+		/mob/living/carbon/human/verb/emote_lizard_squeal,
+		/mob/living/carbon/human/verb/emote_lizard_thump,
+	)
 
 	if(!client?.prefs?.hide_unavailable_emotes)
 		verbs -= all_tongue_noise_verbs
@@ -1968,6 +1979,78 @@
 	else
 		show_tongue_noise_warning()
 		return
+
+/datum/emote/living/gnash
+	key = "gnash"
+	key_third_person = "gnashes"
+	message = "gnashes."
+	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
+	is_animal = TRUE
+	sound = 'sound/vo/gnash.ogg'
+
+/mob/living/carbon/human/verb/emote_gnash()
+	set name = "Gnash"
+	set category = "Noises"
+	emote("gnash", intentional = TRUE, animal = TRUE)
+
+/datum/emote/living/lizard_bellow
+	key = "bellow"
+	key_third_person = "bellows"
+	message = "bellows!"
+	emote_type = EMOTE_AUDIBLE
+	message_muffled = "makes a muffled bellow!"
+	is_animal = TRUE
+	show_runechat = FALSE
+
+/mob/living/carbon/human/verb/emote_lizard_bellow()
+	set name = "LizBellow"
+	set category = "Noises"
+
+	emote("bellow", intentional = TRUE, animal = TRUE)
+
+/datum/emote/living/lizard_hiss
+	key = "lizhiss"
+	message = "hisses!"
+	emote_type = EMOTE_AUDIBLE
+	message_muffled = "makes a muffled hiss!"
+	is_animal = TRUE
+	show_runechat = FALSE
+
+/mob/living/carbon/human/verb/emote_lizard_hiss()
+	set name = "LizHiss"
+	set category = "Noises"
+
+	emote("lizhiss", intentional = TRUE, animal = TRUE)
+
+/datum/emote/living/lizard_squeal
+	key = "squeal"
+	key_third_person = "squeals"
+	message = "squeals!"
+	emote_type = EMOTE_AUDIBLE
+	message_muffled = "makes a muffled squeal!"
+	is_animal = TRUE
+	show_runechat = FALSE
+
+/mob/living/carbon/human/verb/emote_lizard_squeal()
+	set name = "LizSqueal"
+	set category = "Noises"
+
+	emote("squeal", intentional = TRUE, animal = TRUE)
+
+/datum/emote/living/lizard_thump
+	key = "thump"
+	key_third_person = "thumps"
+	message = "thumps!"
+	emote_type = EMOTE_VISIBLE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_lizard_thump()
+	set name = "LizThump"
+	set category = "Noises"
+
+	emote("thump", intentional = TRUE, animal = TRUE)
 
 /datum/emote/living/roar
 	key = "roar"

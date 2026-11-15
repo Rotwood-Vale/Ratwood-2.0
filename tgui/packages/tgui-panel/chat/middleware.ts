@@ -31,7 +31,7 @@ import {
   toggleAcceptedType,
   updateMessageCount,
 } from './actions';
-import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
+import { MAX_CHAT_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
 import { selectChat, selectCurrentChatPage } from './selectors';
@@ -43,7 +43,7 @@ const saveChatToStorage = async (store: Store) => {
   const state = selectChat(store.getState());
   const fromIndex = Math.max(
     0,
-    chatRenderer.messages.length - MAX_PERSISTED_MESSAGES,
+    chatRenderer.messages.length - MAX_CHAT_MESSAGES,
   );
   const messages = chatRenderer.messages
     .slice(fromIndex)

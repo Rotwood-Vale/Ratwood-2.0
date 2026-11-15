@@ -47,11 +47,13 @@
 	var/list/mobsinview = list()
 	var/list/mobspickable = list("1-Tile Range", "Same Tile")
 	for(var/mob/living/L in ghostless)
-		if((L.stat == CONSCIOUS || (L.stat == UNCONSCIOUS && L.IsSleeping())) && L != src)
+		if(L.stat < DEAD && L != src)
 			mobsinview += L
 			if(!L.rogue_sneaking && L.name != "Unknown") // do not let hidden/unknown targets be added to list
 				mobspickable += L
 	var/choice = input(src, "Pick a target?", "Subtle Emote") in mobspickable
+	if(QDELETED(src) || isnull(choice))
+		return
 	to_chat(src, "<i>[message]</i>")
 
 	var/user_loc
@@ -65,7 +67,7 @@
 			to_chat(src, span_boldwarning("The subtle emote target no longer exists, try again."))
 			return
 		user_loc = get_turf(src)
-		if(get_dist(get_turf(target), user_loc) <= distance)
+		if(target.stat < DEAD && user_loc && target.z == z && get_dist(get_turf(target), user_loc) <= distance)
 			to_chat(target, "<i>[message]</i>")
 			target.playsound_local(target, 'sound/misc/subtle_emote.ogg', 100)
 		else
@@ -76,7 +78,7 @@
 		return
 	user_loc = get_turf(src)
 	for(var/mob/living/L in mobsinview)
-		if(!isliving(L) || QDELETED(L)) // mob has since been deleted/destroyed, skip
+		if(!isliving(L) || QDELETED(L) || L.stat == DEAD || !user_loc || L.z != z) // recheck after the target picker
 			continue
 		if(get_dist(get_turf(L), user_loc) <= distance)
 			to_chat(L, "<i>[message]</i>")

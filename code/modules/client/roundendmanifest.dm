@@ -38,7 +38,8 @@
 	var/ad_text = replacetext(html_encode(roleplay_ad), "\n", "<br>")
 	LAZYSET(GLOB.roleplay_ads, mobid, "<b><a href='?src=[REF(src)];task=view_headshot'>[html_encode(real_name)]</a></b> - [ad_text]<br>")
 	if(notify_viewers)
+		var/mob/living/carbon/human/actor = get_shapeshift_actor()
 		for(var/client/advertisee in GLOB.clients)
-			if(advertisee == client || !(advertisee.prefs.toggles & ROLEPLAY_ADS))
+			if(advertisee == actor?.client || !(advertisee.prefs.toggles & ROLEPLAY_ADS))
 				continue
 			to_chat(advertisee, "<span class='notice' style='font-size: 90%;'>[html_encode(real_name)] has set a roleplay ad.</span>")

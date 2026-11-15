@@ -50,6 +50,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Unlucky"=/datum/charflaw/unlucky,
 	))
 
+/// Racial drawbacks cannot also fund the equivalent selectable vice.
+/proc/vice_conflicts_with_species(vice_type, datum/species/species)
+	return ispath(vice_type, /datum/charflaw/critweakness) && istype(species) && (TRAIT_CRITICAL_WEAKNESS in species.inherent_traits)
+
 /datum/charflaw
 	var/name
 	var/desc

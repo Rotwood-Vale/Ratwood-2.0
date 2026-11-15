@@ -23,6 +23,10 @@
 		if(!(body_marking.name in zone_list_cache))
 			continue
 		compiled_list[body_marking.name] = body_marking
+	if(zone == BODY_ZONE_L_LEG && (/obj/item/bodypart/taur/equine in species.get_taur_list()))
+		for(var/horse_marking_type in list(/datum/body_marking/horse_socks, /datum/body_marking/horse_hooves))
+			var/datum/body_marking/horse_marking = GLOB.body_markings_by_type[horse_marking_type]
+			compiled_list[horse_marking.name] = horse_marking
 	return compiled_list
 
 /proc/marking_sets_for_species(datum/species/species)
@@ -35,7 +39,7 @@
 
 /proc/apply_markings_to_body_parts(list/list/markings, mob/living/carbon/human/human)
 	for(var/obj/item/bodypart/bp as anything in human.bodyparts)
-		var/zone = bp.body_zone
+		var/zone = istype(bp, /obj/item/bodypart/taur/equine) ? BODY_ZONE_L_LEG : bp.body_zone
 		var/aux_zone = bp.aux_zone
 		if(markings[zone])
 			bp.markings = markings[zone].Copy()

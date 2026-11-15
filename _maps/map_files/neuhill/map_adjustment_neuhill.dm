@@ -26,11 +26,6 @@
 		/datum/job/roguetown/tribalrabble,
 		/datum/job/roguetown/tribalvillager,
 		)
-	min_pq_adjust = list(
-		/datum/job/roguetown/adventurer = 1,
-		/datum/job/roguetown/pilgrim = 1,
-		/datum/job/roguetown/druid = 1,
-	)
 	slot_adjust = list(
 		/datum/job/roguetown/manorguard = 4,//split with watchmen
 		/datum/job/roguetown/warden = 4,//split with vanguard

@@ -1,10 +1,24 @@
 /client/var/commandbar_thinking = FALSE
 /client/var/commandbar_typing = FALSE
+/client/var/commandbar_looc_typing = FALSE
 
 /client/proc/initialize_commandbar_spy()
 	src << output('html/typing_indicator.html', "commandbar_spy")
 
 /client/proc/handle_commandbar_typing(href_list)
+	var/is_looc = (LOWER_TEXT(href_list["verb"]) in list("looc", "loocwp", "subtlelooc"))
+	if(is_looc)
+		if(commandbar_thinking)
+			commandbar_thinking = FALSE
+			stop_thinking()
+		commandbar_typing = FALSE
+		commandbar_looc_typing = TRUE
+		mob?.display_looc_typing_indicator()
+		return
+	if(commandbar_looc_typing)
+		commandbar_looc_typing = FALSE
+		mob?.clear_looc_typing_indicator("changed input")
+
 	// Check if user has any text typed
 	if(length(href_list["verb"]) < 1)
 		if(commandbar_typing)

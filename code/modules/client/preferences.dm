@@ -144,11 +144,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/descriptor_color = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
-	/// If we are lactating, can others milk us via reagent containers (not for sex actions, but the stuff in milking.dm)
+	/// Allow container milking by others and lactation from the two hand-panel breast-rubbing actions.
 	var/milkable = FALSE
 	/// If manticore tail flavor messages are on by default
 	var/manticore_tail_messages = FALSE
 	var/hypnosis_content = FALSE
+	var/cumflation_content = FALSE
 	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
@@ -540,6 +541,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 /datum/preferences/proc/set_new_race(datum/species/new_race, user)
 	pref_species = new_race
+	fix_duplicate_vices()
 	real_name = pref_species.random_name(gender,1)
 	ResetJobs()
 	if(user)
@@ -590,6 +592,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		"hear_barks",
 		"hide_unavailable_emotes",
 		"hypnosis_content",
+		"cumflation_content",
 		"masked_examine",
 		"mute_animal_emotes",
 		"no_autopunctuate",
@@ -627,6 +630,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 /// Feature definitions are shared and immutable; per-account state belongs to preferences.
 /datum/character_sheet_feature
 	var/id
+	/// The saved acknowledgement uses this existing entry's revision, not a new flag.
+	var/revision = 1
 	var/label
 	var/explanation
 	var/location
@@ -645,8 +650,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 /datum/character_sheet_feature/hypnosis_consent
 	id = "hypnosis_consent"
+	revision = 2
 	label = "Content Toggles"
-	explanation = "New consent toggles are available, including Enable Hypnosis Content, which is off by default."
+	explanation = "New consent toggles are available. Open Content Toggles to review your content preferences."
 	location = "in the character sheet's upper-right corner, below Keybinds"
 
 /datum/character_sheet_feature/roleplay_ad
@@ -750,10 +756,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 /// First-time setup only: snapshot today's registered IDs, not future additions.
 /// The constructor's existing save_preferences() call persists this in one write.
 /datum/preferences/proc/acknowledge_current_character_sheet_features()
-	for(var/feature_id in get_character_sheet_features())
+	var/list/features = get_character_sheet_features()
+	for(var/feature_id in features)
 		if(feature_id == "content_toggles" && content_toggles_intro == "pending")
 			continue
-		seen_character_sheet_features[feature_id] = TRUE
+		var/datum/character_sheet_feature/feature = features[feature_id]
+		seen_character_sheet_features[feature_id] = feature.revision
 
 /datum/preferences/proc/show_content_toggles_intro()
 	if(content_toggles_intro != "pending")
@@ -767,7 +775,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		return FALSE
 	var/list/features = get_character_sheet_features()
 	var/datum/character_sheet_feature/feature = features[feature_id]
-	if(!istype(feature) || seen_character_sheet_features[feature_id])
+	if(!istype(feature) || seen_character_sheet_features[feature_id] >= feature.revision)
 		return FALSE
 	if(!feature.is_eligible(src))
 		mark_character_sheet_feature_seen(feature_id)
@@ -815,13 +823,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	seen_character_sheet_features = list()
 	if(islist(saved_state))
 		for(var/feature_id in saved_state)
-			if(istext(feature_id) && saved_state[feature_id] == TRUE)
-				seen_character_sheet_features[feature_id] = TRUE
+			var/seen_revision = saved_state[feature_id]
+			// Legacy TRUE is revision 1. Keep higher revisions and retired IDs intact.
+			if(istext(feature_id) && isnum(seen_revision) && seen_revision >= 1 && seen_revision == round(seen_revision))
+				seen_character_sheet_features[feature_id] = seen_revision
 
 /datum/preferences/proc/dismiss_character_sheet_feature(mob/user, feature)
 	if(!parent || user?.client != parent)
 		return FALSE
-	if(feature == "content_toggles")
+	if(feature == "content_toggles" && character_sheet_feature_is_new("hypnosis_consent"))
 		feature = "hypnosis_consent"
 	if(!mark_character_sheet_feature_seen(feature))
 		return FALSE
@@ -832,11 +842,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	if(!istext(feature))
 		return FALSE
 	var/list/features = get_character_sheet_features()
-	if(!istype(features[feature], /datum/character_sheet_feature) || seen_character_sheet_features[feature])
+	var/datum/character_sheet_feature/definition = features[feature]
+	if(!istype(definition) || seen_character_sheet_features[feature] >= definition.revision)
 		return FALSE
-	seen_character_sheet_features[feature] = TRUE
+	seen_character_sheet_features[feature] = definition.revision
 	if(feature == "hypnosis_consent")
-		seen_character_sheet_features["content_toggles"] = TRUE
+		var/datum/character_sheet_feature/content_definition = features["content_toggles"]
+		seen_character_sheet_features["content_toggles"] = max(seen_character_sheet_features["content_toggles"], content_definition.revision)
 	save_preferences()
 	return TRUE
 
@@ -867,9 +879,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		ShowChoices(user)
 
 /datum/preferences/proc/ShowChoices(mob/user, tabchoice)
-	if(!user || !user.client)
+	var/client/viewer = user?.client
+	if(!viewer)
 		return
-	var/sheet_was_visible = winget(user, "preferencess_window", "is-visible") == "true"
+	var/sheet_was_visible = winget(viewer, "preferencess_window", "is-visible") == "true"
+	if(!viewer || user?.client != viewer)
+		return
 	if(slot_randomized)
 		load_character(default_slot) // Reloads the character slot. Prevents random features from overwriting the slot if saved.
 		slot_randomized = FALSE
@@ -1052,9 +1067,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				var/name = ispath(T) ? T::name : "None"
 				var/taur_feature_id = character_sheet_feature_is_new("digitigrade_big_legs") ? "digitigrade_big_legs" : "revenant_customization"
 				dat += "<b>Taur Body Type:</b> [character_sheet_feature_link(taur_feature_id, "?_src_=prefs;preference=taur_type;task=input", "Choose a lower-body appearance", name)]<BR>"
-				dat += "<b>Taur Color:</b> <span style='border: 1px solid #161616; background-color: #[taur_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_color;task=input'>Change</a><BR>"
-				dat += "<b>Taur Markings:</b> <span style='border: 1px solid #161616; background-color: #[taur_markings];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_markings;task=input'>Change</a><BR>"
-				dat += "<b>Taur Tertiary:</b> <span style='border: 1px solid #161616; background-color: #[taur_tertiary];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_tertiary;task=input'>Change</a><BR>"
+				dat += "<b>[taur_type == /obj/item/bodypart/taur/equine ? "Horse Coat" : "Taur Color"]:</b> <span style='border: 1px solid #161616; background-color: #[taur_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_color;task=input'>Change</a><BR>"
+				dat += "<b>[taur_type == /obj/item/bodypart/taur/equine ? "Horse Underbelly" : "Taur Markings"]:</b> <span style='border: 1px solid #161616; background-color: #[taur_markings];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_markings;task=input'>Change</a><BR>"
+				dat += "<b>[taur_type == /obj/item/bodypart/taur/equine ? "Horse Tail" : "Taur Tertiary"]:</b> <span style='border: 1px solid #161616; background-color: #[taur_tertiary];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_tertiary;task=input'>Change</a><BR>"
 
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 			dat += "<b>Origin:</b> <a href='?_src_=prefs;preference=origin;task=input'>[origin ? origin.name : "None"]</a><BR>"
@@ -2023,8 +2038,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	roleplay_ad = length(trim(new_ad)) ? new_ad : null
 	save_character()
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!H.roleplay_ad_is_gnoll && H.roleplay_ad_slot == ad_slot && H.roleplay_ad_owner == parent?.ckey)
+		var/mob/living/carbon/human/actor = user
+		var/mob/living/carbon/human/H = actor.get_shapeshift_owner()
+		if(H && !H.roleplay_ad_is_gnoll && H.roleplay_ad_slot == ad_slot && H.roleplay_ad_owner == parent?.ckey)
 			H.roleplay_ad = roleplay_ad
 			H.publish_roleplay_ad()
 	to_chat(user, span_notice(roleplay_ad ? "Roleplay ad saved." : "Saved roleplay ad cleared."))
@@ -3100,9 +3116,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("charflaw")
 					var/list/coom = GLOB.character_flaws.Copy()
+					for(var/choice in coom.Copy())
+						if(vice_conflicts_with_species(coom[choice], pref_species))
+							coom -= choice
 					var/result = tgui_input_list(user, "What burden will you bear?", "FLAWS",coom)
 					if(result)
 						result = coom[result]
+						if(vice_conflicts_with_species(result, pref_species))
+							return
 						var/datum/charflaw/C = new result()
 						charflaw = C
 						if(charflaw.desc)
@@ -3203,8 +3224,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("charflaw")
 					var/selectedflaw
-					selectedflaw = tgui_input_list(user, "Choose your character's flaw:", "FLAWS", GLOB.character_flaws)
+					var/list/available_flaws = GLOB.character_flaws.Copy()
+					for(var/choice in available_flaws.Copy())
+						if(vice_conflicts_with_species(available_flaws[choice], pref_species))
+							available_flaws -= choice
+					selectedflaw = tgui_input_list(user, "Choose your character's flaw:", "FLAWS", available_flaws)
 					if(selectedflaw)
+						if(vice_conflicts_with_species(GLOB.character_flaws[selectedflaw], pref_species))
+							return
 						charflaw = GLOB.character_flaws[selectedflaw]
 						charflaw = new charflaw()
 						if(charflaw.desc)
@@ -3780,6 +3807,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		slot_randomized = TRUE
 		random_character(gender, antagonist)
 
+	fix_duplicate_vices()
+
 	// Bandaid to undo no arm flaw prosthesis
 	if(charflaw)
 		var/obj/item/bodypart/O = character.get_bodypart(BODY_ZONE_R_ARM)
@@ -3879,9 +3908,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	// Apply multiple vices system
 	character.vices = list()
+	var/datum/species/vice_species = character.dna ? character.dna.species : null
 	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
-		if(vice)
+		if(vice && !vice_conflicts_with_species(vice.type, vice_species))
 			var/datum/charflaw/new_vice = new vice.type()
 			character.vices += new_vice
 			new_vice.on_mob_creation(character)
@@ -3890,7 +3920,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				character.charflaw = new_vice
 
 	// Legacy single vice support (if new system not used)
-	if(!length(character.vices) && charflaw)
+	if(!length(character.vices) && charflaw && !vice_conflicts_with_species(charflaw.type, vice_species))
 		character.charflaw = new charflaw.type()
 		character.charflaw.on_mob_creation(character)
 		character.vices += character.charflaw
@@ -3958,6 +3988,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	if(taur_type)
 		character.Taurize(taur_type, "#[taur_color]", "#[taur_markings]", "#[taur_tertiary]")
+		var/obj/item/bodypart/taur/horse_body = character.get_taur_tail()
+		if(istype(horse_body, /obj/item/bodypart/taur/equine))
+			horse_body.markings = body_markings[BODY_ZONE_L_LEG] ? body_markings[BODY_ZONE_L_LEG].Copy() : null
 	else if(character_setup)
 		// This should only ever ~do~ anything for previews
 		character.ensure_not_taur()

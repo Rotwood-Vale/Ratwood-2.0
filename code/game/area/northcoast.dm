@@ -14,6 +14,7 @@
 	ambush_times = list("night","dusk")
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 30,
+				new /datum/ambush_config/direvolf_pack = 6,
 				/mob/living/simple_animal/hostile/retaliate/rogue/mole = 10,
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 20,
 				/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 15,

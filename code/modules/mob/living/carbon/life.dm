@@ -2,6 +2,17 @@
 
 // Kelvin per second (10 K per minute)
 #define TEMP_RECOVERY_RATE (10.0 / 60.0)
+
+/// Do not allocate wound/bodypart lists or recalculate health for fully healed deadites.
+/// Wounds can still need healing even when brute and burn damage are both zero.
+/mob/living/carbon/has_deadite_regeneration_work()
+	if(length(simple_wounds))
+		return TRUE
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(bodypart.brute_dam || bodypart.burn_dam || length(bodypart.wounds))
+			return TRUE
+	return FALSE
+
 /mob/living/carbon/Life(seconds, times_fired)
 	set invisibility = 0
 

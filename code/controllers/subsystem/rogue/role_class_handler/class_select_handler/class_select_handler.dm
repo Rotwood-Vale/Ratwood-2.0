@@ -65,6 +65,8 @@
 
 /// The normal route for first use of this list. Returns TRUE if there is more than one advclass (need user input), FALSE - if just one (no need for select menu)
 /datum/class_select_handler/proc/initial_setup()
+	if(linked_client && class_cat_alloc_attempts?[CTAG_WRETCH])
+		to_chat(linked_client, span_danger(ANTAGONIST_CONFLICT_GUIDANCE))
 	if(register_id)
 		SSrole_class_handler.add_class_register_listener(register_id, linked_client.mob)
 	if(!assemble_the_CLASSES())

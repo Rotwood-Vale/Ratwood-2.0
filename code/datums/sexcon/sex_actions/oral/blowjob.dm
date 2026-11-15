@@ -45,12 +45,13 @@
 	if(target.sexcon.check_active_ejaculation())
 		if(tiny_user_licking)
 			target.visible_message(span_lovebold("[target] cums onto [user]'s hair and face!"))
-			target.sexcon.cum_onto(user)
 		else
 			target.visible_message(span_love("[target] cums into [user]'s mouth!"))
-			for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
-				target.sexcon.cum_into(oral = TRUE, splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, consume_charge = i == 1 ? TRUE : FALSE)
-				sleep(10)
+		var/burst_count = target.sexcon.get_load_bursts()
+		var/extra_per_burst = target.sexcon.get_oral_intake_extra_volume(!!user.has_status_effect(/datum/status_effect/facial)) / burst_count
+		for(var/i = 1; i <= burst_count; i++)
+			target.sexcon.cum_into(oral = TRUE, splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, consume_charge = i == 1 ? TRUE : FALSE, oral_extra_volume = extra_per_burst)
+			sleep(10)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 

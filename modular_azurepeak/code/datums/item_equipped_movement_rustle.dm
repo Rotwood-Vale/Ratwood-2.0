@@ -39,6 +39,9 @@ with light edits to work with roguecode */
 		volume = volume_override
 	if(isnum(move_delay_override))
 		move_delay = move_delay_override
+	// Metal armor clanks once per twelve steps instead of four; leave bells and wood unchanged.
+	if(rustle_sounds == SFX_CHAIN_STEP || rustle_sounds == SFX_PLATE_STEP || rustle_sounds == SFX_PLATE_COAT_STEP)
+		move_delay *= 3
 	if(isnum(extrarange))
 		sound_extra_range = extrarange
 	if(isnum(falloff_exponent))

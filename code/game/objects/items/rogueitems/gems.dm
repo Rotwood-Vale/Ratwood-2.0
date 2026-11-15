@@ -208,9 +208,19 @@
 /obj/item/roguegem/blood_diamond
 	name = "glut"
 	icon_state = "blood"
+	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/glut.dmi'
 	sellprice = 188
 	desc = "Something about this gem just doesn't sit right with you. Holding it makes the blood leave your fingertips."
 	smeltresult = /obj/item/ingot/component/glutcrystal
+
+/obj/item/roguegem/blood_diamond/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	if(isinhands)
+		return ..()
+	var/trophy_state = "blood"
+	if(istype(loc, /obj/item/clothing/head))
+		trophy_state = default_layer == MASK_LAYER ? "blood_mask" : "blood_head"
+	return ..(default_layer, default_icon_file, isinhands, femaleuniform, trophy_state, FALSE, null, sleeveindex, boobed_overlay, clip_mask)
 
 /obj/item/roguegem/blood_diamond/examine(mob/user)
 	. = ..()

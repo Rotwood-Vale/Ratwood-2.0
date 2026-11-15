@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 				dat += "<b>Taur Barding Tassets</b><BR>"
 
 				var/icon/tasset1_preview = new /icon()
-				tasset1_preview.Insert(new /icon('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "plate-tasset1_[taur.taur_clothing_category]"), "", SOUTH, 0)
+				tasset1_preview.Insert(new /icon(taur.taur_clothing_icon, taur.get_tasset_state(1)), "", SOUTH, 0)
 				if(taur.tasset1_color)
 					tasset1_preview.Blend(taur.tasset1_color, ICON_MULTIPLY)
 				dat += "<div style='text-align:center;'>"
@@ -278,7 +278,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 				dat += "<A href='?src=\ref[src];clear_tasset1=1'>Remove color</A><BR><BR>"
 
 				var/icon/tasset2_preview = new /icon()
-				tasset2_preview.Insert(new /icon('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "plate-tasset2_[taur.taur_clothing_category]"), "", SOUTH, 0)
+				tasset2_preview.Insert(new /icon(taur.taur_clothing_icon, taur.get_tasset_state(2)), "", SOUTH, 0)
 				if(taur.tasset2_color)
 					tasset2_preview.Blend(taur.tasset2_color, ICON_MULTIPLY)
 				dat += "<div style='text-align:center;'>"
@@ -777,4 +777,3 @@ GLOBAL_LIST_INIT(pridelist, list(
 		return
 	dye = null
 	update_icon()
-

@@ -138,6 +138,8 @@
 	for(var/key in specific_markings)
 		var/color = specific_markings[key]
 		var/datum/body_marking/BM = GLOB.body_markings[key]
+		if(BM.taur_body_type)
+			continue
 
 		var/render_limb_string = specific_render_zone
 		if(BM.gendered && (!BM.gender_only_chest || specific_render_zone == BODY_ZONE_CHEST))

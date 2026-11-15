@@ -231,7 +231,7 @@
 
 /obj/structure/fluff/walldeco/customflag/Initialize(mapload)
 	. = ..()
-	if(SSmapping.current_map.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name in list("Rockhill", "Smollhill"))
 		name = "Rockhill flag"
 	else if(SSmapping.current_map.map_name == "Desert Town")
 		name = "Al-Ashur flag"

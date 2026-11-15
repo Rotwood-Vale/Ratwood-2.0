@@ -147,6 +147,9 @@
 
 // Classifications for items already present in Bad Drakian.
 
+/obj/item/rogue/instrument/ztratocaster/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, "A profane instrument of Zizo's champions.")
+
 /obj/item/abyssal_marker/get_examine_highlight_status()
 	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, "It shatters the barrier between reality and NIGHTMARE")
 

@@ -7,6 +7,7 @@
 import { createUuid } from 'tgui-core/uuid';
 
 import { MESSAGE_TYPE_INTERNAL, MESSAGE_TYPES } from './constants';
+import { getSavedMessageHtml } from './savedHtml';
 
 export const canPageAcceptType = (page, type) =>
   type.startsWith(MESSAGE_TYPE_INTERNAL) || page.acceptedTypes[type];
@@ -50,7 +51,7 @@ export const createMessage = (payload) => ({
 export const serializeMessage = (message) => ({
   type: message.type,
   text: message.text,
-  html: message.html,
+  html: getSavedMessageHtml(message),
   times: message.times,
   createdAt: message.createdAt,
 });

@@ -287,6 +287,9 @@
 #define TRAIT_OWNED_SLAVE "Owned Slave"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
 #define TRAIT_BIGGUY "Big Guy"
+#define TRAIT_LARGE_FRAME "Large Frame"
+#define TRAIT_FAT_KNOT "Fat Knot"
+#define TRAIT_HIGH_PRODUCTION "High Production"
 #define TRAIT_RESIDENT "Resident"
 #define TRAIT_COUNTERCOUNTERSPELL "Counter Counterspell"
 #define TRAIT_UNSEEMLY "Ugly"
@@ -685,7 +688,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SCALEARMOR = span_info("My scales can protect me from harm every so often."),
 	TRAIT_STANDARD_BEARER = span_info("The banner is my lifeline. Just as I am to it. The retinue know to rally around me, so long as I keep it safe."),
 	TRAIT_WHITE_STAG = span_info("The power of the white stag lives on inside of me!"),
-	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
+	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this."),
 	TRAIT_OVERLY_FERTILE = span_info("My exceptional fertility allows me to support pregnancy even without the usual reproductive anatomy, and increases my chance of pregnancy."),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),

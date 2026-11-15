@@ -108,6 +108,11 @@
 	if(!client || !can_hear())
 		return FALSE
 
+	// Enforce the opt-out before creating/sending sound or registering a listener.
+	if(istype(repeat, /datum/looping_sound/instrument) || istype(repeat, /datum/looping_sound/musloop) || istype(repeat, /datum/looping_sound/dmusloop))
+		if(!client.prefs || !(client.prefs.toggles & SOUND_INSTRUMENTS))
+			return FALSE
+
 	if(!S)
 		S = sound(get_sfx(soundin))
 

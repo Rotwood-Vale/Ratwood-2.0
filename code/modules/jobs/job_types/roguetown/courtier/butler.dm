@@ -13,7 +13,7 @@
 	advclass_cat_rolls = list(CTAG_SENESCHAL = 20)
 	display_order = JDO_BUTLER
 	give_bank_account = 30
-	min_pq = 3
+	min_pq = 5
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_YEOMAN

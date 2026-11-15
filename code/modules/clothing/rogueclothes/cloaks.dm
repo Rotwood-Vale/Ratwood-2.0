@@ -11,6 +11,8 @@
 	experimental_inhand = FALSE
 	color = null
 	allowed_sex = list(MALE, FEMALE)
+	var/wear_over_taur = FALSE
+	var/overarmor = TRUE
 
 	grid_width = 64
 	grid_height = 64
@@ -35,11 +37,60 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 	var/picked
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+
+/obj/item/clothing/cloak/proc/cycle_taur_wear_position(mob/user)
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/human = user
+	if(human.cloak != src)
+		return FALSE
+	var/obj/item/bodypart/taur/taur = human.get_taur_tail()
+	if(!taur?.taur_clothing_category)
+		return FALSE
+	if(wear_over_taur)
+		wear_over_taur = FALSE
+		alternate_worn_layer = initial(alternate_worn_layer)
+		to_chat(human, span_info("I wear [src] normally."))
+	else if(alternate_worn_layer == UNDER_ARMOR_LAYER)
+		wear_over_taur = TRUE
+		alternate_worn_layer = initial(alternate_worn_layer)
+		to_chat(human, span_info("I spread [src] over my taur body."))
+	else
+		alternate_worn_layer = UNDER_ARMOR_LAYER
+		to_chat(human, span_info("I tuck [src] under my armor."))
+	overarmor = alternate_worn_layer != UNDER_ARMOR_LAYER
+	human.update_inv_cloak()
+	human.update_inv_armor()
+	return TRUE
+
+/obj/item/clothing/cloak/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	return ..()
+
+/obj/item/clothing/cloak/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(!modifiers["middle"] || modifiers["shift"] || modifiers["ctrl"] || modifiers["alt"])
+		return ..()
+	if(!ishuman(usr))
+		return ..()
+	var/mob/living/carbon/human/human = usr
+	if(human.cloak != src)
+		return ..()
+	var/obj/item/bodypart/taur/taur = human.get_taur_tail()
+	if(!taur?.taur_clothing_category || !(flags_1 & INITIALIZED_1))
+		return ..()
+	if(human.incapacitated() || human.notransform)
+		return
+	if(world.time <= human.next_click || world.time <= human.next_move)
+		return
+	human.next_click = world.time + 1
+	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, human)
+	MiddleClick(human, params)
 
 /obj/item/clothing/cloak/ComponentInitialize()
 	. = ..()
@@ -64,13 +115,15 @@
 	boobed = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/abyssortabard/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	wear_over_taur = FALSE
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
 	if(overarmor)
@@ -91,7 +144,6 @@
 	boobed = TRUE
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
@@ -109,7 +161,6 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 	var/open_wear = FALSE
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
@@ -125,6 +176,9 @@
 	open_wear = TRUE
 
 /obj/item/clothing/cloak/psydontabard/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	wear_over_taur = FALSE
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
 	if(overarmor)
@@ -172,6 +226,9 @@
 		add_overlay(pic)
 
 /obj/item/clothing/cloak/tabard/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	wear_over_taur = FALSE
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
 	if(overarmor)
@@ -485,13 +542,15 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 	var/picked
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/stabard/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	wear_over_taur = FALSE
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
 	if(overarmor)
@@ -1327,7 +1386,6 @@
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/cloak/templar
-	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/templar/psydon
 	name = "psydon tabard"
@@ -1535,6 +1593,9 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 
 /obj/item/clothing/cloak/templar/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	wear_over_taur = FALSE
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
 	if(overarmor)
@@ -1991,13 +2052,15 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_cloaks.dmi'
 	sleevetype = "cotehardie"
 	nodismemsleeves = FALSE
-	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/cotehardie/Initialize(mapload)
 	. = ..()
 	update_icon()
 
 /obj/item/clothing/cloak/cotehardie/MiddleClick(mob/user)
+	if(cycle_taur_wear_position(user))
+		return
+	wear_over_taur = FALSE
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear the coat over my armor" : "wear the coat under my armor"]."))
 	if(overarmor)

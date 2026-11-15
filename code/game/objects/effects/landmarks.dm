@@ -165,6 +165,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	jobspawn_override = list("Servant")
 	delete_after_roundstart = FALSE
 
+/obj/effect/landmark/start/lordlate
+	name = "Grand Dukelate"
+	icon_state = "arrow"
+	jobspawn_override = list("Grand Duke")
+	delete_after_roundstart = FALSE
+
 /obj/effect/landmark/start/lord
 	name = "Grand Duke"
 	icon_state = "arrow"

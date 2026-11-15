@@ -194,7 +194,9 @@
 /area/rogue/indoors/town/cell/warden)
 "abz" = (
 /obj/structure/mineral_door/wood/donjon{
-	dir = 4
+	dir = 4;
+	locked = 1;
+	lockid = "church"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/rtfield/eora)
@@ -7086,7 +7088,7 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 8;
 	locked = 1;
-	lockid = "inquisition"
+	lockid = "church"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/rtfield/eora)
@@ -61804,6 +61806,16 @@
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/under/town/basement/keep)
 "lhK" = (
@@ -111248,10 +111260,13 @@
 	locked = 1;
 	lockid = "lich"
 	},
-/obj/item/book/granter/spell/blackstone/skeleton,
 /obj/item/book/granter/spell/blackstone/bonechill,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
+/obj/item/clothing/ring/sapphirebs,
+/obj/item/clothing/ring/quartzbs,
+/obj/item/clothing/ring/topazbs,
+/obj/item/clothing/ring/diamondbs,
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/under/cave/licharena/bossroom)
 "tSA" = (
@@ -123295,6 +123310,10 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop)
+"wcD" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor)
 "wcF" = (
 /obj/structure/deadbodyrandom/med,
 /turf/open/floor/rogue/naturalstone,
@@ -342083,7 +342102,7 @@ xHQ
 rrD
 fAA
 iJY
-xHQ
+wcD
 xHQ
 qIt
 qIt
@@ -445683,7 +445702,7 @@ aBB
 aBB
 aBB
 jWw
-eps
+iVE
 hrE
 aBB
 aBB
@@ -447491,7 +447510,7 @@ bGf
 bGf
 bGf
 jWw
-iVE
+eps
 hrE
 aBB
 aBB

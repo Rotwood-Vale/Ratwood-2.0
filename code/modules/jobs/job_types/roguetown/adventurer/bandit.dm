@@ -17,7 +17,7 @@
 
 	display_order = JDO_BANDIT
 	announce_latejoin = FALSE
-	min_pq = 3
+	min_pq = 15
 	max_pq = null
 	round_contrib_points = 5
 	allowed_patrons = ALL_INHUMEN_PATRONS

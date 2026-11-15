@@ -363,8 +363,6 @@
 		var/mob/living/carbon/C = user
 		if(C.domhand)
 			used_str = C.get_str_arms(C.used_hand)
-	if(istype(user.rmb_intent, /datum/rmb_intent/weak))
-		used_str--
 	if(used_str >= 11)
 		var/strmod
 		if(used_str > STRENGTH_SOFTCAP && !HAS_TRAIT(user, TRAIT_STRENGTH_UNCAPPED))
@@ -492,6 +490,8 @@
 
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 		newforce += (I.force_dynamic * STRONG_STANCE_DMG_BONUS)
+	else if(istype(user.rmb_intent, /datum/rmb_intent/weak))
+		newforce *= WEAK_STANCE_DMG_MULT
 
 	testing("endforce [newforce]")
 	return newforce

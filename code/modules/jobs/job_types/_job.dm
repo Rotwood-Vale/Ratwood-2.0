@@ -313,18 +313,23 @@
 	var/datum/job/J = SSjob.GetJob(mind.assigned_role)
 	var/used_title = get_role_title()
 
-	GLOB.credits_icons[thename] = list()
 	var/client/C = client
 	var/datum/preferences/P = C.prefs
+	if(!P)
+		return
+	var/datum/mind/credit_mind = mind
+	var/credit_slot = P.default_slot
 	var/icon/I
 	if(generate_for_adv_class)
-		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH), human_gear_override = src)
+		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH), human_gear_override = src, hide_portrait_headgear = TRUE)
 	else if (P)
-		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH))
+		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH), hide_portrait_headgear = TRUE)
+	// Acquiring the shared mannequin can sleep; do not publish a stale character's portrait.
+	if(QDELETED(src) || client != C || C.prefs != P || P.default_slot != credit_slot || mind != credit_mind || real_name != thename)
+		return
 	if(I)
-		var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="credits")
-		I.Blend(female_s, ICON_MULTIPLY)
-		I.Scale(96,96)
+		I = crop_credit_headshot(I)
+		GLOB.credits_icons[thename] = list()
 		GLOB.credits_icons[thename]["title"] = used_title
 		GLOB.credits_icons[thename]["icon"] = I
 		GLOB.credits_icons[thename]["vc"] = voice_color

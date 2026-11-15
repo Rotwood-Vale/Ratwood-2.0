@@ -1028,59 +1028,81 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null, mob/living/carbon/human/human_gear_override, copy_appearance = FALSE)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null, mob/living/carbon/human/human_gear_override, copy_appearance = FALSE, hide_portrait_headgear = FALSE)
 	var/static/list/humanoid_icon_cache = list()
-	if(!icon_id || !humanoid_icon_cache[icon_id])
+	var/static/list/portrait_icon_cache = list()
+	var/list/selected_icon_cache = hide_portrait_headgear ? portrait_icon_cache : humanoid_icon_cache
+	if(!icon_id || !selected_icon_cache[icon_id])
+		var/had_gear_override = !!human_gear_override
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
+		if(had_gear_override && QDELETED(human_gear_override))
+			dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
+			return null
+		var/icon/out_icon
 
-		if(prefs)
-			prefs.copy_to(body,TRUE,FALSE)
-		if(human_gear_override) //EVIL CODE!!
-			var/static/list/all_item_slots = ALL_ITEM_SLOTS
-			for(var/slot in all_item_slots)
-				var/obj/item/item = human_gear_override.get_item_by_slot(slot)
-				if(!item)
-					continue
-				var/obj/item/new_item
-				if(item.visual_replacement)
-					new_item = new item.visual_replacement(body)
-				else
-					new_item = new item.type(body)
-				new_item.icon_state = item.icon_state
-				new_item.flags_inv = item.flags_inv
-				new_item.body_parts_covered = item.body_parts_covered
-				new_item.color = item.color
-				body.equip_to_slot_if_possible(new_item, slot)
+		try
+			if(prefs)
+				prefs.copy_to(body, TRUE, FALSE, character_setup = hide_portrait_headgear)
+			if(human_gear_override) //EVIL CODE!!
+				var/static/list/all_item_slots = ALL_ITEM_SLOTS
+				for(var/slot in all_item_slots)
+					var/obj/item/item = human_gear_override.get_item_by_slot(slot)
+					if(!item)
+						continue
+					var/obj/item/new_item
+					if(item.visual_replacement)
+						new_item = new item.visual_replacement(body)
+					else
+						new_item = new item.type(body)
+					new_item.icon_state = item.icon_state
+					new_item.flags_inv = item.flags_inv
+					new_item.body_parts_covered = item.body_parts_covered
+					new_item.color = item.color
+					body.equip_to_slot_if_possible(new_item, slot)
 
-			if(copy_appearance)
-				human_gear_override.dna.transfer_identity(body)
-				body.updateappearance(icon_update=1, mutcolor_update=1)
-		else if(J)
-			J.equip(body, TRUE, FALSE, outfit_override = outfit_override)
-		else if (outfit_override)
-			body.equipOutfit(outfit_override,visualsOnly = TRUE)
+				if(copy_appearance)
+					human_gear_override.dna.transfer_identity(body)
+					body.updateappearance(icon_update=1, mutcolor_update=1)
+			else if(J)
+				J.equip(body, TRUE, FALSE, outfit_override = outfit_override)
+			else if (outfit_override)
+				body.equipOutfit(outfit_override,visualsOnly = TRUE)
 
-		body.update_inv_hands(hide_experimental = TRUE)
-		body.update_inv_belt(hide_experimental = TRUE)
-		body.update_inv_back(hide_experimental = TRUE)
-		body.update_inv_head(hide_nonstandard = TRUE)
+			if(hide_portrait_headgear)
+				// Remove only the mannequin's copies, never equipment on the real character.
+				for(var/slot in list(SLOT_HEAD, SLOT_WEAR_MASK, SLOT_NECK))
+					var/obj/item/covering = body.get_item_by_slot(slot)
+					if(covering)
+						qdel(covering)
+				body.update_inv_wear_mask()
+				body.update_inv_neck()
+				body.update_hair()
 
-		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-		for(var/D in showDirs)
-			body.setDir(D)
-			var/icon/partial = getFlatIcon(body)
-			out_icon.Insert(partial,dir=D)
+			body.update_inv_hands(hide_experimental = TRUE)
+			body.update_inv_belt(hide_experimental = TRUE)
+			body.update_inv_back(hide_experimental = TRUE)
+			body.update_inv_head(hide_nonstandard = TRUE)
 
-		body.update_inv_hands()
-		body.update_inv_belt()
-		body.update_inv_back()
-		body.update_inv_head()
+			out_icon = icon('icons/effects/effects.dmi', "nothing")
+			for(var/D in showDirs)
+				body.setDir(D)
+				var/icon/partial = getFlatIcon(body)
+				out_icon.Insert(partial,dir=D)
 
-		humanoid_icon_cache[icon_id] = out_icon
+			body.update_inv_hands()
+			body.update_inv_belt()
+			body.update_inv_back()
+			body.update_inv_head()
+		catch(var/exception/error)
+			dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
+			throw error
+
 		dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
+		if(icon_id)
+			selected_icon_cache[icon_id] = out_icon
 		return out_icon
 	else
-		return humanoid_icon_cache[icon_id]
+		return selected_icon_cache[icon_id]
 
 /**
  * A simpler version of get_flat_human_icon() that uses an existing human as a base to create the icon.

@@ -53,7 +53,7 @@
 	desc = "My gaze draws others in, leaving my words lingering deep within their thoughts."
 	point_cost = 1
 	incompatible_quirks = list(/datum/quirk/hypnotic_presence)
-	custom_text = "Grants Hypnotic Gaze: a two-tile, ten-second stationary channel. The next words the target hears from me become a lasting suggestion. Recasting releases them."
+	custom_text = "Grants Hypnotic Gaze. The next words the target hears from me become a lasting suggestion. Recasting releases them. Customize the examine text on the button below."
 	var/is_presence = FALSE
 	var/hypnotic_spell_type = /obj/effect/proc_holder/spell/invoked/hypnotic_gaze
 
@@ -61,7 +61,7 @@
 	parent_type = /datum/quirk/hypnotic_gaze
 	name = "Hypnotic Presence"
 	desc = "Something about my presence draws others in, leaving my words lingering deep within their thoughts."
-	custom_text = "Grants Hypnotic Presence: a two-tile, ten-second stationary channel that does not require exposed eyes. The next words the target hears from me become a lasting suggestion. Recasting releases them."
+	custom_text = "Grants Hypnotic Presence, which does not require exposed eyes. The next words the target hears from me become a lasting suggestion. Recasting releases them. Customize the examine text on the button below."
 	incompatible_quirks = list(/datum/quirk/hypnotic_gaze)
 	is_presence = TRUE
 	hypnotic_spell_type = /obj/effect/proc_holder/spell/invoked/hypnotic_gaze/presence

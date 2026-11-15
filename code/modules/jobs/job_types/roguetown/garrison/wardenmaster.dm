@@ -18,7 +18,7 @@
 	advclass_cat_rolls = list(CTAG_BOGMASTER = 20)
 
 	give_bank_account = 50
-	min_pq = 6
+	min_pq = 10
 	max_pq = null
 	cmode_music = 'sound/music/combat_hornofthebeast.ogg'
 	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_FUSILIER, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH)

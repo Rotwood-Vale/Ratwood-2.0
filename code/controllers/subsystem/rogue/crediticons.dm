@@ -1,3 +1,13 @@
+/// Keep the portrait in the original 96x96 credits frame, regardless of accessory canvas size.
+/proc/crop_credit_headshot(icon/source)
+	if(!source)
+		return null
+	var/icon/portrait = icon(source)
+	// Explicitly discard the body and oversized lower/side overlays instead of masking them.
+	portrait.Crop(1, 17, 32, 32)
+	portrait.Crop(1, -15, 32, 16) // Restore transparent space below the head for existing labels/crops.
+	portrait.Scale(96, 96)
+	return portrait
 
 SUBSYSTEM_DEF(crediticons)
 	name = "crediticons"

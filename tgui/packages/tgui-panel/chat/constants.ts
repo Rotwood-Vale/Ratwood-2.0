@@ -4,8 +4,7 @@
  * @license MIT
  */
 
-export const MAX_VISIBLE_MESSAGES = 2500;
-export const MAX_PERSISTED_MESSAGES = 1000;
+export const MAX_CHAT_MESSAGES = 2500;
 export const MESSAGE_SAVE_INTERVAL = 10000;
 export const MESSAGE_PRUNE_INTERVAL = 60000;
 export const COMBINE_MAX_MESSAGES = 5;

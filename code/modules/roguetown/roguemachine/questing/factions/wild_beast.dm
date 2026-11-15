@@ -7,11 +7,8 @@
 	category = FACTION_CAT_BEAST
 	progress_noun = "beasts"
 	mob_types = list(
-		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 40,
-		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 25,
-		/mob/living/simple_animal/hostile/retaliate/rogue/fox = 15,
-		/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 15,
-		/mob/living/simple_animal/hostile/retaliate/rogue/mole = 5,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 75,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/dire = 25,
 	)
 	crime_weights = list(
 		CRIME_BEAST_SHEEP = 10,

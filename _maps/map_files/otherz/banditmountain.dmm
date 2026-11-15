@@ -9,8 +9,8 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ag" = (
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -48,8 +48,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "bY" = (
 /obj/structure/fluff/railing/fence,
@@ -59,20 +59,20 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "cl" = (
 /obj/structure/bars,
 /turf/open/water/river/flow/east,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "cn" = (
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "cz" = (
@@ -86,16 +86,16 @@
 /area/rogue/indoors/banditcamp)
 "cW" = (
 /obj/structure/table/wood{
-	dir = 5;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 5
 	},
 /obj/item/candle/skull/lit,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
 "dd" = (
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "largetable_mid"
+	icon_state = "largetable_mid";
+	dir = 1
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
@@ -116,15 +116,15 @@
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "dP" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "en" = (
 /obj/structure/stairs/d,
@@ -139,8 +139,8 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "eA" = (
 /obj/structure/stairs/stone{
@@ -151,15 +151,15 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "eB" = (
 /obj/structure/flora/roguegrass/bush/winter,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "eC" = (
 /obj/effect/landmark/start/bandit{
@@ -186,8 +186,8 @@
 /area/rogue/indoors/banditcamp)
 "eM" = (
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 1
 	},
 /obj/item/mattcoin,
 /obj/item/mattcoin,
@@ -223,22 +223,22 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "fG" = (
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "fN" = (
 /obj/structure/roguemachine/mail/r{
 	mailtag = "Freemen"
 	},
 /obj/structure/table/wood{
-	dir = 9;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 9
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
@@ -252,15 +252,15 @@
 "ga" = (
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "gb" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "gc" = (
 /obj/effect/landmark/start/bandit{
@@ -278,8 +278,8 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "gO" = (
 /obj/item/reagent_containers/powder/salt,
@@ -310,8 +310,8 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "hc" = (
 /obj/structure/stairs/stone{
@@ -324,8 +324,8 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "he" = (
 /turf/closed/mineral/rogue/bedrock,
@@ -338,8 +338,8 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "hp" = (
 /obj/machinery/light/rogue/firebowl/stump{
@@ -347,8 +347,8 @@
 	},
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "hq" = (
 /obj/structure/flora/roguetree/pine{
@@ -395,22 +395,22 @@
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "il" = (
 /obj/machinery/light/rogue/firebowl/standing/green,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "iq" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ir" = (
 /obj/structure/fluff/railing/wood/north{
@@ -421,16 +421,16 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "iw" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "iA" = (
 /obj/structure/flora/roguetree,
@@ -446,8 +446,8 @@
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "jP" = (
 /obj/structure/fluff/railing/wood/north{
@@ -457,8 +457,8 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "jS" = (
 /obj/structure/stairs/stone{
@@ -466,13 +466,13 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ka" = (
 /obj/structure/table/wood{
-	dir = 10;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 10
 	},
 /obj/item/paper,
 /obj/item/paper,
@@ -507,16 +507,16 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ky" = (
 /turf/open/transparent/openspace,
 /area/rogue/under/cave)
 "kL" = (
 /obj/structure/table/wood{
-	dir = 4;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 4
 	},
 /obj/item/natural/feather,
 /turf/open/floor/rogue/hexstone,
@@ -534,8 +534,8 @@
 /area/rogue/indoors/banditcamp)
 "lf" = (
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable"
+	icon_state = "longtable";
+	dir = 1
 	},
 /obj/item/paper/scroll,
 /turf/open/floor/rogue/tile,
@@ -554,9 +554,9 @@
 /area/rogue/indoors/banditcamp)
 "ll" = (
 /obj/structure/arcyne_wall{
-	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
 	name = "Wall of Greed";
-	max_integrity = 1000
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	max_integrity = 99999
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp/hoardmaster)
@@ -565,31 +565,31 @@
 	icon_state = "tablewood3"
 	},
 /obj/item/roguekey/walls{
-	lockid = "bandit";
 	name = "old key";
-	pixel_x = -9
+	pixel_x = -9;
+	lockid = "bandit"
 	},
 /obj/item/roguekey/walls{
-	lockid = "bandit";
 	name = "old key";
-	pixel_y = 3
+	pixel_y = 3;
+	lockid = "bandit"
 	},
 /obj/item/roguekey/walls{
-	lockid = "bandit";
 	name = "old key";
-	pixel_x = 12
+	pixel_x = 12;
+	lockid = "bandit"
 	},
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "lv" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "lF" = (
 /obj/machinery/light/rogue/candle/l,
@@ -607,8 +607,8 @@
 /obj/structure/bars,
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "mq" = (
 /obj/structure/fluff/railing/border/west{
@@ -616,22 +616,22 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "mN" = (
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "tablewood1"
+	icon_state = "tablewood1";
+	dir = 1
 	},
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "tablewood1"
+	icon_state = "tablewood1";
+	dir = 1
 	},
 /obj/item/candle/skull/lit,
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "mP" = (
@@ -653,8 +653,8 @@
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "nd" = (
 /turf/closed/wall/mineral/rogue/stone/window,
@@ -669,8 +669,8 @@
 /obj/item/paper,
 /obj/item/natural/feather,
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "nZ" = (
@@ -687,8 +687,8 @@
 /area/rogue/outdoors/banditcamp)
 "ob" = (
 /obj/structure/table/wood{
-	dir = 8;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 8
 	},
 /obj/item/reagent_containers/powder/salt,
 /turf/open/floor/rogue/hexstone,
@@ -722,8 +722,8 @@
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "px" = (
 /turf/open/floor/rogue/ruinedwood,
@@ -755,8 +755,8 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "qe" = (
 /obj/effect/landmark/start/bandit,
@@ -786,16 +786,16 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "qu" = (
-/obj/structure/arcyne_wall{
-	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
-	name = "Wall of Greed";
-	max_integrity = 1000
-	},
 /obj/machinery/light/rogue/firebowl/standing/red,
+/obj/structure/arcyne_wall{
+	name = "Wall of Greed";
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	max_integrity = 99999
+	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp/hoardmaster)
 "qC" = (
@@ -819,8 +819,8 @@
 	},
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "qR" = (
 /obj/structure/rack/rogue,
@@ -842,8 +842,8 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ri" = (
 /obj/structure/stairs/stone{
@@ -864,8 +864,8 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "sl" = (
 /turf/open/floor/rogue/tile,
@@ -874,8 +874,8 @@
 /obj/structure/handcart,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "sA" = (
 /obj/structure/flora/roguegrass,
@@ -893,15 +893,15 @@
 	},
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ta" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "th" = (
 /obj/item/needle/thorn,
@@ -924,15 +924,15 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "tx" = (
 /obj/structure/handcart,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "uC" = (
 /obj/structure/table/wood{
@@ -952,13 +952,13 @@
 /area/rogue/outdoors/banditcamp)
 "uJ" = (
 /obj/structure/fluff/traveltile/bandit{
-	aportalgoesto = "banditexit3";
-	aportalid = "banditin3"
+	aportalid = "banditin3";
+	aportalgoesto = "banditexit3"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "uW" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -985,8 +985,8 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "vC" = (
 /obj/structure/fluff/psycross/matthios,
@@ -996,8 +996,8 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "vE" = (
 /turf/open/floor/rogue/cobblerock,
@@ -1005,8 +1005,8 @@
 "vJ" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "vO" = (
 /obj/machinery/light/rogue/hearth,
@@ -1021,15 +1021,15 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "wv" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ww" = (
 /obj/structure/stairs/stone{
@@ -1042,8 +1042,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "wC" = (
 /obj/machinery/light/rogue/torchholder/l,
@@ -1056,12 +1056,12 @@
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/banditcamp/hoardmaster)
 "wN" = (
-/obj/structure/arcyne_wall{
-	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
-	name = "Wall of Greed";
-	max_integrity = 1000
-	},
 /obj/machinery/light/rogue/firebowl/standing/red,
+/obj/structure/arcyne_wall{
+	name = "Wall of Greed";
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	max_integrity = 99999
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/banditcamp/hoardmaster)
 "wZ" = (
@@ -1074,8 +1074,8 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "xz" = (
 /obj/structure/fluff/railing/border{
@@ -1103,8 +1103,8 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "yu" = (
 /obj/machinery/light/rogue/torchholder/c{
@@ -1119,8 +1119,8 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "yC" = (
 /obj/structure/flora/roguetree/burnt,
@@ -1136,8 +1136,8 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "yK" = (
 /obj/effect/particle_effect/smoke{
@@ -1145,8 +1145,8 @@
 	},
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "yM" = (
 /obj/structure/flora/roguegrass/bush/winter,
@@ -1174,8 +1174,8 @@
 /area/rogue/indoors/banditcamp)
 "zL" = (
 /obj/structure/table/wood{
-	dir = 10;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 10
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
@@ -1190,15 +1190,15 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Af" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Au" = (
 /obj/structure/fluff/railing/border{
@@ -1210,8 +1210,8 @@
 /obj/structure/far_travel,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "AA" = (
 /obj/structure/closet/crate/chest/old_crate,
@@ -1245,16 +1245,16 @@
 "Bd" = (
 /turf/open/water/river/flow/east,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Be" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 4
 	},
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "Bl" = (
@@ -1274,8 +1274,8 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "BD" = (
 /obj/structure/flora/roguetree/pine{
@@ -1292,8 +1292,8 @@
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Cp" = (
 /obj/structure/pillory{
@@ -1305,8 +1305,8 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "CD" = (
 /obj/structure/fluff/railing/fence{
@@ -1333,8 +1333,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "DR" = (
 /turf/closed/mineral/rogue/bedrock,
@@ -1351,8 +1351,8 @@
 /area/rogue/indoors/banditcamp)
 "Ep" = (
 /obj/structure/table/wood{
-	dir = 8;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 8
 	},
 /obj/item/reagent_containers/glass/cup/skull,
 /turf/open/floor/rogue/hexstone,
@@ -1368,8 +1368,8 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "EN" = (
@@ -1388,8 +1388,8 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Fj" = (
 /obj/structure/fluff/railing/border{
@@ -1408,22 +1408,22 @@
 /obj/structure/far_travel,
 /turf/open/water/river/flow/east,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Fz" = (
 /obj/machinery/light/rogue/torchholder/c,
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "FG" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "FH" = (
 /obj/structure/fluff/railing/wood/west{
@@ -1431,8 +1431,8 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "FN" = (
 /obj/item/roguecoin/gold/pile,
@@ -1461,8 +1461,8 @@
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "GL" = (
 /obj/item/roguecoin/gold/pile,
@@ -1471,8 +1471,8 @@
 "GY" = (
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Ha" = (
 /obj/structure/fermentation_keg/random/water,
@@ -1481,30 +1481,30 @@
 "Hm" = (
 /turf/open/water/river/flow/west,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Hn" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Hs" = (
 /obj/item/natural/bundle/stick,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "HB" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
 "HJ" = (
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "tablewood1"
+	icon_state = "tablewood1";
+	dir = 1
 	},
 /obj/item/candle/skull/lit,
 /turf/open/floor/rogue/herringbone,
@@ -1517,22 +1517,22 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Ig" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Ik" = (
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "In" = (
 /obj/item/rogueweapon/shield/wood,
@@ -1546,16 +1546,20 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
+"IQ" = (
+/obj/structure/fluff/statue/gargoyle,
+/turf/open/floor/rogue/dirt,
+/area/rogue/indoors/banditcamp)
 "IS" = (
 /obj/structure/stairs{
 	dir = 1
 	},
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "IT" = (
@@ -1569,25 +1573,25 @@
 /area/rogue/indoors/banditcamp)
 "IX" = (
 /obj/structure/table/wood{
-	dir = 4;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 4
 	},
 /obj/item/reagent_containers/glass/cup/skull,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
 "Jk" = (
 /obj/structure/arcyne_wall{
-	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
 	name = "Wall of Greed";
-	max_integrity = 1000
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	max_integrity = 99999
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/banditcamp/hoardmaster)
 "Jm" = (
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Jt" = (
 /obj/effect/landmark/start/bandit,
@@ -1618,8 +1622,8 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "JZ" = (
 /obj/structure/stairs/stone{
@@ -1627,8 +1631,8 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Ka" = (
 /obj/structure/fluff/railing/wood/west{
@@ -1636,8 +1640,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Kb" = (
 /obj/structure/roguewindow,
@@ -1650,8 +1654,8 @@
 /obj/structure/flora/roguegrass/bush/winter,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "KC" = (
 /obj/structure/chair/frankenstein/zizo,
@@ -1672,8 +1676,8 @@
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Lm" = (
 /turf/open/floor/rogue/dirt,
@@ -1687,8 +1691,8 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Lr" = (
 /obj/structure/fluff/railing/border,
@@ -1721,8 +1725,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Mk" = (
 /obj/structure/fluff/railing/border{
@@ -1739,22 +1743,22 @@
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "MA" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "MK" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "MQ" = (
 /obj/structure/chair/freedomchair,
@@ -1764,8 +1768,8 @@
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Nc" = (
 /obj/structure/fluff/railing/border{
@@ -1774,11 +1778,11 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
 "Ne" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
 /obj/structure/closet/crate/roguecloset{
 	name = "suspicious, squeaking closet";
 	desc = "Is it... breathing?"
 	},
-/mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
 /obj/item/roguegem/random,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
@@ -1795,8 +1799,8 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "NQ" = (
 /obj/machinery/light/rogue/candle/r,
@@ -1808,8 +1812,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Oe" = (
 /obj/structure/fluff/railing/fence{
@@ -1817,8 +1821,8 @@
 	},
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Of" = (
 /obj/machinery/light/rogue/candle/r,
@@ -1832,8 +1836,8 @@
 /area/rogue/indoors/banditcamp)
 "Oo" = (
 /obj/structure/table/wood{
-	dir = 6;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 6
 	},
 /obj/item/paper,
 /turf/open/floor/rogue/hexstone,
@@ -1842,8 +1846,8 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Ou" = (
 /obj/structure/stairs/stone{
@@ -1851,16 +1855,16 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Oz" = (
 /turf/closed/mineral/random/rogue/high,
 /area/rogue/under/cave)
 "OB" = (
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "tablewood1"
+	icon_state = "tablewood1";
+	dir = 1
 	},
 /obj/item/candle/skull/lit,
 /turf/open/floor/rogue/hexstone,
@@ -1874,8 +1878,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "OS" = (
 /turf/closed/wall/mineral/rogue/wooddark,
@@ -1916,8 +1920,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "PN" = (
 /obj/structure/flora/roguegrass,
@@ -1939,8 +1943,8 @@
 /obj/item/rope/chain,
 /obj/item/rogueweapon/surgery/cautery/branding/slave,
 /turf/open/floor/rogue/ruinedwood{
-	dir = 1;
-	icon_state = "vertw"
+	icon_state = "vertw";
+	dir = 1
 	},
 /area/rogue/indoors/banditcamp)
 "Qa" = (
@@ -1953,8 +1957,8 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Qc" = (
 /obj/structure/bars,
@@ -1970,26 +1974,26 @@
 /area/rogue/indoors/banditcamp)
 "Qz" = (
 /obj/structure/fluff/traveltile/bandit{
-	aportalgoesto = "banditexit2";
-	aportalid = "banditin2"
+	aportalid = "banditin2";
+	aportalgoesto = "banditexit2"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "QC" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "QE" = (
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "QG" = (
 /turf/closed/wall/mineral/rogue/tent,
@@ -2006,8 +2010,8 @@
 "QN" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "QR" = (
 /obj/structure/flora/roguetree{
@@ -2024,13 +2028,13 @@
 /obj/machinery/light/rogue/campfire,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "RS" = (
 /obj/structure/table/wood{
-	dir = 9;
-	icon_state = "largetable"
+	icon_state = "largetable";
+	dir = 9
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
@@ -2052,8 +2056,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Sj" = (
 /turf/open/floor/rogue/herringbone,
@@ -2061,8 +2065,8 @@
 "Sk" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Su" = (
 /turf/open/lava,
@@ -2072,8 +2076,8 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Tf" = (
 /obj/structure/rack/rogue,
@@ -2111,15 +2115,15 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "UB" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "UH" = (
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
@@ -2163,8 +2167,8 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Vl" = (
 /obj/structure/fluff/statue/gargoyle,
@@ -2172,13 +2176,13 @@
 /area/rogue/indoors/banditcamp)
 "Vs" = (
 /obj/structure/fluff/traveltile/bandit{
-	aportalgoesto = "banditexit";
-	aportalid = "banditin"
+	aportalid = "banditin";
+	aportalgoesto = "banditexit"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Vt" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -2224,8 +2228,8 @@
 "Wn" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Wo" = (
 /obj/machinery/light/rogue/firebowl/stump,
@@ -2233,13 +2237,13 @@
 /area/rogue/outdoors/banditcamp)
 "Wq" = (
 /obj/structure/fluff/traveltile/bandit{
-	aportalgoesto = "banditexit2";
-	aportalid = "banditin2"
+	aportalid = "banditin2";
+	aportalgoesto = "banditexit2"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "WC" = (
 /obj/structure/stairs/stone{
@@ -2270,8 +2274,8 @@
 "WY" = (
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "Xl" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -2282,8 +2286,8 @@
 "Xn" = (
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "XD" = (
 /obj/machinery/light/rogue/torchholder/r,
@@ -2313,8 +2317,8 @@
 "Yt" = (
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "YH" = (
 /obj/machinery/light/rogue/firebowl/standing,
@@ -2347,8 +2351,8 @@
 /obj/structure/flora/roguegrass/bush/winter,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 "ZS" = (
 /obj/item/candle/skull,
@@ -2361,8 +2365,8 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	first_time_text = "Murder Pass";
-	name = "Bandit Woods"
+	name = "Bandit Woods";
+	first_time_text = "Murder Pass"
 	})
 
 (1,1,1) = {"
@@ -8284,7 +8288,7 @@ Oj
 gt
 gt
 kn
-Lm
+IQ
 wN
 Jk
 Jk
@@ -8644,7 +8648,7 @@ pO
 gt
 DC
 bm
-Lm
+IQ
 qu
 Jk
 Jk

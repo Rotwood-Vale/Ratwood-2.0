@@ -341,7 +341,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return GLOB.skin_tones
 
 /datum/species/proc/get_taur_list()
-	return allowed_taur_types
+	var/list/taurs = allowed_taur_types.Copy()
+	if(/obj/item/bodypart/taur/horse in taurs)
+		taurs |= /obj/item/bodypart/taur/equine
+	return taurs
 
 /datum/species/proc/get_hairc_list()
 	return GLOB.haircolor

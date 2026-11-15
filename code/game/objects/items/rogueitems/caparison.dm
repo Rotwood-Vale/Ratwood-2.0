@@ -5,6 +5,10 @@
 	icon_state = "caparison"
 	var/caparison_icon = 'icons/roguetown/mob/monster/saiga.dmi'
 	var/caparison_state = "caparison"
+	/// Taur body wearing this cloth, if any.
+	var/obj/item/bodypart/taur/taur_wearer
+	/// Removal action granted only while the cloth is fitted to a taur.
+	var/datum/action/item_action/remove_taur_caparison/taur_remove_action
 	var/detail_state
 	var/list/detail_types
 	var/list/symbol_types
@@ -13,6 +17,28 @@
 	var/list/valid_animal_types = list(/mob/living/simple_animal/hostile/retaliate/rogue/saiga)
 
 /obj/item/caparison/attack(mob/living/M, mob/living/user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/human = M
+		var/obj/item/bodypart/taur/taur = human.get_taur_tail()
+		if(!taur || !taur.get_caparison_state(src))
+			to_chat(user, span_warning("This caparison does not fit that body."))
+			return
+		if(taur.applied_caparison)
+			to_chat(user, span_warning("[human] is already wearing a caparison."))
+			return
+		if(!do_after(user, 5 SECONDS, TRUE, human))
+			return
+		if(QDELETED(taur) || human.get_taur_tail() != taur || taur.applied_caparison)
+			return
+		if(!user.transferItemToLoc(src, human))
+			return
+		taur_wearer = taur
+		taur.applied_caparison = src
+		taur_remove_action = new(src)
+		taur_remove_action.Grant(human)
+		human.update_body_parts(redraw = TRUE)
+		user.visible_message(span_notice("[user] fits [src] onto [human]."))
+		return
 	if(!issimple(M))
 		to_chat(user, span_warning("\The [src] can only be used on animals!"))
 		return
@@ -89,6 +115,37 @@
 // SUBTYPES - SAIGA //
 //////////////////////
 
+/obj/item/caparison/proc/remove_from_taur(move_to_floor = TRUE)
+	var/obj/item/bodypart/taur/taur = taur_wearer
+	if(!taur)
+		return
+	var/mob/living/carbon/human/human = taur.owner
+	taur_wearer = null
+	taur.applied_caparison = null
+	QDEL_NULL(taur_remove_action)
+	if(move_to_floor)
+		forceMove(get_turf(human || taur))
+	if(human && !QDELETED(human))
+		human.update_body_parts(redraw = TRUE)
+
+/obj/item/caparison/Moved(atom/oldloc, movement_dir, forced = FALSE)
+	. = ..()
+	if(taur_wearer && loc != taur_wearer.owner)
+		remove_from_taur(FALSE)
+
+/obj/item/caparison/Destroy()
+	remove_from_taur(FALSE)
+	return ..()
+
+/obj/item/caparison/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/remove_taur_caparison))
+		if(taur_wearer?.owner != user)
+			return
+		remove_from_taur()
+		user.put_in_hands(src)
+		return
+	return ..()
+
 /obj/item/caparison/psy
 	name = "psydonite caparison"
 	desc = "A decorative piece of cloth meant to be used as a saddle decoration. It's adorned with Psycrosses. This one fits on a Saiga."
@@ -137,3 +194,7 @@
 	desc = "A decorative piece of cloth meant to be used as a saddle decoration. It's adorned with ducal colours. This one fits on a Fogbeast."
 	caparison_state = "azure_caparison"
 	female_caparison_state = "azure_caparison"
+
+/datum/action/item_action/remove_taur_caparison
+	name = "Remove Caparison"
+	desc = "Remove the decorative cloth from your taur body."

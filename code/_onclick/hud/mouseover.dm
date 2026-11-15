@@ -48,9 +48,9 @@
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
 		if(!isturf(loc))
 			PM = params2list(params)
-			p.client.mouseovertext.movethis(PM, TRUE)
+			p.client.mouseovertext.movethis(PM, TRUE, p.client)
 		else
-			p.client.mouseovertext.movethis(PM)
+			p.client.mouseovertext.movethis(PM, viewer = p.client)
 		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:#ddd7df;text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
@@ -72,9 +72,9 @@
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
 		if(!isturf(loc))
 			PM = params2list(params)
-			p.client.mouseovertext.movethis(PM, TRUE)
+			p.client.mouseovertext.movethis(PM, TRUE, p.client)
 		else
-			p.client.mouseovertext.movethis(PM)
+			p.client.mouseovertext.movethis(PM, viewer = p.client)
 		//if((((rotation_structure && rotation_network) || istype(src, /obj/structure/water_pipe)) || accepts_water_input) && HAS_TRAIT(p, TRAIT_ENGINEERING_GOGGLES))	
 		if(((rotation_structure && rotation_network)) && (HAS_TRAIT(p, TRAIT_ENGINEERING_GOGGLES))) //changing this to just look at rotations and removing the trait, users just need over 3 engineering.
 			var/rotation_chat = return_rotation_chat(p.client.mouseovertext)
@@ -107,7 +107,7 @@
 		var/list/PM = params2list(params)
 		var/mob/p = usr
 		if(p.boxaim && p.client)
-			p.client.mouseoverbox.movethis(PM)
+			p.client.mouseoverbox.movethis(PM, viewer = p.client)
 
 /turf/MouseExited(params)
 	. = ..()
@@ -136,7 +136,7 @@
 			return FALSE
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
 		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:#607d65;text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
-		p.client.mouseovertext.movethis(PM)
+		p.client.mouseovertext.movethis(PM, viewer = p.client)
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
 
@@ -158,7 +158,7 @@
 		var/offset_y = 8 - (AT.y - y) - (p.client.pixel_y / world.icon_size)
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
 		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:#6b3f3f;text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
-		p.client.mouseovertext.movethis(PM)
+		p.client.mouseovertext.movethis(PM, viewer = p.client)
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
 
@@ -191,9 +191,7 @@
 			return FALSE
 		p.client.mouseovertext.maptext_height = mouseover_data["height"]
 		p.client.mouseovertext.maptext = mouseover_data["text"]
-		p.client.mouseovertext.movethis(PM)
-		if(mouseover_data["y_shift"])
-			p.client.mouseovertext.maptext_y += mouseover_data["y_shift"]
+		p.client.mouseovertext.movethis(PM, viewer = p.client, y_shift = mouseover_data["y_shift"] ? mouseover_data["y_shift"] : 0)
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
 
@@ -255,17 +253,19 @@
 	maptext_width = 96
 	alpha = 150
 
-/atom/movable/screen/movable/mouseover/proc/movethis(list/PM, hudobj = FALSE)
+/atom/movable/screen/movable/mouseover/proc/movethis(list/PM, hudobj = FALSE, client/viewer, y_shift = 0)
 	if(locked) //no! I am locked! begone!
 		return
 
 	//No screen-loc information? abort.
-	if(!PM || !PM["screen-loc"])
+	if(!PM || !PM["screen-loc"] || !viewer)
 //		testing("Can't find parameters for that mouseover.")
 		return
 
 	//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
 	var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+	if(length(screen_loc_params) != 2)
+		return
 
 	//Split X+Pixel_X up into list(X, Pixel_X)
 	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
@@ -274,8 +274,8 @@
 	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 
 	//Normalise Pixel Values (So the object drops at the center of the mouse, not 16 pixels off)
-	var/pix_X = text2num(screen_loc_X[2])
-	var/pix_Y = text2num(screen_loc_Y[2])
+	var/pix_X = length(screen_loc_X) > 1 ? text2num(screen_loc_X[2]) : 0
+	var/pix_Y = length(screen_loc_Y) > 1 ? text2num(screen_loc_Y[2]) : 0
 
 	if(hudobj)
 		maptext_y = 28
@@ -285,12 +285,25 @@
 		maptext_y = 28
 		maptext_x = -32
 
-	if(text2num(screen_loc_X[1]) <= -3)
-		screen_loc_X[1] = -3
-	if(text2num(screen_loc_Y[1]) <= 0)
-		screen_loc_Y[1] = 1
+	var/tile_x = text2num(screen_loc_X[1])
+	var/tile_y = text2num(screen_loc_Y[1])
+	if(!isnum(tile_x) || !isnum(tile_y))
+		return
+	// Mouse screen-loc is one-based; maptext offsets and view dimensions are pixels.
+	var/anchor_x = (tile_x - 1) * world.icon_size + pix_X
+	var/anchor_y = (tile_y - 1) * world.icon_size + pix_Y
+	var/list/view_size = getviewsize(viewer.view)
+	var/view_width = view_size[1] * world.icon_size
+	var/view_height = view_size[2] * world.icon_size
+	if(view_width <= 0 || view_height <= 0)
+		return
 
-	screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
+	maptext_y += y_shift
+	if(anchor_y + maptext_y + maptext_height > view_height - 2)
+		maptext_y = -maptext_height - 4 // No room above: put the label below the target.
+	maptext_x = clamp(anchor_x + maptext_x, 2, max(2, view_width - maptext_width - 2)) - anchor_x
+	maptext_y = clamp(anchor_y + maptext_y, 2, max(2, view_height - maptext_height - 2)) - anchor_y
+	screen_loc = "[tile_x]:[pix_X],[tile_y]:[pix_Y]"
 
 	moved = screen_loc
 

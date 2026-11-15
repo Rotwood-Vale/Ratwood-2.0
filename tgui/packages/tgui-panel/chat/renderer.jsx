@@ -18,8 +18,7 @@ import {
   IMAGE_RETRY_DELAY,
   IMAGE_RETRY_LIMIT,
   IMAGE_RETRY_MESSAGE_AGE,
-  MAX_PERSISTED_MESSAGES,
-  MAX_VISIBLE_MESSAGES,
+  MAX_CHAT_MESSAGES,
   MESSAGE_PRUNE_INTERVAL,
   MESSAGE_TYPE_INTERNAL,
   MESSAGE_TYPE_UNKNOWN,
@@ -27,6 +26,7 @@ import {
 } from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
+import { withoutExamineIcons } from './savedHtml';
 
 const logger = createLogger('chatRenderer');
 
@@ -739,7 +739,7 @@ export class ChatRenderer {
     // Visible messages
     {
       const messages = this.visibleMessages;
-      const fromIndex = Math.max(0, messages.length - MAX_VISIBLE_MESSAGES);
+      const fromIndex = Math.max(0, messages.length - MAX_CHAT_MESSAGES);
       if (fromIndex > 0) {
         this.visibleMessages = messages.slice(fromIndex);
         for (let i = 0; i < fromIndex; i++) {
@@ -761,10 +761,7 @@ export class ChatRenderer {
     }
     // All messages
     {
-      const fromIndex = Math.max(
-        0,
-        this.messages.length - MAX_PERSISTED_MESSAGES,
-      );
+      const fromIndex = Math.max(0, this.messages.length - MAX_CHAT_MESSAGES);
       if (fromIndex > 0) {
         this.messages = this.messages.slice(fromIndex);
         logger.log(`pruned ${fromIndex} stored messages`);
@@ -777,10 +774,7 @@ export class ChatRenderer {
       return;
     }
     // Make a copy of messages
-    const fromIndex = Math.max(
-      0,
-      this.messages.length - MAX_PERSISTED_MESSAGES,
-    );
+    const fromIndex = Math.max(0, this.messages.length - MAX_CHAT_MESSAGES);
     const messages = this.messages.slice(fromIndex);
     // Remove existing nodes
     for (const message of messages) {
@@ -837,7 +831,7 @@ export class ChatRenderer {
     let messagesHtml = '';
     for (const message of this.visibleMessages) {
       if (message.node) {
-        messagesHtml += `${message.node.outerHTML}\n`;
+        messagesHtml += `${withoutExamineIcons(message.node.outerHTML)}\n`;
       }
     }
     // Create a page

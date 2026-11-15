@@ -320,6 +320,7 @@
 	// Clear existing spells, then grant familiar communication
 	mind_datum.RemoveAllSpells()
 	mind_datum.AddSpell(new /obj/effect/proc_holder/spell/self/message_summoner)
+	mind_datum.AddSpell(new /obj/effect/proc_holder/spell/self/familiar_nighteyes)
 	user.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/message_familiar)
 
 	// Add familiar's inherent spells

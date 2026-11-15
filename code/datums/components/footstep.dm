@@ -50,7 +50,8 @@
 
 	if(iscarbon(LM))
 		var/mob/living/carbon/C = LM
-		if(!C.get_bodypart(BODY_ZONE_L_LEG) && !C.get_bodypart(BODY_ZONE_R_LEG))
+		// Horse Body replaces both humanoid legs but still walks on hooves.
+		if(!C.get_bodypart(BODY_ZONE_L_LEG) && !C.get_bodypart(BODY_ZONE_R_LEG) && !istype(C.get_taur_tail(), /obj/item/bodypart/taur/equine))
 			return
 		if(C.m_intent == MOVE_INTENT_SNEAK && !T.footstepstealth)
 			return// stealth
@@ -108,7 +109,21 @@
 	var/used_volume = 0
 	var/used_extra_range = 0
 	var/do_vary = FALSE
-	if(islamia(human_parent))
+	if(istype(human_parent.get_taur_tail(), /obj/item/bodypart/taur/equine))
+		var/static/list/horse_walk_footsteps = list(
+			'sound/foley/footsteps/hoof/horsewalk (1).ogg',
+			'sound/foley/footsteps/hoof/horsewalk (2).ogg',
+			'sound/foley/footsteps/hoof/horsewalk (3).ogg',
+		)
+		var/static/list/horse_run_footsteps = list(
+			'sound/foley/footsteps/hoof/horserun (1).ogg',
+			'sound/foley/footsteps/hoof/horserun (2).ogg',
+			'sound/foley/footsteps/hoof/horserun (3).ogg',
+		)
+		used_footsteps = human_parent.m_intent == MOVE_INTENT_RUN ? horse_run_footsteps : horse_walk_footsteps
+		used_volume = 75
+		do_vary = TRUE
+	else if(islamia(human_parent))
 		var/static/lamia_footsteps = list(
 			'sound/foley/footsteps/lamia_slither (1).ogg',
 			'sound/foley/footsteps/lamia_slither (2).ogg',

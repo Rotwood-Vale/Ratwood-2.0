@@ -357,6 +357,16 @@
 
 /datum/sprite_accessory/testicles/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
+	adjust_taur_rear_layer(appearance_list, organ, owner)
+
+/// Run after exposure/device layer adjustments, including the local modular override.
+/datum/sprite_accessory/testicles/proc/adjust_taur_rear_layer(list/appearance_list, obj/item/organ/testicles/testes, mob/living/carbon/owner)
+	var/obj/item/bodypart/taur/taur = owner?.get_taur_tail()
+	if(!istype(taur, /obj/item/bodypart/taur/equine) || !get_taur_icon_state(testes))
+		return
+	// North sits below the tail; preserve an even lower device-imposed layer.
+	var/mutable_appearance/appearance = appearance_list[1]
+	set_north_appearance_layer(appearance_list, min(appearance.layer, -(BODY_ADJ_LAYER + 0.1)))
 
 /datum/sprite_accessory/testicles/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	var/obj/item/organ/testicles/testes = organ
@@ -468,6 +478,11 @@
 /datum/sprite_accessory/vagina/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
 	adjust_exposed_genital_layers(appearance_list, owner)
+	var/obj/item/organ/vagina/vagina = organ
+	if(!vagina?.vagina_taur_enabled || !istype(owner?.get_taur_tail(), /obj/item/bodypart/taur/equine))
+		return
+	var/mutable_appearance/appearance = appearance_list[1]
+	set_north_appearance_layer(appearance_list, min(appearance.layer, -(BODY_ADJ_LAYER + 0.1)))
 
 /datum/sprite_accessory/vagina/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	if(!organ.is_visible_on_owner())

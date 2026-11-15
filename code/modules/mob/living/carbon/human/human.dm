@@ -730,7 +730,45 @@
  * out of one or stamped onto one, see [/datum/mind/proc/transfer_to].
  */
 /mob/living/carbon/human/proc/is_shapeshift_shell()
-	return istype(src, /mob/living/carbon/human/species/wildshape) || istype(src, /mob/living/carbon/human/species/werewolf)
+	return istype(src, /mob/living/carbon/human/species/lessershift) || istype(src, /mob/living/carbon/human/species/wildshape) || istype(src, /mob/living/carbon/human/species/werewolf)
+
+/// The original character owns listings; temporary forms only borrow the connection.
+/mob/living/carbon/human/proc/get_shapeshift_owner()
+	RETURN_TYPE(/mob/living/carbon/human)
+	if(QDELETED(src))
+		return null
+	if(!is_shapeshift_shell())
+		return src
+	var/mob/living/carbon/human/owner = src
+	var/list/visited = list()
+	while(owner.is_shapeshift_shell())
+		if(owner in visited)
+			return null
+		visited += owner
+		var/mob/living/carbon/human/original = owner.stored_mob
+		if(!istype(original) || QDELETED(original) || original.loc != owner)
+			return null
+		owner = original
+	return QDELETED(owner) ? null : owner
+
+/// Resolve a stored character to its outermost form without trusting last_mind.
+/mob/living/carbon/human/proc/get_shapeshift_actor()
+	RETURN_TYPE(/mob/living/carbon/human)
+	if(QDELETED(src))
+		return null
+	if(!ishuman(loc))
+		return src
+	var/mob/living/carbon/human/actor = src
+	var/list/visited = list()
+	while(ishuman(actor.loc))
+		var/mob/living/carbon/human/shell = actor.loc
+		if(!shell.is_shapeshift_shell() || shell.stored_mob != actor)
+			break
+		if(QDELETED(shell) || (shell in visited))
+			return null
+		visited += shell
+		actor = shell
+	return actor
 
 /mob/living/carbon/human/is_literate()
 	if(mind)

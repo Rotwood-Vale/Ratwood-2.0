@@ -537,6 +537,7 @@
 /area/rogue/outdoors/wretch)
 "fu" = (
 /obj/structure/closet/crate/chest,
+/obj/item/baotha_crayon,
 /obj/item/leash/chain,
 /obj/item/leash/chain,
 /obj/item/clothing/neck/roguetown/collar/leather,
@@ -1400,6 +1401,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/wretch)
 "nX" = (
+/obj/item/baotha_crayon,
 /obj/structure/fluff/pillow/magenta{
 	dir = 8;
 	color = "#5232a8"
@@ -1635,6 +1637,7 @@
 /area/rogue/under/wretch/temple)
 "qz" = (
 /obj/structure/closet/crate/chest,
+/obj/item/baotha_crayon,
 /obj/item/leash/chain,
 /obj/item/leash/chain,
 /obj/item/clothing/neck/roguetown/collar/leather,
@@ -4657,6 +4660,7 @@
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/outdoors/wretch)
 "SV" = (
+/obj/item/baotha_crayon,
 /obj/structure/fluff/pillow/magenta{
 	color = "#5232a8"
 	},

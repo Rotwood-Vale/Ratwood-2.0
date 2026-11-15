@@ -8,6 +8,8 @@
 
 /datum/sprite_accessory/underwear/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_UNDIES, OFFSET_UNDIES_F)
+	if(istype(owner?.get_taur_tail(), /obj/item/bodypart/taur/equine))
+		set_north_appearance_layer(appearance_list, -(BODYPARTS_LAYER + 0.1))
 
 /datum/sprite_accessory/underwear/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	if(hides_breasts)

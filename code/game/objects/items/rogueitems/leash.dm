@@ -14,20 +14,33 @@
 	/// The storage for the leash
 	var/datum/beam/current_leash = null
 
-/datum/status_effect/leash_owner/on_creation(mob/living/new_owner, atom/target)
+/datum/status_effect/leash_owner/on_creation(mob/living/new_owner, mob/living/target)
 	. = ..()
-	start_beam(new_owner, target)
-
-/// Used for starting the beam when a target has been acquired
-/datum/status_effect/leash_owner/proc/start_beam(atom/target, mob/living/user)
-	if(!isliving(target))
+	if(!. || !isliving(target))
 		return
 	current_target = target
-	current_leash = user.Beam(current_target, icon_state = "chain")
+	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_endpoint_z_changed))
+	RegisterSignal(current_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_endpoint_z_changed))
+	update_leash_beam()
 
-/datum/status_effect/leash_owner/on_remove()
-	. = ..()
+/datum/status_effect/leash_owner/proc/on_endpoint_z_changed()
+	SIGNAL_HANDLER
+	update_leash_beam()
+
+/datum/status_effect/leash_owner/proc/update_leash_beam()
+	// The endpoints can transition separately. Restore the chain once they share a level again.
+	if(QDELETED(owner) || QDELETED(current_target) || !owner.z || owner.z != current_target.z)
+		QDEL_NULL(current_leash)
+		return
+	if(QDELETED(current_leash))
+		current_leash = current_target.Beam(owner, icon_state = "chain")
+
+/datum/status_effect/leash_owner/Destroy()
+	UnregisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED)
+	UnregisterSignal(current_target, COMSIG_MOVABLE_Z_CHANGED)
 	QDEL_NULL(current_leash)
+	current_target = null
+	return ..()
 
 /atom/movable/screen/alert/status_effect/leash_owner
 	name = "Leash Master"

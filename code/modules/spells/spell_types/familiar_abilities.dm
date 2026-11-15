@@ -3,6 +3,33 @@
 #define STARSEERS_CRY_RANGE 7
 #define SOOTHING_BLOOM_RANGE 5
 
+// Familiar bodies have no night-vision eye organ, so adjust their lighting plane directly.
+/obj/effect/proc_holder/spell/self/familiar_nighteyes
+	name = "Nighteyes"
+	desc = "Cycle through four levels of darkness visibility."
+	action_icon_state = "darkvision"
+	recharge_time = 1 SECONDS
+	antimagic_allowed = TRUE
+	breaks_invisibility = FALSE
+
+/obj/effect/proc_holder/spell/self/familiar_nighteyes/cast(list/targets, mob/living/user)
+	if(!istype(user, /mob/living/simple_animal/pet/familiar))
+		// revert_cast requires a real actor; never fall back to usr here.
+		if(isliving(user))
+			revert_cast(user)
+		return FALSE
+	switch(user.lighting_alpha)
+		if(LIGHTING_PLANE_ALPHA_VISIBLE)
+			user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		if(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		if(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			user.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			user.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	user.update_sight()
+	return TRUE
+
 /obj/effect/proc_holder/spell/self/message_summoner
 	name = "Message Summoner"
 	recharge_time = 1 SECONDS

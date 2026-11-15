@@ -67,11 +67,17 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 		board.update_icon()
 
 /obj/structure/roguemachine/rosewall/proc/can_advertise(mob/living/carbon/human/H)
+	if(!istype(H) || QDELETED(H))
+		return FALSE
+	H = H.get_shapeshift_owner()
 	return istype(H) && ((H.job in list("Slave", "Enslaved Adventurer")) || (H.job in GLOB.bathhouse_positions) || HAS_TRAIT(H, TRAIT_AGENT_BATHHOUSE))
 
 /// Slave characters stay separate even if they are also bathhouse agents.
 /obj/structure/roguemachine/rosewall/proc/get_roster(mob/living/carbon/human/H)
-	return (H.job in list("Slave", "Enslaved Adventurer")) ? "Slaves" : "Bathhouse"
+	if(!istype(H) || QDELETED(H))
+		return "Bathhouse"
+	H = H.get_shapeshift_owner()
+	return H && (H.job in list("Slave", "Enslaved Adventurer")) ? "Slaves" : "Bathhouse"
 
 /obj/structure/roguemachine/rosewall/proc/auto_register(mob/living/carbon/human/H)
 	if(QDELETED(H) || !H.mind || !H.advjob || H.stat == DEAD || !can_advertise(H))
@@ -86,14 +92,17 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	return TRUE
 
 /obj/structure/roguemachine/rosewall/proc/send_spawn_ad_link(mob/living/carbon/human/H, expected_key)
-	if(QDELETED(H) || H.stat == DEAD || H.key != expected_key || !can_advertise(H))
+	if(QDELETED(H) || !can_advertise(H))
+		return
+	var/mob/living/carbon/human/actor = H.get_shapeshift_actor()
+	if(!actor?.client || actor.stat == DEAD || actor.key != expected_key)
 		return
 	var/list/data = rosewall_adverts[H.real_name]
 	if(!data || data["mob"] != H)
 		return
-	pending_spawn_links[H.key] = H
-	addtimer(CALLBACK(src, PROC_REF(expire_spawn_link), H.key, H), 5 MINUTES)
-	to_chat(H, span_notice("I am listed on the [get_roster(H)] roster at the Rosewall. <a href='?src=[REF(src)];edit_spawn_ad=[REF(H)]'>Set my status and advertisement for this round</a> (one use, expires in 5 minutes). I can visit the Rosewall later to make further changes."))
+	pending_spawn_links[actor.key] = H
+	addtimer(CALLBACK(src, PROC_REF(expire_spawn_link), actor.key, H), 5 MINUTES)
+	to_chat(actor, span_notice("I am listed on the [get_roster(H)] roster at the Rosewall. <a href='?src=[REF(src)];edit_spawn_ad=[REF(H)]'>Set my status and advertisement for this round</a> (one use, expires in 5 minutes). I can visit the Rosewall later to make further changes."))
 
 /obj/structure/roguemachine/rosewall/proc/expire_spawn_link(key, mob/expected_user)
 	if(pending_spawn_links[key] == expected_user)
@@ -134,7 +143,7 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	for(var/advert_key in rosewall_adverts)
 		var/list/advert_data = rosewall_adverts[advert_key]
 		var/mob/living/carbon/human/worker = advert_data["mob"]
-		if(!worker || QDELETED(worker) || !worker.ckey || !can_advertise(worker))
+		if(!worker || QDELETED(worker) || !worker.get_shapeshift_actor()?.client || !can_advertise(worker))
 			stale_keys += advert_key
 	if(!length(stale_keys))
 		return FALSE
@@ -149,7 +158,8 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	var/mob/living/carbon/human/H = user
 	data["can_advertise"] = can_advertise(H)
 	data["my_roster"] = can_advertise(H) ? get_roster(H) : "Bathhouse"
-	data["my_key"] = istype(H) ? H.real_name : ""
+	var/mob/living/carbon/human/owner = istype(H) ? H.get_shapeshift_owner() : null
+	data["my_key"] = owner ? owner.real_name : ""
 	data["message_char_limit"] = message_char_limit
 	data["status_options"] = list(ROSEWALL_STATUS_AVAILABLE, ROSEWALL_STATUS_HIRED, ROSEWALL_STATUS_DND)
 	var/list/adverts = list()
@@ -180,10 +190,11 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 			var/datum/preferences/P = H.client.prefs
 			if(!P)
 				return FALSE
-			if(H.roleplay_ad_owner != H.ckey || H.roleplay_ad_slot != P.default_slot)
+			var/mob/living/carbon/human/owner = H.get_shapeshift_owner()
+			if(!owner || owner.roleplay_ad_owner != H.ckey || owner.roleplay_ad_slot != P.default_slot)
 				to_chat(H, span_warning("Select this character's slot in Character Setup before changing its renewing ad."))
 				return FALSE
-			if(H.roleplay_ad_is_gnoll)
+			if(owner.roleplay_ad_is_gnoll)
 				if(!P.gnoll_prefs)
 					return FALSE
 				P.gnoll_prefs.edit_roleplay_ad(H)
@@ -200,6 +211,9 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	if(!ishuman(ui?.user))
 		return
 	var/mob/living/carbon/human/H = ui.user
+	var/mob/living/carbon/human/owner = H.get_shapeshift_owner()
+	if(!owner)
+		return
 	if(!Adjacent(H))
 		to_chat(H, span_warning("I need to be closer to the board."))
 		return
@@ -212,12 +226,12 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 			var/new_status = params["status"]
 			if(!(new_status in list(ROSEWALL_STATUS_AVAILABLE, ROSEWALL_STATUS_HIRED, ROSEWALL_STATUS_DND)))
 				return
-			var/list/advert_data = rosewall_adverts[H.real_name]
+			var/list/advert_data = rosewall_adverts[owner.real_name]
 			if(!advert_data)
-				advert_data = list("status" = ROSEWALL_STATUS_AVAILABLE, "mob" = H, "message" = "")
-				rosewall_adverts[H.real_name] = advert_data
+				advert_data = list("status" = ROSEWALL_STATUS_AVAILABLE, "mob" = owner, "message" = "")
+				rosewall_adverts[owner.real_name] = advert_data
 			advert_data["status"] = new_status
-			advert_data["mob"] = H
+			advert_data["mob"] = owner
 			to_chat(H, span_notice("I set my Rosewall status to: <b>[new_status]</b>"))
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 			log_admin_private("[key_name(H)] set Rosewall status to [new_status]")
@@ -226,15 +240,16 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 		if("edit_advert")
 			if(!can_advertise(H))
 				return
-			var/list/advert_data = rosewall_adverts[H.real_name]
+			var/list/advert_data = rosewall_adverts[owner.real_name]
 			if(!advert_data)
-				advert_data = list("status" = ROSEWALL_STATUS_AVAILABLE, "mob" = H, "message" = "")
-				rosewall_adverts[H.real_name] = advert_data
+				advert_data = list("status" = ROSEWALL_STATUS_AVAILABLE, "mob" = owner, "message" = "")
+				rosewall_adverts[owner.real_name] = advert_data
+			var/client/editor = H.client
 			var/current_msg = advert_data["message"] || ""
 			var/new_msg = stripped_input(H, "Compose my advert for the Rosewall (max [message_char_limit] characters):", "Rosewall Advert", current_msg, message_char_limit)
 			if(new_msg == null)
 				return
-			if(!can_advertise(H))
+			if(QDELETED(src) || QDELETED(H) || QDELETED(owner) || !editor || H.client != editor || editor.mob != H || H.get_shapeshift_owner() != owner || !can_advertise(H) || rosewall_adverts[owner.real_name] != advert_data)
 				if(prune_stale_adverts())
 					update_all_boards()
 				to_chat(H, span_warning("I no longer have permission to advertise here."))
@@ -243,7 +258,7 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 				to_chat(H, span_warning("I moved too far from the board."))
 				return
 			advert_data["message"] = new_msg
-			advert_data["mob"] = H
+			advert_data["mob"] = owner
 			to_chat(H, span_notice("My advert has been pinned to the Rosewall."))
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 			log_admin_private("[key_name(H)] set Rosewall advert: \"[new_msg]\"")
@@ -252,10 +267,10 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 		if("remove_advert")
 			if(!can_advertise(H))
 				return
-			if(!rosewall_adverts[H.real_name])
+			if(!rosewall_adverts[owner.real_name])
 				to_chat(H, span_warning("I have no advert pinned here."))
 				return
-			rosewall_adverts -= H.real_name
+			rosewall_adverts -= owner.real_name
 			to_chat(H, span_notice("I take my advert down from the Rosewall."))
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 			log_admin_private("[key_name(H)] removed their Rosewall advert")
@@ -263,7 +278,7 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 			return TRUE
 		if("send_offer")
 			var/target_key = params["key"]
-			if(!target_key || target_key == H.real_name)
+			if(!target_key || target_key == owner.real_name)
 				return
 			send_offer(H, target_key)
 			return TRUE
@@ -298,15 +313,18 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 		to_chat(sender, span_warning("That advert is no longer pinned here."))
 		return
 	var/mob/living/carbon/human/worker = advert_data["mob"]
-	if(!worker || QDELETED(worker) || worker.stat == DEAD || !worker.ckey || !can_advertise(worker))
+	if(!worker || QDELETED(worker) || worker.stat == DEAD || !worker.get_shapeshift_actor()?.client || !can_advertise(worker))
 		rosewall_adverts -= target_key
 		update_all_boards()
 		to_chat(sender, span_warning("My offer cannot be delivered for some reason."))
 		return
+	var/mob/living/carbon/human/sender_owner = sender.get_shapeshift_owner()
+	if(!sender_owner || sender_owner == worker)
+		return
 	if(advert_data["status"] == ROSEWALL_STATUS_DND)
 		to_chat(sender, span_warning("[worker.real_name] is not to be disturbed."))
 		return
-	var/cooldown_key = "rosewall_[sender.real_name]_[worker.real_name]"
+	var/cooldown_key = "rosewall_[sender_owner.real_name]_[worker.real_name]"
 	if(sender_cooldowns[cooldown_key])
 		var/time_left = sender_cooldowns[cooldown_key] + offer_cooldown - world.time
 		if(time_left > 0)
@@ -316,16 +334,22 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	if(!Adjacent(sender))
 		to_chat(sender, span_warning("I need to stay close to the board."))
 		return
+	var/client/offer_client = sender.client
 	var/message = stripped_input(sender, "What offer do I wish to send? (Max [message_char_limit] characters)", "Rosewall Offer", "", message_char_limit)
 	if(!message)
+		return
+	if(QDELETED(src) || QDELETED(sender) || !offer_client || sender.client != offer_client || offer_client.mob != sender)
 		return
 	if(!Adjacent(sender))
 		to_chat(sender, span_warning("I moved too far from the board."))
 		return
-	if(!can_advertise(worker))
+	if(QDELETED(sender) || !sender.client || sender.get_shapeshift_owner() != sender_owner || QDELETED(worker) || !can_advertise(worker) || rosewall_adverts[target_key] != advert_data || advert_data["status"] == ROSEWALL_STATUS_DND)
 		if(prune_stale_adverts())
 			update_all_boards()
 		to_chat(sender, span_warning("That advert is no longer pinned here."))
+		return
+	var/mob/living/carbon/human/recipient = worker.get_shapeshift_actor()
+	if(!recipient?.client || recipient.stat == DEAD)
 		return
 	sender_cooldowns[cooldown_key] = world.time
 	response_id_counter++
@@ -333,10 +357,10 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	if(!QDELETED(worker) && !QDELETED(sender))
 		// Tracked by expiry time rather than an addtimer bound to this board, so the
 		// entry cannot leak (holding refs to both mobs) if this board is destroyed.
-		pending_offer_responses[response_id] = list("responder" = worker, "sender" = sender, "expires" = world.time + response_timeout)
-	to_chat(worker, span_boldnotice("A perfumed slip finds its way to me from the Rosewall: <i>[message]</i> - [sender.real_name]<br><a href='?src=[REF(src)];offer_response=yae;response_id=[response_id]'>\[YAE\]</a> | <a href='?src=[REF(src)];offer_response=nae;response_id=[response_id]'>\[NAE\]</a>"))
+		pending_offer_responses[response_id] = list("responder" = worker, "sender" = sender_owner, "expires" = world.time + response_timeout)
+	to_chat(recipient, span_boldnotice("A perfumed slip finds its way to me from the Rosewall: <i>[message]</i> - [sender_owner.real_name]<br><a href='?src=[REF(src)];offer_response=yae;response_id=[response_id]'>\[YAE\]</a> | <a href='?src=[REF(src)];offer_response=nae;response_id=[response_id]'>\[NAE\]</a>"))
 	to_chat(sender, span_notice("My offer has been sent to [worker.real_name]."))
-	playsound(worker.loc, 'sound/misc/notice (2).ogg', 100, FALSE, -1)
+	playsound(recipient.loc, 'sound/misc/notice (2).ogg', 100, FALSE, -1)
 	sender.log_talk(message, LOG_SAY, tag="rosewall offer (to [key_name(worker)])")
 	worker.log_talk(message, LOG_SAY, tag="rosewall offer (from [key_name(sender)])", log_globally=FALSE)
 
@@ -344,33 +368,35 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	. = ..()
 	if(href_list["edit_spawn_ad"])
 		var/mob/living/carbon/human/H = locate(href_list["edit_spawn_ad"])
-		if(!H || usr != H)
+		var/mob/living/carbon/human/actor = usr
+		if(!istype(H) || QDELETED(H) || !istype(actor) || actor.get_shapeshift_owner() != H || !actor.client)
 			return
-		if(pending_spawn_links[H.key] != H)
-			to_chat(H, span_warning("That Rosewall link has expired."))
+		if(pending_spawn_links[actor.key] != H)
+			to_chat(actor, span_warning("That Rosewall link has expired."))
 			return
+		var/client/editor = actor.client
 		var/list/data = rosewall_adverts[H.real_name]
-		if(!data || data["mob"] != H || H.stat == DEAD || !can_advertise(H))
+		if(!data || data["mob"] != H || actor.stat == DEAD || !can_advertise(H))
 			return
-		pending_spawn_links -= H.key
+		pending_spawn_links -= actor.key
 		var/list/status_options = list(ROSEWALL_STATUS_AVAILABLE, ROSEWALL_STATUS_HIRED, ROSEWALL_STATUS_DND)
-		var/new_status = input(H, "Choose my status for this round. Afterwards, I can edit my advertisement.", "Rosewall Status", data["status"]) as null|anything in status_options
-		if(!(new_status in status_options) || QDELETED(H) || usr != H || H.stat == DEAD)
+		var/new_status = input(actor, "Choose my status for this round. Afterwards, I can edit my advertisement.", "Rosewall Status", data["status"]) as null|anything in status_options
+		if(!(new_status in status_options) || QDELETED(src) || QDELETED(H) || QDELETED(actor) || !editor || actor.client != editor || editor.mob != actor || actor.get_shapeshift_owner() != H || actor.stat == DEAD)
 			return
 		if(!can_advertise(H) || rosewall_adverts[H.real_name] != data || data["mob"] != H)
 			return
 		data["status"] = new_status
 		update_all_boards()
-		to_chat(H, span_notice("I set my Rosewall status to: <b>[new_status]</b>"))
+		to_chat(actor, span_notice("I set my Rosewall status to: <b>[new_status]</b>"))
 		log_admin_private("[key_name(H)] set Rosewall status to [new_status]")
-		var/new_msg = stripped_input(H, "Compose my advert for this round (max [message_char_limit] characters):", "Rosewall Advert", data["message"] || "", message_char_limit)
-		if(new_msg == null || QDELETED(H) || usr != H || H.stat == DEAD)
+		var/new_msg = stripped_input(actor, "Compose my advert for this round (max [message_char_limit] characters):", "Rosewall Advert", data["message"] || "", message_char_limit)
+		if(new_msg == null || QDELETED(src) || QDELETED(H) || QDELETED(actor) || !editor || actor.client != editor || editor.mob != actor || actor.get_shapeshift_owner() != H || actor.stat == DEAD)
 			return
 		if(!can_advertise(H) || rosewall_adverts[H.real_name] != data || data["mob"] != H)
 			return
 		data["message"] = new_msg
 		update_all_boards()
-		to_chat(H, span_notice("My Rosewall advertisement has been updated. I can visit the Rosewall to make further changes."))
+		to_chat(actor, span_notice("My Rosewall advertisement has been updated. I can visit the Rosewall to make further changes."))
 		log_admin_private("[key_name(H)] set Rosewall advert: \"[new_msg]\"")
 		return
 	if(href_list["offer_response"])
@@ -392,7 +418,7 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 		var/mob/living/carbon/human/stored_responder = response_data["responder"]
 		var/mob/living/carbon/human/sender = response_data["sender"]
 
-		if(responder != stored_responder)
+		if(QDELETED(stored_responder) || responder.get_shapeshift_owner() != stored_responder)
 			to_chat(responder, span_warning("That response link is not for me."))
 			return
 
@@ -401,16 +427,19 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 			pending_offer_responses -= response_id
 			return
 
+		var/mob/living/carbon/human/sender_actor = sender.get_shapeshift_actor()
+		if(!sender_actor?.client)
+			return
 		pending_offer_responses -= response_id
 
 		if(response_type == "yae")
-			to_chat(sender, span_notice("[responder.real_name] responded in affirmation to my offer."))
+			to_chat(sender_actor, span_notice("[stored_responder.real_name] responded in affirmation to my offer."))
 			to_chat(responder, span_notice("I responded in affirmation to [sender.real_name]."))
 		else
-			to_chat(sender, span_notice("[responder.real_name] responded negatively to my offer."))
+			to_chat(sender_actor, span_notice("[stored_responder.real_name] responded negatively to my offer."))
 			to_chat(responder, span_notice("I responded negatively to [sender.real_name]."))
 
-		playsound(sender.loc, 'sound/misc/notice (2).ogg', 100, FALSE, -1)
+		playsound(sender_actor.loc, 'sound/misc/notice (2).ogg', 100, FALSE, -1)
 		playsound(responder.loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 
 		responder.log_talk("offer response: [response_type]", LOG_SAY, tag="rosewall offer response (to [key_name(sender)])")

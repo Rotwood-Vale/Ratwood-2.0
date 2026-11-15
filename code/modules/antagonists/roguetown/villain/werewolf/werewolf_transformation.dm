@@ -184,6 +184,7 @@
 	W.gender = gender
 	W.regenerate_icons()
 	W.stored_mob = src
+	W.vices += new /datum/charflaw/addiction/lovefiend/werewolf()
 
 	//Set the werewolf's name from the antagonist datum
 	var/datum/antagonist/werewolf/Were = mind.has_antag_datum(/datum/antagonist/werewolf/)
@@ -212,6 +213,7 @@
 	skills?.skill_experience = list()
 	W.remove_all_languages()
 	W.grant_language(/datum/language/beast)
+	W.grant_language(/datum/language/common)
 
 	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	W.update_a_intents()
@@ -282,9 +284,18 @@
 
 	invisibility = oldinv
 
+/mob/living/carbon/human/species/werewolf/could_speak_in_language(datum/language/dt)
+	if(dt == /datum/language/common)
+		return FALSE
+	return ..()
+
 /mob/living/carbon/human/proc/werewolf_untransform(dead,gibbed)
 	if(!stored_mob)
 		return
+	for(var/datum/charflaw/addiction/lovefiend/werewolf/vice in vices.Copy())
+		vice.on_removal(src)
+		vices -= vice
+		qdel(vice)
 	if(!mind)
 		log_runtime("NO MIND ON [src.name] WHEN UNTRANSFORMING")
 	Paralyze(1, ignore_canstun = TRUE)

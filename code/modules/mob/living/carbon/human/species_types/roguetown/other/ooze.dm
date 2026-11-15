@@ -58,6 +58,8 @@
 		/obj/item/bodypart/taur/deer,
 		/obj/item/bodypart/taur/wasp,
 		/obj/item/bodypart/taur/mermaid,
+		/obj/item/bodypart/taur/biglegs,
+		/obj/item/bodypart/taur/biglegsstanced,
 	)
 	enflamed_icon = "widefire"
 	customizers = list(
