@@ -875,7 +875,6 @@
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	body_parts_covered = NECK
-	flags_inv = HIDEEARS|HIDEFACE|HIDEFACIALHAIR	//Open-topped shroud with a see-through brow; hiding hair just shows a bald scalp
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	dynamic_hair_suffix = ""
 	edelay_type = 1
