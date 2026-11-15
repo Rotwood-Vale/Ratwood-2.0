@@ -432,7 +432,7 @@
 	dropshrink = 0.8
 	var/open = TRUE
 	var/list/occupants = list()
-	var/max_occupants = 1 //Hard-cap so you can't have multiple seelie in one carrier
+	var/max_occupants = 2
 
 /obj/item/flashlight/flare/torch/lantern/afterattack(atom/movable/A, mob/user, proximity)
 	. = ..()
@@ -498,8 +498,21 @@
 //On exiting the lantern
 /obj/item/flashlight/flare/torch/lantern/Exited(atom/movable/occupant)
 	. = ..()
-	if((occupant in occupants) && isliving(occupant))
-		occupants -= occupant
+	if(!(occupant in occupants))
+		return
+	occupants -= occupant
+	if(occupants.len || QDELETED(src))
+		return
+	icon_state = initial(icon_state)
+	item_state = initial(item_state)
+	set_light_color(initial(light_color))
+	on = FALSE
+	set_light_on(FALSE)
+	STOP_PROCESSING(SSobj, src)
+	if(ismob(loc))
+		var/mob/holder = loc
+		holder.update_inv_hands()
+		holder.update_inv_belt()
 
 //On being examined
 /obj/item/flashlight/flare/torch/lantern/examine(mob/user)
@@ -526,9 +539,6 @@
 /obj/item/flashlight/flare/torch/lantern/attack(mob/living/target, mob/living/user)
 	if(!(istype(user.rmb_intent, /datum/rmb_intent/weak)))	//Only allow caging seelie via weak intent rmb
 		return ..()
-	if(!open)	//Lantern must be "open", or unlocked
-		to_chat(user, span_warning("I need to open the [src]'s door!"))
-		return
 	if(!HAS_TRAIT(target, TRAIT_TINY))
 		to_chat(user, span_warning("How could they possibly fit?"))
 		return
@@ -537,9 +547,6 @@
 		return
 	if((isseelie(user)) && HAS_TRAIT(target, TRAIT_TINY))	//Left this one as a seelie check since they shrink items
 		to_chat(user, span_warning("You shrink the [src] by holding it, they cant fit!"))
-		return
-	if(on)
-		to_chat(user, span_warning("[src] is lit, you'll burn them!"))
 		return
 	load_occupant(user, target)
 
@@ -569,7 +576,7 @@
 /obj/item/flashlight/flare/torch/lantern/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(isliving(O))
 		var/mob/living/l_object = O
-		if(HAS_TRAIT(l_object, TRAIT_TINY) && l_object == user)
+		if(l_object == user && can_accept_occupant(l_object, user))
 			loc.visible_message(span_notice("[user] starts climbing into [src]!"), \
 			span_warning("[user] starts climbing into [src]!"))
 			if(do_after(user, 120, target = src))
@@ -581,34 +588,47 @@
 	if(isopenturf(over_atom) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message(span_notice("[usr] unloads [src]."), \
 		span_notice("I unload [src] onto [over_atom]."))
-		for(var/V in occupants)
-			remove_occupant(V, over_atom)
+		for(var/mob/living/occupant in occupants.Copy())
+			remove_occupant(occupant, over_atom)
+
+/obj/item/flashlight/flare/torch/lantern/proc/can_accept_occupant(mob/living/occupant, mob/living/user)
+	if(QDELETED(src) || !istype(occupant) || QDELETED(occupant) || (occupant in occupants))
+		return FALSE
+	if(!HAS_TRAIT(occupant, TRAIT_TINY) || occupant.buckled)
+		return FALSE
+	if(!open)
+		to_chat(user, span_warning("I need to open [src]'s door!"))
+		return FALSE
+	// Occupants make the lantern glow. Only a lit, empty lantern has a flame.
+	if(on && !occupants.len)
+		to_chat(user, span_warning("[src] is lit!"))
+		return FALSE
+	if(occupants.len >= max_occupants)
+		to_chat(user, span_warning("[src] is full!"))
+		return FALSE
+	return TRUE
 
 //Handle the actual loading of the seelie
 /obj/item/flashlight/flare/torch/lantern/proc/load_occupant(mob/living/user, mob/living/target)
-	if(occupants.len >= max_occupants)
-		to_chat(user, span_warning("[src] is already carrying a seelie!"))
+	if(!can_accept_occupant(target, user))
 		return
 	user.visible_message(span_notice("[user] starts loading [target] into [src]."), \
 	span_notice("I start loading [target] into [src]..."), null, null, target)
 	to_chat(target, span_danger("[user] starts loading you into [user.p_their()] [name]!"))
 	if(!do_mob(user, target, 30))
 		return
-	if(target in occupants)
-		return
-	if(occupants.len >= max_occupants) //Run the checks again, just in case
-		to_chat(user, span_warning("[src] is already carrying a seelie!"))
+	if(!add_occupant(target, user))
 		return
 	user.visible_message(span_notice("[user] loads [target] into [src]!"), \
 	span_notice("I load [target] into [src]."), null, null, target)
 	to_chat(target, span_danger("[user] loads you into [user.p_their()] [name]!"))
-	add_occupant(target)
 
 //Adds the seelie to the list of occupants
-/obj/item/flashlight/flare/torch/lantern/proc/add_occupant(mob/living/occupant)
-	if(!istype(occupant) || (occupant in occupants))
-		return
-	occupant.forceMove(src)
+/obj/item/flashlight/flare/torch/lantern/proc/add_occupant(mob/living/occupant, mob/living/user = occupant)
+	if(!can_accept_occupant(occupant, user))
+		return FALSE
+	if(!occupant.forceMove(src))
+		return FALSE
 	occupants += occupant
 	icon_state = "lantern_wisp"
 	set_light_color("#6e55fc")
@@ -619,24 +639,15 @@
 		M.update_inv_hands()
 		M.update_inv_belt()
 	START_PROCESSING(SSobj, src)
+	return TRUE
 
 //Removes the seelie from the list of occupants
 /obj/item/flashlight/flare/torch/lantern/proc/remove_occupant(mob/living/occupant, turf/new_turf)
 	if(!istype(occupant) || !(occupant in occupants))
 		return
-	occupant.forceMove(new_turf ? new_turf : drop_location())
-	occupants -= occupant
-	icon_state = initial(icon_state)
-	item_state = initial(item_state)
-	set_light_color(initial(light_color))
-	on = FALSE
-	set_light_on(FALSE)
-	STOP_PROCESSING(SSobj, src)
-	if(ismob(src.loc))
-		var/mob/M = src.loc
-		M.update_inv_hands()
-		M.update_inv_belt()
-	occupant.setDir(SOUTH)
+	var/atom/destination = new_turf || drop_location()
+	if(destination && occupant.forceMove(destination))
+		occupant.setDir(SOUTH)
 
 //------------END LANTERN SEELIE CARRYING CODE--------------//
 
