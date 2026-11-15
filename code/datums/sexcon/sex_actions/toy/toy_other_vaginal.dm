@@ -22,15 +22,9 @@
 
 /datum/sex_action/toy_other_vagina/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = !pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] forces \the [dildo] in [target]'s tiny cunt!"))
-		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
-		if(chest)
-			chest.add_wound(/datum/wound/fracture/chest)
-		if(groin)
-			groin.add_wound(/datum/wound/fracture/groin)
-		target.apply_damage(30, BRUTE, chest)
+	if(can_apply_tiny_injury(user, target))
+		user.visible_message(span_warning("[user] forces \the [dildo] in [target]'s tiny cunt!"), ignored_mobs = get_extreme_content_excluded_mobs(user))
+		apply_tiny_start_injury(target)
 	else
 		user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s cunt..."))
 
@@ -41,7 +35,7 @@
 		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s cunt..."))
 	user.sexcon.outercourse_noise(target, TRUE)
 
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+	if(can_apply_tiny_injury(user, target))
 		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
 		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 
@@ -73,7 +67,7 @@
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+	if(can_apply_tiny_injury(user, target))
 		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
 		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 

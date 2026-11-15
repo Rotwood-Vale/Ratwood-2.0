@@ -6,15 +6,9 @@
 	user_sex_part = SEX_PART_TAIL
 
 /datum/sex_action/tailpegging_anal/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] forces their tail into [target]'s tiny butt!"))
-		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
-		if(chest)
-			chest.add_wound(/datum/wound/fracture/chest)
-		if(groin)
-			groin.add_wound(/datum/wound/fracture/groin)
-		target.apply_damage(30, BRUTE, chest)
+	if(can_apply_tiny_injury(user, target))
+		user.visible_message(span_warning("[user] forces their tail into [target]'s tiny butt!"), ignored_mobs = get_extreme_content_excluded_mobs(user))
+		apply_tiny_start_injury(target)
 	else if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
 		user.visible_message(span_warning("[user] tries and fails to insert their tiny tail into [target]'s butt!"))
 	else
@@ -36,7 +30,7 @@
 	user.sexcon.outercourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
 
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+	if(can_apply_tiny_injury(user, target))
 		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
 		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 
