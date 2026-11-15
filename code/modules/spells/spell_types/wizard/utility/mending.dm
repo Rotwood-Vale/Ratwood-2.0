@@ -45,7 +45,7 @@
 			span_warning("[user] begins to concentrate on [I]!"),
 			span_notice("I begin to concentrate on [I]..")
 	)
-	if(!do_after(user, 4 SECONDS, TRUE, I, TRUE))
+	if(!do_after(user, 4 SECONDS, TRUE, I, TRUE, extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), user)))
 		to_chat(user, span_warning("My concentration breaks! I could not repair [I]."))
 		revert_cast()
 		return

@@ -14,6 +14,7 @@
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	antimagic_allowed = FALSE
+	movement_interrupt = FALSE
 	charging_slowdown = 3
 	cost = 2
 	spell_tier = 2 // Spellblade tier.

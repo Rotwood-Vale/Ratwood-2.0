@@ -108,7 +108,7 @@
 
 				to_chat(user, span_info("I begin to meld with the shadows.."))
 				lockon(T, user)
-				if(do_after(user, 5 SECONDS))
+				if(do_after(user, 5 SECONDS, extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), user)))
 					tp(user)
 				else
 					reset(silent = TRUE)

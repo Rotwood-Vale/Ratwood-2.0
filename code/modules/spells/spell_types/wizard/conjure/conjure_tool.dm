@@ -49,6 +49,8 @@
 /obj/effect/proc_holder/spell/invoked/conjure_tool/cast(list/targets, mob/living/user = usr)
 	var/tool_choice = input(user, "Choose a tool", "Conjure Tool") as anything in tool_options
 	if(!arcane_speech_allowed(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
 		return FALSE
 	if(!tool_choice)
 		return

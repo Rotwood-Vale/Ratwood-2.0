@@ -5,6 +5,8 @@
 	range = -1
 	include_user = TRUE
 	recharge_time = 1 MINUTES
+	movement_interrupt = FALSE
+	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokegen
 	action_icon_state = "summons"
 	invocations = list("Evoca Telum")

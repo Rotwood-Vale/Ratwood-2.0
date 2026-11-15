@@ -45,8 +45,9 @@
 
 	var/first_target_name = input(user, "Choose the first person to link", "Mindlink") as null|anything in possible_targets
 
-	if(!first_target_name)
-		revert_cast()
+	if(!first_target_name || !arcane_speech_allowed(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
 		return FALSE
 
 	var/mob/living/first_target
@@ -59,8 +60,9 @@
 
 	var/second_target_name = input(user, "Choose the second person to link", "Mindlink") as null|anything in possible_targets
 
-	if(!second_target_name)
-		revert_cast()
+	if(!second_target_name || !arcane_speech_allowed(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
 		return FALSE
 
 	var/mob/living/second_target

@@ -273,6 +273,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return 0
 	// Preserve minor utility casts, including their existing button/instant behavior.
 	var/static/list/utility_types = typecacheof(list(
+		/obj/effect/proc_holder/spell/self/lessershift,
+		/obj/effect/proc_holder/spell/self/magicians_brick,
 		/obj/effect/proc_holder/spell/self/light,
 		/obj/effect/proc_holder/spell/self/message,
 		/obj/effect/proc_holder/spell/self/message_familiar,
@@ -579,6 +581,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			to_chat(user, span_warning("I'm missing [req_name] in my hand to cast this."))
 			return FALSE
 
+	// Completion checks must not spend resources, restart processing or record another cast.
+	if(!check_charge)
+		return TRUE
+
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")
@@ -739,11 +745,22 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			// do_after applies its own coefficient; preserve the spell's displayed duration.
 			var/coefficient = caster.do_after_coefficent()
 			if(coefficient <= 0)
+				revert_cast(caster)
 				return FALSE
 			delay /= coefficient
-			if(!do_after(caster, delay, needhand = FALSE, target = caster, extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), caster)))
-				return FALSE
-			if(QDELETED(src) || QDELETED(caster) || (original_client && caster.client != original_client) || !check_cast_requirements(TRUE, caster, check_charge = FALSE))
+			var/completed
+			// Use a separate modifier so mouse charging and other slowdowns keep their ownership.
+			var/slowdown_id = "arcane_cast_[REF(src)]"
+			if(!movement_interrupt)
+				caster.add_movespeed_modifier(slowdown_id, update = TRUE, priority = 100, multiplicative_slowdown = charging_slowdown, movetypes = GROUND)
+				completed = move_after(caster, delay, needhand = FALSE, target = caster, extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), caster))
+				if(!QDELETED(caster))
+					caster.remove_movespeed_modifier(slowdown_id, TRUE)
+			else
+				completed = do_after(caster, delay, needhand = FALSE, target = caster, extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), caster))
+			if(!completed || QDELETED(src) || QDELETED(caster) || (original_client && caster.client != original_client) || !check_cast_requirements(TRUE, caster, check_charge = FALSE))
+				if(!QDELETED(src) && !QDELETED(caster))
+					revert_cast(caster)
 				return FALSE
 
 	if(!ignore_los)
