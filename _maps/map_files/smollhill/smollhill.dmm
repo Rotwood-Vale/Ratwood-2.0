@@ -41621,6 +41621,8 @@
 /area/rogue/outdoors/mountains/decap/rockhill)
 "tLb" = (
 /obj/structure/rack/rogue,
+/obj/item/broom,
+/obj/item/broom,
 /obj/item/rogueweapon/hoe,
 /obj/item/rogueweapon/hoe,
 /obj/item/rogueweapon/shovel,
