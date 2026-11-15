@@ -264,8 +264,8 @@
 	..()
 	to_chat(H, span_warning("The mercenary guild is teeming with corn-fed brutes looking to make mammons off the only thing they're good at - while simple-minded describes you best, you possess brute strength and a heavy club. Sometimes that's all you need to solve problems in lyfe."))
 	if(H.mind)
-		var/armor = list("Regular Armor", "Skin Armor")
-		var/armor_choice = input(H, "Choose your armor.", "PROTECT YOURSELF") as anything in armor
+		var/armor_options = list("Regular Armor", "Skin Armor")
+		var/armor_choice = input(H, "Choose your armor.", "PROTECT YOURSELF") as anything in armor_options
 		switch(armor_choice)
 			if("Regular Armor")
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron

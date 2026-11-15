@@ -5,6 +5,7 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	icon_state = null
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	nudist_approved = TRUE
 
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
@@ -28,6 +29,7 @@
 	var/repair_fraction = 0.35
 	/// Flat integrity restored per cycle. Defaults to repair_fraction * max_integrity at Initialize; set directly for a flat per-armour override.
 	var/repair_percent
+	var/monk_regen = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/manual/Initialize(mapload)
 	. = ..()
@@ -35,7 +37,17 @@
 		repair_percent = repair_fraction * max_integrity
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
+/obj/item/clothing/suit/roguetown/armor/manual/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	if(monk_regen && ishuman(user))
+		if(worn_on_body(user))
+			ADD_TRAIT(user, TRAIT_MONK_ROBE, REF(src))
+		else
+			REMOVE_TRAIT(user, TRAIT_MONK_ROBE, REF(src))
+
 /obj/item/clothing/suit/roguetown/armor/manual/dropped(mob/living/carbon/human/user)
+	if(monk_regen && ishuman(user))
+		REMOVE_TRAIT(user, TRAIT_MONK_ROBE, REF(src))
 	..()
 	if(QDELETED(src))
 		return
@@ -118,7 +130,7 @@
 /obj/item/clothing/suit/roguetown/armor/manual/meditation/get_mechanics_examine(mob/user)
 	. = ..()
 
-	. += span_info("Repairable by completing a *meditate emote.")
+	. += span_info("Repairable every 10 seconds while meditating.")
 
 /obj/item/clothing/suit/roguetown/armor/manual/meditation/proc/on_wearer_meditated(mob/living/carbon/human/user)
 	SIGNAL_HANDLER
@@ -149,6 +161,7 @@
 	</br>Happiness must be fought for. The pain inflicted upon this vessel can be mended with meditation."
 	repair_fraction = 0.35 //Single layer, so back to default rate.
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //a heavy gambeson.
+	monk_regen = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats //Only for roles with Honorbound, as the restrictions offset the better head coverage & repair rate.
 	icon_state = "easttats"
@@ -158,7 +171,7 @@
 	body_parts_covered = COVERAGE_FULL | COVERAGE_HEAD | NECK //This does not cover eyes/nose/mouth. Use a mask.
 	body_parts_inherent = COVERAGE_FULL | COVERAGE_HEAD | NECK
 	//allowed_race = NON_DWARVEN_RACE_TYPES
-	repair_fraction = 0.35 //It fully mends within a 30s meditation cycle.
+	repair_fraction = 0.35 //It fully mends after 30s of meditation.
 	repairmsg_end = "The tattoos flow more calmly, as the meditation renews their strength."
 	repairmsg_continue = "The tattoos mend some of their abuse..."
 
@@ -298,6 +311,7 @@
 	</br>I came here because I wanted purpose, something solid to believe in.\
 	</br>They tell me doubt is natural, and that understanding comes with time.\
 	</br>For now, I will listen, learn, and try to live in a way that does not waste what was given to us."
+	monk_regen = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/body/disciple
 	name = "enduring skin"
@@ -308,6 +322,7 @@
 	</br>Heaven's gate closed to us long ago, yet His children persist; as long as they do, so must I. \
 	</br>Happiness must be fought for. My superficial wounds can be repaired with a needle or a cautery."
 	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE + 50 //They eat a LOT of abuse.
+	monk_regen = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest
 	body_parts_covered = COVERAGE_VEST

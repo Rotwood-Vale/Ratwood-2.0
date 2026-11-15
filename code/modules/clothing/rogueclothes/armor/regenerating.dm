@@ -64,7 +64,7 @@
 	is_disrupted = TRUE
 	if(reptimer)
 		deltimer(reptimer)
-	disrupttimer = addtimer(CALLBACK(src, PROC_REF(revert_disrupt)), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
+	disrupttimer = addtimer(CALLBACK(src, PROC_REF(revert_disrupt)), 30 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/proc/revert_disrupt()
 	if(is_disrupted)
