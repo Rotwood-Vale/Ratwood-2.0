@@ -466,6 +466,15 @@
 
 //------------BEGIN LANTERN SEELIE CARRYING CODE--------------//
 
+/obj/item/flashlight/flare/torch/lantern/Destroy()
+	if(locate(/mob/living) in contents)
+		var/turf/eject_turf = get_turf(drop_location()) || find_safe_turf(extended_safety_checks = TRUE)
+		if(eject_turf)
+			for(var/mob/living/occupant in contents.Copy())
+				occupant.forceMove(eject_turf)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/item/flashlight/flare/torch/lantern/fire_act(added, maxstacks)
 	if(fuel)
 		if(occupants.len)
