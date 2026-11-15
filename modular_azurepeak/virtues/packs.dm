@@ -266,7 +266,7 @@
 	)
 	custom_text = "Grants two virtues for the Volf In Sheep's Clothing:\n\
 	- Resident: City residency, treasury account, home in the city\n\
-	- Defiled Keyholder: Know the location of the local heretic conclave"
+	- Defiled Keyholder: Knows the location of the local heretic conclave and the bandit hideout"
 
 // Street Fencer Pack: Resident + Duelist
 /datum/virtue/pack/streetfencer

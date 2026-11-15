@@ -48,9 +48,10 @@
 		return
 	if(!ishuman(usr))
 		return
+	var/datum/antagonist/bandit/B = usr.mind?.has_antag_datum(/datum/antagonist/bandit)
+	if(!B)
+		return
 	if(href_list["buy"])
-		var/mob/M = usr
-		var/datum/antagonist/bandit/B = M.mind.has_antag_datum(/datum/antagonist/bandit)
 		var/path = text2path(href_list["buy"])
 		if(!ispath(path, /datum/supply_pack))
 			message_admins("silly MOTHERFUCKER [usr.key] IS TRYING TO BUY A [path] WITH THE HOARDMASTER")
@@ -67,7 +68,7 @@
 		var/l
 		for(l=1,l<=shoplength,l++)
 			var/pathi = pick(PA.contains)
-			var/atom/hmasteritem = new pathi(get_turf(M))
+			var/atom/hmasteritem = new pathi(get_turf(usr))
 			hmasteritem.flags_1 |= HOARDMASTER_SPAWNED_1
 			if(istype(hmasteritem, /obj/item))
 				var/obj/item/newitem = hmasteritem
@@ -83,7 +84,9 @@
 /obj/structure/roguemachine/Hoardmaster/attack_hand(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_COMMIE))
 		return
-	var/datum/antagonist/bandit/B = usr.mind.has_antag_datum(/datum/antagonist/bandit)
+	var/datum/antagonist/bandit/B = user.mind?.has_antag_datum(/datum/antagonist/bandit)
+	if(!B)
+		return
 	. = ..()
 	if(.)
 		return
@@ -96,7 +99,7 @@
 
 
 	var/list/unlocked_cats = list("Supplies", "Medicaments", "Clothing")
-	switch(usr.advjob)
+	switch(user.advjob)
 		if("Brigand")
 			unlocked_cats+="Brigand"
 		if("Sellsword")
