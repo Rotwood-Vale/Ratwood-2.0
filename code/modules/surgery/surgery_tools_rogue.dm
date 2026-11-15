@@ -163,6 +163,8 @@
 	if(!heated)
 		playsound(src, 'sound/items/firelight.ogg', 100, vary = TRUE)
 	update_heated(TRUE)
+	if(added < 20)
+		added = 20
 	if(cool_timer)
 		deltimer(cool_timer)
 	cool_timer = addtimer(CALLBACK(src, PROC_REF(update_heated), FALSE), added SECONDS, TIMER_STOPPABLE)
