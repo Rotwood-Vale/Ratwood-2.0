@@ -92,6 +92,15 @@
 /*	stress_examine = TRUE
 	stress_desc = span_red("A tiny seelie, mischievous in nature.")*/ //sleep advancement
 
+/datum/species/seelie/can_equip(obj/item/item, slot, disable_warning, mob/living/carbon/human/user, bypass_equip_delay_self = FALSE)
+	if(istype(item, /obj/item/clothing) && (slot in list(SLOT_ARMOR, SLOT_SHIRT, SLOT_PANTS, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_MOUTH, SLOT_NECK, SLOT_GLOVES, SLOT_WRISTS, SLOT_SHOES, SLOT_CLOAK, SLOT_RING, SLOT_BELT)))
+		var/obj/item/clothing/clothing = item
+		if(clothing.armor_class == ARMOR_CLASS_MEDIUM || clothing.armor_class == ARMOR_CLASS_HEAVY)
+			if(!disable_warning)
+				to_chat(user, span_warning("I am too small to wear this!"))
+			return FALSE
+	return ..()
+
 /datum/species/seelie/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))

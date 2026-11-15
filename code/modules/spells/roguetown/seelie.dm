@@ -1,7 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/seelie_dust
 	name = "Seelie Dust"
 	desc = "Blow a handful of magicked fae dust into your target's face, leaving them disorented for a while."
-	overlay_state = "createlight"
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "powder"
 	releasedrain = 50
 	recharge_time = 150 SECONDS
 	range = 7
@@ -103,7 +104,8 @@
 /obj/effect/proc_holder/spell/invoked/strip
 	name = "Strip Clothes"
 	desc = "Enchant an object of clothing on your target, forcing it to remove itself."
-	overlay_state = "bcry"
+	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
+	overlay_state = "slip"
 	releasedrain = 80
 	recharge_time = 6 MINUTES
 	range = 1
@@ -171,7 +173,8 @@
 
 /obj/effect/proc_holder/spell/invoked/replenish
 	name = "Replenish Nature"
-	overlay_state = "blesscrop"
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	overlay_state = "eorabed"
 	releasedrain = 40
 	recharge_time = 3 MINUTES
 	range = 1
@@ -229,7 +232,7 @@
 /obj/effect/proc_holder/spell/targeted/seelie_kiss
 	name = "Regenerative Kiss"
 	desc = "Blow a kiss at your target, forcing their body to mend itself at the cost of some nausea."
-	overlay_state = "heal"
+	overlay_state = "love"
 	releasedrain = 0
 	recharge_time = 4 MINUTES
 	range = 1
@@ -252,9 +255,9 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/projectile/splash
-	name = "Water splash"
+	name = "Water Splash"
 	desc = "Fire forth a small bolt of water."
-	overlay_state = "bloodlightning"
+	overlay_state = "frost_bolt"
 	range = 8
 	projectile_type = /obj/projectile/magic/water
 	releasedrain = 50

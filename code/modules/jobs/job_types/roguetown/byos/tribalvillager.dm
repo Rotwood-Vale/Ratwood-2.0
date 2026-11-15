@@ -8,7 +8,7 @@
 	selection_color = JCOLOR_TRIBAL
 
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold, /datum/species/seelie)
+	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	// tutorial = "Ooga Chacka WORK-a chacka."
 	tutorial = "You are the lowest of the low in the tribe. You're the camp's laborer, in service to the Chief before all others. \
