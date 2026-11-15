@@ -67,7 +67,8 @@
 	var/minimum = get_minimum_cast_time()
 	if(minimum)
 		// Preserve early-release spells above the floor, but never permit an instant cast.
-		var/required_charge = no_early_release ? goal : minimum
+		// Mouse progress is capped at the goal captured when this charge started.
+		var/required_charge = no_early_release ? max(client?.goal, minimum) : minimum
 		if(!client || charge_progress < required_charge)
 			to_chat(caller, span_warning("[name] was not finished charging! It fizzles."))
 			revert_cast(caller)
