@@ -246,7 +246,7 @@
 
 /datum/supply_pack/rogue/Alchemist/poison
 	name = "High-Potency poison"
-	cost = 4000
+	cost = 2000
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/poison)
 
 /datum/supply_pack/rogue/Alchemist/rotcure

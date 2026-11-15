@@ -200,7 +200,7 @@
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_poison
 	name = "Impact grenade (poison)"
-	cost = 40
+	cost = 400 //Playerbase has proven they cant be trusted with cheap, acceessible poison bombs. 
 	contains = list(/obj/item/impact_grenade/smoke/poison_gas)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_fire
