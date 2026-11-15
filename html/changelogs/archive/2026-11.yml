@@ -515,3 +515,5 @@
   - code_imp: Minor Rous rework to allow taming and riding for Seelies.
   - server: I don't think Seelies are enabled by default as a rounstart race in config
       by default. Tread lightly or whatnot.
+  - rscdel: Removed logic from `mind.dm` that prevented `player_card` from being moved
+      to shapeshifted bodies.

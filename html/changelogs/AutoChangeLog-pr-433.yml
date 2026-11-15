@@ -1,4 +1,0 @@
-author: "Protabs"
-delete-after: True
-changes:
-  - rscdel: "Removed logic from `mind.dm` that prevented `player_card` from being moved to shapeshifted bodies."
