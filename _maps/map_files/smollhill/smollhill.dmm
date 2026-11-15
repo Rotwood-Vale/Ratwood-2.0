@@ -19710,6 +19710,13 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/manor)
+"aaB" = (
+/obj/structure/roguewindow,
+/obj/structure/curtain/directional/black{
+	dir = 2
+	},
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors/town/manor)
 "jlP" = (
 /obj/structure/roguewindow{
 	icon_state = "reinforcedwindowbr"
@@ -241564,7 +241571,7 @@ xlA
 klb
 dxE
 gxX
-jlK
+aaB
 guU
 eSh
 eSh
