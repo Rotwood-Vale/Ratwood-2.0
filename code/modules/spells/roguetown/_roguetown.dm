@@ -64,7 +64,15 @@
 	var/percentage_progress = client?.chargedprog
 	var/charge_progress = client?.progress // This is in seconds, same unit as chargetime
 	var/goal = get_chargetime() //if we have no chargetime then we can freely cast (and no early release flag was not set)
-	if(no_early_release) //This is to stop half-channeled spells from casting as the repeated-casts somehow bypass into this function.
+	var/minimum = get_minimum_cast_time()
+	if(minimum)
+		// Preserve early-release spells above the floor, but never permit an instant cast.
+		var/required_charge = no_early_release ? goal : minimum
+		if(!client || charge_progress < required_charge)
+			to_chat(caller, span_warning("[name] was not finished charging! It fizzles."))
+			revert_cast(caller)
+			return FALSE
+	else if(no_early_release) //This is to stop half-channeled spells from casting as the repeated-casts somehow bypass into this function.
 		if(percentage_progress < 100 && charge_progress < goal)//Conditions for failure: a) not 100% progress, b) charge progress less than goal
 			to_chat(usr, span_warning("[name] was not finished charging! It fizzles."))
 			revert_cast(caller)
@@ -104,8 +112,8 @@
 			B.sender = user
 		P.def_zone = user.zone_selected
 		// Accuracy modification code, same as bow rebalance PR
-		P.accuracy += (user.STAINT - 9) * 4
-		P.bonus_accuracy += (user.STAINT - 8) * 3
+		P.accuracy += (user.STAPER - 9) * 4
+		P.bonus_accuracy += (user.STAPER - 8) * 3
 		if(user.mind)
 			P.bonus_accuracy += (user.get_skill_level(associated_skill) * 5) // +5% per level
 		P.firer = user

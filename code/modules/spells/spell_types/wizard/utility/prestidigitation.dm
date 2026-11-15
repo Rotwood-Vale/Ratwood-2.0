@@ -127,6 +127,8 @@
 		mote.update_light()
 
 /obj/item/melee/touch_attack/prestidigitation/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!can_channel_arcane(user, TRUE))
+		return
 	switch (user.used_intent.type)
 		if (INTENT_HELP) // Clean something like a bar of soap
 			if(istype(target, /obj/structure/well/fountain/mana) || istype(target, /turf/open/lava))
@@ -144,6 +146,9 @@
 		if (INTENT_HARM) // Fire a harmless water bolt — douses fire, distresses felines and nobles when targering the head
 			if(shoot_water_bolt(user, target))
 				handle_cost(user, PRESTI_SPLASH)
+
+/obj/item/melee/touch_attack/prestidigitation/proc/can_channel_arcane(mob/living/user, show_message = FALSE)
+	return !QDELETED(attached_spell) && attached_spell.arcane_speech_allowed(user, show_message)
 
 /obj/item/melee/touch_attack/prestidigitation/proc/handle_cost(mob/living/carbon/human/user, action)
 	// handles fatigue/stamina deduction, this stuff isn't free - also returns the cost we took to use for xp calculations
@@ -187,7 +192,7 @@
 
 	if (mote.loc == src)
 		user.visible_message(span_notice("[user] holds open the palm of [user.p_their()] hand and concentrates..."), span_notice("I hold open the palm of my hand and concentrate on my arcyne power..."))
-		if (do_after(user, src.motespeed, target = user))
+		if (do_after(user, src.motespeed, target = user, extra_checks = CALLBACK(src, PROC_REF(can_channel_arcane), user)))
 			mote.orbit(user, 1, TRUE, 0, 48, TRUE)
 			return TRUE
 		return FALSE
@@ -228,21 +233,21 @@
 
 	if (istype(target, /obj/structure/roguewindow))
 		user.visible_message(span_notice("[user] gestures at \the [target.name]. Tiny motes of arcyne power dance across its surface..."), span_notice("I begin to clean \the [target.name] with my arcyne power..."))
-		if (do_after(user, src.cleanspeed, target = target))
+		if (do_after(user, src.cleanspeed, target = target, extra_checks = CALLBACK(src, PROC_REF(can_channel_arcane), user)))
 			wash_atom(target,CLEAN_MEDIUM)
 			to_chat(user, span_notice("I render \the [target.name] clean."))
 			return TRUE
 		return FALSE
 	else if (istype(target, /obj/effect/decal/cleanable))
 		user.visible_message(span_notice("[user] gestures at \the [target.name]. Arcyne power slowly scours it away..."), span_notice("I begin to scour \the [target.name] away with my arcyne power..."))
-		if (do_after(user, src.cleanspeed, target = target))
+		if (do_after(user, src.cleanspeed, target = target, extra_checks = CALLBACK(src, PROC_REF(can_channel_arcane), user)))
 			wash_atom(get_turf(target),CLEAN_MEDIUM)
 			to_chat(user, span_notice("I expunge \the [target.name] with my mana."))
 			return TRUE
 		return FALSE
 	else
 		user.visible_message(span_notice("[user] gestures at \the [target.name]. Tiny motes of arcyne power surge over [target.p_them()]..."), span_notice("I begin to clean \the [target.name] with my arcyne power..."))
-		if (do_after(user, src.cleanspeed, target = target))
+		if (do_after(user, src.cleanspeed, target = target, extra_checks = CALLBACK(src, PROC_REF(can_channel_arcane), user)))
 			wash_atom(target,CLEAN_MEDIUM)
 			to_chat(user, span_notice("I render \the [target.name] clean."))
 			return TRUE
@@ -255,12 +260,12 @@
 	var/turf/Turf = get_turf(target)
 	if (istype(target, /obj/structure/well/fountain/mana))
 		user.visible_message(span_notice("[user] begins crystalizing liquid mana..."))
-		while(do_after(user, speed, target = target))
+		while(do_after(user, speed, target = target, extra_checks = CALLBACK(src, PROC_REF(can_channel_arcane), user)))
 			to_chat(user, span_notice("I mold the liquid mana in \the [target.name] with my arcane power, crystalizing it!"))
 			new /obj/item/magic/manacrystal(Turf)
 	if (istype(target, /turf/open/lava))
 		user.visible_message(span_notice("[user] begins molding the oozing lava..."))
-		while(do_after(user, speed, target = target))
+		while(do_after(user, speed, target = target, extra_checks = CALLBACK(src, PROC_REF(can_channel_arcane), user)))
 			to_chat(user, span_notice("I mold a handful of oozing lava  with my arcane power, rapidly hardening it!"))
 			new /obj/item/magic/obsidian(user.loc)
 

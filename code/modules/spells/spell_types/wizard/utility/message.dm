@@ -53,6 +53,8 @@
 				is_projection = TRUE
 
 			var/message = sanitize(input(user, "You successfully make a connection! [is_projection == TRUE ? "What sensory vision are you trying to send into their mind?" : "What are you trying to whisper into their mind?"]"))
+			if(!arcane_speech_allowed(user, TRUE))
+				return FALSE
 			if(!message)
 				revert_cast()
 				return FALSE

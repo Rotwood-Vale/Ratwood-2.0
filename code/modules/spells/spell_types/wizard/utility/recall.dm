@@ -38,7 +38,7 @@
 	// Subsequent casts - begin channeling
 	H.visible_message(span_warning("[H] closes [H.p_their()] eyes and begins to focus intently..."))
 	H.apply_status_effect(/datum/status_effect/buff/recalling)
-	if(do_after(H, recall_delay, target = H, progress = TRUE))
+	if(do_after(H, recall_delay, target = H, progress = TRUE, extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), H)))
 		// Get any grabbed mobs
 		var/list/to_teleport = list(H)
 		if(H.pulling && isliving(H.pulling))

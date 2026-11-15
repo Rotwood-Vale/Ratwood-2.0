@@ -6,6 +6,13 @@
 	warnie = "aimwarn"
 	warnoffset = 0
 
+/datum/intent/spell/get_chargetime()
+	var/obj/effect/proc_holder/spell/S = mastermob?.ranged_ability
+	if(istype(S))
+		return S.get_chargetime()
+	return ..()
+
+
 /datum/intent/spell/can_charge()
 	var/obj/effect/proc_holder/spell/spell_ability = mastermob.ranged_ability
 	if(istype(spell_ability) && !spell_ability.charge_check(mastermob, TRUE))

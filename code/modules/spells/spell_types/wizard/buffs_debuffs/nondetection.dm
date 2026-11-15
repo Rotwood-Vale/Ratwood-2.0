@@ -38,6 +38,8 @@
 
 /obj/item/melee/touch_attack/nondetection/afterattack(atom/target, mob/living/carbon/user, proximity)
 	var/obj/effect/proc_holder/spell/targeted/touch/nondetection/base_spell = attached_spell
+	if(QDELETED(base_spell) || !base_spell.arcane_speech_allowed(user, TRUE))
+		return
 	var/requirement = FALSE
 	var/obj/item/sacrifice
 
@@ -54,7 +56,7 @@
 			to_chat(user, span_warning("I require some ash in a free hand."))
 			return
 
-		if(!do_after(user, 5 SECONDS, target = spelltarget))
+		if(!do_after(user, 5 SECONDS, target = spelltarget, extra_checks = CALLBACK(base_spell, TYPE_PROC_REF(/obj/effect/proc_holder/spell, arcane_speech_allowed), user)))
 			return
 
 		qdel(sacrifice)

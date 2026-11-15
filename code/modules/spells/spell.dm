@@ -221,10 +221,97 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_background_icon_state = ""
 	base_action = /datum/action/spell_action/spell
 
+/// Speech rules apply to mage spells, not innate abilities inheriting Arcane skill.
+/obj/effect/proc_holder/spell/proc/requires_arcane_speech()
+	if(miracle || associated_skill != /datum/skill/magic/arcane)
+		return FALSE
+	var/static/list/mage_types = typecacheof(GLOB.learnable_spells + list(
+		/obj/effect/proc_holder/spell/invoked/conjure_tool,
+		/obj/effect/proc_holder/spell/invoked/knock,
+		/obj/effect/proc_holder/spell/invoked/slick_trick,
+		/obj/effect/proc_holder/spell/invoked/frostbite,
+		/obj/effect/proc_holder/spell/invoked/shadowstep,
+		/obj/effect/proc_holder/spell/invoked/projectile/airblade,
+		/obj/effect/proc_holder/spell/invoked/projectile/deathgrasp,
+		/obj/effect/proc_holder/spell/invoked/projectile/profane,
+		/obj/effect/proc_holder/spell/targeted/touch/prestidigitation,
+		/obj/effect/proc_holder/spell/targeted/summonweapon,
+		/obj/effect/proc_holder/spell/invoked/wound_closure,
+		/obj/effect/proc_holder/spell/self/message_familiar,
+		/obj/effect/proc_holder/spell/invoked/primordialmark,
+	))
+	return is_type_in_typecache(src, mage_types)
+
+/// Returns a warning, or null when the caster can speak the arcane words.
+/obj/effect/proc_holder/spell/proc/arcane_speech_error(mob/living/user)
+	if(!requires_arcane_speech())
+		return null
+	if(!istype(user) || QDELETED(user))
+		return "I cannot cast right now."
+	if(!user.can_speak_vocal() || HAS_TRAIT(user, TRAIT_GARGLE_SPEECH))
+		return "I can't speak the arcane words!"
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		for(var/obj/item/grabbing/grab in C.grabbedby)
+			if(grab.sublimb_grabbed == BODY_ZONE_PRECISE_MOUTH)
+				return "I can't speak the arcane words while my mouth is grabbed!"
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(!H.getorganslot(ORGAN_SLOT_TONGUE))
+				return "I can't speak the arcane words!"
+	return null
+
+/obj/effect/proc_holder/spell/proc/arcane_speech_allowed(mob/living/user, show_message = FALSE)
+	var/error = arcane_speech_error(user)
+	if(error && show_message && !QDELETED(user))
+		to_chat(user, span_warning(error))
+	return !error
+
+/// Minimum charge for non-utility mage spells; innate abilities and miracles are excluded.
+/obj/effect/proc_holder/spell/proc/get_minimum_cast_time()
+	if(!requires_arcane_speech())
+		return 0
+	// Preserve minor utility casts, including their existing button/instant behavior.
+	var/static/list/utility_types = typecacheof(list(
+		/obj/effect/proc_holder/spell/self/light,
+		/obj/effect/proc_holder/spell/self/message,
+		/obj/effect/proc_holder/spell/self/message_familiar,
+		/obj/effect/proc_holder/spell/self/findfamiliar,
+		/obj/effect/proc_holder/spell/invoked/darkvision,
+		/obj/effect/proc_holder/spell/invoked/create_campfire,
+		/obj/effect/proc_holder/spell/invoked/mending,
+		/obj/effect/proc_holder/spell/invoked/wound_closure,
+		/obj/effect/proc_holder/spell/invoked/mirror_transform,
+		/obj/effect/proc_holder/spell/invoked/mindlink,
+		/obj/effect/proc_holder/spell/invoked/conjure_tool,
+		/obj/effect/proc_holder/spell/targeted/touch/prestidigitation,
+		/obj/effect/proc_holder/spell/targeted/touch/lesserknock,
+		/obj/effect/proc_holder/spell/targeted/touch/nondetection,
+	))
+	if(is_type_in_typecache(src, utility_types))
+		return 0
+	// Recall already channels for 15 seconds inside cast(); do not add a second bar.
+	if(istype(src, /obj/effect/proc_holder/spell/self/recall))
+		return 0
+	return 1.5 SECONDS
+
+/// One equipment focus bonus, regardless of hand order, closed books or other held weapons.
+/obj/effect/proc_holder/spell/proc/get_equipment_cast_reduction(mob/living/user)
+	var/best = 0
+	if(!istype(user))
+		return best
+	for(var/obj/item/I in user.held_items)
+		if(istype(I, /obj/item/book/spellbook))
+			var/obj/item/book/spellbook/book = I
+			if(book.open)
+				best = max(best, book.get_cdr())
+		else if(istype(I, /obj/item/rogueweapon))
+			var/obj/item/rogueweapon/staff = I
+			best = max(best, staff.cast_time_reduction || 0)
+	return best
+
 /obj/effect/proc_holder/spell/get_chargetime()
-	if(ranged_ability_user && chargetime)
-		return calculate_chargetime(ranged_ability_user)
-	return chargetime
+	return calculate_chargetime(ranged_ability_user)
 
 /obj/effect/proc_holder/spell/get_fatigue_drain()
 	if(ranged_ability_user && releasedrain)
@@ -232,24 +319,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return releasedrain
 
 /obj/effect/proc_holder/spell/proc/calculate_chargetime(mob/living/user)
-	if(!user || !chargetime || miracle)
-		return chargetime
-	var/newtime = chargetime
-	//skill block
-	newtime = newtime - (chargetime * (user.get_skill_level(associated_skill) * CHARGE_REDUCTION_PER_SKILL))
-	//spellbook cast time reduction
-	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
-	if(sbook && sbook?.open)
-		newtime = newtime - (chargetime * (sbook.get_cdr()))
-	//staff cast time reduction
-	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
-	if(staff && staff.cast_time_reduction)
-		newtime = newtime - (chargetime * (staff.cast_time_reduction))
-	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens Charge by 25%.
+	var/minimum = get_minimum_cast_time()
+	if(!istype(user) || !chargetime || miracle)
+		return max(chargetime, minimum)
+	var/newtime = chargetime * (1 - user.get_skill_level(associated_skill) * CHARGE_REDUCTION_PER_SKILL - get_equipment_cast_reduction(user))
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE))
 		newtime *= 0.75
-	if(newtime > 0)
-		return newtime
-	return 0.1
+	return max(newtime, 0.1, minimum)
 
 /obj/effect/proc_holder/spell/proc/calculate_fatigue_drain(mob/living/user)
 	if(!user || !releasedrain || miracle)
@@ -286,18 +362,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/skill_mod = chargetime * skill_level * CHARGE_REDUCTION_PER_SKILL
 		if(skill_mod > 0)
 			breakdown += span_smallgreen("  Skill: -[DisplayTimeText(skill_mod)]")
-	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
-	if(sbook && sbook?.open)
-		var/book_mod = chargetime * sbook.get_cdr()
-		if(book_mod > 0)
-			breakdown += span_smallgreen("  Spellbook: -[DisplayTimeText(book_mod)]")
-	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
-	if(staff && staff.cast_time_reduction)
-		var/staff_mod = chargetime * staff.cast_time_reduction
-		if(staff_mod > 0)
-			breakdown += span_smallgreen("  Staff: -[DisplayTimeText(staff_mod)]")
+	var/equipment_mod = chargetime * get_equipment_cast_reduction(user)
+	if(equipment_mod > 0)
+		breakdown += span_smallgreen("  Equipment focus: -[DisplayTimeText(equipment_mod)]")
 	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE))
 		breakdown += span_smallgreen("  <font color='#00e1ff'>Ley Lines (-25%)</font>")
+	if(get_minimum_cast_time())
+		breakdown += span_smallred("  Minimum charge time: 1.5 seconds")
 	return breakdown
 
 /obj/effect/proc_holder/spell/proc/get_cooldown_breakdown(mob/living/user)
@@ -360,7 +431,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/list/stats = list()
 	if(range)
 		stats += span_info("Range: [range] tiles")
-	var/base_ct = chargetime
+	var/base_ct = max(chargetime, get_minimum_cast_time())
 	if(base_ct > 0)
 		var/dynamic_ct = user ? calculate_chargetime(user) : base_ct
 		if(dynamic_ct != base_ct)
@@ -393,7 +464,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		stats += span_info("Devotion cost: [devotion_cost]")
 	return stats
 
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge, mob/user = usr)
+	return check_cast_requirements(skipcharge, user)
+
+/// Recheck a delayed cast without testing or spending its already-reserved charge.
+/obj/effect/proc_holder/spell/proc/check_cast_requirements(skipcharge, mob/user, check_charge = TRUE)
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
 			to_chat(user, span_warning("I shouldn't have this spell! Something's wrong..."))
@@ -408,7 +483,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("I can't cast this spell here!"))
 		return FALSE
 
-	if(!charge_check(user))
+	if(!arcane_speech_allowed(user, TRUE))
+		return FALSE
+
+	if(check_charge && !charge_check(user))
 		return FALSE
 
 	if(user.stat && !stat_allowed)
@@ -648,6 +726,26 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			action.button.update_maptext(recharge_time - charge_counter)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
+	if(!arcane_speech_allowed(user, TRUE))
+		return FALSE
+
+	if(get_minimum_cast_time())
+		if(!isliving(user) || QDELETED(user))
+			return FALSE
+		if(!istype(src, /obj/effect/proc_holder/spell/invoked) || !user.client)
+			var/mob/living/caster = user
+			var/client/original_client = caster.client
+			var/delay = calculate_chargetime(caster)
+			// do_after applies its own coefficient; preserve the spell's displayed duration.
+			var/coefficient = caster.do_after_coefficent()
+			if(coefficient <= 0)
+				return FALSE
+			delay /= coefficient
+			if(!do_after(caster, delay, needhand = FALSE, target = caster, extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), caster)))
+				return FALSE
+			if(QDELETED(src) || QDELETED(caster) || (original_client && caster.client != original_client) || !check_cast_requirements(TRUE, caster, check_charge = FALSE))
+				return FALSE
+
 	if(!ignore_los)
 		if(length(targets))
 			var/radius
@@ -936,6 +1034,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.client && user.buckled)
 		if(moving_mount_blocks_cast(user))
 			return FALSE
+
+	if(!arcane_speech_allowed(user))
+		return FALSE
 
 	if(!charge_check(user, TRUE))
 		return FALSE
