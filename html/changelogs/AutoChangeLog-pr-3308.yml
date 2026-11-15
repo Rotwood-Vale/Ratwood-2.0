@@ -1,0 +1,5 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "Wanted posters now work. They will show those with named bounties with a headshot."
+  - bugfix: "fixed the end credits. They should now work properly, showing a headshot for all the characters from the round. Also the round end stat window 'outlaw' tab will now show all wanted characters from the round"
