@@ -22,3 +22,9 @@
 	)
 
 	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+/datum/ai_controller/big_rat/get_expected_ai_status()
+	var/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/rat = pawn
+	if(istype(rat) && rat.has_buckled_mobs())
+		return AI_STATUS_OFF
+	return ..()

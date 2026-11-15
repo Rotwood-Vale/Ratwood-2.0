@@ -111,6 +111,14 @@
 	unbuckle_all_mobs()
 	update_icon()
 
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/post_buckle_mob(mob/living/M)
+	. = ..()
+	ai_controller?.reset_ai_status()
+
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/post_unbuckle_mob(mob/living/M)
+	. = ..()
+	ai_controller?.reset_ai_status()
+
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/update_icon()
 	cut_overlays()

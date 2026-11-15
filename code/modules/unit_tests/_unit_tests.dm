@@ -96,6 +96,7 @@
 #include "penis_taur_mode.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
+#include "rous_taming.dm"
 #include "scabbard_sprites.dm"
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"

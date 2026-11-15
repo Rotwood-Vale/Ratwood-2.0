@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/seelie_dust
 	name = "Seelie Dust"
+	desc = "Blow a handful of magicked fae dust into your target's face, leaving them disorented for a while."
 	overlay_state = "createlight"
 	releasedrain = 50
 	recharge_time = 150 SECONDS
@@ -77,6 +78,7 @@
 
 /obj/effect/proc_holder/spell/invoked/summon_rat
 	name = "Call Beast"
+	desc = "Summon a small rodent to aid you."
 	overlay_state = "dendor"
 	releasedrain = 30
 	recharge_time = 2 MINUTES
@@ -100,6 +102,7 @@
 
 /obj/effect/proc_holder/spell/invoked/strip
 	name = "Strip Clothes"
+	desc = "Enchant an object of clothing on your target, forcing it to remove itself."
 	overlay_state = "bcry"
 	releasedrain = 80
 	recharge_time = 6 MINUTES
@@ -190,6 +193,7 @@
 
 /obj/effect/proc_holder/spell/targeted/roustame
 	name = "Tame Rous"
+	desc = "Calm a nearby Rous with magicked powder."
 	range = 5
 	overlay_state = "tamebeast"
 	releasedrain = 30
@@ -202,9 +206,9 @@
 
 /obj/effect/proc_holder/spell/targeted/roustame/cast(list/targets, mob/user = usr)
 	. = ..()
-	visible_message(span_green("[usr] soothes the beast with Seelie dust."))
+	user.visible_message(span_green("[user] soothes the beast with Seelie dust."))
 	var/tamed = FALSE
-	for(var/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/B in oview(2))
+	for(var/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/B in oview(2, user))
 		if(!B.tame)
 			B.tame = TRUE
 			B.tamed()
@@ -212,12 +216,19 @@
 		B.enemies = list()
 		B.aggressive = 0
 		B.LoseTarget()
+		if(B.ai_controller)
+			B.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			B.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+			B.ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+			B.ai_controller.set_blackboard_key(BB_BASIC_MOB_TAMED, TRUE)
+			B.ai_controller.CancelActions()
 		tamed = B.tame
 	user.log_message("has tamed a rous via the spell", LOG_GAME)
 	return tamed
 
 /obj/effect/proc_holder/spell/targeted/seelie_kiss
 	name = "Regenerative Kiss"
+	desc = "Blow a kiss at your target, forcing their body to mend itself at the cost of some nausea."
 	overlay_state = "heal"
 	releasedrain = 0
 	recharge_time = 4 MINUTES
@@ -242,6 +253,7 @@
 
 /obj/effect/proc_holder/spell/invoked/projectile/splash
 	name = "Water splash"
+	desc = "Fire forth a small bolt of water."
 	overlay_state = "bloodlightning"
 	range = 8
 	projectile_type = /obj/projectile/magic/water
