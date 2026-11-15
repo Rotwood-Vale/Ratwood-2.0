@@ -127,10 +127,10 @@
 		span_notice("[user] cauterizes the wounds on [target]'s [parse_zone(target_zone)]."))
 	var/obj/item/bodypart/bodypart = target.get_bodypart(check_zone(target_zone))
 	var/skill_level = user.get_skill_level(skill_used)
+	var/damage = 30 - skill_level * 5
 	if(bodypart)
 		for(var/datum/wound/bleeder in bodypart.wounds)
 			bleeder.cauterize_wound()
-		var/damage = 30 - skill_level * 5
 		bodypart.receive_damage(burn = damage) //down to 0 at legendary medicine
 	if (!target.has_status_effect(/datum/status_effect/buff/ozium) && damage > 0)
 		target.emote("scream")
