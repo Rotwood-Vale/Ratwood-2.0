@@ -1,0 +1,4 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - qol: "Caughtery now heats up for minimum of 20 seconds when heated"
