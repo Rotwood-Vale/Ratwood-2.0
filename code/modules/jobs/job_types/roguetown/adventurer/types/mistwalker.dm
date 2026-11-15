@@ -74,7 +74,7 @@
 		)
 
 	if(H.mind)
-		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD", "Nodachi +1 STR +1 PER")
+		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD", "Nodachi +2 PER")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)

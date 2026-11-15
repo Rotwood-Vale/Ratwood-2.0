@@ -64,7 +64,7 @@
 			if("Nodachi")
 				r_hand = /obj/item/rogueweapon/greatsword/nodachi
 				backr = /obj/item/rogueweapon/scabbard/gwstrap/nodachi
-				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast
 /datum/advclass/foreigner/yoruku
 	name = "Eastern Assassin"
