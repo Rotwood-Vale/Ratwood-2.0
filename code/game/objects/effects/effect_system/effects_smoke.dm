@@ -151,7 +151,7 @@
 	if(..())
 		if(HAS_TRAIT(M, TRAIT_HOLDBREATH))
 			return 0
-		M.adjustToxLoss(20, 0)
+		M.stamina_add(20)
 		M.emote("cough")
 		return 1
 
