@@ -33,7 +33,7 @@
 		var/milk_to_take = max(min(free_space, B.milk_stored, size_limit), 0)
 
 		// Play milking sound before do_after
-		playsound(get_turf(src), pick('modular/Creechers/sound/milking1.ogg', 'modular/Creechers/sound/milking2.ogg'), 100, TRUE, -1)
+		playsound_erp(get_turf(src), pick('modular/Creechers/sound/milking1.ogg', 'modular/Creechers/sound/milking2.ogg'), 100, TRUE, -1)
 
 		if(!do_after(user, 20, target = src))
 			return
@@ -65,7 +65,7 @@
 	var/has_blood = blood_volume && blood_volume >= 20
 
 	// Play milking sound
-	playsound(get_turf(src), pick('modular/Creechers/sound/milking1.ogg', 'modular/Creechers/sound/milking2.ogg'), 100, TRUE, -1)
+	playsound_erp(get_turf(src), pick('modular/Creechers/sound/milking1.ogg', 'modular/Creechers/sound/milking2.ogg'), 100, TRUE, -1)
 
 	if(!do_after(user, 20, target = src))
 		return

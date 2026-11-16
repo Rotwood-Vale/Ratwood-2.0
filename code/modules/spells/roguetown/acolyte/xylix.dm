@@ -265,7 +265,6 @@
 	var/turf/user_turf
 	var/mutable_appearance/tile_effect
 	var/mutable_appearance/target_effect
-	var/datum/looping_sound/invokeshadow/shadowloop
 	var/static/list/sounds = list('sound/magic/xylix_slip1.ogg','sound/magic/xylix_slip2.ogg','sound/magic/xylix_slip3.ogg','sound/magic/xylix_slip4.ogg')
 
 //Resets the tile and turf effects.

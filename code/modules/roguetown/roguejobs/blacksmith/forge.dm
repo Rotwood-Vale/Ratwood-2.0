@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = TRUE
 	on = FALSE
+	point_ambience_category = /datum/point_ambience_category/fire
 	climbable = TRUE
 	climb_time = 0
 	var/heat_time = 20 SECONDS

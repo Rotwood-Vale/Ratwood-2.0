@@ -69,6 +69,15 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
+/// Registers the fountain's continuous water ambience when initialized
+/obj/structure/well/fountain/Initialize(mapload)
+	. = ..()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/water)
+
+/obj/structure/well/fountain/Destroy()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/water)
+	return ..()
+
 /obj/structure/well/fountain/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/W = I
@@ -123,6 +132,15 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
+
+/// Registers the swamp fountain's water ambience
+/obj/structure/well/fountainswamp/Initialize(mapload)
+	. = ..()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/water)
+
+/obj/structure/well/fountainswamp/Destroy()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/water)
+	return ..()
 
 /obj/structure/well/fountainswamp/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
