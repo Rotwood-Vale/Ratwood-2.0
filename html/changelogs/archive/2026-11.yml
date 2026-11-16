@@ -543,6 +543,17 @@
   - rscadd: Towners can post rumors, earn referral fees, and commission Blockade Defense
       writs.
   - qol: Notorious Bounties and contracts can now be signed solo. Don't die.
+  - rscadd: (Kaolin1234) Arachnids can weave silk beds and rescue cocoons.
+  - qol: (Kaolin1234) Arachnid web weaving automatically continues from thin webbing
+      to reinforcement.
+  - qol: Anyone can now pick custom colors at dye bins.
+  - rscadd: Lanterns can now hold two Seelies.
+  - bugfix: Fixed lantern reach checks, occupant ejection on destruction, and Seelie
+      glow consuming fuel or igniting items.
+  - bugfix: Rous must be tamed before mounting, and Seelie verbs are removed on species
+      loss.
+  - bugfix: Seelie size-mismatch injuries respect Extreme ERP preferences and fracture
+      protection.
   mypingishuge:
   - balance: "Reduced Stuffed\u2019s Speed penalty from 6 to 3."
   - bugfix: Stat debuffs no longer disappear when applied at minimum stats.
