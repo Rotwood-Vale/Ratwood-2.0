@@ -168,7 +168,7 @@
 		<li><p><strong>Personal canon is a choice.</strong> You choose which events are canon for your character. Other players make that choice for their own characters.</p></li>
 		<li><p><strong>Past crimes do not carry over by default.</strong> Crimes from previous weeks never happened, and the criminals were never caught, unless the criminal&#39;s player chooses otherwise.</p></li>
 		<li><p><strong>PvP outcomes require agreement.</strong> The results of player-versus-player conflict are canon only as agreed by both parties.</p></li>
-		<li><p><strong>Other characters have always held their current roles.</strong> If someone was an adventurer last round but is the Guildmaster this round, treat them as having always been the Guildmaster.</p></li>
+		<li><p><strong>Other characters have always held their current roles.</strong> If someone was an adventurer last round but is the Guildmaster this round, treat them as having always been the Guildmaster, unless agreed otherwise.</p></li>
 		<li><p><strong>Player-controlled deadites can be saved.</strong> These are player characters who have died and become zombie-like creatures. They may still be saved and revived, so capture them and bring them to the church or an apothecary.</p></li>
 		</ul>
 	"}
