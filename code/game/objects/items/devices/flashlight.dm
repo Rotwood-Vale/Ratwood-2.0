@@ -570,7 +570,7 @@
 //Unloads via click-dragging onto an empty tile
 /obj/item/flashlight/flare/torch/lantern/MouseDrop(atom/over_atom)
 	. = ..()
-	if(isopenturf(over_atom) && usr.Adjacent(over_atom) && open && occupants.len)
+	if(usr && Adjacent(usr) && isopenturf(over_atom) && over_atom.Adjacent(usr) && open && occupants.len)
 		usr.visible_message(span_notice("[usr] unloads [src]."), \
 		span_notice("I unload [src] onto [over_atom]."))
 		for(var/mob/living/occupant in occupants.Copy())
@@ -600,6 +600,8 @@
 	span_notice("I start loading [target] into [src]..."), null, null, target)
 	to_chat(target, span_danger("[user] starts loading you into [user.p_their()] [name]!"))
 	if(!do_mob(user, target, 30))
+		return
+	if(!user.is_holding(src) || !target.Adjacent(user))
 		return
 	if(!add_occupant(target, user))
 		return
