@@ -285,6 +285,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"loadout8" = loadout8,
 		"loadout9" = loadout9,
 		"loadout10" = loadout10,
+		"loadout_markdown_fields" = normalize_loadout_markdown_fields(loadout_markdown_fields),
 		"loadout_1_name" = loadout_1_name,
 		"loadout_2_name" = loadout_2_name,
 		"loadout_3_name" = loadout_3_name,
@@ -366,6 +367,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	loadout8 = snapshot["loadout8"]
 	loadout9 = snapshot["loadout9"]
 	loadout10 = snapshot["loadout10"]
+	loadout_markdown_fields = normalize_loadout_markdown_fields(snapshot["loadout_markdown_fields"])
 	loadout_1_name = snapshot["loadout_1_name"]
 	loadout_2_name = snapshot["loadout_2_name"]
 	loadout_3_name = snapshot["loadout_3_name"]
@@ -439,6 +441,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"loadout8" = loadout8?.type,
 		"loadout9" = loadout9?.type,
 		"loadout10" = loadout10?.type,
+		"loadout_markdown_fields" = normalize_loadout_markdown_fields(loadout_markdown_fields),
 		"loadout_1_name" = loadout_1_name,
 		"loadout_2_name" = loadout_2_name,
 		"loadout_3_name" = loadout_3_name,
@@ -633,6 +636,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		loadout10 = null
 	
 	// Always restore all string values from preset (including null/empty values)
+	loadout_markdown_fields = normalize_loadout_markdown_fields(preset["loadout_markdown_fields"])
 	loadout_1_name = preset["loadout_1_name"]
 	loadout_2_name = preset["loadout_2_name"]
 	loadout_3_name = preset["loadout_3_name"]
@@ -1384,6 +1388,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 		<div id="loadout" class="tab-content">
 			<h2 style='color: [theme["text"]]; margin: 0 0 10px 0; font-size: 1.1em;'>Loadout Selection</h2>
+			<div style='margin-bottom: 8px;'>
+				<a class='btn btn-customize' href='byond://?src=\ref[src];loadout_preview=1'>[loadout_text_preview ? "Hide" : "Show"] Formatting Preview</a>
+				<div style='font-size: 0.8em; margin-top: 5px;'>Rename or describe an item to use Markdown. *italics*, **bold**, -=ffcc00colored text=-. Start a name with \\improper to enable articles.</div>
+			</div>
 	"}
 	
 	// Calculate point costs for loadout
@@ -1456,8 +1464,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 			html += "</div>"
 			html += "<div style='flex: 1;'>"
-			html += "<div class='vice-name'>[custom_name ? custom_name : current_item.name]</div>"
-			html += "<div class='vice-desc'>[custom_desc ? custom_desc : (item_desc ? item_desc : current_item.desc)]</div>"
+			html += "<div class='vice-name'>[custom_name ? (loadout_text_preview ? get_loadout_text(i, TRUE, TRUE) : format_loadout_text(custom_name, FALSE, TRUE)) : current_item.name]</div>"
+			html += "<div class='vice-desc'>[custom_desc ? (loadout_text_preview ? get_loadout_text(i, FALSE, TRUE) : format_loadout_text(custom_desc)) : (item_desc ? item_desc : current_item.desc)]</div>"
 			
 			if(custom_name || custom_desc)
 				html += "<div style='margin-top: 3px; font-size: 0.7em; color: [theme["label"]];'>✎ Customized</div>"
@@ -2139,14 +2147,23 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 				open_vices_menu(usr)
 	
+	if(href_list["loadout_preview"])
+		if(usr?.client != parent)
+			return
+		loadout_text_preview = !loadout_text_preview
+		open_vices_menu(usr)
+		return
+
 	if(href_list["loadout_action"])
+		if(usr?.client != parent)
+			return
 		// Save state before any loadout change
 		save_to_history()
 		
 		var/action = href_list["loadout_action"]
 		var/slot = text2num(href_list["slot"])
 		
-		if(!slot || slot < 1 || slot > 10)
+		if(!slot || slot < 1 || slot > 10 || slot != round(slot))
 			return
 		
 		var/slot_var = (slot == 1) ? "loadout" : "loadout[slot]"
@@ -2161,31 +2178,27 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				vars["loadout_[slot]_name"] = null
 				vars["loadout_[slot]_desc"] = null
 				vars["loadout_[slot]_hex"] = null
+				loadout_markdown_fields -= "loadout_[slot]_name"
+				loadout_markdown_fields -= "loadout_[slot]_desc"
 				open_vices_menu(usr)
 				return
 			
-			if("rename")
+			if("rename", "describe")
 				var/datum/loadout_item/current = vars[slot_var]
-				if(!current)
+				if(!istype(current))
 					return
-				
-				var/new_name = tgui_input_text(usr, "Enter a custom name for this item (leave blank to use default):", "Rename Item", html_decode(vars["loadout_[slot]_name"]), MAX_NAME_LEN)
-				
-				if(new_name != null) // Allow empty string to clear
-					vars["loadout_[slot]_name"] = new_name
-					open_vices_menu(usr)
-				return
-			
-			if("describe")
-				var/datum/loadout_item/current = vars[slot_var]
-				if(!current)
+				var/mob/editor = usr
+				var/editing_slot = default_slot
+				var/is_name = action == "rename"
+				var/field = "loadout_[slot]_[is_name ? "name" : "desc"]"
+				var/original_text = vars[field]
+				var/prompt = "Enter a custom [is_name ? "name" : "description"] (Markdown supported; leave blank for default):"
+				var/new_text = tgui_input_text(editor, prompt, is_name ? "Rename Item" : "Describe Item", html_decode(original_text), max_length = is_name ? MAX_NAME_LEN : 500, multiline = !is_name, encode = FALSE)
+				// Dialogs can outlive their character, selected item, editor or original field.
+				if(!editor || editor.client != parent || default_slot != editing_slot || vars[slot_var] != current || vars[field] != original_text)
 					return
-				
-				var/new_desc = tgui_input_text(usr, "Enter a custom description for this item (leave blank to use default):", "Describe Item", html_decode(vars["loadout_[slot]_desc"]), max_length = 500, multiline = TRUE)
-				
-				if(new_desc != null) // Allow empty string to clear
-					vars["loadout_[slot]_desc"] = new_desc
-					open_vices_menu(usr)
+				if(set_loadout_custom_text(slot, is_name, new_text))
+					open_vices_menu(editor)
 				return
 			
 			if("color")

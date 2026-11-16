@@ -805,6 +805,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/_load_loadout_colours(S)
+	var/list/loaded_markdown_fields
+	S["loadout_markdown_fields"] >> loaded_markdown_fields
+	loadout_markdown_fields = normalize_loadout_markdown_fields(loaded_markdown_fields)
 	S["loadout_1_hex"] >> loadout_1_hex
 	S["loadout_2_hex"] >> loadout_2_hex
 	S["loadout_3_hex"] >> loadout_3_hex
@@ -1401,6 +1404,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["loadout_8_hex"], loadout_8_hex)
 	WRITE_FILE(S["loadout_9_hex"], loadout_9_hex)
 	WRITE_FILE(S["loadout_10_hex"], loadout_10_hex)
+	WRITE_FILE(S["loadout_markdown_fields"], normalize_loadout_markdown_fields(loadout_markdown_fields))
 	// Save custom names
 	WRITE_FILE(S["loadout_1_name"], loadout_1_name)
 	WRITE_FILE(S["loadout_2_name"], loadout_2_name)
