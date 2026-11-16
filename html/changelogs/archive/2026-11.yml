@@ -310,3 +310,87 @@
   eirenxiv:
   - bugfix: fixed fencing shirt/jacket layering, detail and sleeve issue on female
       sprites
+2026-11-16:
+  Arturlang:
+  - bugfix: curses should be less buggy and actually make your lyfe miserable
+  - admin: cursing people should be more convenient now
+  - bugfix: being unable to resist out of graves
+  - bugfix: aheals removing vamp eyes
+  CentralSmith:
+  - balance: Necra's Vow no longer deals extra damage in crit. Its healing pauses
+      instead and resumes if you are saved.
+  - bugfix: Necra's Vow now counts collapsing from blood loss as crit.
+  - spellcheck: Necra's Vow descriptions and consent prompt now describe what the
+      Vow does.
+  - bugfix: Retainers can switch SCOMs to the garrison line.
+  - bugfix: Grabbing someone with Dual Wielder keeps the grabbing hand selected.
+  - bugfix: Prayer cooldowns now restart when a prayer actually goes through, not
+      when you retry early. Early attempts tell you how long is left.
+  - bugfix: Martyr self-prayer and received-prayer healing no longer overwrite each
+      other. Your own prayer can't trigger both, and Inhumen prayers no longer trigger
+      received-prayer healing.
+  - qol: Martyrs get a Prayer Recovering countdown, and active prayer heals show miracle
+      heal icons with their own timers.
+  - bugfix: Removing a net clears its stat penalties immediately.
+  IronDragoon:
+  - rscadd: Ports warden rous-skull helm from SR
+  - rscadd: Added a peddlar and potion seller cart, mobile versions of the trading
+      machines
+  - qol: Reworked the Peddlar and Potion seller interfaces with TGUI, and added a
+      bunch of QOL related changes to make them much easier to use (bulk loading/unloading/buying/etc
+  - qol: Hooked up the expandable mechanics help that we had in place from a lot of
+      AP ports. Will allow further easy implementation of this going forward to make
+      some more complex interactions easier to learn/understand for players
+  - rscadd: Wanted posters now work. They will show those with named bounties with
+      a headshot.
+  - bugfix: fixed the end credits. They should now work properly, showing a headshot
+      for all the characters from the round. Also the round end stat window 'outlaw'
+      tab will now show all wanted characters from the round
+  Kaolin1234:
+  - bugfix: Fireman-carried and piggyback riders keep their carry posture when taking
+      stairs.
+  Kroto-Ker:
+  - rscadd: New Character Preferences Menu
+  MrShibaa:
+  - rscadd: Added the ability to uppercut with bare fists.
+  - balance: allows court chaplain to be a psydonite.
+  - balance: gives court chaplain psydonite defy miracle.
+  - rscadd: Steel and Western Nodachi (Iron)
+  - rscadd: Custom sheathe for the steel nodachi variant, only obtainable via roles
+      that spawn with them.
+  - rscadd: Crafting recipes for steel and western nodachi (Steel nodachi requires
+      respective craft book)
+  - balance: gives nodachi as an option for (Retainer duelist, eastern warrior, hangyaku-kounen,
+      disgraced knight, mistwalker.
+  - code_imp: replaced "sword, great mace, spear etc.." with the respective sword
+      names for hangyaku-kounen.
+  Ripperserk:
+  - rscadd: armor_class = ARMOR_CLASS_MEDIUM to /obj/item/clothing/under/roguetown/platelegs/graggar
+  SirSwagmeyer:
+  - bugfix: fixed leather armor accidentally having brigandine-tier values.
+  - balance: Pioneer Kneestinger Traps now fade-in, fade-out radius when triggered.
+  Xander3359:
+  - balance: The fencing padded gambeson is now fireproof
+  acssination:
+  - rscadd: Added the punch intent from daggers into rapiers.
+  annikaRU:
+  - bugfix: fixes bronze shovels/spades going invisible when digging
+  - bugfix: heavy bolts now craft the actual bolt intead of the flying projectile
+  - balance: changes the cannon back to steel instead of blacksteel again
+  coffeecoffeecoffee:
+  - rscadd: Added short elf ears
+  - rscadd: Gave pick intent back to the steel lucerne
+  - balance: changed 2-tile pick from 40 AP to 50 AP
+  mushy:
+  - rscadd: Black Oak Pariah now has a ranged spellblade variant.
+  - balance: Black Oak Pariah now has three slots.
+  ophaq:
+  - balance: Message costs 1 point now.
+  - balance: Water bolt can be self casted and its CD lowered to 2 seconds. Water
+      bolt now costs 2 points.
+  - rscadd: Create campfire can be casted on top of hearths and tables but not turfs
+      like walls.
+  wikimody:
+  - rscadd: Bishop no longer gets to call divine punishment on inqusition, psydonite
+      conversion now clenses related debuffs/curses
+  - qol: Caughtery now heats up for minimum of 20 seconds when heated

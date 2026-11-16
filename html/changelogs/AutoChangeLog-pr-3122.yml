@@ -1,0 +1,14 @@
+author: "hugmeorelse"
+delete-after: True
+changes:
+  - sound: "Added positional point ambience for fires, torches, fountains, clocks, corpses, etc."
+  - sound: "Added continuous river ambience that follows nearby river coverage and becomes quieter indoors."
+  - sound: "Improved ambience fades, directional transitions, source handoffs and variation."
+  - sound: "Updated instruments, music boxes and other persistent sounds to the new sound framework."
+  - sound: "Added sound occlusion, revised distance falloff and containment rules for relevant sounds."
+  - qol: "Reorganized Audio Settings with Master, Instruments and Point Ambience controls, separate admin and streamed audio controls, editable percentages and tooltips."
+  - qol: "Point Ambience can be controlled independently of Master Volume."
+  - bugfix: "Corrected sound-state leakage between listeners, distant explosion and church-bell attenuation, and several looping-sound startup and cleanup issues."
+  - bugfix: "Repaired windowed doors retain their transparency."
+  - admin: "Added sound diagnostics and live point-ambience controls and reporting."
+  - config: "Added documented sound and point-ambience settings in config/sound.txt."

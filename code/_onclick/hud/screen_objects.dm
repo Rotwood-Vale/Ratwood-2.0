@@ -948,7 +948,7 @@
 	hud.mymob.playsound_local(hud.mymob, 'sound/misc/click.ogg', 100)
 	if(isliving(hud?.mymob))
 		var/mob/living/L = hud.mymob
-		if(L.eyesclosed)
+		if(L.eyesclosed && !(SEND_SIGNAL(L, COMSIG_LIVING_TRY_OPEN_EYES) & COMPONENT_BLOCK_OPEN_EYES))
 			L.eyesclosed = 0
 			L.cure_blind("eyelids")
 
@@ -958,6 +958,7 @@
 				var/mob/living/L = hud.mymob
 				L.eyesclosed = 1
 				L.become_blind("eyelids")
+				SEND_SIGNAL(L, COMSIG_LIVING_CLOSED_EYES)
 		else
 			toggle(usr)
 
