@@ -7133,13 +7133,11 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains)
 "boz" = (
-/obj/structure/curtain/magenta{
-	color = "#a1254a";
-	icon_state = "curtain-closed";
-	opacity = 1;
-	open = 0
+/obj/effect/mapping_helpers/secret_door_creator{
+	secret_door_access = list(/datum/job/roguetown/niteman, /datum/job/roguetown/nightmaiden);
+	secret_door_locale = 'escape tunnel - gambling den'
 	},
-/turf/open/floor/rogue/churchbrick,
+/turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/bath)
 "boA" = (
 /turf/closed/wall/mineral/rogue/wooddark/end,
@@ -12753,7 +12751,7 @@
 	},
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "coo" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue/end,
 /area/rogue/under/underdark/north)
@@ -76906,14 +76904,11 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "nMU" = (
-/obj/structure/curtain/magenta{
-	color = "#a1254a";
-	icon_state = "curtain-closed";
-	opacity = 1;
-	open = 0
+/obj/effect/mapping_helpers/secret_door_creator{
+	secret_door_access = list(/datum/job/roguetown/niteman, /datum/job/roguetown/nightmaiden);
+	secret_door_locale = 'escape tunnel'
 	},
-/obj/structure/plasticflaps,
-/turf/open/floor/rogue/blocks,
+/turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/indoors/town/bath)
 "nMW" = (
 /turf/closed/wall/mineral/rogue/stone,
@@ -121704,6 +121699,9 @@
 	redstone_id = "keeper"
 	},
 /obj/structure/roguemachine/potionseller/mobile,
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Keeper Dungeon"
+	},
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/indoors/town/church/basement)
 "vMc" = (
@@ -132761,6 +132759,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/forest/hamlet)
+"xMY" = (
+/turf/open/floor/rogue/metal,
+/area/rogue/indoors/town/bath)
 "xNb" = (
 /mob/living/carbon/human/species/elf/dark/drowraider,
 /turf/open/floor/rogue/naturalstone,
@@ -133936,6 +133937,10 @@
 "xYB" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/underdark/north)
+"xYG" = (
+/obj/structure/fluff/railing/border,
+/turf/open/floor/rogue/metal,
+/area/rogue/indoors/town/bath)
 "xYI" = (
 /obj/machinery/light/rogue/candle/blue/r,
 /obj/structure/lever/wall{
@@ -194429,7 +194434,7 @@ gQk
 vSV
 wBO
 aDu
-aDu
+xMY
 nMU
 uMz
 rqY
@@ -208459,7 +208464,7 @@ xNm
 fiz
 eNk
 izx
-imS
+xYG
 ogB
 lfh
 nYi
