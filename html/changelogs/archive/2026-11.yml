@@ -549,3 +549,9 @@
   - bugfix: Corrected stat overflow bookkeeping when overlapping modifiers are applied
       and removed.
   - bugfix: "Removed the duplicated Speed sentence from Stuffed\u2019s tooltip."
+  - balance: "Non-utility arcane spells have a 1.5-second minimum cast time after\
+      \ reductions; minor utility spells, Lesser Shapeshift and Magician\u2019s Brick\
+      \ retain their existing casting behavior."
+  - balance: Blink and Shadowstep cannot be cast while grabbed.
+  - balance: Repel and Repulse drag you along when they knock back the person pulling
+      you.
