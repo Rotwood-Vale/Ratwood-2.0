@@ -68,6 +68,8 @@ GLOBAL_LIST_INIT(pridelist, list(
 	var/activecolor = "#FFFFFF"
 	var/activecolor_detail = "#FFFFFF"
 	var/activecolor_altdetail = "#FFFFFF"
+	var/activecolor_tasset1 = "#FFFFFF"
+	var/activecolor_tasset2 = "#FFFFFF"
 	var/ducal_scheme = FALSE // Whether primary color is using Ducal Scheme
 	var/ducal_scheme_detail = FALSE // Whether detail color is using Ducal Scheme
 	var/ducal_scheme_altdetail = FALSE // Whether altdetail color is using Ducal Scheme
@@ -91,11 +93,6 @@ GLOBAL_LIST_INIT(pridelist, list(
 			/obj/item/reagent_containers/glass/bottle/blown,
 			/obj/item/reagent_containers/glass/bottle/alchemical/blown
 			)
-	var/list/used_colors
-
-/obj/machinery/gear_painter/Initialize(mapload)
-	. = ..()
-	used_colors = GLOB.colorlist
 
 /obj/machinery/gear_painter/Destroy()
 	if(inserted)
@@ -116,7 +113,15 @@ GLOBAL_LIST_INIT(pridelist, list(
 			activecolor = "[S.swatchbookcolor]"
 			activecolor_detail = "[S.swatchbookcolor]"
 			activecolor_altdetail = "[S.swatchbookcolor]"
-			ui_interact(user)
+			activecolor_tasset1 = S.swatchbookcolor
+			activecolor_tasset2 = S.swatchbookcolor
+			ducal_scheme = FALSE
+			ducal_scheme_detail = FALSE
+			ducal_scheme_altdetail = FALSE
+			barony_scheme = FALSE
+			barony_scheme_detail = FALSE
+			barony_scheme_altdetail = FALSE
+			interact(user)
 			return ..()
 	if(inserted)
 		to_chat(user, span_warning("Something is already inside!"))
@@ -138,6 +143,29 @@ GLOBAL_LIST_INIT(pridelist, list(
 
 /obj/machinery/gear_painter/attack_hand(mob/living/user)
 	interact(user)
+
+/obj/machinery/gear_painter/proc/pick_dye(mob/user, current_color, prompt_title, allow_schemes = FALSE)
+	var/atom/movable/target = inserted
+	var/picked_color
+	switch(alert(user, "Input Choice", prompt_title, "Color Wheel", "Color Preset", "Cancel"))
+		if("Color Wheel")
+			var/custom_color = color_pick_sanitized(user, "Choose your dye:", "Dyes", current_color)
+			if(custom_color)
+				picked_color = sanitize_hexcolor(custom_color, 6, TRUE)
+		if("Color Preset")
+			var/list/presets = GLOB.colorlist.Copy()
+			if(allow_schemes)
+				presets["Ducal Scheme"] = "Ducal Scheme"
+				presets["Barony Scheme"] = "Barony Scheme"
+			var/choice = input(user, "Choose your dye:", "Dyes", null) as null|anything in presets
+			if(choice)
+				picked_color = presets[choice]
+
+	if(!picked_color || QDELETED(src) || QDELETED(target) || target != inserted || target.loc != src)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src))
+		return
+	return picked_color
 
 /obj/machinery/gear_painter/interact(mob/user)
 	if(!is_operational())
@@ -237,24 +265,25 @@ GLOBAL_LIST_INIT(pridelist, list(
 
 	dat += "</div><BR>"
 
-	dat += "Item inserted: [inserted]<BR><BR>"
+	var/item_href = "?src=[REF(src)];item=[REF(inserted_item)]"
+	dat += "Item inserted: [inserted_item]<BR><BR>"
 
 	dat += "Color: <font color='[activecolor]'>&#10070;</font> "
-	dat += "<A href='?src=\ref[src];select=1'>Select new color.</A><BR>"
-	dat += "<A href='?src=\ref[src];paint_primary=1'>Apply new color</A> | "
-	dat += "<A href='?src=\ref[src];clear_primary=1'>Remove paintjob</A><BR><BR>"
+	dat += "<A href='[item_href];select=1'>Select new color.</A><BR>"
+	dat += "<A href='[item_href];paint_primary=1'>Apply new color</A> | "
+	dat += "<A href='[item_href];clear_primary=1'>Remove paintjob</A><BR><BR>"
 
 	if(inserted_item.detail_color)
 		dat += "Detail Color: <font color='[activecolor_detail]'>&#10070;</font> "
-		dat += "<A href='?src=\ref[src];select_detail=1'>Select new detail color.</A><BR>"
-		dat += "<A href='?src=\ref[src];paint_detail=1'>Apply new color</A> | "
-		dat += "<A href='?src=\ref[src];clear_detail=1'>Remove paintjob</A><BR><BR>"
+		dat += "<A href='[item_href];select_detail=1'>Select new detail color.</A><BR>"
+		dat += "<A href='[item_href];paint_detail=1'>Apply new color</A> | "
+		dat += "<A href='[item_href];clear_detail=1'>Remove paintjob</A><BR><BR>"
 
 	if(inserted_item.altdetail_color)
 		dat += "Alt. Detail Color: <font color='[activecolor_altdetail]'>&#10070;</font> "
-		dat += "<A href='?src=\ref[src];select_altdetail=1'>Select new tertiary color.</A><BR>"
-		dat += "<A href='?src=\ref[src];paint_altdetail=1'>Apply new color</A> | "
-		dat += "<A href='?src=\ref[src];clear_altdetail=1'>Remove paintjob</A><BR><BR>"
+		dat += "<A href='[item_href];select_altdetail=1'>Select new tertiary color.</A><BR>"
+		dat += "<A href='[item_href];paint_altdetail=1'>Apply new color</A> | "
+		dat += "<A href='[item_href];clear_altdetail=1'>Remove paintjob</A><BR><BR>"
 
 	// Taur tasset dyyyyyyeeeing - only for heavy armor when user is a taur
 	if(istype(inserted_item, /obj/item/clothing))
@@ -267,29 +296,27 @@ GLOBAL_LIST_INIT(pridelist, list(
 
 				var/icon/tasset1_preview = new /icon()
 				tasset1_preview.Insert(new /icon(taur.taur_clothing_icon, taur.get_tasset_state(1)), "", SOUTH, 0)
-				if(taur.tasset1_color)
-					tasset1_preview.Blend(taur.tasset1_color, ICON_MULTIPLY)
+				tasset1_preview.Blend(activecolor_tasset1, ICON_MULTIPLY)
 				dat += "<div style='text-align:center;'>"
 				dat += "<img src='data:image/png;base64,[icon2base64(tasset1_preview)]' style='vertical-align:middle; width:64px; height:64px; image-rendering: pixelated; image-rendering: crisp-edges;'>"
 				dat += "</div>"
-				dat += "Tasset 1 Color: <font color='[taur.tasset1_color || "#FFFFFF"]'>&#10070;</font> "
-				dat += "<A href='?src=\ref[src];select_tasset1=1'>Select color.</A><BR>"
-				dat += "<A href='?src=\ref[src];paint_tasset1=1'>Apply color</A> | "
-				dat += "<A href='?src=\ref[src];clear_tasset1=1'>Remove color</A><BR><BR>"
+				dat += "Tasset 1 Color: <font color='[activecolor_tasset1]'>&#10070;</font> "
+				dat += "<A href='[item_href];select_tasset1=1'>Select color.</A><BR>"
+				dat += "<A href='[item_href];paint_tasset1=1'>Apply color</A> | "
+				dat += "<A href='[item_href];clear_tasset1=1'>Remove color</A><BR><BR>"
 
 				var/icon/tasset2_preview = new /icon()
 				tasset2_preview.Insert(new /icon(taur.taur_clothing_icon, taur.get_tasset_state(2)), "", SOUTH, 0)
-				if(taur.tasset2_color)
-					tasset2_preview.Blend(taur.tasset2_color, ICON_MULTIPLY)
+				tasset2_preview.Blend(activecolor_tasset2, ICON_MULTIPLY)
 				dat += "<div style='text-align:center;'>"
 				dat += "<img src='data:image/png;base64,[icon2base64(tasset2_preview)]' style='vertical-align:middle; width:64px; height:64px; image-rendering: pixelated; image-rendering: crisp-edges;'>"
 				dat += "</div>"
-				dat += "Tasset 2 Color: <font color='[taur.tasset2_color || "#FFFFFF"]'>&#10070;</font> "
-				dat += "<A href='?src=\ref[src];select_tasset2=1'>Select color.</A><BR>"
-				dat += "<A href='?src=\ref[src];paint_tasset2=1'>Apply color</A> | "
-				dat += "<A href='?src=\ref[src];clear_tasset2=1'>Remove color</A><BR><BR>"
+				dat += "Tasset 2 Color: <font color='[activecolor_tasset2]'>&#10070;</font> "
+				dat += "<A href='[item_href];select_tasset2=1'>Select color.</A><BR>"
+				dat += "<A href='[item_href];paint_tasset2=1'>Apply color</A> | "
+				dat += "<A href='[item_href];clear_tasset2=1'>Remove color</A><BR><BR>"
 
-	dat += "<A href='?src=\ref[src];eject=1'>Eject item.</A><BR><BR>"
+	dat += "<A href='[item_href];eject=1'>Eject item.</A><BR><BR>"
 	menu.set_content("<html>[dat.Join("")]</html>")
 	menu.open()
 
@@ -304,128 +331,44 @@ GLOBAL_LIST_INIT(pridelist, list(
 		usr << browse(null, "window=colormate")
 		return
 
-	if(href_list["select"])
-		ducal_scheme = FALSE
-		barony_scheme = FALSE
-		if(HAS_TRAIT(usr, TRAIT_DYES))
-			var/choice
-			var/input_type = alert(usr, "Input Choice", "Primary Dye", "Color Wheel", "Color Preset", "Scheme")
-			if(input_type == "Scheme")
-				var/scheme_type = alert(usr, "Choose Scheme", "Scheme", "Ducal", "Barony")
-				if(scheme_type == "Barony")
-					barony_scheme = TRUE
-					activecolor = GLOB.baronprimary ? GLOB.baronprimary : "#685542"
-				else
-					ducal_scheme = TRUE
-					activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
-			else if(input_type != "Color Wheel")
-				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
-				if(!choice)
-					return
-				activecolor = used_colors[choice]
-			else
-				activecolor = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", choice ? choice : activecolor, 0.2, 1), 6, TRUE)
-				if(activecolor == "#000000")
-					activecolor = "#FFFFFF"
-			interact(usr)
-		else
-			var/choice_list = GLOB.colorlist.Copy()
-			choice_list["Ducal Scheme"] = "#DUCAL"
-			choice_list["Barony Scheme"] = "#BARONY"
-			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
-			if(!choice)
-				return
-			if(choice == "Ducal Scheme")
-				ducal_scheme = TRUE
-				activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
-			else if(choice == "Barony Scheme")
-				barony_scheme = TRUE
-				activecolor = GLOB.baronprimary ? GLOB.baronprimary : "#685542"
-			else
-				activecolor = GLOB.colorlist[choice]
-			interact(usr)
+	if(QDELETED(inserted) || inserted.loc != src || href_list["item"] != REF(inserted))
+		to_chat(usr, span_warning("The item in the dye station has changed."))
+		interact(usr)
+		return
 
-	if(href_list["select_detail"])
-		ducal_scheme_detail = FALSE
-		barony_scheme_detail = FALSE
-		if(HAS_TRAIT(usr, TRAIT_DYES))
-			var/choice
-			var/input_type = alert(usr, "Input Choice", "Detail Dye", "Color Wheel", "Color Preset", "Scheme")
-			if(input_type == "Scheme")
-				var/scheme_type = alert(usr, "Choose Scheme", "Scheme", "Ducal", "Barony")
-				if(scheme_type == "Barony")
-					barony_scheme_detail = TRUE
-					activecolor_detail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
-				else
-					ducal_scheme_detail = TRUE
-					activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
-			else if(input_type != "Color Wheel")
-				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
-				if(!choice)
-					return
-				activecolor_detail = used_colors[choice]
-			else
-				activecolor_detail = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", choice ? choice : activecolor_detail, 0.2, 1), 6, TRUE)
-				if(activecolor_detail == "#000000")
-					activecolor_detail = "#FFFFFF"
-			interact(usr)
-		else
-			var/choice_list = GLOB.colorlist.Copy()
-			choice_list["Ducal Scheme"] = "#DUCAL"
-			choice_list["Barony Scheme"] = "#BARONY"
-			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
-			if(!choice)
-				return
-			if(choice == "Ducal Scheme")
-				ducal_scheme_detail = TRUE
-				activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
-			else if(choice == "Barony Scheme")
-				barony_scheme_detail = TRUE
-				activecolor_detail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
-			else
-				activecolor_detail = GLOB.colorlist[choice]
-			interact(usr)
+	if(href_list["select"] || href_list["select_detail"] || href_list["select_altdetail"])
+		var/obj/item/inserted_item = inserted
+		if(!inserted_item)
+			return
+		var/primary = href_list["select"]
+		var/detail = !primary && href_list["select_detail"]
+		if(!primary && !(detail ? inserted_item.detail_color : inserted_item.altdetail_color))
+			return
+		var/current_color = primary ? activecolor : (detail ? activecolor_detail : activecolor_altdetail)
+		var/title = primary ? "Primary Dye" : (detail ? "Detail Dye" : "Tertiary Dye")
+		var/picked_color = pick_dye(usr, current_color, title, allow_schemes = TRUE)
+		if(!picked_color)
+			return
+		var/ducal = picked_color == "Ducal Scheme"
+		var/barony = picked_color == "Barony Scheme"
+		if(ducal)
+			picked_color = primary ? (GLOB.lordprimary || "#264d26") : (GLOB.lordsecondary || "#2b292e")
+		else if(barony)
+			picked_color = primary ? (GLOB.baronprimary || "#685542") : (GLOB.baronsecondary || "#505050")
 
-	if(href_list["select_altdetail"])
-		ducal_scheme_altdetail = FALSE
-		barony_scheme_altdetail = FALSE
-		if(HAS_TRAIT(usr, TRAIT_DYES))
-			var/choice
-			var/input_type = alert(usr, "Input Choice", "Tertiary Dye", "Color Wheel", "Color Preset", "Scheme")
-			if(input_type == "Scheme")
-				var/scheme_type = alert(usr, "Choose Scheme", "Scheme", "Ducal", "Barony")
-				if(scheme_type == "Barony")
-					barony_scheme_altdetail = TRUE
-					activecolor_altdetail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
-				else
-					ducal_scheme_altdetail = TRUE
-					activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
-			else if(input_type != "Color Wheel")
-				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
-				if(!choice)
-					return
-				activecolor_altdetail = used_colors[choice]
-			else
-				activecolor_altdetail = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", choice ? choice : activecolor_altdetail, 0.2, 1), 6, TRUE)
-				if(activecolor_altdetail == "#000000")
-					activecolor_altdetail = "#FFFFFF"
-			interact(usr)
+		if(primary)
+			activecolor = picked_color
+			ducal_scheme = ducal
+			barony_scheme = barony
+		else if(detail)
+			activecolor_detail = picked_color
+			ducal_scheme_detail = ducal
+			barony_scheme_detail = barony
 		else
-			var/choice_list = GLOB.colorlist.Copy()
-			choice_list["Ducal Scheme"] = "#DUCAL"
-			choice_list["Barony Scheme"] = "#BARONY"
-			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
-			if(!choice)
-				return
-			if(choice == "Ducal Scheme")
-				ducal_scheme_altdetail = TRUE
-				activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
-			else if(choice == "Barony Scheme")
-				barony_scheme_altdetail = TRUE
-				activecolor_altdetail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
-			else
-				activecolor_altdetail = GLOB.colorlist[choice]
-			interact(usr)
+			activecolor_altdetail = picked_color
+			ducal_scheme_altdetail = ducal
+			barony_scheme_altdetail = barony
+		interact(usr)
 
 	if(href_list["paint_primary"])
 		if(!inserted)
@@ -618,34 +561,18 @@ GLOBAL_LIST_INIT(pridelist, list(
 		var/obj/item/clothing/armor_item = inserted
 		if(!istype(armor_item) || armor_item.armor_class != ARMOR_CLASS_HEAVY)
 			return
-		var/which = href_list["select_tasset1"] ? "tasset1" : "tasset2"
-		if(HAS_TRAIT(usr, TRAIT_DYES))
-			var/choice
-			var/input_type = alert(usr, "Input Choice", "[which == "tasset1" ? "Tasset 1" : "Tasset 2"] Dye", "Color Wheel", "Color Preset")
-			if(input_type != "Color Wheel")
-				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
-				if(!choice)
-					return
-				if(which == "tasset1")
-					activecolor_detail = used_colors[choice]
-				else
-					activecolor_altdetail = used_colors[choice]
-			else
-				var/picked = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", "#FFFFFF", 0.2, 1), 6, TRUE)
-				if(picked == "#000000")
-					picked = "#FFFFFF"
-				if(which == "tasset1")
-					activecolor_detail = picked
-				else
-					activecolor_altdetail = picked
+		var/mob/living/carbon/human/H = usr
+		var/obj/item/bodypart/taur/taur = H.get_taur_tail()
+		if(!taur?.taur_clothing_category || !taur.has_barding_tassets)
+			return
+		var/first_tasset = href_list["select_tasset1"]
+		var/picked_color = pick_dye(usr, first_tasset ? activecolor_tasset1 : activecolor_tasset2, first_tasset ? "Tasset 1 Dye" : "Tasset 2 Dye")
+		if(!picked_color || H.get_taur_tail() != taur)
+			return
+		if(first_tasset)
+			activecolor_tasset1 = picked_color
 		else
-			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in GLOB.colorlist
-			if(!choice)
-				return
-			if(which == "tasset1")
-				activecolor_detail = GLOB.colorlist[choice]
-			else
-				activecolor_altdetail = GLOB.colorlist[choice]
+			activecolor_tasset2 = picked_color
 		interact(usr)
 
 	if(href_list["paint_tasset1"] || href_list["paint_tasset2"])
@@ -659,9 +586,9 @@ GLOBAL_LIST_INIT(pridelist, list(
 		if(!taur?.taur_clothing_category || !taur.has_barding_tassets)
 			return
 		if(href_list["paint_tasset1"])
-			taur.tasset1_color = activecolor_detail
+			taur.tasset1_color = activecolor_tasset1
 		else
-			taur.tasset2_color = activecolor_altdetail
+			taur.tasset2_color = activecolor_tasset2
 		playsound(src, "bubbles", 50, 1)
 		H.update_inv_armor()
 		H.update_inv_shirt()
