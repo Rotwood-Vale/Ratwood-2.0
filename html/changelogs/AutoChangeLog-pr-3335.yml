@@ -1,8 +1,0 @@
-author: "MrShibaa"
-delete-after: True
-changes:
-  - rscadd: "Steel and Western Nodachi (Iron)"
-  - rscadd: "Custom sheathe for the steel nodachi variant, only obtainable via roles that spawn with them."
-  - rscadd: "Crafting recipes for steel and western nodachi (Steel nodachi requires respective craft book)"
-  - balance: "gives nodachi as an option for (Retainer duelist, eastern warrior, hangyaku-kounen, disgraced knight, mistwalker."
-  - code_imp: "replaced \"sword, great mace, spear etc..\" with the respective sword names for hangyaku-kounen."

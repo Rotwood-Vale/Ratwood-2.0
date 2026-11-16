@@ -1,6 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - rscadd: "Added a peddlar and potion seller cart, mobile versions of the trading machines"
-  - qol: "Reworked the Peddlar and Potion seller interfaces with TGUI, and added a bunch of QOL related changes to make them much easier to use (bulk loading/unloading/buying/etc"
-  - qol: "Hooked up the expandable mechanics help that we had in place from a lot of AP ports. Will allow further easy implementation of this going forward to make some more complex interactions easier to learn/understand for players"
