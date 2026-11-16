@@ -71,7 +71,7 @@
 			continue
 		new /obj/effect/temp_visual/kinetic_blast(T)
 		for(var/obj/structure/S in T)
-			S.take_damage(damage, BRUTE, "blunt", FALSE)
+			S.take_damage_from(caster, damage, BRUTE, "blunt", FALSE, cause = "with [spell_name]")
 		for(var/mob/living/L in T.contents)
 			if(L.anti_magic_check())
 				L.visible_message(span_warning("The arcyne force dissipates around [L]!"))

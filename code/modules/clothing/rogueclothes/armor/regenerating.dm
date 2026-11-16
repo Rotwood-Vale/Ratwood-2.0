@@ -143,7 +143,7 @@
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
 	name = "tough skin"
 	desc = "My skin has always been tough enough to stop most cuts and bruises, with time it will mend."
-	armor = ARMOR_PADDED_BAD
+	armor = ARMOR_REGENERATING_WEAK
 	max_integrity = 300
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
@@ -194,7 +194,7 @@
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	repair_time = 40 SECONDS
+	repair_time = 20 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berzerker
 	name = "unstoppable chest"
@@ -203,7 +203,7 @@
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
-	repair_time = 40 SECONDS
+	repair_time = 30 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/iconclast
 	name = "gilded skin"

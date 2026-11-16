@@ -670,12 +670,12 @@
 			user.visible_message(span_notice("[user] examines [src]."), \
 				span_notice("I check [src] for injuries."))
 
-	if(stat < DEAD)
+	if(stat == DEAD || (user != src && looks_dead()))
+		examination += span_dead("[m1] dead.")
+	else
 		examination += "[m1] still alive."
 		if(stat >= UNCONSCIOUS)
 			examination += "[m1] [IsSleeping() ? "asleep" : "unconscious"]."
-	else
-		examination += span_dead("[m1] dead.")
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
 			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))

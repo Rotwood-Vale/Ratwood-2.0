@@ -238,6 +238,7 @@
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
 		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
+		record_forensic_transfer(target_atom, transfer_log, transfered_by, method, prepend)
 
 	update_total()
 	R.update_total()

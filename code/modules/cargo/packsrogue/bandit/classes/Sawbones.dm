@@ -219,6 +219,11 @@
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strong_antidote)
 
+/datum/supply_pack/rogue/Sawbones/rotcure
+	name = "Rot Cure Potion"
+	cost = 100
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure)
+
 /datum/supply_pack/rogue/Sawbones/emberwine
 	name = "Emberwine"
 	cost = 50

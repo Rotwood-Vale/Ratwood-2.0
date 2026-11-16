@@ -332,6 +332,13 @@
 	color_key_defaults = list(KEY_SKIN_COLOR)
 	can_flick = TRUE
 
+/datum/sprite_accessory/ears/elfshort
+	name = "Elf (Short)"
+	icon = 'icons/mob/sprite_accessory/elf.dmi'
+	icon_state = "elfshort"
+	color_key_defaults = list(KEY_SKIN_COLOR)
+	can_flick = FALSE
+
 /datum/sprite_accessory/ears/halforc
 	name = "Half Orc"
 	icon = 'icons/mob/sprite_accessory/halforc.dmi'

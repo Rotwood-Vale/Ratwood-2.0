@@ -3,6 +3,8 @@
 	roundend_category = "Lich"
 	antagpanel_category = "Lich"
 	job_rank = ROLE_LICH
+	antag_hud_type = ANTAG_HUD_UNDEAD
+	antag_hud_name = "lich_hud"
 	confess_lines = list(
 		"I WILL LIVE ETERNAL!",
 		"I AM BEHIND SEVEN PHYLACTERIES!",
@@ -55,7 +57,12 @@
 	equip_lich()
 	greet()
 	save_stats()
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
+	return ..()
+
+/datum/antagonist/lich/on_removal()
+	remove_own_antag_hud()
 	return ..()
 
 /datum/antagonist/lich/greet()

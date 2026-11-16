@@ -131,7 +131,7 @@
 
 /datum/outfit/job/roguetown/baron_retainer/duelist/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Der Schwertkämpfer (Kriegsmesser)", "The Vagabond (Hwando)")
+	var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Der Schwertkämpfer (Kriegsmesser)", "The Vagabond (Hwando)", "The Wayfarer (Nodachi)")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	switch(weapon_choice)
 		if("La Bête (Executioner)")
@@ -168,7 +168,11 @@
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/sword/kazengun, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/mentorhat, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/eastcloak2, SLOT_CLOAK, TRUE)
-
+		if("The Wayfarer (Nodachi)")
+			H.put_in_hands(new /obj/item/rogueweapon/greatsword/nodachi, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap/nodachi, SLOT_BACK_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/mentorhat, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/eastcloak2, SLOT_CLOAK, TRUE)
 /datum/advclass/baron_retainer/greyleaf
 	name = "Greyleaf"
 	tutorial = "Honorably discharged from the warden corps, you have found new purpose in protecting the baron from the shadows and advising him on matters of Lowtown as someone who has shed blood to protect it."
@@ -204,7 +208,7 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 	if(H.mind)
-		var/helmets = list("Warden Bearskull", "Warden Goatskull", "Warden Wolfskull", "Studded Hood and Hound Mask")
+		var/helmets = list("Warden Bearskull", "Warden Goatskull", "Warden Wolfskull", "Warden Rouskull", "Studded Hood and Hound Mask")
 		var/helmet_choice = input(H, "Choose your Outfit", "EQUIP THINESELF") as anything in helmets
 		switch(helmet_choice)
 			if("Warden Bearskull")
@@ -217,6 +221,10 @@
 				cloak = /obj/item/clothing/cloak/wardencloak
 			if("Warden Wolfskull")
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
+				mask = /obj/item/clothing/head/roguetown/roguehood/warden
+				cloak = /obj/item/clothing/cloak/wardencloak
+			if("Warden Rouskull")
+				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/rat
 				mask = /obj/item/clothing/head/roguetown/roguehood/warden
 				cloak = /obj/item/clothing/cloak/wardencloak
 			if("Studded Hood and Hound Mask")
