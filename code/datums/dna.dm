@@ -179,6 +179,13 @@
 		dna.species = new_race
 		//BODYPARTS AND FEATURES
 		if(pref_load)
+			// A shared mannequin must start each preview with a fresh transform.
+			// Reset after species loss so its cleanup cannot affect the next character.
+			if(istype(src, /mob/living/carbon/human/dummy))
+				transform = matrix()
+				dna.current_body_size = BODY_SIZE_NORMAL
+				dna.current_body_center_offset = 0
+				dna.current_body_center_offset_y = 0
 			dna.features = pref_load.features.Copy()
 			dna.body_markings = deepCopyList(pref_load.body_markings)
 			dna.real_name = pref_load.real_name
