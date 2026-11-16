@@ -533,3 +533,9 @@
   _Rarity:
   - bugfix: Fixed Character Sheet sprites drifting when other players preview characters
       of a different species and size.
+  - bugfix: Fix HERMES mail notifications not sending.
+  - bugfix: Fireman carries keep their original grip on stairs, and piggyback riders
+      stay mounted.
+  - qol: "Map ballots now respect each map\u2019s population limits when voting opens."
+  - balance: Dun World requires 30 connected players to appear on the ballot and at
+      least 24 when voting closes to win.

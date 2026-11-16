@@ -1,5 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - qol: "Map ballots now respect each map’s population limits when voting opens."
-  - balance: "Dun World requires 30 connected players to appear on the ballot and at least 24 when voting closes to win."
