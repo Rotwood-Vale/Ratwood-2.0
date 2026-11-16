@@ -41,6 +41,8 @@
 				return DICE_WIN
 
 /mob/living/carbon/proc/rollfrenzy()
+	if(HAS_TRAIT(src, TRAIT_TORPOR))
+		return
 	if(client)
 		beast_heartbeat_pulse()
 		if(clan)

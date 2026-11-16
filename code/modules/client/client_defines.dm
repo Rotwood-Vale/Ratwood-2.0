@@ -43,6 +43,8 @@
 	var/datum/toggle_options_menu/toggles_menu = null
 	/// Single-instance Volume Power TGUI menu
 	var/datum/volume_power_menu/volume_power_menu = null
+	/// Everything point ambience keeps for this player, see /datum/point_ambience_listener
+	var/datum/point_ambience_listener/point_ambience
 	///Move delay of controlled mob, related to input handling
 	var/move_delay = 0
 	///Current area of the controlled mob

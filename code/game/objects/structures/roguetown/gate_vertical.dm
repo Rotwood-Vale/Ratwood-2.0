@@ -6,6 +6,8 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	sound_door = TRUE
+	sound_opening = TRUE
 	bound_width = 32
 	bound_height = 96
 	layer = ABOVE_MOB_LAYER
@@ -59,14 +61,15 @@
 	if(isSwitchingStates || !density)
 		return
 	isSwitchingStates = TRUE
-	playsound(src, 'sound/misc/gate.ogg', 100, extrarange = 5)
+	// Track listener movement during playback. The token deletes itself when the clip ends
+	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_opening", src)
 	layer = initial(layer)
 	sleep(15)
 	density = FALSE
-	opacity = FALSE
+	set_opacity(FALSE)
 	for(var/obj/gblock/B in blockers)
-		B.opacity = FALSE
+		B.set_opacity(FALSE)
 	isSwitchingStates = FALSE
 	update_gate_icon()
 
@@ -76,7 +79,8 @@
 	isSwitchingStates = TRUE
 	update_gate_icon()
 	layer = ABOVE_MOB_LAYER
-	playsound(src, 'sound/misc/gate.ogg', 100, extrarange = 5)
+	// Track listener movement during playback. The token deletes itself when the clip ends
+	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_closing", src)
 	sleep(10)
 
@@ -99,10 +103,10 @@
 			M.Stun(50)
 
 	density = TRUE
-	opacity = TRUE
+	set_opacity(TRUE)
 	layer = initial(layer)
 	for(var/obj/gblock/B in blockers)
-		B.opacity = TRUE
+		B.set_opacity(TRUE)
 	isSwitchingStates = FALSE
 	update_gate_icon()
 

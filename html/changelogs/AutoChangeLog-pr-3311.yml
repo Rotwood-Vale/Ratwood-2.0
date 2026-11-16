@@ -1,6 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Prayer cooldowns now restart when a prayer actually goes through, not when you retry early. Early attempts tell you how long is left."
-  - bugfix: "Martyr self-prayer and received-prayer healing no longer overwrite each other. Your own prayer can't trigger both, and Inhumen prayers no longer trigger received-prayer healing."
-  - qol: "Martyrs get a Prayer Recovering countdown, and active prayer heals show miracle heal icons with their own timers."
