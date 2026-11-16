@@ -1,0 +1,7 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - rscadd: "Lanterns can now hold two Seelies."
+  - bugfix: "Fixed lantern reach checks, occupant ejection on destruction, and Seelie glow consuming fuel or igniting items."
+  - bugfix: "Rous must be tamed before mounting, and Seelie verbs are removed on species loss."
+  - bugfix: "Seelie size-mismatch injuries respect Extreme ERP preferences and fracture protection."
