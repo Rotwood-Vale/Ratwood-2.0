@@ -22,12 +22,13 @@
 		out += initial(A.name)
 	return out
 
+/obj/structure/roguemachine/contractledger/proc/can_compose_rumors(mob/user)
+	return ishuman(user) && ((user.job in GLOB.tavern_positions) || user.job == "Towner")
+
 /obj/structure/roguemachine/contractledger/proc/compose_rumor_from_tgui(mob/user, list/params)
-	if(!ishuman(user))
+	if(!can_compose_rumors(user))
 		return
 	var/mob/living/carbon/human/innkeeper = user
-	if(!(innkeeper.job in GLOB.tavern_positions))
-		return
 	if(!innkeeper.Adjacent(src))
 		return
 
@@ -100,7 +101,7 @@
 		say("\"So I have heard...\" A rumor is whispered into the Guild's ledger.")
 		to_chat(innkeeper, span_notice("Rumor posted to the board: <b>[dispatched.title || dispatched.quest_type]</b>[lucrative_tail]."))
 
-/obj/structure/roguemachine/contractledger/proc/pay_innkeeper_referral_fees(mob/user, datum/quest/completed_quest, gross_reward)
+/obj/structure/roguemachine/contractledger/proc/pay_innkeeper_referral_fees(mob/user, datum/quest/completed_quest, gross_reward, datum/fund/rumor_referral_account)
 	if(gross_reward <= 0)
 		return 0
 	var/datum/fund/tavern_fund = SStreasury.innkeeper_fund
@@ -112,8 +113,8 @@
 			SStreasury.bank_accounts[user] -= guild_fee
 			SStreasury.mint(tavern_fund, guild_fee, "Guild Cut - [completed_quest.quest_type]")
 			guild_paid = guild_fee
-	if(completed_quest.source == QUEST_SOURCE_RUMOR && tavern_fund)
+	if(rumor_referral_account)
 		var/rumor_fee = round(gross_reward * RUMOR_CONTACT_FEE_PCT)
 		if(rumor_fee > 0)
-			SStreasury.mint(tavern_fund, rumor_fee, "Contact Referral Fee - [completed_quest.quest_type]")
+			SStreasury.mint(rumor_referral_account, rumor_fee, "Contact Referral Fee - [completed_quest.quest_type]")
 	return guild_paid

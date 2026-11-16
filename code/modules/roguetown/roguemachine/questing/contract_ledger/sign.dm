@@ -114,6 +114,14 @@
 	var/deposit_return = completed_quest.calculate_deposit()
 	var/gross_reward = base_reward + deposit_return
 
+	var/datum/fund/rumor_referral_account
+	if(completed_quest.source == QUEST_SOURCE_RUMOR)
+		if(completed_quest.rumor_referral_issuer)
+			var/mob/issuer = completed_quest.rumor_referral_issuer.resolve()
+			rumor_referral_account = SStreasury.get_account(issuer)
+		else
+			rumor_referral_account = SStreasury.innkeeper_fund
+
 	var/quest_levy_exempt = completed_quest.levy_exempt
 	if(completed_quest.source == QUEST_SOURCE_TOWNER && hascall(completed_quest, "on_turn_in_pay_giver"))
 		call(completed_quest, "on_turn_in_pay_giver")(user, get_turf(src))
@@ -134,7 +142,7 @@
 		var/levy_rate = SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY)
 		SStreasury.record_tax_exemption(TAX_CATEGORY_CONTRACT_LEVY, FLOOR(base_reward * levy_rate, 1))
 
-	var/guild_fee_paid = pay_innkeeper_referral_fees(benef_account, completed_quest, gross_reward)
+	var/guild_fee_paid = pay_innkeeper_referral_fees(benef_account, completed_quest, gross_reward, rumor_referral_account)
 
 	var/take_home = gross_reward - tax_amt - guild_fee_paid
 	SSquestpool.record_completion(user, completed_quest, take_home, tax_amt)

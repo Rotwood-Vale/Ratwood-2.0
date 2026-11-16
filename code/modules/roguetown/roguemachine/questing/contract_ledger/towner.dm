@@ -168,6 +168,27 @@ GLOBAL_LIST_INIT(towner_posting_descriptors, list(
 		))
 	return out
 
+/obj/structure/roguemachine/contractledger/proc/can_commission_towner_blockade(mob/user)
+	return ishuman(user) && user.job == "Towner"
+
+/obj/structure/roguemachine/contractledger/proc/commission_towner_blockade_from_tgui(mob/user, region_name)
+	if(!can_commission_towner_blockade(user) || !user.Adjacent(src))
+		return
+	if(SSticker.current_state != GAME_STATE_PLAYING)
+		to_chat(user, span_warning("The ledger is not yet open."))
+		return
+
+	var/datum/fund/account = SStreasury.get_account(user)
+	if(!account)
+		to_chat(user, span_warning("No account on record - register with a Nervelock before commissioning a writ."))
+		return
+	var/cost = BLOCKADE_SCROLL_TOWNER_COST
+	if(account.balance < cost)
+		to_chat(user, span_warning("A Blockade Defense writ costs [cost] mammons."))
+		return
+
+	commission_blockade_defense(user, list("region" = region_name), cost, account, FALSE)
+
 /obj/structure/roguemachine/contractledger/proc/compose_towner_from_tgui(mob/user, list/params)
 	if(!ishuman(user))
 		return

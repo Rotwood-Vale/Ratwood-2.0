@@ -21,6 +21,7 @@ type InnkeeperData = {
   rumor_destinations: string[];
   rumor_log: RumorLogEntry[];
   rumor_lucrative_mult: number;
+  rumor_personal_referral_pct?: number;
   region_tp_multipliers: Record<string, number>;
   region_delivery_multipliers: Record<string, number>;
 };
@@ -296,7 +297,7 @@ const ComposeView = () => {
             value="board"
             selected={mode}
             onChange={setMode}
-            label="Post on public board"
+            label="Post as a standing contract"
           />
           <ModeRadio
             value="hands"
@@ -315,10 +316,16 @@ const ComposeView = () => {
             onChange={(e) => setLucrative(e.target.checked)}
           />
           &nbsp;Spend {pts(Math.round(baseCost * lucrativeMult))} instead of{' '}
-          {pts(baseCost)} for a x{lucrativeMult} reward. Your referral cut grows
-          with the payout.
+          {pts(baseCost)} for a x{lucrativeMult} reward.
         </label>
       </FormRow>
+
+      {!!data.rumor_personal_referral_pct && (
+        <p>
+          On turn-in, your Nervelock account receives a referral fee of{' '}
+          {data.rumor_personal_referral_pct}% of the gross payout.
+        </p>
+      )}
 
       <div className="ContractLedger__InnkeeperFormFooter">
         <button
