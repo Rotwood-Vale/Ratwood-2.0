@@ -1054,6 +1054,9 @@
 			display1 = span_info("This is the <EM>[used_name]</EM>, the [race_name].")
 		. += "[display1] [display2]"
 
+		if(origin && origin != "Unknown")
+			. += span_info("[capitalize(m2)] ancestry is [origin].")
+
 		if(HAS_TRAIT(src, TRAIT_WITCH))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
 				. += span_warning("A witch! Their presence brings an unsettling aura.")
@@ -1141,7 +1144,7 @@
 			var/mob/living/carbon/human/H = user
 			for(var/type in GLOB.origins)
 				var/datum/origin/O = GLOB.origins[type]
-				if(O.name == origin && O.prejudice_stress && H.origin != origin && (!O.hated_by || (H.origin in O.hated_by)))
+				if(O.name == origin && O.prejudice_stress && H.origin != origin && !HAS_TRAIT(H, TRAIT_TOLERANT) && (!O.hated_by || (H.origin in O.hated_by)))
 					. += O.prejudice_examine
 					user.add_stress(O.prejudice_stress)
 
@@ -1166,8 +1169,8 @@
 					. += (user_side == mob_side) ? span_notice("Fellow [their_god.name] supporter!") : span_userdanger("Vile [their_god.name] supporter!")
 
 
-		if(origin && origin != "Unknown")
-			. += span_info("[capitalize(m2)] ancestry is [origin].")
+		if(HAS_TRAIT(src, TRAIT_OVERWEIGHT))
+			. += span_info(span_yellow("[m1] quite chubby."))
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -1328,13 +1331,13 @@
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
-				. += span_danger("They extrude a pale aura. Their soul [stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
-			else if(stat == DEAD)
+				. += span_danger("They extrude a pale aura. Their soul [looks_dead() ? "was not" : "is not"] clean. This is it for them.")
+			else if(looks_dead())
 				. += span_danger("This was their only chance at lyfe.")
 
 	// Real medical role can tell at a glance it is a waste of time, but only if the Necra message don't come first.
 
-	if(user.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT && src.stat == DEAD)
+	if(user.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT && looks_dead())
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user && !HAS_TRAIT(user, TRAIT_DEATHSIGHT)) // A lot of conditional to avoid a redundant message, but we also want unknown DNRs to be covered.
 			. += span_danger("Their body holds not even a glimmer of life. No medicine can bring them back.")
 

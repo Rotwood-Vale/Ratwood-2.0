@@ -1,6 +1,7 @@
 /datum/origin
 	var/name = null
 	var/desc = ""
+	var/short_desc
 	var/origin_title = null
 	var/region_title = null
 	var/map_x = 0
@@ -21,6 +22,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 /datum/origin/otava
 	name = ORIGIN_OTAVA
 	desc = "An unforgivingly cold alpine clime, said to be the birthplace of the Psydonic faith. The Orthodoxist Inquisition operates from the capital of Otava's old monarchy."
+	short_desc = "An unforgivingly cold alpine clime, said to be the birthplace of the Psydonic faith."
 	origin_title = "Otava"
 	origin_language = /datum/language/otavan
 	origin_traits = list(TRAIT_COLD_RESISTANCE, TRAIT_SLOW_METABOLISM)
@@ -32,8 +34,9 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/zybantine
 	name = ORIGIN_ZYBANTINE
-	desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Ferentia. The Empire favours strength and wealth; though rumours are abound \
+	desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Grimoria. The Empire favours strength and wealth; though rumours are abound \
 	that the opulent empire gathers its wealth through unsavoury means."
+	short_desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Grimoria."
 	origin_title = "Zybantine"
 	origin_language = /datum/language/celestial
 	origin_traits = list(TRAIT_HEAT_RESISTANCE, TRAIT_WATCHFUL)
@@ -44,6 +47,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	name = ORIGIN_NALEDI
 	desc = "Once a thriving empire in its own right, the Naledi people have warred against demons (or djinn in the local tongue) on their island for centuries. Their homeland \
 	was sundered by Zizo and all but finished off by the Ascension of Baotha about 100 yils ago. It is said that the first magics were born here."
+	short_desc = "Once a thriving empire in its own right, the Naledi people have warred against demons (or djinn in the local tongue) on their island for centuries."
 	origin_title = "Naledi"
 	origin_language = /datum/language/celestial
 	origin_traits = list(TRAIT_HEAT_RESISTANCE, TRAIT_GOLD_AFFINITY)
@@ -54,6 +58,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	name = ORIGIN_FERENTIA
 	desc = "An island kingdom off of the western coast of Grenzelhoft and Etrusca. The Ferentian people are a hardworking sort, eager to drink and revel after a dae's worth \
 	of toil. In the past, the kingdom has had to defend against Otava and Grenzelhoft, but now it acts as a mediator between the two nations."
+	short_desc = "An island kingdom off of the western coast of Grenzelhoft and Etrusca."
 	origin_title = "Ferentia"
 	origin_traits = list(TRAIT_LOCAL_KNOWLEDGE, TRAIT_WATERLOVING)
 	map_x = 151
@@ -64,6 +69,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	desc = "Said to be an immense network of caves and tunnels located all throughout the crust of Grimoria, the Underdark is home to the Dark Elves and the Kobolds, as well \
 	as the elusive Fluvian city-state of Mercuriam. The caverns of the Underdark are filled with many threats from rivers of acid to man-eating spiders; and even exaggerated \
 	reports of dragons beneath."
+	short_desc = "Said to be an immense network of caves and tunnels located all throughout the crust of Grimoria, the Underdark is home to the Dark Elves and the Kobolds, as well as the elusive Fluvian city-state of Mercuriam."
 	origin_title = ORIGIN_UNDERDARK
 	origin_traits = list(TRAIT_LIGHT_SENSITIVITY)
 	prejudice_stress = /datum/stressevent/prejudice/underdark
@@ -76,6 +82,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	desc = "The Hammerhold Peninsula and Isles are home to a myriad of peoples, from the Abyssor-loving Witan of the peninsula, the red-heads of Ru-Yermon, or the isles that \
 	once made up the see of seasons. Within it lies the Platinum Dwarf Fortress, the ruins of a glorious cathedral that was once the seat of northern tennite faith, and various \
 	petty kingdoms, or Jarldoms, all loosely agreeing to the will of the Ringbearer, Lord of the Witan."
+	short_desc = "The Hammerhold Peninsula and Isles are home to a myriad of peoples, from the Abyssor-loving Witan of the peninsula, the red-heads of Ru-Yermon, or the isles that once made up the see of seasons."
 	origin_title = "Hammerhold"
 	origin_language = /datum/language/hammerholdian
 	origin_traits = list(TRAIT_HEARTY_DRINKER, TRAIT_COLD_RESISTANCE)
@@ -87,6 +94,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	desc = "The Grenzelhoft Empire is the seat of the Holy See of the Dieci, the main Ten-worshipping religion of Grimoria. Due to the unfathomable hordes of deadites plaguing \
 	the Empire, many of the grand cities and artisan towns have been abandoned in favour of a lyfe across the seas or within the capital city. Despite all, Grenzelhoft still \
 	stands tall."
+	short_desc = "The Grenzelhoft Empire is the seat of the Holy See of the Dieci, the main Ten-worshipping religion of Grimoria."
 	origin_title = "Grenzelhoft"
 	origin_language = /datum/language/grenzelhoftian
 	origin_traits = list(TRAIT_DEADITE_RESISTANCE, TRAIT_METICULOUS)
@@ -100,19 +108,27 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	name = ORIGIN_AVAR
 	desc = "Avar is a land divided between the great Northern mountain ranges, the rolling grasslands of the Steppe, and the thick forests of the oncoming Taiga. It is home \
 	to the second greatest Psydonic kingdom behind Otava, the finest martial force of the Eastern ranges, and the most ethnically and culturally diverse peoples in Grimoria."
+	short_desc = "Avar is a land divided between the great Northern mountain ranges, the rolling grasslands of the Steppe, and the thick forests of the oncoming Taiga."
 	origin_title = "Avar"
 	origin_language = /datum/language/aavnic
 	origin_traits = list(TRAIT_STEPPE_RIDER, TRAIT_ANCESTOR_GUARDIAN)
+	hated_by = list(ORIGIN_GRONN)
+	prejudice_stress = /datum/stressevent/prejudice/avar
+	prejudice_examine = span_red("Humourless Aavnic! Pah!")
 	map_x = 417
 	map_y = 189
 
 /datum/origin/gronn
 	name = ORIGIN_GRONN
-	desc = "The steppes of Gronn are a place of bloodshed and war; Graggarite warbands laying waste to the people of Gronn and vying for dominance over Avar to the south. \
+	desc = "The steppes of Gronn are a place of bloodshed and war; Graggarite warbands lay waste to the people of Gronn and vie for dominance over Avar to the south. \
 	Not all is lost in the steppes, however, with many towns and nomad families eking out an existence fraught with danger despite the ravagers' conquest."
+	short_desc = "The steppes of Gronn are a place of bloodshed and war; Graggarite warbands lay waste to the people of Gronn and vie for dominance over Avar to the south."
 	origin_title = "Gronn"
 	origin_language = /datum/language/gronnic
 	origin_traits = list(TRAIT_COLD_RESISTANCE, TRAIT_BATTLE_CRY)
+	hated_by = list(ORIGIN_AVAR)
+	prejudice_stress = /datum/stressevent/prejudice/gronn
+	prejudice_examine = span_red("Inhumen Gronnite! Pah!")
 	map_x = 445
 	map_y = 116
 
@@ -120,6 +136,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	name = ORIGIN_ETRUSCA
 	desc = "A sunny trade nation comprised mostly of beautiful archipelagos. Etrusca prides itself on its martial and culinary traditions, with people all across Grimoria \
 	striving to learn the ways of the vaqueros and duellists of the trader state. "
+	short_desc = "A sunny trade nation comprised mostly of beautiful archipelagos."
 	origin_title = "Etrusca"
 	origin_language = /datum/language/etruscan
 	origin_traits = list(TRAIT_BLACKLEG, TRAIT_WATERLOVING)
@@ -131,12 +148,10 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	desc = "Kazengun is not but one nation, but three dynasties that have been in stand-still for centuries. The Kazengun Shogunate to the west of the island, the \
 	Pui-Maen Dynasty to the east, and the Clan Xinyi to the north. Kazengun is oft travelled by the people of the west, but those who visit recount (mostly tall) \
 	tales of the warriors and monsters within. Kazengunese imports are particularly expensive considering the vast ocean between the dynasties and the western world."
+	short_desc = "Kazengun is not but one nation, but three dynasties that have been in stand-still for centuries."
 	origin_title = "Kazengun"
 	origin_language = /datum/language/kazengunese
 	origin_traits = list(TRAIT_SOFT_FOOTED)
-	hated_by = list(ORIGIN_FERENTIA)
-	prejudice_stress = /datum/stressevent/prejudice/kazengun
-	prejudice_examine = span_red("Uninvited Kazengunite! Pah!")
 	map_x = 120
 	map_y = 374
 
@@ -145,6 +160,17 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	user << browse_rsc(file("html/rwmap1.png"), "rwmap1.png")
 	user << browse(html, "window=origin_map;size=685x540")
 	onclose(user, "origin_map", src)
+
+/datum/preferences/proc/open_origin_info(mob/user, datum/origin/O)
+	var/html = "<html><body style='background:#1a1209;color:#e8dcc8;font-family:Georgia,serif;padding:10px;'>"
+	html += "<center><b style='color:#e8c87a;font-size:18px;'>[O.name]</b></center><hr>[O.desc]<br><br>"
+	if(length(O.origin_traits))
+		html += "<b style='color:#e8c87a;'>Origin Traits:</b>"
+		for(var/trait in O.origin_traits)
+			html += "<details><summary><i><font color='#ccbb82'>[trait]</font></i></summary>"
+			html += "<i><font color='#a3ffe0'>[GLOB.roguetraits[trait]]</font></i></details>"
+	html += "<br><center>Is [O.name] my homeland?<br><a href='byond://?src=\ref[src];preference=origin_select;type=[url_encode("[O.type]")]'>Affirm</a> | <a href='byond://?src=\ref[src];preference=origin_cancel'>Deny</a></center></body></html>"
+	user << browse(html, "window=origin_info;size=400x450")
 
 /datum/preferences/proc/build_origin_map_html()
 	var/html = ""
@@ -170,8 +196,8 @@ GLOBAL_LIST_INIT(origins, build_origins())
 		var/datum/origin/O = GLOB.origins[otype]
 		var/sel_cls = (origin == O) ? " selected" : ""
 		var/safe_name = replacetext(O.name, "'", "\\'")
-		var/safe_desc = replacetext(O.desc, "'", "\\'")
-		var/node_href = "byond://?src=\ref[src];preference=origin_select;type=[url_encode("[otype]")]"
+		var/safe_desc = replacetext(O.short_desc, "'", "\\'")
+		var/node_href = "byond://?src=\ref[src];preference=origin_view;type=[url_encode("[otype]")]"
 		html += "<div class='pin[sel_cls]' style='left:[O.map_x]px;top:[O.map_y]px;' "
 		html += "onclick=\"window.location.href='[node_href]'; return false;\" "
 		html += "onmouseenter=\"showTip(event,'[safe_name]','[safe_desc]')\" "

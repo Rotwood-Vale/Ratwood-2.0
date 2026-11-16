@@ -4,6 +4,7 @@
 	source_aspect = /datum/magic_aspect/pseudo/spellblade
 	name = "Empower Weapon"
 	desc = "Channel all accumulated momentum into your next strike, empowering it to bypass parry and dodge. Works with both weapons and unarmed attacks. \
+		With a bound bow, your next arrow instead flies true, striking exactly where you aimed and piercing armor like a bodkin. \
 		Requires 5+ momentum. Burns ALL momentum."
 	button_icon = 'icons/mob/actions/classuniquespells/spellblade.dmi'
 	button_icon_state = "empower_weapon"
@@ -80,6 +81,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/empowered_strike
 	duration = 8 SECONDS
 	status_type = STATUS_EFFECT_UNIQUE
+	/// Bound bow we're listening to for the next loosed arrow, if any.
+	var/obj/item/gun/ballistic/revolver/grenadelauncher/bow/bound_bow
 
 /datum/status_effect/buff/empowered_strike/on_creation(mob/living/new_owner, new_duration)
 	if(new_duration)
@@ -90,13 +93,32 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_attack))
 	RegisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	var/datum/status_effect/buff/arcyne_momentum/M = owner.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(istype(M?.bound_weapon, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
+		bound_bow = M.bound_weapon
+		RegisterSignal(bound_bow, COMSIG_PROJECTILE_BEFORE_FIRE, PROC_REF(on_arrow_loosed))
 	owner.add_filter(EMPOWER_FILTER, 2, list("type" = "outline", "color" = "#ff2020", "alpha" = 200, "size" = 2))
 	owner.balloon_alert_to_viewers("<font color='#ff2020'>empowered!</font>")
 
 /datum/status_effect/buff/empowered_strike/on_remove()
 	UnregisterSignal(owner, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+	if(bound_bow)
+		UnregisterSignal(bound_bow, COMSIG_PROJECTILE_BEFORE_FIRE)
+		bound_bow = null
 	owner.remove_filter(EMPOWER_FILTER)
 	. = ..()
+
+/datum/status_effect/buff/empowered_strike/proc/on_arrow_loosed(obj/item/source, obj/projectile/arrow, atom/original)
+	SIGNAL_HANDLER
+	if(arrow.firer != owner)
+		return
+	arrow.true_aim = TRUE
+	arrow.armor_penetration = max(arrow.armor_penetration, PEN_HEAVY)
+	playsound(get_turf(owner), 'sound/magic/antimagic.ogg', 40, TRUE)
+	owner.visible_message(
+		span_danger("[owner]'s arrow streaks out wreathed in red arcyne light!"),
+		span_notice("My empowered arrow flies true!"))
+	owner.remove_status_effect(/datum/status_effect/buff/empowered_strike)
 
 /datum/status_effect/buff/empowered_strike/proc/on_attack(mob/living/source, mob/living/target, mob/living/user, obj/item/weapon)
 	SIGNAL_HANDLER

@@ -1,0 +1,6 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - rscadd: "Added runelock pistol"
+  - rscadd: "Added Testament new relic weapon"
+  - image: "added new icons and sprites"

@@ -1,3 +1,13 @@
+/mob/living/carbon/proc/get_armor_class(def_zone, d_type)
+	return ARMOR_CLASS_NONE
+
+/mob/living/carbon/human/get_armor_class(def_zone, d_type)
+	var/obj/item/clothing/C = get_best_worn_armor(def_zone, d_type)
+
+	if(!C)
+		return ARMOR_CLASS_NONE
+
+	return C.armor_class
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration = PEN_NONE, penetrated_text, damage, blade_dulling, intdamfactor, used_weapon = null, pen_info, no_debuff = FALSE)
 	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info)
@@ -152,7 +162,8 @@
 /mob/living/bullet_act(obj/projectile/P, def_zone = BODY_ZONE_CHEST)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone) & COMPONENT_ATOM_BLOCK_BULLET)
 		return
-	def_zone = bullet_hit_accuracy_check(P.accuracy + P.bonus_accuracy, def_zone)
+	if(!P.true_aim || !def_zone)
+		def_zone = bullet_hit_accuracy_check(P.accuracy + P.bonus_accuracy, def_zone)
 	P.def_zone = def_zone // on_hit needs to know where it actually landed
 	var/armor = run_armor_check(def_zone, P.flag, "", "",armor_penetration = P.armor_penetration, damage = P.damage, used_weapon = P)
 

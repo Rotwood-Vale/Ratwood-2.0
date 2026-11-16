@@ -182,6 +182,7 @@
 		/obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf      = 3,
 		/obj/item/clothing/head/roguetown/helmet/sallet/warden/goat      = 3,
 		/obj/item/clothing/head/roguetown/helmet/sallet/warden/bear      = 3,
+		/obj/item/clothing/head/roguetown/helmet/sallet/warden/rat       = 3,
 		/obj/item/clothing/head/roguetown/roguehood/warden               = 5,
 		/obj/item/clothing/head/roguetown/roguehood/warden/antler        = 3,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot         = 15,
@@ -197,6 +198,7 @@
 		/obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf      = 10,
 		/obj/item/clothing/head/roguetown/helmet/sallet/warden/goat      = 10,
 		/obj/item/clothing/head/roguetown/helmet/sallet/warden/bear      = 10,
+		/obj/item/clothing/head/roguetown/helmet/sallet/warden/rat       = 10,
 		/obj/item/clothing/head/roguetown/roguehood/warden/antler        = 8,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot         = 15,
 	)
