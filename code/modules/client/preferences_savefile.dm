@@ -940,6 +940,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_species(S)
 
 	_load_virtue(S)
+	var/saved_natural_armor_name
+	S["natural_armor_name"] >> saved_natural_armor_name
+	natural_armor_name = sanitize_natural_armor_text(saved_natural_armor_name)
+	var/saved_natural_armor_desc
+	S["natural_armor_desc"] >> saved_natural_armor_desc
+	natural_armor_desc = sanitize_natural_armor_text(saved_natural_armor_desc)
 	_load_quirks(S)
 	_load_flaw(S)
 
@@ -1365,6 +1371,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!background_typepath)
 		background_typepath = /datum/virtue/background/none
 	WRITE_FILE(S["virtue_background"], background_typepath)
+	WRITE_FILE(S["natural_armor_name"], natural_armor_name)
+	WRITE_FILE(S["natural_armor_desc"], natural_armor_desc)
 	WRITE_FILE(S["quirks"], get_quirk_typepaths())
 	WRITE_FILE(S["virgin_attraction"], sanitize_virgin_attraction(virgin_attraction))
 	WRITE_FILE(S["race_bonus"], race_bonus)

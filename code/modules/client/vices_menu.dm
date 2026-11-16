@@ -1,3 +1,9 @@
+/proc/sanitize_natural_armor_text(value)
+	return trim(copytext_char(sanitize_text(value), 1, 201))
+
+/datum/preferences/proc/has_natural_armor_virtue()
+	return istype(virtue, /datum/virtue/combat/tough_hide) || (statpack?.name == "Virtuous" && istype(virtuetwo, /datum/virtue/combat/tough_hide))
+
 /// Old/edited presets must not grant or charge for both hypnosis alternatives.
 /// Preserve the first selected variant and leave every unrelated quirk alone.
 /datum/preferences/proc/normalize_hypnotic_quirks()
@@ -260,6 +266,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"virtue" = virtue,
 		"virtuetwo" = virtuetwo,
 		"virtue_background" = virtue_background,
+		"natural_armor_name" = natural_armor_name,
+		"natural_armor_desc" = natural_armor_desc,
 		"quirks" = quirks.Copy(),
 		"virgin_attraction" = sanitize_virgin_attraction(virgin_attraction),
 		"vice1" = vice1,
@@ -339,6 +347,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
 	virtue_background = snapshot["virtue_background"]
+	natural_armor_name = snapshot["natural_armor_name"]
+	natural_armor_desc = snapshot["natural_armor_desc"]
 	var/list/quirks_snapshot = snapshot["quirks"]
 	quirks = quirks_snapshot ? quirks_snapshot.Copy() : list()
 	normalize_hypnotic_quirks()
@@ -414,6 +424,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
 		"virtue_background" = virtue_background?.type,
+		"natural_armor_name" = natural_armor_name,
+		"natural_armor_desc" = natural_armor_desc,
 		"quirks" = get_quirk_typepaths(),
 		"virgin_attraction" = sanitize_virgin_attraction(virgin_attraction),
 		"vice1" = vice1?.type,
@@ -515,6 +527,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		virtue_background = new background_type()
 	else
 		virtue_background = new /datum/virtue/background/none()
+	natural_armor_name = sanitize_natural_armor_text(preset["natural_armor_name"])
+	natural_armor_desc = sanitize_natural_armor_text(preset["natural_armor_desc"])
 
 	quirks = list()
 	virgin_attraction = sanitize_virgin_attraction(preset["virgin_attraction"])
@@ -1193,8 +1207,17 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		if(!istype(virtuetwo, /datum/virtue/none))
 			html += "<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=clear_secondary'>Clear Second Virtue</a>"
 
+	var/show_natural_armor = has_natural_armor_virtue()
+	if(show_natural_armor)
+		html += "<a class='btn btn-customize' href='byond://?src=\ref[src];edit_natural_armor=name'>Edit Natural Armor Name</a>"
+		html += "<a class='btn btn-customize' href='byond://?src=\ref[src];edit_natural_armor=description'>Edit Natural Armor Description</a>"
+	html += "</div>"
+	if(show_natural_armor && natural_armor_name)
+		html += "<div class='statpack-desc'><b>Natural Armor Name:</b> [html_encode(natural_armor_name)]</div>"
+	if(show_natural_armor && natural_armor_desc)
+		html += "<div class='statpack-desc'><b>Natural Armor Description:</b> [html_encode(natural_armor_desc)]</div>"
+
 	html += {"
-			</div>
 		</div>
 		<div class="statpack-section">
 			<h2>Background Selection</h2>
@@ -2139,6 +2162,23 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 				open_vices_menu(usr)
 	
+	var/armor_field = href_list["edit_natural_armor"]
+	if(armor_field == "name" || armor_field == "description")
+		var/mob/editor = usr
+		if(!editor || editor.client != parent || !has_natural_armor_virtue())
+			return
+		var/editing_slot = default_slot
+		var/field_var = armor_field == "name" ? NAMEOF(src, natural_armor_name) : NAMEOF(src, natural_armor_desc)
+		var/previous_value = vars[field_var]
+		var/title = armor_field == "name" ? "Natural Armor Name" : "Natural Armor Description"
+		var/new_value = tgui_input_text(editor, "Enter a [armor_field] for your Natural Armor. Leave blank to choose one at spawn.", title, previous_value, max_length = 200, encode = FALSE)
+		if(isnull(new_value) || editor.client != parent || default_slot != editing_slot || vars[field_var] != previous_value || !has_natural_armor_virtue())
+			return
+		save_to_history()
+		vars[field_var] = sanitize_natural_armor_text(new_value)
+		open_vices_menu(editor)
+		return
+
 	if(href_list["loadout_action"])
 		// Save state before any loadout change
 		save_to_history()
