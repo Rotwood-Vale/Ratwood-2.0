@@ -559,7 +559,10 @@
 
 	if(destination)
 		if(pulledby)
-			pulledby.stop_pulling()
+			// Keep the grab when a rider moves onto their own carrier's tile.
+			var/mob/living/rider = src
+			if(!istype(rider) || rider.buckled != pulledby || pulledby.loc != destination)
+				pulledby.stop_pulling()
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
