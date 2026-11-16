@@ -2311,7 +2311,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 
 /datum/status_effect/quivering
 	id = "quivering"
-	duration = 30 SECONDS
+	duration = 15 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/quivering
 	effectedstats = list("speed" = -2)

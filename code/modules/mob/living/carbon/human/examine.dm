@@ -137,6 +137,8 @@
 
 	. += get_redolent_examine_lines(user)
 	. += stuffed_examine_line(user)
+	if(has_status_effect(/datum/status_effect/quivering) || has_status_effect(/datum/status_effect/knot_gaped) || has_status_effect(/datum/status_effect/knot_fucked_stupid))
+		. += "<span style='color:#d8cf8a'>They are walking funny, their legs shaky.</span>"
 	var/gaze_examine = hypnotic_gaze_examine(user)
 	if(gaze_examine)
 		. += gaze_examine

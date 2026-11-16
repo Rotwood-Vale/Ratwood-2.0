@@ -101,7 +101,7 @@
 	duration = 15 MINUTES
 	tick_interval = 15 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/stuffed
-	effectedstats = list(STATKEY_SPD = -6)
+	effectedstats = list(STATKEY_SPD = -3)
 
 /datum/status_effect/debuff/stuffed/on_apply()
 	if(!cumflation_content_enabled(owner))
