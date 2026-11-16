@@ -9,15 +9,9 @@
 	knot_on_finish = TRUE
 
 /datum/sex_action/vaginal_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] forces [user.p_their()] cock into [target]'s tiny cunt!"))
-		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
-		if(chest)
-			chest.add_wound(/datum/wound/fracture/chest)
-		if(groin)
-			groin.add_wound(/datum/wound/fracture/groin)
-		target.apply_damage(30, BRUTE, chest)
+	if(can_apply_tiny_injury(user, target))
+		user.visible_message(span_warning("[user] forces [user.p_their()] cock into [target]'s tiny cunt!"), ignored_mobs = get_extreme_content_excluded_mobs(user))
+		apply_tiny_start_injury(user, target)
 		playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 	else if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
 		user.visible_message(span_warning("[user] tries and fails to insert [user.p_their()] tiny cock into [target]'s cunt."))
@@ -42,7 +36,7 @@
 	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+	if(can_apply_tiny_injury(user, target))
 		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
 		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 
@@ -93,15 +87,9 @@
 	return ..()
 
 /datum/sex_action/vaginal_sex/double/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] forces [user.p_their()] cocks into [target]'s tiny cunt!"))
-		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
-		if(chest)
-			chest.add_wound(/datum/wound/fracture/chest)
-		if(groin)
-			groin.add_wound(/datum/wound/fracture/groin)
-		target.apply_damage(30, BRUTE, chest)
+	if(can_apply_tiny_injury(user, target))
+		user.visible_message(span_warning("[user] forces [user.p_their()] cocks into [target]'s tiny cunt!"), ignored_mobs = get_extreme_content_excluded_mobs(user))
+		apply_tiny_start_injury(user, target)
 		playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 	else if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
 		user.visible_message(span_warning("[user] tries and fails to insert [user.p_their()] tiny cocks into [target]'s cunt."))
@@ -126,7 +114,7 @@
 	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+	if(can_apply_tiny_injury(user, target))
 		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
 		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 

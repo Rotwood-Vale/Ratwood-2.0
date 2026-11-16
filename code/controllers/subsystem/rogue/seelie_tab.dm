@@ -4,7 +4,8 @@
 	set name = "Seelie glow"
 	set category = "Seelie"
 
-
+	if(!isseelie(src))
+		return
 	if(light_outer_range)
 		to_chat(src, span_notice("I stop glowing"))
 		src.set_light(0)

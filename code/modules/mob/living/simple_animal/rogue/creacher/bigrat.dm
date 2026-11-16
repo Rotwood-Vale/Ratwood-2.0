@@ -161,7 +161,7 @@
 
 //Only Seelie or other tiny mobs can ride on a rous
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/user_buckle_mob(mob/living/M, mob/user)
-	if(!HAS_TRAIT(M, TRAIT_TINY))
+	if(!tame || !HAS_TRAIT(M, TRAIT_TINY))
 		return
 	. = ..()
 

@@ -112,16 +112,18 @@
 	//C.movement_type = FLYING
 	C.set_mob_offsets("pixie_hover", _x = 0, _y = 10)
 	C.set_light(3, 1, 1, l_color = "#d4fcac")
+	C.verbs |= (/mob/living/carbon/human/proc/Turnlight)
+	C.verbs |= (/mob/living/carbon/proc/switchaura)
 
 /datum/species/seelie/after_creation(mob/living/carbon/C)
 	..()
 	to_chat(C, "<span class='info'>I can speak Faexin with ,t before my speech.</span>")
-	C.verbs |= (/mob/living/carbon/human/proc/Turnlight)
-	C.verbs |= (/mob/living/carbon/proc/switchaura)
 
 /datum/species/seelie/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
+	C.verbs -= /mob/living/carbon/human/proc/Turnlight
+	C.verbs -= /mob/living/carbon/proc/switchaura
 	REMOVE_TRAIT(C, TRAIT_TINY, "[type]")
 	REMOVE_TRAIT(C, TRAIT_NOFALLDAMAGE1, TRAIT_GENERIC)
 	C.transform = C.transform.Scale(2, 2)
