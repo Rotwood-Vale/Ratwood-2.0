@@ -39,6 +39,9 @@
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
 #define TRAIT_TINY "Tiny"
 #define TRAIT_JOURNEYS_END "Journey's End"
+/// Source-scoped pressure from an intact rescue cocoon; never changes wound data.
+#define TRAIT_SILK_COMPRESSION "silk_compression"
+
 #define TRAIT_BLOOD_RESISTANCE "Thick Blooded" //50% less bleeding
 #define TRAIT_CRITICAL_WEAKNESS "Critical Weakness"
 #define TRAIT_SHATTER_WEAKNESS "Brittle Form"
