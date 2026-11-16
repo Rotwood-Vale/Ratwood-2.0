@@ -240,24 +240,10 @@
 			STAWIL = newamt
 
 		if(STATKEY_SPD)
-			newamt = STASPD + amt
-			if(BUFSPE < 0)
-				BUFSPE = BUFSPE + amt
-				if(BUFSPE > 0)
-					newamt = STASPD + BUFSPE
-					BUFSPE = 0
-			if(BUFSPE > 0)
-				BUFSPE = BUFSPE + amt
-				if(BUFSPE < 0)
-					newamt = STASPD + BUFSPE
-					BUFSPE = 0
-			while(newamt < 1)
-				newamt++
-				BUFSPE--
-			while(newamt > 20)
-				newamt--
-				BUFSPE++
-			STASPD = newamt
+			// Retain the true total outside display limits, so modifier order is reversible.
+			newamt = STASPD + BUFSPE + amt
+			STASPD = clamp(newamt, 1, 20)
+			BUFSPE = newamt - STASPD
 			update_move_intent_slowdown()
 
 		if(STATKEY_LCK)

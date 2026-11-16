@@ -108,12 +108,14 @@
 		// Failed applications still run removal; there is no stat penalty to restore.
 		effectedstats = list()
 		return FALSE
-	. = ..()
-	if(.)
-		RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(washed))
-		var/mob/living/carbon/human/H = owner
-		if(istype(H))
-			H.notify_stuffed()
+	// Keep the intended penalty; change_stat buffers the portion below minimum Speed.
+	// The default status handler permanently clips it, even after other penalties end.
+	owner.change_stat(STATKEY_SPD, effectedstats[STATKEY_SPD])
+	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(washed))
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.notify_stuffed()
+	return TRUE
 
 /datum/status_effect/debuff/stuffed/on_remove()
 	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
@@ -134,7 +136,7 @@
 /atom/movable/screen/alert/status_effect/debuff/stuffed
 	name = "Stuffed"
 	icon = 'icons/mob/stuffed.dmi'
-	desc = "Your body feels overfull. Speed is reduced by 6. Washing your body clears this effect."
+	desc = "Your body feels overfull. Washing your body clears this effect."
 	icon_state = "stuffed"
 
 /client/verb/toggle_cumflation_content()
