@@ -155,6 +155,8 @@
 		data["rumor_destinations"] = build_rumor_destinations()
 		data["rumor_log"] = SStreasury.rumor_log
 		data["rumor_lucrative_mult"] = RUMOR_LUCRATIVE_MULT
+		if(user.job == "Towner")
+			data["rumor_personal_referral_pct"] = RUMOR_CONTACT_FEE_PCT * 100
 		// Per-region reward multipliers powering the Compose tab's "(xN reward)" suffix and the
 		// bleak/dangerous/settled flavor line. The builder procs existed but were never wired in.
 		data["region_tp_multipliers"] = build_region_tp_multipliers()
@@ -190,7 +192,7 @@
 		data["towner_postings"] = build_towner_posting_listing(user)
 		data["towner_purse_balance"] = SStreasury?.discretionary_fund?.balance || 0
 		if(can_commission_towner_blockade(user))
-			data["towner_blockade_cost"] = GLOB.defense_quest_tier_costs[QUEST_BLOCKADE_DEFENSE]
+			data["towner_blockade_cost"] = BLOCKADE_SCROLL_TOWNER_COST
 			data["towner_blockade_regions"] = build_blockade_region_labels(available_only = TRUE)
 	return data
 

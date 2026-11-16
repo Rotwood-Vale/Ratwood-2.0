@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(towner_posting_descriptors, list(
 	if(!account)
 		to_chat(user, span_warning("No account on record - register with a Nervelock before commissioning a writ."))
 		return
-	var/cost = GLOB.defense_quest_tier_costs[QUEST_BLOCKADE_DEFENSE]
+	var/cost = BLOCKADE_SCROLL_TOWNER_COST
 	if(account.balance < cost)
 		to_chat(user, span_warning("A Blockade Defense writ costs [cost] mammons."))
 		return

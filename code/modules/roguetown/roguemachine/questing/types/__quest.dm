@@ -2,6 +2,8 @@
 	var/title = ""
 	var/datum/weakref/quest_giver_reference
 	var/quest_giver_name = ""
+	/// The Towner who issued this rumor and receives its contact referral fee.
+	var/datum/weakref/rumor_referral_issuer
 	var/datum/weakref/quest_receiver_reference
 	var/quest_receiver_name = ""
 	var/quest_type = ""

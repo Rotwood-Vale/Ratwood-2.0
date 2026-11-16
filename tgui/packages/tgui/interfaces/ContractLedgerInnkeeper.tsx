@@ -21,6 +21,7 @@ type InnkeeperData = {
   rumor_destinations: string[];
   rumor_log: RumorLogEntry[];
   rumor_lucrative_mult: number;
+  rumor_personal_referral_pct?: number;
   region_tp_multipliers: Record<string, number>;
   region_delivery_multipliers: Record<string, number>;
 };
@@ -318,6 +319,13 @@ const ComposeView = () => {
           {pts(baseCost)} for a x{lucrativeMult} reward.
         </label>
       </FormRow>
+
+      {!!data.rumor_personal_referral_pct && (
+        <p>
+          On turn-in, your Nervelock account receives a referral fee of{' '}
+          {data.rumor_personal_referral_pct}% of the gross payout.
+        </p>
+      )}
 
       <div className="ContractLedger__InnkeeperFormFooter">
         <button
