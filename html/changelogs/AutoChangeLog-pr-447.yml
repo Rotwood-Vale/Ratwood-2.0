@@ -1,0 +1,7 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - balance: "Reduced Stuffed’s Speed penalty from 6 to 3."
+  - bugfix: "Stat debuffs no longer disappear when applied at minimum stats."
+  - bugfix: "Corrected stat overflow bookkeeping when overlapping modifiers are applied and removed."
+  - bugfix: "Removed the duplicated Speed sentence from Stuffed’s tooltip."
