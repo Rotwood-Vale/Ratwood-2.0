@@ -256,6 +256,9 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 
 	user.doing = TRUE
+#ifdef UNIT_TESTS
+	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
+#endif
 
 	var/atom/Tloc = null
 	if(target && !isturf(target))

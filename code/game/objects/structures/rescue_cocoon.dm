@@ -96,6 +96,9 @@
 	if(world.time < next_treatment)
 		return
 	next_treatment = world.time + 2 SECONDS
+	if(!struggling && can_auto_escape(occupant))
+		// Struggling can sleep, so let the object subsystem continue processing.
+		addtimer(CALLBACK(src, PROC_REF(container_resist), occupant, TRUE), 0)
 	if(occupant.stat == CONSCIOUS && !was_conscious)
 		to_chat(occupant, span_notice("Awareness returns to the close embrace of silk. Woven layers support your body, shifting slightly with each breath."))
 	was_conscious = occupant.stat == CONSCIOUS
@@ -103,19 +106,31 @@
 		return
 	var/brute_before = occupant.getBruteLoss()
 	var/burn_before = occupant.getFireLoss()
-	occupant.adjustBruteLoss(-healing_amount)
-	occupant.adjustFireLoss(-healing_amount)
-	occupant.adjustOxyLoss(-oxygen_recovery)
+	var/oxy_before = occupant.getOxyLoss()
+	var/shared_damage = istype(occupant, /mob/living/simple_animal)
+	// Simple animals apply all three adjustments to the same damage pool.
+	if(brute_before > 0)
+		occupant.adjustBruteLoss(-healing_amount, updating_health = FALSE)
+	if(burn_before > 0 || (shared_damage && occupant.getBruteLoss() > 0))
+		occupant.adjustFireLoss(-healing_amount, updating_health = FALSE)
+	if(oxy_before > 0 || (shared_damage && occupant.getBruteLoss() > 0))
+		occupant.adjustOxyLoss(-oxygen_recovery, updating_health = FALSE)
+	var/brute_healed = occupant.getBruteLoss() < brute_before
+	var/burn_healed = occupant.getFireLoss() < burn_before
+	if(brute_healed || burn_healed || occupant.getOxyLoss() < oxy_before)
+		occupant.updatehealth()
 	if(iscarbon(occupant))
 		var/mob/living/carbon/patient = occupant
+		if(brute_healed || burn_healed)
+			patient.update_stamina()
 		if(!(NOBLOOD in patient.dna?.species?.species_traits) && patient.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			patient.set_blood_volume(min(BLOOD_VOLUME_NORMAL, patient.get_blood_volume() + blood_recovery))
 	if(world.time < next_sensation)
 		return
 	var/list/sensations = list()
-	if(occupant.getBruteLoss() < brute_before)
+	if(brute_healed)
 		sensations += "Your aches ease a little beneath the silk's steady, supporting pressure."
-	if(occupant.getFireLoss() < burn_before)
+	if(burn_healed)
 		sensations += "A faint coolness settles over your burns beneath the silk, soothing their raw sting."
 	if(length(sensations))
 		to_chat(occupant, span_notice(pick(sensations)))
@@ -124,8 +139,13 @@
 /obj/structure/spider/rescue_cocoon/proc/escape_time(mob/living/patient)
 	return max(0, 30 SECONDS * (1 - max(0, patient.STASTR - 10) * 0.1))
 
-/obj/structure/spider/rescue_cocoon/container_resist(mob/living/user)
-	if(user != occupant || opened || struggling || user.incapacitated(ignore_restraints = TRUE))
+/obj/structure/spider/rescue_cocoon/proc/can_auto_escape(mob/living/patient)
+	return !QDELETED(src) && !QDELETED(patient) && patient == occupant && patient.loc == src && !opened && !patient.client && !patient.key && !patient.mind?.key && !patient.incapacitated(ignore_restraints = TRUE)
+
+/obj/structure/spider/rescue_cocoon/container_resist(mob/living/user, automatic = FALSE)
+	if(QDELETED(user) || user != occupant || opened || struggling || user.incapacitated(ignore_restraints = TRUE))
+		return
+	if(automatic && !can_auto_escape(user))
 		return
 	if(is_species(user, /datum/species/arachnid) || user.has_status_effect(/datum/status_effect/buff/spider_speak))
 		visible_message(span_notice("[user] parts the woven layers with practiced ease and slips free of [src]."), ignored_mobs = list(user))
@@ -136,13 +156,16 @@
 	var/delay = escape_time(user)
 	to_chat(user, span_notice("You brace against the silk and begin working its woven layers apart. This will take about [DisplayTimeText(delay)]."))
 	visible_message(span_notice("[src] shifts as its occupant begins struggling against the woven layers."), ignored_mobs = list(user))
-	var/finished = do_after(user, delay, needhand = FALSE, target = src)
+	var/datum/callback/extra_checks
+	if(automatic)
+		extra_checks = CALLBACK(src, PROC_REF(can_auto_escape), user)
+	var/finished = do_after(user, delay, needhand = FALSE, target = src, extra_checks = extra_checks)
 	if(QDELETED(src))
 		return
 	struggling = FALSE
 	if(user != occupant || opened || QDELETED(user))
 		return
-	if(!finished || user.incapacitated(ignore_restraints = TRUE))
+	if(!finished || user.incapacitated(ignore_restraints = TRUE) || (automatic && !can_auto_escape(user)))
 		to_chat(user, span_notice("You stop struggling. The woven layers settle around you again."))
 		return
 	to_chat(user, span_notice("The layers finally part under your efforts, leaving an opening in the silk."))

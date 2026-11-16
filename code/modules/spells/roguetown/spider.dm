@@ -32,6 +32,7 @@
 	name = "Weave Web"
 	desc = "Spin thin webbing, then automatically reinforce it. Move or cancel during reinforcement to leave a thin web. Cooldown begins when weaving ends."
 	overlay_state = "webthin"
+	action_icon_state = "webthin"
 	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
 	ignore_cockblock = TRUE
@@ -39,6 +40,11 @@
 	action_icon = 'icons/mob/actions/arachnid_weaving.dmi'
 	var/spin_time = 4 SECONDS
 	var/stamina_cost = 30
+
+/obj/effect/proc_holder/spell/self/spin_web/update_icon()
+	if(action)
+		action.button_icon_state = action_icon_state
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/self/spin_web/proc/can_place(turf/T)
 	if(!isfloorturf(T) || T.density || (locate(/obj/structure/bed/rogue/silk) in T))
@@ -111,9 +117,15 @@
 	ignore_cockblock = TRUE
 	sound = 'sound/misc/nutriment.ogg'
 	overlay_state = "bed"
+	action_icon_state = "bed"
 	recharge_time = 30 SECONDS
 	var/spin_time = 8 SECONDS
 	var/stamina_cost = 60
+
+/obj/effect/proc_holder/spell/self/spin_silk_bed/update_icon()
+	if(action)
+		action.button_icon_state = action_icon_state
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/self/spin_silk_bed/proc/can_place(turf/T)
 	if(!isfloorturf(T) || T.density)
@@ -247,6 +259,7 @@
 	desc = "Wrap an adjacent living person, or yourself, in supporting silk. Weaving takes five seconds and movement interrupts it. Three uses; each recovers independently after five minutes. Resist to escape, or cut or break it open."
 	action_icon = 'icons/roguetown/misc/rescue_cocoon.dmi'
 	overlay_state = "intact"
+	action_icon_state = "intact"
 	range = 1
 	include_user = TRUE
 	antimagic_allowed = TRUE
@@ -254,17 +267,26 @@
 	charge_type = "charges"
 	recharge_time = 3
 	var/list/charge_returns = list()
+	var/recharge_timer
 	var/weaving = FALSE
 	var/weave_time = 5 SECONDS
 	var/charge_delay = 5 MINUTES
 
 /obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/Initialize(mapload)
 	. = ..()
+	STOP_PROCESSING(SSfastprocess, src)
 	update_icon()
+
+/obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/Destroy()
+	if(recharge_timer)
+		deltimer(recharge_timer)
+		recharge_timer = null
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/cast_check(skipcharge, mob/user = usr)
 	// cast_check uses its argument, not the spell's skipcharge field. Spend only after wrapping succeeds.
-	return ..(TRUE, user)
+	. = ..(TRUE, user)
+	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/charge_check(mob/user, silent = FALSE)
 	if(!weaving && charge_counter > 0)
@@ -310,7 +332,7 @@
 		return FALSE
 	charge_counter--
 	charge_returns += world.time + charge_delay
-	START_PROCESSING(SSfastprocess, src)
+	schedule_charge_return()
 	cocoon.visible_message(span_notice("[user] draws the final strands into place, enclosing [patient] in a cocoon of layered silk."), ignored_mobs = list(patient))
 	if(patient == user)
 		to_chat(patient, span_notice("You settle within your finished cocoon, supported by the silk you have drawn around yourself."))
@@ -326,15 +348,29 @@
 	user?.stop_attack()
 
 /obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/start_recharge()
-	START_PROCESSING(SSfastprocess, src)
+	// A successful enclosure schedules its own charge return.
+	return
+
+/obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/after_cast(list/targets, mob/user = usr)
+	. = ..()
+	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/process()
+	// The base processor interprets the charge count as elapsed cooldown time.
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/proc/schedule_charge_return()
+	if(recharge_timer || !length(charge_returns))
+		return
+	recharge_timer = addtimer(CALLBACK(src, PROC_REF(return_due_charges)), max(1, charge_returns[1] - world.time), TIMER_STOPPABLE)
+
+/obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/proc/return_due_charges()
+	recharge_timer = null
 	while(length(charge_returns) && charge_returns[1] <= world.time)
 		charge_returns.Cut(1, 2)
 		charge_counter = min(initial(recharge_time), charge_counter + 1)
-		update_icon()
-	if(!length(charge_returns))
-		STOP_PROCESSING(SSfastprocess, src)
+	schedule_charge_return()
+	update_icon()
 
 /obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/update_icon()
 	if(!action)

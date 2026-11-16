@@ -51,7 +51,8 @@
 		TEST_ASSERT(option.type in expected_types, "Only the retained web, bed and cocoon abilities should be granted.")
 		TEST_ASSERT_EQUAL(option.action.owner, weaver, "Each ability must retain its owner.")
 		TEST_ASSERT(option.action in weaver.actions, "Every retained ability must have a visible button.")
-		TEST_ASSERT(icon_exists(option.action_icon, option.overlay_state), "Retained ability button art is missing.")
+		TEST_ASSERT_EQUAL(option.action.button_icon_state, option.overlay_state, "The button must use the weaving artwork.")
+		TEST_ASSERT(icon_exists(option.action.icon_icon, option.action.button_icon_state), "Retained ability button art is missing.")
 		weaving_actions += option.action
 	TEST_ASSERT_EQUAL(length(weaving_actions), 3, "Arachnids must have three retained weaving abilities.")
 	var/obj/effect/proc_holder/spell/self/spin_web/web_spell = locate() in weaver.mob_spell_list
@@ -305,7 +306,6 @@
 	var/obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/spell = locate() in weaver.mob_spell_list
 	TEST_ASSERT(spell && (spell.action in weaver.actions), "Arachnids need their own cocoon button.")
 	TEST_ASSERT_EQUAL(spell.charge_counter, 3, "The ability must start with three charges.")
-	TEST_ASSERT(icon_exists(spell.action_icon, spell.overlay_state), "The cocoon button needs valid artwork.")
 	patient = allocate(/mob/living/carbon/human/consistent, get_step(center, EAST))
 	RegisterSignal(weaver, COMSIG_DO_AFTER_BEGAN, PROC_REF(on_weave))
 	cancel_cast = TRUE
@@ -339,18 +339,87 @@
 	TEST_ASSERT(!spell.charge_check(user), "A busy ability must reject reentrant casts with safe feedback.")
 	spell.weaving = FALSE
 	spell.charge_counter = 0
-	spell.charge_returns = list(world.time - 1, world.time + 1 MINUTES, world.time + 2 MINUTES)
+	spell.charge_returns = list(world.time + 5 MINUTES)
+	spell.schedule_charge_return()
+	var/timer_id = spell.recharge_timer
+	TEST_ASSERT(timer_id && SStimer.timer_id_dict[timer_id], "Recharge must own a live timer.")
 	spell.process()
-	TEST_ASSERT_EQUAL(spell.charge_counter, 1, "Only the due charge must recover.")
-	TEST_ASSERT_EQUAL(length(spell.charge_returns), 2, "Later charges must retain their original deadlines.")
-	spell.charge_returns[1] = world.time
-	spell.process()
-	TEST_ASSERT_EQUAL(spell.charge_counter, 2, "A second charge must return independently.")
-	TEST_ASSERT_EQUAL(spell.charge_returns[1], world.time + 2 MINUTES, "Returning a charge must not restart the last deadline.")
-	spell.charge_returns[1] = world.time
-	spell.process()
-	TEST_ASSERT_EQUAL(spell.charge_counter, 3, "All recovered charges must restore full capacity.")
-	TEST_ASSERT_EQUAL(length(spell.charge_returns), 0, "No recharge deadlines should remain at full capacity.")
+	TEST_ASSERT_EQUAL(spell.charge_counter, 0, "Legacy fast processing must never restore a charge.")
+	qdel(spell)
+	TEST_ASSERT(!SStimer.timer_id_dict[timer_id], "Deleting the spell must cancel its pending timer.")
+
+/datum/unit_test/arachnid_cocoon_healing_batch
+	var/health_updates = 0
+
+/datum/unit_test/arachnid_cocoon_healing_batch/proc/count_health_update()
+	SIGNAL_HANDLER
+	health_updates++
+
+/datum/unit_test/arachnid_cocoon_healing_batch/Run()
+	var/turf/center = run_loc_floor_bottom_left
+	var/mob/living/carbon/human/consistent/patient = allocate(/mob/living/carbon/human/consistent, center)
+	var/obj/structure/spider/rescue_cocoon/cocoon = allocate(/obj/structure/spider/rescue_cocoon, center)
+	TEST_ASSERT(cocoon.enclose(patient), "Patient must be enclosed for treatment.")
+	RegisterSignal(patient, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(count_health_update))
+	cocoon.next_treatment = world.time
+	cocoon.process()
+	TEST_ASSERT_EQUAL(health_updates, 0, "A healthy patient should not have their health recalculated.")
+
+	patient.adjustBruteLoss(10)
+	patient.adjustFireLoss(10)
+	patient.adjustOxyLoss(10)
+	var/brute_before = patient.getBruteLoss()
+	var/burn_before = patient.getFireLoss()
+	var/oxy_before = patient.getOxyLoss()
+	health_updates = 0
+	cocoon.next_treatment = world.time
+	cocoon.process()
+	TEST_ASSERT_EQUAL(health_updates, 1, "Treating multiple damage types should update health once.")
+	TEST_ASSERT(patient.getBruteLoss() < brute_before, "Treatment must heal brute damage.")
+	TEST_ASSERT(patient.getFireLoss() < burn_before, "Treatment must heal burn damage.")
+	TEST_ASSERT(patient.getOxyLoss() < oxy_before, "Treatment must heal oxygen damage.")
+
+/datum/unit_test/arachnid_cocoon_npc_escape/Run()
+	var/turf/center = run_loc_floor_bottom_left
+	var/mob/living/simple_animal/hostile/retaliate/rogue/wolf/wolf = allocate(/mob/living/simple_animal/hostile/retaliate/rogue/wolf, center)
+	wolf.STASTR = 20
+	wolf.SetUnconscious(20 SECONDS, ignore_canstun = TRUE)
+	var/obj/structure/spider/rescue_cocoon/cocoon = allocate(/obj/structure/spider/rescue_cocoon, center)
+	TEST_ASSERT(cocoon.enclose(wolf), "An unconscious NPC must still be eligible for rescue.")
+	sleep(3 SECONDS)
+	TEST_ASSERT_EQUAL(wolf.loc, cocoon, "An NPC must remain enclosed while unconscious.")
+	wolf.SetUnconscious(0, ignore_canstun = TRUE)
+	var/timeout = world.time + 5 SECONDS
+	while(!cocoon.opened && world.time < timeout)
+		sleep(world.tick_lag)
+	TEST_ASSERT(cocoon.opened && wolf.loc == center, "A conscious Strength-20 NPC must escape without a Resist command.")
+
+/datum/unit_test/arachnid_cocoon_player_takeover
+	var/datum/mind/test_mind
+
+/datum/unit_test/arachnid_cocoon_player_takeover/Destroy()
+	QDEL_NULL(test_mind)
+	return ..()
+
+/datum/unit_test/arachnid_cocoon_player_takeover/Run()
+	var/turf/center = run_loc_floor_bottom_left
+	var/mob/living/carbon/human/consistent/patient = allocate(/mob/living/carbon/human/consistent, center)
+	patient.STASTR = 19
+	patient.mind_initialize()
+	test_mind = patient.mind
+	var/obj/structure/spider/rescue_cocoon/cocoon = allocate(/obj/structure/spider/rescue_cocoon, center)
+	TEST_ASSERT(cocoon.enclose(patient), "The character must be eligible for rescue.")
+	var/timeout = world.time + 5 SECONDS
+	while(!cocoon.struggling && world.time < timeout)
+		sleep(world.tick_lag)
+	TEST_ASSERT(cocoon.struggling, "The NPC must begin a Strength-based escape attempt.")
+	TEST_ASSERT_EQUAL(patient.loc, cocoon, "A timed escape should leave the patient inside during the struggle.")
+	test_mind.key = "CocoonTestPlayer"
+	sleep(5 SECONDS)
+	TEST_ASSERT(!cocoon.struggling && !patient.doing, "A player identity must cancel the automatic struggle.")
+	TEST_ASSERT_EQUAL(patient.loc, cocoon, "A disconnected player character must stay enclosed until manually released.")
+	cocoon.container_resist(patient)
+	TEST_ASSERT(cocoon.opened && patient.loc == center, "Player-controlled Resist must remain available.")
 
 /datum/unit_test/arachnid_cocoon_snipping/Run()
 	var/turf/center = run_loc_floor_bottom_left
@@ -393,6 +462,7 @@
 	weaver.notransform = TRUE
 	var/mob/living/carbon/human/consistent/patient = allocate(/mob/living/carbon/human/consistent, get_step(center, EAST))
 	var/obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon/spell = locate() in weaver.mob_spell_list
+	TEST_ASSERT_EQUAL(spell.charge_delay, 5 MINUTES, "Live recharge must take five minutes.")
 	spell.charge_delay = recovery_delay
 	TEST_ASSERT(spell.cast_check(FALSE, weaver), "Framework must permit a fresh cast.")
 	weaver.doing = TRUE
@@ -402,29 +472,33 @@
 	TEST_ASSERT_EQUAL(spell.charge_counter, 3, "A failed framework cast must neither spend nor refund an unreserved charge.")
 	TEST_ASSERT_EQUAL(length(spell.charge_returns), 0, "Failed casts must not schedule a recharge.")
 	TEST_ASSERT(!spell.weaving && spell.action.IsAvailable(), "Failed casting must leave the ability usable.")
-	world.log << "LIVE INITIAL: count=[spell.charge_counter], type=[spell.charge_type], available=[spell.action.IsAvailable()]"
+	var/list/deadlines = list()
 	for(var/use in 1 to 3)
 		TEST_ASSERT(spell.cast_check(FALSE, weaver), "Framework cast_check must accept remaining charges.")
+		TEST_ASSERT(!(spell in SSfastprocess.processing), "Targeting must leave recharge to the timer.")
 		TEST_ASSERT(spell.perform(list(patient), user = weaver), "Full framework casting must succeed.")
 		var/obj/structure/spider/rescue_cocoon/cocoon = patient.loc
 		TEST_ASSERT(istype(cocoon), "Full casting must create a cocoon.")
 		allocated += cocoon
 		cocoon.open_cocoon("snipped")
-		world.log << "LIVE USE [use]: count=[spell.charge_counter], deadlines=[json_encode(spell.charge_returns)], time=[world.time], queued=[spell in SSfastprocess.processing], available=[spell.action.IsAvailable()], name=[spell.action.name]"
+		TEST_ASSERT(!(spell in SSfastprocess.processing), "Casting must leave recharge to the timer.")
 		TEST_ASSERT_EQUAL(spell.charge_counter, 3 - use, "Each full cast must spend exactly one charge.")
+		TEST_ASSERT_EQUAL(length(spell.charge_returns), use, "Each cast must add its own deadline.")
+		TEST_ASSERT_EQUAL(spell.charge_returns[use], world.time + recovery_delay, "A charge deadline must start at successful enclosure.")
+		deadlines += spell.charge_returns[use]
 		TEST_ASSERT_EQUAL(spell.action.IsAvailable(), use < 3, "Button must remain usable until all three uses are spent.")
-	world.log << "LIVE WAIT: observing [DisplayTimeText(spell.charge_delay)] deadline recovery, without manually calling process()."
-	var/timeout = world.time + spell.charge_delay + 10 SECONDS
-	var/next_report = world.time
-	while(world.time < timeout && spell.charge_counter < 3)
-		if(world.time >= next_report)
-			world.log << "LIVE WATCH: count=[spell.charge_counter], time=[world.time], queued=[spell in SSfastprocess.processing], deadlines=[json_encode(spell.charge_returns)]"
-			next_report = world.time + 30 SECONDS
-		sleep(1 SECONDS)
-	world.log << "LIVE FINAL: count=[spell.charge_counter], stat=[weaver.stat], health=[weaver.health], listed=[spell in weaver.mob_spell_list], weaving=[spell.weaving], available=[spell.action.IsAvailable()]"
-	TEST_ASSERT_EQUAL(spell.charge_counter, 3, "All charges must return through real subsystem processing after their independent five-minute deadlines.")
+	for(var/charge in 1 to length(deadlines))
+		var/deadline = deadlines[charge]
+		while(world.time < deadline)
+			TEST_ASSERT_EQUAL(spell.charge_counter, charge - 1, "A charge must never come back before its deadline.")
+			sleep(world.tick_lag)
+		var/timeout = deadline + 2 SECONDS
+		while(spell.charge_counter < charge && world.time < timeout)
+			sleep(world.tick_lag)
+		TEST_ASSERT_EQUAL(spell.charge_counter, charge, "Each deadline must return exactly one charge.")
+		TEST_ASSERT_EQUAL(length(spell.charge_returns), 3 - charge, "Later casts must keep their deadlines.")
 	TEST_ASSERT(spell.action.IsAvailable(), "Button must become usable after live recovery.")
-	TEST_ASSERT_EQUAL(length(spell.charge_returns), 0, "Full live recovery must clear all pending deadlines.")
+	TEST_ASSERT(!spell.recharge_timer, "Full recovery must clear the timer.")
 
 /datum/unit_test/arachnid_cocoon_other_arachnid
 	var/datum/mind/test_mind
@@ -493,7 +567,9 @@
 	cocoon.enclose(patient)
 	patient.adjust_fire_stacks(5)
 	patient.ignite_mob(TRUE)
-	stoplag(1)
+	var/timeout = world.time + 1 SECONDS
+	while(patient.on_fire && world.time < timeout)
+		sleep(world.tick_lag)
 	TEST_ASSERT(!patient.on_fire, "Ignition while enclosed must be smothered after the ignition callback finishes.")
 	cocoon.open_cocoon("snipped")
 	patient.adjust_fire_stacks(5)
@@ -536,7 +612,9 @@
 	ADD_TRAIT(patient, TRAIT_NO_EXTINGUISH, TRAIT_SOURCE_UNIT_TESTS)
 	patient.adjust_fire_stacks(5)
 	patient.ignite_mob(TRUE)
-	stoplag(1)
+	var/timeout = world.time + 1 SECONDS
+	while(!reignited.opened && world.time < timeout)
+		sleep(world.tick_lag)
 	TEST_ASSERT_EQUAL(patient.loc, center, "Unsmotherable ignition inside must release the patient.")
 	TEST_ASSERT(reignited.opened, "Unsmotherable ignition must open the silk.")
 	TEST_ASSERT(!HAS_TRAIT(patient, TRAIT_SILK_COMPRESSION), "Emergency opening must clean up treatment.")
