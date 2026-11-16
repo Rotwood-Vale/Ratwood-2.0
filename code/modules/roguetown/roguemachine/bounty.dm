@@ -523,7 +523,7 @@ GLOBAL_LIST_EMPTY(castifico_penance_records)
 
 /obj/structure/chair/arrestchair
 	name = "CASTIFICO"
-	desc = "A bounty-processing chair. Right-click it with someone seated to clear their outstanding bounties and fit a temporary pacification collar. The collar prevents harmful attacks and blocks most spellcasting. Its duration depends on the bounty amount."
+	desc = "A chair-shaped machine that collects bounties, for a greater reward, in exchange for a penalty that some might consider worse than death."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "evilchair"
 	blade_dulling = DULLING_BASH
