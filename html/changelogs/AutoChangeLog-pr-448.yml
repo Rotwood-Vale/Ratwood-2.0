@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "You can now save your Natural Armor's name and description in character setup."
