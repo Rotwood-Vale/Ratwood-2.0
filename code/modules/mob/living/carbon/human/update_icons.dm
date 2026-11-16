@@ -2033,6 +2033,10 @@ generate/load female uniform sprites matching all previously decided variables
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		. += BP.generate_limb_cache_key(hideaux = should_hide_bodypart_aux(BP))
 
+	// Tail organs and tail features both select their sprite from this state.
+	var/obj/item/organ/tail/tail = getorganslot(ORGAN_SLOT_TAIL)
+	. += "tail-wag:[!!tail?.wagging]"
+
 	. += "[obscured_flags]"	//features are drawn through is_visible(), which reads this
 	// These change organ visibility/layers without changing clothing or organ appearance keys.
 	. += "crotch:[sexcon?.bottom_exposed]-sprites:[sexcon?.hide_pintle_visuals]-underwear:[!!underwear]"
