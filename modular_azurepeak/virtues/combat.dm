@@ -142,34 +142,39 @@
 		qdel(shirt)
 
 	// Equip the skin armor
-	recipient.equip_to_slot_or_del(
-		new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak(recipient),
-		SLOT_SHIRT,
-		TRUE
-	)
-	
-	if(alert(recipient, "Would you like to change the name or description of your skin?", "TOUGH HIDE", "MAKE IT SO", "I RESCIND") == "MAKE IT SO") // Query user
-		addtimer(CALLBACK(src, PROC_REF(customize_skin), recipient), 1 SECONDS)
+	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/hide = new(recipient)
+	var/datum/preferences/prefs = recipient.client?.prefs
+	var/saved_name = prefs?.natural_armor_name
+	var/saved_desc = prefs?.natural_armor_desc
+	if(saved_name)
+		hide.name = html_encode(saved_name)
+	if(saved_desc)
+		hide.desc = html_encode(saved_desc)
+	if(!recipient.equip_to_slot_or_del(hide, SLOT_SHIRT, TRUE))
+		return
 
-/datum/virtue/combat/tough_hide/proc/customize_skin(mob/living/carbon/human/recipient)
-	var/obj/item/clothing/hide = recipient.wear_shirt
-	var/vanished_hide = FALSE
-	if(!QDELETED(hide))
-		var/inputty = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
-		if(!QDELETED(hide))
-			if(inputty)
-				hide.name = inputty
-		else
-			vanished_hide = TRUE
-		inputty = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
-		if(!QDELETED(hide))
-			if(inputty)
-				hide.desc = inputty
-		else
-			vanished_hide = TRUE
-	else
-		vanished_hide = TRUE
+	var/edit_name = !saved_name
+	var/edit_desc = !saved_desc
+	if(!edit_name && !edit_desc)
+		return
+	var/fields = "name or description"
+	if(saved_name)
+		fields = "description"
+	else if(saved_desc)
+		fields = "name"
+	var/prompt = "Would you like to change the [fields] of your skin?"
+	if(alert(recipient, prompt, "TOUGH HIDE", "MAKE IT SO", "I RESCIND") == "MAKE IT SO")
+		addtimer(CALLBACK(src, PROC_REF(customize_skin), recipient, hide, edit_name, edit_desc), 1 SECONDS)
 
-	if(vanished_hide) //failsafe
+/datum/virtue/combat/tough_hide/proc/customize_skin(mob/living/carbon/human/recipient, obj/item/clothing/hide, edit_name, edit_desc)
+	if(edit_name && !QDELETED(hide))
+		var/new_name = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
+		if(new_name && !QDELETED(hide))
+			hide.name = new_name
+	if(edit_desc && !QDELETED(hide))
+		var/new_desc = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
+		if(new_desc && !QDELETED(hide))
+			hide.desc = new_desc
+	if(QDELETED(hide))
 		to_chat(recipient, span_warning("My natural armor vanished! Perhaps some divine intervention might sort things out..."))
 

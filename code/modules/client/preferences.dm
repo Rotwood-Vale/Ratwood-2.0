@@ -89,6 +89,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
+	var/natural_armor_name = ""
+	var/natural_armor_desc = ""
 	// Backgrounds: a virtue-like pick (skills + a starting equipment kit) in its own free slot
 	// alongside virtue/virtuetwo, so nobody has to burn a virtue on "some skills and a kit".
 	// See modular_azurepeak/virtues/background.dm.
