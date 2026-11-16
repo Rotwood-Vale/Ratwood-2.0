@@ -293,3 +293,43 @@
 		if(puddle_big && puddle) // inherit pixel offset from first puddle
 			puddle_big.pixel_x = puddle.pixel_x
 			puddle_big.pixel_y = puddle.pixel_y
+
+/// Collect floor spills into open liquid containers on this tile. Returns the amount collected.
+/proc/collect_floor_fluid(turf/location, reagent_type, amount)
+	if(!isturf(location) || amount <= 0)
+		return 0
+	var/remaining = amount
+	for(var/obj/item/reagent_containers/container in location)
+		if(!container.is_open_container())
+			continue
+		var/to_collect = min(remaining, container.reagents.maximum_volume - container.reagents.total_volume)
+		if(to_collect <= 0 || !container.reagents.add_reagent(reagent_type, to_collect))
+			continue
+		remaining -= to_collect
+		if(remaining <= 0)
+			break
+	return amount - remaining
+
+/// Only uncollected fluid leaves a floor decal.
+/proc/spill_floor_fluid(turf/location, reagent_type, amount, do_big_puddle = FALSE)
+	if(!isturf(location) || amount <= 0)
+		return 0
+	var/collected = collect_floor_fluid(location, reagent_type, amount)
+	if(collected < amount)
+		add_cum_floor(location, do_big_puddle)
+	return collected
+
+/// Hand-panel lactation uses the same chance and volume as oral lactation, with donor consent.
+/mob/living/carbon/human/proc/drip_panel_milk()
+	if(!client?.prefs?.milkable)
+		return
+	var/obj/item/organ/breasts/breasts = getorganslot(ORGAN_SLOT_BREASTS)
+	if(!istype(breasts) || !breasts.lactating || breasts.milk_stored <= 0)
+		return
+	var/turf/location = get_turf(src)
+	if(!location || !prob(25))
+		return
+	var/milk_to_release = min(max(breasts.breast_size, 1), breasts.milk_stored)
+	breasts.milk_stored -= milk_to_release
+	spill_floor_fluid(location, /datum/reagent/consumable/milk, milk_to_release)
+	to_chat(src, span_notice("I can feel milk drip from my [get_chest_word()]."))

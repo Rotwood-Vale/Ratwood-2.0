@@ -79,7 +79,8 @@ SUBSYSTEM_DEF(map_vote)
 	var/list/messages = args.Copy()
 	to_chat(world, span_purple(examine_block("Map Vote\n<hr>\n[messages.Join("\n")]")))
 
-/datum/controller/subsystem/map_vote/proc/get_valid_map_vote_choices()
+/datum/controller/subsystem/map_vote/proc/get_valid_map_vote_choices(ignore_population = FALSE)
+	var/connected_players = length(GLOB.clients)
 	var/list/choices = list()
 
 	for(var/map_id in config.maplist)
@@ -89,29 +90,15 @@ SUBSYSTEM_DEF(map_vote)
 			continue
 		if(!cfg.votable)
 			continue
+		if(!ignore_population)
+			if(cfg.config_min_users > 0 && connected_players < cfg.config_min_users)
+				continue
+			if(cfg.config_max_users > 0 && connected_players > cfg.config_max_users)
+				continue
 
 		choices += map_id
 
 	return choices
-
-/datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps()
-	var/connected_players = length(GLOB.player_list)
-	var/list/valid_maps = list()
-
-	for(var/map_id in config.maplist)
-		var/datum/map_config/cfg = config.maplist[map_id]
-		if(!cfg)
-			continue
-		if(!cfg.votable)
-			continue
-		if(cfg.config_min_users && connected_players < cfg.config_min_users)
-			continue
-		if(cfg.config_max_users && connected_players > cfg.config_max_users)
-			continue
-
-		valid_maps += map_id
-
-	return valid_maps
 
 // Returns a player's currently banked bonus for a given map (0 if none).
 /datum/controller/subsystem/map_vote/proc/get_bonus_for(ckey, map_id)
@@ -125,11 +112,7 @@ SUBSYSTEM_DEF(map_vote)
 		message_admins("Map vote already finalized.")
 		return
 
-	already_voted = TRUE
-
 	var/flat = CONFIG_GET(number/map_vote_flat_bonus)
-
-	previous_bonus = deep_copy_list(player_vote_bonus)
 
 	// ckey map_id, everyone credited with a vote this round (direct votes
 	// tracked by the base /datum/vote itself, plus preference auto-votes for
@@ -161,10 +144,16 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("Admin override active. Map not changed.")
 		return
 
-	var/list/valid_maps = filter_cache_to_valid_maps()
-	if(!length(valid_maps))
-		send_map_vote_notice("No valid maps.")
-		return
+	// The ballot applies the full limits at open. At close, allow population to fall to 80% of a map's minimum.
+	var/connected_players = length(GLOB.clients)
+	var/list/valid_maps = list()
+	for(var/map_id in map_vote.choices)
+		var/datum/map_config/cfg = config.maplist[map_id]
+		if(!cfg?.votable)
+			continue
+		if(cfg.config_min_users > 0 && connected_players < cfg.config_min_users * 0.8)
+			continue
+		valid_maps += map_id
 
 	// Pick the highest tally among maps that were actually voted on this round
 	var/winner_id
@@ -180,17 +169,27 @@ SUBSYSTEM_DEF(map_vote)
 
 	// Nobody voted for anything valid - fall back to the first valid map so
 	// rotation doesn't stall out.
-	if(isnull(winner_id))
+	if(isnull(winner_id) && length(valid_maps))
 		winner_id = valid_maps[1]
 
-	var/datum/map_config/winner_cfg = config.maplist[winner_id]
+	// If every ballot option lost eligibility, rotate to the configured default.
+	var/using_default_map = isnull(winner_id)
+	var/datum/map_config/winner_cfg = using_default_map ? config.defaultmap : config.maplist[winner_id]
 	if(!winner_cfg)
-		send_map_vote_notice("Winner map could not be resolved (bad map_id: [winner_id]).")
+		if(using_default_map)
+			send_map_vote_notice("No ballot maps remained eligible and no default map is configured.")
+		else
+			send_map_vote_notice("Winner map could not be resolved (bad map_id: [winner_id]).")
 		return
 
 	if(!set_next_map(winner_cfg))
 		send_map_vote_notice("Failed to set next map.")
 		return
+
+	already_voted = TRUE
+	previous_bonus = deep_copy_list(player_vote_bonus)
+	if(using_default_map)
+		winner_id = winner_cfg.map_name
 
 	// Apply the pity adjustments. Only touches ckeys who actually voted this
 	// round everyone else's banked bonus is left exactly as it was.
@@ -216,6 +215,8 @@ SUBSYSTEM_DEF(map_vote)
 
 	messages += "Map Selected - [span_bold(next_map_config.map_name)]"
 	messages += ""
+	if(using_default_map)
+		messages += "No ballot maps remained eligible, so the default map was selected."
 	messages += "The next round will be played on [span_bold(next_map_config.map_name)]."
 
 	send_map_vote_notice(arglist(messages))

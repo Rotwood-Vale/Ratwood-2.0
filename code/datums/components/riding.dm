@@ -371,6 +371,9 @@
 
 /datum/component/riding/human/get_offsets(pass_index, mob/living/driver)
 	var/mob/living/carbon/human/H = parent
+	var/mob/living/rider = LAZYACCESS(H.buckled_mobs, pass_index)
+	if(rider && HAS_TRAIT(rider, TRAIT_TINY))
+		return list(TEXT_NORTH = list(5, 6), TEXT_SOUTH = list(5, 6), TEXT_EAST = list(-2, 6), TEXT_WEST = list(2, 6))
 	if(H.buckle_lying)
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
 	else if(istype(parent, /mob/living/carbon/human/species/wildshape)) //Snowflake druid travel

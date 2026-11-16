@@ -90,6 +90,9 @@
 
 	var/next_smell = 0
 
+	/// Used by Seelie to switch between good luck and bad luck auras
+	var/aura = TRUE
+
 	/// Bitflags for pending icon updates - batched at end of tick
 	var/pending_icon_updates = NONE
 	/// Cached key for damage overlay state - invalidated when damage state changes

@@ -1096,7 +1096,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 						do_footstep = FALSE
 			if(user.mind)
 				var/amt = user.get_skill_level(/datum/skill/misc/riding)
-				if(amt)
+				if(amt && !istype(src, /mob/living/simple_animal/hostile/retaliate/rogue/bigrat))
 					new_delay -= 5 + amt/6
 				else
 					new_delay -= 3
@@ -1133,7 +1133,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			if(loc != oldloc)
 				var/obj/structure/mineral_door/MD = locate() in loc
 				if(MD && !MD.ridethrough)
-					if(!HAS_TRAIT(user, TRAIT_EQUESTRIAN))
+					if(!HAS_TRAIT(user, TRAIT_EQUESTRIAN) && !isseelie(user))
 						violent_dismount(user)
 
 /mob/living/simple_animal/proc/violent_dismount(mob/living/user)

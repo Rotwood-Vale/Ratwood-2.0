@@ -43,7 +43,7 @@
 	. += span_info("Heads taken from <b>contract targets</b> carry no bounty - the contract's reward is payment in full. Beasts and brigands you hunt outside a contract still fetch coin at a HEADEATER.")
 	. += span_info("A <b>Fellowship of [BLOCKADE_FELLOWSHIP_REQUIREMENT] or more</b> may pledge <b>[HOARD_RECOVERY_PLEDGE] mammons</b> to call a <b>Hoard Recovery</b> for an unblocked region with at least <b>[HOARD_RECOVERY_HOARD_MINIMUM] mammons</b> in its hoard. It pays the standard blockade reward and reclaims the hoard, subject to the Crown's Recovered Spoils tax.")
 	. += span_info("A <b>Notorious Bounty</b> may be controlled by a ghost playing the outlaw. Its reward rises by <b>[NOTORIOUS_BOUNTY_PLAYER_BONUS] mammons</b> if a ghost answers, or by <b>[NOTORIOUS_BOUNTY_NPC_BONUS] mammons</b> otherwise.")
-	. += span_info("The <b>Innkeeper</b> may compose rumor contracts here, spending Rumor Points to seed retrieval, courier, and light kill jobs across the realm.")
+	. += span_info("<b>Innkeepers and Towners</b> may spend Rumor Points to draft rumors or post them as standing contracts.")
 	. += span_info("The <b>[english_list(GLOB.crown_authority_roles)]</b> may commission defense writs here - paid from the Burgher Pledge, the Crown's Purse, or issued as an unfunded Request. The Steward is the primary commissioner; the others substitute if the Steward is absent. A Regent sitting in the Lord's absence inherits commission authority for the duration of their regency.")
 	. += span_info("<b>Townsfolk</b> may post contracts of their own using their own coin. It can be pinned to the board or handed over in person. The <b>[english_list(GLOB.crown_authority_roles)]</b> may commission any of them, but it will draw from the Crown's Purse at double the price. Only the poster may open what is recovered.")
 	. += span_info("Your <b>fellowship</b> may turn in contracts you hold on your behalf, should you fall in battle. The reward and levy is credited to the one who turns it in, using their tax exempt status, if any.")
@@ -155,6 +155,8 @@
 		data["rumor_destinations"] = build_rumor_destinations()
 		data["rumor_log"] = SStreasury.rumor_log
 		data["rumor_lucrative_mult"] = RUMOR_LUCRATIVE_MULT
+		if(user.job == "Towner")
+			data["rumor_personal_referral_pct"] = RUMOR_CONTACT_FEE_PCT * 100
 		// Per-region reward multipliers powering the Compose tab's "(xN reward)" suffix and the
 		// bleak/dangerous/settled flavor line. The builder procs existed but were never wired in.
 		data["region_tp_multipliers"] = build_region_tp_multipliers()
@@ -189,6 +191,9 @@
 	if("towner" in dynamic_roles)
 		data["towner_postings"] = build_towner_posting_listing(user)
 		data["towner_purse_balance"] = SStreasury?.discretionary_fund?.balance || 0
+		if(can_commission_towner_blockade(user))
+			data["towner_blockade_cost"] = BLOCKADE_SCROLL_TOWNER_COST
+			data["towner_blockade_regions"] = build_blockade_region_labels(available_only = TRUE)
 	return data
 
 // crown_authority_roles lives in _es_compat.dm (ES 3-role roster: Steward/Clerk/Grand Duke).
@@ -225,7 +230,7 @@ GLOBAL_LIST_INIT(contract_proxy_officials, list(
 
 /obj/structure/roguemachine/contractledger/proc/resolve_dynamic_roles(mob/user)
 	var/list/roles = list()
-	if(user?.job in GLOB.tavern_positions)
+	if(can_compose_rumors(user))
 		roles += "innkeeper"
 	if(can_commission(user))
 		roles += "steward"
@@ -403,6 +408,9 @@ GLOBAL_LIST_INIT(contract_proxy_officials, list(
 			return TRUE
 		if("compose_towner")
 			compose_towner_from_tgui(user, params)
+			return TRUE
+		if("commission_towner_blockade")
+			commission_towner_blockade_from_tgui(user, params["region"])
 			return TRUE
 		if("request_hoard_recovery")
 			request_hoard_recovery(user, params["region"])

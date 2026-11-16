@@ -10,6 +10,8 @@
 /datum/sex_action/throat_sex/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!(. = ..()))
 		return FALSE
+	if(HAS_TRAIT(user, TRAIT_TINY) || HAS_TRAIT(target, TRAIT_TINY))
+		return FALSE
 	if(knot_on_finish && isdullahan(target))
 		var/datum/species/dullahan/dullahan = target.dna.species
 		if(dullahan.headless)
@@ -18,6 +20,8 @@
 
 /datum/sex_action/throat_sex/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!(. = ..()))
+		return FALSE
+	if(HAS_TRAIT(user, TRAIT_TINY) || HAS_TRAIT(target, TRAIT_TINY))
 		return FALSE
 	if(knot_on_finish && isdullahan(target))
 		var/datum/species/dullahan/dullahan = target.dna.species
@@ -45,8 +49,10 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s throat!"))
-		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
-			user.sexcon.cum_into(oral = TRUE, splashed_user = target, consume_charge = i == 1 ? TRUE : FALSE) // give facial status effect for the target, considering this was rough throat sex
+		var/burst_count = user.sexcon.get_load_bursts()
+		var/extra_per_burst = user.sexcon.get_oral_intake_extra_volume(!!target.has_status_effect(/datum/status_effect/facial)) / burst_count
+		for(var/i = 1; i <= burst_count; i++)
+			user.sexcon.cum_into(oral = TRUE, splashed_user = target, consume_charge = i == 1 ? TRUE : FALSE, oral_extra_volume = extra_per_burst) // give facial status effect for the target, considering this was rough throat sex
 			sleep(10)
 		user.lose_virginity(target)
 
@@ -94,8 +100,10 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s throat!"))
-		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
-			user.sexcon.cum_into(oral = TRUE, splashed_user = target, consume_charge = i == 1 ? TRUE : FALSE) // give facial status effect for the target, considering this was rough throat sex
+		var/burst_count = user.sexcon.get_load_bursts()
+		var/extra_per_burst = user.sexcon.get_oral_intake_extra_volume(!!target.has_status_effect(/datum/status_effect/facial)) / burst_count
+		for(var/i = 1; i <= burst_count; i++)
+			user.sexcon.cum_into(oral = TRUE, splashed_user = target, consume_charge = i == 1 ? TRUE : FALSE, oral_extra_volume = extra_per_burst) // give facial status effect for the target, considering this was rough throat sex
 			sleep(10)
 		user.lose_virginity(target)
 

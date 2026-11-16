@@ -31,6 +31,7 @@ type ListInputData = {
   previewing: boolean;
   timeout: number;
   title: string;
+  window_width?: number | null;
 };
 
 export const ListInputModal = (props) => {
@@ -46,6 +47,7 @@ export const ListInputModal = (props) => {
     title,
     enable_preview,
     previewing,
+    window_width,
   } = data;
   const hasDetails = Object.keys(option_details).length > 0;
   const expandedWindow = hasDetails || large_window;
@@ -148,7 +150,7 @@ export const ListInputModal = (props) => {
   return (
     <Window
       title={title}
-      width={expandedWindow ? 900 : 325}
+      width={window_width ?? (expandedWindow ? 900 : 325)}
       height={expandedWindow ? 900 : windowHeight}
     >
       {timeout && <Loader value={timeout} />}

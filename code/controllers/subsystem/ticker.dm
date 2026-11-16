@@ -509,9 +509,9 @@ SUBSYSTEM_DEF(ticker)
 			GLOB.joined_player_list += player.ckey
 			setup_watchdog?.track("character creation", player)
 			player.create_character(FALSE)
-		else
-			setup_watchdog?.track("lobby-panel refresh", player)
-			player.new_player_panel()
+		else if(player.client)
+			// Refresh separately so a client-side window query cannot hold up roundstart.
+			addtimer(CALLBACK(player, TYPE_PROC_REF(/mob/dead/new_player, new_player_panel)), 0)
 		setup_watchdog?.track("creation-loop tick-budget wait", player)
 		CHECK_TICK
 

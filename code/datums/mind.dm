@@ -358,8 +358,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	new_character.mind = src							//and associate our new body with ourself
 	if(ishuman(new_character) && player_card)
 		var/mob/living/carbon/human/new_human = new_character
-		if(!new_human.is_shapeshift_shell())
-			player_card.apply_card_to(new_human)
+		player_card.apply_card_to(new_human)
 	for(var/datum/antagonist/A in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))

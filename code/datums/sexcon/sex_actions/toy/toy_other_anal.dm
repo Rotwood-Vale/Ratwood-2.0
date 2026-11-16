@@ -22,11 +22,24 @@
 
 /datum/sex_action/toy_other_anal/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = !pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
-	user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s butt..."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.visible_message(span_warning("[user] forces \the [dildo] in [target]'s tiny butt!"))
+		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
+		if(chest)
+			chest.add_wound(/datum/wound/fracture/chest)
+		if(groin)
+			groin.add_wound(/datum/wound/fracture/groin)
+		target.apply_damage(30, BRUTE, chest)
+	else
+		user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s butt..."))
 
 /datum/sex_action/toy_other_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] stuffs [target]'s tiny butt..."))
+	else
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s butt..."))
 	target.lose_anal_virginity(user)
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s butt..."))
 	user.sexcon.outercourse_noise(target)
 
 	user.sexcon.perform_sex_action(target, 2, 6, TRUE)
@@ -51,7 +64,10 @@
 
 /datum/sex_action/toy_other_anal/pegging/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	target.lose_anal_virginity(user)
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s ass."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] stuffs [target]'s tiny butt..."))
+	else
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s ass."))
 	user.sexcon.intercourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
 

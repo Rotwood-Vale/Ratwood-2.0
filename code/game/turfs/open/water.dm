@@ -97,6 +97,10 @@
 
 /turf/open/water/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
+	var/mob/living/carbon/human/FM = AM
+	if(isseelie(FM) && !(FM.resting))	//Add wingcheck
+		return
+
 	if(!isliving(AM))
 		return
 	if(AM.throwing)
@@ -206,6 +210,10 @@
 
 /turf/open/water/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
+	var/mob/living/carbon/human/FM = AM
+	if(isseelie(FM) && !(FM.resting))	//Add wingcheck
+		return
+
 	if(platform_atom_count > 0)
 		return
 
@@ -403,6 +411,10 @@
 	O.extinguish()
 
 /turf/open/water/get_slowdown(mob/user)
+	var/mob/living/carbon/human/FM = user
+	if(isseelie(FM) && !(FM.resting))	//Add wingcheck
+		return 0
+
 	var/returned = slowdown
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -508,6 +520,9 @@
 
 /turf/open/water/swamp/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
+	var/mob/living/carbon/human/FM = AM
+	if(isseelie(FM) && !(FM.resting))	//Add wingcheck
+		return
 	if(HAS_TRAIT(AM, TRAIT_LEECHIMMUNE))
 		return
 	if(isliving(AM) && !AM.throwing)
@@ -548,6 +563,9 @@
 
 /turf/open/water/swamp/deep/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
+	var/mob/living/carbon/human/FM = AM
+	if(isseelie(FM) && !(FM.resting))	//Add wingcheck
+		return
 	if(HAS_TRAIT(AM, TRAIT_LEECHIMMUNE))
 		return
 	if(isliving(AM) && !AM.throwing)
@@ -638,6 +656,9 @@
 
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
+	var/mob/living/carbon/human/FM = AM
+	if(isseelie(FM) && !(FM.resting))	//Add wingcheck
+		return
 	if(platform_atom_count <= 0)
 		START_PROCESSING(SSrivers, src)
 

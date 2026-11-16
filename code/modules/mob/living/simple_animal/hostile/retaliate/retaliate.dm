@@ -70,6 +70,8 @@
 	// saving hearers to an intermediary list disables certain byond optimizations
 	// so we just use it directly in the for loop
 	for(var/mob/living/bystander in hearers(vision_range, src))
+		if(bystander in friends) //Makes the mob not target its friends (only applies to tamed Rous)
+			continue
 		if(bystander == src)
 			continue
 		// A thrown rider stays on the mount's tile; don't mistake them for its attacker.

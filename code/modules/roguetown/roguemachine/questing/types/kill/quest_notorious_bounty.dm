@@ -3,7 +3,6 @@
 	quest_difficulty = QUEST_DIFFICULTY_NOTORIOUS
 	tp_budget = QUEST_TP_BUDGET_NOTORIOUS_GOONS
 	threat_bands_cleared = QUEST_BANDS_NOTORIOUS
-	required_fellowship_size = 2
 	var/boss_name
 	var/datum/weakref/boss_ref
 	var/turf/leash_origin
@@ -265,9 +264,7 @@
 	to_chat(boss, span_boldnotice("Your hunters are marked. [describe_hunting_party()]"))
 	var/turf/boss_turf = get_turf(boss)
 	var/mob/living/bearer = quest_receiver_reference?.resolve()
-	var/datum/fellowship/F = bearer?.current_fellowship
-	var/mob/living/party_leader = F?.get_leader()
-	message_admins("[key_name_admin(boss)] has taken over notorious bounty '[boss_name]' at [ADMIN_COORDJMP(boss_turf)] ([region]), fighting a fellowship led by [party_leader ? key_name_admin(party_leader) : "an unknown party"].")
+	message_admins("[key_name_admin(boss)] has taken over notorious bounty '[boss_name]' at [ADMIN_COORDJMP(boss_turf)] ([region]), on a writ signed by [bearer ? key_name_admin(bearer) : "an unknown hunter"].")
 	addtimer(CALLBACK(src, PROC_REF(release_boss)), NOTORIOUS_BOUNTY_CONTROL_TIME)
 	check_hunt_engaged(boss)
 

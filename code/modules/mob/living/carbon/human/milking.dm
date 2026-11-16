@@ -28,10 +28,6 @@
 
 	if(container.reagents.total_volume < container.reagents.maximum_volume)
 
-		var/size_limit = max(B.breast_size, 1)
-		var/free_space = container.reagents.maximum_volume - container.reagents.total_volume
-		var/milk_to_take = max(min(free_space, B.milk_stored, size_limit), 0)
-
 		// Play milking sound before do_after
 		playsound(get_turf(src), pick('modular/Creechers/sound/milking1.ogg', 'modular/Creechers/sound/milking2.ogg'), 100, TRUE, -1)
 
@@ -40,7 +36,16 @@
 		if(user != src && !client?.prefs?.milkable)
 			return
 
-		container.reagents.add_reagent(/datum/reagent/consumable/milk, milk_to_take)
+		if(QDELETED(container) || !container.is_open_container())
+			return
+		B = has_breasts()
+		if(!istype(B) || !B.lactating || B.milk_stored < 1)
+			return
+		var/size_limit = max(B.breast_size, 1)
+		var/free_space = container.reagents.maximum_volume - container.reagents.total_volume
+		var/milk_to_take = max(min(free_space, B.milk_stored, size_limit), 0)
+		if(milk_to_take <= 0 || !container.reagents.add_reagent(/datum/reagent/consumable/milk, milk_to_take))
+			return
 		B.milk_stored -= milk_to_take
 		user.visible_message(
 			span_notice("[user] milks [(src == user) ? p_themselves() : src] into \the [container]."),

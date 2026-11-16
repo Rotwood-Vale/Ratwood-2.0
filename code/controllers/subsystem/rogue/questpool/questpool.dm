@@ -261,6 +261,8 @@ SUBSYSTEM_DEF(questpool)
 	Q.issued_day = GLOB.dayspassed
 	if(innkeeper)
 		Q.quest_giver_name = innkeeper.real_name
+		if(innkeeper.job == "Towner")
+			Q.rumor_referral_issuer = WEAKREF(innkeeper)
 	Q.deposit_amount = Q.calculate_deposit()
 	if(override_destination && istype(Q, /datum/quest/kill/recovery))
 		var/datum/quest/kill/recovery/RQ = Q

@@ -412,6 +412,11 @@
 	desc = "A keyring issued to the baronial household with warden and slaver access."
 	keys = list(/obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
 
+/obj/item/storage/keyring/baronmaster
+	name = "baronial keyring"
+	desc = "The baron's personal keyring, with warden and slaver access."
+	keys = list(/obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse, /obj/item/roguekey/baron, /obj/item/roguekey/baronguest)
+
 /obj/item/storage/keyring/tribalchief
 	keys = list(/obj/item/roguekey/tribal, /obj/item/roguekey/tribalchief)
 

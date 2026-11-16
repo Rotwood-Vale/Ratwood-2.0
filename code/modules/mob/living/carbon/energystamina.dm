@@ -193,6 +193,8 @@
 		addtimer(CALLBACK(src, PROC_REF(Immobilize), 30), 1 SECONDS)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
+			if(isseelie(C))
+				C.visible_message(span_warning("[C] falls from the air!"), span_warning("I fall down in exhaustion!"))
 			if(C.get_stress_amount() >= 30)
 				C.heart_attack()
 			if(!HAS_TRAIT(C, TRAIT_NOHUNGER))

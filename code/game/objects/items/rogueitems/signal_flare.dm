@@ -85,12 +85,12 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 		return
 	to_chat(user, span_notice("I need to load this into a Wolkenmaw to fire it."))
 
-// Held to full charge like shooting a crossbow, so a stray click can't loose a signal.
+// Firing checks full charge in afterattack; early release must still allow storage clicks.
 /datum/intent/use/flaregun
 	name = "aim"
 	tranged = TRUE
 	chargetime = 8
-	no_early_release = TRUE
+	no_early_release = FALSE
 	charging_slowdown = 1
 
 /obj/item/signal_flare_gun
@@ -236,6 +236,18 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 		eject_canister(user)
 		return
 	return ..()
+
+// Ranged intents skip atom.attackby(), including its storage insertion signal.
+/obj/item/signal_flare_gun/pre_attack(atom/target, mob/living/user, params)
+	if(..())
+		return TRUE
+	if(!istype(user) || !istype(user.used_intent) || !user.used_intent.tranged || !target)
+		return FALSE
+	var/datum/component/storage/storage = target.GetComponent(/datum/component/storage)
+	if(!istype(storage))
+		return FALSE
+	SEND_SIGNAL(target, COMSIG_PARENT_ATTACKBY, src, user, params)
+	return TRUE // A rejected insertion must not fall through into an attack.
 
 /obj/item/signal_flare_gun/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()

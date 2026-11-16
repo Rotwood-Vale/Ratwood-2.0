@@ -607,7 +607,8 @@
 	update_inv_hands()
 
 	var/list/grip = I.grip_offset(dir, mirrored)
-	spin_appearance.layer = layer + (index == INHAND_FRONT ? 0.1 : -0.1)
+	// Keep the flourish visible even when this hand normally renders behind the body.
+	spin_appearance.layer = layer + 0.1
 
 	var/atom/movable/flick_visual/spin = flick_overlay_view(spin_appearance, speed + 2)
 	if(spin)

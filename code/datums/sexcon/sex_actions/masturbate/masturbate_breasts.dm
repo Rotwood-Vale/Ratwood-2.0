@@ -20,6 +20,7 @@
 
 	user.sexcon.perform_sex_action(user, 1, 4, TRUE, apply_sensitivity = FALSE)
 	user.sexcon.handle_passive_ejaculation()
+	user.drip_panel_milk()
 
 	user.sexcon.suppress_moan = FALSE
 

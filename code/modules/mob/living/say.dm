@@ -416,12 +416,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	last_heard_raw_message = raw_message
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-	// Local speech remains intelligible while sleeping; whispers still require adjacency.
+	// Local speech remains intelligible while unconscious; whispers still require adjacency.
 	var/is_whisper = message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT
-	var/allow_sleeping = !radio_freq && (!is_whisper || (speaker && speaker.z == z && (get_dist(src, speaker) in 0 to 1)))
-	if(hypnotic_speech && hypnotic_pending?.capture(src, speaker, message_language, raw_message, radio_freq, message_mode, allow_sleeping))
+	var/allow_unconscious = !radio_freq && (!is_whisper || (speaker && speaker.z == z && (get_dist(src, speaker) in 0 to 1)))
+	if(hypnotic_speech && hypnotic_pending?.capture(src, speaker, message_language, raw_message, radio_freq, message_mode, allow_unconscious))
 		message = span_hypnophrase(message)
-	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, allow_sleeping = allow_sleeping)
+	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, allow_unconscious = allow_unconscious)
 	return message
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode, original_message)

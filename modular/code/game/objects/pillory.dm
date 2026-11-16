@@ -1,4 +1,5 @@
 #define PILLORY_HEAD_OFFSET      2 // How much we need to move the player to center their head
+#define PILLORY_NORTH_LAYER (NOT_HIGH_OBJ_LAYER - 0.1)
 
 /obj/structure/pillory
 	name = "pillory"
@@ -12,11 +13,16 @@
 	buckle_blocks_spells = TRUE
 	anchored = TRUE
 	density = TRUE
-	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER
+	layer = HIGH_OBJ_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	var/latched = FALSE
 	locked = FALSE
 	var/base_icon = "pillory_single"
+	/// Draw layer to restore after the occupant leaves the pillory.
+	var/occupant_original_layer
+	var/turf/north_tile
+	/// Original layers of characters currently drawing behind this pillory.
+	var/list/north_player_layers
 	lockid = list()
 
 /obj/structure/pillory/double
@@ -31,6 +37,77 @@
 /obj/structure/pillory/Initialize(mapload)
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(on_mob_created))
+	watch_north_tile()
+
+/obj/structure/pillory/Moved(atom/old_loc, direction, forced)
+	. = ..()
+	watch_north_tile()
+
+/obj/structure/pillory/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED)
+	stop_watching_north_tile()
+	return ..()
+
+/obj/structure/pillory/proc/watch_north_tile()
+	var/turf/new_north_tile = isturf(loc) ? get_step(src, NORTH) : null
+	if(north_tile == new_north_tile)
+		return
+	stop_watching_north_tile()
+	if(!new_north_tile)
+		return
+	north_tile = new_north_tile
+	RegisterSignal(north_tile, COMSIG_TURF_ENTERED, PROC_REF(on_north_entered))
+	RegisterSignal(north_tile, COMSIG_TURF_EXITED, PROC_REF(on_north_exited))
+	if(locate(/mob/living/carbon/human) in north_tile)
+		START_PROCESSING(SSfastprocess, src)
+
+/obj/structure/pillory/proc/stop_watching_north_tile()
+	STOP_PROCESSING(SSfastprocess, src)
+	if(north_tile)
+		UnregisterSignal(north_tile, list(COMSIG_TURF_ENTERED, COMSIG_TURF_EXITED))
+		north_tile = null
+	for(var/mob/living/carbon/human/player as anything in north_player_layers)
+		restore_north_player_layer(player)
+	north_player_layers = null
+
+/obj/structure/pillory/proc/on_north_entered(datum/source, atom/movable/entering)
+	SIGNAL_HANDLER
+	if(ishuman(entering))
+		START_PROCESSING(SSfastprocess, src)
+
+/obj/structure/pillory/proc/on_mob_created(datum/source, mob/created)
+	SIGNAL_HANDLER
+	if(north_tile && created.loc == north_tile && ishuman(created))
+		START_PROCESSING(SSfastprocess, src)
+
+/obj/structure/pillory/proc/on_north_exited(datum/source, atom/movable/leaving)
+	SIGNAL_HANDLER
+	if(ishuman(leaving))
+		restore_north_player_layer(leaving)
+
+/obj/structure/pillory/proc/restore_north_player_layer(mob/living/carbon/human/player)
+	var/original_layer = LAZYACCESS(north_player_layers, player)
+	if(isnull(original_layer))
+		return
+	if(player.layer == PILLORY_NORTH_LAYER)
+		player.layer = original_layer
+	LAZYREMOVE(north_player_layers, player)
+
+/obj/structure/pillory/process()
+	if(!north_tile)
+		return PROCESS_KILL
+	var/has_player = FALSE
+	for(var/mob/living/carbon/human/player in north_tile)
+		has_player = TRUE
+		if(player.buckled || player.plane != plane || !player.is_shifted || player.pixel_y >= player.base_pixel_y + player.get_standard_pixel_y_offset(player.lying))
+			restore_north_player_layer(player)
+			continue
+		if(player.layer > PILLORY_NORTH_LAYER)
+			LAZYSET(north_player_layers, player, player.layer)
+			player.layer = PILLORY_NORTH_LAYER
+	if(!has_player)
+		return PROCESS_KILL
 
 /obj/structure/pillory/examine(mob/user)
 	. = ..()
@@ -74,10 +151,13 @@
 			return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K.keys)
+		for(var/obj/item/roguekey/KE in K.contents)
 			if(KE.lockid in lockid)
 				togglelock(user)
 				return
+		to_chat(user, span_warning("None of the keys on my keyring fit this lock."))
+		playsound(src, 'sound/foley/doors/lockrattle.ogg', 100)
+		return
 
 /obj/structure/pillory/proc/place_liquid_container(obj/item/reagent_containers/glass/container, mob/user)
 	if(!isliving(user) || QDELETED(user) || !istype(container) || QDELETED(container) || user.get_active_held_item() != container || !Adjacent(user))
@@ -118,8 +198,9 @@
 	animate(container)
 	container.pixel_x = initial(container.pixel_x)
 	container.pixel_y = initial(container.pixel_y) - world.icon_size / 2
+	// The bucket covers the post, but nearby mobs still draw over both.
 	container.plane = pillory.plane
-	container.layer = pillory.layer + 0.1
+	container.layer = BELOW_MOB_LAYER
 
 /datum/component/pillory_container_placement/proc/clear_placement()
 	SIGNAL_HANDLER
@@ -139,7 +220,7 @@
 	var/obj/item/container = parent
 	if(container)
 		UnregisterSignal(container, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_PICKUP))
-		if(!QDELETED(container) && pillory)
+		if(!QDELETED(container))
 			container.pixel_x = initial(container.pixel_x)
 			container.pixel_y = initial(container.pixel_y)
 			container.plane = original_plane
@@ -184,7 +265,7 @@
 		to_chat(usr, span_warning("Unlock it first!"))
 		return FALSE
 
-	if (!istype(M, /mob/living/carbon/human))
+	if ((!istype(M, /mob/living/carbon/human)) || HAS_TRAIT(M, TRAIT_TINY))
 		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
 		return FALSE // Can't hold non-humanoids
 
@@ -201,6 +282,11 @@
 			var/datum/species/S = H.dna.species
 
 			if (istype(S))
+				// The occupied sprite masks the body and leaves an opening for the head.
+				for(var/obj/structure/pillory/south_pillory in get_step(src, SOUTH))
+					south_pillory.restore_north_player_layer(H)
+				occupant_original_layer = H.layer
+				H.layer = NOT_HIGH_OBJ_LAYER
 				//H.cut_overlays()
 				H.update_body_parts_head_only()
 				switch(H.dna.species.name)
@@ -218,6 +304,10 @@
 	..()
 
 /obj/structure/pillory/post_unbuckle_mob(mob/living/M)
+	// Unbuckling can already have moved a resting occupant to the prone layer.
+	if(!isnull(occupant_original_layer) && M.layer == NOT_HIGH_OBJ_LAYER)
+		M.layer = occupant_original_layer
+	occupant_original_layer = null
 	//M.regenerate_icons()
 	M.reset_offsets("bed_buckle")
 	icon_state = "[base_icon]"
@@ -260,3 +350,4 @@
 	return AM.throw_impact(victim, throwingdatum)
 
 #undef PILLORY_HEAD_OFFSET
+#undef PILLORY_NORTH_LAYER

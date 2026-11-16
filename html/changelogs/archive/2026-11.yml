@@ -393,8 +393,159 @@
   - balance: Wretches now have access to the bandit camp.
   - balance: The dragon hoard in the bandit camp now has 99999 integrity walls, effectively
       making them unbreakable (up from 1000 integrity).
+  - map: ' The baron on Smollhill is now a duke in disguise.'
+  - map: All of the banners on Smollhill are now duchy banners, allowing the duke-baron
+      to set their color.
+  - map: Added a few RCOMs to Smollhill.
+  - map: Fixed a door with invalid key ID on Smollhill.
+  - map: Added a head physician to Smollhill.
+  Khanivore.:
+  - sound: Added LizBellow, LizHiss, LizSqueal, LizThump, and Gnash for all species
+      through chat and the Noises menu.
   mypingishuge:
   - rscadd: Oozes can choose Digitigrade Big Legs and Digitigrade Big Legs, Stanced.
   - qol: Liquid containers can be set at the base of a pillory, visibly in front of
       its occupant.
   - qol: Wretches receive a new role guidance message before choosing their class.
+  - balance: Rebalanced role PQ requirements.
+  - qol: "PQ-blocked late-join roles remain visible in darker red, while roles disabled\
+      \ on the current map stay hidden. PQ errors explain how to earn PQ, with a Towner\
+      \ suggestion whenever a player at 0 PQ falls below a role\u2019s minimum."
+  - rscadd: Added optional Cumflation Content, with intake tracking, a washable Stuffed
+      debuff and consent-gated examine text.
+  - bugfix: Unconscious and dying players can follow nearby speech, whispers, emotes
+      and subtles.
+  - bugfix: Unconscious and dying players can be selected as named SLOOC targets.
+  - qol: Erotic Fluid collected in containers gains 5/10/30 extra units by donor size,
+      or 7/15/45 for taur donors.
+  - qol: Erotic FLuid leakage duration scales with donor size, stacks up to one hour,
+      and pauses while clothing blocks dripping.
+  - bugfix: Collection by containers on the floor now use the size-scaled amount for
+      donors with both anatomy options, matching held collection.
+2026-11-13:
+  GarrusVakarian:
+  - map: Smollhill now has a single public SCOM.
+  _Rarity:
+  - map: fix stage after some monster left holes in it
+  - qol: Dried swampweed now has a distinct name from the raw item
+  - admin: "The Spawn\u2026 type picker is now searchable and resizable, and opens\
+      \ 500 pixels wide."
+  - qol: Failed crafting attempts now list missing ingredients and quantities in chat,
+      with an uncorking hint when a nearby corked bottle contains a missing reagent.
+  - bugfix: Fixed how pillories, attached buckets, and nearby characters draw over
+      each other when players pixel-shift.
+  - bugfix: "The Artificer\u2019s Apprentice Mason loadout now includes a chisel."
+  - balance: Weak stance now deals 20% of calculated weapon damage instead of only
+      -1 STR
+  mypingishuge:
+  - bugfix: Tennite Radical clergy, including Churchlings, can no longer access Inhumen
+      miracle research, relations or their trait bonuses.
+  - bugfix: Lupians now have one snout selector containing all their previous snout
+      styles.
+  - rscadd: 'Added free Fat Knot and High Production quirks. Fat Knot: counts as Large
+      cock size for movement retention. This lets you always drag knotted people behind
+      you hands-free. High Production: counts as having Large testicle size for how
+      much cum you can store and release.'
+  - bugfix: Wolkenmaw can once again be put into pouches and other storage by clicking
+      them while holding it.
+  - rscadd: Exposed Baotha marks appear in character examine text with a heretical
+      highlight and tooltip.
+  - balance: "Extra oral nutrition is now shared across a climax\u2019s bursts instead\
+      \ of being added again for every burst."
+  - balance: Raised the base oral intake threshold for Stuffed from over 45 to over
+      60 units.
+  - bugfix: Flail Sweep now applies its crowd effects reliably at high target counts,
+      counts each target once and uses the correct throw distance.
+  - rscadd: Breast-rubbing panel actions can release milk when lactating, if Enable
+      Breast Milking is enabled.
+  - bugfix: Open liquid containers can collect floor fluids regardless of their container
+      subtype; closed or full containers no longer block collection.
+  - bugfix: Fully collected floor fluids no longer leave a floor decal, and direct
+      milking rechecks the available milk and container space after its delay.
+  - qol: The Enable Breast Milking tooltip explains its effect on both breast-rubbing
+      panel actions.
+2026-11-14:
+  _Rarity:
+  - bugfix: Fixed a roundstart stall caused by an unresponsive client during a lobby-panel
+      refresh.
+  - bugfix: Fixed Gnoll latejoins being sent to town arrival points by Virtues on
+      the player's regular character slot.
+  - rscadd: (7erracotta) Added 28 whittling recipes for wooden carvings and a corkable
+      wooden bottle that survives being thrown.
+  - admin: The storyteller now checks role bans before selecting antagonists.
+  mypingishuge:
+  - rscadd: LOOC typing, including Subtle LOOC, displays a blue typing bubble.
+  - spellcheck: Clarified the Enable Extreme ERP Content tooltip.
+  - rscadd: Adds the Saccharine Keepsake quirk, that provides a reusable pink crayon
+      that can grant Baotha's fertility marks.
+  - rscadd: Added one saccharine crayon to each gnoll-cave equipment chest in the
+      Wretch Grotto on Neuhill and Smollhill.
+  - rscadd: Added a saccharine crayon to each of the two pillows at Baotha's Wretch
+      Grotto shrine on Neuhill and Smollhill.
+  - bugfix: Half-Kin's race description now correctly names its +1 Willpower bonus
+      instead of Endurance.
+  - rscadd: "Claimed crimes remain visible as REWARD CLAIMED \u2014 PENANCE INCOMPLETE\
+      \ until penance is completed, without paying again on recapture."
+  - bugfix: Pillories now recognize matching keys inside keyrings for locking and
+      unlocking.
+  - bugfix: Races with inherent Critical Weakness can no longer select the same vice
+      for free quirk points and loadout points, including through saved character
+      setups.
+2026-11-15:
+  Protabs:
+  - rscadd: Seelie race
+  - rscadd: Seelie exclusive spells
+  - rscadd: Town Seelie job
+  - rscadd: Seelie fortune/misfortune effects
+  - rscadd: Seelie's curse effect
+  - rscadd: Faexin Language
+  - rscadd: Seelie Wings organ
+  - rscadd: Seelie luck/misfortune aura and glow
+  - rscadd: Taming logic to Rous for Seelies, this also allows Rous to be mounted
+      and ridden as a Seelie
+  - rscadd: New lamptern logic for Seelies. THE WISP LANTERN IS REEALL!!
+  - rscadd: Shoulder-riding mechanics
+  - rscadd: Reactive conditionals to sexcon actions that change if you're fucking
+      with a tiny race.
+  - balance: Seelies now have a -6 STR off-rip
+  - balance: Seelies now cannot equip armor heavier than light
+  - balance: Seelies now inherently have critical weakness
+  - balance: Seelies cannot acquire critical resistance
+  - image: Added Seelie Wings, both feature states, in-hand state and dropped state.
+  - code_imp: Minor Rous rework to allow taming and riding for Seelies.
+  - server: I don't think Seelies are enabled by default as a rounstart race in config
+      by default. Tread lightly or whatnot.
+  - rscdel: Removed logic from `mind.dm` that prevented `player_card` from being moved
+      to shapeshifted bodies.
+  _Rarity:
+  - rscadd: Defiled Keyholders can now enter the bandit hideout.
+  - code_imp: Fix Dragonhoard logic to avoid runtimes from non-bandits attempting
+      to access it
+  mypingishuge:
+  - rscadd: Lucernes can now be twirled.
+  - bugfix: Weapon twirls remain visible in front of the character.
+  - rscadd: Warden storage now has two brooms on its tool rack.
+  - bugfix: Strong-intent sweeping skips clean tiles, including tiles already cleared
+      by another sweep.
+  - bugfix: The Smollhill manor window curtain can now be operated from inside.
+  - rscadd: Added a sickle to the Smollhill manor tool rack.
+2026-11-16:
+  _Rarity:
+  - bugfix: Fixed Character Sheet sprites drifting when other players preview characters
+      of a different species and size.
+  - bugfix: Fix HERMES mail notifications not sending.
+  - bugfix: Fireman carries keep their original grip on stairs, and piggyback riders
+      stay mounted.
+  - qol: "Map ballots now respect each map\u2019s population limits when voting opens."
+  - balance: Dun World requires 30 connected players to appear on the ballot and at
+      least 24 when voting closes to win.
+  - qol: You can now save your Natural Armor's name and description in character setup.
+  - rscadd: Towners can post rumors, earn referral fees, and commission Blockade Defense
+      writs.
+  - qol: Notorious Bounties and contracts can now be signed solo. Don't die.
+  mypingishuge:
+  - balance: "Reduced Stuffed\u2019s Speed penalty from 6 to 3."
+  - bugfix: Stat debuffs no longer disappear when applied at minimum stats.
+  - bugfix: Corrected stat overflow bookkeeping when overlapping modifiers are applied
+      and removed.
+  - bugfix: "Removed the duplicated Speed sentence from Stuffed\u2019s tooltip."

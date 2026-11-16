@@ -6,6 +6,16 @@
 	user_sex_part = SEX_PART_FOOT // yes, this is a special part just so you only need one foot out
 	target_sex_part = SEX_PART_JAWS
 
+/datum/sex_action/force_foot_lick/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY)
+
+/datum/sex_action/force_foot_lick/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY)
+
 /datum/sex_action/force_foot_lick/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] shoves [user.p_their()] feet against [target]'s head!"))
 

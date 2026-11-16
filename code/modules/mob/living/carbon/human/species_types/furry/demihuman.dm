@@ -10,7 +10,7 @@
 	acquired their Beastling traits due to magical curses or blessings from a god, typically \
 	Dendor. Half-kins can reproduce with one another, and their children will inherit features \
 	from both parents. Half-kin genes are dominant when mixing with Humens or Elves.<br>\
-	(+1 Endurance, +1 Perception)"
+	(+1 Willpower, +1 Perception)"
 
 	expanded_desc = "Half-kins are a highly diversified people. Half-kins are primarily \
 	a consequence of Beastling races mixing with a Humens and Elves, although some have \

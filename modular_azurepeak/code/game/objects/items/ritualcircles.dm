@@ -2417,23 +2417,17 @@
 			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 
 /obj/structure/ritualcircle/baotha/proc/baothablessing_stage2(mob/living/carbon/human/target)
-	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
-	if(isdwarf(target) || isgoblinp(target) || iskobold(target) || iscritter(target))
-		if(target.gender == MALE)
-			marking_overlay.pixel_y -= 6
-		else
-			marking_overlay.pixel_y -= 4
-	target.add_overlay(marking_overlay)
-	target.update_body_parts()
+	if(QDELETED(target))
+		return
+	target.add_baotha_fertility_mark()
 	playsound(target, 'sound/health/fastbeat.ogg', 60)
 	addtimer(CALLBACK(src, PROC_REF(baothablessing_stage3), target), 40)
 
 /obj/structure/ritualcircle/baotha/proc/baothablessing_stage3(mob/living/carbon/human/target)
+	if(QDELETED(target))
+		return
 	to_chat(target, span_purple("Enjoy the new you!"))
-	ADD_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
-	var/obj/item/organ/vagina/vagina = target.getorganslot(ORGAN_SLOT_VAGINA)
-	if(vagina && !vagina.fertility)
-		vagina.fertility = TRUE
+	target.grant_baotha_fertility_boon()
 
 /obj/structure/ritualcircle/baotha/proc/baothaarmor_stage2(mob/living/carbon/human/target)
 	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)

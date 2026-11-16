@@ -1155,7 +1155,7 @@ rough example of the "cone" made by the 3 dirs checked
 	return closest_atom
 
 
-/proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
+/proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types(), resizable = FALSE)
 	if (value == FALSE) //nothing should be calling us with a number, so this is safe
 		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
 		if (isnull(value))
@@ -1171,7 +1171,11 @@ rough example of the "cone" made by the 3 dirs checked
 	if(matches.len==1)
 		chosen = matches[1]
 	else
-		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in sortList(matches)
+		var/list/sorted_matches = sortList(matches)
+		if(resizable)
+			chosen = tgui_input_list(usr, "Select a type", "Pick Type", sorted_matches, matches[1], strict_modern = TRUE, window_width = 500)
+		else
+			chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in sorted_matches
 		if(!chosen)
 			return
 	chosen = matches[chosen]

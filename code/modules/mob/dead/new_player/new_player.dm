@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	qdel(src)
 	return TRUE
 
-/proc/get_job_unavailable_error_message(retval, jobtitle)
+/proc/get_job_unavailable_error_message(retval, jobtitle, mob/player)
 	switch(retval)
 		if(JOB_AVAILABLE)
 			return "[jobtitle] is available."
@@ -408,20 +408,23 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		if(JOB_UNAVAILABLE_LASTCLASS)
 			return "You have played [jobtitle] recently."
 		if(JOB_UNAVAILABLE_JOB_COOLDOWN)
-			if(usr.ckey in GLOB.job_respawn_delays)
-				var/remaining_time = round((GLOB.job_respawn_delays[usr.ckey] - world.time) / 10)
+			if(player?.ckey in GLOB.job_respawn_delays)
+				var/remaining_time = round((GLOB.job_respawn_delays[player.ckey] - world.time) / 10)
 				return "You must wait [remaining_time] seconds before playing as an [jobtitle] again."
 		if(JOB_UNAVAILABLE_VIRTUESVICE)
 			return "[jobtitle] is restricted by your Virtues or Vices."
 		if(JOB_UNAVAILABLE_PQ)
 			var/datum/job/job = SSjob.GetJob(jobtitle)
-			if(job && !isnull(job.min_pq))
-				var/player_pq = get_playerquality(usr?.ckey)
-				return "You do not meet the Player Quality requirement for [jobtitle]. (Required: [job.min_pq], Your PQ: [player_pq])"
-			else if(job && !isnull(job.max_pq))
-				var/player_pq = get_playerquality(usr?.ckey)
+			var/player_pq = get_playerquality(player?.ckey)
+			var/pq_help = "You can earn PQ by playing roles that award round contribution points or by being commended by other players."
+			if(job && !isnull(job.min_pq) && isnum(player_pq) && player_pq < job.min_pq)
+				var/message = "You do not meet the Player Quality requirement for [jobtitle]. (Required: [job.min_pq], Your PQ: [player_pq]) [pq_help]"
+				if(player_pq == 0)
+					message += " Try the Towner role to get started."
+				return message
+			if(job && !isnull(job.max_pq) && isnum(player_pq) && player_pq > job.max_pq)
 				return "You exceed the Player Quality requirement for [jobtitle]. (Maximum: [job.max_pq], Your PQ: [player_pq])"
-			return "You do not meet the Player Quality requirement for [jobtitle]."
+			return "You do not meet the Player Quality requirement for [jobtitle]. [pq_help]"
 	return "Error: Unknown job availability."
 
 //used for latejoining
@@ -525,9 +528,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		to_chat(src, span_warning("Enslaved Adventurer is roundstart-only on Rockhill."))
 		return FALSE
 
-	var/error = IsJobUnavailable(rank)
+	var/error = IsJobUnavailable(rank, TRUE)
 	if(error != JOB_AVAILABLE)
-		to_chat(src, span_warning("[get_job_unavailable_error_message(error, rank)]"))
+		to_chat(src, span_warning("[get_job_unavailable_error_message(error, rank, src)]"))
 		return FALSE
 
 	if(SSticker.late_join_disabled)
@@ -635,6 +638,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		character.client.update_ooc_verb_visibility()
 
 /mob/dead/new_player/proc/LateChoices()
+	if(!client)
+		return
 	var/list/dat = list("<div class='notice' style='font-style: normal; font-size: 14px; margin-bottom: 2px; padding-bottom: 0px'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time, 1)]</div>")
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
@@ -659,19 +664,16 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			testing("HELP NO THING FOUND FOR [category[1]]")
 			continue
 
-		var/list/available_jobs = list()
+		var/list/listed_jobs = list()
 		for(var/job in category)
 			var/datum/job/job_datum = SSjob.name_occupations[job]
-			if(!job_datum)
+			if(!job_datum || job_datum.total_positions == 0)
 				continue
-			// Make sure hiv+ jobs always appear on list, even if unavailable
-			var/is_job_available = (IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
-			if(job_datum.always_show_on_latechoices)
-				is_job_available = TRUE
-			if(is_job_available)
-				available_jobs += job
+			var/availability = IsJobUnavailable(job_datum.title, TRUE)
+			if(availability == JOB_AVAILABLE || availability == JOB_UNAVAILABLE_PQ)
+				listed_jobs[job] = availability
 
-		if (length(available_jobs))
+		if (length(listed_jobs))
 			var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
 			var/cat_name = ""
 			switch (SSjob.name_occupations[category[1]].department_flag)
@@ -715,8 +717,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			if(has_world_trait(/datum/world_trait/skeleton_siege)|| has_world_trait(/datum/world_trait/goblin_siege))
 				break
 
-			for(var/job in available_jobs)
+			for(var/job in listed_jobs)
 				var/datum/job/job_datum = SSjob.name_occupations[job]
+				var/availability_class = listed_jobs[job] == JOB_UNAVAILABLE_PQ ? " job-unavailable" : ""
 				var/do_elaborate = job_datum.has_limited_subclasses()
 				var/incompatible_href = length(job_datum.get_blocked_subclasses(client)) ? "<a href='?src=[REF(job_datum)];jobadvincomp=1'><b><font color = '#df1919'>(!!)</font></b></a>" : ""
 				if(job_datum)
@@ -727,9 +730,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					if(client.prefs.pronouns == SHE_HER && job_datum.f_title)
 						used_name = job_datum.f_title
 					if(job_datum in SSjob.prioritized_jobs)
-						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([job_datum.current_positions])</span></a>"
+						dat += "<a class='job[command_bold][availability_class]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([job_datum.current_positions])</span></a>"
 					else
-						dat += "<font size = 3>[incompatible_href][do_elaborate ? "<a href='?src=[REF(job_datum)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a>" : ""]<a href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[command_bold ? "<b>" : ""][used_name] ([job_datum.current_positions]/[job_datum.total_positions])[command_bold ? "</b>" : ""]</a></font>"
+						dat += "<font size = 3>[incompatible_href][do_elaborate ? "<a href='?src=[REF(job_datum)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a>" : ""]<a class='[availability_class]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[command_bold ? "<b>" : ""][used_name] ([job_datum.current_positions]/[job_datum.total_positions])[command_bold ? "</b>" : ""]</a></font>"
 						dat += "<br>"
 
 			dat += "</fieldset><br>"

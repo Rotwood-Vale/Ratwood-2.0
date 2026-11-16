@@ -8,6 +8,16 @@
 	user_needs_functional = TRUE
 	target_sex_part = SEX_PART_JAWS
 
+/datum/sex_action/force_blowjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY) && !HAS_TRAIT(target, TRAIT_TINY)
+
+/datum/sex_action/force_blowjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY) && !HAS_TRAIT(target, TRAIT_TINY)
+
 /datum/sex_action/force_blowjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] forces [target]'s head down to swallow and suck on [user.p_their()] cock!"))
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
@@ -20,8 +30,10 @@
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s throat!"))
-		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
-			user.sexcon.cum_into(oral = TRUE, splashed_user = target, consume_charge = i == 1 ? TRUE : FALSE) // give facial status effect for the target, considering this was rough throat sex
+		var/burst_count = user.sexcon.get_load_bursts()
+		var/extra_per_burst = user.sexcon.get_oral_intake_extra_volume(!!target.has_status_effect(/datum/status_effect/facial)) / burst_count
+		for(var/i = 1; i <= burst_count; i++)
+			user.sexcon.cum_into(oral = TRUE, splashed_user = target, consume_charge = i == 1 ? TRUE : FALSE, oral_extra_volume = extra_per_burst) // give facial status effect for the target, considering this was rough throat sex
 			sleep(10)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))

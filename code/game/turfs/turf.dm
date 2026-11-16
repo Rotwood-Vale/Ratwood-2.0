@@ -333,7 +333,10 @@
 		return
 	if(zFall(A, ++levels))
 		return FALSE
-	if(!HAS_TRAIT(A, TRAIT_NOFALLDAMAGE1) && !HAS_TRAIT(A, TRAIT_NOFALLDAMAGE2))
+	var/mob/living/carbon/human/FM = A
+	if(isseelie(FM) && !FM.resting)	//Add wingcheck
+		A.visible_message(span_danger("[A] floats gently onto [src]!"))
+	else if(!HAS_TRAIT(A, TRAIT_NOFALLDAMAGE1) && !HAS_TRAIT(A, TRAIT_NOFALLDAMAGE2))
 		A.visible_message(span_danger("[A] crashes into [src]!"))
 	else
 		A.visible_message(span_warning("[A] lands on [src]!"))

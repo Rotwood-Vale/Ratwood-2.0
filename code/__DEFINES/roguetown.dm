@@ -56,6 +56,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/halforc,\
 	/datum/species/kobold,\
 	/datum/species/goblinp,\
+	/datum/species/seelie,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/dwarf/gnome,\
@@ -218,6 +219,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/kobold,\
 	/datum/species/goblinp,\
 	/datum/species/lamia,\
+	/datum/species/seelie,\
 	/datum/species/harpy,\
 )
 
@@ -244,6 +246,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/orc,\
 	/datum/species/kobold,\
 	/datum/species/goblinp,\
+	/datum/species/seelie,\
 	/datum/species/construct/metal,\
 	/datum/species/construct/metal/porcelain,\
 	/datum/species/dullahan,\
@@ -270,6 +273,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/anthromorph,\
 	/datum/species/demihuman,\
 	/datum/species/halforc,\
+	/datum/species/seelie,\
 	/datum/species/harpy,\
 	/datum/species/construct/metal,\
 	/datum/species/construct/metal/porcelain,\

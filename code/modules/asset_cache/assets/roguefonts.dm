@@ -35,4 +35,5 @@
 		"aavnic.ttf" = 'interface/fonts/languages/aavnic.ttf',
 		"merar.ttf" = 'interface/fonts/languages/merar.ttf',
 		"abyssal.ttf" = 'interface/fonts/languages/abyssal.ttf',
+		"fae.ttf" = 'interface/fonts/languages/fae.ttf',
 	)

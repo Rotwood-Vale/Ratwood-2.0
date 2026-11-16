@@ -58,6 +58,20 @@
 
 	handle_sleep()
 
+	if(isseelie(src) && !IsSleeping())
+		if((mobility_flags & MOBILITY_STAND) && haswings(src) && !buckled)
+			INVOKE_ASYNC(src, PROC_REF(fairy_hover))
+		//Seelie luck aura
+		for(var/mob/living/carbon/human/H in view(1, src))
+			if(!H || isseelie(H))
+				continue
+			if(aura)
+				H.apply_status_effect(/datum/status_effect/buff/seelie/happy)
+				H.remove_status_effect(/datum/status_effect/buff/seelie/sad)
+			else
+				H.apply_status_effect(/datum/status_effect/buff/seelie/sad)
+				H.remove_status_effect(/datum/status_effect/buff/seelie/happy)
+
 	if(HAS_TRAIT(src, TRAIT_IN_FRENZY))
 		handle_automated_frenzy()
 
@@ -612,6 +626,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return
 
 	heart.beating = !status
+
+/mob/living/carbon/proc/fairy_hover()
+	//Fairy hovering animation
+	if(!resting && !wallpressed)
+		animate(src, pixel_y = pixel_y + 2, time = 5, loop = -1)
+	sleep(5)
+	if(!resting && !wallpressed)
+		animate(src, pixel_y = pixel_y - 2, time = 5, loop = -1)
 
 /// Handles sleep. Mobs with no_sleep trait cannot sleep.
 /*

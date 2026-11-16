@@ -15,7 +15,7 @@
 	outfit = /datum/outfit/job/roguetown/loudmouth
 	display_order = JDO_CRIER
 	give_bank_account = 15
-	min_pq = 3 // Has actual responsibility and is a key figure in town.
+	min_pq = 0
 	max_pq = null
 	round_contrib_points = 3
 

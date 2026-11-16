@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 0
 	spawn_positions = 0
-	min_pq = 25		//This is a class that lets you effectively no-esc someone. So.. responsibility.
+	min_pq = 15
 	max_pq = null
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS

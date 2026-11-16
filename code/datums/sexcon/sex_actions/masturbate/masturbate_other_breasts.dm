@@ -20,6 +20,7 @@
 
 	user.sexcon.perform_sex_action(target, 1, 4, TRUE)
 	target.sexcon.handle_passive_ejaculation()
+	target.drip_panel_milk()
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 

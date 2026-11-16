@@ -190,6 +190,11 @@ body {
   font-family: "Rasyideen"; 
   src: url('merar.ttf'); 
 }
+
+@font-face {
+  font-family: "Faexin";
+  src: url('fae.ttf');
+}
 /* */
 
 em {
@@ -987,6 +992,9 @@ h2.alert {
   font-family: "Rasyideen", "Pterra";
 	font-size: 110%; 
 }
+.faexin {
+	font-family: "Faexin", "Pterra";
+}
 .torture {
 	color: #42ff20;
 }
@@ -1017,6 +1025,7 @@ h2.alert {
 .aavnic					{font-family: "Romeodn", "Pterra"; font-size: 100%;}
 .abyssal				{font-family: "Achilles", "Pterra"; font-size: 110%;}
 .felid					{font-family: "Rasyideen", "Pterra"; font-size: 120%;}
+.faexin					{font-family: "Faexin", "Pterra";}
 
 .command_headset {
 	font-weight: bold;

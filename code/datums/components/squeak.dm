@@ -69,7 +69,7 @@
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.movement_type & (FLYING|FLOATING))
+		if(M.movement_type & (FLYING|FLOATING) || isseelie(M))	//Seelie fly but do not have the FLYING|FLOATING flags
 			return
 		if(M.m_intent == MOVE_INTENT_SNEAK && prob(90))
 			return

@@ -18,3 +18,12 @@
   color: #ffffff;
   font-style: italic;
 }
+
+a.job-unavailable,
+a.job-unavailable:link,
+a.job-unavailable:visited,
+a.job-unavailable:hover,
+a.job-unavailable:active,
+a.job-unavailable .priority {
+  color: #700000;
+}

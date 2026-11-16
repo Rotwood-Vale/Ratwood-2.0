@@ -16,7 +16,7 @@
 	display_order = JDO_SUITOR
 	give_bank_account = 40
 	noble_income = 20
-	min_pq = 3
+	min_pq = 0
 	max_pq = null
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_noble.ogg'

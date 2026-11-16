@@ -5,11 +5,12 @@
 	winner_method = VOTE_WINNER_METHOD_SIMPLE
 	display_statistics = TRUE
 
-/datum/vote/map_vote/New()
-	. = ..()
-	default_choices = SSmap_vote.get_valid_map_vote_choices()
+/datum/vote/map_vote/is_accessible_vote()
+	// Register the vote at startup even if no maps meet their population limits yet.
+	return !!length(SSmap_vote.get_valid_map_vote_choices(ignore_population = TRUE))
 
 /datum/vote/map_vote/create_vote(mob/vote_creator)
+	choices.Cut()
 	default_choices = SSmap_vote.get_valid_map_vote_choices()
 	. = ..()
 	if(!.)

@@ -169,7 +169,11 @@
 
 /datum/sex_controller/proc/get_knot_size()
 	var/mob/living/carbon/human/top = knotted_owner
-	var/obj/item/organ/penis/organ = top?.getorganslot(ORGAN_SLOT_PENIS)
+	if(!ishuman(top) || QDELETED(top))
+		return DEFAULT_PENIS_SIZE
+	var/obj/item/organ/penis/organ = top.getorganslot(ORGAN_SLOT_PENIS)
+	if(istype(organ) && HAS_TRAIT(top, TRAIT_FAT_KNOT))
+		return MAX_PENIS_SIZE
 	return organ ? organ.penis_size : DEFAULT_PENIS_SIZE
 
 /datum/sex_controller/proc/knot_requires_manual_release()
@@ -451,9 +455,8 @@
 			else if(bottom_redolent && !top_redolent)
 				btm.redolent_apply_contact_stink(top)
 			modular_record_collar_receive_event(btm, top)
-			var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)
 			var/knot_orifice = top.sexcon.knotted_part_partner & (SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)
-			apply_creampie_drip(btm, knot_orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+			apply_creampie_drip(btm, knot_orifice, use_long = top.sexcon.get_production_testicle_size() > DEFAULT_TESTICLES_SIZE, added_duration = top.sexcon.get_leakage_duration())
 		if(top.sexcon.knotted_part_partner&SEX_PART_JAWS)
 			var/datum/status_effect/facial/facial = btm.has_status_effect(/datum/status_effect/facial)
 			if(!facial)
@@ -552,7 +555,7 @@
 
 /datum/status_effect/knot_fucked_stupid
 	id = "knot_fucked_stupid"
-	duration = 2 MINUTES
+	duration = 15 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/knot_fucked_stupid
 	effectedstats = list("intelligence" = -10)
@@ -564,7 +567,7 @@
 
 /datum/status_effect/knot_gaped
 	id = "knot_gaped"
-	duration = 60 SECONDS
+	duration = 15 MINUTES
 	tick_interval = 100 // every 10 seconds
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/knot_gaped
@@ -578,19 +581,26 @@
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head) // only apply this effect if a head is found
 			owner.apply_status_effect(/datum/status_effect/jaw_gaped)
+	. = ..()
+	if(.)
+		RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(washed))
+
+/datum/status_effect/knot_gaped/on_remove()
+	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
 	return ..()
+
+/datum/status_effect/knot_gaped/proc/washed(datum/source, strength)
+	SIGNAL_HANDLER
+	if(strength >= CLEAN_WEAK && !QDELETED(owner))
+		owner.remove_status_effect(src)
 
 /datum/status_effect/knot_gaped/tick()
 	var/cur_loc = get_turf(owner)
 	if(get_dist(cur_loc, last_loc) <= 5) // too close, don't spawn a puddle
 		return
-	add_cum_floor(cur_loc)
 	playsound(owner, pick('sound/misc/bleed (1).ogg', 'sound/misc/bleed (2).ogg', 'sound/misc/bleed (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
 	last_loc = cur_loc
-	var/obj/item/reagent_containers/glass/cum_chalice = locate() in cur_loc
-	if(!cum_chalice?.spillable) // leak contents underneath the first found open container
-		return
-	cum_chalice.reagents.add_reagent(contents_to_drip,1)
+	spill_floor_fluid(cur_loc, contents_to_drip, 1)
 
 /atom/movable/screen/alert/status_effect/knot_gaped
 	name = "Gaped"
@@ -632,7 +642,7 @@
 
 /datum/status_effect/jaw_gaped
 	id = "jaw_gaped"
-	duration = 30 SECONDS
+	duration = 15 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
 	tick_interval = -1
 	alert_type = null

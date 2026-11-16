@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 
-	allowed_races = ACCEPTED_RACES
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 
 	tutorial = "The Grenzelhofts were known for their Jesters, wisemen with a tongue just as sharp as their wit. \
 		You command a position of a fool, envious of the position your superiors have upon you. \
@@ -47,12 +47,19 @@
 	H.adjust_skillrank(/datum/skill/craft/cooking, rand(1,3), TRUE)
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
-	H.STASTR = rand(1, 21)
-	H.STAWIL = rand(1, 21)
-	H.STACON = rand(1, 21)
-	H.STAINT = rand(1, 21)
-	H.STAPER = rand(1, 21)
-	H.STALUC = rand(1, 21)
+	if(!isseelie(H))
+		H.STASTR = rand(1, 21)
+		H.STAWIL = rand(1, 21)
+		H.STACON = rand(1, 21)
+		H.STAINT = rand(1, 21)
+		H.STAPER = rand(1, 21)
+		H.STALUC = rand(1, 21)
+	else if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)
 	H.cmode_music = 'sound/music/combat_jester.ogg'
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick) // hilarious
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)

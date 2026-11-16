@@ -87,6 +87,13 @@
 //	flight_for_species = list("dracon") we'll revisit this later it's probably moth sprite only
 
 
+/obj/item/organ/wings/seelie
+	name = "seelie wings"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "fairywingsnormal"
+	accessory_type = /datum/sprite_accessory/wings/seelie
+	sellprice = 50
+
 /obj/item/organ/wings/anthro
 	name = "wild-kin wings"
 

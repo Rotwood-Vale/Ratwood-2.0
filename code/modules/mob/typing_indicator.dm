@@ -1,3 +1,5 @@
+#define LOOC_TYPING_COLOR "#6699cc"
+
 /// state = overlay/image/object/type/whatever add_overlay will accept
 GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 
@@ -23,6 +25,7 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 		var/atom/thing = new state(null)
 		var/mutable_appearance/generated = new(thing)
 		generated.plane = FULLSCREEN_PLANE
+		qdel(thing)
 		return generated
 	else
 		CRASH("Unsupported typing indicator state: [state]")
@@ -65,3 +68,19 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	layer = HUD_LAYER
 	plane = FULLSCREEN_PLANE
 	alpha = 175
+
+/// Reuse the current blue appearance instead of allocating one on each keystroke.
+/mob/proc/display_looc_typing_indicator()
+	if(typing_indicator_current?.color == LOOC_TYPING_COLOR)
+		return typing_indicator_current
+	clear_typing_indicator("LOOC input")
+	var/mutable_appearance/indicator = generate_typing_indicator()
+	indicator.color = LOOC_TYPING_COLOR
+	display_typing_indicator(state_override = indicator)
+	return typing_indicator_current
+
+/mob/proc/clear_looc_typing_indicator(reason)
+	if(typing_indicator_current?.color == LOOC_TYPING_COLOR)
+		clear_typing_indicator(reason)
+
+#undef LOOC_TYPING_COLOR

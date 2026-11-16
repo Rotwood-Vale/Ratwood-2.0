@@ -19,7 +19,7 @@
 
 	announce_latejoin = FALSE
 	display_order = JDO_PILGRIM
-	min_pq = -20
+	min_pq = 1
 	max_pq = null
 	wanderer_examine = TRUE
 	advjob_examine = TRUE

@@ -12,6 +12,14 @@
 	listclearnulls(customizer_entries)
 	var/datum/species/species = pref_species
 	var/list/customizers = species.customizers
+	// The enabled Wild-Kin snout previously overwrote the Lupian snout.
+	if(istype(species, /datum/species/lupian))
+		var/datum/customizer_entry/legacy_snout = get_customizer_entry_for_customizer_type(/datum/customizer/organ/snout/anthro)
+		if(legacy_snout && !legacy_snout.disabled)
+			var/datum/customizer_entry/lupian_snout = get_customizer_entry_for_customizer_type(/datum/customizer/organ/snout/lupian)
+			customizer_entries -= lupian_snout
+			legacy_snout.customizer_type = /datum/customizer/organ/snout/lupian
+			legacy_snout.customizer_choice_type = /datum/customizer_choice/organ/snout/lupian
 	/// Check if we have any customizer entries that don't match.
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)
 		// Keep existing revenant appearances/settings when adding the Wild-Kin cloaca option.

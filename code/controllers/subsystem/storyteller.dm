@@ -316,6 +316,7 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/get_candidates(be_special, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles)
 	var/list/candidates = list()
 	var/list/candidate_candidates = list() //lol
+	var/list/banned_roles = list(ROLE_SYNDICATE) + job_ban
 
 	for(var/mob/player as anything in GLOB.player_list)
 		if(QDELETED(player) || player.mind?.picking)
@@ -333,6 +334,8 @@ SUBSYSTEM_DEF(gamemode)
 
 	for(var/mob/candidate as anything in candidate_candidates)
 		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
+			continue
+		if(is_banned_from(candidate.ckey, banned_roles))
 			continue
 		if(!observers)
 			if(!ready_players && !isliving(candidate))

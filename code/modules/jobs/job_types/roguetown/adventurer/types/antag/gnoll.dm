@@ -11,7 +11,7 @@
 	outfit_female = null
 	display_order = JDO_GNOLL
 	show_in_credits = TRUE
-	min_pq = 30 //Same as wretches for now
+	min_pq = 5
 	max_pq = null
 
 	obsfuscated_job = TRUE

@@ -287,6 +287,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["manticore_tail_messages"]	>> manticore_tail_messages
 	S["hypnosis_content"] >> hypnosis_content
 	hypnosis_content = sanitize_integer(hypnosis_content, 0, 1, FALSE)
+	S["cumflation_content"] >> cumflation_content
+	cumflation_content = sanitize_integer(cumflation_content, 0, 1, FALSE)
 	S["shake"]				>> shake
 	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
@@ -487,6 +489,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["milkable"], milkable)
 	WRITE_FILE(S["manticore_tail_messages"], manticore_tail_messages)
 	WRITE_FILE(S["hypnosis_content"], hypnosis_content)
+	WRITE_FILE(S["cumflation_content"], cumflation_content)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)
@@ -603,6 +606,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
 	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
+	fix_duplicate_vices()
 	S["redolent_type"] >> redolent_type
 	S["redolent_scent"] >> redolent_scent
 	S["hypnotic_gaze_text"] >> hypnotic_gaze_text
@@ -936,6 +940,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_species(S)
 
 	_load_virtue(S)
+	var/saved_natural_armor_name
+	S["natural_armor_name"] >> saved_natural_armor_name
+	natural_armor_name = sanitize_natural_armor_text(saved_natural_armor_name)
+	var/saved_natural_armor_desc
+	S["natural_armor_desc"] >> saved_natural_armor_desc
+	natural_armor_desc = sanitize_natural_armor_text(saved_natural_armor_desc)
 	_load_quirks(S)
 	_load_flaw(S)
 
@@ -1361,6 +1371,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!background_typepath)
 		background_typepath = /datum/virtue/background/none
 	WRITE_FILE(S["virtue_background"], background_typepath)
+	WRITE_FILE(S["natural_armor_name"], natural_armor_name)
+	WRITE_FILE(S["natural_armor_desc"], natural_armor_desc)
 	WRITE_FILE(S["quirks"], get_quirk_typepaths())
 	WRITE_FILE(S["virgin_attraction"], sanitize_virgin_attraction(virgin_attraction))
 	WRITE_FILE(S["race_bonus"], race_bonus)

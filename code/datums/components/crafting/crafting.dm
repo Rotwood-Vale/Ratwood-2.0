@@ -123,32 +123,48 @@
 
 
 
-/datum/component/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
+/datum/component/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents, mob/feedback_user)
+	var/list/corked_reagents = contents["corked_reagents"]
 	contents = contents["other"]
+	var/list/missing
 	main_loop:
-		for(var/A in R.reqs)
-			var/needed_amount = R.reqs[A]
-			for(var/B in contents)
-				if(ispath(B, A))
-					if(!R.subtype_reqs && (B in subtypesof(A)))
-						continue
-					if (R.blacklist.Find(B))
-						testing("foundinblacklist")
-						continue
-					if(contents[B] >= R.reqs[A])
-						continue main_loop
-					else
-						testing("removecontent")
-						needed_amount -= contents[B]
-						if(needed_amount <= 0)
-							continue main_loop
-						else
-							continue
+		for(var/atom/requirement as anything in R.reqs)
+			var/needed_amount = R.reqs[requirement]
+			for(var/available_type in contents)
+				if(!ispath(available_type, requirement))
+					continue
+				if(!R.subtype_reqs && available_type != requirement)
+					continue
+				if(available_type in R.blacklist)
+					continue
+				needed_amount -= contents[available_type]
+				if(needed_amount <= 0)
+					continue main_loop
+			if(!feedback_user)
+				return FALSE
+			var/units = ispath(requirement, /datum/reagent) ? "u" : ""
+			var/cork_hint = corked_reagent_hint(requirement, corked_reagents, R.subtype_reqs, R.blacklist)
+			LAZYADD(missing, "[needed_amount][units] [initial(requirement.name)][cork_hint]")
+	for(var/datum/reagent/catalyst as anything in R.chem_catalysts)
+		var/needed_amount = R.chem_catalysts[catalyst] - (contents[catalyst] || 0)
+		if(needed_amount <= 0)
+			continue
+		if(!feedback_user)
 			return FALSE
-	for(var/A in R.chem_catalysts)
-		if(contents[A] < R.chem_catalysts[A])
-			return FALSE
+		var/cork_hint = corked_reagent_hint(catalyst, corked_reagents, FALSE)
+		LAZYADD(missing, "[needed_amount]u [initial(catalyst.name)][cork_hint]")
+	if(length(missing))
+		to_chat(feedback_user, span_warning("I need [english_list(missing)] to craft [R.name]."))
+		return FALSE
 	return TRUE
+
+/datum/component/personal_crafting/proc/corked_reagent_hint(requirement, list/corked_reagents, allow_subtypes, list/blacklist)
+	for(var/reagent_type in corked_reagents)
+		if(reagent_type in blacklist)
+			continue
+		if(reagent_type == requirement || (allow_subtypes && ispath(reagent_type, requirement)))
+			return " (uncork a bottle containing it)"
+	return ""
 
 /datum/component/personal_crafting/proc/get_environment(mob/user)
 	. = list()
@@ -175,7 +191,7 @@
 		return FALSE
 	return TRUE
 
-/datum/component/personal_crafting/proc/get_surroundings(mob/user)
+/datum/component/personal_crafting/proc/get_surroundings(mob/user, include_corked = FALSE)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
@@ -199,6 +215,11 @@
 				if(RC.is_drainable())
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
 						.["other"][A.type] += A.volume
+				else if(include_corked && istype(RC, /obj/item/reagent_containers/glass/bottle))
+					var/list/corked_reagents = .["corked_reagents"]
+					for(var/datum/reagent/reagent in RC.reagents?.reagent_list)
+						LAZYOR(corked_reagents, reagent.type)
+					.["corked_reagents"] = corked_reagents
 				if(istype(RC, /obj/item/reagent_containers/glass)) // Only count glass bottles themselves as a valid crafting item if it's empty
 					if(RC.reagents.total_volume == 0)
 						.["other"][I.type] += 1
@@ -292,7 +313,7 @@
 		return
 	if(user.doing)
 		return
-	var/list/contents = get_surroundings(user)
+	var/list/contents = get_surroundings(user, include_corked = TRUE)
 //	var/send_feedback = 1
 	var/turf/T = get_step(user, user.dir)
 	var/obj/N
@@ -347,15 +368,15 @@
 				str = initial(O.name)
 			to_chat(user, span_warning("I'm missing a structure I need: \the <b>[str]</b>"))
 			return
-	if(check_contents(R, contents))
+	if(check_contents(R, contents, user))
 		if(check_tools(user, R, contents))
 			if(R.craftsound)
 				playsound(T, R.craftsound, 100, TRUE)
 			var/time2use = 10
 			for(var/i = 1 to 100)
 				if(do_after(user, time2use, target = user))
-					contents = get_surroundings(user)
-					if(!check_contents(R, contents))
+					contents = get_surroundings(user, include_corked = TRUE)
+					if(!check_contents(R, contents, user))
 						return FALSE
 					if(!check_tools(user, R, contents))
 						return FALSE
