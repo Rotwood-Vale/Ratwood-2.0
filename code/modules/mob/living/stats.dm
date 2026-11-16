@@ -137,107 +137,32 @@
 			if(isseelie(src))
 				STASTR = 1
 				return
-			newamt = STASTR + amt
-			if(BUFSTR < 0)
-				BUFSTR = BUFSTR + amt
-				if(BUFSTR > 0)
-					newamt = STASTR + BUFSTR
-					BUFSTR = 0
-			if(BUFSTR > 0)
-				BUFSTR = BUFSTR + amt
-				if(BUFSTR < 0)
-					newamt = STASTR + BUFSTR
-					BUFSTR = 0
-			while(newamt < 1)
-				newamt++
-				BUFSTR--
-			while(newamt > 20)
-				newamt--
-				BUFSTR++
-			STASTR = newamt
+			newamt = STASTR + BUFSTR + amt
+			STASTR = clamp(newamt, 1, 20)
+			BUFSTR = newamt - STASTR
 
 		if(STATKEY_PER)
-			newamt = STAPER + amt
-			if(BUFPER < 0)
-				BUFPER = BUFPER + amt
-				if(BUFPER > 0)
-					newamt = STAPER + BUFPER
-					BUFPER = 0
-			if(BUFPER > 0)
-				BUFPER = BUFPER + amt
-				if(BUFPER < 0)
-					newamt = STAPER + BUFPER
-					BUFPER = 0
-			while(newamt < 1)
-				newamt++
-				BUFPER--
-			while(newamt > 20)
-				newamt--
-				BUFPER++
-			STAPER = newamt
+			newamt = STAPER + BUFPER + amt
+			STAPER = clamp(newamt, 1, 20)
+			BUFPER = newamt - STAPER
 			see_override = initial(src.see_invisible) + (STAPER/3.25) //PER is far easier to get in Rogueslop 2.0
 			update_sight() //This also fixes a few new bugs that have come and gone.
 			update_fov_angles()
 
 		if(STATKEY_INT)
-			newamt = STAINT + amt
-			if(BUFINT < 0)
-				BUFINT = BUFINT + amt
-				if(BUFINT > 0)
-					newamt = STAINT + BUFINT
-					BUFINT = 0
-			if(BUFINT > 0)
-				BUFINT = BUFINT + amt
-				if(BUFINT < 0)
-					newamt = STAINT + BUFINT
-					BUFINT = 0
-			while(newamt < 1)
-				newamt++
-				BUFINT--
-			while(newamt > 20)
-				newamt--
-				BUFINT++
-			STAINT = newamt
+			newamt = STAINT + BUFINT + amt
+			STAINT = clamp(newamt, 1, 20)
+			BUFINT = newamt - STAINT
 
 		if(STATKEY_CON)
-			newamt = STACON + amt
-			if(BUFCON < 0)
-				BUFCON = BUFCON + amt
-				if(BUFCON > 0)
-					newamt = STACON + BUFCON
-					BUFCON = 0
-			if(BUFCON > 0)
-				BUFCON = BUFCON + amt
-				if(BUFCON < 0)
-					newamt = STACON + BUFCON
-					BUFCON = 0
-			while(newamt < 1)
-				newamt++
-				BUFCON--
-			while(newamt > 20)
-				newamt--
-				BUFCON++
-			STACON = newamt
+			newamt = STACON + BUFCON + amt
+			STACON = clamp(newamt, 1, 20)
+			BUFCON = newamt - STACON
 
 		if(STATKEY_WIL)
-			newamt = STAWIL + amt
-			if(BUFEND < 0)
-				BUFEND = BUFEND + amt
-				if(BUFEND > 0)
-					newamt = STAWIL + BUFEND
-					BUFEND = 0
-			if(BUFEND > 0)
-				BUFEND = BUFEND + amt
-				if(BUFEND < 0)
-					newamt = STAWIL + BUFEND
-					BUFEND = 0
-			while(newamt < 1)
-				newamt++
-				BUFEND--
-			while(newamt > 20)
-				newamt--
-				BUFEND++
-			STAWIL = newamt
+			newamt = STAWIL + BUFEND + amt
+			STAWIL = clamp(newamt, 1, 20)
+			BUFEND = newamt - STAWIL
 
 		if(STATKEY_SPD)
 			// Retain the true total outside display limits, so modifier order is reversible.
@@ -247,24 +172,9 @@
 			update_move_intent_slowdown()
 
 		if(STATKEY_LCK)
-			newamt = STALUC + amt
-			if(BUFLUC < 0)
-				BUFLUC = BUFLUC + amt
-				if(BUFLUC > 0)
-					newamt = STALUC + BUFLUC
-					BUFLUC = 0
-			if(BUFLUC > 0)
-				BUFLUC = BUFLUC + amt
-				if(BUFLUC < 0)
-					newamt = STALUC + BUFLUC
-					BUFLUC = 0
-			while(newamt < 1)
-				newamt++
-				BUFLUC--
-			while(newamt > 20)
-				newamt--
-				BUFLUC++
-			STALUC = newamt
+			newamt = STALUC + BUFLUC + amt
+			STALUC = clamp(newamt, 1, 20)
+			BUFLUC = newamt - STALUC
 
 /// Calculates a luck value in the range [1, 400] (calculated as STALUC^2), then maps the result linearly to the given range
 /// min must be >= 0, max must be <= 100, and min must be <= max

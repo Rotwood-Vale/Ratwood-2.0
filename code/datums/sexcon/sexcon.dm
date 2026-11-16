@@ -1956,6 +1956,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		action.on_perform(user, target)
 		if(session != panel_action_session)
 			return
+		refresh_completed_panel_effects(action)
 		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
@@ -2211,9 +2212,51 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		if(SEX_FORCE_LUDICROUS)
 			return "<span class='love_ludicrous'>[string]</span>"
 
+/// These callbacks run from completed on_perform steps, never from button/start events.
+/// Extend existing effects without reapplying penalties, traits or notification messages.
+/datum/sex_controller/proc/refresh_existing_panel_effect(mob/living/recipient, effect_type, refresh_duration = null)
+	if(!istype(recipient) || QDELETED(recipient) || !ispath(effect_type, /datum/status_effect) || ispath(effect_type, /datum/status_effect/debuff/stuffed))
+		return FALSE
+	if(!istype(user) || QDELETED(user) || !user.client?.prefs?.sexable || !recipient.client?.prefs?.sexable)
+		return FALSE
+	var/datum/status_effect/existing = recipient.has_status_effect(effect_type)
+	if(!istype(existing) || QDELETED(existing) || existing.duration <= world.time)
+		return FALSE
+	if(isnull(refresh_duration))
+		refresh_duration = initial(existing.duration)
+	if(!isnum(refresh_duration) || refresh_duration <= 0)
+		return FALSE
+	existing.duration = max(existing.duration, world.time + refresh_duration)
+	return TRUE
+
+/datum/sex_controller/proc/refresh_completed_panel_effects(datum/sex_action/action)
+	if(!istype(action) || !action.knot_on_finish || QDELETED(user) || QDELETED(target))
+		return
+	// Delivery callbacks can sleep; do not sustain an effect after the pair separates.
+	if(!Adjacent_Or_Closet(target))
+		return
+	var/mob/living/carbon/human/donor
+	var/mob/living/carbon/human/recipient
+	var/receiving_parts = SEX_PART_ANUS | SEX_PART_CUNT | SEX_PART_JAWS
+	if((action.user_sex_part & SEX_PART_COCK) && (action.target_sex_part & receiving_parts))
+		donor = user
+		recipient = target
+	else if((action.target_sex_part & SEX_PART_COCK) && (action.user_sex_part & receiving_parts))
+		donor = target
+		recipient = user
+	if(!istype(recipient) || !istype(donor) || donor == recipient)
+		return
+	refresh_existing_panel_effect(recipient, /datum/status_effect/knot_gaped)
+	var/datum/sex_controller/recipient_controller = recipient.sexcon
+	if(istype(recipient_controller) && recipient_controller.knotted_status == KNOTTED_AS_BTM && recipient_controller.knotted_owner == donor)
+		refresh_existing_panel_effect(recipient, /datum/status_effect/knot_fucked_stupid)
+
 /datum/sex_controller/proc/try_pelvis_crush(mob/living/carbon/human/target)
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
-		if(prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
+		var/refreshed = refresh_existing_panel_effect(target, /datum/status_effect/quivering)
+		if(refreshed)
+			refresh_existing_panel_effect(target, STATUS_EFFECT_OFFBALANCED, 30 SECONDS)
+		if(!refreshed && prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
 			target.apply_status_effect(/datum/status_effect/quivering)
 			target.confused += 25
 			target.OffBalance(30 SECONDS)
@@ -2230,7 +2273,10 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	var/list/excluded = get_extreme_content_excluded_mobs(user)
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force == SEX_FORCE_LUDICROUS)
 		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
-			if(prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
+			var/refreshed = refresh_existing_panel_effect(target, /datum/status_effect/quivering)
+			if(refreshed)
+				refresh_existing_panel_effect(target, STATUS_EFFECT_OFFBALANCED, 30 SECONDS)
+			if(!refreshed && prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
 				target.apply_status_effect(/datum/status_effect/quivering)
 				target.confused += 25
 				target.OffBalance(30 SECONDS)
@@ -2254,7 +2300,12 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 				if(prob(10))
 					var/obj/item/bodypart/mouth = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_MOUTH))
 					mouth.add_wound(/datum/wound/fracture)
-		if(prob(10) && !target.has_status_effect(/datum/status_effect/jaw_gaped) && !target.has_wound(/datum/wound/fracture/mouth))
+		var/refreshed = FALSE
+		if(!target.has_wound(/datum/wound/fracture/mouth))
+			refreshed = refresh_existing_panel_effect(target, /datum/status_effect/jaw_gaped)
+			if(refreshed)
+				refresh_existing_panel_effect(target, /datum/status_effect/debuff/dazed)
+		if(!refreshed && prob(10) && !target.has_status_effect(/datum/status_effect/jaw_gaped) && !target.has_wound(/datum/wound/fracture/mouth))
 			target.apply_status_effect(/datum/status_effect/jaw_gaped)
 			target.apply_status_effect(/datum/status_effect/debuff/dazed)
 

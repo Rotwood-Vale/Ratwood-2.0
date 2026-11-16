@@ -287,17 +287,7 @@
 	for(var/S in old_stats)
 		owner.change_stat(S, -(old_stats[S]))
 
-	for(var/S in effectedstats)
-		if(effectedstats[S] < 0)
-			if((owner.get_stat(S) + effectedstats[S]) < 1)
-				for(var/i in 1 to abs(effectedstats[S]))
-					if((owner.get_stat(S) + (effectedstats[S] + i)) == 1)
-						effectedstats[S] = (effectedstats[S] + i)
-						break
-		else
-			if((owner.get_stat(S) + effectedstats[S]) > 20)
-				effectedstats[S] = 20 - owner.get_stat(S)
-		owner.change_stat(S, effectedstats[S])
+	apply_stat_modifiers()
 
 /datum/status_effect/black_rot/tick()
 	if(world.time >= progression_timer && tier < 4)
