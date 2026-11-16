@@ -18,6 +18,7 @@
 #define ROLE_LICH				"Lich"
 #define ROLE_DREAMWALKER		"Dreamwalker"
 #define ROLE_GNOLL				"Gnoll"
+#define ROLE_DRAGON				"Dragon"
 #define ROLE_ASCENDANT			"Ascendant"
 #define ROLE_WRETCH				"Wretch"
 #define ROLE_UNBOUND_DEATHKNIGHT "Unbound Death Knight"
@@ -68,6 +69,7 @@ GLOBAL_LIST_INIT(special_roles_rogue, list(
 	ROLE_LICH = /datum/antagonist/lich,
 	ROLE_DREAMWALKER = /datum/antagonist/dreamwalker,
 	ROLE_GNOLL = /datum/antagonist/gnoll,
+	ROLE_DRAGON = /datum/antagonist/dragon,
 	ROLE_THIEVESGUILD = /datum/antagonist/thievesguild,
 	ROLE_ASSASSIN = /datum/antagonist/assassin,
 ))

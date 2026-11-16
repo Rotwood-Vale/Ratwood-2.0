@@ -135,6 +135,9 @@
 		if(H.dna?.species?.id == "gnoll")
 			// Gnolls should be built only from gnoll-specific prefs, not base-slot virtue/flaw/race bonus state.
 			H.apply_gnoll_preferences(FALSE)
+		else if(H.dna?.species?.id == "dragon")
+			// Dragons should also be built only from dragon-specific prefs, not base-slot virtue/flaw/race bonus state.
+			H.apply_dragon_preferences(FALSE)
 		else
 			apply_character_post_equipment(H)
 

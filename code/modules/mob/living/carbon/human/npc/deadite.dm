@@ -29,7 +29,7 @@
 	var/obj/item/organ/ears/organ_ears = getorgan(/obj/item/organ/ears)
 	var/list/deadite_firstnames = world.file2list("strings/rt/names/other/deaditenpcfirst.txt")
 	var/list/deadite_lastnames  = world.file2list("strings/rt/names/other/deaditenpclast.txt")
-	
+
 	if(organ_ears)
 		organ_ears.accessory_colors = "#868e79"
 
@@ -112,7 +112,7 @@
 /mob/living/carbon/human/proc/try_do_deadite_bite(mob/living/victim)
 	if(!src || stat >= DEAD)
 		return FALSE
-	
+
 	var/obj/item/grabbing/bite/bite = get_item_by_slot(SLOT_MOUTH)
 	if(istype(bite))
 		// 50% chance to continue biting if already started
@@ -174,6 +174,8 @@
 	if(mind.has_antag_datum(/datum/antagonist/werewolf))
 		return
 	if(mind.has_antag_datum(/datum/antagonist/gnoll))
+		return
+	if(mind.has_antag_datum(/datum/antagonist/dragon))
 		return
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
 		return

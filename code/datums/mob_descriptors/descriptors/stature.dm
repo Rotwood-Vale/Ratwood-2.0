@@ -342,6 +342,13 @@
 /datum/mob_descriptor/stature/gnoll/get_description(mob/living/described)
 	return "gnoll"
 
+// Dragon stature — always returns "dragon" regardless of pronouns
+/datum/mob_descriptor/stature/dragon
+	name = "Dragon"
+
+/datum/mob_descriptor/stature/dragon/get_description(mob/living/described)
+	return "dragon"
+
 /datum/mob_descriptor/stature/widower/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)

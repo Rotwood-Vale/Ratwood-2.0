@@ -131,6 +131,9 @@
 			if(istype(user.dna.species, /datum/species/gnoll))
 				if(prob(30))
 					user.gnoll_feed(bite_victim, 10)
+			if(istype(user.dna.species, /datum/species/dragon))
+				if(prob(30))
+					user.dragon_feed(bite_victim, 30)
 			/*
 				ZOMBIE INFECTION VIA BITE
 			*/

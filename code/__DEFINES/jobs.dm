@@ -209,6 +209,7 @@
 #define VAMPIRE_GUARD (1<<5)
 #define VAMPIRE_SPAWN (1<<6)
 #define GNOLL		  (1<<7)
+#define DRAGON		  (1<<8)
 
 #define INQUISITION (1<<10)
 
@@ -329,6 +330,7 @@
 #define JDO_ASSASSIN 30.6
 #define JDO_TRADER 30.7
 #define JDO_SEELIE 30.8
+#define JDO_DRAGON 30.9
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
