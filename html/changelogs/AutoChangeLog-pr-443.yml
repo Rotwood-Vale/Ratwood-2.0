@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Fixed Character Sheet sprites drifting when other players preview characters of a different species and size."
