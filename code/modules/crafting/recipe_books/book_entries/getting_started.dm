@@ -154,3 +154,20 @@
 		</ul>
 		<p>Always ask questions in LOOC, it’s your best tool for learning!</p>
 	"}
+
+/datum/book_entry/getting_started/canonicity
+	name = "10. Setting Canonicity"
+
+/datum/book_entry/getting_started/canonicity/inner_book_html(mob/user)
+	return {"
+		<p>These are the expectations for roleplaying within the setting and deciding what carries over between rounds.</p>
+		<ul>
+		<li><p><strong>Rounds are weeks.</strong> Each full round is referred to as a week. When talking about the previous round in character, call it &#39;last week&#39;.</p></li>
+		<li><p><strong>The Duke has always been the Duke.</strong> Whoever holds the title this week has always held it. There is not canonically a different Duke every week.</p></li>
+		<li><p><strong>Dungeons do not regenerate.</strong> Treat each dungeon run as the discovery of a new dungeon, rather than the same dungeon regenerating every week.</p></li>
+		<li><p><strong>Personal canon is a choice.</strong> You choose which events are canon for your character. Other players make that choice for their own characters.</p></li>
+		<li><p><strong>Past crimes do not carry over by default.</strong> Crimes from previous weeks never happened, and the criminals were never caught, unless the criminal&#39;s player chooses otherwise.</p></li>
+		<li><p><strong>PvP outcomes require agreement.</strong> The results of player-versus-player conflict are canon only as agreed by both parties.</p></li>
+		<li><p><strong>Other characters have always held their current roles.</strong> If someone was an adventurer last round but is the Guildmaster this round, treat them as having always been the Guildmaster.</p></li>
+		</ul>
+	"}
