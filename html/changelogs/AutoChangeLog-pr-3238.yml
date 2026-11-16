@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "being unable to resist out of graves"
+  - bugfix: "aheals removing vamp eyes"
