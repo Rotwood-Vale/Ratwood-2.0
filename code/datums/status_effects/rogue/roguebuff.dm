@@ -366,7 +366,7 @@
 /datum/status_effect/buff/cum_consumed
 	id = "cum_consumed"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/cum_consumed
-	duration = 10 MINUTES
+	duration = 15 MINUTES
 
 /datum/status_effect/buff/cum_consumed/on_apply()
 	. = ..()

@@ -555,7 +555,7 @@
 
 /datum/status_effect/knot_fucked_stupid
 	id = "knot_fucked_stupid"
-	duration = 2 MINUTES
+	duration = 15 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/knot_fucked_stupid
 	effectedstats = list("intelligence" = -10)
@@ -567,7 +567,7 @@
 
 /datum/status_effect/knot_gaped
 	id = "knot_gaped"
-	duration = 60 SECONDS
+	duration = 15 MINUTES
 	tick_interval = 100 // every 10 seconds
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/knot_gaped
@@ -581,7 +581,18 @@
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head) // only apply this effect if a head is found
 			owner.apply_status_effect(/datum/status_effect/jaw_gaped)
+	. = ..()
+	if(.)
+		RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(washed))
+
+/datum/status_effect/knot_gaped/on_remove()
+	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
 	return ..()
+
+/datum/status_effect/knot_gaped/proc/washed(datum/source, strength)
+	SIGNAL_HANDLER
+	if(strength >= CLEAN_WEAK && !QDELETED(owner))
+		owner.remove_status_effect(src)
 
 /datum/status_effect/knot_gaped/tick()
 	var/cur_loc = get_turf(owner)
@@ -631,7 +642,7 @@
 
 /datum/status_effect/jaw_gaped
 	id = "jaw_gaped"
-	duration = 30 SECONDS
+	duration = 15 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
 	tick_interval = -1
 	alert_type = null
