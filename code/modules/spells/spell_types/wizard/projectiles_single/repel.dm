@@ -48,13 +48,15 @@
 
 /obj/projectile/magic/repel/on_hit(target)
 
+	if(QDELETED(firer) || !isturf(get_turf(firer)))
+		return BULLET_ACT_BLOCK
 	var/atom/throw_target = get_edge_target_turf(firer, get_dir(firer, target)) //ill be real I got no idea why this worked.
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check() || !firer)
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
-		L.throw_at(throw_target, 7, 4)
+		L.throw_at(throw_target, 7, 4, preserve_pull = isliving(firer) ? firer : null)
 		new /datum/magic_throw_slip_watcher(L)
 	else
 		if(isitem(target))

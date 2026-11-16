@@ -54,8 +54,9 @@
 
 	var/new_lessershift_type = show_radial_menu(user, user, choices)
 
-	if(!new_lessershift_type)
-		revert_cast()
+	if(!new_lessershift_type || !arcane_speech_allowed(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
 		return FALSE
 
 	user.Stun(30)

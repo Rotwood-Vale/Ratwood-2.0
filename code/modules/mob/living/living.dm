@@ -2251,9 +2251,11 @@
 /mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage the weapon does.
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, extra = FALSE, jumping = FALSE)
-	stop_pulling()
-	. = ..()
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, extra = FALSE, jumping = FALSE, mob/living/preserve_pull = null)
+	// Spell knockback may carry its caster along using ordinary collision-aware pulling.
+	if(!preserve_pull || QDELETED(preserve_pull) || preserve_pull == src || pulling != preserve_pull || preserve_pull.pulledby != src)
+		stop_pulling()
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, extra, jumping)
 
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted

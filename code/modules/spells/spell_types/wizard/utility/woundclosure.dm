@@ -46,7 +46,7 @@
 				to_chat(user, span_warning("We cannot seal wounds with objects inside this limb!"))
 				revert_cast()
 				return FALSE
-		if(!do_after(user, (delay - (0.5 SECONDS * HU.get_skill_level(associated_skill)))))
+		if(!do_after(user, (delay - (0.5 SECONDS * HU.get_skill_level(associated_skill))), extra_checks = CALLBACK(src, PROC_REF(arcane_speech_allowed), HU)))
 			revert_cast()
 			to_chat(user, span_warning("We were interrupted!"))
 			return FALSE

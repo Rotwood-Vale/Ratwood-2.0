@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/shadowstep
 	name = "Shadowstep"
+	blocked_while_grabbed = TRUE
 	desc = "Project your shadow to swap places with it, teleporting several feet away."
 	cost = 3
 	xp_gain = TRUE
@@ -72,6 +73,11 @@
 
 //Successful teleport, complete reset.
 /obj/effect/proc_holder/spell/invoked/shadowstep/proc/tp(mob/user)
+	if(!arcane_channel_allowed(user))
+		reset(silent = TRUE)
+		if(!QDELETED(user))
+			revert_cast(user)
+		return FALSE
 	if(destination_turf)
 		if(do_teleport(user, destination_turf, no_effects=TRUE))
 			log_admin("[user.real_name]([key_name(user)] Shadowstepped from X:[user_turf.x] Y:[user_turf.y] Z:[user_turf.z] to X:[destination_turf.x] Y:[destination_turf.y] Z:[destination_turf.z] in area: [get_area(destination_turf)]")
@@ -84,6 +90,10 @@
 			reset(silent = TRUE)
 
 /obj/effect/proc_holder/spell/invoked/shadowstep/cast(list/targets, mob/user)
+	if(grab_blocks_cast(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
+		return FALSE
 	var/turf/T = get_turf(targets[1])
 	if(!istransparentturf(T))
 		var/reason
@@ -108,11 +118,12 @@
 
 				to_chat(user, span_info("I begin to meld with the shadows.."))
 				lockon(T, user)
-				if(do_after(user, 5 SECONDS))
+				if(do_after(user, 5 SECONDS, extra_checks = CALLBACK(src, PROC_REF(arcane_channel_allowed), user)))
 					tp(user)
 				else
 					reset(silent = TRUE)
-					revert_cast()
+					if(!QDELETED(user))
+						revert_cast(user)
 				return
 			else
 				to_chat(user, span_info("The path is blocked!"))

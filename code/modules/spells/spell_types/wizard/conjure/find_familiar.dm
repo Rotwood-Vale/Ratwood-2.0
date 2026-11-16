@@ -49,6 +49,11 @@
 		if (fam.familiar_summoner == user)
 			if(fam.health <= 0)
 				var/choice = input(user, "Your familiar is dead. What do you want to do?") as null|anything in list("Revive with magic stone", "Free them")
+				if(!arcane_speech_allowed(user, TRUE))
+					if(!QDELETED(user))
+						user.busy_summoning_familiar = FALSE
+						revert_cast(user)
+					return FALSE
 				if(choice == "Revive with magic stone")
 					to_chat(user, span_notice("You will need a magical stone in your active hand to attempt resurrection."))
 					var/obj/item/natural/stone/magic_stone = user.get_active_held_item()
@@ -76,6 +81,11 @@
 					return FALSE
 			else
 				var/choice = input(user, "You already have a familiar. Do you want to free them?") as null|anything in list("Yes", "No")
+				if(!arcane_speech_allowed(user, TRUE))
+					if(!QDELETED(user))
+						user.busy_summoning_familiar = FALSE
+						revert_cast(user)
+					return FALSE
 				if (choice != "Yes")
 					user.busy_summoning_familiar = FALSE
 					revert_cast()
@@ -160,6 +170,11 @@
 
 			switch(askuser(target.mob, "[user.real_name] is trying to summon you as a familiar. Do you accept?", "Please answer in [DisplayTimeText(200)]!", "Yes", "No", StealFocus=0, Timeout=200))
 				if(1)
+					if(!arcane_speech_allowed(user, TRUE))
+						if(!QDELETED(user))
+							user.busy_summoning_familiar = FALSE
+							revert_cast(user)
+						return FALSE
 					to_chat(target.mob, span_notice("You are [user.real_name]'s magical familiar, you are magically contracted to help them, yet you still have a self preservation instinct."))
 					GLOB.familiar_queue -= target
 					spawn_familiar_for_player(target.mob, user)
@@ -183,6 +198,11 @@
 	if(path_choice == "Summon a non-sentient familiar")
 		// Non-sentient familiar summoning
 		var/familiarchoice = input("Choose your familiar", "Available familiars") as anything in familiars
+		if(!arcane_speech_allowed(user, TRUE))
+			if(!QDELETED(user))
+				user.busy_summoning_familiar = FALSE
+				revert_cast(user)
+			return FALSE
 		var/mob/living/simple_animal/pet/familiar/familiar_type = familiars[familiarchoice]
 		var/mob/living/simple_animal/pet/familiar/fam = new familiar_type(spawn_turf)
 		fam.familiar_summoner = user
@@ -359,6 +379,10 @@
 		to_chat(user, "You cannot sense your familiar's mind.")
 		return
 	var/message = input(user, "You make a connection. What are you trying to say?")
+	if(!arcane_speech_allowed(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
+		return FALSE
 	if(!message)
 		revert_cast()
 		return

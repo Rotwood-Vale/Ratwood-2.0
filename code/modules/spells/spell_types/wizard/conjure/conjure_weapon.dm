@@ -69,6 +69,10 @@
 	if(user.STAINT >= 12)
 		weapons = steel_weapons
 	var/weapon_choice = input(user, "Choose a weapon", "Conjure Weapon") as anything in weapons
+	if(!arcane_speech_allowed(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
+		return FALSE
 	if(!weapon_choice)
 		return
 	dispel_conjured_item()
