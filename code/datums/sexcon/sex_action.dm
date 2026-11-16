@@ -79,7 +79,7 @@
 		chest?.add_wound(/datum/wound/fracture/chest)
 		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
 		groin?.add_wound(/datum/wound/fracture/groin)
-	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && user.sexcon.force > SEX_FORCE_MID)
 		target.apply_damage(30, BRUTE, chest)
 
 /datum/sex_action/proc/user_knows_required_spell(mob/living/carbon/human/user)
