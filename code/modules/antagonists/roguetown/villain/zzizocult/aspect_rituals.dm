@@ -702,6 +702,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		GLOB.zizo_researchable |= /datum/ritual/fleshcrafting/ascend
 		for(var/obj/item/clothing/cloak/cultrobe/robe as anything in GLOB.cult_robes)
 			robe.empower()
+		for(var/datum/mind/M in SSmapping.retainer.cultists)
+			var/datum/antagonist/zizocultist/Z = M.has_antag_datum(/datum/antagonist/zizocultist)
+			Z?.add_halo()
 
 	if(gate_count > 0)
 		reroll_gate_targets(gate_count)

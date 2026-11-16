@@ -18,6 +18,7 @@
 	var/start_budget = 20
 	var/start_points = 0
 	var/change_stats = TRUE
+	var/mutable_appearance/halo
 	var/list/innate_traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_CABAL,
@@ -84,10 +85,17 @@
 	owner.zizo_points += start_points
 	new /datum/antag_setup(owner.current, start_budget)
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
+	if(/datum/ritual/fleshcrafting/ascend in GLOB.zizo_researchable)
+		add_halo()
 	greet()
+
+/datum/antagonist/zizocultist/proc/add_halo()
+	halo = mutable_appearance('icons/roguetown/cult/halo.dmi', "halo1", ABOVE_ALL_MOB_LAYER)
+	owner.current.add_overlay(halo)
 
 /datum/antagonist/zizocultist/on_removal()
 	SSmapping.retainer.cultists -= owner
+	owner.current?.cut_overlay(halo)
 	remove_own_antag_hud()
 	var/mob/living/carbon/human/H = owner?.current
 	if(istype(H))
