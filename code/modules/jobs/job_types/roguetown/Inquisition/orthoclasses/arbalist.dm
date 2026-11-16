@@ -81,7 +81,7 @@
 	switch(ranged_choice)
 		if("Arbalest")
 			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/stakebelt, SLOT_BELT, TRUE)//Because your 'crossbow' FUCKS.
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/heavybolts, SLOT_BELT_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest, SLOT_IN_BACKPACK, TRUE)//You get ONE.
@@ -96,7 +96,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)// To parry with the Rifle
 			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/entropy_sphere_belt, SLOT_BELT, TRUE) // stakes < concept of entropy
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/arbalist, SLOT_BELT_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/arbalist/mark, SLOT_IN_BACKPACK, TRUE)//You get ONE.
