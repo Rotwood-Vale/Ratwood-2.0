@@ -266,12 +266,13 @@ const BlockadePosting = () => {
   const canAfford = data.balance >= cost;
 
   return (
-    <div className="ContractLedger__Card" style={{ marginTop: 12 }}>
+    <div className="ContractLedger__Card" style={{ width: 300, marginTop: 12 }}>
       <strong>Blockade Defense</strong>
       <p>Draft a writ to hand to a bearer or pin to the Contract Ledger.</p>
       <select
         aria-label="Blockaded region"
         className="ContractLedger__InnkeeperSelect"
+        style={{ display: 'block', width: '100%', boxSizing: 'border-box' }}
         disabled={!options.length}
         value={selectedRegion}
         onChange={(event) => setRegion(event.target.value)}

@@ -22,12 +22,13 @@
 		out += initial(A.name)
 	return out
 
+/obj/structure/roguemachine/contractledger/proc/can_compose_rumors(mob/user)
+	return ishuman(user) && ((user.job in GLOB.tavern_positions) || user.job == "Towner")
+
 /obj/structure/roguemachine/contractledger/proc/compose_rumor_from_tgui(mob/user, list/params)
-	if(!ishuman(user))
+	if(!can_compose_rumors(user))
 		return
 	var/mob/living/carbon/human/innkeeper = user
-	if(!(innkeeper.job in GLOB.tavern_positions))
-		return
 	if(!innkeeper.Adjacent(src))
 		return
 

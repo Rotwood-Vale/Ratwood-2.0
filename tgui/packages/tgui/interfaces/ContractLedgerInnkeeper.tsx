@@ -296,7 +296,7 @@ const ComposeView = () => {
             value="board"
             selected={mode}
             onChange={setMode}
-            label="Post on public board"
+            label="Post as a standing contract"
           />
           <ModeRadio
             value="hands"
@@ -315,8 +315,7 @@ const ComposeView = () => {
             onChange={(e) => setLucrative(e.target.checked)}
           />
           &nbsp;Spend {pts(Math.round(baseCost * lucrativeMult))} instead of{' '}
-          {pts(baseCost)} for a x{lucrativeMult} reward. Your referral cut grows
-          with the payout.
+          {pts(baseCost)} for a x{lucrativeMult} reward.
         </label>
       </FormRow>
 

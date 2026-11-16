@@ -43,7 +43,7 @@
 	. += span_info("Heads taken from <b>contract targets</b> carry no bounty - the contract's reward is payment in full. Beasts and brigands you hunt outside a contract still fetch coin at a HEADEATER.")
 	. += span_info("A <b>Fellowship of [BLOCKADE_FELLOWSHIP_REQUIREMENT] or more</b> may pledge <b>[HOARD_RECOVERY_PLEDGE] mammons</b> to call a <b>Hoard Recovery</b> for an unblocked region with at least <b>[HOARD_RECOVERY_HOARD_MINIMUM] mammons</b> in its hoard. It pays the standard blockade reward and reclaims the hoard, subject to the Crown's Recovered Spoils tax.")
 	. += span_info("A <b>Notorious Bounty</b> may be controlled by a ghost playing the outlaw. Its reward rises by <b>[NOTORIOUS_BOUNTY_PLAYER_BONUS] mammons</b> if a ghost answers, or by <b>[NOTORIOUS_BOUNTY_NPC_BONUS] mammons</b> otherwise.")
-	. += span_info("The <b>Innkeeper</b> may compose rumor contracts here, spending Rumor Points to seed retrieval, courier, and light kill jobs across the realm.")
+	. += span_info("<b>Innkeepers and Towners</b> may spend Rumor Points to draft rumors or post them as standing contracts.")
 	. += span_info("The <b>[english_list(GLOB.crown_authority_roles)]</b> may commission defense writs here - paid from the Burgher Pledge, the Crown's Purse, or issued as an unfunded Request. The Steward is the primary commissioner; the others substitute if the Steward is absent. A Regent sitting in the Lord's absence inherits commission authority for the duration of their regency.")
 	. += span_info("<b>Townsfolk</b> may post contracts of their own using their own coin. It can be pinned to the board or handed over in person. The <b>[english_list(GLOB.crown_authority_roles)]</b> may commission any of them, but it will draw from the Crown's Purse at double the price. Only the poster may open what is recovered.")
 	. += span_info("Your <b>fellowship</b> may turn in contracts you hold on your behalf, should you fall in battle. The reward and levy is credited to the one who turns it in, using their tax exempt status, if any.")
@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(contract_proxy_officials, list(
 
 /obj/structure/roguemachine/contractledger/proc/resolve_dynamic_roles(mob/user)
 	var/list/roles = list()
-	if(user?.job in GLOB.tavern_positions)
+	if(can_compose_rumors(user))
 		roles += "innkeeper"
 	if(can_commission(user))
 		roles += "steward"
