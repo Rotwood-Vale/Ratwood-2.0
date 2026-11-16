@@ -299,7 +299,7 @@
 	if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!! Kind of redoundant here since this is absolver special and he alwys has it, but futureprofing
 		user.visible_message(span_warning("[user] shuddered but they eyes flash silver and they keep on going."), span_userdanger("Cold shoots through my spine and dark laughs resounds, but i focus on my lux and ENDURE."))
 		zcross_trigger = FALSE
-	
+
 	if(zcross_trigger)
 		user.visible_message(span_warning("[user] shuddered. Something's very wrong."), span_userdanger("Cold shoots through my spine. Something laughs at me for trying."))
 		user.playsound_local(user, 'sound/misc/zizo.ogg', 25, FALSE)
@@ -319,7 +319,7 @@
 		cast(user)
 		return TRUE
 	else
-		to_chat(H, span_warning("I lose my focus and control over my lux escapes me."))  
+		to_chat(H, span_warning("I lose my focus and control over my lux escapes me."))
 		return FALSE
 
 
@@ -340,7 +340,7 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	recharge_time = 30 SECONDS 
+	recharge_time = 30 SECONDS
 	miracle = TRUE
 	devotion_cost = 80
 
@@ -368,7 +368,7 @@
 			return FALSE
 		to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))
 		// Dramatic effect
-		user.visible_message(span_danger("[user] grabs [H] by the wrists, silvery lux thread pouring from their hands!"))  
+		user.visible_message(span_danger("[user] grabs [H] by the wrists, silvery lux thread pouring from their hands!"))
 
 		if(alert(H, "They want to ABSOLVE you. Will you let them?", "ABSOLUTION", "I'll allow it", "I refuse") != "I'll allow it")
 			H.visible_message(span_notice("Nothing happens."))
@@ -377,7 +377,12 @@
 		H.apply_status_effect(/datum/status_effect/buff/psyvived)
 		// Kill the caster
 		user.say("MY LYFE FOR YOURS! LYVE, AS DOES HE!", forced = TRUE)
-		user.death()
+		// nu uh, immortality won't save you here
+		var/datum/component/vampire_torpor/caster_torpor = user.GetComponent(/datum/component/vampire_torpor)
+		if(caster_torpor)
+			caster_torpor.die_for_good(ash = TRUE)
+		else
+			user.death()
 		// Revive the target
 		H.revive(full_heal = TRUE, admin_revive = FALSE)
 		H.adjustOxyLoss(-H.getOxyLoss())
@@ -389,7 +394,7 @@
 		ADD_TRAIT(H, TRAIT_IWASREVIVED, "[type]")
 		H.apply_status_effect(/datum/status_effect/buff/psyvived)
 		user.apply_status_effect(/datum/status_effect/buff/psyvived)
-		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void, covered in inert silver threads."))  
+		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void, covered in inert silver threads."))
 		H.mind.remove_antag_datum(/datum/antagonist/zombie)
 		H.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
 		H.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
@@ -433,12 +438,12 @@
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
 		to_chat(user, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
 	else
-		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm  
+		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm
 		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns lighten."))
 	return TRUE
 
 // Weaker absolve for the Stigmata adventurer
-/obj/effect/proc_holder/spell/invoked/psydonamend	
+/obj/effect/proc_holder/spell/invoked/psydonamend
 	name = "AMEND"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
@@ -455,7 +460,7 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	recharge_time = 30 SECONDS 
+	recharge_time = 30 SECONDS
 	miracle = TRUE
 	devotion_cost = 80
 
@@ -465,18 +470,18 @@
 		to_chat(user, span_warning("AMENDMENT is for those who walk in HIS image!"))
 		revert_cast()
 		return FALSE
-	
+
 	var/mob/living/carbon/human/H = targets[1]
-	
+
 	if(H == user)
 		to_chat(user, span_warning("You cannot AMEND yourself!"))
 		revert_cast()
 		return FALSE
 
 	// THE LESSER ART OF AMENDMENT CANNOT RETURN THE DEAD.
-	
+
 	// Transfer afflictions from the target to the caster
-	
+
 	// Transfer damage
 	var/brute_transfer = H.getBruteLoss()
 	var/burn_transfer = H.getFireLoss()
@@ -488,14 +493,14 @@
 		if (alert(user, "THEY ARE ASHEN WITH STILLED BREATH. AMENDMENT MAY INSTANTLY KILL YOU, STIGMATA. PROCEED?", "SELF-PRESERVATION", "YES", "NO") != "YES")
 			revert_cast()
 			return
-	
+
 	// Heal the target
 	H.adjustBruteLoss(-brute_transfer)
 	H.adjustFireLoss(-burn_transfer)
 	H.adjustToxLoss(-tox_transfer)
 	H.adjustOxyLoss(-oxy_transfer)
 	H.adjustCloneLoss(-clone_transfer)
-	
+
 	// Apply damage to the caster
 	user.adjustBruteLoss(brute_transfer)
 	user.adjustFireLoss(burn_transfer)
@@ -505,14 +510,14 @@
 
 	// Visual effects
 	user.visible_message(span_danger("Silvery thread of lux shoots from [user] and hits [H] AMENDING their suffering!"))
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
 
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
-	
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717")
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717")
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717")
+
 	// Notify the user and target
 	to_chat(user, span_warning("You pull on [H]'s lux, AMENDING their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
@@ -520,5 +525,5 @@
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // someone just torn away something from your lux, that isn't calm
 		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burdens lighten."))
-	
+
 	return TRUE
