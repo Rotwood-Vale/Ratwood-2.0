@@ -206,10 +206,9 @@
 	if(istype(O, /obj/effect/decal/cleanable))
 		var/cleanme = TRUE
 		if(istype(O, /obj/effect/decal/cleanable/blood))
-			var/obj/effect/decal/cleanable/blood/wiped_blood = O
 			if(!wet)
 				cleanme = FALSE
-			add_blood_DNA(wiped_blood.return_blood_DNA(), wiped_blood.blood_color)
+			add_blood_DNA(O.return_blood_DNA())
 		if(prob(33 + (wet*10)) && cleanme)
 			wet = max(wet-1, 0)
 			user.visible_message(span_info("[user] wipes \the [O.name] with [src]."), span_info("I wipe \the [O.name] with [src]."))
@@ -220,7 +219,7 @@
 			user.visible_message(span_info("[user] wipes \the [O.name] with [src]."), span_info("I wipe \the [O.name] with [src]."))
 
 			if(O.return_blood_DNA())
-				add_blood_DNA(O.return_blood_DNA(), O.get_stored_blood_color())
+				add_blood_DNA(O.return_blood_DNA())
 			for(var/obj/effect/decal/cleanable/C in O)
 				qdel(C)
 			if(!wet)
@@ -358,9 +357,8 @@
 			prob2break = 0
 		if(L.m_intent == MOVE_INTENT_RUN)
 			prob2break = 100
-		if(prob(prob2break))
-			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) || (HAS_TRAIT(L, TRAIT_WOODWALKER)) && L.m_intent != MOVE_INTENT_RUN))
-				playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
+		if(prob(prob2break) && !L.treads_lightly())
+			playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
 			qdel(src)
 			if (L.alpha == 0 && L.rogue_sneaking) // not anymore you're not
 				L.update_sneak_invis(TRUE)

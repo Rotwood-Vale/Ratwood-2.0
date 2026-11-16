@@ -15,6 +15,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/toggle_aghost_invis,
 	/client/proc/set_admin_ghost_image,
 	/client/proc/clear_admin_ghost_image,
+	/client/proc/set_admin_ghost_name,
 	/client/proc/admin_ghost,
 	/client/proc/admin_move_oasis,
 	/datum/admins/proc/start_vote,
@@ -68,6 +69,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/reload_whitelist,
 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/view_forensics,		/*right-click list of who opened, locked, picked or broke an object*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds,
 	/client/proc/mark_datum_mapview,
@@ -86,6 +88,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_aghost_invis, /* lets us choose whether our in-game mob goes visible when we aghost (off by default) */
 	/client/proc/set_admin_ghost_image,
 	/client/proc/clear_admin_ghost_image,
+	/client/proc/set_admin_ghost_name,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/hearallasghost,
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
@@ -124,6 +127,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/wake_view,
 	/datum/admins/proc/extend_round,
 	/client/proc/open_fax_panel,
+	/client/proc/disconnected_players_panel,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(
 	/client/proc/unban_panel,
@@ -459,6 +463,30 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	prefs.save_preferences()
 	apply_admin_ghost_image()
 	to_chat(src, span_notice("Admin ghost image cleared."))
+
+/client/proc/set_admin_ghost_name()
+	set category = "-Admin-"
+	set name = "set ghost name"
+	if(!holder || !prefs)
+		return
+	var/new_name = input(src, "Choose the name your admin ghost takes instead of your character's. Leave it blank to keep your character's name.", "Set Ghost Name", prefs.admin_ghost_name) as text|null
+	if(isnull(new_name))
+		return
+	new_name = trim(new_name)
+	if(new_name)
+		new_name = reject_bad_name(new_name, allow_numbers = TRUE)
+		if(!new_name)
+			to_chat(src, span_warning("That name isn't allowed. Use at most [MAX_NAME_LEN] letters, numbers, spaces and simple punctuation."))
+			return
+	prefs.admin_ghost_name = new_name || null
+	prefs.save_preferences()
+	var/mob/dead/observer/admin/admin_ghost = mob
+	if(istype(admin_ghost))
+		admin_ghost.apply_admin_ghost_name()
+	if(new_name)
+		to_chat(src, span_notice("Your admin ghost will now be named [new_name]."))
+	else
+		to_chat(src, span_notice("Your admin ghost will now keep your character's name."))
 
 /client/proc/apply_admin_ghost_image()
 	var/mob/dead/observer/admin_ghost = mob

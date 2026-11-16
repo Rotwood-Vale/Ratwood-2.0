@@ -230,7 +230,7 @@
 		living_movable.adjustFireLoss(25)
 		return
 	if (istype(src,/turf/open/water/bloody))
-		living_movable.add_mob_blood(living_movable, BLOOD_COLOR_DEFAULT)
+		living_movable.add_mob_blood(living_movable)
 	if(!(living_movable.movement_type & FLYING) && !HAS_TRAIT(living_movable, TRAIT_ON_BOAT))
 		if(!(living_movable.mobility_flags & MOBILITY_STAND) || water_level == 3)
 			living_movable.SoakMob(FULL_BODY)
@@ -316,7 +316,7 @@
 				if(istype(src,/turf/open/water/sewer) || istype(src,/turf/open/water/swamp) || istype(src, /turf/open/water/sewer))
 					if (istype(src, /turf/open/water/sewer))
 						user.add_stress(/datum/stressevent/sewertouched)
-					if (!HAS_TRAIT(L,TRAIT_LEECHIMMUNE)) // cleaning yourself in nasty water is a wonderful way to get leeches.
+					if (!HAS_TRAIT(L,TRAIT_LEECHIMMUNE) && !HAS_TRAIT(L,TRAIT_BOGWALKER)) // cleaning yourself in nasty water is a wonderful way to get leeches.
 						if (prob(20)) // 1 in 5 chance of getting leeched if you wash up in gross water.
 							var/list/zones = list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_PRECISE_NECK, BODY_ZONE_HEAD)
 							var/zone = pick(zones)
@@ -329,7 +329,7 @@
 					water_color = "#a4955b"
 					update_icon()*/
 				if (istype(src,/turf/open/water/bloody))
-					L.add_mob_blood(L, BLOOD_COLOR_DEFAULT)
+					L.add_mob_blood(L) //Yes its their own DNA
 
 		else
 			user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
@@ -338,7 +338,7 @@
 					wash_atom(item2wash, CLEAN_STRONG)
 					L.update_inv_hands()
 				if(istype(src,/turf/open/water/bloody))
-					item2wash.add_blood_DNA(list("Blood" = random_blood_type()), BLOOD_COLOR_DEFAULT)
+					item2wash.add_blood_DNA(list("Blood" = random_blood_type()))
 				if(iscarbon(L))
 					var/mob/living/carbon/C = user
 					C.update_inv_hands()
@@ -508,7 +508,7 @@
 
 /turf/open/water/swamp/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
-	if(HAS_TRAIT(AM, TRAIT_LEECHIMMUNE))
+	if(HAS_TRAIT(AM, TRAIT_LEECHIMMUNE) || HAS_TRAIT(AM, TRAIT_BOGWALKER))
 		return
 	if(isliving(AM) && !AM.throwing)
 		if(ishuman(AM))
@@ -548,7 +548,7 @@
 
 /turf/open/water/swamp/deep/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
-	if(HAS_TRAIT(AM, TRAIT_LEECHIMMUNE))
+	if(HAS_TRAIT(AM, TRAIT_LEECHIMMUNE) || HAS_TRAIT(AM, TRAIT_BOGWALKER))
 		return
 	if(isliving(AM) && !AM.throwing)
 		if(ishuman(AM))

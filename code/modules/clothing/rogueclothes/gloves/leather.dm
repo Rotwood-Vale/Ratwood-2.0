@@ -131,3 +131,52 @@
 	body_parts_covered = HANDS|ARMS
 	// sleeved = FALSE
 	color = null
+
+/obj/item/clothing/gloves/roguetown/fingerless/shadowgloves/spymaster
+	name = "hand's gloves"
+	desc = "Supple silk, cut at the fingertips to ensure absolute precision."
+	icon_state = "handgloves"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/gloves.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/gloves.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/gloves.dmi'
+
+/obj/item/clothing/gloves/roguetown/rosa
+	name = "ivory gloves"
+	desc = "Finely crafted gloves of silk and leather."
+	icon_state = "rosagloves1"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/rosewood.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+	salvage_result = /obj/item/natural/hide/cured
+
+/obj/item/clothing/gloves/roguetown/rosa/eight
+	name = "courtly gloves"
+	icon_state = "rosagloves8"
+
+/obj/item/clothing/gloves/roguetown/rosa/five
+	name = "sable gloves"
+	icon_state = "rosagloves5"
+
+/obj/item/clothing/gloves/roguetown/rosa/four
+	name = "obsidian gloves"
+	icon_state = "rosagloves4"
+
+/obj/item/clothing/gloves/roguetown/rosa/nine
+	name = "royal gloves"
+	icon_state = "rosagloves9"
+
+/obj/item/clothing/gloves/roguetown/rosa/seven
+	name = "regal gloves"
+	icon_state = "rosagloves7"
+
+/obj/item/clothing/gloves/roguetown/rosa/six
+	name = "maroon gloves"
+	icon_state = "rosagloves6"
+
+/obj/item/clothing/gloves/roguetown/rosa/ten
+	name = "stately gloves"
+	icon_state = "rosagloves10"
+
+/obj/item/clothing/gloves/roguetown/rosa/three
+	name = "silvered gloves"
+	icon_state = "rosagloves3"

@@ -156,7 +156,7 @@
 			seg.icon_state = "obeliskbeam_end"
 
 		for(var/obj/structure/S in T)
-			S.take_damage(damage, BRUTE, "blunt", FALSE)
+			S.take_damage_from(caster, damage, BRUTE, "blunt", FALSE, cause = "with [spell_name]")
 
 		for(var/mob/living/L in T.contents)
 			if(L in struck)

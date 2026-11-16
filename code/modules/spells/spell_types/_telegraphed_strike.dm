@@ -282,7 +282,7 @@
 	var/dmg = structure_damage ? structure_damage : damage
 	var/hit_any = FALSE
 	for(var/obj/structure/S in T)
-		S.take_damage(dmg, BRUTE, "blunt", TRUE)
+		S.take_damage_from(owner, dmg, BRUTE, "blunt", TRUE, cause = "with [name]")
 		hit_any = TRUE
 	if(hit_any)
 		if(spell_impact_intensity != SPELL_IMPACT_NONE)
