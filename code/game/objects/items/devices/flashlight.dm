@@ -445,14 +445,15 @@
 			A.fire_act(3,3)
 
 /obj/item/flashlight/flare/torch/lantern/process()
+	if(!on)
+		return PROCESS_KILL
 	open_flame(heat)
 	fuel = max(fuel - 1, 0)
-	if(!fuel || !on)
+	if(!fuel)
 		turn_off()
-		STOP_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/flare/torch/lantern/attack_self(mob/user)
-	if(on && !(occupants.len))
+	if(on)
 		turn_off()
 
 /obj/item/flashlight/flare/torch/lantern/getonmobprop(tag)
@@ -476,23 +477,9 @@
 	return ..()
 
 /obj/item/flashlight/flare/torch/lantern/fire_act(added, maxstacks)
-	if(fuel)
-		if(occupants.len)
-			to_chat(loc, span_warning("There is an occupant, you'll burn them!"))
-			return FALSE
-		else if(!on)
-			playsound(src.loc, 'sound/items/firelight.ogg', 100)
-			on = TRUE
-			damtype = BURN
-			update_brightness()
-			force = on_damage
-			if(soundloop)
-				soundloop.start()
-			if(ismob(loc))
-				var/mob/M = loc
-				M.update_inv_hands()
-			START_PROCESSING(SSobj, src)
-			return TRUE
+	if(occupants.len)
+		to_chat(loc, span_warning("There is an occupant, you'll burn them!"))
+		return FALSE
 	return ..()
 
 //On exiting the lantern
@@ -506,9 +493,7 @@
 	icon_state = initial(icon_state)
 	item_state = initial(item_state)
 	set_light_color(initial(light_color))
-	on = FALSE
 	set_light_on(FALSE)
-	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		var/mob/holder = loc
 		holder.update_inv_hands()
@@ -599,8 +584,7 @@
 	if(!open)
 		to_chat(user, span_warning("I need to open [src]'s door!"))
 		return FALSE
-	// Occupants make the lantern glow. Only a lit, empty lantern has a flame.
-	if(on && !occupants.len)
+	if(on)
 		to_chat(user, span_warning("[src] is lit!"))
 		return FALSE
 	if(occupants.len >= max_occupants)
@@ -630,15 +614,16 @@
 	if(!occupant.forceMove(src))
 		return FALSE
 	occupants += occupant
+	if(occupants.len > 1)
+		return TRUE
+	// Only a flame sets on and registers for fuel processing.
 	icon_state = "lantern_wisp"
 	set_light_color("#6e55fc")
-	on = TRUE
 	set_light_on(TRUE)
 	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_hands()
 		M.update_inv_belt()
-	START_PROCESSING(SSobj, src)
 	return TRUE
 
 //Removes the seelie from the list of occupants
@@ -758,8 +743,7 @@
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 60, TRUE, -1)
 			fuel += 120 MINUTES
 			if(istype(I, /obj/item/candle/yellow/lit))
-				on = TRUE
-				update_brightness()
+				fire_act()
 			qdel(I)
 	return ..()
 
