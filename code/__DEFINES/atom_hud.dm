@@ -9,6 +9,12 @@
 #define ANTAG_HUD_TRAITOR 	1
 #define ANTAG_HUD_REV		2
 #define ANTAG_HUD_VAMPIRE	3
+/// Deadites only, so they can tell each other apart from the infected who haven't turned
+#define ANTAG_HUD_ZOMBIE	4
+/// The lich and player skeletons
+#define ANTAG_HUD_UNDEAD	5
+#define ANTAG_HUD_WEREWOLF	6
+#define ANTAG_HUD_BANDIT	7
 // Notification action types
 #define NOTIFY_JUMP "jump"
 #define NOTIFY_ATTACK "attack"

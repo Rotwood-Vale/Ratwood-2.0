@@ -124,6 +124,8 @@
 
 	var/accuracy = 65 //How likely the project will hit it's intended target area. Decreases over distance moved, increased from perception.
 	var/bonus_accuracy = 0 //bonus accuracy that cannot be affected by range drop off.
+	/// If TRUE, skips the hit accuracy roll and lands exactly where you aim
+	var/true_aim = FALSE
 
 	var/target_z = 0
 	/// If TRUE, Guard-deflecting this projectile exposes its firer (riposte punish). Arcyne/wizard bolts opt in.

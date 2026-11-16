@@ -36,8 +36,16 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/cloak (3).ogg', null, (UPD_HEAD|UPD_MASK))	//Standard hood
 
 /obj/item/clothing/head/roguetown/roguehood/MiddleClick(mob/user)
+	..()
+	if(ishuman(user))
+		user.update_inv_wear_mask()
+
+/obj/item/clothing/head/roguetown/roguehood/AltRightClick(mob/user)
+	. = ..()
+	if(. || loc != user)
+		return
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
+	to_chat(user, span_info("I wear \the [src] [overarmor ? "under" : "over"] my hair."))
 	if(overarmor)
 		alternate_worn_layer = HOOD_LAYER //Below Hair Layer
 	else
@@ -372,3 +380,107 @@
 	max_integrity = ARMOR_INT_SIDE_STEEL //High leather-tier protection and critical resistances, steel-tier integrity. Integrity boost encourages hand-to-hand parrying. Weaker than the Psydonic Thorns.
 	blocksound = SOFTHIT
 	nudist_approved = FALSE // armored
+
+/obj/item/clothing/head/roguetown/roguehood/bishop
+	name = "bishop hood"
+	desc = ""
+	color = null
+	icon_state = "bishop_hood"
+	item_state = "bishop_hood"
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/head.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/head.dmi'
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	max_integrity = 180
+	resistance_flags = FIRE_PROOF
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
+
+/obj/item/clothing/head/roguetown/roguehood/bishop/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CHOSEN, "VISAGE")
+
+/obj/item/clothing/head/roguetown/roguehood/burgerhood
+	name = "noble hood"
+	desc = "A silk hood that shows its owner's high status. At the very least, it looks passable."
+	color = null
+	icon_state = "burgerhood"
+	item_state = "burgerhood"
+	icon = 'modular_twilight_axis/icons/clothing/kazengun_n_burger.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/clothing/onmob/kazengun_n_burger.dmi'
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	detail_tag = "_detail"
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	color = "#de5013"
+	detail_color = "#e3ab12"
+	toggle_icon_state = TRUE
+	max_integrity = 180
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
+
+/obj/item/clothing/head/roguetown/roguehood/eorahood
+	name = "opera hood"
+	desc = "An opera mask worn by the faithful of Eora, usually during their rituals. Comes with a hood that can be pulled up for warmth."
+	color = null
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/head.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/64x64/head.dmi'
+	icon_state = "eorahood"
+	bloody_icon = 'icons/effects/blood64.dmi'
+	bloody_icon_state = "helmetblood"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	resistance_flags = FIRE_PROOF
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	max_integrity = 180
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
+
+/obj/item/clothing/head/roguetown/roguehood/ravox
+	name = "ravox hood"
+	desc = "A hood of those devoted to upholding Justicar's will. Justice might be blind but not it's servants."
+	color = null
+	icon_state = "ravoxhood"
+	item_state = "ravoxhood"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/head.dmi'
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR
+	block2add = null
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	max_integrity = 180
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/head.dmi'
+
+/obj/item/clothing/head/roguetown/roguehood/see
+	name = "see hood"
+	desc = "A hood of those devoted to upholding the Ten in their dae to dae duties."
+	color = null
+	icon_state = "undividedhood"
+	item_state = "undividedhood"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/head.dmi'
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR
+	block2add = null
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	max_integrity = 180
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/head.dmi'

@@ -2,6 +2,8 @@
 /datum/antagonist/skeleton
 	name = "Skeleton"
 	increase_votepwr = FALSE
+	antag_hud_type = ANTAG_HUD_UNDEAD
+	antag_hud_name = "skeleton_hud"
 
 /datum/antagonist/skeleton/get_antag_cap_weight()
 	return 0.5
@@ -22,9 +24,11 @@
 //		objectives += escape_objective
 //		return
 	ADD_TRAIT(owner.current, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 	return ..()
 
 /datum/antagonist/skeleton/on_removal()
+	remove_own_antag_hud()
 	REMOVE_TRAIT(owner.current, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	return ..()
 

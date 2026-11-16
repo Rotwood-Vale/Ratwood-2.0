@@ -46,6 +46,7 @@
 		for(var/datum/antagonist/A as anything in mind.antag_datums)
 			A.on_life(src)
 
+	handle_curses()
 	handle_vamp_dreams()
 	if(IsSleeping())
 		if(health > 0)
