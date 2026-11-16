@@ -11,7 +11,7 @@
 /datum/sex_action/anal_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(can_apply_tiny_injury(user, target))
 		user.visible_message(span_warning("[user] forces [user.p_their()] cock into [target]'s tiny butt!"), ignored_mobs = get_extreme_content_excluded_mobs(user))
-		apply_tiny_start_injury(target)
+		apply_tiny_start_injury(user, target)
 	else if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
 		user.visible_message(span_warning("[user] tries and fails to insert [user.p_their()] tiny cock into [target]'s butt!"))
 	else
@@ -85,7 +85,7 @@
 /datum/sex_action/anal_sex/double/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(can_apply_tiny_injury(user, target))
 		user.visible_message(span_warning("[user] forces [user.p_their()] cocks into [target]'s tiny butt!"), ignored_mobs = get_extreme_content_excluded_mobs(user))
-		apply_tiny_start_injury(target)
+		apply_tiny_start_injury(user, target)
 	else if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
 		user.visible_message(span_warning("[user] tries and fails to insert [user.p_their()] tiny cocks into [target]'s butt!"))
 	else

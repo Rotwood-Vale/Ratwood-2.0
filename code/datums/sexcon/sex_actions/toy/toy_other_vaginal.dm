@@ -24,7 +24,7 @@
 	var/obj/item/dildo/dildo = !pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
 	if(can_apply_tiny_injury(user, target))
 		user.visible_message(span_warning("[user] forces \the [dildo] in [target]'s tiny cunt!"), ignored_mobs = get_extreme_content_excluded_mobs(user))
-		apply_tiny_start_injury(target)
+		apply_tiny_start_injury(user, target)
 	else
 		user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s cunt..."))
 
