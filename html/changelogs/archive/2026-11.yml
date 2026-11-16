@@ -539,3 +539,13 @@
   - qol: "Map ballots now respect each map\u2019s population limits when voting opens."
   - balance: Dun World requires 30 connected players to appear on the ballot and at
       least 24 when voting closes to win.
+  - qol: You can now save your Natural Armor's name and description in character setup.
+  - rscadd: Towners can post rumors, earn referral fees, and commission Blockade Defense
+      writs.
+  - qol: Notorious Bounties and contracts can now be signed solo. Don't die.
+  mypingishuge:
+  - balance: "Reduced Stuffed\u2019s Speed penalty from 6 to 3."
+  - bugfix: Stat debuffs no longer disappear when applied at minimum stats.
+  - bugfix: Corrected stat overflow bookkeeping when overlapping modifiers are applied
+      and removed.
+  - bugfix: "Removed the duplicated Speed sentence from Stuffed\u2019s tooltip."

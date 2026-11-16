@@ -1,5 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - rscadd: "Towners can post rumors, earn referral fees, and commission Blockade Defense writs."
-  - qol: "Notorious Bounties and contracts can now be signed solo. Don't die."
