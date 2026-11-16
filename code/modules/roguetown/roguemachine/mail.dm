@@ -278,7 +278,9 @@
 	else
 		master.new_mail = TRUE
 		master.update_icon()
-		send_ooc_note("A new letter has arrived for you.", name = destination)
+		var/mail_kind = istype(parcel, /obj/item/smallDelivery) ? "package" : "letter"
+		var/mail_notice = sender == "Anonymous" ? "A new [mail_kind] has arrived for you." : "New [mail_kind] from <b>[sender]</b>."
+		to_chat(recipient, span_biginfo("[mail_notice] Collect it at a HERMES."))
 		recipient.apply_status_effect(/datum/status_effect/ugotmail)
 		recipient.playsound_local(recipient, 'sound/misc/mail.ogg', 100, FALSE, -1)
 	visible_message(span_warning("[user] sends something."))
