@@ -394,6 +394,42 @@
 		sleep(world.tick_lag)
 	TEST_ASSERT(cocoon.opened && wolf.loc == center, "A conscious Strength-20 NPC must escape without a Resist command.")
 
+/datum/unit_test/arachnid_cocoon_revival/Run()
+	var/turf/center = run_loc_floor_bottom_left
+	var/mob/living/simple_animal/hostile/retaliate/rogue/wolf/wolf = allocate(/mob/living/simple_animal/hostile/retaliate/rogue/wolf, center)
+	var/obj/structure/spider/rescue_cocoon/cocoon = allocate(/obj/structure/spider/rescue_cocoon, center)
+	TEST_ASSERT(cocoon.enclose(wolf), "The NPC must start enclosed.")
+	wolf.adjustBruteLoss(wolf.maxHealth, forced = TRUE)
+	TEST_ASSERT_EQUAL(wolf.stat, DEAD, "The NPC must die inside the cocoon.")
+	TEST_ASSERT(!(cocoon in SSobj.processing), "A closed cocoon must stop processing after its occupant dies.")
+	wolf.become_alive()
+	TEST_ASSERT_EQUAL(wolf.stat, DEAD, "An NPC that is still mortally injured must die again.")
+	TEST_ASSERT(!(cocoon in SSobj.processing), "An unsuccessful revival must leave the cocoon stopped.")
+	TEST_ASSERT(!HAS_TRAIT(wolf, TRAIT_SILK_COMPRESSION), "An unsuccessful revival must leave compression off.")
+
+	TEST_ASSERT(wolf.revive(full_heal = TRUE), "Healing must allow revival inside the closed cocoon.")
+	TEST_ASSERT_EQUAL(wolf.loc, cocoon, "Revival must keep the NPC inside.")
+	TEST_ASSERT(cocoon in SSobj.processing, "A successful revival must restart object processing.")
+	TEST_ASSERT(HAS_TRAIT(wolf, TRAIT_SILK_COMPRESSION), "A successful revival must restore compression.")
+
+	// Hold the timed-action lock long enough to observe treatment before the NPC escapes.
+	wolf.STASTR = 20
+	wolf.doing = TRUE
+	wolf.adjustBruteLoss(10, forced = TRUE)
+	var/brute_before = wolf.getBruteLoss()
+	var/timeout = world.time + 6 SECONDS
+	while(wolf.getBruteLoss() >= brute_before && world.time < timeout)
+		sleep(world.tick_lag)
+	TEST_ASSERT(wolf.getBruteLoss() < brute_before, "The object subsystem must resume healing the revived occupant.")
+	TEST_ASSERT(!cocoon.struggling && wolf.loc == cocoon, "The busy occupant must remain enclosed during treatment.")
+	wolf.doing = FALSE
+	timeout = world.time + 6 SECONDS
+	while(!cocoon.opened && world.time < timeout)
+		sleep(world.tick_lag)
+	TEST_ASSERT(cocoon.opened && wolf.loc == center, "The revived NPC must escape automatically when free to act.")
+	TEST_ASSERT(!HAS_TRAIT(wolf, TRAIT_SILK_COMPRESSION), "Escape must clear the restored compression.")
+	TEST_ASSERT(!(cocoon in SSobj.processing), "Escape must stop treatment again.")
+
 /datum/unit_test/arachnid_cocoon_player_takeover
 	var/datum/mind/test_mind
 

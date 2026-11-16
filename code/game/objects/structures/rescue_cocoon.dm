@@ -29,14 +29,18 @@
 		return FALSE
 	was_conscious = patient.stat == CONSCIOUS
 	RegisterSignal(patient, COMSIG_LIVING_DEATH, PROC_REF(on_patient_death))
+	RegisterSignal(patient, COMSIG_LIVING_BECAME_ALIVE, PROC_REF(on_patient_revived))
 	RegisterSignal(patient, COMSIG_QDELETING, PROC_REF(on_patient_deleted))
 	RegisterSignal(patient, COMSIG_LIVING_IGNITED, PROC_REF(on_patient_ignited))
-	ADD_TRAIT(patient, TRAIT_SILK_COMPRESSION, REF(src))
+	start_treatment()
 	if(patient.get_bleed_rate())
 		to_chat(patient, span_notice("The silk presses firmly around your wounds, stemming the flow of blood without closing them."))
+	return TRUE
+
+/obj/structure/spider/rescue_cocoon/proc/start_treatment()
+	ADD_TRAIT(occupant, TRAIT_SILK_COMPRESSION, REF(src))
 	next_treatment = world.time + 2 SECONDS
 	START_PROCESSING(SSobj, src)
-	return TRUE
 
 /obj/structure/spider/rescue_cocoon/proc/on_patient_ignited()
 	SIGNAL_HANDLER
@@ -58,7 +62,13 @@
 /obj/structure/spider/rescue_cocoon/proc/on_patient_death()
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(occupant, TRAIT_SILK_COMPRESSION, REF(src))
+	was_conscious = FALSE
 	STOP_PROCESSING(SSobj, src)
+
+/obj/structure/spider/rescue_cocoon/proc/on_patient_revived(mob/living/patient)
+	SIGNAL_HANDLER
+	if(!opened && patient == occupant && patient.loc == src)
+		start_treatment()
 
 /obj/structure/spider/rescue_cocoon/proc/on_patient_deleted()
 	SIGNAL_HANDLER
@@ -70,7 +80,7 @@
 /obj/structure/spider/rescue_cocoon/proc/clear_patient()
 	STOP_PROCESSING(SSobj, src)
 	if(occupant)
-		UnregisterSignal(occupant, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_LIVING_IGNITED))
+		UnregisterSignal(occupant, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_BECAME_ALIVE, COMSIG_QDELETING, COMSIG_LIVING_IGNITED))
 		REMOVE_TRAIT(occupant, TRAIT_SILK_COMPRESSION, REF(src))
 	occupant = null
 
@@ -96,7 +106,7 @@
 	if(world.time < next_treatment)
 		return
 	next_treatment = world.time + 2 SECONDS
-	if(!struggling && can_auto_escape(occupant))
+	if(!struggling && !occupant.doing && can_auto_escape(occupant))
 		// Struggling can sleep, so let the object subsystem continue processing.
 		addtimer(CALLBACK(src, PROC_REF(container_resist), occupant, TRUE), 0)
 	if(occupant.stat == CONSCIOUS && !was_conscious)
@@ -107,7 +117,7 @@
 	var/brute_before = occupant.getBruteLoss()
 	var/burn_before = occupant.getFireLoss()
 	var/oxy_before = occupant.getOxyLoss()
-	var/shared_damage = istype(occupant, /mob/living/simple_animal)
+	var/shared_damage = brute_before > 0 && istype(occupant, /mob/living/simple_animal)
 	// Simple animals apply all three adjustments to the same damage pool.
 	if(brute_before > 0)
 		occupant.adjustBruteLoss(-healing_amount, updating_health = FALSE)
@@ -115,9 +125,9 @@
 		occupant.adjustFireLoss(-healing_amount, updating_health = FALSE)
 	if(oxy_before > 0 || (shared_damage && occupant.getBruteLoss() > 0))
 		occupant.adjustOxyLoss(-oxygen_recovery, updating_health = FALSE)
-	var/brute_healed = occupant.getBruteLoss() < brute_before
-	var/burn_healed = occupant.getFireLoss() < burn_before
-	if(brute_healed || burn_healed || occupant.getOxyLoss() < oxy_before)
+	var/brute_healed = brute_before > 0 && occupant.getBruteLoss() < brute_before
+	var/burn_healed = burn_before > 0 && occupant.getFireLoss() < burn_before
+	if(brute_healed || burn_healed || (oxy_before > 0 && occupant.getOxyLoss() < oxy_before))
 		occupant.updatehealth()
 	if(iscarbon(occupant))
 		var/mob/living/carbon/patient = occupant
@@ -125,16 +135,15 @@
 			patient.update_stamina()
 		if(!(NOBLOOD in patient.dna?.species?.species_traits) && patient.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			patient.set_blood_volume(min(BLOOD_VOLUME_NORMAL, patient.get_blood_volume() + blood_recovery))
-	if(world.time < next_sensation)
+	if(world.time < next_sensation || !(brute_healed || burn_healed))
 		return
 	var/list/sensations = list()
 	if(brute_healed)
 		sensations += "Your aches ease a little beneath the silk's steady, supporting pressure."
 	if(burn_healed)
 		sensations += "A faint coolness settles over your burns beneath the silk, soothing their raw sting."
-	if(length(sensations))
-		to_chat(occupant, span_notice(pick(sensations)))
-		next_sensation = world.time + 45 SECONDS
+	to_chat(occupant, span_notice(pick(sensations)))
+	next_sensation = world.time + 45 SECONDS
 
 /obj/structure/spider/rescue_cocoon/proc/escape_time(mob/living/patient)
 	return max(0, 30 SECONDS * (1 - max(0, patient.STASTR - 10) * 0.1))
@@ -145,7 +154,7 @@
 /obj/structure/spider/rescue_cocoon/container_resist(mob/living/user, automatic = FALSE)
 	if(QDELETED(user) || user != occupant || opened || struggling || user.incapacitated(ignore_restraints = TRUE))
 		return
-	if(automatic && !can_auto_escape(user))
+	if(automatic && (user.doing || !can_auto_escape(user)))
 		return
 	if(is_species(user, /datum/species/arachnid) || user.has_status_effect(/datum/status_effect/buff/spider_speak))
 		visible_message(span_notice("[user] parts the woven layers with practiced ease and slips free of [src]."), ignored_mobs = list(user))
