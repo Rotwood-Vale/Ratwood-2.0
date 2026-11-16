@@ -48,3 +48,6 @@
 #else
 #define REGISTER_REQUIRED_MAP_ITEM(min, max)
 #endif
+
+/// Lets unit tests observe when an interruptible action starts.
+#define COMSIG_DO_AFTER_BEGAN "do_after_began"

@@ -1453,6 +1453,8 @@
 	update_mobility()
 	update_sight()
 	reload_fullscreen()
+	if(!QDELETED(src) && stat != DEAD)
+		SEND_SIGNAL(src, COMSIG_LIVING_BECAME_ALIVE)
 	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
