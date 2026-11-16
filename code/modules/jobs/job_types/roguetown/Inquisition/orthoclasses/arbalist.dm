@@ -89,7 +89,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inviolability)//A shield against the undead.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_lux_bolt)//Take a guess. Exclusive to arbalist.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/arbalist_blood_runes)// SAY HELLO TO BLOOD MAGIC, m'lord. Exclusive to arbalist.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
 		if("Fusilier")
 			ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -1, TRUE)
