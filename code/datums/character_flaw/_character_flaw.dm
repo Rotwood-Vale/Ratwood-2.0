@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Clingy"=/datum/charflaw/clingy,
 	"Colorblind (+2 Q-Points)"=/datum/charflaw/colorblind,
 	"Compliant"=/datum/charflaw/compliant,
+	"Corpulent"=/datum/charflaw/addiction/corpulent,
 	"Critical Weakness (+2 Q-Points)"=/datum/charflaw/critweakness,
 	"Cyclops (L) (+2 Q-Points)"=/datum/charflaw/noeyel,
 	"Cyclops (R) (+2 Q-Points)"=/datum/charflaw/noeyer,
@@ -771,7 +772,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	..()
 	REMOVE_TRAIT(user, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
 	REMOVE_TRAIT(user, TRAIT_VAMPBITE, TRAIT_GENERIC)
-
 
 /datum/charflaw/weak
 	name = "Feeble-bodied"

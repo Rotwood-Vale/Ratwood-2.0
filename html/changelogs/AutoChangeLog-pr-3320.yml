@@ -1,0 +1,4 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Removing a net clears its stat penalties immediately."

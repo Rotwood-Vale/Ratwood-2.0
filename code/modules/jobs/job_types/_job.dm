@@ -275,7 +275,7 @@
 			SStreasury.grant_estate_income(H, noble_income, TRUE)
 
 	if(show_in_credits)
-		SScrediticons.processing += H
+		SScrediticons.queue_capture(H)
 
 	if(cmode_music)
 		H.cmode_music = cmode_music
@@ -305,29 +305,6 @@
 		hugboxify_for_class_selection(H)
 
 	log_admin("[department] >> [H.key]/([H.real_name]) has joined as [H.mind.assigned_role].")
-
-/mob/living/carbon/human/proc/add_credit(generate_for_adv_class = FALSE) //Evil code to get the proper image for adv classes after they spawn in.
-	if(!mind || !client)
-		return
-	var/thename = "[real_name]"
-	var/datum/job/J = SSjob.GetJob(mind.assigned_role)
-	var/used_title = get_role_title()
-
-	GLOB.credits_icons[thename] = list()
-	var/client/C = client
-	var/datum/preferences/P = C.prefs
-	var/icon/I
-	if(generate_for_adv_class)
-		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH), human_gear_override = src)
-	else if (P)
-		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH))
-	if(I)
-		var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="credits")
-		I.Blend(female_s, ICON_MULTIPLY)
-		I.Scale(96,96)
-		GLOB.credits_icons[thename]["title"] = used_title
-		GLOB.credits_icons[thename]["icon"] = I
-		GLOB.credits_icons[thename]["vc"] = voice_color
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 

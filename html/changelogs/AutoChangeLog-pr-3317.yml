@@ -1,0 +1,4 @@
+author: "Ripperserk"
+delete-after: True
+changes:
+  - rscadd: "armor_class = ARMOR_CLASS_MEDIUM to /obj/item/clothing/under/roguetown/platelegs/graggar"
