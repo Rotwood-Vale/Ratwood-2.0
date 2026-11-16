@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Fireman carries keep their original grip on stairs, and piggyback riders stay mounted."
