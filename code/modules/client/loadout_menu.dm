@@ -1,3 +1,52 @@
+/// Render only server-generated markup. Saved fields contain encoded source, never trusted HTML.
+/proc/format_loadout_text(text, markdown = FALSE, is_name = FALSE, preview = FALSE)
+	if(!istext(text) || !length(text))
+		return null
+	var/source = html_decode(text)
+	var/improper_name = FALSE
+	if(markdown && is_name && length(source) > 9 && findtext(source, "\\improper") == 1)
+		improper_name = TRUE
+		source = copytext(source, 10)
+	var/rendered = is_name ? sanitize(source) : html_encode(source)
+	if(markdown)
+		rendered = parsemarkdown_basic(rendered)
+	if(!is_name)
+		rendered = replacetext(rendered, "\n", "<br>")
+	if(improper_name && !preview)
+		rendered = "\improper" + rendered
+	return rendered
+
+/// Per-field opt-in keeps old saves and unedited fields literal, including Markdown punctuation.
+/proc/normalize_loadout_markdown_fields(fields)
+	. = list()
+	if(!islist(fields))
+		return
+	for(var/i = 1 to 10)
+		for(var/kind in list("name", "desc"))
+			var/field = "loadout_[i]_[kind]"
+			if(field in fields)
+				. += field
+
+/datum/preferences/proc/get_loadout_text(slot, is_name = FALSE, preview = FALSE)
+	if(!isnum(slot) || slot < 1 || slot > 10 || slot != round(slot))
+		return null
+	var/field = "loadout_[slot]_[is_name ? "name" : "desc"]"
+	return format_loadout_text(vars[field], field in loadout_markdown_fields, is_name, preview)
+
+/datum/preferences/proc/set_loadout_custom_text(slot, is_name, text)
+	if(!isnum(slot) || slot < 1 || slot > 10 || slot != round(slot) || !istext(text))
+		return FALSE
+	var/field = "loadout_[slot]_[is_name ? "name" : "desc"]"
+	var/limit = is_name ? MAX_NAME_LEN : 500
+	text = copytext_char(text, 1, limit + 1)
+	if(is_name)
+		text = replacetext(replacetext(text, "\n", " "), "\t", " ")
+	vars[field] = length(text) ? html_encode(text) : null
+	loadout_markdown_fields -= field
+	if(length(text))
+		loadout_markdown_fields += field
+	return TRUE
+
 /datum/preferences/proc/open_loadout_menu(mob/user, slot = 1)
 	if(!user || !user.client)
 		return
@@ -262,8 +311,8 @@
 			
 			html += "</div>"
 			html += "<div class='item-info'>"
-			html += "<div class='item-name'>[custom_name ? custom_name : current_item.name]</div>"
-			html += "<div class='item-desc'>[custom_desc ? custom_desc : (item_desc ? item_desc : current_item.desc)]</div>"
+			html += "<div class='item-name'>[custom_name ? get_loadout_text(i, TRUE, TRUE) : current_item.name]</div>"
+			html += "<div class='item-desc'>[custom_desc ? get_loadout_text(i, FALSE, TRUE) : (item_desc ? item_desc : current_item.desc)]</div>"
 			
 			if(custom_name || custom_desc)
 				html += "<div class='custom-text'>✎ Customized</div>"
