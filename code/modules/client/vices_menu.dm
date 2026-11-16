@@ -1388,10 +1388,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 		<div id="loadout" class="tab-content">
 			<h2 style='color: [theme["text"]]; margin: 0 0 10px 0; font-size: 1.1em;'>Loadout Selection</h2>
-			<div style='margin-bottom: 8px;'>
-				<a class='btn btn-customize' href='byond://?src=\ref[src];loadout_preview=1'>[loadout_text_preview ? "Hide" : "Show"] Formatting Preview</a>
-				<div style='font-size: 0.8em; margin-top: 5px;'>Rename or describe an item to use Markdown. *italics*, **bold**, -=ffcc00colored text=-. Start a name with \\improper to enable articles.</div>
-			</div>
 	"}
 	
 	// Calculate point costs for loadout
@@ -1464,8 +1460,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 			html += "</div>"
 			html += "<div style='flex: 1;'>"
-			html += "<div class='vice-name'>[custom_name ? (loadout_text_preview ? get_loadout_text(i, TRUE, TRUE) : format_loadout_text(custom_name, FALSE, TRUE)) : current_item.name]</div>"
-			html += "<div class='vice-desc'>[custom_desc ? (loadout_text_preview ? get_loadout_text(i, FALSE, TRUE) : format_loadout_text(custom_desc)) : (item_desc ? item_desc : current_item.desc)]</div>"
+			html += "<div class='vice-name'>[custom_name ? get_loadout_text(i, TRUE, TRUE) : current_item.name]</div>"
+			html += "<div class='vice-desc'>[custom_desc ? get_loadout_text(i, FALSE, TRUE) : (item_desc ? item_desc : current_item.desc)]</div>"
 			
 			if(custom_name || custom_desc)
 				html += "<div style='margin-top: 3px; font-size: 0.7em; color: [theme["label"]];'>✎ Customized</div>"
@@ -2147,13 +2143,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 				open_vices_menu(usr)
 	
-	if(href_list["loadout_preview"])
-		if(usr?.client != parent)
-			return
-		loadout_text_preview = !loadout_text_preview
-		open_vices_menu(usr)
-		return
-
 	if(href_list["loadout_action"])
 		if(usr?.client != parent)
 			return
@@ -2192,7 +2181,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				var/is_name = action == "rename"
 				var/field = "loadout_[slot]_[is_name ? "name" : "desc"]"
 				var/original_text = vars[field]
-				var/prompt = "Enter a custom [is_name ? "name" : "description"] (Markdown supported; leave blank for default):"
+				var/prompt = is_name ? "Enter a custom name (Markdown supported: *italics*, **bold**, -=ffcc00colored text=-. Start a name with \\improper to enable articles. leave blank for default):" : "Enter a custom description (Markdown supported: *italics*, **bold**, -=ffcc00colored text=-):"
 				var/new_text = tgui_input_text(editor, prompt, is_name ? "Rename Item" : "Describe Item", html_decode(original_text), max_length = is_name ? MAX_NAME_LEN : 500, multiline = !is_name, encode = FALSE)
 				// Dialogs can outlive their character, selected item, editor or original field.
 				if(!editor || editor.client != parent || default_slot != editing_slot || vars[slot_var] != current || vars[field] != original_text)

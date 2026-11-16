@@ -407,8 +407,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	// Custom names for loadout items
 	var/list/loadout_markdown_fields = list()
-	/// Session-only presentation state; not character data.
-	var/loadout_text_preview = FALSE
 	var/loadout_1_name
 	var/loadout_2_name
 	var/loadout_3_name
