@@ -1627,7 +1627,9 @@
 	..()
 	var/list/items = list()
 	items |= H.get_equipped_items(TRUE)
-	for(var/I in items)
+	for(var/obj/item/I in items)
+		if(istype(I, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//dont remove nat armor
+			continue
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/matthios
@@ -1637,6 +1639,10 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
+	if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//prevents getting free gilded armor for your hedge knight buddy if you have natural armor
+		armor = null
+	if(istype(H.wear_shirt, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))
+		shirt = null
 
 	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
 	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
@@ -1826,14 +1832,48 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar
-	pants = /obj/item/clothing/under/roguetown/platelegs/graggar
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/graggar
-	gloves = /obj/item/clothing/gloves/roguetown/plate/graggar
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/graggar
-	neck = /obj/item/clothing/neck/roguetown/gorget/steel
+
+	var/helmets = list("VICIOUS HELMET", "VICIOUS SKULLHELM")
+	var/helmet_choice = input(H, "Choose your helmet.", "GRAGGAR'S ARMAMENTS") as anything in helmets
+	switch(helmet_choice)
+		if("VICIOUS HELMET")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/graggar
+		if("VICIOUS SKULLHELM")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/graggar/skull
+
+	var/armors = list("MEDIUM ARMOR", "HEAVY ARMOR")
+	var/armor_choice = input(H, "Choose your armor.", "GRAGGAR'S ARMAMENTS") as anything in armors
+	switch(armor_choice)
+		if("MEDIUM ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar
+			pants = /obj/item/clothing/under/roguetown/platelegs/graggar
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/graggar
+			gloves = /obj/item/clothing/gloves/roguetown/plate/graggar
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/graggar
+			neck = /obj/item/clothing/neck/roguetown/gorget/steel/graggar
+			mask = /obj/item/clothing/mask/rogue/facemask/steel/graggar
+		if("HEAVY ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/graggar
+			pants = /obj/item/clothing/under/roguetown/platelegs/graggar
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/graggar
+			gloves = /obj/item/clothing/gloves/roguetown/plate/graggar/heavy
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/graggar/heavy
+			neck = /obj/item/clothing/neck/roguetown/gorget/steel/graggar
+			mask = /obj/item/clothing/mask/rogue/facemask/steel/graggar
+
+	var/weapons = list("Sanguis - (tomahawk and targe)", "Carnifex - (two-handed greataxe)")
+	var/weapon_choice = input(H, "Choose your ARMS.", "ARMS OF VIOLENCE") as anything in weapons
+	switch(weapon_choice)
+		if("Sanguis - (tomahawk and targe)")
+			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel/graggar
+			l_hand = /obj/item/rogueweapon/shield/iron/graggar
+		if("Carnifex - (two-handed greataxe)")
+			r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead/graggar
+			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+
 	cloak = /obj/item/clothing/cloak/graggar
-	r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead/graggar
 
 /obj/structure/ritualcircle/graggar/proc/graggarconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -2212,13 +2252,15 @@
 		loc.visible_message(span_warning("[target] does not have the mind to benefit from the One's guidance."))
 		return
 
-	if(HAS_TRAIT(target, TRAIT_SILVER_BLESSED))
-		loc.visible_message(span_warning("[target] has already been saved by the One's admonishment."))
-		return
-
 	if(target.stat == DEAD)
 		loc.visible_message(span_warning("With their heart stilled, the ritual will have no purchase upon [target]. It would be a waste."))
 		return
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+		loc.visible_message(span_warning("With masterfull precision, the divine curse on [target] is unvowen."))
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 
 	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
 	var/datum/antagonist/werewolf/lesser/Wereless = target.mind.has_antag_datum(/datum/antagonist/werewolf/lesser/)
@@ -2505,6 +2547,17 @@
 
 /obj/structure/ritualcircle/psydon/proc/psydonconversion_stage4(mob/living/carbon/human/target)
 	to_chat(target, span_mind_control("..."))
+	
+	// Remove divine punishments
+	target.remove_status_effect(/datum/status_effect/debuff/apostasy)
+	target.remove_status_effect(/datum/status_effect/debuff/excomm)
+	target.remove_stress(/datum/stressevent/apostasy)
+	target.remove_stress(/datum/stressevent/excommunicated)
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+	
 	if(target.devotion == null)
 		target.set_patron(new /datum/patron/old_god)
 		return

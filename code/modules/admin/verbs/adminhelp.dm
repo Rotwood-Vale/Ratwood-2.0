@@ -417,6 +417,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			user.client.cmd_admin_rejuvenate(ticket.initiator.mob)
 			return TRUE
 
+		if("ticket_pref_refresh")
+			var/ticket_id = params["ticket_id"]
+			var/datum/admin_help/ticket = TicketByID(ticket_id)
+			if(!ticket || !ticket.initiator || !user.client)
+				return FALSE
+			if(!check_rights(R_ADMIN))
+				return FALSE
+			var/mob/living/carbon/human/H = ticket.initiator.mob
+			if(!istype(H))
+				to_chat(user, span_warning("[ticket.initiator.mob] is not a character whose preferences can be refreshed."))
+				return FALSE
+			H.admin_pref_refresh(user)
+			return TRUE
+
 		if("ticket_pq")
 			var/ticket_id = params["ticket_id"]
 			var/datum/admin_help/ticket = TicketByID(ticket_id)

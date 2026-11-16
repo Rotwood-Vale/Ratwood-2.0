@@ -121,8 +121,8 @@
 	display_category = ITEM_CAT_TOOLS_FIELD
 
 /datum/anvil_recipe/tools/decrepit/tongs
-	name = "Tongs, Decrepit"
-	created_item = /obj/item/rogueweapon/tongs/ancient/decrepit
+	name = "Tongs, Ancient"
+	created_item = /obj/item/rogueweapon/tongs/ancient
 	i_type = "Tools"
 	display_category = ITEM_CAT_TOOLS_WORKSHOP
 

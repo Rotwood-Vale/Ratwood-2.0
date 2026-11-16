@@ -9,6 +9,26 @@
 		clash(user, IM, IU)
 		return
 	if(!IU)	//The opponent is trying to rawdog us with their bare hands while we have Guard up. We get a riposte window.
+		if(is_bite)	//They lunged in with their teeth -- rather than a hand or weapon, we give them an extra bonk to the head.
+			var/obj/item/bodypart/affecting = H.get_bodypart(BODY_ZONE_HEAD)
+			var/force = IM ? get_complex_damage(IM, src) : get_punch_dmg()
+			var/armor_block = H.run_armor_check(BODY_ZONE_PRECISE_MOUTH, "blunt", armor_penetration = PEN_NONE, damage = force)
+			if(IM)
+				visible_message(span_suicide("[src] catches [H]'s bite and bashes \the [IM] into [H.p_their()] mouth!"))
+			else
+				visible_message(span_suicide("[src] catches [H]'s bite and smashes [p_their()] fist into [H.p_their()] mouth!"))
+			if(affecting && H.apply_damage(force, BRUTE, affecting, armor_block))
+				affecting.bodypart_attacked_by(BCLASS_BLUNT, force, crit_message = TRUE, weapon = IM, zone_precise = BODY_ZONE_PRECISE_MOUTH)
+			H.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+			H.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+			if(H.mind)
+				H.dodgetime = clamp(H.dodgetime + 5, 0, CLICK_CD_HEAVY)
+			H.Slowdown(3)
+			to_chat(src, span_notice("[capitalize(H.p_theyre())] exposed!"))
+			playsound(src, 'sound/combat/clash_struck.ogg', 100)
+			remove_status_effect(/datum/status_effect/buff/clash)
+			apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
+			return
 		if(!IM)
 			visible_message(span_suicide("[src] ripostes [H]'s strike with [p_their()] bare hands!"))
 		else
@@ -183,7 +203,7 @@
 
 ///Shared by the Defend RMB stance and the direct Guard keybinding, so both go through the same checks.
 /mob/living/carbon/human/proc/try_guard()
-	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd))
+	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd) || has_status_effect(/datum/status_effect/buff/clash/limbguard))
 		return FALSE
 	if(!get_active_held_item())
 		if(get_skill_level(/datum/skill/combat/unarmed) < 3)
@@ -197,6 +217,9 @@
 	if(has_status_effect(/datum/status_effect/debuff/exposed))
 		balloon_alert(src, "<font color = '#ffffff'>Can't guard while exposed!</font>")
 		return FALSE
+	if(has_status_effect(/datum/status_effect/debuff/vulnerable))
+		balloon_alert(src, "<font color = '#ffffff'>Can't guard while vulnerable!</font>")
+		return FALSE
 	// Can't guard while channeling a spell
 	var/datum/action/cooldown/spell/active_spell = click_intercept
 	if(istype(active_spell) && (active_spell.currently_charging || active_spell.charged))
@@ -204,9 +227,6 @@
 		return FALSE
 
 	if(is_swinging(disrupt_only = TRUE))
-		return FALSE
-
-	if(has_status_effect(/datum/status_effect/debuff/exposed))
 		return FALSE
 
 	apply_status_effect(/datum/status_effect/buff/clash)

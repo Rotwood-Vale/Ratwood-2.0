@@ -12,7 +12,7 @@
 	stress_generator = TRUE
 	rotation_structure = TRUE
 	initialize_dirs = CONN_DIR_FORWARD | CONN_DIR_FLIP
-	debris = list(/obj/item/magic/infernal/core = 1)
+	static_debris = list(/obj/item/magic/infernal/core = 1, /obj/item/ingot/steel = 1)
 
 /obj/structure/infernalengine/examine(mob/user)
 	. = ..()

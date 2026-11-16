@@ -66,6 +66,7 @@
 /obj/structure/trap/chill,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	floor_turf = /turf/open/floor/rogue/ruinedwood;
 	redstone_id = "Ship1"
 	},
@@ -1134,6 +1135,7 @@
 /area/rogue/under/tomb/indoors)
 "FW" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	floor_turf = /turf/open/floor/rogue/ruinedwood;
 	redstone_id = "Ship1"
 	},

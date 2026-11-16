@@ -13,8 +13,12 @@
 	var/climb_offset = 0 //offset up when climbed
 	var/mob/living/structureclimber
 	var/hammer_repair
-	/// Forced-entry lines shown to admins on examine, oldest first
-	var/list/breakin_log
+	/// Who is damaging this right now, so on_forced_break() can name them. take_damage carries no attacker
+	var/mob/forcing_user
+	/// How, such as "with an explosion", for the break entry. Null for a plain hit
+	var/forcing_cause
+	/// world.time the two above were set, so a runtime mid-attack cannot leave them stuck past the tick
+	var/forcing_time
 //	move_resist = MOVE_FORCE_STRONG
 
 /obj/structure/Initialize(mapload)
@@ -223,6 +227,7 @@
 		else
 			return
 
+	var/forcing = begin_forcing(null, "with an explosion")
 	var/extra_integrity = 0
 	switch(severity)
 		if(EXPLODE_DEVASTATE) extra_integrity = 1500
@@ -248,6 +253,8 @@
 			fire_act(stacks)
 	if(!QDELETED(src) && !density)
 		..()
+	if(forcing)
+		end_forcing()
 
 /obj/structure/proc/climb_structure(mob/living/user)
 	src.add_fingerprint(user)
@@ -292,25 +299,62 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
-	var/breakin_count = LAZYLEN(breakin_log)
-	if(breakin_count && isAdminObserver(user))
-		. += span_boldnotice("\[ADMIN\] Break-in log:")
-		for(var/i in max(1, breakin_count - 4) to breakin_count)
-			. += span_notice(breakin_log[i])
-		if(breakin_count > 5)
-			. += span_notice("<a href='?src=[REF(src)];show_breakin_log=1'>Show all [breakin_count]</a>")
 
-/obj/structure/Topic(href, href_list)
+/obj/structure/attacked_by(obj/item/I, mob/living/user)
+	var/forcing = begin_forcing(user)
 	. = ..()
-	if(href_list["show_breakin_log"] && isAdminObserver(usr))
-		usr << browse("<html><body>[jointext(breakin_log, "<br>")]</body></html>", "window=breakin_log;size=500x400")
+	if(forcing)
+		end_forcing()
 
-/// Records a forced-entry attempt for admin persual
-/obj/structure/proc/log_breakin(mob/user, action)
-	add_hiddenprint(user)
-	var/line = "[user ? key_name(user) : "something"] [action]"
-	investigate_log(line, INVESTIGATE_DOORS)
-	LAZYADD(breakin_log, "[station_time_timestamp()] - [line]")
+/obj/structure/bullet_act(obj/projectile/P)
+	var/forcing = begin_forcing(ismob(P.firer) ? P.firer : null, "with [format_text(P.name)]")
+	. = ..()
+	if(forcing)
+		end_forcing()
+
+/obj/structure/attack_animal(mob/living/simple_animal/M)
+	var/forcing = begin_forcing(M)
+	. = ..()
+	if(forcing)
+		end_forcing()
+
+/// take_damage() as user's doing, so a break it causes is put to them by on_forced_break(). cause reads after the action, such as "with Fire Strike"
+/obj/structure/proc/take_damage_from(mob/user, damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, cause)
+	var/forcing = begin_forcing(user, cause)
+	. = take_damage(damage_amount, damage_type, damage_flag, sound_effect)
+	if(forcing)
+		end_forcing()
+
+/// Puts damage landing on this to user and cause until end_forcing(). The outermost caller wins, so a fireball
+/// exploding on the door it hit stays its caster's. Returns FALSE when an outer caller holds it, and that caller ends it
+/obj/structure/proc/begin_forcing(mob/user, cause)
+	if(forcing_time == world.time && (forcing_user || forcing_cause))
+		return FALSE
+	forcing_user = user
+	forcing_cause = cause
+	forcing_time = world.time
+	return TRUE
+
+/obj/structure/proc/end_forcing()
+	forcing_user = null
+	forcing_cause = null
+
+/// Run by doors, windows and closets the moment they break, however it happened, for View Forensics.
+/// A break with no player behind it, such as fire, an explosion or a mob without a player, is still noted, unattributed.
+/obj/structure/proc/on_forced_break(damage_flag, action = "broke")
+	var/mob/user = forcing_user
+	var/cause = forcing_cause
+	// Burning objects take their damage straight from SSfire_burning, so fire is told by the flag
+	if(!cause && damage_flag == "fire")
+		cause = "with fire"
+	if(cause)
+		action = "[action] [cause]"
+	if(user?.ckey)
+		add_forensic_action(user, action)
+		return
+	if(user)
+		action = "[action] by [user.name] (no player)"
+	add_unattributed_forensic_action(action)
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	if(max_integrity)

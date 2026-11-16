@@ -281,6 +281,10 @@
 	stressadd = 2
 	desc = "<span class='red'>Where did everyone go? Did something happen?!</span>"
 
+/datum/stressevent/sundercritted
+	stressadd = 5 //Its literally killing you, sire.
+	desc = span_boldred("I CAN FEEL MY SOUL TEARING APART FROM BLESSED FLAMES, I NEED TO GET AWAY!")
+
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES
 	stressadd = 5
@@ -599,6 +603,12 @@
 
 /datum/stressevent/prejudice/kazengun
 	desc = span_red("Who invited Kazengunites to Ferentia?")
+
+/datum/stressevent/prejudice/avar
+	desc = span_red("Aavnics are always so dour, so mirthless.")
+
+/datum/stressevent/prejudice/gronn
+	desc = span_red("I just saw a Gronnite! How uncivilized!")
 
 /datum/stressevent/prejudice/underdark
 	desc = span_red("That underdweller should be underground, where it belongs.")

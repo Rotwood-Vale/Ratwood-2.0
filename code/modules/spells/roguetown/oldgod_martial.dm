@@ -366,7 +366,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		S.start()
 	// Everything from this point has to do with what is damaged, additional structures can be added to the list to have different damage/effects!
 	for(var/obj/structure/damaged in range(radius, fallzone))
-		damaged.take_damage(structure_damage, BRUTE, "blunt", 1)
+		damaged.take_damage_from(ismob(firer) ? firer : null, structure_damage, BRUTE, "blunt", 1, cause = "with [format_text(name)]")
 	for(var/turf/closed/wall/damagedwalls in range(radius, fallzone))
 		damagedwalls.take_damage(structure_damage, BRUTE, "blunt", 1)
 	for(var/turf/closed/mineral/aoemining in range(radius, fallzone))

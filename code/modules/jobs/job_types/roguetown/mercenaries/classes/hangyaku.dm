@@ -58,18 +58,18 @@
 
 /datum/outfit/job/roguetown/mercenary/hangyaku/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Sword","Great Mace","Spear","Bow")
+	var/weapons = list("Sword (Ssangsudo)","Mace (Kanabo)","Spear (Naginata)","Bow","Greatsword (Nodachi)") 
 	var/weapon_choice = input(H, "Choose your weapon.", "WHEN STEEL MUST SPEAK...") as anything in weapons
 	switch(weapon_choice)
-		if("Sword")
+		if("Sword (Ssangsudo)")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword/kazengun/noparry, SLOT_BELT_L, TRUE)	
-		if("Great Mace")
+		if("Mace (Kanabo)")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/kanabo, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-		if("Spear")
+		if("Spear (Naginata)")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/spear/naginata, TRUE) 
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
@@ -77,6 +77,10 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve, TRUE) 
 			H.equip_to_slot_or_del(new /obj/item/quiver/arrows, SLOT_BELT_L, TRUE) 
+		if("Greatsword (Nodachi)")
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/greatsword/nodachi, TRUE) 
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap/nodachi, SLOT_BACK_R, TRUE)
 	var/armors = list("Heavy Armor","Medium Armor")
 	var/armor_choice = input(H, "Choose your armor.", "...THE TONGUE MUST STAY QUIET.") as anything in armors
 	switch(armor_choice)
@@ -108,7 +112,10 @@
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_KAZENGUN
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_MEDIUMARMOR) //peasant levy turned mercenary. the underdog.
+	traits_applied = list(TRAIT_MEDIUMARMOR) //peasant levy turned mercenary. the underdog.
+	subclass_virtues = list(
+		/datum/virtue/combat/guarded
+	)
 	cmode_music = 'sound/music/combat_kazengite.ogg'
 	subclass_stats = list(  
 		STATKEY_STR = 2,

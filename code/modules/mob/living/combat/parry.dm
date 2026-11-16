@@ -224,7 +224,7 @@
 	var/parry_status = FALSE
 	var/text
 
-	text += "Roll to parry... [HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS) ? "???" : prob2defend]%"
+	text += "Roll to parry... [guarded_roll(prob2defend, attacker)]%"
 
 	// Dual wield drawback (-5%)
 	var/dualwield_penalty = HAS_TRAIT(src, TRAIT_DUALWIELDER) && src.can_dualwield(mainhand, offhand)

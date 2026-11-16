@@ -115,6 +115,7 @@
 
 	var/list/gameplay_entries = list(
 		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
+		list("id" = "autoblooddrink", "label" = "Auto Blood Drinking", "enabled" = !!owner.prefs.autoblooddrink, "desc" = "Automatically repeat blood drinking."),
 		list("id" = "autowoodcut", "label" = "AutoWoodcut", "enabled" = !!owner.prefs.autowoodcut, "desc" = "Automatically continue chopping a tree after the first swing."),
 		list("id" = "autopicking", "label" = "AutoPicking", "enabled" = !!owner.prefs.autopicking, "desc" = "Automatically continue mining after clicking or bumping a rock wall with a pickaxe in hand."),
 		list("id" = "show_rolls", "label" = "Show Rolls", "enabled" = !!owner.prefs.showrolls, "desc" = "Show combat and check roll details in chat."),
@@ -211,6 +212,8 @@
 				owner.toggle_xptext()
 			if("autoconsume")
 				owner.autoconsume()
+			if("autoblooddrink")
+				owner.toggle_autoblooddrink()
 			if("autowoodcut")
 				owner.toggle_autowoodcut()
 			if("autopicking")
@@ -397,6 +400,18 @@
 			to_chat(src, "You will now try to repeatedly consume/feed food/drinks")
 		else
 			to_chat(src, "You will no longer try to repeatedly consume/feed food/drinks")
+
+/client/verb/toggle_autoblooddrink()
+	set category = "Options"
+	set name = "Toggle Auto Blood Drinking"
+	set hidden = 1
+	if(prefs)
+		prefs.autoblooddrink = !prefs.autoblooddrink
+		prefs.save_preferences()
+		if(prefs.autoblooddrink)
+			to_chat(src, "You will now automatically repeat blood drinking from a grabbed limb.")
+		else
+			to_chat(src, "You will no longer automatically repeat blood drinking.")
 
 /client/verb/toggle_autowoodcut()
 	set category = "Options"
@@ -1390,3 +1405,14 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.admin_chat_toggles ^= CHAT_ADMINSPAWN
 	prefs.save_preferences()
 	to_chat(src, "You will [prefs.admin_chat_toggles & CHAT_ADMINSPAWN ? "see" : "not see any"] spawn logs.")
+
+/client/verb/full_examine()
+	set category = "Options"
+	set name = "Toggle Full Examine"
+	if(prefs)
+		prefs.full_examine = !prefs.full_examine
+		prefs.save_preferences()
+		if(prefs.full_examine)
+			to_chat(src, "Examines will be fully shown.")
+		else
+			to_chat(src, "Examines will have some information behind dropdowns.")

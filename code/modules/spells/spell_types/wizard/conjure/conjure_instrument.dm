@@ -35,17 +35,22 @@
 	var/obj/item/rogue/instrument/conjured_instrument = null
 
 	var/list/instrument = list(
-		"Harp" = /obj/item/rogue/instrument/harp,
-		"Lute" = /obj/item/rogue/instrument/lute,
 		"Accordion" = /obj/item/rogue/instrument/accord,
+		"Bagpipe" = /obj/item/rogue/instrument/bagpipe,
+		"Banjo" = /obj/item/rogue/instrument/banjo,
+		"Drum" = /obj/item/rogue/instrument/drum,
+		"Flute" = /obj/item/rogue/instrument/flute,
 		"Guitar" = /obj/item/rogue/instrument/guitar,
+		"Harmonica" = /obj/item/rogue/instrument/harmonica,
+		"Harp" = /obj/item/rogue/instrument/harp,
 		"Hurdy-Gurdy" = /obj/item/rogue/instrument/hurdygurdy,
+		"Jaw Harp" = /obj/item/rogue/instrument/jawharp,
+		"Lute" = /obj/item/rogue/instrument/lute,
+		"Psyaltery" = /obj/item/rogue/instrument/psyaltery,
+		"Shamisen" = /obj/item/rogue/instrument/shamisen,
+		"Trumpet" = /obj/item/rogue/instrument/trumpet,
 		"Viola" = /obj/item/rogue/instrument/viola,
 		"Vocal Talisman" = /obj/item/rogue/instrument/vocals,
-		"Psyaltery" = /obj/item/rogue/instrument/psyaltery,
-		"Flute" = /obj/item/rogue/instrument/flute,
-		"Drum" = /obj/item/rogue/instrument/drum,
-		"Shamisen" = /obj/item/rogue/instrument/shamisen,
 	)
 
 /datum/action/cooldown/spell/conjure_instrument/cast(list/targets, mob/living/user = usr)
