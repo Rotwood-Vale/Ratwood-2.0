@@ -43,6 +43,8 @@
 
 /obj/effect/proc_holder/spell/self/spin_web/update_icon()
 	if(action)
+		// Let the transparent pixels of the button accept clicks.
+		action.button.mouse_opacity = MOUSE_OPACITY_OPAQUE
 		action.button_icon_state = action_icon_state
 		action.UpdateButtonIcon()
 
