@@ -17,9 +17,9 @@
 	// Chair state variables
 	var/charge = 0
 	var/max_charge = 100
-	var/brew_required = 48
-	var/current_brew = 0
-	var/max_brew = 96
+	var/brew_required = 50
+	var/current_brew = 100
+	var/max_brew = 100
 	var/chair_skill_level = 4
 
 	var/static/list/brew_overlays = list(
@@ -34,7 +34,7 @@
 
 /obj/structure/chair/frankenstein/zizo
 	chair_skill_level = 2
-	current_brew = 48
+	current_brew = 100
 
 /obj/structure/chair/frankenstein/debug
 	name = "Fulmenor chair (debug)"
@@ -187,10 +187,7 @@
 /obj/item/reagent_containers/glass/bottle/frankenbrew
 	name = "bottle of Reanimation Elixir"
 	desc = "A volatile chemical mixture that helps the deceased conduct electricity. Looks expensive..."
-	list_reagents = list(/datum/reagent/frankenbrew = 48)
-
-/obj/item/reagent_containers/glass/bottle/frankenbrew/third
-	list_reagents = list(/datum/reagent/frankenbrew = 16)
+	list_reagents = list(/datum/reagent/frankenbrew = 50)
 
 /obj/structure/chair/frankenstein/proc/start_cranking_animation()
 	if(cranking)

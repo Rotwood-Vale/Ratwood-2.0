@@ -99,7 +99,7 @@
 /// From /obj/item/organ/proc/Remove() (mob/living/carbon/lost_organ, obj/item/organ/removed, special, drop_if_replaced)
 #define COMSIG_MOB_ORGAN_REMOVED "mob_organ_removed"
 
-/// From /datum/species/proc/spec_attacked_by()
+/// From /datum/species/proc/spec_attacked_by() and /datum/species/proc/harm()
 #define COMSIG_SPECIES_ATTACKED_BY "species_attacked_by"
 
 /// From /mob/living/proc/run_armor_check()

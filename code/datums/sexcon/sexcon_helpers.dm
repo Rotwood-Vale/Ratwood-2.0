@@ -212,6 +212,7 @@
 			to_chat(wife, span_love("I feel a strange surge of warmth inside me... Am I pregnant?.."))
 			wife.mpreg = TRUE
 			record_round_statistic(STATS_IMPREGNATIONS)
+			wife.start_impregnation_lactation()
 		else
 			wife.mpreg_chance = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
 
@@ -228,8 +229,18 @@
 	if(prob(chance))
 		if(reproductive_organ.be_impregnated(src))
 			record_round_statistic(STATS_IMPREGNATIONS)
+			receiver.start_impregnation_lactation()
 		return IMPREG_PROB_DEFAULT
 	return min(chance + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
+
+/// Only affects breasts set to lactate after impregnation, and only the ones present right now
+/mob/living/carbon/human/proc/start_impregnation_lactation()
+	var/obj/item/organ/breasts/breasts = has_breasts()
+	if(!breasts?.lactates_on_impregnation)
+		return
+	breasts.lactates_on_impregnation = FALSE
+	breasts.lactating = TRUE
+	to_chat(src, span_love("My breasts feel tender and heavy..."))
 
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)
 	var/grabstate = null

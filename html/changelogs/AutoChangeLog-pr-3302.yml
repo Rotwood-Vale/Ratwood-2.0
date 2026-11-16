@@ -1,0 +1,4 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - bugfix: "fixed leather armor accidentally having brigandine-tier values."

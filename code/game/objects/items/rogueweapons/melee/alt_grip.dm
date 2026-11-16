@@ -15,7 +15,7 @@
 /obj/item/proc/can_see_altgrip_name(mob/viewer, mob/living/carbon/wielder = null)
 	if(!wielder)
 		wielder = get_altgrip_holder()
-	if(wielder && HAS_TRAIT(wielder, TRAIT_DECEIVING_MEEKNESS))
+	if(wielder && HAS_TRAIT(wielder, TRAIT_GUARD_RAISED))
 		return FALSE
 	if(viewer && HAS_TRAIT(viewer, TRAIT_COMBAT_AWARE))
 		return TRUE
@@ -243,7 +243,7 @@
 /obj/item/proc/can_see_altgrip_balloon(mob/living/carbon/viewer, mob/living/carbon/user)
 	if(!viewer || !user || viewer == user)
 		return FALSE
-	if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
+	if(HAS_TRAIT(user, TRAIT_GUARD_RAISED))
 		return FALSE
 	if(HAS_TRAIT(viewer, TRAIT_COMBAT_AWARE))
 		return TRUE

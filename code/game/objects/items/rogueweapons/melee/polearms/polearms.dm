@@ -354,6 +354,18 @@
 				to_chat(user, span_danger("The target must have a Nervelock account!")) //no stunlocking antags sorry buddy
 				return
 
+			if(HAS_TRAIT(H, TRAIT_LUX_FREAK))
+				to_chat(src, span_warning("[H] resisted the divine punishment on their soul!"))
+				return
+			
+			if(HAS_TRAIT(H, TRAIT_INQUISITION))
+				to_chat(src, span_warning("Dammed octavian's runic arrays dampen divine punishment directed against their agents!"))
+				return
+
+			if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+				to_chat(user, span_warning("The patron of this one shields them from being suppressed."))
+				return
+
 			if(istype(user.used_intent, /datum/intent/priest_smite))
 				HU.visible_message(span_warning("[HU] smites [H] with the [src]!"))
 				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
@@ -1080,9 +1092,9 @@
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/thrust/bad)
-	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/bad)
-	name = "eagle's beak"
-	desc = "A reinforced pole affixed with an ornate steel eagle's head, of which its beak is intended to pierce with great harm."
+	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/bad, /datum/intent/mace/warhammer/pick/ranged)
+	name = "steel lucerne"
+	desc = "A lucerne of sturdy steel. A hefty hammerhead to crack the skull, a spike to punch through helms, and a spear to thrust like any other polearm, all mounted atop a reinforced shaft. Fracture bone and dissent with righteous force. An instrument to soothe the ears of any noble with the sound of a rebel's skull shattering."
 	icon_state = "eaglebeak"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	pixel_y = -16
@@ -1101,6 +1113,7 @@
 	walking_stick = TRUE
 	wdefense = 5
 	wbalance = WBALANCE_HEAVY
+	special = /datum/special_intent/polearm_backstep
 
 /obj/item/rogueweapon/eaglebeak/getonmobprop(tag)
 	. = ..()
@@ -1118,7 +1131,7 @@
 	desc = "A magnificent lucerne of blacksteel. Purpose-made for killing plate-armored opponents, it features a maillebreaker's point and a \
 	flared macehead; excellent for piercing and shattering alloys, respectively. Wrap a length of cloth around the shaft to bear your heraldry."
 	possible_item_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/bad)
-	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust)
+	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust, /datum/intent/mace/warhammer/pick/ranged)
 	icon_state = "bs_eaglebeak"
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
@@ -1293,17 +1306,19 @@
 
 //Only a 'woodenstaff' for the purpose of CDR on spells.
 /obj/item/rogueweapon/woodstaff/implement/greater/sojourner
+	base_implement_name = "sojourner staff"
 	name = "sojourner staff"
 	desc = "What remains of an old psydonic spear. The tip is blunted, with both barbs and trident-like head removed. \
 	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
-	icon_state = "psystaff"//Temp
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "psystaff"
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
 	gripped_intents = list(/datum/intent/spear/thrust/blunted, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood/ranged)
 	force = 18
 	force_wielded = 20//Worse than just using a knife, really, despite the range.
 	thrown_bclass = BCLASS_STAB
 	throwforce = 20
-	max_integrity = 150
+	max_integrity = 200
 	max_blade_int = 180
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE

@@ -78,3 +78,57 @@
 
 /obj/item/clothing/under/roguetown/loincloth/pink
 	color = "#b98ae3"
+
+/obj/item/clothing/under/roguetown/loincloth/deprived
+	color = "#464040"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/pants.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/pants.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+
+/obj/item/clothing/under/roguetown/tights/dhoti
+	name = "dhoti"
+	icon_state = "dhoti"
+	item_state = "dhoti"
+	detail_tag = "_detail"
+	detail_color = CLOTHING_WHITE
+	desc = "A pair of baggy pants of Ranesheni origin, with a long banner-like cloth draped between the two pant legs."
+	salvage_result = /obj/item/natural/cloth
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/pants.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/pants.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+
+/obj/item/clothing/under/roguetown/tights/hose
+	name = "cloth hosen"
+	icon_state = "hose"
+	item_state = "hose"
+	desc = "A pair of cloth leggings, traditionally worn in conjunction with one's shortclothes. These can be combined with maille hosen for \
+	the perfect blend of function-and-fashion; just pray no one has the mind to aim below the belt."
+	body_parts_covered = LEGS|FEET
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	flags_inv = null
+	color = null
+	detail_color = CLOTHING_WHITE
+	altdetail_color = CLOTHING_WHITE
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/pants.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/pants.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+
+/obj/item/clothing/under/roguetown/tights/hose/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/under/roguetown/tights/hose/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)

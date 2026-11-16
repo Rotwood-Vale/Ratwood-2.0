@@ -32,6 +32,7 @@
 		TRAIT_RITUALIST, //Handles conversions, too, now.
 		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 
 	advclass_cat_rolls = list(CTAG_ABSOLVER = 2)
 	job_subclasses = list(

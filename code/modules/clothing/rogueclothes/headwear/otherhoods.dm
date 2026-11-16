@@ -171,13 +171,6 @@
 	return ..()
 
 /obj/item/clothing/head/roguetown/jester/MiddleClick(mob/user)
-	if(!ishuman(user))
-		return
-	if(flags_inv & HIDE_HEADTOP)
-		flags_inv &= ~HIDE_HEADTOP
-	else
-		flags_inv |= HIDE_HEADTOP
-	persist_inv_flags(HIDE_HEADTOP)
-	user.update_inv_head()
+	..()
 	user.update_fov_angles()
 	user.update_vision_cone()

@@ -108,7 +108,7 @@
 	attack_verb = list("freezes")
 	animname = "chop"
 	hitsound = list('sound/combat/hits/pick/genpick (1).ogg')
-	penfactor = 60
+	penfactor = PEN_HEAVY
 	swingdelay = 8//+2
 //	damfactor = 1.2//Not with new wounds!!!!
 	blade_class = BCLASS_BURN

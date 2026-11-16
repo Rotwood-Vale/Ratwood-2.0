@@ -14,16 +14,16 @@
 
 /obj/projectile/bullet/firearm
 	name = "PARENT SMOKEPOWDER PROJECTILE"
-	damage = 80//Do you see how infrequently these things fire...
-	armor_penetration = 90//... and yet I need to explain?
-	range = 30//We want this to go a few screens. Regardless.
+	damage = 90//Do you see how infrequently these things fire...
+	armor_penetration = PEN_BSTEEL //... and yet I need to explain?
+	range = 7 //Effective range? 7 tiles. You aren't sniping with this.
 	embedchance = 100//Yessir.
 	speed = 0.1//Take a guess.
 	npc_simple_damage_mult = 4//320, at 80 base.
 	accuracy = 90//Their point. Very slow firing. Yet powerful and accurate.
 	bonus_accuracy = 10//As opposed to using PER.
 	damage_type = BRUTE
-	woundclass = BCLASS_PIERCE//This assures pen, similar to crossbows.
+	woundclass = BCLASS_PIERCE
 	flag = "piercing"//Vestigial, but just in case we use another flag later.
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
@@ -46,6 +46,11 @@
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead
 
 /obj/projectile/bullet/firearm/lead/on_hit(atom/target)
+	if(isliving(target))
+		var/mob/living/target_living = target
+		if(target_living.has_status_effect(/datum/status_effect/debuff/exposed) || target_living.has_status_effect(/datum/status_effect/debuff/vulnerable))
+			damage *= 2
+
 	. = ..()
 
 	var/mob/living/L = firer

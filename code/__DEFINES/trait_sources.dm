@@ -10,6 +10,8 @@
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define TRAIT_VIRTUE "virtue"
+/// Guarded's own toggles, see TRAIT_DECEIVING_MEEKNESS
+#define GUARDED_TRAIT "guarded"
 #define TRAIT_MIRACLE "miracle"
 #define UNCONSCIOUS_BLIND "unconscious_blind"
 #define EYE_DAMAGE "eye_damage"

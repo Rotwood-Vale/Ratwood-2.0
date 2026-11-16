@@ -1,0 +1,5 @@
+author: "coffeecoffeecoffee"
+delete-after: True
+changes:
+  - rscadd: "Gave pick intent back to the steel lucerne"
+  - balance: "changed 2-tile pick from 40 AP to 50 AP"

@@ -321,7 +321,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = TRUE
-
+	
 /obj/item/rogueweapon/stoneaxe/woodcut/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -425,8 +425,8 @@
 /obj/item/rogueweapon/stoneaxe/battle/steppesman
 	name = "aavnic valaška"
 	desc = "A steel axe of Aavnic make that combines a deadly weapon with a walking stick - hence its pointed end. It has a flat head that fits the hand comfortably, and it's usable for chopping and smashing. You could probably stab someone if you tried really hard."
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/smash)
-	gripped_intents = list(/datum/intent/axe/cut ,/datum/intent/axe/chop, /datum/intent/stab)
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/smash, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/stab, /datum/intent/pick)
 	force_wielded = 28	//No damage changes for wielded/unwielded
 	icon = 'icons/roguetown/weapons/axes32.dmi'
 	icon_state = "valaskapick"
@@ -462,7 +462,7 @@
 	name = "ćiupaga lunge"
 	desc = "Grip your ćiupaga by the tail-end of the handle and swing in a circular motion to reach further ahead. It will deal extra damage if perfectly positioned, otherwise you'll just hit them with the handle."
 	damfactor = 1.75
-	penfactor = 42
+	penfactor = PEN_HEAVY
 	effective_range = 2
 	effective_range_type = EFF_RANGE_EXACT
 	sharpness_penalty = 2
@@ -494,7 +494,7 @@
 /obj/item/rogueweapon/greataxe
 	force = 15
 	force_wielded = 30
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop) //bash is for nonlethal takedowns, only targets limbs
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/chop/heavy, /datum/intent/axe/sweep)
 	name = "greataxe"
 	desc = "A iron great axe, a long-handled axe with a single blade made for ruining someone's day beyond any measure.."
@@ -533,7 +533,7 @@
 /obj/item/rogueweapon/greataxe/steel
 	force = 15
 	force_wielded = 30
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop) //bash is for nonlethal takedowns, only targets limbs
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/sweep)
 	name = "steel greataxe"
 	desc = "A steel great axe, a long-handled axe with a single blade made for ruining someone's day beyond any measure.."
@@ -560,7 +560,7 @@
 /obj/item/rogueweapon/greataxe/bronze
 	force = 15
 	force_wielded = 30
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop) //bash is for nonlethal takedowns, only targets limbs
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/chop/heavy, /datum/intent/axe/sweep)
 	name = "bronze greataxe"
 	desc = "A massive staff with a bronze axhead mantled onto the wood. It splits and carves from afar with lethal force; be it lumber or limbs."
@@ -667,7 +667,7 @@
 /obj/item/rogueweapon/greataxe/steel/doublehead
 	force = 15
 	force_wielded = 35
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop) //bash is for nonlethal takedowns, only targets limbs
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/sweep)
 	name = "double-headed steel greataxe"
 	desc = "A steel great axe with a wicked double-bladed head. Perfect for cutting either men or trees into stumps.."
@@ -680,13 +680,31 @@
 	name = "vicious greataxe"
 	desc = "A greataxe who's edge thrums with the motive force, violence, oh, sweet violence!"
 	icon_state = "graggargaxe"
+	unenchantable = TRUE
 	force = 20
 	force_wielded = 40
 	max_blade_int = 400
 	icon = 'icons/roguetown/weapons/64.dmi'
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/chop/heavy, /datum/intent/axe/sweep)
+	special = /datum/special_intent/graggar_break_the_ranks
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "AXE", "RENDERED ASUNDER")
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/graggar
+	name = "vicious tomahawk"
+	icon_state = "graggartomahawk"
+	desc = "A handaxe of greater stature, intricately decorated with the Sinistar's heraldry. Worshippers wield it to strengthen their soul's connection \
+	to the force of violence; a blessing, before they pursue the most dangerous game of all."
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash)
+	force = 30
+	force_wielded = 35
+	throwforce = 30 // Hey it's a throwing axe
+	wdefense = 5
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "AXE", "RENDERED ASUNDER")
 

@@ -35,11 +35,17 @@
 #define TRAIT_HEAVYARMOR "Plate Training"
 #define TRAIT_DODGEEXPERT "Expert Dodger"
 #define TRAIT_MAGEARMOR "Magic Barrier"
+/// Guarded: can raise and lower the guard. Grant this, never TRAIT_GUARD_RAISED
 #define TRAIT_DECEIVING_MEEKNESS "Deceiving Meekness"
+/// The guard is currently raised. Only the Guarded toggles add it, see TRAIT_DECEIVING_MEEKNESS
+#define TRAIT_GUARD_RAISED "Guard Raised"
+/// Identifying features hidden by Guarded's anonymity toggle
+#define TRAIT_ANONYMOUS "Anonymous"
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
 #define TRAIT_CRIT_THRESHOLD "NPC Respect Crit Threshold"
 #define TRAIT_JOURNEYS_END "Journey's End"
 #define TRAIT_BLOOD_RESISTANCE "Thick Blooded" //50% less bleeding
+#define TRAIT_RAGE "Rage"
 #define TRAIT_IRONMAN "Construct" // basically rotman but not really, used for diff flavor of some things
 #define TRAIT_CRITICAL_WEAKNESS "Critical Weakness"
 #define TRAIT_SHATTER_WEAKNESS "Brittle Form"
@@ -71,6 +77,7 @@
 /// Trait given only temporarily to prevent being able to Z fall (at all)
 #define TRAIT_PREVENT_Z_FALL "Prevent Z fall" // DO NOT GIVE THIS UNDER NORMAL CIRCUMSTANCES
 #define TRAIT_MISSING_NOSE "Missing Nose" //halved stamina regeneration
+#define TRAIT_OVERWEIGHT "Corpulent"
 #define TRAIT_DISFIGURED "Disfigured"
 #define TRAIT_SPELLCOCKBLOCK "Bewitched" //prevents spellcasting
 #define TRAIT_ANTIMAGIC	"Anti-Magic"
@@ -112,6 +119,7 @@
 #define TRAIT_SEA_DRINKER "Denizen of the Deep"
 /// Won't be frozen when swimming in water
 #define TRAIT_WATERLOVING "Water loving"
+#define TRAIT_BOGWALKER "Bog Walker"
 #define TRAIT_STUDENT		"Student"
 #define TRAIT_INTELLECTUAL "Intellectual"
 #define TRAIT_GRAVEROBBER "Experienced Grave Robber"
@@ -354,6 +362,7 @@
 #define TRAIT_SWIFTCAST "Spell Acceleration"
 #define TRAIT_COMBAT_AWARE	"Combat Aware"
 #define TRAIT_SILVER_WEAK "Silver Weakness"
+#define TRAIT_BITENORECOIL "Sturdy Fangs"
 /// Held while wearing a silver psycross in a valid slot. Wards off a vampire trying to drink from you.
 #define TRAIT_WORN_SILVER_PSICROSS "worn_silver_psicross"
 #define TRAIT_ASSASSIN	"Assassin"
@@ -409,6 +418,7 @@
 // Intended for very powerful, very specific or gimmicky weapon skills.
 // Firearms, as an example, is one of them. We do not let someone get above JMAN without it.
 #define TRAIT_FUSILIER "Fusilier"//Firearm above JMAN, since mass training is possible. On top of removing dangerous interactions.
+#define TRAIT_ENGINEER "Engineer's Knowledge"// this should never be given to anyone besides the guild engineer.
 
 //item and enchantment traits should go under here as new ones get added
 #define TRAIT_ENGINEERING_GOGGLES "Engineering Goggles"
@@ -501,6 +511,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CRITICAL_RESISTANCE = span_info("My constitution is iron-clad. My lifeblood flows slowly, I can resist the first few criitical wounds that would fell others, but repeated punishment will overwhelm my defenses."),
 	TRAIT_JOURNEYS_END = span_info ("As the lyfe ebbs from my veins, my resolve hardens to push through. Do not go quietly into that good nite."),
 	TRAIT_BLOOD_RESISTANCE = span_info("My body is taut, and my blood runs slower. I bleed far less than others."),
+	TRAIT_RAGE = span_info ("PAIN AND INJURY FUELS MY BATTLERAGE!"),
 	TRAIT_CRITICAL_WEAKNESS = span_danger("I am weak to wounds that others could survive."),
 	TRAIT_SHATTER_WEAKNESS = span_danger("My form is especially brittle and frail. A critical, shattering blow to my chest or spine will kill me instantly."),
 	TRAIT_DNR = span_danger("My lux' vigor is weak. There is no hope for me. This lyfe is all I have."),
@@ -524,6 +535,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GRABIMMUNE = span_warning("My great strength, or slippery agility, prevents others from getting ahold of me!"),
 	TRAIT_DISFIGURED = span_warning("No one can recognize me..."),
 	TRAIT_MISSING_NOSE = span_warning("I struggle to breathe."),
+	TRAIT_OVERWEIGHT = span_warning("I've indulged deeply in lyfe's pleasures, and my waistline has taken a toll."),
 	TRAIT_SPELLCOCKBLOCK = span_warning("I cannot cast any spells."),
 	TRAIT_ANTIMAGIC = "I am immune to most forms of magic.",
 	TRAIT_ANTISCRYING = "I am immune to most forms of magical divination.",
@@ -553,6 +565,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_ABYSSOR_SWIM = span_info("I get far less tired when swimming than my peers."),
 	TRAIT_LONGSTRIDER = span_info("Each of my steps finds it's footing no matter how treacherous the terrain is."),
 	TRAIT_TRAINED_SMITH = span_info("I've spent long training, and with some more, I will be able to smith legendary items."),
+	TRAIT_ENGINEER = span_info("I have been trained to create specialized weapons and machines."),
 	TRAIT_KAZENGUNITE_SMITH = span_info("I have studied the old Kazengunite smithing traditions — the folding of tamahagane, the shaping of kozane, the tempering of the yakiba. I can now craft their arms and armour at the anvil."),
 	TRAIT_CAUTIOUS_FISHER = span_info("I know my way around the dangers of fishing, and know how to avoid unwanted attention from the depths."),
 	TRAIT_DEATHSIGHT = span_info("I can feel when someone nearby draws the Undermaiden's attention."),
@@ -658,7 +671,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_EXPERT_HUNTER = span_greentext("I am a skilled local hunter; my hunting skill can progress to expert levels."),
 	TRAIT_DEATHLESS = span_info("I cannot truly die by ordinary means."),
 	TRAIT_NOWW = span_info("Dendor's madness shall find no hold in me."),
-	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
+	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can strike me down in a single blow."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
 	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in the Vale. I can spot an invader at a glance."),
 	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly."),
@@ -714,6 +727,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
 	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean."),
+	TRAIT_BOGWALKER = span_info("The bog's blessing graces me. Kneestingers and leeches will not harm me, and I cannot trigger ambushes within the bog unless sprinting."),
 	TRAIT_DEADITE_RESISTANCE = span_info("I was raised in rot-infested lands. My body is more resistant to the infection."),
 	TRAIT_COLD_RESISTANCE = span_info("I've grown a tolerance to the cold, due to the climate of my homeland."),
 	TRAIT_HEAT_RESISTANCE = span_info("I've grown a tolerance to heat, due to the climate of my homeland."),
@@ -727,7 +741,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_LOCAL_KNOWLEDGE = span_info("I've lived in Ferentia long enough to avoid its dangers."),
 	TRAIT_SOFT_FOOTED = span_info("In the far-off land of Kazengun, it's considered impolite to walk noisily. My steps are soft and light."),
 	TRAIT_ANCESTOR_GUARDIAN = span_info("In Avar, we venerate our ancestors, and they ward us from danger. From time to time, they shall guide my hand in battle."),
-	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!")
+	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!"),
+	TRAIT_BITENORECOIL = span_info("My fangs are sturdy, and I do not suffer recoil when biting.")
 ))
 
 // trait accessor defines
@@ -823,6 +838,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOTIGHTGRABMESSAGE "notightgrabmessage" // Hides grab tightening messages.
 #define TRAIT_NOSSDINDICATOR "nossdindicator" // Hides the SSD indicator. Used with scrying.
 #define TRAIT_NOSTRUGGLE "nostruggle" // Instant grabs on someone else.
+#define TRAIT_OOZE_SUFFERING "ooze_suffering" // Held by a suffering ooze; dying now is permanent.
 #define TRAIT_GARROTED "garroted" // Garrote-wired. Used for a snowflaked grab with item relevant tracking.
 #define TRAIT_INDEXED "indexed" // Used in Indexer-mailing to prevent false-flags.
 #define TRAIT_ACCUSED "accused" // Used in Indexer-mailing to prevent false-flags.
@@ -833,6 +849,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IGNOREDAMAGESLOWDOWN "Ignore Damage Slowdown"
 #define TRAIT_RIGIDMOVEMENT		"Ignore Natural Health Slowdown"
 #define TRAIT_DEATHCOMA			"Death Coma" //Causes death-like unconsciousness
+#define TRAIT_DEATHS_DOOR		"Death's Door" //Shows the death's door overlay and lets the mob succumb regardless of health
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
 #define TRAIT_FAKEDEATH			"Fake Death" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_STUNIMMUNE		"stun_immunity"
@@ -906,6 +923,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRUQK				"druqk"
 #define TRAIT_BURIED_COIN_GIVEN "buried_coin_given" // prevents a human corpse from being used for a corpse multiple times
 #define TRAIT_BLOODLOSS_IMMUNE "bloodloss_immune" // can bleed, but will never die from blood loss
+#define TRAIT_NO_BLEEDING "no_bleeding" // bleeding wounds do not cause blood loss
+#define TRAIT_NO_BLOODLOSS_EFFECTS "no_bloodloss_effects" // being low on blood does not have any effects
+#define TRAIT_NO_BLOOD_REGEN "no_blood_regen" // prevents blood regeneration for carbons and humans passively
 #define TRAIT_NO_BITE "no_bite" //prevents biting
 #define TRAIT_LEGENDARY_ALCHEMIST		"Expert Herb Finder"
 #define TRAIT_STUCKITEMS "stuck_items" // Prevents removing items except for hand slots

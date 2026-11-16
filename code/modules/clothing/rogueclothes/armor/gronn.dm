@@ -171,7 +171,7 @@
 
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/AdjustClothes(mob/user)
-	if(loc == user)
+	if(is_worn_or_stored_by(user))
 		if(adjustable == CAN_CADJUST)
 			playsound(src, 'sound/foley/equip/rummaging-03.ogg', 50, TRUE)
 			if(on)
@@ -260,7 +260,7 @@
 	icon_state = "gronnplate"
 	item_state = "gronnplate"
 	boobed = FALSE
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
 	smeltresult = /obj/item/ingot/iron
 

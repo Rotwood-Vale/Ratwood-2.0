@@ -147,7 +147,7 @@
 	var/list/vice_names
 
 	// If you fail this check, the spell will try to convincingly lie to you about the vices you don't already know.
-	if(HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && user.get_skill_level(/datum/skill/magic/holy) <= SKILL_LEVEL_NOVICE)
+	if(HAS_TRAIT(target, TRAIT_GUARD_RAISED) && user.get_skill_level(/datum/skill/magic/holy) <= SKILL_LEVEL_NOVICE)
 		if(!fake_vices_cache[target])
 			
 			// Gather up what vices the caster knows to be true, then randomize the rest.

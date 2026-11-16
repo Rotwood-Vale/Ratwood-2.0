@@ -1,4 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Ruma Clan Gun-in and Sasu tattoos clear their broken state when they finish regenerating and explain their passive repair when examined."

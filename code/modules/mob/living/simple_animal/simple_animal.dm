@@ -783,7 +783,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
-		if(L.stat == DEAD)
+		if(L.looks_dead())
 			return FALSE
 	return TRUE
 

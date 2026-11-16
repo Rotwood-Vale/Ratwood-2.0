@@ -1,0 +1,6 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - balance: "Message costs 1 point now."
+  - balance: "Water bolt can be self casted and its CD lowered to 2 seconds. Water bolt now costs 2 points."
+  - rscadd: "Create campfire can be casted on top of hearths and tables but not turfs like walls."

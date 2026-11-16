@@ -1,0 +1,4 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Bishop no longer gets to call divine punishment on inqusition, psydonite conversion now clenses related debuffs/curses"

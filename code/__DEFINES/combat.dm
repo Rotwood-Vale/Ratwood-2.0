@@ -472,4 +472,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
 #define MAX_DODGE_CEIL 5
+#define MAX_DODGE_START 0	// We start at (presumed) 90%
 #define MAX_DODGE_FLOOR -15
+#define MAX_DODGE_CLAMP -5 // at 85%. Base is 90%.

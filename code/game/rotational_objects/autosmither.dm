@@ -50,7 +50,7 @@
 
 	var/list/pre_start_list = list(STEP_FIDDLE, STEP_BUTTON, STEP_LEVER)
 	var/list/post_start_list = list(STEP_BUTTON, STEP_LEVER, STEP_FIDDLE)
-	debris = list(/obj/item/roguegear = 2, /obj/item/natural/wood/plank = 2, /obj/item/ingot/steel = 1)
+	static_debris = list(/obj/item/roguegear/bronze = 4, /obj/item/natural/wood/plank = 4, /obj/item/ingot/steel = 2)
 
 /obj/structure/autosmither/Initialize(mapload)
 	. = ..()
@@ -128,8 +128,8 @@
 	for(var/datum/anvil_recipe/recipe as anything in regular_recipes)
 		var/list/requirements = recipe_req_data(recipe)
 		UNTYPED_LIST_ADD(recipes, list(
-			"name" = recipe.name,
-			"category" = recipe.i_type || recipe.category,
+			"name" = recipe.name || "Unknown Recipe",
+			"category" = recipe.i_type || recipe.category || "Unknown Category",
 			"ref" = REF(recipe),
 			"icon" = spritesheet.icon_class_name(sanitize_css_class_name("recipe_[REF(recipe)]")),
 			"icon_file" = "[initial(recipe.created_item:icon)]",

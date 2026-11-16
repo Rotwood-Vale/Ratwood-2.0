@@ -106,7 +106,7 @@
 	for(var/obj/structure/S in T.contents)
 		if(QDELETED(S))
 			continue
-		S.take_damage(direct_damage * 2, BRUTE, "blunt")
+		S.take_damage_from(owner, direct_damage * 2, BRUTE, "blunt", cause = "with [name]")
 	T.take_damage(direct_damage * 2, BRUTE, "blunt")
 	var/mob/living/carbon/human/caster = owner
 	var/static/list/random_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
