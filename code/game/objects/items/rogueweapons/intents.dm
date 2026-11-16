@@ -123,7 +123,7 @@
 	)
 
 /datum/intent/Destroy()
-	if(chargedloop)
+	if(istype(chargedloop))
 		QDEL_NULL(chargedloop)
 	if(mob_light)
 		QDEL_NULL(mob_light)
@@ -369,35 +369,47 @@
 	noaa = TRUE
 	pointer = 'icons/effects/mousemice/human_give.dmi'
 
+/**
+ * Positional spell-charge loops, active from on_charge_start() until on_mouse_up().
+ *
+ * Tokens track movement during a charge. Native repeat keeps playback active when the charge
+ * outlasts its clip.
+ */
+
 /datum/looping_sound/invokegen
 	mid_sounds = list('sound/magic/charging.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokefire
 	mid_sounds = list('sound/magic/charging_fire.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokelightning
 	mid_sounds = list('sound/magic/charging_lightning.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokeholy
 	mid_sounds = list('sound/magic/holycharging.ogg')
 	mid_length = 320
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokeascendant
 	mid_sounds = list('sound/magic/chargingold.ogg')
 	mid_length = 320
 	volume = 100
 	extra_range = 5
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/flailswing
 	mid_sounds = list('sound/combat/wooshes/flail_swing.ogg')

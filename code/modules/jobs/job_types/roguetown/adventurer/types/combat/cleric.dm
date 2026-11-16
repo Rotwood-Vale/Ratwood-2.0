@@ -353,7 +353,7 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	if(H.mind)
 		if(!istype(H?.patron, /datum/patron/old_god)) //Psydonics are special.
-			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Capped to T1 miracles.
+			C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)//Capped to T2 miracles. Devotion at T2.
 			var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Weapon")
 			var/oath_choice = input(H, "Choose your OATH.", "PROFESS YOUR BLESSINGS.") as anything in oaths
 			switch(oath_choice)

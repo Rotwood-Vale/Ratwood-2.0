@@ -607,7 +607,7 @@
 			var/turf/T = locate(center.x + dx, center.y + dy, center.z)
 			if(!T || isclosedturf(T))
 				continue
-			new /obj/structure/glowshroom(T)
+			new /obj/effect/temp_visual/glowshroom_dendorite(T)
 
 //Poison tr*p
 

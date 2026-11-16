@@ -1482,3 +1482,24 @@
 	result = /obj/item/carvedgem/chitin/beetle
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_MASTER
+
+/datum/crafting_recipe/roguetown/gemcarving/head_roguetown_circlet_carvedgem_porcelain
+	name = "porcelain circlet"
+	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/porcelain
+	reqs = list(/obj/item/natural/clay/porcelain = 1)
+	craftdiff = 3
+	display_category = ITEM_CAT_DECORATION
+
+/datum/crafting_recipe/roguetown/gemcarving/mask_rogue_xylixmask_ceramic
+	name = "ceramic mask"
+	result = /obj/item/clothing/mask/rogue/xylixmask/ceramic
+	reqs = list(/obj/item/natural/clay/porcelain = 1)
+	craftdiff = 3
+	display_category = ITEM_CAT_DECORATION
+
+/datum/crafting_recipe/roguetown/gemcarving/mask_rogue_xylixmask_weathered
+	name = "weathered mask"
+	result = /obj/item/clothing/mask/rogue/xylixmask/weathered
+	reqs = list(/obj/item/natural/clay/porcelain = 1)
+	craftdiff = 3
+	display_category = ITEM_CAT_DECORATION

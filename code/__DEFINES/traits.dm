@@ -77,6 +77,7 @@
 /// Trait given only temporarily to prevent being able to Z fall (at all)
 #define TRAIT_PREVENT_Z_FALL "Prevent Z fall" // DO NOT GIVE THIS UNDER NORMAL CIRCUMSTANCES
 #define TRAIT_MISSING_NOSE "Missing Nose" //halved stamina regeneration
+#define TRAIT_OVERWEIGHT "Corpulent"
 #define TRAIT_DISFIGURED "Disfigured"
 #define TRAIT_SPELLCOCKBLOCK "Bewitched" //prevents spellcasting
 #define TRAIT_ANTIMAGIC	"Anti-Magic"
@@ -361,6 +362,7 @@
 #define TRAIT_SWIFTCAST "Spell Acceleration"
 #define TRAIT_COMBAT_AWARE	"Combat Aware"
 #define TRAIT_SILVER_WEAK "Silver Weakness"
+#define TRAIT_BITENORECOIL "Sturdy Fangs"
 /// Held while wearing a silver psycross in a valid slot. Wards off a vampire trying to drink from you.
 #define TRAIT_WORN_SILVER_PSICROSS "worn_silver_psicross"
 #define TRAIT_ASSASSIN	"Assassin"
@@ -533,6 +535,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GRABIMMUNE = span_warning("My great strength, or slippery agility, prevents others from getting ahold of me!"),
 	TRAIT_DISFIGURED = span_warning("No one can recognize me..."),
 	TRAIT_MISSING_NOSE = span_warning("I struggle to breathe."),
+	TRAIT_OVERWEIGHT = span_warning("I've indulged deeply in lyfe's pleasures, and my waistline has taken a toll."),
 	TRAIT_SPELLCOCKBLOCK = span_warning("I cannot cast any spells."),
 	TRAIT_ANTIMAGIC = "I am immune to most forms of magic.",
 	TRAIT_ANTISCRYING = "I am immune to most forms of magical divination.",
@@ -668,7 +671,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_EXPERT_HUNTER = span_greentext("I am a skilled local hunter; my hunting skill can progress to expert levels."),
 	TRAIT_DEATHLESS = span_info("I cannot truly die by ordinary means."),
 	TRAIT_NOWW = span_info("Dendor's madness shall find no hold in me."),
-	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
+	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can strike me down in a single blow."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
 	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in the Vale. I can spot an invader at a glance."),
 	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly."),
@@ -738,7 +741,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_LOCAL_KNOWLEDGE = span_info("I've lived in Ferentia long enough to avoid its dangers."),
 	TRAIT_SOFT_FOOTED = span_info("In the far-off land of Kazengun, it's considered impolite to walk noisily. My steps are soft and light."),
 	TRAIT_ANCESTOR_GUARDIAN = span_info("In Avar, we venerate our ancestors, and they ward us from danger. From time to time, they shall guide my hand in battle."),
-	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!")
+	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!"),
+	TRAIT_BITENORECOIL = span_info("My fangs are sturdy, and I do not suffer recoil when biting.")
 ))
 
 // trait accessor defines
@@ -845,6 +849,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IGNOREDAMAGESLOWDOWN "Ignore Damage Slowdown"
 #define TRAIT_RIGIDMOVEMENT		"Ignore Natural Health Slowdown"
 #define TRAIT_DEATHCOMA			"Death Coma" //Causes death-like unconsciousness
+#define TRAIT_DEATHS_DOOR		"Death's Door" //Shows the death's door overlay and lets the mob succumb regardless of health
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
 #define TRAIT_FAKEDEATH			"Fake Death" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_STUNIMMUNE		"stun_immunity"
@@ -918,6 +923,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRUQK				"druqk"
 #define TRAIT_BURIED_COIN_GIVEN "buried_coin_given" // prevents a human corpse from being used for a corpse multiple times
 #define TRAIT_BLOODLOSS_IMMUNE "bloodloss_immune" // can bleed, but will never die from blood loss
+#define TRAIT_NO_BLEEDING "no_bleeding" // bleeding wounds do not cause blood loss
+#define TRAIT_NO_BLOODLOSS_EFFECTS "no_bloodloss_effects" // being low on blood does not have any effects
+#define TRAIT_NO_BLOOD_REGEN "no_blood_regen" // prevents blood regeneration for carbons and humans passively
 #define TRAIT_NO_BITE "no_bite" //prevents biting
 #define TRAIT_LEGENDARY_ALCHEMIST		"Expert Herb Finder"
 #define TRAIT_STUCKITEMS "stuck_items" // Prevents removing items except for hand slots

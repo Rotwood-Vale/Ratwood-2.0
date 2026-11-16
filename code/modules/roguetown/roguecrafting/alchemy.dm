@@ -92,7 +92,6 @@
 	reqs = list(/obj/item/clothing/mask/cigarette/rollie/nicotine = 1, /obj/item/alch/mentha = 1)
 	craftdiff = 1
 
-//Hard to craft but feasable, will give ONE vial but that has 10 units so, enough to cure 2 people if they ration it.
 /datum/crafting_recipe/roguetown/alchemy/curerot
 	name = "rot cure potion"
 	category = "Table"

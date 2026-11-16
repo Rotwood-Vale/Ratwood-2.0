@@ -8,7 +8,7 @@
 
 /obj/item/clothing/attack_right(mob/user)
 	. = ..()
-	if(adjustable && loc == user)
+	if(adjustable && is_worn_or_stored_by(user))
 		AdjustClothes(user)
 	if(hoodtype)
 		ToggleHood(user)

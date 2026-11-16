@@ -338,10 +338,10 @@
 	if(!soundloop)
 		return
 	if(show_working_anim())
-		if(soundloop.stopped)
+		if(!soundloop.is_active())
 			soundloop.start()
 		return
-	if(!soundloop.stopped)
+	if(soundloop.is_active())
 		soundloop.stop()
 
 /obj/structure/autosmither/proc/show_working_anim()
