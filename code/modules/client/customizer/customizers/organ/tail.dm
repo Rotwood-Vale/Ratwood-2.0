@@ -17,9 +17,17 @@
 	var/datum/organ_dna/tail/tail_dna = organ_dna
 	var/datum/customizer_entry/organ/tail/tail_entry = entry
 	tail_dna.fertility = tail_entry.fertility
+	tail_dna.tailmaw_fluid = (tail_entry.tailmaw_fluid in GLOB.tailmaw_fluid_options) ? tail_entry.tailmaw_fluid : "Default"
 
 /datum/customizer_entry/organ/tail
 	var/fertility = TRUE
+	var/tailmaw_fluid = "Default"
+
+/datum/customizer_choice/organ/tail/validate_entry(datum/preferences/prefs, datum/customizer_entry/entry)
+	..()
+	var/datum/customizer_entry/organ/tail/tail_entry = entry
+	if(!(tail_entry.tailmaw_fluid in GLOB.tailmaw_fluid_options))
+		tail_entry.tailmaw_fluid = "Default"
 
 /datum/customizer_choice/organ/tail/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
@@ -27,13 +35,24 @@
 		return
 	var/datum/customizer_entry/organ/tail/tail_entry = entry
 	dat += "<br>Fertile: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=fertile'>[tail_entry.fertility ? "Fertile" : "Sterile"]</a>"
+	dat += "<br>Fluid: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=fluid'>[tail_entry.tailmaw_fluid]</a>"
 
 /datum/customizer_choice/organ/tail/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
-	if((organ_type != /obj/item/organ/tail/manticore && entry.accessory_type != /datum/sprite_accessory/tail/manticore) || href_list["customizer_task"] != "fertile")
+	if(organ_type != /obj/item/organ/tail/manticore && entry.accessory_type != /datum/sprite_accessory/tail/manticore)
 		return
 	var/datum/customizer_entry/organ/tail/tail_entry = entry
-	tail_entry.fertility = !tail_entry.fertility
+	switch(href_list["customizer_task"])
+		if("fertile")
+			tail_entry.fertility = !tail_entry.fertility
+		if("fluid")
+			var/editing_slot = prefs.default_slot
+			var/old_choice = entry.customizer_choice_type
+			var/old_fluid = tail_entry.tailmaw_fluid
+			var/choice = tgui_input_list(user, "Choose your tailmaw's fluid. Emberwine and honey retain their normal reagent effects.", "Tailmaw Fluid", GLOB.tailmaw_fluid_options, old_fluid)
+			if(!(choice in GLOB.tailmaw_fluid_options) || !user || user.client != prefs.parent || prefs.default_slot != editing_slot || prefs.get_customizer_entry_for_customizer_type(customizer_type) != entry || entry.customizer_choice_type != old_choice || tail_entry.tailmaw_fluid != old_fluid)
+				return
+			tail_entry.tailmaw_fluid = choice
 
 /datum/customizer/organ/tail/vulpkanin
 	customizer_choices = list(/datum/customizer_choice/organ/tail/vulpkanin)

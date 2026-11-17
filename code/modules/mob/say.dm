@@ -51,7 +51,7 @@
 	set hidden = TRUE
 	set category = "IC"
 
-	display_typing_indicator()
+	display_emote_typing_indicator()
 	var/message = input(usr, "", "me") as text|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator(length(message) ? "sent" : "closed input")		// clear it immediately!
@@ -86,7 +86,7 @@
 	set category = "IC"
 	set hidden = 1
 
-	display_typing_indicator()
+	display_emote_typing_indicator()
 	var/message = input(usr, "", "me") as message|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator(length(message) ? "sent" : "closed input")

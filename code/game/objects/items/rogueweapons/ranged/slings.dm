@@ -63,6 +63,7 @@
 //objs
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling
+	anvilrepair = /datum/skill/craft/crafting
 	name = "sling"
 	desc = "Twisted fibers manifest into a strung pouch capable of hurling stones afar."
 	icon = 'icons/roguetown/weapons/misc32.dmi'

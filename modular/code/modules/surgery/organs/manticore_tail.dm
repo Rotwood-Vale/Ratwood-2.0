@@ -1,3 +1,9 @@
+GLOBAL_LIST_INIT(tailmaw_fluid_options, list(
+	"Default" = /datum/reagent/erpjuice/femcum,
+	"Emberwine" = /datum/reagent/consumable/ethanol/beer/emberwine,
+	"Honey" = /datum/reagent/consumable/honey,
+))
+
 // Manticore Tail Organ
 // On insertion, automatically attaches the intimate_reaction/manticore_tail
 // component which produces movement and sex-received flavor text.
@@ -27,6 +33,7 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	accessory_type = /datum/sprite_accessory/tail/manticore
 	can_wag = TRUE
 	organ_dna_type = /datum/organ_dna/tail
+	var/tailmaw_fluid = "Default"
 	var/fertility = TRUE
 	var/pregnant = FALSE
 	var/impregnation_probability = IMPREG_PROB_DEFAULT
@@ -69,6 +76,7 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	..()
 	var/datum/organ_dna/tail/tail_dna = organ_dna
 	tail_dna.fertility = fertility
+	tail_dna.tailmaw_fluid = tailmaw_fluid
 
 /obj/item/organ/tail/manticore/be_impregnated(mob/living/carbon/human/father)
 	if(!owner || owner.stat == DEAD || !fertility)
@@ -81,6 +89,7 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	return TRUE
 
 /datum/organ_dna/tail
+	var/tailmaw_fluid = "Default"
 	var/fertility = TRUE
 
 /datum/organ_dna/tail/imprint_organ(obj/item/organ/organ)
@@ -88,6 +97,7 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	if(istype(organ, /obj/item/organ/tail/manticore))
 		var/obj/item/organ/tail/manticore/tail = organ
 		tail.fertility = fertility
+		tail.tailmaw_fluid = (tailmaw_fluid in GLOB.tailmaw_fluid_options) ? tailmaw_fluid : "Default"
 
 /obj/item/organ/tail/manticore/proc/get_examine_text(mob/living/carbon/human/looker)
 	if(!owner)
@@ -160,3 +170,6 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 
 /obj/item/organ/tail/manticore/spriteless/is_plain_tailmaw()
 	return TRUE
+
+/obj/item/organ/tail/manticore/proc/get_fluid_reagent()
+	return GLOB.tailmaw_fluid_options[tailmaw_fluid] || /datum/reagent/erpjuice/femcum

@@ -609,6 +609,7 @@
 	var/list/grip = I.grip_offset(dir, mirrored)
 	// Keep the flourish visible even when this hand normally renders behind the body.
 	spin_appearance.layer = layer + 0.1
+	spin_appearance.appearance_flags |= KEEP_APART // Do not flatten the flourish into the human's KEEP_TOGETHER body.
 
 	var/atom/movable/flick_visual/spin = flick_overlay_view(spin_appearance, speed + 2)
 	if(spin)
