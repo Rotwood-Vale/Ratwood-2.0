@@ -1,0 +1,4 @@
+author: "ronfino"
+delete-after: True
+changes:
+  - rscadd: "Picking/Blunt-attacking boulders increases Mining skill"
