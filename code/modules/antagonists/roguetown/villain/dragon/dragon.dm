@@ -2,9 +2,9 @@
 	slot_flags = null
 	name = "dragon scales"
 	desc = "an impenetrable coat of greed."
-	mob_overlay_icon = 'icons/roguetown/mob/monster/gnoll.dmi'
-	icon = 'icons/roguetown/mob/monster/gnoll.dmi'
-	icon_state = "berserker"
+	mob_overlay_icon = 'icons/roguetown/mob/monster/player_dragon.dmi'
+	icon = 'icons/roguetown/mob/monster/player_dragon.dmi'
+	icon_state = "empty"
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
 	armor = ARMOR_DRAGON_STRONG

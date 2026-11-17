@@ -75,8 +75,8 @@
 	REMOVE_TRAIT(src, TRAIT_LAMIAN_TAIL, TRAIT_VIRTUE)
 	REMOVE_TRAIT(src, TRAIT_LAMIAN_TAIL, TRAIT_GENERIC)
 
-	icon_state = "firepelt"
-	dna?.species?.custom_base_icon = "firepelt"
+	icon_state = "dragon"
+	dna?.species?.custom_base_icon = "dragon"
 
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -164,4 +164,5 @@
 		H.set_species(/datum/species/dragon)
 		H.def_intent_change(INTENT_PARRY)
 		H.skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/dragon_armor(H)
+		neck = /obj/item/storage/belt/rogue/pouch/healing
 		don_scales(H)

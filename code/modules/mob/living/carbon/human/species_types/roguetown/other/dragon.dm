@@ -18,7 +18,7 @@
 	name = "dragon"
 	id = "dragon"
 	custom_rotation_icon = TRUE
-	custom_base_icon = "firepelt"
+	custom_base_icon = "dragon"
 	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
 	inherent_traits = list(
 		TRAIT_ORGASM_DENIER,
@@ -47,7 +47,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	inherent_biotypes = MOB_HUMANOID
 	armor = 50
-	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_L, SLOT_S_STORE)
+	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_L, SLOT_BACK_R, SLOT_S_STORE)
 	nojumpsuit = 1
 	sexes = 1
 	offset_features = list(OFFSET_HANDS = list(0,2), OFFSET_HANDS_F = list(0,2))
@@ -73,7 +73,7 @@
 
 /datum/species/dragon/regenerate_icons(mob/living/carbon/human/H)
 	var/static/list/dragon_base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
-	H.icon = 'icons/roguetown/mob/monster/gnoll.dmi'
+	H.icon = 'icons/roguetown/mob/monster/player_dragon.dmi'
 	H.base_intents = dragon_base_intents
 	H.update_damage_overlays()
 	H.update_inv_armor_special()
@@ -87,8 +87,8 @@
 	C.ambushable = FALSE
 	var/mob/living/carbon/human/H = C
 	H.reset_dragon_sprite_scale()
-	C.icon_state = "darkpelt"
-	C.base_pixel_x = -8
+	C.icon_state = "dragon"
+	C.base_pixel_x = -32
 	C.pixel_x = -8
 	C.base_pixel_y = -4
 	C.pixel_y = -4
