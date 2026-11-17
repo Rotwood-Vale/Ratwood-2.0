@@ -89,9 +89,8 @@
 	H.footstep_type = FOOTSTEP_MOB_HEAVY
 	C.icon_state = "dragon"
 	C.base_pixel_x = -32
-	C.pixel_x = -32
 	C.base_pixel_y = -16
-	C.pixel_y = -16
+	H.set_mob_offsets("dragon_offset", _x = -32, _y = -16)
 
 /datum/species/dragon/on_species_loss(mob/living/carbon/C)
 	. = ..()
