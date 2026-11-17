@@ -140,7 +140,7 @@
 		/obj/item/bodypart/taur/ant,
 		/obj/item/bodypart/taur/wasp
 	)
-	forced_taur = TRUE
+	default_taur = TRUE
 
 /datum/species/arachnid/check_roundstart_eligible()
 	return TRUE

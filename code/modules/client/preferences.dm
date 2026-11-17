@@ -556,7 +556,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	random_character(gender, FALSE, FALSE)
 	accessory = "Nothing"
 
-	if(pref_species.forced_taur && pref_species.allowed_taur_types.len)
+	if((pref_species.forced_taur || pref_species.default_taur) && pref_species.allowed_taur_types.len)
 		taur_type = pick(pref_species.allowed_taur_types)
 	else
 		taur_type = null

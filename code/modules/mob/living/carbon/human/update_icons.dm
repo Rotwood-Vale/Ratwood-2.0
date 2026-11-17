@@ -57,6 +57,15 @@ There are several things that need to be remembered:
 			jazz += 2
 	return jazz
 
+/// Choose clothing variants per wearer without mutating shared species settings.
+/mob/living/carbon/proc/get_custom_clothing_id()
+	var/datum/species/species = dna?.species
+	if(!istype(species) || !species.custom_clothes)
+		return null
+	if(istype(species, /datum/species/arachnid) && !get_taur_tail())
+		return null
+	return species.clothes_id
+
 /mob/living/carbon/human/update_body()
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
@@ -94,6 +103,8 @@ There are several things that need to be remembered:
 		return ..("Generic_mob_burning")
 	else
 		var/burning = dna.species.enflamed_icon
+		if(isarachnid(src) && !get_taur_tail())
+			burning = "Standing"
 		if(!burning)
 			return ..("widefire")
 		return ..(burning)
@@ -465,8 +476,7 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/racecustom
 			var/mutable_appearance/gloves_overlay
-			if(dna.species.custom_clothes)
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
 			if((gender == FEMALE && !dna.species.use_m) || dna.species.use_f)
 				gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, sleeveindex = armsindex)
@@ -519,8 +529,7 @@ There are several things that need to be remembered:
 		update_observer_view(wear_wrists,1)
 		if(dna && dna.species.sexes)
 			var/racecustom
-			if(dna.species.custom_clothes)
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
 			var/mutable_appearance/wrists_overlay
 			if((gender == FEMALE && !dna.species.use_m) || dna.species.use_f)
@@ -640,8 +649,7 @@ There are several things that need to be remembered:
 			var/footindex = get_limbloss_index(LEG_RIGHT, LEG_LEFT)
 			var/racecustom
 			var/mutable_appearance/shoes_overlay
-			if(dna.species.custom_clothes)
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			if((gender == FEMALE && !dna.species.use_m) || dna.species.use_f)
 				shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, customi = racecustom, sleeveindex = footindex, boobed_overlay = has_boobed_overlay(), clip_mask = c_mask)
 			else
@@ -883,13 +891,12 @@ There are several things that need to be remembered:
 			if(dna && dna.species.sexes)
 				var/racecustom
 				var/mutable_appearance/mbeltoverlay
-				if(dna.species.custom_clothes)
-					racecustom = dna.species.clothes_id
+				racecustom = get_custom_clothing_id()
 				if((gender == FEMALE && !dna.species.use_m) || dna.species.use_f)
 					mbeltoverlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/belts.dmi', female = TRUE, customi = racecustom, boobed_overlay = has_boobed_overlay())
 				else
 					mbeltoverlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/belts.dmi', female = FALSE, customi = racecustom)
-				if(mbeltoverlay && !dna.species.custom_clothes)
+				if(mbeltoverlay && !racecustom)
 					if(gender == MALE)
 						if(OFFSET_BELT in dna.species.offset_features)
 							mbeltoverlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
@@ -1182,8 +1189,7 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/racecustom
 			var/mutable_appearance/cloak_overlay
-			if(dna.species.custom_clothes)
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			if(gender == FEMALE && !dna.species.use_m)
 				cloak_overlay = cloak.build_worn_icon(default_layer = CLOAK_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, customi = racecustom, boobed_overlay = has_boobed_overlay(), clip_mask = worn_cloak_mask)
 			else
@@ -1247,8 +1253,7 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/racecustom
 			var/mutable_appearance/cloak_overlay
-			if(dna.species.custom_clothes)
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			if(gender == FEMALE && !dna.species.use_m)
 				cloak_overlay = backr.build_worn_icon(default_layer = CLOAK_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, customi = racecustom, boobed_overlay = has_boobed_overlay(), clip_mask = c_mask)
 			else
@@ -1326,8 +1331,7 @@ There are several things that need to be remembered:
 			var/mutable_appearance/shirt_overlay
 			var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
 			var/racecustom
-			if(dna.species.custom_clothes)
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			if(dna.species.use_f || (gender == FEMALE && !dna.species.use_m))
 				shirt_overlay = wear_shirt.build_worn_icon(default_layer = SHIRT_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, customi = racecustom, sleeveindex = armsindex, boobed_overlay = has_boobed_overlay(), clip_mask = c_mask)
 			else
@@ -1425,8 +1429,7 @@ There are several things that need to be remembered:
 			var/racecustom
 			var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
 			var/mutable_appearance/armor_overlay
-			if(dna.species.custom_clothes)
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			var/desired_gender_render = gender
 			if(dna.species.use_f)
 				desired_gender_render = FEMALE
@@ -1528,8 +1531,7 @@ There are several things that need to be remembered:
 			if(isharpy(src))
 				clip_mask_init = icon(icon = 'icons/roguetown/mob/bodies/f/harpy.dmi', icon_state = "harpy_clipmask")
 				c_mask = clip_mask_init
-			if(dna.species.custom_clothes) // should prolly make it a separate limb or just use clipmask then
-				racecustom = dna.species.clothes_id
+			racecustom = get_custom_clothing_id()
 			if(gender == FEMALE && !dna.species.use_m)
 				pants_overlay = wear_pants.build_worn_icon(default_layer = PANTS_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, customi = racecustom, sleeveindex = legsindex, boobed_overlay = has_boobed_overlay(), clip_mask = c_mask)
 			else
@@ -1914,8 +1916,7 @@ generate/load female uniform sprites matching all previously decided variables
 			sleeveindex -= 2
 
 	var/racecustom
-	if(dna.species.custom_clothes)
-		racecustom = dna.species.clothes_id
+	racecustom = get_custom_clothing_id()
 	var/index = "[I.icon_state][((gender == FEMALE && !dna.species.use_m)|| dna.species.use_f) ? "_f" : ""][racecustom ? "_[racecustom]" : ""]"
 	var/static/list/bloody_r = list()
 	var/static/list/bloody_l = list()
