@@ -8,7 +8,8 @@
 /datum/component/rot
 	var/amount = 0
 	var/last_process = 0
-	var/datum/looping_sound/fliesloop/soundloop
+	/// Whether this corpse has flies. Heard only while it lies on a turf, see place_flies()
+	var/flies_playing = FALSE
 
 /datum/component/rot/Initialize(new_amount)
 	..()
@@ -18,14 +19,53 @@
 	if(new_amount)
 		amount = new_amount
 
-	soundloop = new(parent, FALSE)
-
 	START_PROCESSING(SSroguerot, src)
 
 /datum/component/rot/Destroy()
-	if(soundloop)
-		QDEL_NULL(soundloop)
+	set_flies(FALSE)
 	. = ..()
+
+/**
+ * Enables or removes this corpse's point ambience source.
+ *
+ * Mobs at or below MOB_SIZE_TINY cannot produce flies. Source placement is handled by place_flies()
+ * so corpses inside containers remain silent.
+ *
+ * Arguments:
+ * * state - TRUE enables flies for an eligible parent. FALSE removes them.
+ */
+/datum/component/rot/proc/set_flies(state)
+	if(state)
+		var/mob/living/rotting_mob = parent
+		if(istype(rotting_mob) && rotting_mob.mob_size <= MOB_SIZE_TINY)
+			state = FALSE
+	// The rot process polls this state repeatedly. Only transitions need registration work
+	if(!state == !flies_playing)
+		return
+	flies_playing = state
+	if(!state)
+		UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
+		return
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_body_moved))
+	place_flies()
+
+/datum/component/rot/proc/on_body_moved(datum/source)
+	SIGNAL_HANDLER
+	place_flies()
+
+/**
+ * Updates fly ambience when the corpse moves.
+ *
+ * Only corpses directly on a turf produce sound. Container movement does not move the corpse
+ * itself, so contained corpses are unregistered until placed back on a turf.
+ */
+/datum/component/rot/proc/place_flies()
+	var/atom/movable/body = parent
+	if(isturf(body.loc))
+		SSpoint_ambience.register_source(parent, /datum/point_ambience_category/rot)
+	else
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
 
 /datum/component/rot/process()
 
@@ -130,21 +170,17 @@
 		var/turf/open/T = C.loc
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
-			if(soundloop && soundloop.stopped && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		else
-			if(soundloop && !soundloop.stopped)
-				soundloop.stop()
+			set_flies(FALSE)
 	else
-		if(soundloop && !soundloop.stopped)
-			soundloop.stop()
+		set_flies(FALSE)
 	if(shouldupdate)
 		if(findonerotten)
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.skin_tone = "878f79" //elf ears
-			if(soundloop && soundloop.stopped && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		C.update_body()
 
 /datum/component/rot/simple
@@ -158,9 +194,9 @@
 		qdel(src)
 		return
 	if(amount > rot_start)
-		if(soundloop && soundloop.stopped)
-			soundloop.start()
 		var/turf/open/T = get_turf(L)
+		// Gated on an open turf like /rot/corpse, since nothing else in this branch turns the flies off
+		set_flies(istype(T))
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
 	if(amount > dust_time)
@@ -173,12 +209,6 @@
 
 /datum/component/rot/gibs
 	amount = MIASMA_GIBS_MOLES
-
-/datum/looping_sound/fliesloop
-	mid_sounds = list('sound/misc/fliesloop.ogg')
-	mid_length = 60
-	volume = 50
-	extra_range = 0
 
 #undef SIMPLE_CORPSE_ROT_START
 #undef SIMPLE_CORPSE_DUST_TIME

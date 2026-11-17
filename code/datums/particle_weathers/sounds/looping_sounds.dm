@@ -41,7 +41,6 @@
 	direct = TRUE
 
 /datum/looping_sound/wind
-	mid_sounds = 'sound/weather/rain/wind_1.ogg'
 	mid_sounds = list(
 		'sound/weather/rain/wind_1.ogg'=1,
 		'sound/weather/rain/wind_2.ogg'=1,

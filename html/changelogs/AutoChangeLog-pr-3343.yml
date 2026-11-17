@@ -1,0 +1,5 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Caughterise wounds surgery now deals less damage with high skill, the fumble now deals high damage though"
+  - bugfix: "Master or above medical skill lets you caughtorise though clothes, but the target must have combat mode off"

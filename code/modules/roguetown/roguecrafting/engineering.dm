@@ -27,6 +27,32 @@
 	craftdiff = 4
 	display_category = ITEM_CAT_ENG_MACHINERY
 
+/datum/crafting_recipe/roguetown/engineering/peddlercart
+	name = "peddler cart"
+	result = /obj/structure/roguemachine/vendor/mobile/crafted
+	reqs = list(/obj/item/grown/log/tree/small = 1,
+				/obj/item/ingot/iron = 1,
+				/obj/item/natural/glass = 1,
+				/obj/item/roguegear/bronze = 2)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
+
+/datum/crafting_recipe/roguetown/engineering/potioncart
+	name = "potion cart"
+	result = /obj/structure/roguemachine/potionseller/mobile/crafted
+	reqs = list(/obj/item/grown/log/tree/small = 1,
+				/obj/item/ingot/iron = 1,
+				/obj/item/natural/glass = 2,
+				/obj/item/roguegear/bronze = 2)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
+
 /datum/crafting_recipe/roguetown/engineering/lever
 	name = "lever"
 	result = /obj/structure/lever
@@ -218,16 +244,16 @@
 /datum/crafting_recipe/roguetown/engineering/heavyboltsten
 	name = "Heavy Bolts 10x"
 	reqs = list(/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
-	result = list(/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt
+	result = list(/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt
 				)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering

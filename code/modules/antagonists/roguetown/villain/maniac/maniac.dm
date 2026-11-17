@@ -107,7 +107,7 @@
 			ADD_TRAIT(owner.current, trait, "[type]")
 	LAZYINITLIST(owner.learned_recipes)
 	if(length(objectives))
-		SEND_SOUND(owner.current, 'sound/villain/dreamer_warning.ogg')
+		SEND_SOUND(owner.current, sound('sound/villain/dreamer_warning.ogg', volume = overall_volume(owner.current)))
 		to_chat(owner.current, span_danger("[antag_memory]"))
 		owner.announce_objectives()
 	START_PROCESSING(SSobj, src)
@@ -171,7 +171,7 @@
 		if(!connected_player.client)
 			continue
 		SEND_SOUND(connected_player, sound(null))
-		SEND_SOUND(connected_player, 'sound/villain/dreamer_win.ogg')
+		SEND_SOUND(connected_player, sound('sound/villain/dreamer_win.ogg', volume = overall_volume(connected_player)))
 	var/mob/living/carbon/human/trey_liam = spawn_trey_liam()
 	if(trey_liam)
 		owner.transfer_to(trey_liam)
