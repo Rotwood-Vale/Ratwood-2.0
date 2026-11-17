@@ -849,7 +849,7 @@
 
 //Self healing for Martyr.
 /datum/status_effect/buff/healing/prayer
-	id = "healing_prayers"
+	id = "healing_prayer_self"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer
 	examine_text = "SUBJECTPRONOUN is burning with divine radiance!"
 	outline_colour = "#b280df"
@@ -858,11 +858,10 @@
 /atom/movable/screen/alert/status_effect/buff/healing/prayer
 	name = "Conviction"
 	desc = "By faith alone, I will mend."
-	icon_state = "buff"
 
 //BY FAITH ALONE. When Martyr heals via another Tennite praying.
 /datum/status_effect/buff/healing/prayer_power
-	id = "healing_prayers"
+	id = "healing_prayer_received"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer_power
 	examine_text = "SUBJECTPRONOUN is lit by divine radiance!"
 	outline_colour = "#b280df"
@@ -871,7 +870,19 @@
 /atom/movable/screen/alert/status_effect/buff/healing/prayer_power
 	name = "Blessed Respite"
 	desc = "By faith, I lyve."
-	icon_state = "buff"
+
+/datum/status_effect/prayer_cooldown
+	id = "prayer_cooldown"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 1 MINUTES
+	tick_interval = -1
+	alert_type = /atom/movable/screen/alert/status_effect/prayer_cooldown
+
+/atom/movable/screen/alert/status_effect/prayer_cooldown
+	name = "Prayer Recovering"
+	desc = "I must wait before another prayer can be answered. Prayers from others can still heal me."
+	icon_state = "lesser_heal"
+	color = "#b280df"
 
 // Lay hands orison effect - gentle, slow healing
 #define LAY_HANDS_FILTER "lay_hands_glow"
@@ -1001,23 +1012,21 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/necras_vow/tick()
-	if (owner.stat > 0 && (!owner.get_blood_volume() || owner.health < owner.crit_threshold))
-		// OH SHIT. SHE'S CASHING IN ON THE VOW!!! YOU'RE FUCKED!!!
-		if (!oh_god_it_hurts)
+	// In crit (by damage or by blood loss), Necra stops mending you and waits.
+	// No self-revive and no extra damage from the Vow; someone else must save you.
+	if(owner.stat != CONSCIOUS && (owner.health <= owner.crit_threshold || (owner.get_blood_volume() <= BLOOD_VOLUME_SURVIVE && !HAS_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE))))
+		if(!oh_god_it_hurts)
 			to_chat(owner, span_boldwarning("The everblack settles around you. Oblivion. Then, you hear it. You hear <i>HER</i>."))
 			to_chat(owner, span_crit("<B>\"MINE.\"</B>"))
 			owner.visible_message(span_warning("[owner]'s unconscious form suddenly arches back into a silent, rictus scream, blue motes spilling from their mouth!"))
 			oh_god_it_hurts = TRUE
-		
-		owner.adjustOxyLoss(healing_on_tick) // this is the part where she kills you.
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 		H.color = "#33cabc"
 		return
-	else if (oh_god_it_hurts)
+	if(oh_god_it_hurts)
+		// Saved. The vow's mending resumes.
 		oh_god_it_hurts = FALSE
-		to_chat(owner, span_warning("The vice-like grip around your mortal coil eases, reluctantly. Yet, you feel hollow, all the same..."))
-		qdel(src) // clear the vow if someone somehow saves us
-		return
+		to_chat(owner, span_warning("The vice-like grip around your mortal coil eases, reluctantly. Not yet, then."))
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#a5a5a5"
 	var/list/wCount = owner.get_wounds()

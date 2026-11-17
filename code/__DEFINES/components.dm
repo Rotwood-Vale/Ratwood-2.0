@@ -95,6 +95,10 @@
 #define COMSIG_GLOB_MOB_CREATED "!mob_created"
 /// mob died somewhere : (mob , gibbed)
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"
+/// from base of /mob/Login(): (mob)
+#define COMSIG_GLOB_PLAYER_LOGIN "!player_login"
+/// from base of /mob/Logout(): (mob)
+#define COMSIG_GLOB_PLAYER_LOGOUT "!player_logout"
 /// global living say plug - use sparingly: (mob/speaker , message)
 #define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
 /// job subystem has spawned and equipped a new mob
@@ -295,6 +299,8 @@
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
+/// from the end of mob/living/fully_heal(), after any limbs and organs have been regenerated: (admin_revive)
+#define COMSIG_LIVING_FULLY_HEALED "living_fully_healed"
 #define COMSIG_LIVING_IMPACT_ZONE "living_impact_zone"			//from base of mob/living/hitby(): (mob/living/target, hit_zone)
 #define COMSIG_LIVING_ONJUMP "living_onjump"					//from base of /mob/living/proc/jump_action(atom/A)
 #define COMSIG_LIVING_SWINGDELAY_MOD "living_swingdelay_mod"	//from base of /obj/item/proc/attack(mob/living/M, mob/living/user)
@@ -312,8 +318,10 @@
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"	//from base of mob/living/Unconscious() (amount, update, ignore)
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
-/// from mob/living/proc/set_blood_volume() when the value actually changes (new_volume)
+/// from mob/living/proc/set_blood_volume() when the value actually changes (new_volume, old_volume)
 #define COMSIG_LIVING_BLOOD_VOLUME_CHANGED "living_blood_volume_changed"
+/// from mob/living/proc/set_bloodpool() and adjust_bloodpool() when the value actually changes (new_bloodpool, old_bloodpool)
+#define COMSIG_LIVING_BLOODPOOL_CHANGED "living_bloodpool_changed"
 #define COMSIG_LIVING_MIRACLE_HEAL_APPLY "living_miracle_heal_apply"
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"			//from base of mob/living/Sleeping() (amount, update, ignore)
 	#define COMPONENT_NO_STUN 1			//For all of them
