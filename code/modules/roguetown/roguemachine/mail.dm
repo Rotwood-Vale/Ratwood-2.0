@@ -344,7 +344,7 @@
 				budget2change(2, user, "MARQUE")
 				qdel(I)
 				record_round_statistic(STATS_MARQUES_MADE, 2)
-				playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+				playsoundtoken(src, 'sound/misc/otavanlament.ogg', 100, SOUND_RANGE - 1)
 				playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			else
 				if(!I.broken)
@@ -450,7 +450,7 @@
 						qdel(I.paired)
 					qdel(I)
 					visible_message(span_warning("[user] sends something."))
-					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+					playsoundtoken(src, 'sound/misc/otavanlament.ogg', 100, SOUND_RANGE - 1)
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			return
 
@@ -471,7 +471,7 @@
 			record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
 			qdel(I)
 			visible_message(span_warning("[user] sends something."))
-			playsound(loc, 'sound/misc/otavasent.ogg', 100, FALSE, -1)
+			playsoundtoken(src, 'sound/misc/otavasent.ogg', 100, SOUND_RANGE - 1)
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 		return
 
@@ -565,7 +565,7 @@
 					qdel(I.paired)
 					qdel(I)
 					visible_message(span_warning("[user] sends something."))
-					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+					playsoundtoken(src, 'sound/misc/otavanlament.ogg', 100, SOUND_RANGE - 1)
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					return
 			else
@@ -619,7 +619,7 @@
 							letter_package = P
 							if(letter_package.note)
 								letter_text = letter_package.note.info
-						GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey)
+						GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey, letter_package)
 						P.forceMove(X.loc)
 						if(X.mailtag == KINGSFIELD_MAILTAG)
 							GLOB.fax_panel.notify_kingsfield_mail(P, user)
@@ -658,7 +658,7 @@
 						letter_package = P
 						if(letter_package.note)
 							letter_text = letter_package.note.info
-					GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey)
+					GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey, letter_package)
 					P.forceMove(X.loc)
 					var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
 					STR.handle_item_insertion(P, prevent_warning=TRUE)

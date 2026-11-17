@@ -11,10 +11,10 @@
 			if(C.is_mouth_covered())
 				return
 		for(var/obj/effect/decal/cleanable/coom/C in src)
-			playsound(user, pick('sound/misc/mat/guymouth (1).ogg','sound/misc/mat/guymouth (2).ogg','sound/misc/mat/guymouth (3).ogg','sound/misc/mat/guymouth (4).ogg','sound/misc/mat/guymouth (5).ogg'), 100, FALSE, ignore_walls = FALSE)
+			playsound_erp(user, pick('sound/misc/mat/guymouth (1).ogg','sound/misc/mat/guymouth (2).ogg','sound/misc/mat/guymouth (3).ogg','sound/misc/mat/guymouth (4).ogg','sound/misc/mat/guymouth (5).ogg'), 100, FALSE)
 			user.visible_message("<span class='love'>[user] starts cleaning [src].</span>")
 			if(do_after(L, 25, target = src))
-				playsound(user, pick('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg'), 100, FALSE, ignore_walls = FALSE)
+				playsound_erp(user, pick('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg'), 100, FALSE)
 				user.visible_message("<span class='love'>[user] cleaned [src] dilligently.</span>")
 				qdel(C)
 				var/datum/status_effect/facial/facial = L.has_status_effect(/datum/status_effect/facial)

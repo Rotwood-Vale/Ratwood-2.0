@@ -509,7 +509,6 @@
 	I.item_flags &= ~BEING_REMOVED
 
 //drops both cuffs to the floor. This is from SS13, not Roguetown.
-//predates nets, so it needs netted status cleanup before anything calls it again
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
 		var/obj/item/W = handcuffed
@@ -551,10 +550,6 @@
 	if(cuff_break)
 		playsound(src, 'sound/misc/chain_snap.ogg', 100, FALSE, 10)
 	to_chat(src, "<span class='notice'>I [cuff_break ? "break" : "slip"] out of [I]!</span>")
-
-	if(istype(I, /obj/item/net))
-		if(has_status_effect(/datum/status_effect/debuff/netted))
-			remove_status_effect(/datum/status_effect/debuff/netted)
 
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
@@ -760,7 +755,7 @@
 				if(vomitrelay && blood_volume > 0)
 					var/mob/living/carbon/human/parent = vomitrelay.loc
 					var/amt = 5 * parent.physiology.bleed_mod
-					blood_volume = max(blood_volume - amt, 0)
+					adjust_blood_volume(-amt)
 					GLOB.azure_round_stats[STATS_BLOOD_SPILT] += amt
 					if(isturf(vomit_source.loc))
 						add_drip_floor(vomit_source.loc, amt)
@@ -991,7 +986,7 @@
 	else
 		clear_fullscreen("CMODE")
 
-	if(health <= crit_threshold || ((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE)))
+	if(health <= crit_threshold || ((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS)) || HAS_TRAIT(src, TRAIT_DEATHS_DOOR))
 		var/severity = 0
 		switch(health)
 			if(-20 to -10)
@@ -1145,9 +1140,9 @@
 			death()
 			cure_blind(UNCONSCIOUS_BLIND)
 			return
-		if(((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE)) || IsUnconscious() || IsSleeping() || getOxyLoss() > 75 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
+		if(((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS)) || IsUnconscious() || IsSleeping() || getOxyLoss() > 75 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			if(stat != UNCONSCIOUS) // Transition into hardcrit — announce once
-				if((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
+				if((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
 					visible_message(span_danger("<b>[src] collapses, [src.p_their()] skin pale as parchment!</b>"), \
 						span_userdanger("My blood... there is nothing left. I cannot feel my limbs."))
 				else if(getOxyLoss() > 75)
@@ -1199,15 +1194,15 @@
 	update_mobility()
 
 // sole owner of legcuffed, every path that changes the slot comes through here
-// There are three states that must be maintained consistently with the slot:
-// the movespeed slowdown, the alert, and the overlay!
-// Otherwise, it will keep breaking. If we know it's always true,
-// encapsulate instead of writing it directly every time you need itz`
+// Keep the restraint's slowdown, net debuff, alert, and overlay in sync with the slot.
 /mob/living/carbon/proc/set_legcuffed(obj/item/cuffs, mob/user)
 	if(legcuffed == cuffs)
 		return
 	var/obj/item/old_cuffs = legcuffed
 	legcuffed = cuffs
+	// Inventory removal can move the net before the slot is cleared.
+	if(istype(old_cuffs, /obj/item/net))
+		remove_status_effect(/datum/status_effect/debuff/netted)
 	//must hold: the movespeed slowdown is applied exactly when the slot holds a slowing item
 	remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)
 	if(legcuffed)

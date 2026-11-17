@@ -56,8 +56,22 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/desc
 	var/ephemeral = FALSE // This flaw is currently disabled and will not process
 	var/point_value = 1 // Quirk points granted by this vice. Insignificant vices set this to zero.
+	var/list/incompatible_vices = list()
+	var/configurable = FALSE
 
 /datum/charflaw/proc/on_mob_creation(mob/user)
+	return
+
+/datum/charflaw/proc/configure(mob/user)
+	return
+
+/datum/charflaw/proc/config_summary()
+	return
+
+/datum/charflaw/proc/save_config()
+	return list()
+
+/datum/charflaw/proc/load_config(list/data)
 	return
 
 /datum/charflaw/proc/apply_post_equipment(mob/user)
@@ -159,6 +173,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Bad Eyesight"
 	desc = "I need spectacles to see normally from my years spent reading books."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/noeyer, /datum/charflaw/noeyel, /datum/charflaw/noeyeall, /datum/charflaw/colorblind)
 
 /datum/charflaw/badsight/flaw_on_life(mob/user)
 	if(!ishuman(user))
@@ -286,6 +301,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Cyclops (R)"
 	desc = "I lost my right eye long ago."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/badsight, /datum/charflaw/noeyel, /datum/charflaw/noeyeall, /datum/charflaw/colorblind)
 
 /datum/charflaw/noeyer/on_mob_creation(mob/user)
 	..()
@@ -302,6 +318,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Cyclops (L)"
 	desc = "I lost my left eye long ago."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/badsight, /datum/charflaw/noeyer, /datum/charflaw/noeyeall, /datum/charflaw/colorblind)
 
 /datum/charflaw/noeyel/on_mob_creation(mob/user)
 	..()
@@ -318,6 +335,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Blindness"
 	desc = "I lost both of my eyes long ago."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/badsight, /datum/charflaw/noeyer, /datum/charflaw/noeyel, /datum/charflaw/colorblind)
 
 /datum/charflaw/noeyeall/on_mob_creation(mob/user)
 	..()
@@ -335,6 +353,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Colorblind"
 	desc = "I was cursed with flawed eyesight from birth, and can't discern things others can. Incompatible with Night-eyed virtue."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/badsight, /datum/charflaw/noeyer, /datum/charflaw/noeyel, /datum/charflaw/noeyeall)
 
 /datum/charflaw/colorblind/on_mob_creation(mob/user)
 	..()
@@ -479,6 +498,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Unintelligible"
 	desc = "I cannot speak the common tongue!"
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/mute)
 
 /datum/charflaw/unintelligible/on_mob_creation(mob/user)
 	var/mob/living/carbon/human/recipient = user
@@ -579,6 +599,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Narcoleptic"
 	desc = "I get drowsy during the day and tend to fall asleep suddenly, but I can sleep easier if I want to, and moon dust can help me stay awake."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/sleepless)
 	var/last_unconsciousness = 0
 	var/next_sleep = 0
 	var/concious_timer = (10 MINUTES)
@@ -648,6 +669,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Insomnia"
 	desc = "I do not sleep. I cannot sleep. I've tried everything."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/narcoleptic)
 
 /datum/charflaw/sleepless/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_NOSLEEP, TRAIT_GENERIC)
@@ -660,6 +682,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Mute"
 	desc = "I was born without the ability to speak."
 	point_value = 2
+	incompatible_vices = list(/datum/charflaw/unintelligible)
 
 /datum/charflaw/mute/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_PERMAMUTE, TRAIT_GENERIC)
