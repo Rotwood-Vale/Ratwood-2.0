@@ -18,17 +18,30 @@ type HermesEntry = {
   tag: string;
 };
 
+type PlayerEntry = {
+  name: string;
+  ckey: string;
+};
+
 type LetterEntry = {
+  id: number;
+  kind: 'player' | 'admin';
+  // Admin letters are admin-written HTML; player letters are plain text and must be shown escaped.
+  is_html: boolean;
   sender: string;
   recipient: string;
   sender_ckey: string;
   recipient_ckey: string;
   body: string;
+  contents: string[] | null;
+  item_path: string | null;
 };
+
+type ArchiveFilter = 'all' | 'player' | 'admin';
 
 type Data = {
   hermes_list: HermesEntry[];
-  player_list: string[];
+  player_list: PlayerEntry[];
   master_exists: boolean;
   letter_history: LetterEntry[];
 };
@@ -133,7 +146,8 @@ export const FaxPanel = (props) => {
   const { hermes_list, player_list, master_exists, letter_history } = data;
 
   const [activePage, setActivePage] = useState<'send' | 'archive'>('send');
-  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+  const [archiveFilter, setArchiveFilter] = useState<ArchiveFilter>('all');
+  const [previewId, setPreviewId] = useState<number | null>(null);
   const [sendMode, setSendMode] = useState<'player' | 'hermes'>('player');
   const [sender, setSender] = useState('');
   const [body, setBody] = useState('');
@@ -145,11 +159,33 @@ export const FaxPanel = (props) => {
   const [itemName, setItemName] = useState('');
   const [itemDesc, setItemDesc] = useState('');
   const [packageSize, setPackageSize] = useState(0); // 0 = auto
+  // Holds the recipient's ckey; the server resolves their current name when sending.
   const [playerRecipient, setPlayerRecipient] = useState(
-    player_list?.[0] || '',
+    player_list?.[0]?.ckey || '',
   );
   const [hermesNum, setHermesNum] = useState<number>(
     hermes_list?.[0]?.num ?? 1,
+  );
+
+  // Keep the selection in step with what the dropdown shows. A <select> whose value
+  // isn't among its options displays the first option while state still holds the stale one.
+  useEffect(() => {
+    if (!player_list?.some((p) => p.ckey === playerRecipient)) {
+      setPlayerRecipient(player_list?.[0]?.ckey || '');
+    }
+  }, [player_list, playerRecipient]);
+
+  useEffect(() => {
+    if (!hermes_list?.some((h) => h.num === hermesNum)) {
+      setHermesNum(hermes_list?.[0]?.num ?? 1);
+    }
+  }, [hermes_list, hermesNum]);
+
+  const filteredHistory = useMemo(
+    () => (letter_history || []).filter(
+      (entry) => archiveFilter === 'all' || entry.kind === archiveFilter,
+    ),
+    [letter_history, archiveFilter],
   );
 
   const trimmedSender = sender.trim();
@@ -212,19 +248,45 @@ export const FaxPanel = (props) => {
 
           {activePage === 'archive' ? (
             <Stack.Item>
-              <Section title="Player Letter Archive">
-                <Button icon="sync" onClick={() => act('refresh')}>
-                  Refresh
-                </Button>
+              <Section title="Letter Archive">
+                <Stack>
+                  <Stack.Item>
+                    <Button icon="sync" onClick={() => act('refresh')}>
+                      Refresh
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item grow>
+                    <Tabs>
+                      <Tabs.Tab
+                        selected={archiveFilter === 'all'}
+                        onClick={() => setArchiveFilter('all')}
+                      >
+                        All
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        selected={archiveFilter === 'player'}
+                        onClick={() => setArchiveFilter('player')}
+                      >
+                        Player
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        selected={archiveFilter === 'admin'}
+                        onClick={() => setArchiveFilter('admin')}
+                      >
+                        Admin
+                      </Tabs.Tab>
+                    </Tabs>
+                  </Stack.Item>
+                </Stack>
                 <Box mt={1}>
-                  {!letter_history || letter_history.length === 0 ? (
+                  {filteredHistory.length === 0 ? (
                     <Box color="label" italic>
-                      No player letters have been sent yet.
+                      No letters have been sent yet.
                     </Box>
                   ) : (
-                    letter_history.map((entry, index) => (
+                    filteredHistory.map((entry) => (
                       <Box
-                        key={`${entry.sender}-${entry.recipient}-${entry.sender_ckey}-${entry.recipient_ckey}-${index}`}
+                        key={entry.id}
                         className="candystripe"
                         p={1}
                         mb={1}
@@ -236,10 +298,18 @@ export const FaxPanel = (props) => {
                         }}
                       >
                         <Box bold>
+                          <Box
+                            inline
+                            mr={1}
+                            px={0.5}
+                            color={entry.kind === 'admin' ? 'average' : 'good'}
+                          >
+                            [{entry.kind === 'admin' ? 'Admin' : 'Player'}]
+                          </Box>
                           From: {entry.sender || 'Anonymous'}
                         </Box>
                         <Box color="label" fontSize="0.85em">
-                          Sender ckey: {entry.sender_ckey || 'unknown'}
+                          {entry.kind === 'admin' ? 'Sent by admin' : 'Sender ckey'}: {entry.sender_ckey || 'unknown'}
                         </Box>
                         <Box bold>
                           To: {entry.recipient || 'Unknown'}
@@ -247,16 +317,26 @@ export const FaxPanel = (props) => {
                         <Box color="label" fontSize="0.85em">
                           Recipient ckey: {entry.recipient_ckey || 'unknown'}
                         </Box>
+                        {entry.contents && (
+                          <Box mt={0.5}>
+                            Package contents: {entry.contents.length > 0 ? entry.contents.join(', ') : 'nothing'}
+                            {entry.item_path && (
+                              <Box inline ml={1} color="label" style={{ fontFamily: 'monospace' }}>
+                                ({entry.item_path})
+                              </Box>
+                            )}
+                          </Box>
+                        )}
                         <Box mt={1}>
                           <Button
                             compact
                             icon="file-alt"
-                            onClick={() => setPreviewIndex(previewIndex === index ? null : index)}
+                            onClick={() => setPreviewId(previewId === entry.id ? null : entry.id)}
                           >
-                            {previewIndex === index ? 'Hide Preview' : 'Preview Letter'}
+                            {previewId === entry.id ? 'Hide Preview' : 'Preview Letter'}
                           </Button>
                         </Box>
-                        {previewIndex === index && (
+                        {previewId === entry.id && (
                           <Box mt={1} style={{ border: '1px solid #8f7142', borderRadius: '4px', overflow: 'hidden' }}>
                             <Box
                               style={{
@@ -279,11 +359,18 @@ export const FaxPanel = (props) => {
                               >
                                 From: {entry.sender || 'Anonymous'}
                               </Box>
-                              <Box
-                                dangerouslySetInnerHTML={{
-                                  __html: (entry.body || '(empty letter)').replace(/\r?\n/g, '<br>'),
-                                }}
-                              />
+                              {entry.is_html ? (
+                                <Box
+                                  dangerouslySetInnerHTML={{
+                                    __html: entry.body || '(empty letter)',
+                                  }}
+                                />
+                              ) : (
+                                // Player-written: rendered as text so their HTML can't run in an admin's panel.
+                                <Box style={{ whiteSpace: 'pre-wrap' }}>
+                                  {entry.body || '(empty letter)'}
+                                </Box>
+                              )}
                             </Box>
                           </Box>
                         )}
@@ -348,9 +435,9 @@ export const FaxPanel = (props) => {
                               )
                             }
                           >
-                            {player_list.map((name) => (
-                              <option key={name} value={name}>
-                                {name}
+                            {player_list.map((player) => (
+                              <option key={player.ckey} value={player.ckey}>
+                                {player.name} ({player.ckey})
                               </option>
                             ))}
                           </select>
@@ -560,7 +647,7 @@ export const FaxPanel = (props) => {
                       stamp,
                       rim,
                       send_mode: sendMode,
-                      recipient: playerRecipient,
+                      recipient_ckey: playerRecipient,
                       hermes_num: hermesNum,
                       item_path: trimmedItemPath,
                       item_name: trimmedItemName,

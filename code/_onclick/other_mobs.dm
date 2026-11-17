@@ -39,7 +39,7 @@
 		if(used_intent.releasedrain)
 			stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
 		var/dualwield_armed = FALSE
-		if(HAS_TRAIT(src, TRAIT_DUALWIELDER))
+		if(used_intent.type != INTENT_GRAB && HAS_TRAIT(src, TRAIT_DUALWIELDER))
 			dualwield_armed = process_dualwield()
 		if(L.has_status_effect(/datum/status_effect/buff/clash) && L.get_active_held_item() && ishuman(L))
 			var/mob/living/carbon/human/H = L

@@ -32,6 +32,18 @@
 	window.send_message("audio/playMusic", payload)
 
 /**
+ * Sends Master-scaled streamed music volume to the browser player's settings store.
+ *
+ * Converts the slider's percentage to the audio element's zero-to-one range.
+ */
+/datum/tgui_panel/proc/set_streamed_volume()
+	if(!is_ready() || !client?.prefs)
+		return
+	window.send_message("settings/update", list(
+		"adminMusicVolume" = client.prefs.at_overall(client.prefs.streamedmusicvol) / 100,
+	))
+
+/**
  * public
  *
  * Stops playing music through the browser.

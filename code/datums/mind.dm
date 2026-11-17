@@ -1132,8 +1132,14 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 							// Mark as loadout item to prevent crafting usage
 							I.loadout_item = TRUE
 
-							// Set sellprice to 0
-							I.sellprice = 0
+							// Add subtle examination text to indicate this is a loadout reproduction
+							if(I.desc)
+								I.desc += " The overall look and feel of the item suggests this may be a mere reproduction."
+							else
+								I.desc = "The overall look and feel of the item suggests this may be a mere reproduction."
+
+							// Make quality suck
+							I.item_quality = ITEM_QUALITY_CRUDE 
 
 							// Make items smelt to ash instead of original materials
 							I.smeltresult = /obj/item/ash
