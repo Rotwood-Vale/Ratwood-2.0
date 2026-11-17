@@ -1,12 +1,38 @@
-/// Keep the portrait in the original 96x96 credits frame, regardless of accessory canvas size.
-/proc/crop_credit_headshot(icon/source)
+/// Fit the upper half of the native body canvas into the existing 96x96 credits frame.
+/proc/crop_credit_headshot(icon/source, mob/living/carbon/human/character)
 	if(!source)
 		return null
+	// Use the body's canvas, not flattened dimensions enlarged by equipment or effects.
+	var/list/dimensions = character?.icon ? get_icon_dimensions(character.icon) : null
+	var/body_width = dimensions?["width"] || 32
+	var/body_height = dimensions?["height"] || 32
+	var/left = 1
+	var/bottom = FLOOR(body_height / 2, 1) + 1
+	var/right = body_width
+	var/top = body_height
+	// Optional native-pixel rectangle for artwork whose face is outside the usual upper half.
+	var/list/override = character?.dna?.species?.credits_portrait_crop
+	if(islist(override) && length(override) == 4)
+		var/valid_override = TRUE
+		for(var/coordinate in override)
+			if(!isnum(coordinate) || coordinate != round(coordinate))
+				valid_override = FALSE
+		if(valid_override && override[1] >= 1 && override[2] >= 1 && override[3] <= body_width && override[4] <= body_height && override[1] <= override[3] && override[2] <= override[4])
+			left = override[1]
+			bottom = override[2]
+			right = override[3]
+			top = override[4]
 	var/icon/portrait = icon(source)
-	// Explicitly discard the body and oversized lower/side overlays instead of masking them.
-	portrait.Crop(1, 17, 32, 32)
-	portrait.Crop(1, -15, 32, 16) // Restore transparent space below the head for existing labels/crops.
-	portrait.Scale(96, 96)
+	portrait.Crop(left, bottom, right, top)
+	var/crop_width = right - left + 1
+	var/crop_height = top - bottom + 1
+	var/scale = min(96 / crop_width, 48 / crop_height)
+	var/fitted_width = max(1, round(crop_width * scale))
+	var/fitted_height = max(1, round(crop_height * scale))
+	portrait.Scale(fitted_width, fitted_height)
+	var/offset_x = FLOOR((96 - fitted_width) / 2, 1)
+	// Preserve aspect ratio, center horizontally, and leave room below for the labels.
+	portrait.Crop(1 - offset_x, fitted_height - 95, 96 - offset_x, fitted_height)
 	return portrait
 
 // One worker owns generation and its completion-relative cooldown, including when idle.
@@ -146,7 +172,7 @@ SUBSYSTEM_DEF(crediticons)
 	var/icon/portrait = get_flat_human_icon(null, null, preferences, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH), human_gear_override = character, copy_appearance = TRUE, hide_portrait_headgear = TRUE)
 	if(!portrait || !valid())
 		return
-	portrait = crop_credit_headshot(portrait)
+	portrait = crop_credit_headshot(portrait, character)
 	if(!portrait)
 		return
 	GLOB.credits_icons[REF(owner)] = list("name" = character_name, "title" = role_title, "icon" = portrait, "vc" = character.voice_color)
