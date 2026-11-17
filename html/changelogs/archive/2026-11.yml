@@ -575,6 +575,8 @@
       reduced the massive -5 PER debuff.
   - bugfix: Fixed raw article and color codes appearing in stash item names.
   - bugfix: Qualifying face-slot clothing now protects against Sun Blinded.
+  - rscadd: Added a Lava Immunity trait that protects against damage and ignition
+      from standing in lava.
   mypingishuge:
   - rscadd: Foresters can choose a bronze warclub with an iron shield or a Goedendag,
       with Expert Maces.
