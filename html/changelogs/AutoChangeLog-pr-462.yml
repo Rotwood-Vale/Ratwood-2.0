@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - rscadd: "Added a Lava Immunity trait that protects against damage and ignition from standing in lava."
