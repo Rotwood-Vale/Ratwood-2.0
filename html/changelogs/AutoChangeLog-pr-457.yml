@@ -1,0 +1,6 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - rscadd: "Arachnids can choose None as their taur body type while new Arachnids still default to a taur form."
+  - bugfix: "Biped Arachnids use appropriate clothing and fire sprites."
+  - bugfix: "Old taur-selection dialogs no longer overwrite a different character or race after switching."
