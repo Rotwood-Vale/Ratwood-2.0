@@ -3839,7 +3839,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.dna.features = features.Copy()
 	character.gender = gender
 	if(dragon_special_race)
-		character.set_species(/datum/species/dragon, icon_update = FALSE)
+		character.set_species(/datum/species/dragon, icon_update = FALSE, pref_load = src)
 	else
 		character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
 	character.dna.update_body_size()

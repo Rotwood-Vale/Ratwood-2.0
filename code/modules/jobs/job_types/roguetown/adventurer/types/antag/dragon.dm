@@ -77,10 +77,8 @@
 
 	icon_state = "dragon"
 	dna?.species?.custom_base_icon = "dragon"
-
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
-	// dna?.
 
 	var/obj/item/organ/breasts/breasts = getorganslot(ORGAN_SLOT_BREASTS)
 	if(breasts)
@@ -161,7 +159,6 @@
 
 /datum/outfit/job/roguetown/dragon/pre_equip(mob/living/carbon/human/H)
 	if(H.mind)
-		H.set_species(/datum/species/dragon)
 		H.def_intent_change(INTENT_PARRY)
 		H.skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/dragon_armor(H)
 		neck = /obj/item/storage/belt/rogue/pouch/healing

@@ -632,6 +632,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	delete_after_roundstart = FALSE
 	jobspawn_override = list("Gnoll")
 
+/obj/effect/landmark/start/dragon
+	name = "dragon"
+	icon_state = "arrow"
+	jobspawn_override = list("Dragon")
+
+/obj/effect/landmark/start/dragonlate
+	name = "dragonlate"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
+	jobspawn_override = list("Dragon")
+
 /obj/effect/landmark/start/nukeop_leader
 	name = "nukeop leader"
 	icon = 'icons/effects/landmarks_static.dmi'

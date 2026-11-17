@@ -41,7 +41,8 @@
 		TRAIT_NUDIST,
 		TRAIT_EXTREME_TEMPERATURE_IMMUNE,
 		TRAIT_UNLYCKERABLE, //Just stop
-		TRAIT_DEATHBYSNUSNU
+		TRAIT_DEATHBYSNUSNU,
+		TRAIT_NOFIRE
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	inherent_biotypes = MOB_HUMANOID
@@ -79,6 +80,7 @@
 	return TRUE
 
 /datum/species/dragon/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	C.dna?.body_markings?.Cut()
 	. = ..()
 	C.remove_status_effect(/datum/status_effect/buff/adrenaline_rush)
 	REMOVE_TRAIT(C, TRAIT_ADRENALINE_RUSH, INNATE_TRAIT)
