@@ -20,7 +20,8 @@
 		/datum/job/roguetown/dtchaplain,
 		/datum/job/roguetown/guardsman,
 		/datum/job/roguetown/watchcaptain,
-		
+		/datum/job/roguetown/dragon,
+
 		/datum/job/roguetown/tribalchieftain,
 		/datum/job/roguetown/tribalshaman,
 		/datum/job/roguetown/tribalguard,
