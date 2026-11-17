@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	// Recall already channels for 15 seconds inside cast(); do not add a second bar.
 	if(istype(src, /obj/effect/proc_holder/spell/self/recall))
 		return 0
-	return 1.5 SECONDS
+	return 0.5 SECONDS
 
 /// One equipment focus bonus, regardless of hand order, closed books or other held weapons.
 /obj/effect/proc_holder/spell/proc/get_equipment_cast_reduction(mob/living/user)
@@ -395,8 +395,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		breakdown += span_smallgreen("  Equipment focus: -[DisplayTimeText(equipment_mod)]")
 	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE))
 		breakdown += span_smallgreen("  <font color='#00e1ff'>Ley Lines (-25%)</font>")
-	if(get_minimum_cast_time())
-		breakdown += span_smallred("  Minimum charge time: 1.5 seconds")
+	var/minimum = get_minimum_cast_time()
+	if(minimum)
+		breakdown += span_smallred("  Minimum charge time: [DisplayTimeText(minimum)]")
 	return breakdown
 
 /obj/effect/proc_holder/spell/proc/get_cooldown_breakdown(mob/living/user)
