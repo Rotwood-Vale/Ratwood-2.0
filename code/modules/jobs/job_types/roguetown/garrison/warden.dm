@@ -141,7 +141,7 @@
 
 /datum/advclass/warden/forester
 	name = "Forester"
-	tutorial = "You are a forester, a woodsman who volunteered to become a part of the wardens. You have experience in the axe and the spear."
+	tutorial = "You are a forester, a frontline scout of the Wardens. Skilled in close combat, you venture ahead of civilization to find its threats and hold them at bay."
 	outfit = /datum/outfit/job/roguetown/warden/forester
 	category_tags = list(CTAG_WARDEN)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
