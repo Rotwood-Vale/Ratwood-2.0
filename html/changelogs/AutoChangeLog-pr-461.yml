@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Qualifying face-slot clothing now protects against Sun Blinded."
