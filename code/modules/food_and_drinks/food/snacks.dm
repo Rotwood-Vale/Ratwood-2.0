@@ -381,12 +381,12 @@ All foods are distributed among various categories. Use common sense.
 		return FALSE
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
-	if(iscarbon(M))
-		if(!canconsume(M, user))
-			return FALSE
-		try_consume(M, user)
+	try_consume(M, user)
 
 /obj/item/reagent_containers/food/snacks/try_consume(mob/eater, mob/feeder)
+	. = ..()
+	if(!.)
+		return
 	var/fullness = eater.nutrition + 10
 	for(var/datum/reagent/consumable/C in eater.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
 		fullness += C.nutriment_factor * C.volume / C.metabolization_rate
@@ -469,10 +469,10 @@ All foods are distributed among various categories. Use common sense.
 				qdel(src)
 			else if(feeder.client?.prefs.autoconsume)
 				if(eater == feeder && do_after(feeder, CLICK_CD_MELEE))
-					INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder, feeder.zone_selected)
+					INVOKE_ASYNC(src, PROC_REF(try_consume), eater, feeder)
 					feeder.changeNext_move(CLICK_CD_MELEE)
 				else if(eater != feeder)
-					INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder, feeder.zone_selected)
+					INVOKE_ASYNC(src, PROC_REF(try_consume), eater, feeder)
 					feeder.changeNext_move(CLICK_CD_MELEE)
 			return TRUE
 	playsound(eater.loc,'sound/misc/eat.ogg', rand(30,60), TRUE)

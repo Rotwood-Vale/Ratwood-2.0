@@ -84,22 +84,18 @@
 	///if the thrown object's target zone isn't the head
 	if(thrownthing.target_zone != BODY_ZONE_PRECISE_NOSE)
 		return
-	if(iscarbon(hit_atom))
-		var/mob/living/carbon/C = hit_atom
-		if(canconsume(C, silent = TRUE))
-			if(reagents.total_volume)
-				playsound(C, 'sound/items/sniff.ogg', 100, FALSE)
-				record_round_statistic(STATS_DRUGS_SNORTED)
-				reagents.trans_to(C, 1, transfered_by = thrownthing.thrower, method = "swallow")
+	try_consume(hit_atom)
 	qdel(src)
 
 /obj/item/reagent_containers/powder/attack(mob/M, mob/user, def_zone)
-	if(!canconsume(M, user))
+	if(!can_consume(M, user))
 		return FALSE
 	try_consume(M, user)
 
 /obj/item/reagent_containers/powder/try_consume(mob/consumer, mob/feeder)
 	. = ..()
+	if(!.)
+		return
 	if(consumer == feeder)
 		consumer.visible_message(span_notice("[feeder] sniffs [src]."))
 	else

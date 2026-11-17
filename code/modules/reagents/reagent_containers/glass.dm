@@ -57,11 +57,12 @@
 		reagents.clear_reagents()
 		return
 	else if(user.used_intent.type == INTENT_POUR)
-		if(!canconsume(M, user) || !is_drainable())
-			return
 		try_consume(M, user)
 
 /obj/item/reagent_containers/glass/try_consume(mob/eater, mob/feeder)
+	. = ..()
+	if(!.)
+		return
 	var/sneaking = FALSE
 	if(feeder.m_intent == MOVE_INTENT_SNEAK)
 		sneaking = TRUE
@@ -92,10 +93,10 @@
 	playsound(eater.loc,pick(drinksounds), sneaking ? 50 : 100, TRUE)
 	if(feeder.client?.prefs.autoconsume)
 		if(eater == feeder && do_after(feeder, CLICK_CD_MELEE))
-			INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder)
+			INVOKE_ASYNC(src, PROC_REF(try_consume), eater, feeder)
 			feeder.changeNext_move(CLICK_CD_MELEE)
 		else if(eater != feeder)
-			INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder)
+			INVOKE_ASYNC(src, PROC_REF(try_consume), eater, feeder)
 			feeder.changeNext_move(CLICK_CD_MELEE)
 
 /obj/item/reagent_containers/glass/attack_obj(obj/target, mob/living/user)
