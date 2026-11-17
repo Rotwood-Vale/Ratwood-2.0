@@ -429,7 +429,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	if(.)
 		if(!was_destroyed && obj_destroyed)
 			record_featured_stat(FEATURED_STATS_MINERS, user)
-			
+
 /obj/item/natural/rock/deconstruct(disassembled = FALSE)
 	if(!disassembled)
 		if(mineralType && mineralAmt)
