@@ -302,6 +302,8 @@
 	droning_sound = 'sound/music/area/catacombs.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+	// Match town-cell soundproofing despite inheriting from the garrison area tree
+	soundproof = TRUE
 
 /area/rogue/indoors/town/garrison/desert/cell/outdoor
 	name = "dungeon cell"
@@ -314,6 +316,8 @@
 	ceiling_protected = FALSE
 	keep_area = TRUE
 	cell_area = TRUE
+	// The open exercise yard must not inherit the cell's soundproofing
+	soundproof = FALSE
 
 /area/rogue/indoors/town/tavern/desert
 	name = "tavern"

@@ -104,3 +104,15 @@ GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 #define CLAN_LAYOUT_NAME_MAX_LENGTH 32
 #define CLAN_LAYOUT_SAVE_FILE "vampire_clan_layouts.json"
 #define CLAN_LAYOUT_SAVE_COOLDOWN (2 SECONDS)
+
+/// Voluntary torpor, enter by lying down with your eyes closed
+#define TORPOR_VOLUNTARY "voluntary"
+/// Torpor when you die, forces you to be in torpor for awhile
+#define TORPOR_DEATH "death"
+
+/// How much we multiply healing and reduce forced dormancy time when in a grave/coffin
+#define TORPOR_RESTING_PLACE_MULT 2
+/// How much vitae it costs to heal while in voluntary torpor
+#define TORPOR_VOLUNTARY_VITAE_COST 1
+/// How much healing is required to regrow a head
+#define TORPOR_HEAD_REGROW_AMOUNT 100

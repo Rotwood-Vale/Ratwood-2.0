@@ -122,7 +122,7 @@
 				heart.inscryption_key = key_text
 				victim.add_stress(/datum/stressevent/saw_wonder)
 				victim.emote("scream")
-				SEND_SOUND(victim, 'sound/villain/seen_wonder.ogg')
+				SEND_SOUND(victim, sound('sound/villain/seen_wonder.ogg', volume = overall_volume(victim)))
 				victim.Paralyze(5 SECONDS)
 				victim.add_client_colour(/datum/client_colour/maniac_marked)
 				gazed_at = TRUE
