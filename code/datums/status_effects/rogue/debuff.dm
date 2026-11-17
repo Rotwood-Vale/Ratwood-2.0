@@ -1459,7 +1459,6 @@
 /datum/status_effect/debuff/sun_blinded
 	id = "sun_blinded"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/sun_blinded
-	effectedstats = list(STATKEY_PER = -5)
 
 /atom/movable/screen/alert/status_effect/debuff/sun_blinded
 	name = "Sun Blinded"
@@ -1468,7 +1467,7 @@
 
 /datum/status_effect/debuff/sun_blinded/on_apply()
 	. = ..()
-	owner.overlay_fullscreen("sunlight", /atom/movable/screen/fullscreen/dustoverlay_light)
+	owner.overlay_fullscreen("sunlight", /atom/movable/screen/fullscreen/dustoverlay_light/sun_blinded)
 	owner.update_fov_angles()
 
 /datum/status_effect/debuff/sun_blinded/on_remove()

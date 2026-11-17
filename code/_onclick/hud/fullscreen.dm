@@ -244,6 +244,10 @@
 	color = "#C3b091"
 	alpha = 90
 
+/atom/movable/screen/fullscreen/dustoverlay_light/sun_blinded
+	alpha = 30
+	filters = list(filter(type = "alpha", icon = 'icons/mob/sun_glare_corners.png'))
+
 /atom/movable/screen/fullscreen/blackimageoverlay
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER

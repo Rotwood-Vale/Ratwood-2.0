@@ -56,7 +56,7 @@
 		if(TRAIT_ANCESTOR_GUARDIAN)
 			return "Gives one additional chance to pass a failed parry or dodge roll per in-game day. The opportunity is spent even if the extra roll fails."
 		if(TRAIT_LIGHT_SENSITIVITY)
-			return "Improves dark vision, but sunlight causes stress. Without suitable protective headgear, sunlight also applies Sun Blinded (-5 Perception). Certain flashes also stun you for two seconds."
+			return "Improves dark vision, but sunlight causes stress. Without suitable protective headgear, sunlight also applies Sun Blinded, narrowing your field of view. Certain flashes also stun you for two seconds."
 		if(TRAIT_BLACKLEG)
 			return "Allows you to rig coin flips and dice rolls in your favour."
 	return null
