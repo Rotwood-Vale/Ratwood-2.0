@@ -1,6 +1,5 @@
 /mob/living/carbon/human/species/dragon
 	race = /datum/species/dragon
-	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /mob/living/carbon/human/species/dragon/updatehealth()
 	..()
@@ -87,11 +86,12 @@
 	C.ambushable = FALSE
 	var/mob/living/carbon/human/H = C
 	H.reset_dragon_sprite_scale()
+	H.footstep_type = FOOTSTEP_MOB_HEAVY
 	C.icon_state = "dragon"
 	C.base_pixel_x = -32
-	C.pixel_x = -8
-	C.base_pixel_y = -4
-	C.pixel_y = -4
+	C.pixel_x = -32
+	C.base_pixel_y = -16
+	C.pixel_y = -16
 
 /datum/species/dragon/on_species_loss(mob/living/carbon/C)
 	. = ..()

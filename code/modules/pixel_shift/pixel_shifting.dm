@@ -33,10 +33,10 @@
 /mob/living/unpixel_shift()
 	. = ..()
 	passthroughable = NONE
-	if(is_shifted)
-		is_shifted = FALSE
-		pixel_x = get_standard_pixel_x_offset() + base_pixel_x
-		pixel_y = get_standard_pixel_y_offset() + base_pixel_y
+	// if(is_shifted)	// This line breaks positioning for gnolls (and dragons).
+	is_shifted = FALSE
+	pixel_x = get_standard_pixel_x_offset() + base_pixel_x
+	pixel_y = get_standard_pixel_y_offset() + base_pixel_y
 
 /mob/proc/pixel_shift(direction)
 	return
