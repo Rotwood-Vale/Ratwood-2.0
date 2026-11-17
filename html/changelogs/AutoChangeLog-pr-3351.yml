@@ -1,0 +1,4 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - admin: "fixes for admin letter panel"
