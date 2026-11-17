@@ -87,7 +87,7 @@
 	skill_required = SKILL_LEVEL_EXPERT
 	required_base = /datum/reagent/consumable/ethanol/wine
 	required_runes = list(ALCH_RUNE_RED = 2, ALCH_RUNE_GREEN = 3, ALCH_RUNE_BLUE = 3)
-	output_reagents = list(/datum/reagent/strongpoison = 100)
+	output_reagents = list(/datum/reagent/deaditerot  = 100)
 
 /datum/alch_cauldron_recipe/doompoison
 	name = "Doom Poison"
