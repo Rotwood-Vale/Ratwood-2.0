@@ -15,23 +15,26 @@
 
 	/// Time taken for regeneration
 	var/repair_time
-	/// Holder for timer
-	var/reptimer
-
-	/// Holder for disruption timer
-	var/disrupttimer
-
-	/// To make repairs relative or not.
-	/// In other words, if you use relative repairing then it will use a different repair interval.
-	/// Repair_time becomes how long it will take on average for the armor to fully repair itself.
-	/// In this mode, armor doesn't repair with a flat 20%, but it repairs at a rate relative to the total time set to repair armor on average.
+	/// Next regeneration tick happens once this cooldown finishes.
+	COOLDOWN_DECLARE(regen_cooldown)
+	/// Regeneration is paused until this cooldown finishes.
+	COOLDOWN_DECLARE(disrupt_cooldown)
+	/// Whether the armour is currently mid-regeneration; cleared once fully repaired.
+	var/was_regenning = FALSE
+	/** To make repairs relative or not.
+	* In other words, if you use relative repairing then it will use a different repair interval.
+	* Repair_time becomes how long it will take on average for the armor to fully repair itself.
+	* In this mode, armor doesn't repair with a flat 20%, but it repairs at a rate relative to the total time set to repair armor on average.
+	*/
 	var/relative_repair_mode = FALSE
 	var/relative_repair_interval = 15 SECONDS
 
-	/// Auto mode.
-	/// Enables relative repair mode if not enabled.
-	/// Sets the total repair time of the armor to be relative to the base repair amount and time.
-	/// By default, aims to repair 100 armor every 15 seconds.
+	/**
+	* Auto mode.
+	* Enables relative repair mode if not enabled.
+	* Sets the total repair time of the armor to be relative to the base repair amount and time.
+	* By default, aims to repair 100 armor every 15 seconds.
+	*/
 	var/auto_repair_mode = FALSE
 	var/auto_repair_mode_triggered = FALSE
 	var/auto_repair_mode_base = 100
@@ -45,7 +48,6 @@
 
 	/// Regen cost vars
 	var/blue_to_integ_ratio = 0
-	var/is_disrupted = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/Initialize(mapload)
 	. = ..()
@@ -54,47 +56,53 @@
 	addtimer(CALLBACK(src, PROC_REF(check_owner)), 5 SECONDS)
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/proc/check_owner()
-	if(!ishuman(loc))
+	var/mob/living/carbon/human/wearer = loc
+	if(!istype(wearer))
 		return
-	var/mob/living/L = loc
-	RegisterSignal(L, COMSIG_MOB_ITEM_BEING_ATTACKED, PROC_REF(process_attack))
-	RegisterSignal(L, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_attack))
+	RegisterSignal(wearer, COMSIG_MOB_ITEM_BEING_ATTACKED, PROC_REF(process_attack))
+	RegisterSignal(wearer, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_attack))
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/proc/process_attack(mob/living/parent, mob/living/target, mob/user, obj/item/I)
-	is_disrupted = TRUE
-	if(reptimer)
-		deltimer(reptimer)
-	disrupttimer = addtimer(CALLBACK(src, PROC_REF(revert_disrupt)), 30 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
+	COOLDOWN_START(src, disrupt_cooldown, 30 SECONDS)
+	COOLDOWN_START(src, regen_cooldown, get_regen_interval())
+	if(obj_integrity < max_integrity)
+		was_regenning = TRUE
+		START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/revert_disrupt()
-	if(is_disrupted)
-		is_disrupted = FALSE
-		to_chat(loc, repairmsg_begin)
-		armour_regen()
+/// If relative repair mode is on, use the interval instead of repairing 20% every repair_time seconds
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/get_regen_interval()
+	return relative_repair_mode ? relative_repair_interval : repair_time
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
 	..()
-	if(reptimer)
+	// Any damage sends the tick back to zero.
+	COOLDOWN_START(src, regen_cooldown, get_regen_interval())
+	if(was_regenning)
 		if(!regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir))
 			return
 		to_chat(loc, span_notice(repairmsg_stop))
-		deltimer(reptimer)
-		reptimer = null
 
-	if(is_disrupted)
+	was_regenning = TRUE
+	START_PROCESSING(SSobj, src)
+	if(!COOLDOWN_FINISHED(src, disrupt_cooldown))
 		return
 
-	// If relative repair mode is on, use the interval instead of repairing 20% every repair_time seconds
-	var/wait_time = relative_repair_mode ? relative_repair_interval : repair_time
-
 	to_chat(loc, span_notice(repairmsg_begin))
-	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), wait_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/process(delta_time)
+	if(!COOLDOWN_FINISHED(src, disrupt_cooldown) || !COOLDOWN_FINISHED(src, regen_cooldown))
+		return
+	armour_regen()
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen()
-	reptimer = null
-
 	if(obj_integrity >= max_integrity)
 		to_chat(loc, span_notice(repairmsg_end))
+		was_regenning = FALSE
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	var/repair_amount
@@ -133,7 +141,7 @@
 
 	to_chat(loc, span_notice(repairmsg_continue))
 
-	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), next_tick_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
+	COOLDOWN_START(src, regen_cooldown, next_tick_time)
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/proc/regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir)
 	if(interrupt_damount && interrupt_damount > damage_amount)

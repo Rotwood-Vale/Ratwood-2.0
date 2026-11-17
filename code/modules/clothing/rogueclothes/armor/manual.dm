@@ -29,6 +29,7 @@
 	var/repair_fraction = 0.35
 	/// Flat integrity restored per cycle. Defaults to repair_fraction * max_integrity at Initialize; set directly for a flat per-armour override.
 	var/repair_percent
+	/// While TRUE, the wearer will gain the TRAIT_MONK_ROBE trait, which increases stamina regen.
 	var/monk_regen = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/manual/Initialize(mapload)
@@ -433,8 +434,8 @@
 	var/repair_time = 5 SECONDS
 	/// Shown once when a rest-based repair cycle begins.
 	var/repairmsg_rest_begin = "I settle in, and my skin begins to knit itself whole.."
-	/// world.time the wearer began their current uninterrupted rest on a bed, 0 when not resting.
-	var/resting_since = 0
+	/// Repair cooldown while the wearer rests on a bed; 0 when not resting.
+	var/resting_repair_cooldown = 0
 	/// Structures on the wearer's turf that count as a bed.
 	var/static/list/repair_rest_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
 
@@ -451,19 +452,19 @@
 	. += span_info("Repairs slowly while resting on a bed.")
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/process(delta_time)
-	var/mob/living/carbon/human/H = loc
-	if(!ishuman(H) || !worn_on_body(H) || obj_integrity >= max_integrity)
-		resting_since = 0
+	var/mob/living/carbon/human/wearer = loc
+	if(!istype(wearer) || !worn_on_body(wearer) || obj_integrity >= max_integrity)
+		COOLDOWN_RESET(src, resting_repair_cooldown)
 		return
-	if(!H.resting || H.cmode || (H.in_combat_until > world.time) || !rest_on_valid_bed(H))
-		resting_since = 0
+	if(!wearer.resting || wearer.cmode || (wearer.in_combat_until > world.time) || !rest_on_valid_bed(wearer))
+		COOLDOWN_RESET(src, resting_repair_cooldown)
 		return
-	if(!resting_since)
-		resting_since = world.time
-		to_chat(H, span_notice(repairmsg_rest_begin))
+	if(!COOLDOWN_STARTED(src, resting_repair_cooldown))
+		COOLDOWN_START(src, resting_repair_cooldown, repair_time)
+		to_chat(wearer, span_notice(repairmsg_rest_begin))
 		return
-	if(world.time >= resting_since + repair_time)
-		resting_since = world.time
+	if(COOLDOWN_FINISHED(src, resting_repair_cooldown))
+		COOLDOWN_START(src, resting_repair_cooldown, repair_time)
 		armour_regen()
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/proc/rest_on_valid_bed(mob/living/carbon/human/H)
