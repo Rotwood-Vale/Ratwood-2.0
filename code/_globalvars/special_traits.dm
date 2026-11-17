@@ -52,8 +52,10 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		var/datum/loadout_item/item = player.prefs.vars[slot == 1 ? "loadout" : "loadout[slot]"]
 		if(!item)
 			continue
-		var/custom_name = player.prefs.vars["loadout_[slot]_name"]
-		var/display_name = custom_name ? custom_name : item.name
+		var/custom_name = player.prefs.get_loadout_text(slot, is_name = TRUE, preview = TRUE)
+		if(custom_name)
+			custom_name = trim(html_decode(GLOB.html_tags.Replace(custom_name, "")))
+		var/display_name = custom_name ? custom_name : format_text(item.name)
 		var/stash_key = display_name
 		var/suffix = 2
 		while(character.mind.special_items[stash_key])
