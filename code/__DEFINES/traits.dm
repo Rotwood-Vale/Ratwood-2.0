@@ -148,6 +148,7 @@
 #define TRAIT_CHASTITY_SPIKED "Genital Spikes" // Causes discomfort during arousal.
 #define TRAIT_CHASTITY_LOCKED "Locked Chastity Device" // Prevents removal of the chastity device.
 #define TRAIT_EXTREME_TEMPERATURE_IMMUNE "Extreme Temperature Immunity" //immunitty to heatstroke and frostbite without damage reduction
+#define TRAIT_LAVA_IMMUNE "Lava Immunity" // Prevents damage and ignition from standing in lava.
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
 #define TRAIT_MARTIAL_PROWESS "Martial Prowess" //allows mastering weapon skills
 #define TRAIT_SELF_AWARE "Self Aware" //Absolver/Stigmata trait that allows them to self-diagnose and get full damage numbers.
@@ -703,6 +704,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GANG_A = span_info("I belong to the Rontz Ratz gang"),
 	TRAIT_GANG_B = span_info("I belong to the Blortz Volves gang"),
 	TRAIT_EXTREME_TEMPERATURE_IMMUNE = span_info("I will not suffer ills from extreme temperatures, wether hot or cold, yet fire and ice can still harm me."),
+	TRAIT_LAVA_IMMUNE = span_info("I can stand in lava without being burned or set alight."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
