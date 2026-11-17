@@ -209,6 +209,7 @@
 			"image_tilt" = !!viewer_prefs?.gallery_image_tilt,
 			"candle_flicker" = !!viewer_prefs?.gallery_candle_flicker,
 			"easter_eggs" = !!viewer_prefs?.gallery_easter_eggs,
+			"sound_volume" = viewer_prefs ? viewer_prefs.at_overall(viewer_prefs.mastervol) : 100,
 		),
 		"image_backdrop" = image_backdrop,
 		"card_backgrounds" = gallery_card_backgrounds(framing_source),

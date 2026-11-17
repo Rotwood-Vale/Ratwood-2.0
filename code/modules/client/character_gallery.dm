@@ -622,10 +622,10 @@
 	var/list/urls = validate_urls(user, params)
 	if(!urls)
 		return FALSE
-	var/main = urls[1]
-	var/alternate = urls[2]
-	var/active_alternate = urls[3]
-	var/promote_alternate = urls[4]
+	var/main = urls["main"]
+	var/alternate = urls["alternate"]
+	var/active_alternate = urls["active_alternate"]
+	var/promote_alternate = urls["promote_alternate"]
 	var/image = url_editor["image"]
 	if(url_editor["sources"] != sources_snapshot(form))
 		url_editor["error"] = "These images changed while the editor was open. Cancel and reopen it."
@@ -707,7 +707,12 @@
 	if(length(alternate) && !valid_headshot_link(user, alternate, TRUE, extensions))
 		url_editor["error"] = "[alternate_name] [invalid_text]"
 		return null
-	return list(main, alternate, active_alternate, promote_alternate)
+	return list(
+		"main" = main,
+		"alternate" = alternate,
+		"active_alternate" = active_alternate,
+		"promote_alternate" = promote_alternate,
+	)
 
 /// A link the editor opened with passes, since older saved links may break these rules and still load
 /datum/character_gallery/proc/new_url_error(link, name)
@@ -860,7 +865,6 @@
 	var/character_gallery_generation = 0
 	var/datum/character_gallery/character_gallery
 	var/last_logged_framing
-	var/queued_save_timer
 
 /datum/preferences/proc/character_gallery_headshot_thumbnail()
 	if(!headshot_link)
@@ -891,17 +895,6 @@
 	WRITE_FILE(S["gallery_image_tilt"], gallery_image_tilt)
 	WRITE_FILE(S["gallery_candle_flicker"], gallery_candle_flicker)
 	WRITE_FILE(S["gallery_easter_eggs"], gallery_easter_eggs)
-
-/// Saves the preferences 2 seconds after the first of a burst of calls, so a run of gallery toggle clicks writes the
-/// savefile once. Never starts savefile_cooldown, or each toggle click would make Save and Undo in Character Setup wait
-/datum/preferences/proc/queue_save_preferences()
-	queued_save_timer = addtimer(CALLBACK(src, PROC_REF(save_preferences)), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-
-/datum/preferences/proc/flush_queued_save()
-	var/pending = deltimer(queued_save_timer)
-	queued_save_timer = null
-	if(pending)
-		save_preferences()
 
 /datum/preferences/proc/character_gallery_state()
 	return json_encode(list(headshot_frame_chat, gallery_form_state(src)))

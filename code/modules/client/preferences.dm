@@ -2772,7 +2772,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("load")
 					if(savefile_ready(user, "undoing"))
 						COOLDOWN_START(src, savefile_cooldown, SAVEFILE_COOLDOWN_TIME)
-						flush_queued_save()
 						load_preferences()
 						load_character()
 

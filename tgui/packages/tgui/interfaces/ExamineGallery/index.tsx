@@ -65,7 +65,7 @@ const Gallery = (props: {
     effects.deal ? dealDelays(selected, count) : null,
   );
   const pictures = usePictures(images, selected);
-  const sounds = useGallerySounds(effects.sounds, effects.eggs);
+  const sounds = useGallerySounds(effects.sounds, effects.eggs, effects.volume);
   const rootRef = useRef<HTMLDivElement>(null);
   const glowRef = useCandleFlicker(rootRef, effects.flicker);
   useFigureBlink(

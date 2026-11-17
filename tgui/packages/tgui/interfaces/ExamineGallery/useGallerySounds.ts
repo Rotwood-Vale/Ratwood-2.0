@@ -13,9 +13,15 @@ import type { PictureChange } from './galleryWheel';
 const CARD_CLICK_VOLUME = 0.83;
 const CARD_THUMBNAIL_VOLUME = 0.58;
 
-export const useGallerySounds = (enabled: boolean, eggs: boolean) => {
+export const useGallerySounds = (
+  enabled: boolean,
+  eggs: boolean,
+  masterVolume: number,
+) => {
   const enabledNow = useRef(enabled);
   enabledNow.current = enabled;
+  const masterVolumeNow = useRef(masterVolume);
+  masterVolumeNow.current = masterVolume;
   const eggsNow = useRef(eggs);
   eggsNow.current = eggs;
   const pools = useRef<Record<string, HTMLAudioElement[]>>({});
@@ -50,10 +56,11 @@ export const useGallerySounds = (enabled: boolean, eggs: boolean) => {
     return copy;
   };
 
-  const play = (name: string, volume = 1) => {
-    if (!enabledNow.current) {
+  const play = (name: string, level = 1) => {
+    if (!enabledNow.current || masterVolumeNow.current <= 0) {
       return;
     }
+    const volume = level * masterVolumeNow.current;
     const audio = idleAudio(name);
     audio.currentTime = 0;
     audio.volume = volume;

@@ -389,7 +389,7 @@
 	set hidden = 1
 	if(prefs)
 		prefs.gallery_plain = !prefs.gallery_plain
-		prefs.queue_save_preferences()
+		prefs.save_preferences()
 		if(prefs.gallery_plain)
 			to_chat(src, "The Image Gallery will show only artwork and basic navigation the next time you open it, with no cards, frames, backdrops, gallery animations or sounds.")
 		else
@@ -401,7 +401,7 @@
 	set hidden = 1
 	if(prefs)
 		prefs.gallery_backdrop = !prefs.gallery_backdrop
-		prefs.queue_save_preferences()
+		prefs.save_preferences()
 		if(prefs.gallery_backdrop)
 			to_chat(src, "Gallery backdrops enabled.")
 		else
@@ -413,7 +413,7 @@
 	set hidden = 1
 	if(prefs)
 		prefs.gallery_card_deal = !prefs.gallery_card_deal
-		prefs.queue_save_preferences()
+		prefs.save_preferences()
 		if(prefs.gallery_card_deal)
 			to_chat(src, "Art cards will now be dealt in.")
 		else
@@ -425,7 +425,7 @@
 	set hidden = 1
 	if(prefs)
 		prefs.gallery_image_sounds = !prefs.gallery_image_sounds
-		prefs.queue_save_preferences()
+		prefs.save_preferences()
 		if(prefs.gallery_image_sounds)
 			to_chat(src, "Art card sounds enabled.")
 		else
@@ -437,7 +437,7 @@
 	set hidden = 1
 	if(prefs)
 		prefs.gallery_image_tilt = !prefs.gallery_image_tilt
-		prefs.queue_save_preferences()
+		prefs.save_preferences()
 		if(prefs.gallery_image_tilt)
 			to_chat(src, "Art card tilt enabled.")
 		else
@@ -449,7 +449,7 @@
 	set hidden = 1
 	if(prefs)
 		prefs.gallery_candle_flicker = !prefs.gallery_candle_flicker
-		prefs.queue_save_preferences()
+		prefs.save_preferences()
 		if(prefs.gallery_candle_flicker)
 			to_chat(src, "Gallery candle flicker enabled.")
 		else
@@ -461,7 +461,7 @@
 	set hidden = 1
 	if(prefs)
 		prefs.gallery_easter_eggs = !prefs.gallery_easter_eggs
-		prefs.queue_save_preferences()
+		prefs.save_preferences()
 		if(prefs.gallery_easter_eggs)
 			to_chat(src, "Gallery easter eggs enabled.")
 		else

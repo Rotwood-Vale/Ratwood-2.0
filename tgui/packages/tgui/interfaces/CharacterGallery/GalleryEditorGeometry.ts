@@ -9,6 +9,9 @@ const EDITOR_MIN_WIDTH = 440;
  *
  * One operation runs at a time, from reading the size until the window answers with a resize. Whatever
  * was asked for meanwhile runs after it, so each read sees the size the last write left
+ *
+ * Repeats drag.ts's window maths because this needs the live devicePixelRatio, which drag.ts reads
+ * once at load. Merging them changes drag.ts for every tgui window, so it stays apart until deemed otherwise
  */
 export class GalleryEditorGeometry {
   private disposed = false;

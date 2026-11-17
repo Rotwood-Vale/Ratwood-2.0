@@ -282,20 +282,21 @@
 		var/list/source = row["source"]
 		var/background = sanitize_card_background(row["background"])
 		var/inactive_valid = source && gallery_link_valid(source["inactive_url"], image)
-		if(!gallery_link_valid(link, image))
+		var/link_valid = gallery_link_valid(link, image)
+		if(!link_valid)
 			add_blocked_link(blocked, label, link)
-			link = null
-			if(inactive_valid)
-				link = source["inactive_url"]
-				background = sanitize_card_background(source["card_background"])
-				if(image == "headshot")
-					frame = sanitize_gallery_frame(source["framing"])
-				source = null
 		if(source && !inactive_valid)
 			add_blocked_link(blocked, "[label] alternate", source["inactive_url"])
 			source = null
-		if(!link)
+		if(!link_valid && !inactive_valid)
 			continue
+		// A failed link gives its slot to the valid alternate
+		if(!link_valid)
+			link = source["inactive_url"]
+			background = sanitize_card_background(source["card_background"])
+			if(image == "headshot")
+				frame = sanitize_gallery_frame(source["framing"])
+			source = null
 		var/slot = image
 		if(row["art"])
 			var/list/gallery = galleries[row["art"]]
