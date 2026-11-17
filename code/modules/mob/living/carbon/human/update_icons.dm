@@ -62,7 +62,7 @@ There are several things that need to be remembered:
 	var/datum/species/species = dna?.species
 	if(!istype(species) || !species.custom_clothes)
 		return null
-	if(istype(species, /datum/species/arachnid) && !get_taur_tail())
+	if(istype(species, /datum/species/arachnid) && !bodyparts_by_zone[BODY_ZONE_TAUR])
 		return null
 	return species.clothes_id
 
@@ -103,7 +103,7 @@ There are several things that need to be remembered:
 		return ..("Generic_mob_burning")
 	else
 		var/burning = dna.species.enflamed_icon
-		if(isarachnid(src) && !get_taur_tail())
+		if(isarachnid(src) && !bodyparts_by_zone[BODY_ZONE_TAUR])
 			burning = "Standing"
 		if(!burning)
 			return ..("widefire")
