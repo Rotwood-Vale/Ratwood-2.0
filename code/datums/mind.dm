@@ -142,6 +142,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	RemoveAllSpells()
+	spell_list.Cut()
 	if(current)
 		if(current.mind == src)
 			current.mind = null
@@ -932,7 +933,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/RemoveAllSpells()
 	for(var/datum/S in spell_list)
 		RemoveSpell(S)
-	for(var/datum/SP in current.actions)
+	for(var/datum/SP in current?.actions)
 		RemoveSpell(SP)
 
 //removes spells that have miracle = true on them
