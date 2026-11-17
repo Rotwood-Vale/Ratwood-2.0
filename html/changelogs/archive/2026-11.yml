@@ -574,6 +574,7 @@
   - qol: Sun Blinded glare is fainter and limited to the corners of the screen. Also
       reduced the massive -5 PER debuff.
   - bugfix: Fixed raw article and color codes appearing in stash item names.
+  - bugfix: Qualifying face-slot clothing now protects against Sun Blinded.
   mypingishuge:
   - rscadd: Foresters can choose a bronze warclub with an iron shield or a Goedendag,
       with Expert Maces.
