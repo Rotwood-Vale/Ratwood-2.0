@@ -1,5 +1,0 @@
-author: "annikaRU"
-delete-after: True
-changes:
-  - code_imp: "items that required example cogs now require bronze cogs"
-  - code_imp: "the cooling table and autogrinder now use static_debris instead of debris"
