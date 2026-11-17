@@ -2247,7 +2247,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 		var/sunlit = GLOB.tod == "day" && cur_turf.outdoor_effect?.state
 		if(sunlit)
 			H.add_stress(/datum/stressevent/sunlit)
-		if(sunlit && !(H.head?.block2add & FOV_BEHIND))
+		if(sunlit && !((H.head?.block2add | H.wear_mask?.block2add) & FOV_BEHIND))
 			H.apply_status_effect(/datum/status_effect/debuff/sun_blinded)
 		else
 			H.remove_status_effect(/datum/status_effect/debuff/sun_blinded)

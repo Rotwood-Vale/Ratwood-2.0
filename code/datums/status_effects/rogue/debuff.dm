@@ -1459,6 +1459,7 @@
 /datum/status_effect/debuff/sun_blinded
 	id = "sun_blinded"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/sun_blinded
+	effectedstats = list(STATKEY_PER = -2)
 
 /atom/movable/screen/alert/status_effect/debuff/sun_blinded
 	name = "Sun Blinded"
