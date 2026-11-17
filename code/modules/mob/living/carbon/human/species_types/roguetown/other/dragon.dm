@@ -16,9 +16,9 @@
 
 /datum/species/dragon
 	name = "dragon"
-	id = "playerdragon"
+	id = "dragon"
 	custom_rotation_icon = TRUE
-	custom_base_icon = "dragon"
+	custom_base_icon = "firepelt"
 	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
 	inherent_traits = list(
 		TRAIT_ORGASM_DENIER,
@@ -73,7 +73,7 @@
 
 /datum/species/dragon/regenerate_icons(mob/living/carbon/human/H)
 	var/static/list/dragon_base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
-	H.icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+	H.icon = 'icons/roguetown/mob/monster/gnoll.dmi'
 	H.base_intents = dragon_base_intents
 	H.update_damage_overlays()
 	H.update_inv_armor_special()
@@ -87,11 +87,11 @@
 	C.ambushable = FALSE
 	var/mob/living/carbon/human/H = C
 	H.reset_dragon_sprite_scale()
-	C.icon_state = "dragon"
-	// C.base_pixel_x = -8
-	// C.pixel_x = -8
-	// C.base_pixel_y = -4
-	// C.pixel_y = -4
+	C.icon_state = "darkpelt"
+	C.base_pixel_x = -8
+	C.pixel_x = -8
+	C.base_pixel_y = -4
+	C.pixel_y = -4
 
 /datum/species/dragon/on_species_loss(mob/living/carbon/C)
 	. = ..()

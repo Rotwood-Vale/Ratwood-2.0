@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	allowed_races = list( /datum/species/dracon )
+	allowed_races = list(/datum/species/dracon)
 	tutorial = "You are an ancient dragon, guarding a hoard of treasure. Strike deals with mortals, protect your territory, and secure a future for your brood."
 	outfit = null
 	outfit_female = null
@@ -61,7 +61,6 @@
 			charflaw.on_removal(src)
 		vices = list()
 		charflaw = null
-		headshot_link = null
 
 	if(status_traits)
 		for(var/trait in status_traits.Copy())
@@ -76,6 +75,13 @@
 	REMOVE_TRAIT(src, TRAIT_LAMIAN_TAIL, TRAIT_VIRTUE)
 	REMOVE_TRAIT(src, TRAIT_LAMIAN_TAIL, TRAIT_GENERIC)
 
+	icon_state = "firepelt"
+	dna?.species?.custom_base_icon = "firepelt"
+
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
+	// dna?.
+
 	var/obj/item/organ/breasts/breasts = getorganslot(ORGAN_SLOT_BREASTS)
 	if(breasts)
 		breasts.Remove(src)
@@ -83,7 +89,6 @@
 
 	update_body()
 	ambushable = FALSE
-	clear_mob_descriptors()
 	add_mob_descriptor(/datum/mob_descriptor/stature/dragon)
 	return TRUE
 
@@ -94,7 +99,7 @@
 	dna.update_body_size()
 	return TRUE
 
-/datum/outfit/job/roguetown/dragon/proc/don_pelt(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/dragon/proc/don_scales(mob/living/carbon/human/H)
 	if(H.mind)
 		H.apply_dragon_preferences()
 		H.set_blindness(0)
@@ -159,4 +164,4 @@
 		H.set_species(/datum/species/dragon)
 		H.def_intent_change(INTENT_PARRY)
 		H.skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/dragon_armor(H)
-		don_pelt(H)
+		don_scales(H)

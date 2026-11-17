@@ -764,8 +764,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	if(mind in GLOB.pre_setup_antags)
 		is_antag = TRUE
 	var/is_gnoll = (mind?.assigned_role == "Gnoll")
+	var/is_dragon = (mind?.assigned_role == "Dragon")
 
-	client.prefs.copy_to(H, antagonist = is_antag, skip_normal_prefs = is_gnoll)
+	client.prefs.copy_to(H, antagonist = is_antag, skip_normal_prefs = is_gnoll, dragon_special_race = is_dragon)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
