@@ -1,3 +1,31 @@
+@font-face {
+	font-family: "VT323";
+	src: url("class-vt323-regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Jacquarda Bastarda 9";
+	src: url("class-jacquarda-bastarda-9-regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Silkscreen";
+	src: url("class-silkscreen-regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Silkscreen";
+	src: url("class-silkscreen-bold.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+}
+
 body {
   	background-color: rgb(31, 20, 24);
 	background: url("try6_border.png"), url("try6.png");
