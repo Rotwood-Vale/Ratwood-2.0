@@ -108,7 +108,7 @@
 	for(var/image in links)
 		var/list/source = alternates[image]
 		if(source)
-			state += list(list(image, source["current_url"], source["inactive_url"], source["active_alternate"], source["framing"], sanitize_card_background(source["card_background"])))
+			state += list(list(image, source["current_url"], source["inactive_url"], source["active_alternate"], source["framing"], sanitize_card_background(source["card_background"]), is_gallery_art_slot(image) ? sanitize_art_view_settings(source["view_settings"]) : null))
 	return state
 
 /proc/clean_gallery_alternate(image, list/source)
@@ -117,6 +117,8 @@
 		clean["framing"] = sanitize_gallery_frame(source["framing"])
 	if(is_gallery_art_slot(image) && source["card_background"])
 		clean["card_background"] = sanitize_card_background(source["card_background"])
+	if(is_gallery_art_slot(image) && source["view_settings"])
+		clean["view_settings"] = sanitize_art_view_settings(source["view_settings"])
 	return clean
 
 /proc/is_gallery_art_slot(image)
@@ -169,6 +171,61 @@
 	if(link && background != GALLERY_CARD_DEFAULT)
 		backgrounds[image] = list("url" = link, "background" = background)
 
+/proc/is_art_opening_view(value)
+	return istext(value) && (value == "whole" || value == "scroll")
+
+/proc/is_art_view_lock(value)
+	var/static/list/locks = list("none", "view", "zoom", "both")
+	return istext(value) && (value in locks)
+
+/proc/is_art_view_settings(list/settings)
+	return islist(settings) && length(settings) == 2 && is_art_opening_view(settings["opening_view"]) && is_art_view_lock(settings["lock"])
+
+/proc/sanitize_art_view_settings(list/settings)
+	if(!islist(settings) || !is_art_opening_view(settings["opening_view"]) || !is_art_view_lock(settings["lock"]))
+		return list("opening_view" = "whole", "lock" = "none")
+	return list("opening_view" = settings["opening_view"], "lock" = settings["lock"])
+
+/proc/read_art_view_settings(list/settings, image, link)
+	var/list/entry = islist(settings) ? settings[image] : null
+	if(!link || !islist(entry) || entry["url"] != link)
+		return sanitize_art_view_settings(null)
+	return sanitize_art_view_settings(entry)
+
+/// Projects occupied art slots in gallery order, using defaults when a stored URL no longer matches
+/proc/gallery_art_view_settings(datum/owner)
+	. = list()
+	if(!owner)
+		return
+	var/list/settings = owner.vars["art_view_settings"]
+	for(var/field in list("img_gallery", "nsfw_img_gallery"))
+		var/list/gallery = owner.vars[field]
+		for(var/index in 1 to min(length(gallery), IMAGE_GALLERY_MAX))
+			var/image = gallery_art_slot(field == "nsfw_img_gallery", index)
+			.[image] = read_art_view_settings(settings, image, gallery[index])
+
+/proc/set_gallery_art_view_settings(datum/owner, image, link, list/settings)
+	var/list/stored = owner.vars["art_view_settings"]
+	if(!islist(stored))
+		stored = list()
+		owner.vars["art_view_settings"] = stored
+	stored -= image
+	settings = sanitize_art_view_settings(settings)
+	if(link && (settings["opening_view"] != "whole" || settings["lock"] != "none"))
+		stored[image] = list("url" = link, "opening_view" = settings["opening_view"], "lock" = settings["lock"])
+
+/// Gives row snapshots one representation for absent and explicit default source settings
+/proc/gallery_art_source_state(list/source)
+	if(!islist(source))
+		return null
+	return list(
+		"current_url" = source["current_url"],
+		"inactive_url" = source["inactive_url"],
+		"active_alternate" = !!source["active_alternate"],
+		"card_background" = sanitize_card_background(source["card_background"]),
+		"view_settings" = sanitize_art_view_settings(source["view_settings"]),
+	)
+
 /datum/asset/simple/gallery_card_materials
 	assets = list("gallery_card_paint.png" = 'icons/tgui/gallery/paint.png')
 
@@ -213,6 +270,7 @@
 	owner.vars["nsfw_img_gallery"] = galleries["nsfw_art"]
 	owner.vars["gallery_alternates"] = settled["alternates"]
 	owner.vars["card_backgrounds"] = settled["backgrounds"]
+	owner.vars["art_view_settings"] = settled["view_settings"]
 	if(length(blocked) > IMAGE_BLOCKED_MAX)
 		blocked.Cut(IMAGE_BLOCKED_MAX + 1)
 	owner.vars["blocked_links"] = blocked
@@ -255,6 +313,13 @@
 			continue
 		var/list/row = rows[image]
 		row["background"] = read_card_background(backgrounds, image, row["link"])
+	S["[prefix]art_view_settings"] >> value
+	var/list/view_settings = islist(value) ? value : list()
+	for(var/image in rows)
+		if(!is_gallery_art_slot(image))
+			continue
+		var/list/row = rows[image]
+		row["view_settings"] = read_art_view_settings(view_settings, image, row["link"])
 
 	var/extra_size
 	S["[prefix]ooc_extra_img_size"] >> extra_size
@@ -274,6 +339,7 @@
 	var/list/links = list()
 	var/list/alternates = list()
 	var/list/backgrounds = list()
+	var/list/view_settings = list()
 	var/list/galleries = list("art" = list(), "nsfw_art" = list())
 	for(var/image in rows)
 		var/list/row = rows[image]
@@ -281,6 +347,7 @@
 		var/link = row["link"]
 		var/list/source = row["source"]
 		var/background = sanitize_card_background(row["background"])
+		var/list/view = sanitize_art_view_settings(row["view_settings"])
 		var/inactive_valid = source && gallery_link_valid(source["inactive_url"], image)
 		var/link_valid = gallery_link_valid(link, image)
 		if(!link_valid)
@@ -294,6 +361,7 @@
 		if(!link_valid)
 			link = source["inactive_url"]
 			background = sanitize_card_background(source["card_background"])
+			view = sanitize_art_view_settings(source["view_settings"])
 			if(image == "headshot")
 				frame = sanitize_gallery_frame(source["framing"])
 			source = null
@@ -310,9 +378,11 @@
 		links[slot] = link
 		if(row["art"] && background != GALLERY_CARD_DEFAULT)
 			backgrounds[slot] = list("url" = link, "background" = background)
+		if(row["art"] && (view["opening_view"] != "whole" || view["lock"] != "none"))
+			view_settings[slot] = list("url" = link, "opening_view" = view["opening_view"], "lock" = view["lock"])
 		if(source)
 			alternates[slot] = clean_gallery_alternate(slot, source)
-	return list("links" = links, "alternates" = alternates, "galleries" = galleries, "frame" = frame, "backgrounds" = backgrounds)
+	return list("links" = links, "alternates" = alternates, "galleries" = galleries, "frame" = frame, "backgrounds" = backgrounds, "view_settings" = view_settings)
 
 /// Also writes the extra markup, which a build reading the save back still needs
 /proc/save_gallery_images(savefile/S, datum/owner, prefix)
@@ -320,7 +390,7 @@
 	for(var/field in gallery_value_fields())
 		WRITE_FILE(S["[prefix][field]"], owner.vars[field])
 	// Left out of gallery_value_fields(), since the fingerprint covers markup through its link and sources and materials in slot order
-	var/static/list/save_only_fields = list("ooc_extra_img", "nsfw_ooc_extra_img", "gallery_alternates", "card_backgrounds")
+	var/static/list/save_only_fields = list("ooc_extra_img", "nsfw_ooc_extra_img", "gallery_alternates", "card_backgrounds", "art_view_settings")
 	for(var/field in save_only_fields)
 		WRITE_FILE(S["[prefix][field]"], owner.vars[field])
 
@@ -335,6 +405,7 @@
 		state += list(owner ? owner.vars[field] : null)
 	state += list(gallery_alternate_state(owner))
 	state += list(gallery_card_backgrounds(owner))
+	state += list(gallery_art_view_settings(owner))
 	return state
 
 /proc/gallery_image_links(datum/owner)

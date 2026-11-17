@@ -1,15 +1,43 @@
 import { Dropdown, Tooltip } from 'tgui-core/components';
 
 import { CardBackground, cardMaterial } from '../common/CardBackground';
+import { gallerySelectEvents } from './nativeSelect';
 import { useGalleryBackend } from './shared';
 
 export const CardBackgroundControl = (props: {
   value: string;
   disabled?: boolean;
+  allowUnchanged?: boolean;
   onSelected: (background: string) => void;
 }) => {
   const { data } = useGalleryBackend();
   const value = cardMaterial(props.value);
+  if (props.allowUnchanged) {
+    return (
+      <label className="CharacterGallery__bulkBackground">
+        Card Backdrop
+        <select
+          aria-label="All artwork card backdrop"
+          value={props.value}
+          disabled={props.disabled}
+          {...gallerySelectEvents}
+          onChange={(event) => props.onSelected(event.target.value)}
+        >
+          <option value="">Unchanged</option>
+          {data.card_background_options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {!!props.value && (
+          <span className="CharacterGallery__materialSwatch">
+            <CardBackground value={value} />
+          </span>
+        )}
+      </label>
+    );
+  }
   const label = data.card_background_options.find(
     (option) => option.value === value,
   )?.label;

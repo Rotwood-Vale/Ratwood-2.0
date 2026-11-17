@@ -1066,6 +1066,7 @@
 	img_gallery = list()
 	nsfw_img_gallery = list()
 	card_backgrounds = list()
+	art_view_settings = list()
 
 
 /mob/living/carbon/human/proc/copy_bodyparts(mob/living/carbon/human/target)

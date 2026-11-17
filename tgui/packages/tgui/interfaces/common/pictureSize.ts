@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { resolveAsset } from '../../assets';
 
 /** The most pixels a picture may have and still be drawn, as decoding a bigger one can take gigabytes. */
-export const PICTURE_PIXELS_MAX = 20_000_000;
+export const PICTURE_PIXELS_MAX = 10_000_000;
 
 export const PICTURE_TOO_LARGE_TEXT = 'This picture is too large to show.';
 

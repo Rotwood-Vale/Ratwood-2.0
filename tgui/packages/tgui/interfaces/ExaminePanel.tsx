@@ -1,10 +1,11 @@
-import { type SyntheticEvent, useEffect, useState } from 'react';
+import { type SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Button, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { PageButton } from '../components/PageButton';
 import { Window } from '../layouts';
 import { ImageGalleryPage } from './ExamineGallery';
+import { createGallerySession } from './ExamineGallery/readingState';
 import { ExaminePanelData } from './ExaminePanelData';
 import { FlavorTextPage } from './ExaminePanelPages';
 
@@ -44,6 +45,8 @@ export const ExaminePanel = (props) => {
     nsfw_img_gallery,
   } = data;
   const [currentPage, setCurrentPage] = useState(Page.FlavorText);
+  const [gallerySession] = useState(createGallerySession);
+  const galleryTabRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(false);
   const [expandedWidth, setExpandedWidth] = useState(DEFAULT_WIDTH);
 
@@ -119,13 +122,15 @@ export const ExaminePanel = (props) => {
                   </PageButton>
                 </Stack.Item>
                 <Stack.Item grow>
-                  <PageButton
-                    currentPage={currentPage}
-                    page={Page.ImageGallery}
-                    setPage={setCurrentPage}
-                  >
-                    Image Gallery
-                  </PageButton>
+                  <div ref={galleryTabRef}>
+                    <PageButton
+                      currentPage={currentPage}
+                      page={Page.ImageGallery}
+                      setPage={setCurrentPage}
+                    >
+                      Image Gallery
+                    </PageButton>
+                  </div>
                 </Stack.Item>
               </Stack>
             )}
@@ -140,7 +145,12 @@ export const ExaminePanel = (props) => {
               <div style={{ display: showGallery ? 'none' : 'contents' }}>
                 <FlavorTextPage collapsed={collapsed} />
               </div>
-              {showGallery && <ImageGalleryPage />}
+              {showGallery && (
+                <ImageGalleryPage
+                  session={gallerySession}
+                  galleryTabRef={galleryTabRef}
+                />
+              )}
             </Stack.Item>
           </Stack>
         </div>

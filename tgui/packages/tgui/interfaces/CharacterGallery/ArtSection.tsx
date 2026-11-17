@@ -3,6 +3,7 @@ import { Box, Icon, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { DragSlider } from '../../components';
+import { artViewSummary } from './ArtworkSettings';
 import { LinkControls, LinkRow } from './LinkRow';
 import {
   artLabel,
@@ -148,6 +149,12 @@ export const ArtSection = (props: { form: ImageForm; nsfw: boolean }) => {
     >
       {shown.map((url, index) => {
         const position = index + 1;
+        const sourceSlot = artSlot(nsfw, shownIndices[index] + 1);
+        const background = form.card_backgrounds?.[sourceSlot] ?? 'transparent';
+        const backgroundLabel =
+          data.card_background_options.find(
+            (option) => option.value === background,
+          )?.label ?? 'Transparent';
         return (
           <Fragment key={keys[index]}>
             {removedRow(position)}
@@ -162,9 +169,8 @@ export const ArtSection = (props: { form: ImageForm; nsfw: boolean }) => {
               onClear={() => act('remove_art', { ...params, index: position })}
               form={form}
               image={artSlot(nsfw, position)}
-              background={
-                form.card_backgrounds?.[artSlot(nsfw, shownIndices[index] + 1)]
-              }
+              background={background}
+              summary={`${artViewSummary(form.art_view_settings?.[sourceSlot])} | ${backgroundLabel}`}
               move={{
                 first: busy || index === 0,
                 last: busy || index === shown.length - 1,

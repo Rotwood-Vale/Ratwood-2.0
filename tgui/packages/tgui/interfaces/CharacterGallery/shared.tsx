@@ -12,6 +12,11 @@ import { useBackend } from '../../backend';
 
 export type FormId = 'character' | 'gnoll';
 
+export type ArtViewSettings = {
+  opening_view: 'whole' | 'scroll';
+  lock: 'none' | 'view' | 'zoom' | 'both';
+};
+
 // tgui-core forwards DOM attributes that its prop types do not declare
 export const buttonRole = {
   role: 'button',
@@ -27,6 +32,7 @@ export type ImageForm = {
   undo: string[];
   undo_removed: Record<string, number>;
   undo_clear: BooleanLike;
+  undo_artwork_settings: BooleanLike;
   blocked_links: { label: string; url: string }[];
   id: FormId;
   name: string;
@@ -42,6 +48,7 @@ export type ImageForm = {
   nsfw_img_gallery: string[] | null;
   image_backdrop: string;
   card_backgrounds: Record<string, string>;
+  art_view_settings: Record<string, ArtViewSettings>;
 };
 
 export type Data = {
@@ -60,6 +67,8 @@ export type Data = {
     active_alternate: BooleanLike;
     main_background?: string;
     alternate_background?: string;
+    main_view_settings?: ArtViewSettings;
+    alternate_view_settings?: ArtViewSettings;
     extensions: string[];
     error: string | null;
   } | null;
@@ -98,6 +107,7 @@ export const extraSlot = (nsfw: boolean) => (nsfw ? 'nsfw_extra' : 'extra');
 export const removedPoint = (scope: 'art' | 'nsfw_art' | 'blocked') =>
   `${scope}_removed`;
 export const UNDO_CLEAR = 'clear_all';
+export const UNDO_ARTWORK_SETTINGS = 'artwork_settings';
 
 export const galleryLabel = (nsfw: boolean) => (nsfw ? 'NSFW Art' : 'SFW Art');
 export const artLabel = (nsfw: boolean, position: number) =>

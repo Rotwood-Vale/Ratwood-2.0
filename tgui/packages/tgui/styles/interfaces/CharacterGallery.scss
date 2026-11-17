@@ -124,6 +124,71 @@ $image-outline: 1px solid rgba(255, 255, 255, 0.3);
     min-width: 0;
   }
 
+  &__viewFields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+
+    > label {
+      display: grid;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+  }
+
+  &__viewFields select,
+  &__bulkBackground select {
+    min-width: 0;
+    width: 100%;
+    color: var(--color-text);
+    background: var(--input-background, var(--modal-background));
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    border-radius: 2px;
+    padding: 0.25rem;
+    font: inherit;
+  }
+
+  &__lockHelp {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &__artworkSettings {
+    margin-bottom: 0.75rem;
+  }
+
+  &__artworkPanel {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: var(--section-background);
+  }
+
+  &__bulkBackground {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 14rem) max-content;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__artworkResult {
+    margin-top: 0.5rem;
+  }
+
+  &__urlFooter {
+    position: sticky;
+    bottom: -1rem;
+    z-index: 1;
+    margin: 0 -1rem -1rem;
+    padding: 0.75rem 1rem 1rem;
+    background: var(--modal-background);
+  }
+
   &__viewport {
     min-height: 0;
     overflow-x: auto;

@@ -1,4 +1,10 @@
-import { type PropsWithChildren, useEffect, useRef, useState } from 'react';
+import {
+  type PropsWithChildren,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Box, Button, Icon } from 'tgui-core/components';
 
 import {
@@ -126,6 +132,7 @@ const SHAPE_WARNING = `This picture's shape is too extreme to show: 1:${PICTURE_
 type LinkRowProps = PropsWithChildren<
   LinkControlsProps & {
     background?: string;
+    summary?: ReactNode;
     move?: MoveControls;
     tone?: 'light' | 'dark';
     flash?: boolean;
@@ -141,6 +148,7 @@ export const LinkRow = (props: LinkRowProps) => {
     tone,
     flash,
     background,
+    summary,
     checkShape,
     ...controls
   } = props;
@@ -177,6 +185,11 @@ export const LinkRow = (props: LinkRowProps) => {
                 {media.ready
                   ? `${media.size[0]} × ${media.size[1]}`
                   : 'Loading…'}
+              </Box>
+            )}
+            {!!summary && (
+              <Box color="label" fontSize="0.8em">
+                {summary}
               </Box>
             )}
           </div>

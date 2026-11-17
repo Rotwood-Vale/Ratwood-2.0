@@ -664,6 +664,126 @@ $thumb-border-color: rgba(255, 255, 255, 0.28);
     position: absolute;
     right: 0;
     bottom: 0;
+    display: flex;
+    align-items: center;
+    z-index: 4;
+
+    > .Button {
+      margin-bottom: 0;
+    }
+  }
+
+  &__viewControl {
+    position: relative;
+    display: inline-flex;
+    margin-right: var(--space-xs);
+  }
+
+  &__viewControl > .ExamineGallery__viewToggle {
+    margin: 0;
+  }
+
+  &__viewMenu {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 4px);
+    width: min(13rem, calc(100vw - 2rem));
+    display: grid;
+    gap: 0.4rem;
+    padding: 0.5rem;
+    background: var(--modal-background);
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+
+    .Button {
+      margin: 0;
+    }
+  }
+
+  &__viewChoices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+  }
+
+  &__viewHelp {
+    color: var(--color-label);
+    font-size: 0.9em;
+  }
+
+  &__zoomHint {
+    color: var(--color-label);
+    font-size: 0.8em;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  &__zoomControls {
+    display: grid;
+    grid-template-columns: 28px minmax(44px, 1fr) 28px;
+    align-items: center;
+
+    .Button,
+    output {
+      text-align: center;
+    }
+
+    output {
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__reader {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    background: #000;
+    touch-action: none;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__readingSurface {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  &__readingPicture {
+    position: absolute;
+
+    > img {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+    }
+  }
+
+  &__main--reading {
+    > .ExamineGallery__tilt {
+      display: none;
+    }
+  }
+
+  &__main--cut {
+    .ExamineGallery__picture,
+    .ExamineGallery__backdrop {
+      transition: none;
+    }
+  }
+
+  &__main--reading .ExamineGallery__status {
+    z-index: 2;
   }
 }
 

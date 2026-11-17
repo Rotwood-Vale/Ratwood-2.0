@@ -375,6 +375,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/headshot_frame_chat = FALSE
 	var/image_backdrop = GALLERY_BACKDROP_PICTURE
 	var/list/card_backgrounds = list()
+	var/list/art_view_settings = list()
 	var/chatheadshot = FALSE
 	var/ooc_extra
 	var/ooc_extra_img

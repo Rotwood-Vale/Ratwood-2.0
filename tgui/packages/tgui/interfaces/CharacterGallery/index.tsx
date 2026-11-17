@@ -5,6 +5,7 @@ import { classes } from 'tgui-core/react';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { ArtSection, BlockedLinks, ExtraRow } from './ArtSection';
+import { ArtworkSettings } from './ArtworkSettings';
 import { BackdropSection } from './BackdropSection';
 import { GalleryEditorGeometry } from './GalleryEditorGeometry';
 import { HeadshotSection } from './HeadshotEditor';
@@ -318,6 +319,7 @@ const OverviewPage = (props: { form: ImageForm } & EditorToggle) => {
           />
         ))}
       </Section>
+      <ArtworkSettings key={form.id} form={form} />
       {[false, true].map((nsfw) => (
         <ArtSection
           key={`${form.id}-${nsfw ? 'nsfw' : 'sfw'}`}

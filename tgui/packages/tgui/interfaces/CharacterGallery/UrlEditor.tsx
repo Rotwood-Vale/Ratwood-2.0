@@ -9,10 +9,17 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
+import { DEFAULT_ART_VIEW } from '../common/artViewSettings';
+import { ArtViewControls } from './ArtworkSettings';
 import { CardBackgroundControl } from './CardBackgroundControl';
 import { guidelineScope, ImageGuidelines } from './ImageGuidelines';
 import { useCopyUrl } from './LinkRow';
-import { type Data, HEADSHOT_SLOT, useGalleryBackend } from './shared';
+import {
+  type ArtViewSettings,
+  type Data,
+  HEADSHOT_SLOT,
+  useGalleryBackend,
+} from './shared';
 import { Thumbnail } from './Thumbnail';
 
 const extensionList = (extensions: string[]) => {
@@ -34,6 +41,12 @@ export const UrlEditor = (props: {
   );
   const [alternateBackground, setAlternateBackground] = useState(
     editor.alternate_background ?? 'transparent',
+  );
+  const [mainView, setMainView] = useState<ArtViewSettings>(
+    editor.main_view_settings ?? DEFAULT_ART_VIEW,
+  );
+  const [alternateView, setAlternateView] = useState<ArtViewSettings>(
+    editor.alternate_view_settings ?? DEFAULT_ART_VIEW,
   );
   const [main, setMain] = useState(editor.main ?? '');
   const [alternate, setAlternate] = useState(editor.alternate ?? '');
@@ -78,7 +91,7 @@ export const UrlEditor = (props: {
           }
           const focusable = [
             ...(dialogRef.current?.querySelectorAll<HTMLElement>(
-              'input, [tabindex="0"], summary, details[open] a[href]',
+              'input:not(:disabled), select:not(:disabled), [tabindex="0"]:not([disabled]), summary, details[open] a[href]',
             ) ?? []),
           ];
           const first = focusable[0];
@@ -110,6 +123,8 @@ export const UrlEditor = (props: {
             const setBackground = isAlternate
               ? setAlternateBackground
               : setMainBackground;
+            const view = isAlternate ? alternateView : mainView;
+            const setView = isAlternate ? setAlternateView : setMainView;
             const label =
               index === 0 ? 'Current Image URL' : 'Alternate Image URL';
             return (
@@ -162,7 +177,7 @@ export const UrlEditor = (props: {
                     </Button>
                   </Box>
                   {isArt && (
-                    <Box inline mt={0.5}>
+                    <Box mt={0.5}>
                       <CardBackgroundControl
                         value={background}
                         disabled={busy}
@@ -171,6 +186,14 @@ export const UrlEditor = (props: {
                           // A menu pick leaves focus on the page body, out of reach of the modal's Escape
                           inputRef.current?.focus();
                         }}
+                      />
+                      <ArtViewControls
+                        label={
+                          index === 0 ? 'Current image' : 'Alternate image'
+                        }
+                        value={view}
+                        disabled={busy}
+                        onChange={(changes) => setView({ ...view, ...changes })}
                       />
                     </Box>
                   )}
@@ -212,45 +235,49 @@ export const UrlEditor = (props: {
               Each link keeps its own framing.
             </Box>
           )}
-          {!!editor.error && (
-            <div role="alert">
-              <Box color="bad" mb={1}>
-                {editor.error}
-              </Box>
-            </div>
-          )}
-          <div role="status" aria-live="polite">
-            {copier.message}
-            {busy && (
-              <Box color="label" mb={0.5}>
-                <Icon name="spinner" spin mr={0.5} />
-                Updating images…
-              </Box>
+          <div className="CharacterGallery__urlFooter">
+            {!!editor.error && (
+              <div role="alert">
+                <Box color="bad" mb={1}>
+                  {editor.error}
+                </Box>
+              </div>
             )}
+            <div role="status" aria-live="polite">
+              {copier.message}
+              {busy && (
+                <Box color="label" mb={0.5}>
+                  <Icon name="spinner" spin mr={0.5} />
+                  Updating images…
+                </Box>
+              )}
+            </div>
+            <Stack justify="flex-end">
+              <Button compact onClick={cancel}>
+                Cancel
+              </Button>
+              <Button
+                compact
+                disabled={busy || !currentValue.trim()}
+                onClick={() =>
+                  act('save_urls', {
+                    editor_id: editor.id,
+                    main,
+                    alternate,
+                    active_alternate: activeAlternate,
+                    ...(isArt && {
+                      main_background: mainBackground,
+                      alternate_background: alternateBackground,
+                      main_view_settings: mainView,
+                      alternate_view_settings: alternateView,
+                    }),
+                  })
+                }
+              >
+                Apply
+              </Button>
+            </Stack>
           </div>
-          <Stack justify="flex-end">
-            <Button compact onClick={cancel}>
-              Cancel
-            </Button>
-            <Button
-              compact
-              disabled={busy || !currentValue.trim()}
-              onClick={() =>
-                act('save_urls', {
-                  editor_id: editor.id,
-                  main,
-                  alternate,
-                  active_alternate: activeAlternate,
-                  ...(isArt && {
-                    main_background: mainBackground,
-                    alternate_background: alternateBackground,
-                  }),
-                })
-              }
-            >
-              Apply
-            </Button>
-          </Stack>
         </Section>
       </div>
     </Modal>

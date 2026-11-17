@@ -12,7 +12,7 @@
 	var/selected_form = GALLERY_FORM_CHARACTER
 	/// Moves on when an image action on the form finishes, refused or not, so the window refuses actions opened before it. Framing and size edits must not move it, or the window drops its newer drafts
 	var/list/form_revisions = list(GALLERY_FORM_CHARACTER = 0, GALLERY_FORM_GNOLL = 0)
-	var/static/list/image_actions = list("save_urls", "use_url", "swap_all_urls", "clear_headshot", "clear_extra", "remove_art", "move_art", "clear_all", "undo_image", "remove_blocked_link")
+	var/static/list/image_actions = list("save_urls", "use_url", "swap_all_urls", "clear_headshot", "clear_extra", "remove_art", "move_art", "clear_all", "undo_image", "remove_blocked_link", "apply_artwork_settings")
 	/// The entries of image_actions that can open a confirm() prompt. After sending one of these the window keeps the
 	/// form busy for CHARACTER_GALLERY_PROMPT_TIMEOUT longer than usual, so an image action that calls confirm() must be
 	/// listed here too, or the window frees the form after 10 seconds while the prompt is still open
@@ -124,6 +124,7 @@
 		"undo" = undo_rows(form, links),
 		"undo_removed" = undo_removed_rows(form, links),
 		"undo_clear" = undo_available(form, GALLERY_UNDO_CLEAR, links),
+		"undo_artwork_settings" = undo_available(form, GALLERY_UNDO_ARTWORK_SETTINGS, links),
 		"blocked_links" = owner.vars["blocked_links"],
 		"name" = name,
 		"headshot" = owner.vars["headshot_link"],
@@ -138,6 +139,7 @@
 		"nsfw_img_gallery" = owner.vars["nsfw_img_gallery"],
 		"image_backdrop" = owner.vars["image_backdrop"],
 		"card_backgrounds" = gallery_card_backgrounds(owner),
+		"art_view_settings" = gallery_art_view_settings(owner),
 	)
 
 /datum/character_gallery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -170,6 +172,9 @@
 	var/static/list/any_revision_actions = list("select_form", "preview", "save", "set_frame_chat", "set_backdrop", "save_urls", "cancel_urls")
 	if(!(action in any_revision_actions) && params["revision"] != form_revisions[form])
 		return TRUE
+	if(action == "apply_artwork_settings")
+		if(!(params["form"] in list(GALLERY_FORM_CHARACTER, GALLERY_FORM_GNOLL)) || !valid_artwork_changes(params["changes"]))
+			return FALSE
 	if(sync_gallery_alternates(image_owner(form)))
 		prefs.gallery_changed()
 	var/nsfw = !!params["nsfw"]
@@ -225,6 +230,8 @@
 			. = use_url(form, params["image"], !!params["alternate"])
 		if("swap_all_urls")
 			. = swap_all_urls(form)
+		if("apply_artwork_settings")
+			. = apply_artwork_settings(user, form, params["changes"])
 		if("remove_art")
 			. = remove_art(user, form, nsfw, params["index"])
 		if("move_art")
@@ -274,6 +281,87 @@
 		var/list/source = alternates[image]
 		if(use_url(form, image, !source["active_alternate"]))
 			. = TRUE
+
+/datum/character_gallery/proc/valid_artwork_changes(list/changes)
+	if(!islist(changes))
+		return FALSE
+	for(var/field in changes)
+		switch(field)
+			if("opening_view")
+				if(!is_art_opening_view(changes[field]))
+					return FALSE
+			if("lock")
+				if(!is_art_view_lock(changes[field]))
+					return FALSE
+			if("card_background")
+				if(!is_card_material(changes[field]))
+					return FALSE
+			else
+				return FALSE
+	return TRUE
+
+/// Applies one settings patch to both sources of occupied art rows, retaining one whole artwork Undo
+/datum/character_gallery/proc/apply_artwork_settings(mob/user, form, list/changes)
+	if(!(form in list(GALLERY_FORM_CHARACTER, GALLERY_FORM_GNOLL)) || !valid_artwork_changes(changes) || !length(changes))
+		return FALSE
+	var/list/before = capture(form, "artwork")
+	var/list/after = capture(form, "artwork")
+	var/list/changed_rows = list()
+	for(var/prefix in list("art", "nsfw_art"))
+		var/list/rows = after[prefix]
+		var/list/previous_rows = before[prefix]
+		for(var/index in 1 to length(rows))
+			var/list/row = rows[index]
+			var/list/settings = row[GALLERY_ART_ROW_VIEW_SETTINGS]
+			if("opening_view" in changes)
+				settings["opening_view"] = changes["opening_view"]
+			if("lock" in changes)
+				settings["lock"] = changes["lock"]
+			if("card_background" in changes)
+				row[GALLERY_ART_ROW_BACKGROUND] = changes["card_background"]
+			var/list/source = row[GALLERY_ART_ROW_SOURCE]
+			if(source)
+				var/list/inactive_settings = source["view_settings"]
+				if("opening_view" in changes)
+					inactive_settings["opening_view"] = changes["opening_view"]
+				if("lock" in changes)
+					inactive_settings["lock"] = changes["lock"]
+				if("card_background" in changes)
+					source["card_background"] = changes["card_background"]
+			if(json_encode(row) != json_encode(previous_rows[index]))
+				changed_rows += "[prefix]_[index]"
+	if(!length(changed_rows))
+		return FALSE
+	var/list/points = undo_points[form]
+	for(var/image in changed_rows)
+		points -= image
+	restore_artwork_metadata(form, after)
+	remember_scope(form, GALLERY_UNDO_ARTWORK_SETTINGS, "artwork", before)
+	log_game("[user] has changed artwork settings for [length(changed_rows)] rows of their [describe(form, FALSE, "character")]: [json_encode(changes)].")
+	return TRUE
+
+/// Restores source metadata without rebuilding rows, preserving unrelated row Undo points
+/datum/character_gallery/proc/restore_artwork_metadata(form, list/saved)
+	var/datum/owner = image_owner(form)
+	var/list/alternates = get_alternates(form)
+	var/list/backgrounds = gallery_card_backgrounds(owner)
+	var/list/view_settings = gallery_art_view_settings(owner)
+	for(var/prefix in list("art", "nsfw_art"))
+		var/list/rows = saved[prefix]
+		for(var/index in 1 to length(rows))
+			var/slot = "[prefix]_[index]"
+			var/list/row = rows[index]
+			if(backgrounds[slot] != row[GALLERY_ART_ROW_BACKGROUND])
+				set_gallery_card_background(owner, slot, row[GALLERY_ART_ROW_URL], row[GALLERY_ART_ROW_BACKGROUND])
+			if(json_encode(view_settings[slot]) != json_encode(row[GALLERY_ART_ROW_VIEW_SETTINGS]))
+				set_gallery_art_view_settings(owner, slot, row[GALLERY_ART_ROW_URL], row[GALLERY_ART_ROW_VIEW_SETTINGS])
+			var/list/current_source = alternates[slot]
+			if(!islist(current_source) || current_source["current_url"] != row[GALLERY_ART_ROW_URL])
+				current_source = null
+			if(json_encode(gallery_art_source_state(current_source)) != json_encode(row[GALLERY_ART_ROW_SOURCE]))
+				alternates -= slot
+				if(row[GALLERY_ART_ROW_SOURCE])
+					alternates[slot] = deepCopyList(row[GALLERY_ART_ROW_SOURCE])
 
 /datum/character_gallery/proc/describe(form, nsfw, field_name)
 	return "[form == GALLERY_FORM_GNOLL ? "gnoll " : ""][nsfw ? "NSFW " : ""][field_name]"
@@ -433,10 +521,15 @@
 /datum/character_gallery/proc/art_rows(form, prefix)
 	. = list()
 	var/list/backgrounds = gallery_card_backgrounds(image_owner(form))
+	var/list/view_settings = gallery_art_view_settings(image_owner(form))
 	var/list/alternates = get_alternates(form)
 	var/list/gallery = get_gallery(form, prefix == "nsfw_art")
 	for(var/index in 1 to length(gallery))
-		. += list(list(gallery[index], deepCopyList(alternates["[prefix]_[index]"]), backgrounds["[prefix]_[index]"]))
+		var/slot = "[prefix]_[index]"
+		var/list/source = alternates[slot]
+		if(!islist(source) || source["current_url"] != gallery[index])
+			source = null
+		. += list(list(gallery[index], gallery_art_source_state(source), backgrounds[slot], view_settings[slot]))
 
 /// Replaces a gallery's rows. Drops the gallery's row Undos, which are held by position and could restore onto the wrong image
 /datum/character_gallery/proc/set_art_rows(form, prefix, list/rows)
@@ -448,17 +541,21 @@
 		alternates -= slot
 		points -= slot
 		set_gallery_card_background(owner, slot, null, GALLERY_CARD_DEFAULT)
+		set_gallery_art_view_settings(owner, slot, null, null)
 	var/list/gallery = list()
 	for(var/list/row as anything in rows)
-		gallery += row[1]
-		if(row[2])
-			alternates["[prefix]_[length(gallery)]"] = row[2]
-		set_gallery_card_background(owner, "[prefix]_[length(gallery)]", row[1], row[3])
+		gallery += row[GALLERY_ART_ROW_URL]
+		if(row[GALLERY_ART_ROW_SOURCE])
+			alternates["[prefix]_[length(gallery)]"] = row[GALLERY_ART_ROW_SOURCE]
+		set_gallery_card_background(owner, "[prefix]_[length(gallery)]", row[GALLERY_ART_ROW_URL], row[GALLERY_ART_ROW_BACKGROUND])
+		set_gallery_art_view_settings(owner, "[prefix]_[length(gallery)]", row[GALLERY_ART_ROW_URL], row[GALLERY_ART_ROW_VIEW_SETTINGS])
 	set_gallery(form, prefix == "nsfw_art", gallery)
 
 /datum/character_gallery/proc/capture(form, scope, list/links)
 	var/datum/owner = image_owner(form)
 	switch(scope)
+		if("artwork")
+			return list("art" = art_rows(form, "art"), "nsfw_art" = art_rows(form, "nsfw_art"))
 		if("form")
 			. = list()
 			for(var/part in list("headshot", "extra", "nsfw_extra", "art", "nsfw_art", "blocked"))
@@ -476,6 +573,8 @@
 	if(is_gallery_art_slot(scope))
 		var/list/backgrounds = gallery_card_backgrounds(owner)
 		.["background"] = backgrounds[scope]
+		var/list/view_settings = gallery_art_view_settings(owner)
+		.["view_settings"] = view_settings[scope]
 	if(scope == "headshot")
 		.["frame"] = gallery_headshot_frame(owner)
 	else if(scope == "extra" || scope == "nsfw_extra")
@@ -484,6 +583,9 @@
 /datum/character_gallery/proc/restore(form, scope, list/saved)
 	var/datum/owner = image_owner(form)
 	switch(scope)
+		if("artwork")
+			restore_artwork_metadata(form, saved)
+			return
 		if("form")
 			for(var/part in saved)
 				restore(form, part, saved[part])
@@ -497,6 +599,7 @@
 	write_image(form, scope, saved["link"])
 	if(is_gallery_art_slot(scope))
 		set_gallery_card_background(owner, scope, saved["link"], saved["background"])
+		set_gallery_art_view_settings(owner, scope, saved["link"], saved["view_settings"])
 	if(saved["frame"])
 		set_framing(form, saved["frame"])
 	if(saved["size"])
@@ -585,7 +688,7 @@
 
 /datum/character_gallery/proc/sources_snapshot(form)
 	var/datum/owner = image_owner(form)
-	return json_encode(list(gallery_image_links(owner), gallery_alternate_state(owner), gallery_card_backgrounds(owner)))
+	return json_encode(list(gallery_image_links(owner), gallery_alternate_state(owner), gallery_card_backgrounds(owner), gallery_art_view_settings(owner)))
 
 /datum/character_gallery/proc/open_url_editor(mob/user, form, image, label)
 	if(url_editor)
@@ -613,6 +716,10 @@
 		var/list/backgrounds = resolve_card_backgrounds(form, image, url_editor["main"], url_editor["alternate"], FALSE)
 		url_editor["main_background"] = backgrounds[1]
 		url_editor["alternate_background"] = backgrounds[2]
+		var/list/settings = resolve_art_view_settings(form, image, url_editor["main"], url_editor["alternate"], FALSE)
+		url_editor["main_view_settings"] = settings[1]
+		if(length(url_editor["alternate"]))
+			url_editor["alternate_view_settings"] = settings[2]
 	return TRUE
 
 /datum/character_gallery/proc/save_urls(mob/user, list/params)
@@ -627,11 +734,17 @@
 	var/active_alternate = urls["active_alternate"]
 	var/promote_alternate = urls["promote_alternate"]
 	var/image = url_editor["image"]
+	for(var/field in list("main_view_settings", "alternate_view_settings"))
+		if((field in params) && (!is_gallery_art_slot(image) || !is_art_view_settings(params[field])))
+			url_editor["error"] = "Choose a valid opening view and lock for each artwork source."
+			return FALSE
 	if(url_editor["sources"] != sources_snapshot(form))
 		url_editor["error"] = "These images changed while the editor was open. Cancel and reopen it."
 		return FALSE
 	var/list/backgrounds
 	var/backgrounds_changed = FALSE
+	var/list/settings
+	var/settings_changed = FALSE
 	if(is_gallery_art_slot(image))
 		backgrounds = resolve_card_backgrounds(form, image, main, alternate, promote_alternate)
 		var/main_draft = params[promote_alternate ? "alternate_background" : "main_background"]
@@ -641,10 +754,15 @@
 		if(length(alternate) && is_card_material(alternate_draft))
 			backgrounds[2] = alternate_draft
 		backgrounds_changed = backgrounds[1] != url_editor["main_background"] || (length(alternate) && backgrounds[2] != url_editor["alternate_background"])
-	// Closes the editor without writing when the links, the active source and the card materials all match url_editor,
-	// or remember_image() below replaces this row's Undo with one that restores the same image. An Add opens with an
-	// empty main, which a validated main never equals, so an Add always writes
-	if(main == url_editor["main"] && alternate == (url_editor["alternate"] || "") && active_alternate == url_editor["active_alternate"] && !backgrounds_changed)
+		settings = resolve_art_view_settings(form, image, main, alternate, promote_alternate)
+		var/main_field = promote_alternate ? "alternate_view_settings" : "main_view_settings"
+		if(main_field in params)
+			settings[1] = sanitize_art_view_settings(params[main_field])
+		if(length(alternate) && ("alternate_view_settings" in params))
+			settings[2] = sanitize_art_view_settings(params["alternate_view_settings"])
+		settings_changed = json_encode(settings[1]) != json_encode(url_editor["main_view_settings"]) || (length(alternate) && json_encode(settings[2]) != json_encode(url_editor["alternate_view_settings"]))
+	// A no-op must keep the previous row Undo. An Add has an empty main, which a validated main never equals
+	if(main == url_editor["main"] && alternate == (url_editor["alternate"] || "") && active_alternate == url_editor["active_alternate"] && !backgrounds_changed && !settings_changed)
 		url_editor = null
 		return TRUE
 	var/list/active_frame
@@ -660,6 +778,8 @@
 	write_image(form, image, active)
 	if(backgrounds)
 		set_gallery_card_background(image_owner(form), image, active, backgrounds[active_alternate ? 2 : 1])
+	if(settings)
+		set_gallery_art_view_settings(image_owner(form), image, active, settings[active_alternate ? 2 : 1])
 	if(active_frame)
 		set_framing(form, active_frame)
 	var/list/alternates = get_alternates(form)
@@ -670,10 +790,14 @@
 			source["framing"] = inactive_frame
 		if(backgrounds)
 			source["card_background"] = backgrounds[active_alternate ? 1 : 2]
+		if(settings)
+			source["view_settings"] = settings[active_alternate ? 1 : 2]
 		alternates[image] = source
 	var/materials = ""
 	if(backgrounds)
 		materials = length(alternate) ? ", card materials main '[backgrounds[1]]', alternate '[backgrounds[2]]'" : ", card material '[backgrounds[1]]'"
+	if(settings)
+		materials += ", artwork view settings main '[json_encode(settings[1])]', alternate '[json_encode(settings[2])]'"
 	log_game("[user] has set [describe(form, FALSE, url_editor["label"])] URLs to main '[main]', alternate '[alternate]', using [active_alternate ? "alternate" : "main"][materials].")
 	url_editor = null
 	return TRUE
@@ -766,6 +890,11 @@
 	var/list/kept = resolve_source_values(form, image, backgrounds[image], "card_background", main, alternate, promote_alternate)
 	return list(sanitize_card_background(kept[1]), sanitize_card_background(kept[2]))
 
+/datum/character_gallery/proc/resolve_art_view_settings(form, image, main, alternate, promote_alternate)
+	var/list/settings = gallery_art_view_settings(image_owner(form))
+	var/list/kept = resolve_source_values(form, image, settings[image], "view_settings", main, alternate, promote_alternate)
+	return list(sanitize_art_view_settings(kept[1]), sanitize_art_view_settings(kept[2]))
+
 /datum/character_gallery/proc/write_image(form, image, link)
 	switch(image)
 		if("headshot")
@@ -790,6 +919,7 @@
 		return FALSE
 	set_gallery(form, nsfw, gallery)
 	set_gallery_card_background(image_owner(form), image, null, GALLERY_CARD_DEFAULT)
+	set_gallery_art_view_settings(image_owner(form), image, null, null)
 	return TRUE
 
 /datum/character_gallery/proc/use_url(form, image, use_alternate)
@@ -804,6 +934,8 @@
 	var/current = links[image]
 	var/list/backgrounds = gallery_card_backgrounds(owner)
 	var/current_background = backgrounds[image]
+	var/list/settings = gallery_art_view_settings(owner)
+	var/list/current_settings = settings[image]
 	var/list/current_frame
 	if(image == "headshot")
 		current_frame = gallery_headshot_frame(owner)
@@ -815,6 +947,8 @@
 	if(is_gallery_art_slot(image))
 		set_gallery_card_background(owner, image, source["current_url"], source["card_background"])
 		source["card_background"] = sanitize_card_background(current_background)
+		set_gallery_art_view_settings(owner, image, source["current_url"], source["view_settings"])
+		source["view_settings"] = sanitize_art_view_settings(current_settings)
 	if(image == "headshot")
 		set_framing(form, source["framing"])
 		source["framing"] = current_frame
@@ -929,10 +1063,12 @@
 	saved_gnoll_gallery = null
 	gallery_alternates = list()
 	card_backgrounds = list()
+	art_view_settings = list()
 	blocked_links = list()
 	if(istype(gnoll_prefs))
 		gnoll_prefs.gallery_alternates = list()
 		gnoll_prefs.card_backgrounds = list()
+		gnoll_prefs.art_view_settings = list()
 		gnoll_prefs.blocked_links = list()
 
 /datum/preferences/proc/finish_gallery_load(gnoll_loaded)

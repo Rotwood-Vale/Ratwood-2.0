@@ -138,6 +138,7 @@
 	var/headshot_frame_chat = FALSE
 	var/image_backdrop = GALLERY_BACKDROP_PICTURE
 	var/list/card_backgrounds = list()
+	var/list/art_view_settings = list()
 	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null

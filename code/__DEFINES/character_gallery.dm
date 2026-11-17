@@ -29,6 +29,8 @@
 #define GALLERY_EXTRA_SLOT(nsfw) ((nsfw) ? "nsfw_extra" : "extra")
 #define GALLERY_REMOVED_POINT(scope) "[scope]_removed"
 #define GALLERY_UNDO_CLEAR "clear_all"
+/// The whole artwork settings Undo point, whose capture scope is artwork
+#define GALLERY_UNDO_ARTWORK_SETTINGS "artwork_settings"
 
 #define GALLERY_BACKDROP_NONE "none"
 #define GALLERY_BACKDROP_PICTURE "picture"
@@ -36,8 +38,17 @@
 
 #define GALLERY_CARD_DEFAULT "transparent"
 
+/// Active URL in an art_rows() snapshot
+#define GALLERY_ART_ROW_URL 1
+/// Alternate source record in an art_rows() snapshot
+#define GALLERY_ART_ROW_SOURCE 2
+/// Active card backdrop in an art_rows() snapshot
+#define GALLERY_ART_ROW_BACKGROUND 3
+/// Active opening view and lock in an art_rows() snapshot
+#define GALLERY_ART_ROW_VIEW_SETTINGS 4
+
 /**
- * Copies headshot framing, the examine backdrop and card backgrounds between owners
+ * Copies headshot framing, the examine backdrop and art presentation between owners
  *
  * A macro so the compiler checks every name against each owner's own type, which a proc taking
  * the four unrelated owner types could not. copy_target and copy_source must be plain names, src included.
@@ -49,7 +60,8 @@
 	copy_target.headshot_y = copy_source.headshot_y;\
 	copy_target.headshot_framed = copy_source.headshot_framed;\
 	copy_target.image_backdrop = copy_source.image_backdrop;\
-	copy_target.card_backgrounds = deepCopyList(copy_source.card_backgrounds);
+	copy_target.card_backgrounds = deepCopyList(copy_source.card_backgrounds);\
+	copy_target.art_view_settings = deepCopyList(copy_source.art_view_settings);
 
 /// Examine Image Gallery easter egg of a cat on the tavern's table, its figure id in the gallery's backdrops.ts
 #define GALLERY_FIGURE_TAVERN_CAT "cat"

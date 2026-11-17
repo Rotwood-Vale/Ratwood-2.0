@@ -1,5 +1,6 @@
 import type { BooleanLike } from 'tgui-core/react';
 
+import type { ArtViewSettings } from './CharacterGallery/shared';
 import type { GallerySettings } from './ExamineGallery/effects';
 
 export type ExaminePanelData = {
@@ -33,5 +34,6 @@ export type ExaminePanelData = {
   gallery: GallerySettings;
   image_backdrop: string;
   card_backgrounds: Record<string, string>;
+  art_view_settings: Record<string, ArtViewSettings>;
   gallery_figures: string[];
 };

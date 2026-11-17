@@ -213,6 +213,7 @@
 		),
 		"image_backdrop" = image_backdrop,
 		"card_backgrounds" = gallery_card_backgrounds(framing_source),
+		"art_view_settings" = gallery_art_view_settings(framing_source),
 		"gallery_figures" = gallery_figures || list(),
 		"song_title" = has_song ? song_title : null,
 		"song_artist" = has_song ? song_artist : null,

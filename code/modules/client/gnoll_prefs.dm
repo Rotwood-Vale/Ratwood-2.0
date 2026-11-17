@@ -27,6 +27,7 @@
 	var/headshot_framed = FALSE
 	var/image_backdrop = GALLERY_BACKDROP_PICTURE
 	var/list/card_backgrounds = list()
+	var/list/art_view_settings = list()
 	var/flavortext
 	var/ooc_notes
 	var/ooc_extra

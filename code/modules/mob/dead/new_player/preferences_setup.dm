@@ -19,6 +19,7 @@
 		character_gallery_generation++
 		gallery_alternates = list()
 		card_backgrounds = list()
+		art_view_settings = list()
 		blocked_links = list()
 		flavortext = null
 		nsfwflavortext = null
