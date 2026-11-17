@@ -566,3 +566,8 @@
   - balance: Blink and Shadowstep cannot be cast while grabbed.
   - balance: Repel and Repulse drag you along when they knock back the person pulling
       you.
+2026-11-17:
+  _Rarity:
+  - balance: Reduced the minimum cast time for affected arcane spells from 1.5 seconds
+      to 0.5 seconds.
+  - balance: Arcyne Bolt casts instantly again.
