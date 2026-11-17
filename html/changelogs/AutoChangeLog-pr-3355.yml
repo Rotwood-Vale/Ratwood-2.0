@@ -1,4 +1,0 @@
-author: "ronfino"
-delete-after: True
-changes:
-  - bugfix: "Fixed SNIPPING tools not able to salvage footwear. You can store tools in boots with other intents."
