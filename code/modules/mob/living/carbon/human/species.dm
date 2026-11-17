@@ -184,6 +184,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/list/allowed_taur_types = list()
 	var/forced_taur = FALSE
+	/// Default when newly selecting this race; does not override saved body choices.
+	var/default_taur = FALSE
 
 	/// List of descriptor choices this species gets in preferences customization
 	var/list/descriptor_choices = list(

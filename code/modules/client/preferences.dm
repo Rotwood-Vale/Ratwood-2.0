@@ -556,7 +556,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	random_character(gender, FALSE, FALSE)
 	accessory = "Nothing"
 
-	if(pref_species.forced_taur && pref_species.allowed_taur_types.len)
+	if((pref_species.forced_taur || pref_species.default_taur) && pref_species.allowed_taur_types.len)
 		taur_type = pick(pref_species.allowed_taur_types)
 	else
 		taur_type = null
@@ -2464,7 +2464,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					for(var/obj/item/bodypart/taur/tt as anything in pref_species.get_taur_list())
 						taur_selection[tt::name] = tt
 
+					var/datum/species/editing_species = pref_species
+					var/editing_slot = default_slot
 					var/new_taur_type = tgui_input_list(user, "Choose your character's taur body", "TAUR BODY", taur_selection)
+					if(!user?.client || user.client != parent || pref_species != editing_species || default_slot != editing_slot)
+						return
 					if(!new_taur_type)
 						return
 
