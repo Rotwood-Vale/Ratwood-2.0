@@ -6,7 +6,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/seamstress
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
-	traits_applied = list(TRAIT_SEWING_EXPERT,TRAIT_DYES)
+	traits_applied = list(TRAIT_SEWING_EXPERT)
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	subclass_stats = list(
 		STATKEY_SPD = 2,

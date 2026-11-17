@@ -408,6 +408,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/loadout_10_hex
 
 	// Custom names for loadout items
+	var/list/loadout_markdown_fields = list()
 	var/loadout_1_name
 	var/loadout_2_name
 	var/loadout_3_name
@@ -555,7 +556,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	random_character(gender, FALSE, FALSE)
 	accessory = "Nothing"
 
-	if(pref_species.forced_taur && pref_species.allowed_taur_types.len)
+	if((pref_species.forced_taur || pref_species.default_taur) && pref_species.allowed_taur_types.len)
 		taur_type = pick(pref_species.allowed_taur_types)
 	else
 		taur_type = null
@@ -2463,7 +2464,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					for(var/obj/item/bodypart/taur/tt as anything in pref_species.get_taur_list())
 						taur_selection[tt::name] = tt
 
+					var/datum/species/editing_species = pref_species
+					var/editing_slot = default_slot
 					var/new_taur_type = tgui_input_list(user, "Choose your character's taur body", "TAUR BODY", taur_selection)
+					if(!user?.client || user.client != parent || pref_species != editing_species || default_slot != editing_slot)
+						return
 					if(!new_taur_type)
 						return
 
@@ -3734,51 +3739,17 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	return FALSE
 
 /datum/preferences/proc/resolve_loadout_to_name(item_path)
-	if (loadout && (item_path == loadout.path) && loadout_1_name)
-		return loadout_1_name
-	if (loadout2 && (item_path == loadout2.path) && loadout_2_name)
-		return loadout_2_name
-	if (loadout3 && (item_path == loadout3.path) && loadout_3_name)
-		return loadout_3_name
-	if (loadout4 && (item_path == loadout4.path) && loadout_4_name)
-		return loadout_4_name
-	if (loadout5 && (item_path == loadout5.path) && loadout_5_name)
-		return loadout_5_name
-	if (loadout6 && (item_path == loadout6.path) && loadout_6_name)
-		return loadout_6_name
-	if (loadout7 && (item_path == loadout7.path) && loadout_7_name)
-		return loadout_7_name
-	if (loadout8 && (item_path == loadout8.path) && loadout_8_name)
-		return loadout_8_name
-	if (loadout9 && (item_path == loadout9.path) && loadout_9_name)
-		return loadout_9_name
-	if (loadout10 && (item_path == loadout10.path) && loadout_10_name)
-		return loadout_10_name
-
+	for(var/i = 1 to 10)
+		var/datum/loadout_item/item = vars[i == 1 ? "loadout" : "loadout[i]"]
+		if(istype(item) && item.path == item_path && vars["loadout_[i]_name"])
+			return get_loadout_text(i, TRUE)
 	return FALSE
 
 /datum/preferences/proc/resolve_loadout_to_desc(item_path)
-	if (loadout && (item_path == loadout.path) && loadout_1_desc)
-		return loadout_1_desc
-	if (loadout2 && (item_path == loadout2.path) && loadout_2_desc)
-		return loadout_2_desc
-	if (loadout3 && (item_path == loadout3.path) && loadout_3_desc)
-		return loadout_3_desc
-	if (loadout4 && (item_path == loadout4.path) && loadout_4_desc)
-		return loadout_4_desc
-	if (loadout5 && (item_path == loadout5.path) && loadout_5_desc)
-		return loadout_5_desc
-	if (loadout6 && (item_path == loadout6.path) && loadout_6_desc)
-		return loadout_6_desc
-	if (loadout7 && (item_path == loadout7.path) && loadout_7_desc)
-		return loadout_7_desc
-	if (loadout8 && (item_path == loadout8.path) && loadout_8_desc)
-		return loadout_8_desc
-	if (loadout9 && (item_path == loadout9.path) && loadout_9_desc)
-		return loadout_9_desc
-	if (loadout10 && (item_path == loadout10.path) && loadout_10_desc)
-		return loadout_10_desc
-
+	for(var/i = 1 to 10)
+		var/datum/loadout_item/item = vars[i == 1 ? "loadout" : "loadout[i]"]
+		if(istype(item) && item.path == item_path && vars["loadout_[i]_desc"])
+			return get_loadout_text(i)
 	return FALSE
 
 

@@ -140,7 +140,7 @@
 		/obj/item/bodypart/taur/ant,
 		/obj/item/bodypart/taur/wasp
 	)
-	forced_taur = TRUE
+	default_taur = TRUE
 
 /datum/species/arachnid/check_roundstart_eligible()
 	return TRUE
@@ -154,8 +154,9 @@
 	give_web_spells(arachnidcarbon)
 
 /datum/species/arachnid/proc/give_web_spells(mob/living/carbon/arachnidcarbon)
-	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_web/thin)
-	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_web/dense)
+	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_web)
+	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_silk_bed)
+	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon)
 
 /datum/species/arachnid/on_species_loss(mob/living/carbon/arachnidcarbon) // one of those auto-appends a dot at the end of player speech
 	. = ..()
@@ -163,8 +164,9 @@
 	remove_web_spells(arachnidcarbon)
 
 /datum/species/arachnid/proc/remove_web_spells(mob/living/carbon/arachnidcarbon)
-	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_web/thin)
-	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_web/dense)
+	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_web)
+	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_silk_bed)
+	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/targeted/weave_rescue_cocoon)
 
 /datum/species/arachnid/get_random_features()
 	var/list/returned = MANDATORY_FEATURE_LIST

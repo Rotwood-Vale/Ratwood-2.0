@@ -543,6 +543,17 @@
   - rscadd: Towners can post rumors, earn referral fees, and commission Blockade Defense
       writs.
   - qol: Notorious Bounties and contracts can now be signed solo. Don't die.
+  - rscadd: (Kaolin1234) Arachnids can weave silk beds and rescue cocoons.
+  - qol: (Kaolin1234) Arachnid web weaving automatically continues from thin webbing
+      to reinforcement.
+  - qol: Anyone can now pick custom colors at dye bins.
+  - rscadd: Lanterns can now hold two Seelies.
+  - bugfix: Fixed lantern reach checks, occupant ejection on destruction, and Seelie
+      glow consuming fuel or igniting items.
+  - bugfix: Rous must be tamed before mounting, and Seelie verbs are removed on species
+      loss.
+  - bugfix: Seelie size-mismatch injuries respect Extreme ERP preferences and fracture
+      protection.
   mypingishuge:
   - balance: "Reduced Stuffed\u2019s Speed penalty from 6 to 3."
   - bugfix: Stat debuffs no longer disappear when applied at minimum stats.
@@ -555,3 +566,24 @@
   - balance: Blink and Shadowstep cannot be cast while grabbed.
   - balance: Repel and Repulse drag you along when they knock back the person pulling
       you.
+2026-11-17:
+  _Rarity:
+  - balance: Reduced the minimum cast time for affected arcane spells from 1.5 seconds
+      to 0.5 seconds.
+  - balance: Arcyne Bolt casts instantly again.
+  - qol: Sun Blinded glare is fainter and limited to the corners of the screen. Also
+      reduced the massive -5 PER debuff.
+  - bugfix: Fixed raw article and color codes appearing in stash item names.
+  - bugfix: Qualifying face-slot clothing now protects against Sun Blinded.
+  - rscadd: Added a Lava Immunity trait that protects against damage and ignition
+      from standing in lava.
+  mypingishuge:
+  - rscadd: Foresters can choose a bronze warclub with an iron shield or a Goedendag,
+      with Expert Maces.
+  - spellcheck: Updated the Forester description to reflect its role as a frontliner,
+      removing the enforced woodsman background.
+  - rscadd: Arachnids can choose None as their taur body type while new Arachnids
+      still default to a taur form.
+  - bugfix: Biped Arachnids use appropriate clothing and fire sprites.
+  - bugfix: Old taur-selection dialogs no longer overwrite a different character or
+      race after switching.

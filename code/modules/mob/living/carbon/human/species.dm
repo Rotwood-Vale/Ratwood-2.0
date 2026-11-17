@@ -184,6 +184,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/list/allowed_taur_types = list()
 	var/forced_taur = FALSE
+	/// Default when newly selecting this race; does not override saved body choices.
+	var/default_taur = FALSE
 
 	/// List of descriptor choices this species gets in preferences customization
 	var/list/descriptor_choices = list(
@@ -2245,7 +2247,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 		var/sunlit = GLOB.tod == "day" && cur_turf.outdoor_effect?.state
 		if(sunlit)
 			H.add_stress(/datum/stressevent/sunlit)
-		if(sunlit && !(H.head?.block2add & FOV_BEHIND))
+		if(sunlit && !((H.head?.block2add | H.wear_mask?.block2add) & FOV_BEHIND))
 			H.apply_status_effect(/datum/status_effect/debuff/sun_blinded)
 		else
 			H.remove_status_effect(/datum/status_effect/debuff/sun_blinded)

@@ -27,6 +27,9 @@
 	associated_skill = /datum/skill/magic/arcane
 	cost = 3
 
+/obj/effect/proc_holder/spell/invoked/projectile/arcynebolt/get_minimum_cast_time()
+	return 0
+
 /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt/cast(list/targets, mob/user = user)
 	var/mob/living/carbon/human/H = user
 	var/datum/intent/a_intent = H.a_intent

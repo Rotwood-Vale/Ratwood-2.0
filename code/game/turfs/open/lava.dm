@@ -55,7 +55,7 @@
 	if(!AM.throwing)
 		if(burn_stuff(AM))
 			START_PROCESSING(SSobj, src)
-		if(ishuman(AM))
+		if(ishuman(AM) && will_burn(AM))
 			playsound(src, 'sound/misc/lava_death.ogg', 100, FALSE)
 //			addomen("lava")
 
@@ -83,6 +83,8 @@
 	return LAZYLEN(found_safeties)
 
 /turf/open/lava/can_traverse_safely(atom/movable/traveler)
+	if(isliving(traveler) && HAS_TRAIT(traveler, TRAIT_LAVA_IMMUNE))
+		return !will_burn(traveler)
 	return ..() && !will_burn(traveler) // can traverse safely if you won't burn in it
 
 /turf/open/lava/proc/will_burn(atom/movable/thing)
@@ -93,6 +95,8 @@
 		return TRUE
 	else if (isliving(thing))
 		var/mob/living/L = thing
+		if(HAS_TRAIT(L, TRAIT_LAVA_IMMUNE) && !istype(src, /turf/open/lava/acid)) // Acid pools inherit from lava, but lava immunity does not protect against acid.
+			return FALSE
 		if(L.movement_type & FLYING)
 			return FALSE //YOU'RE FLYING OVER IT
 		if("lava" in L.weather_immunities) // just flat-out immune. is this even used in RT?

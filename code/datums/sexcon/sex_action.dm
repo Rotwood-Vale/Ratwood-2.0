@@ -69,6 +69,19 @@
 /datum/sex_action/proc/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return FALSE
 
+/// Check each injury branch so a preference change during an action takes effect immediately.
+/datum/sex_action/proc/can_apply_tiny_injury(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY) && both_extreme_erp(user, target)
+
+/datum/sex_action/proc/apply_tiny_start_injury(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	if(!HAS_TRAIT(target, TRAIT_RESILIENT_LOVER))
+		chest?.add_wound(/datum/wound/fracture/chest)
+		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
+		groin?.add_wound(/datum/wound/fracture/groin)
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && user.sexcon.force > SEX_FORCE_MID)
+		target.apply_damage(30, BRUTE, chest)
+
 /datum/sex_action/proc/user_knows_required_spell(mob/living/carbon/human/user)
 	if(!user_required_spell_type)
 		return TRUE
