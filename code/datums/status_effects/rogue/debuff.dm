@@ -220,6 +220,17 @@
 	desc = "My muscles need some sleep to recover."
 	icon_state = "muscles"
 
+/datum/status_effect/debuff/sunder_stacks
+	id = "sundered"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sunder_stacks
+	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)	//Slightly punishing.
+	duration = 10 SECONDS	//Punishing and tied to the duration of your sundering stacks.
+
+/atom/movable/screen/alert/status_effect/debuff/sunder_stacks
+	name = "Sundered!"
+	desc = "Something has been taken from me, and it will take time to recover."
+	icon_state = "luxstrain"
+
 /datum/status_effect/debuff/devitalised
 	id = "devitalised"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/devitalised
@@ -266,19 +277,22 @@
 /datum/status_effect/debuff/breedable
 	id = "breedable"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/breedable
-	duration = 30 SECONDS
+	duration = 60 SECONDS
 
 /datum/status_effect/debuff/breedable/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/breedable/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/debuff/breedable
 	name = "Obedient"
 	desc = "They won't hurt me too much..."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/submissive
 	id = "submissive"
@@ -296,6 +310,18 @@
 /atom/movable/screen/alert/status_effect/debuff/submissive
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
+	icon_state = "yielded"
+
+/datum/status_effect/debuff/omegamale
+	id = "omegamale"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/omegamale
+	effectedstats = list(STATKEY_STR = -15, STATKEY_PER = -15, STATKEY_SPD = -15, STATKEY_LCK = -15)//everything but CON & WIL since these keep you alive
+	duration = 5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/omegamale
+	name = "Conceded"
+	desc = "I conceded and won't be fighting for some time."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/yield_prompt
 	id = "yieldprompt"

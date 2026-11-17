@@ -224,6 +224,7 @@
 	return newphrase
 
 /// Makes you talk like you got cult stunned, which is slurring but with some dark messages
+// Except up, its Psyphied so this is what you get from being sundered instead, thank you whoever left this, I will cook.
 /proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = STRIP_HTML_SIMPLE(n,MAX_MESSAGE_LEN)
 	var/leng = length_char(phrase)
@@ -242,14 +243,13 @@
 			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
 			if(LOWER_TEXT(newletter)=="c")
-				newletter=" NAR "
+				newletter="lr"
+			if(LOWER_TEXT(newletter)=="e")
+				newletter="do"
+			if(LOWER_TEXT(newletter)=="zizo") //YOU WISH
+				newletter="psy"
 			if(LOWER_TEXT(newletter)=="s")
-				newletter=" SIE "
-		if(prob(25))
-			if(newletter==" ")
-				newletter=" no hope... "
-			if(newletter=="H")
-				newletter=" IT COMES... "
+				newletter="zr"
 
 		switch(rand(1,15))
 			if(1)
@@ -259,9 +259,9 @@
 			if(3)
 				newletter="fth"
 			if(4)
-				newletter="nglu"
+				newletter="zghl"
 			if(5)
-				newletter="glor"
+				newletter="psyzl"
 			else
 				;;
 		newphrase+="[newletter]";counter-=1
@@ -717,6 +717,8 @@
 			cmode = FALSE
 			SSdroning.kill_droning(client)
 			SSdroning.play_area_sound(get_area(src), client)
+			// The area loop as well, which entering the area skipped in combat mode
+			SSdroning.play_loop(get_area(src), client)
 		if(hud_used)
 			if(hud_used.cmode_button)
 				hud_used.cmode_button.update_icon()
@@ -726,6 +728,8 @@
 		cmode = FALSE
 		SSdroning.kill_droning(client)
 		SSdroning.play_area_sound(get_area(src), client)
+		// The area loop as well, which entering the area skipped in combat mode
+		SSdroning.play_loop(get_area(src), client)
 		clear_fullscreen("CMODE")
 		if(client && HAS_TRAIT(src, TRAIT_SCREENSHAKE))
 			animate(client, pixel_y)
@@ -928,7 +932,7 @@
 			orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
 		to_chat(O, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
 		if(ghost_sound)
-			SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
+			SEND_SOUND(O, sound(ghost_sound, volume = overall_volume(O, notify_volume)))
 		if(flashwindow)
 			window_flash(O.client)
 		if(source)

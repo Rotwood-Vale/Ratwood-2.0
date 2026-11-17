@@ -72,7 +72,7 @@
 
 	for(var/turf/T in range(blast_radius, center))
 		for(var/obj/structure/S in T.contents)
-			S.take_damage(structural_damage * 2, BRUTE, "blunt")
+			S.take_damage_from(caster, structural_damage * 2, BRUTE, "blunt", cause = "with [name]")
 		T.take_damage(structural_damage * 2, BRUTE, "blunt")
 		for(var/mob/living/L in T.contents)
 			if(L.anti_magic_check())

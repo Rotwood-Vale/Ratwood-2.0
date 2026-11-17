@@ -1,10 +1,18 @@
-/datum/looping_sound/instrument
-	mid_length = 120000 // 20 minutes. Previously 4 minutes for no reason. Songs are restricted to 6 megs. If you have twenty minutes of mono low bitrate or one minute of studio quality orchestra, it makes no difference to the server.
+/datum/looping_sound/music/instrument
+	mid_length = 120000 // Unused, start_sound_loop() sets no re-fire timer and the song plays or repeats natively
 	volume = 100
-	extra_range = 10	// Increase sound range.
-	persistent_loop = TRUE
-	var/stress2give = /datum/stressevent/music
-	sound_group = /datum/sound_group/instruments
+	extra_range = 2
+	/// Uses a sound token with an allocated playback channel
+	use_sound_tokens = TRUE
+	/// Player-selected song repetition, applied through sound.repeat
+	var/loop_song = FALSE
+	/// Shared REALTIMEOFDAY anchor for band starts. Identical stamps keep members in lockstep
+	var/sync_start_time
+	/// Stock replacement songs for uploads, keyed by song name
+	var/list/stand_in_songs
+	/// Suppresses replacement songs after another band member has claimed the band's stock song.
+	/// Clear after start() so later solo playback can use a replacement
+	var/band_follower = FALSE
 
 GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
@@ -144,81 +152,33 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			if(instrument.not_held)
 				holder.remove_status_effect(/datum/status_effect/buff/harpy_sing)
 
-/// Returns the singleton instruments sound group, cached after first lookup.
-/datum/looping_sound/instrument/proc/_get_sound_group()
-	RETURN_TYPE(/datum/sound_group/instruments)
-	var/static/datum/sound_group/instruments/cached
-	if(!cached)
-		for(var/datum/sound_group/g in GLOB.created_sound_groups)
-			if(istype(g, /datum/sound_group/instruments))
-				cached = g
-				break
-	return cached
-
-// attach_loop_to_all_clients() sends a vol=0 sound to every client before the
-// song has actually started, pre-populating their played_loops with a stale entry.
-// When the real play() fires, playsound_local finds them already in thingshearing
-// and only issues a volume update on the finished silent sound instead of
-// sending it fresh — so clients never hear it. Skip this entirely for instruments;
-// the initial playsound() in play() covers in-range clients, and the update_sounds()
-// rescan in SSsoundloopers covers late-joiners via GLOB.persistent_sound_loops.
-/datum/looping_sound/instrument/attach_loop_to_all_clients()
-	return
-
-/datum/looping_sound/instrument/New(_parent, start_immediately=FALSE, _direct=FALSE, _channel = 0)
-	. = ..(_parent, FALSE, _direct, _channel)
-	// Parent assigned a channel via round-robin; return it to the pool since
-	// channels are only held while actively playing, not while idle.
-	if(channel)
-		_get_sound_group()?.return_channel(channel)
-		channel = null
-	if(start_immediately)
-		start()
-
-/datum/looping_sound/instrument/Destroy()
-	// If destroyed while actively playing, return the channel to the instruments
-	// pool rather than letting the base Destroy() leak it to SSsounds' general pool.
-	if(channel)
-		_get_sound_group()?.return_channel(channel)
-		channel = null
-	return ..()
-
-/datum/looping_sound/instrument/start(atom/on_behalf_of, sync_anchor)
-	if(sync_anchor)
-		starttime = sync_anchor
-	if(!channel)
-		channel = _get_sound_group()?.checkout_channel()
-		if(!channel)
-			log_game("INSTRUMENT: All [/datum/sound_group/instruments::channel_count] instrument channels in use simultaneously - [parent]")
-			return FALSE
+/datum/looping_sound/music/instrument/configure_token(datum/sound_token/token)
 	..()
-	return TRUE
+	token.same_floor_only = TRUE
+	token.stand_in_songs = band_follower ? null : stand_in_songs
+	if(sync_start_time)
+		token.start_time = sync_start_time
 
-// Thingshearing was previously cleared BEFORE calling ..() which meant
-// the parent stop() had nothing to iterate over and silently did nothing.
-// We now let the parent run first, THEN clear thingshearing, and THEN free
-// the channel. The manual GLOB.clients loop handles clients whose played_loops
-// entry may have been missed by the parent.
-/datum/looping_sound/instrument/stop(null_parent)
-	if(channel)
-		. = ..(null_parent)  // Parent runs first with thingshearing intact.
-		for(var/client/C in GLOB.clients)
-			if(!(src in C.played_loops))
-				continue
-			var/list/L = C.played_loops[src]
-			var/sound/SD = L?["SOUND"]
-			var/stop_channel = SD?.channel || channel
-			if(C.mob)
-				C.mob.stop_sound_channel(stop_channel)
-			else
-				SEND_SOUND(C, sound(null, repeat = 0, wait = 0, channel = stop_channel))
-			C.played_loops -= src
-		thingshearing = list()  // Clear AFTER parent and client loop are done.
-		// Return the channel to the group pool so other instruments can use it.
-		_get_sound_group()?.return_channel(channel)
-		channel = null
-	else
-		. = ..(null_parent)
+/// One token per song and no re-fire timer. The song repeats natively when loop_song is set, or
+/// ends and sits silent until stopped
+/datum/looping_sound/music/instrument/start_sound_loop()
+	loop_started = TRUE
+	play(resolve_single_sound() || get_sound(), repeat_sound = loop_song)
+
+/**
+ * Starts instrument playback. Returns FALSE if no sound channel is available.
+ *
+ * For bands, callers try the leader first and assign the stock replacement song to the first member
+ * that starts successfully. Set band_follower for later members, then clear it after this call so
+ * subsequent solo playback can use a replacement song.
+ */
+/datum/looping_sound/music/instrument/start(atom/on_behalf_of, sync_anchor)
+	sync_start_time = sync_anchor
+	..(on_behalf_of)
+	if(!sound_token_instance)
+		stop()
+		return FALSE
+	return TRUE
 
 /obj/item/rogue/instrument
 	name = ""
@@ -232,7 +192,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	throw_range = 4
 	var/lastfilechange = 0
 	var/curvol = 100
-	var/datum/looping_sound/instrument/soundloop
+	var/datum/looping_sound/music/instrument/soundloop
 	var/list/song_list = list()
 	var/note_color = "#7f7f7f"
 	var/groupplaying = FALSE
@@ -272,6 +232,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/Initialize(mapload)
 	soundloop = new(src, FALSE)
+	// Before any upload joins song_list, so the copy holds the stock songs alone
+	soundloop.stand_in_songs = song_list.Copy()
 	. = ..()
 
 /obj/item/rogue/instrument/Destroy()
@@ -355,7 +317,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 				user.balloon_alert(user, "quick-playing last song! (combat)")
 				soundloop.set_mid_sounds(list(quickfile))
 				soundloop.volume = clamp(curvol, 10, 100)
-				soundloop.repeat_sound = loop_enabled
+				soundloop.loop_song = loop_enabled
 				if(!soundloop.start(user))
 					to_chat(user, span_warning("Could not play - no sound channels available. Try again in a moment."))
 					return
@@ -434,8 +396,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					to_chat(user, span_warning("TOO BIG. 6 MEGS OR LESS."))
 					return
 				lastfilechange = world.time
-				fcopy(infile,"data/jukeboxuploads/[user.ckey]/[filename]")
-				curfile = file("data/jukeboxuploads/[user.ckey]/[filename]")
+				fcopy(infile,"[SONG_UPLOAD_FOLDER][user.ckey]/[filename]")
+				curfile = file("[SONG_UPLOAD_FOLDER][user.ckey]/[filename]")
 				var/songname = input(user, "Name your song:", "Song Name") as text|null
 				if(songname)
 					song_list[songname] = curfile
@@ -475,7 +437,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			if(curfile)
 				soundloop.set_mid_sounds(list(curfile))
 				soundloop.volume = clamp(curvol, 10, 100)
-				soundloop.repeat_sound = loop_enabled
+				soundloop.loop_song = loop_enabled
 				if(!soundloop.start(user))
 					to_chat(user, span_warning("Could not play - no sound channels available. Try again in a moment."))
 					return
@@ -572,6 +534,12 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			return
 		owned_lobby.add_or_replace_member(user, src, curfile)
 
+		// Gather ready members after the delay, since someone may start playing while it runs.
+		if(!do_after(user, 1))
+			return
+		if(GLOB.instrument_band_lobbies[member_id] != owned_lobby)
+			return
+
 		var/list/slots = owned_lobby.get_active_slots()
 		if(!slots.len)
 			to_chat(user, span_warning("Nobody is registered in your band lobby."))
@@ -634,11 +602,16 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			to_chat(user, span_warning("No ready band members to start."))
 			return
 
-		if(!do_after(user, 1))
-			return
+		var/sync_anchor = REALTIMEOFDAY // token playback clocks run on real time
 
-		var/sync_anchor = world.time
+		// Try the leader first, but only a successful start claims the band's stand in.
+		for(var/i in 1 to instruments_to_start.len)
+			var/obj/item/rogue/instrument/band_instrument = instruments_to_start[i]
+			if(instrument_to_bandmate[band_instrument] == user)
+				instruments_to_start.Swap(1, i)
+				break
 
+		var/stand_in_assigned = FALSE
 		for(var/obj/item/rogue/instrument/band_instrument in instruments_to_start)
 			if(band_instrument.playing || !band_instrument.curfile)
 				continue
@@ -652,11 +625,16 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					play_source = band_mob
 			band_instrument.soundloop.set_mid_sounds(list(band_instrument.curfile))
 			band_instrument.soundloop.volume = clamp(band_instrument.curvol, 10, 100)
-			band_instrument.soundloop.repeat_sound = band_instrument.loop_enabled
-			if(!band_instrument.soundloop.start(play_source, sync_anchor))
+			band_instrument.soundloop.loop_song = band_instrument.loop_enabled
+			band_instrument.soundloop.band_follower = stand_in_assigned
+			var/started = band_instrument.soundloop.start(play_source, sync_anchor)
+			// The token is configured by now, and a later solo play must not inherit the flag
+			band_instrument.soundloop.band_follower = FALSE
+			if(!started)
 				if(isliving(play_source))
 					to_chat(play_source, span_warning("Could not play [band_instrument.name] - no sound channels available."))
 				continue
+			stand_in_assigned = TRUE
 			band_instrument.playing = TRUE
 			band_instrument.groupplaying = TRUE
 
@@ -808,7 +786,6 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/ztratocaster/Initialize(mapload)
 	. = ..()
-	soundloop.extra_range = 5 //stop blowing up my ears ser
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "INSTRUMENT")
 
 /obj/item/rogue/instrument/lute

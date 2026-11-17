@@ -862,17 +862,10 @@
 	var/last_logged_framing
 	var/queued_save_timer
 
-/datum/preferences/proc/character_gallery_thumbnails()
-	var/list/thumbnails = list()
-	if(headshot_link)
-		thumbnails += gallery_thumbnail("Headshot", "<img src='[headshot_link]' style='width: 100%; height: 100%; [headshot_picture_style(headshot_zoom, headshot_x, headshot_y)]'>")
-	if(ooc_extra_img_link)
-		thumbnails += gallery_thumbnail("OOC Extra", extra_thumbnail_media(ooc_extra_img_link))
-	if(nsfw_ooc_extra_img_link)
-		thumbnails += gallery_thumbnail("NSFW OOC Extra", extra_thumbnail_media(nsfw_ooc_extra_img_link))
-	if(!length(thumbnails))
+/datum/preferences/proc/character_gallery_headshot_thumbnail()
+	if(!headshot_link)
 		return ""
-	return "<br>[thumbnails.Join()]"
+	return gallery_thumbnail("Headshot", "<img src='[headshot_link]' style='width: 100%; height: 100%; [headshot_picture_style(headshot_zoom, headshot_x, headshot_y)]'>")
 
 /datum/preferences/proc/load_gallery_toggles(savefile/S)
 	S["gallery_plain"]	>> gallery_plain

@@ -7,7 +7,7 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "padded dress"
 	desc = "This dress has been padded with leather for extra protection. Bolts and arrows punch right through it."
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	icon_state = "armordress"
 	armor = ARMOR_LEATHER
 	blocksound = SOFTHIT
@@ -31,7 +31,7 @@
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
 	desc = "A thick, padded, and comfortable dress popular amongst nobility during winter."
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	icon_state = "winterdress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
 	boobed = TRUE

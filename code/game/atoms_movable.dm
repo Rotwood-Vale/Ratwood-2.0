@@ -540,7 +540,10 @@
 
 	if(destination)
 		if(pulledby)
-			pulledby.stop_pulling()
+			// Moving onto a rider's own carrier must not drop the grab that attaches them.
+			var/mob/living/rider = src
+			if(!istype(rider) || rider.buckled != pulledby || pulledby.loc != destination)
+				pulledby.stop_pulling()
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
@@ -962,6 +965,7 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	var/obj/effect/temp_visual/dir_setting/attack_effect/firstatk = new(first_step, newdir)
 	firstatk.icon_state = visual_effect_icon
 	firstatk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	firstatk.layer = ABOVE_MOB_LAYER
 	var/dist = get_dist(src, A)
 	if(dist > 1)	//2+ tiles, we trace a path to the target.
 		for(var/i = 1, i<dist, i++)

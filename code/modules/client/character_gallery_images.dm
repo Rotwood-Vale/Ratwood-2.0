@@ -6,11 +6,6 @@
 /proc/gallery_thumbnail(caption, media)
 	return "<div style='display: inline-block; vertical-align: top; text-align: center; margin: 4px 6px 0 0;'><div style='width: 100px; height: 100px; overflow: hidden; border: 1px solid #555;'>[media]</div><div style='font-size: 85%;'>[caption]</div></div>"
 
-/proc/extra_thumbnail_media(link)
-	if(is_video_link(link))
-		return "<video src='[link]' muted preload='metadata' style='width: 100%; height: 100%; object-fit: fill;'></video>"
-	return "<img src='[link]' style='width: 100%; height: 100%; object-fit: fill;'>"
-
 /proc/is_video_link(link)
 	var/list/link_parts = splittext(link, ".")
 	return LOWER_TEXT(link_parts[length(link_parts)]) == "mp4"

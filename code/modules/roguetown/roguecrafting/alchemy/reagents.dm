@@ -355,12 +355,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.add_nausea(5.5)
 			M.adjustToxLoss(7.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
-			M.playsound_local('sound/magic/heartbeat.ogg', 50)
+			M.playsound_local(M, 'sound/magic/heartbeat.ogg', 50)
 		else
 			M.add_nausea(6.5)
 			M.adjustToxLoss(8.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
-			M.playsound_local('sound/magic/heartbeat.ogg', 50)
+			M.playsound_local(M, 'sound/magic/heartbeat.ogg', 50)
 	return ..()
 
 /datum/reagent/organpoison
@@ -421,6 +421,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = 0.1
 	toxpwr = 0
 	harmful = TRUE
+	pain = 500
 
 /datum/reagent/toxin/killersice/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(20, 0)

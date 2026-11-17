@@ -29,6 +29,8 @@
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/AspectPicker.scss');
+@include meta.load-css('./interfaces/AudioSettings.scss');
+@include meta.load-css('./components/DragSlider.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/CharacterGallery.scss');
 @include meta.load-css('./interfaces/ExamineGallery.scss');
@@ -62,7 +64,6 @@
 
 // Components
 @include meta.load-css('./components/CardBackground.scss');
-@include meta.load-css('./components/DragSlider.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

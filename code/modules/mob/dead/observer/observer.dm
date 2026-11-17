@@ -75,6 +75,18 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/admin
 	hud_type = /datum/hud/adminghost
 
+/mob/dead/observer/admin/Login()
+	. = ..()
+	apply_admin_ghost_name()
+
+/// Renames this admin ghost to its admin's preferred ghost name, if they have set one.
+/mob/dead/observer/admin/proc/apply_admin_ghost_name()
+	var/preferred_name = client?.prefs?.admin_ghost_name
+	if(!client?.holder || !preferred_name)
+		return
+	name = preferred_name
+	real_name = preferred_name
+
 /mob/dead/observer/proc/apply_admin_ghost_image()
 	if(!client?.holder)
 		return
@@ -110,6 +122,25 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/screye/Move(n, direct)
 	return
+
+/mob/dead/observer/screye/reenter_corpse()
+	if(client)
+		return ..()
+	// The scry ended while its player was disconnected. Send the key home anyway, or they would reconnect stranded in an eye
+	// that cannot move, leaving their body keyless and hidden from the deep slumber alert and the Disconnected Players panel
+	if(!key || !can_reenter_corpse || !mind)
+		return
+	var/mob/living/body = mind.current
+	// An aghosted admin's body keeps a placeholder "@key", so it is never taken
+	if(!isliving(body) || QDELETED(body) || body.key)
+		return
+	body.key = key
+	// Cleared when the key left the body, and transfer_to only carries the key of an active mind
+	mind.active = TRUE
+	body.mark_disconnected()
+	// No client means no Logout, which would otherwise delete this
+	qdel(src)
+	return TRUE
 
 
 
@@ -598,7 +629,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				source.plane = old_plane
 	to_chat(src, span_ghostalert("<a href=?src=[REF(src)];reenter=1>(Click to re-enter)</a>"))
 	if(sound)
-		SEND_SOUND(src, sound(sound))
+		SEND_SOUND(src, sound(sound, volume = overall_volume(src)))
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
@@ -845,7 +876,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(istype(src, /mob/dead/observer/rogue/arcaneeye))
 		return
 	var/bt = world.time
-	SEND_SOUND(src, sound('sound/misc/notice (2).ogg'))
+	SEND_SOUND(src, sound('sound/misc/notice (2).ogg', volume = overall_volume(src)))
 	if(alert(src, "You have been summoned you to destroy!", "Join the Horde", "Yes", "No") == "Yes")
 		if(world.time > bt + 5 MINUTES)
 			to_chat(src, span_warning("Too late."))

@@ -28,6 +28,7 @@
 			Copy.info += "</font>"
 			Copy.name = "Copy - [C.name]"
 			Copy.fields = C.fields
+			Copy.writer_ckeys = C.writer_ckeys?.Copy()
 			Copy.updateinfolinks()
 		to_chat(user, span_notice("I tear off the carbon-copy!"))
 		C.copied = TRUE

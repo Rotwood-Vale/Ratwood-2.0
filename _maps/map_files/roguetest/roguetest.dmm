@@ -68,10 +68,6 @@
 	},
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
-"cd" = (
-/obj/item/roguemachine/mastermail,
-/turf/open/floor/rogue/tile/harem,
-/area/rogue/indoors)
 "ce" = (
 /obj/effect/decal/mossy{
 	dir = 1
@@ -167,6 +163,11 @@
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
+"eP" = (
+/obj/structure/roguemachine/vendor/mobile,
+/obj/machinery/light/rogue/candle/l,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "fb" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -191,6 +192,14 @@
 /area/rogue/outdoors/bog/north)
 "fE" = (
 /obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
+"gj" = (
+/obj/item/canvas,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
+"gL" = (
+/obj/structure/roguemachine/potionseller/mobile,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
 "gP" = (
@@ -267,6 +276,12 @@
 /obj/item/cooking/pan,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors)
+"iY" = (
+/obj/machinery/light/rogue/candle/l,
+/obj/structure/roguemachine/vendor,
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "jr" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -307,6 +322,10 @@
 /obj/machinery/light/rogue/candle/blue,
 /obj/machinery/tanningrack,
 /turf/open/floor/rogue/blocks/stonered/tiny,
+/area/rogue/indoors)
+"kJ" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
 "lb" = (
 /turf/open/floor/rogue/blocks/stonered/tiny,
@@ -618,6 +637,13 @@
 /obj/effect/landmark/observer_start,
 /turf/open/floor/rogue/carpet/lord,
 /area/rogue/indoors)
+"sF" = (
+/obj/structure/stairs{
+	dir = 8
+	},
+/obj/item/roguemachine/mastermail,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "sG" = (
 /obj/structure/dungeon_entry/center,
 /turf/open/floor/rogue/dirt/road,
@@ -815,6 +841,10 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors)
+"wV" = (
+/obj/structure/roguemachine/vendor/mobile,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
 "wX" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods/north)
@@ -827,6 +857,12 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/churchrough,
+/area/rogue/indoors)
+"xm" = (
+/obj/structure/table/wood,
+/obj/item/book_crafting_kit,
+/obj/item/book_crafting_kit,
+/turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
 "xt" = (
 /obj/structure/table/wood{
@@ -1099,10 +1135,6 @@
 	pixel_y = 12
 	},
 /obj/structure/table/wood,
-/turf/open/floor/rogue/tile/harem,
-/area/rogue/indoors)
-"DO" = (
-/obj/structure/roguemachine/ministry_bureau,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
 "Ef" = (
@@ -1393,6 +1425,10 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
+"MW" = (
+/obj/structure/roguemachine/potionseller,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
 "MX" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
@@ -1467,6 +1503,11 @@
 /obj/structure/table/cooling,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors)
+"OV" = (
+/obj/structure/roguemachine/ministry_bureau,
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "Pc" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -1499,6 +1540,10 @@
 /obj/structure/well,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
+"PT" = (
+/obj/machinery/printingpress,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "Qg" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -1570,10 +1615,18 @@
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
+"SU" = (
+/obj/item/canvas/random_painting,
+/turf/closed/wall/mineral/rogue/decowood/vert,
+/area/rogue/indoors)
 "Tj" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
+"Tu" = (
+/obj/structure/roguemachine/vendor,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
 "TE" = (
 /obj/structure/closet/crate/chest/crate,
 /obj/item/natural/bundle/cloth/roll,
@@ -1736,6 +1789,10 @@
 /obj/machinery/light/rogue/oven/south,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors)
+"XM" = (
+/obj/structure/roguemachine/potionseller/mobile,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
 "XN" = (
 /obj/structure/dungeon_entry/hamlet,
 /turf/open/floor/rogue/dirt/road,
@@ -1762,6 +1819,11 @@
 /obj/structure/fluff/nest,
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/hay,
+/area/rogue/indoors)
+"ZN" = (
+/obj/structure/roguemachine/potionseller,
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
 
 (1,1,1) = {"
@@ -1840,7 +1902,7 @@ zo
 zo
 zo
 zo
-AO
+zo
 dB
 dB
 dB
@@ -1881,18 +1943,18 @@ Nb
 aF
 zo
 WY
-zo
-zo
+SU
+kJ
 Ey
 tc
 Ey
 Ey
 tc
 Ey
-tc
+iY
 Ey
+eP
 zo
-AO
 dB
 dB
 dB
@@ -1941,10 +2003,10 @@ Br
 Ey
 mm
 Ey
+ZN
 Ey
-Ey
+gL
 zo
-AO
 dB
 dB
 dB
@@ -1987,7 +2049,7 @@ zb
 rp
 cU
 mx
-Ey
+gj
 zo
 BX
 Ey
@@ -1995,8 +2057,8 @@ ca
 Ey
 Ey
 Ey
+Ey
 zo
-AO
 dB
 dB
 dB
@@ -2037,18 +2099,18 @@ Ey
 Ey
 zo
 DG
-zo
-zo
-cd
+SU
+PT
+xm
 zo
 KJ
 Ey
 bm
 Ey
 fE
-DO
+Ey
+OV
 zo
-AO
 AO
 AO
 AO
@@ -2085,7 +2147,7 @@ dB
 AO
 zo
 zo
-tW
+sF
 tW
 zo
 zo
@@ -3546,7 +3608,7 @@ CZ
 CZ
 SE
 CZ
-CZ
+Tu
 CZ
 AX
 rT
@@ -3598,7 +3660,7 @@ AX
 AX
 FP
 CZ
-CZ
+MW
 CZ
 AX
 vq
@@ -3651,8 +3713,8 @@ AX
 xY
 CZ
 CZ
-CZ
-CZ
+wV
+XM
 AX
 AX
 eg

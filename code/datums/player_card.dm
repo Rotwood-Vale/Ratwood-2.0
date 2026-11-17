@@ -40,6 +40,7 @@
 	var/vocal_speed
 	var/vocal_pitch
 	var/vocal_pitch_range
+	var/vocal_volume
 	/// Snapshot of the character's dna, including organ_dna, for remaking a claimed body
 	var/datum/dna/stored_dna
 	/**
@@ -83,6 +84,7 @@
 	vocal_speed = H.vocal_speed
 	vocal_pitch = H.vocal_pitch
 	vocal_pitch_range = H.vocal_pitch_range
+	vocal_volume = H.vocal_volume
 	ooc_notes = H.ooc_notes
 	erpprefs = H.erpprefs
 	if(!H.dna)
@@ -122,6 +124,7 @@
 	H.vocal_speed = vocal_speed
 	H.vocal_pitch = vocal_pitch
 	H.vocal_pitch_range = vocal_pitch_range
+	H.vocal_volume = vocal_volume
 	H.ooc_notes = ooc_notes
 	H.erpprefs = erpprefs
 

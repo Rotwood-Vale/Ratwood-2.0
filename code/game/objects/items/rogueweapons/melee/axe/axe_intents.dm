@@ -87,6 +87,12 @@
 	damfactor = 1
 	demolition_mod = 1
 
+/datum/intent/axe/cut/long/dolabra
+	demolition_mod = 3
+
+/datum/intent/axe/cut/long/dolabra/pioneer
+	demolition_mod = 4.5
+
 /datum/intent/axe/cut/long/bronze
 	damfactor = 1.1
 	demolition_mod = 1.3
@@ -95,6 +101,12 @@
 	reach = 2
 	damfactor = 1.2
 	demolition_mod = 1.5
+
+/datum/intent/axe/chop/long/woodcutter
+	reach = 2
+	demolition_mod = 3
+/datum/intent/axe/chop/long/woodcutter/pioneer
+	demolition_mod = 4.5
 
 /datum/intent/axe/bash
 	name = "bash"
@@ -113,3 +125,9 @@
 /datum/intent/axe/bash/battle
 	name = "heavy bash"
 	damfactor = 0.8 //Buttstrokes, in essence. +20% damage over the standard variant.
+
+/datum/intent/axe/bash/dolabra
+	demolition_mod = 3
+
+/datum/intent/axe/bash/dolabra/pioneer
+	demolition_mod = 4.5

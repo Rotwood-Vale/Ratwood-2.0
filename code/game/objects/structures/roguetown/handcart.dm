@@ -22,18 +22,8 @@
 /obj/structure/handcart/examine(mob/user)
 	. = ..()
 	. += span_info("Clicking and dragging an item onto the handcart from the tile you are on will put every items from the tile you can into the cart.")
-	if(upgrade_level == 1)
-		. += span_notice("This cart has a <i>level 1</i> woodcutters wheelbrace installed.")
-	else if(upgrade_level == 2)
-		. += span_notice("This cart has a <i>level 2</i> woodcutters wheelbrace installed.")
-
-/obj/structure/handcart/proc/manage_upgrade()
-	switch(upgrade_level)
-		if(1)
-			maximum_capacity = 90
-		if(2)
-			maximum_capacity = 120
-	update_icon()
+	if(upgrade_level > 0)
+		. += span_notice("This cart has <b>[upgrade]</b> installed.")
 
 /obj/structure/handcart/Initialize(mapload)
 	if(mapload)		// if closed, any item at the crate's loc is put in the contents
@@ -54,12 +44,16 @@
 /obj/structure/handcart/dump_contents()
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
+		if(AM == upgrade)
+			continue
 		AM.forceMove(L)
 	stuff_shit = list()
 	current_capacity = 0
+	update_icon()
 
 /obj/structure/handcart/Destroy()
 	dump_contents()
+	QDEL_NULL(upgrade)
 	return ..()
 
 /obj/structure/handcart/MouseDrop_T(atom/movable/O, mob/living/user)
@@ -92,41 +86,16 @@
 /obj/structure/handcart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/roguegear/wood))
 		var/obj/item/roguegear/wood/cog = I
-		if(cog.ulevel == 0)
-			upgrade = I
-			upgrade_level = cog.ulevel
-			maximum_capacity = cog.cart_capacity
-			qdel(cog)
-			playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
-			shake_camera(user, 1, 1)
-			to_chat(user, span_warning("[cog.name] inserted!"))
+		if(cog.ulevel < upgrade_level)
+			to_chat(user, span_warning("[I] is obsolete."))
 			return
-		if(cog.ulevel == 1)
-			if(upgrade_level != 0)
-				to_chat(user, span_warning("This [I] is obsolete."))
-				return
-			else
-				upgrade = I
-				upgrade_level = cog.ulevel
-				maximum_capacity = cog.cart_capacity
-				qdel(cog)
-				playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
-				shake_camera(user, 1, 1)
-				to_chat(user, span_warning("[cog.name] inserted!"))
-				return
-		if(cog.ulevel == 2)
-			if(upgrade_level == 2)
-				to_chat(user, span_warning("This [I] is obsolete."))
-				return
-			else
-				upgrade = I
-				upgrade_level = cog.ulevel
-				maximum_capacity = cog.cart_capacity
-				qdel(cog)
-				playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
-				shake_camera(user, 1, 1)
-				to_chat(user, span_warning("[cog.name] inserted!"))
-				return
+		if(!user.transferItemToLoc(cog, src))
+			return
+		install_upgrade(cog)
+		playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
+		shake_camera(user, 1, 1)
+		to_chat(user, span_warning("[cog] inserted!"))
+		return
 	if(!user.cmode)
 		if(!insertion_allowed(I))
 			return
@@ -134,6 +103,14 @@
 			playsound(loc, 'sound/foley/cartadd.ogg', 100, FALSE, -1)
 		return
 	..()
+
+/obj/structure/handcart/proc/install_upgrade(obj/item/roguegear/wood/cog)
+	if(upgrade && upgrade != cog)
+		QDEL_NULL(upgrade)
+	upgrade = cog
+	upgrade_level = cog.ulevel + 1
+	maximum_capacity = cog.cart_capacity
+	update_icon()
 
 /obj/structure/handcart/attack_hand(mob/living/user)
 	. = ..()
@@ -183,9 +160,9 @@
 	. = ..()
 	cut_overlays()
 	if(upgrade_level)
-		if(upgrade_level == 1)
-			add_overlay("ov_upgrade")
 		if(upgrade_level == 2)
+			add_overlay("ov_upgrade")
+		if(upgrade_level == 3)
 			add_overlay("ov_upgrade2")
 	if(stuff_shit.len)
 		icon_state = "cart-full"
