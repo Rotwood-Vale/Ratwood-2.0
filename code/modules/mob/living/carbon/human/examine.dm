@@ -909,11 +909,11 @@
 		. += trait_exam
 
 	if(temporary_flavortext) //should be kept at the bottom always if possible, since someone could change the spans to trick people if it's on other places
-		var/max_temp_ft_length = 100 //Proably a good idea to fine-tune this later
-		if(length_char(temporary_flavortext) > max_temp_ft_length)
-			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [format_temporary_flavortext(copytext_char(temporary_flavortext, 1, max_temp_ft_length + 1), cut = TRUE)]</span>" + "<a href='?src=[REF(src)];task=show_temp_ft;'>...</a>"
+		update_temporary_flavortext_cache()
+		if(!isnull(temporary_flavortext_preview))
+			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext_preview]</span>" + "<a href='?src=[REF(src)];task=show_temp_ft;'>...</a>"
 		else
-			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [format_temporary_flavortext(temporary_flavortext)]</span>"
+			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext_formatted]</span>"
 
 	if(!user.client?.prefs?.top_examine)
 		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)

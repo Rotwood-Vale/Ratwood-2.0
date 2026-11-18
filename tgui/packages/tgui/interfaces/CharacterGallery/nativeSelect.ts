@@ -1,7 +1,7 @@
 import type { KeyboardEvent } from 'react';
 import { releaseHeldKeys } from 'tgui-core/hotkeys';
 
-const stopGameKeys = (event: KeyboardEvent<HTMLSelectElement>) => {
+const stopGameKeys = (event: KeyboardEvent<HTMLElement>) => {
   if (event.key !== 'Tab' && event.key !== 'Escape') {
     event.stopPropagation();
   }

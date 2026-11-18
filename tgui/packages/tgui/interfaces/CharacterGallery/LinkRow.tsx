@@ -13,6 +13,7 @@ import {
   PICTURE_TOO_LARGE_TEXT,
   pictureShapeTooExtreme,
 } from '../common/pictureSize';
+import { gallerySelectEvents } from './nativeSelect';
 import { copyUrl, type ImageForm, useGalleryBackend } from './shared';
 import { Thumbnail } from './Thumbnail';
 import { useMediaStatus } from './useMediaStatus';
@@ -330,15 +331,27 @@ const HiddenUrl = (props: { url: string; label: string }) => {
   const [shown, setShown] = useState(false);
   const copier = useCopyUrl();
   const textRef = useRef<HTMLDivElement>(null);
+  const focusOnShow = useRef(false);
   useEffect(() => {
-    if (shown) {
-      selectContents(textRef.current);
+    if (!shown) {
+      return;
     }
+    if (focusOnShow.current) {
+      focusOnShow.current = false;
+      textRef.current?.focus({ preventScroll: true });
+      return;
+    }
+    selectContents(textRef.current);
   }, [shown]);
 
   const copy = () =>
     copier.copy(url, 'URL copied.', () => {
-      setShown(true);
+      if (!textRef.current) {
+        focusOnShow.current = true;
+        setShown(true);
+        return;
+      }
+      textRef.current.focus({ preventScroll: true });
       selectContents(textRef.current);
     });
   return (
@@ -362,7 +375,11 @@ const HiddenUrl = (props: { url: string; label: string }) => {
           aria-label={`${label} URL`}
           title="Press Ctrl+C to copy"
           className="CharacterGallery__revealedUrl"
-          onFocus={() => selectContents(textRef.current)}
+          {...gallerySelectEvents}
+          onFocus={() => {
+            gallerySelectEvents.onFocus();
+            selectContents(textRef.current);
+          }}
           onClick={() => selectContents(textRef.current)}
         >
           {url}

@@ -64,7 +64,7 @@ export const readingEntry = (
 };
 
 export const isReading = (state: ReaderState) =>
-  state.view === 'scroll' || state.zoom > 1;
+  state.view !== 'whole' || state.zoom > 1;
 
 export const viewLocked = (owner: ArtViewSettings) =>
   owner.lock === 'view' || owner.lock === 'both';

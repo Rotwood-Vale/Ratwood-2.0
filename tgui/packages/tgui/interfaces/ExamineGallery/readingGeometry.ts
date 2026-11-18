@@ -38,12 +38,13 @@ export const readingBox = (
   const ratio = Number.isFinite(aspect) && aspect > 0 ? aspect : 1;
   const width = Math.max(0, area.width);
   const height = Math.max(0, area.height);
+  const fitMargin = view === 'whole' ? margin : 0;
   const fitted =
     view === 'scroll'
       ? width
       : Math.max(
           0,
-          Math.min(width - margin * 2, (height - margin * 2) * ratio),
+          Math.min(width - fitMargin * 2, (height - fitMargin * 2) * ratio),
         );
   const base = Math.min(fitted, sideMax, sideMax * ratio);
   const zoomMax =

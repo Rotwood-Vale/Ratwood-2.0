@@ -319,6 +319,19 @@ $image-outline: 1px solid rgba(255, 255, 255, 0.3);
     }
   }
 
+  &__frameControls,
+  &__frameShortcut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+  }
+
+  &__frameControls {
+    gap: 0.35rem;
+    font-size: 0.85em;
+  }
+
   &__frameCanvas {
     position: relative;
     width: $editor-size;
@@ -336,16 +349,6 @@ $image-outline: 1px solid rgba(255, 255, 255, 0.3);
     &--dragging {
       cursor: grabbing;
     }
-  }
-
-  &__separatorDot {
-    display: inline-block;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background-color: currentColor;
-    vertical-align: middle;
-    margin: 0 6px;
   }
 
   &__chatOptions {
@@ -420,6 +423,37 @@ $image-outline: 1px solid rgba(255, 255, 255, 0.3);
   &__guidelines > summary {
     cursor: pointer;
     padding: 0.35rem 0;
+  }
+
+  &__keyboardHelp {
+    color: var(--color-label);
+    font-size: 0.8em;
+
+    dl {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      align-items: center;
+      gap: 0.1rem 0.65rem;
+      margin: 0 0 0.35rem;
+    }
+
+    dd {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin: 0;
+    }
+  }
+
+  &__frameControls kbd,
+  &__keyboardHelp kbd {
+    min-width: 1em;
+    padding-inline: 0.2em;
+    color: var(--color-text);
+    border: 1px solid var(--color-label);
+    border-radius: 2px;
+    font: inherit;
+    text-align: center;
   }
 
   &__guidelines {

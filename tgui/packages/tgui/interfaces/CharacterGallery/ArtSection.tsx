@@ -168,7 +168,7 @@ export const ArtSection = (props: { form: ImageForm; nsfw: boolean }) => {
               onSet={() => act('set_art', { ...params, index: position })}
               onClear={() => act('remove_art', { ...params, index: position })}
               form={form}
-              image={artSlot(nsfw, position)}
+              image={sourceSlot}
               background={background}
               summary={`${artViewSummary(form.art_view_settings?.[sourceSlot])} | ${backgroundLabel}`}
               move={{

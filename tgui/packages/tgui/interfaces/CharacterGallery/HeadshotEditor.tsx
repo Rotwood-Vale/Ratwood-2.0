@@ -16,6 +16,12 @@ import { useMediaStatus } from './useMediaStatus';
 const ZOOM_LIMIT_MIN = 300;
 const BLUR_WARNING_ENLARGEMENT = 1.5;
 
+const arrowKeys = (
+  <>
+    <kbd>←</kbd> <kbd>↑</kbd> <kbd>↓</kbd> <kbd>→</kbd>
+  </>
+);
+
 export const HeadshotSection = (props: { form: ImageForm }) => {
   const { act, data, isBusy } = useGalleryBackend();
   const { form } = props;
@@ -222,10 +228,21 @@ export const HeadshotSection = (props: { form: ImageForm }) => {
             </div>
             <details className="CharacterGallery__details">
               <summary>Precise Keyboard Controls</summary>
-              <Box color="label" mt={0.5}>
-                Arrow keys: move. Shift + arrows: larger steps. + / -: zoom.
-                Click outside the portrait to finish.
-              </Box>
+              <div className="CharacterGallery__keyboardHelp">
+                <dl>
+                  <dt>Move</dt>
+                  <dd>{arrowKeys}</dd>
+                  <dt>Larger steps</dt>
+                  <dd>
+                    <kbd>Shift</kbd> + {arrowKeys}
+                  </dd>
+                  <dt>Zoom</dt>
+                  <dd>
+                    <kbd>−</kbd> <kbd>+</kbd>
+                  </dd>
+                </dl>
+                Focus the portrait to start. Click outside to finish.
+              </div>
             </details>
           </div>
         </div>

@@ -142,7 +142,7 @@ export const BACKDROPS: Backdrop[] = [
   },
 ];
 
-export const DEFAULT_BACKDROP = 'picture';
+export const DEFAULT_BACKDROP = 'tavern';
 
 export const findBackdrop = (choice: unknown): Backdrop =>
   BACKDROPS.find((backdrop) => backdrop.id === choice) ??

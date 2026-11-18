@@ -1058,7 +1058,7 @@
 	headshot_link = null
 	set_gallery_frame(src, sanitize_gallery_frame(null))
 	headshot_frame_chat = FALSE
-	image_backdrop = GALLERY_BACKDROP_PICTURE
+	image_backdrop = GALLERY_BACKDROP_TAVERN
 	ooc_extra_img = null
 	ooc_extra_img_link = null
 	nsfw_ooc_extra_img = null

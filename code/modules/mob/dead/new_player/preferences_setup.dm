@@ -37,7 +37,7 @@
 		headshot_link = null
 		set_gallery_frame(src, sanitize_gallery_frame(null))
 		headshot_frame_chat = FALSE
-		image_backdrop = GALLERY_BACKDROP_PICTURE
+		image_backdrop = GALLERY_BACKDROP_TAVERN
 		img_gallery = null
 		nsfw_img_gallery = null
 	features = pref_species.get_random_features()

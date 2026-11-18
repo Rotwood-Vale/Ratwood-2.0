@@ -32,6 +32,16 @@ const FRAME_MARGIN = 18;
 const TILT_MARGIN = 14;
 
 const DEAL_LANDING_MS = 540;
+const CLICK_SLOP = 5;
+const FITTED_DRAG_LIMIT = 10;
+const FITTED_DRAG_SCALE = 0.2;
+const SETTLING_PICTURE = 'ExamineGallery__readingPicture--settling';
+
+const fittedDragOffset = (distance: number) =>
+  Math.max(
+    -FITTED_DRAG_LIMIT,
+    Math.min(FITTED_DRAG_LIMIT, distance * FITTED_DRAG_SCALE),
+  );
 
 export type PictureMove = {
   change: PictureChange | 'cut';
@@ -102,10 +112,12 @@ export const MainPicture = (props: {
   const reading = isReading(readerState);
   const tiltRef = useTilt(areaRef, !plain && tiltOn && !reading, shownBox);
   const readerRef = useRef<HTMLDivElement>(null);
+  const readingPictureRef = useRef<HTMLDivElement>(null);
   const [readerArea, setReaderArea] = useState({ width: 0, height: 0 });
   const [sideLimit] = useState(readerSideLimit);
-  // Keep a reader press non-advancing until its click or a new primary press, even after Reset
-  const readerPress = useRef(false);
+  const advancePress = useRef<{ id: number; x: number; y: number } | null>(
+    null,
+  );
   const drag = useRef<{
     id: number;
     x: number;
@@ -113,7 +125,19 @@ export const MainPicture = (props: {
     left: number;
     top: number;
     scale: number;
+    fittedWiggle: boolean;
   } | null>(null);
+  const endDrag = (reader: HTMLDivElement, id: number) => {
+    const start = drag.current;
+    if (start?.id !== id) return;
+    drag.current = null;
+    const picture = readingPictureRef.current;
+    if (start.fittedWiggle && picture) {
+      picture.classList.add(SETTLING_PICTURE);
+      picture.style.removeProperty('transform');
+    }
+    if (reader.hasPointerCapture(id)) reader.releasePointerCapture(id);
+  };
   const pendingPoint = useRef<{
     key: string;
     point: { x: number; y: number };
@@ -348,7 +372,7 @@ export const MainPicture = (props: {
       sideLimit,
     );
     const requestedZoom = readerState.zoom * factor;
-    // Reciprocal wheel steps must return to exact 100% so Whole Pic can leave the reader
+    // Reciprocal wheel steps must return to exact 100% so Card Art can leave the reader
     const normalizedZoom =
       Math.abs(requestedZoom - 1) < 1e-10 ? 1 : requestedZoom;
     const next = Math.max(
@@ -368,36 +392,13 @@ export const MainPicture = (props: {
     onReaderChange({ ...readerState, zoom: next });
   };
   controlsRef.current = { zoom };
-  const wheelZoom = useRef(zoom);
-  wheelZoom.current = zoom;
-  useEffect(() => {
-    const area = areaRef.current;
-    if (!area) return;
-    const onWheel = (event: WheelEvent) => {
-      if (!event.ctrlKey) return;
-      event.preventDefault();
-      event.stopPropagation();
-      if (event.deltaY) {
-        wheelZoom.current(
-          event.deltaY < 0 ? 1.1 : 1 / 1.1,
-          event.clientX,
-          event.clientY,
-        );
-      }
-    };
-    area.addEventListener('wheel', onWheel, { passive: false });
-    return () => area.removeEventListener('wheel', onWheel);
-  }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const reader = readerRef.current;
-    const current = drag.current;
-    drag.current = null;
-    if (current && reader?.hasPointerCapture(current.id)) {
-      reader.releasePointerCapture(current.id);
-    }
     return () => {
-      drag.current = null;
+      advancePress.current = null;
+      if (reader && drag.current) endDrag(reader, drag.current.id);
+      readingPictureRef.current?.classList.remove(SETTLING_PICTURE);
     };
   }, [sourceKey, readerState]);
   // Written during render, which is safe as only the mouse handler reads it
@@ -456,26 +457,102 @@ export const MainPicture = (props: {
         onAdvance && 'ExamineGallery__main--clickable',
         dealing && 'ExamineGallery__main--dealing',
       ])}
-      onClick={() => {
-        if (readerPress.current) {
-          readerPress.current = false;
-          return;
+      onClick={(event) => {
+        const press = advancePress.current;
+        advancePress.current = null;
+        if (
+          press &&
+          event.button === 0 &&
+          event.buttons === 0 &&
+          Math.abs(event.clientX - press.x) <= CLICK_SLOP &&
+          Math.abs(event.clientY - press.y) <= CLICK_SLOP
+        ) {
+          onAdvance?.();
         }
-        onAdvance?.();
+      }}
+      onContextMenu={(event) => {
+        event.preventDefault();
       }}
       tabIndex={0}
       role="region"
       aria-label="Gallery artwork"
-      onPointerDownCapture={(event) => {
-        if (event.button === 0) {
-          readerPress.current = !!readerRef.current?.contains(
-            event.target as Node,
-          );
+      onPointerDown={(event) => {
+        advancePress.current = null;
+        const reader =
+          reading && readerRef.current?.contains(event.target as Node)
+            ? readerRef.current
+            : null;
+        let scale = 1;
+        if (reader) {
+          const bounds = reader.getBoundingClientRect();
+          scale = bounds.width / reader.offsetWidth || 1;
+          if (
+            (event.clientX - bounds.left) / scale >= reader.clientWidth ||
+            (event.clientY - bounds.top) / scale >= reader.clientHeight
+          ) {
+            return;
+          }
+        }
+        if (event.button === 0 || (reader && event.button === 2)) {
+          (reader ?? event.currentTarget).focus({ preventScroll: true });
+        }
+        if (event.button === 0 && (!reader || event.pointerType !== 'touch')) {
+          if (onAdvance && event.buttons === 1) {
+            advancePress.current = {
+              id: event.pointerId,
+              x: event.clientX,
+              y: event.clientY,
+            };
+          }
+          return;
+        }
+        if (
+          !reader ||
+          (event.button !== 2 && event.pointerType !== 'touch') ||
+          drag.current
+        ) {
+          return;
+        }
+        const canScroll =
+          reader.scrollWidth > reader.clientWidth ||
+          reader.scrollHeight > reader.clientHeight;
+        const picture = readingPictureRef.current;
+        const fittedWiggle =
+          !canScroll && readerState.view === 'fitted' && !!picture;
+        if (!canScroll && !fittedWiggle) return;
+        if (fittedWiggle) picture.classList.remove(SETTLING_PICTURE);
+        drag.current = {
+          id: event.pointerId,
+          x: event.clientX,
+          y: event.clientY,
+          left: reader.scrollLeft,
+          top: reader.scrollTop,
+          scale,
+          fittedWiggle,
+        };
+        reader.setPointerCapture(event.pointerId);
+        event.preventDefault();
+      }}
+      onMouseDownCapture={(event) => {
+        if (event.buttons !== 1) advancePress.current = null;
+      }}
+      onPointerMove={(event) => {
+        const press = advancePress.current;
+        if (
+          press?.id === event.pointerId &&
+          (event.buttons !== 1 ||
+            Math.abs(event.clientX - press.x) > CLICK_SLOP ||
+            Math.abs(event.clientY - press.y) > CLICK_SLOP)
+        ) {
+          advancePress.current = null;
         }
       }}
-      onPointerDown={(event) => {
-        if (event.button === 0 && !reading) {
-          event.currentTarget.focus({ preventScroll: true });
+      onPointerLeave={() => {
+        advancePress.current = null;
+      }}
+      onPointerCancel={(event) => {
+        if (advancePress.current?.id === event.pointerId) {
+          advancePress.current = null;
         }
       }}
       onKeyDown={(event) => {
@@ -487,6 +564,7 @@ export const MainPicture = (props: {
         ) {
           event.preventDefault();
           event.stopPropagation();
+          advancePress.current = null;
           onReset();
         }
       }}
@@ -571,8 +649,8 @@ export const MainPicture = (props: {
         role="region"
         aria-label={
           zoomLocked(owner)
-            ? 'Image viewer. Scroll or drag to read. Zoom is locked by the owner.'
-            : 'Image viewer. Scroll or drag to read; Control and wheel to zoom.'
+            ? 'Image viewer. Scroll to read or right-drag to pan. Zoom is locked by the owner.'
+            : 'Image viewer. Scroll to read or right-drag to pan. Control and wheel to zoom.'
         }
         onScroll={(event) =>
           rememberPosition(
@@ -580,66 +658,48 @@ export const MainPicture = (props: {
             event.currentTarget.scrollTop,
           )
         }
-        onPointerDown={(event) => {
-          if (event.button !== 0) return;
-          const reader = event.currentTarget;
-          reader.focus({ preventScroll: true });
-          const bounds = reader.getBoundingClientRect();
-          const scale = bounds.width / reader.offsetWidth || 1;
-          if (
-            (event.clientX - bounds.left) / scale >= reader.clientWidth ||
-            (event.clientY - bounds.top) / scale >= reader.clientHeight
-          ) {
-            return;
-          }
-          if (
-            reader.scrollWidth <= reader.clientWidth &&
-            reader.scrollHeight <= reader.clientHeight
-          ) {
-            return;
-          }
-          drag.current = {
-            id: event.pointerId,
-            x: event.clientX,
-            y: event.clientY,
-            left: reader.scrollLeft,
-            top: reader.scrollTop,
-            scale,
-          };
-          reader.setPointerCapture(event.pointerId);
-          event.preventDefault();
-        }}
         onPointerMove={(event) => {
           const start = drag.current;
           if (!start || start.id !== event.pointerId) return;
-          event.currentTarget.scrollLeft =
-            start.left - (event.clientX - start.x) / start.scale;
-          event.currentTarget.scrollTop =
-            start.top - (event.clientY - start.y) / start.scale;
+          if (event.pointerType !== 'touch' && !(event.buttons & 2)) {
+            endDrag(event.currentTarget, event.pointerId);
+            return;
+          }
+          const x = (event.clientX - start.x) / start.scale;
+          const y = (event.clientY - start.y) / start.scale;
+          if (start.fittedWiggle) {
+            const picture = readingPictureRef.current;
+            if (picture) {
+              picture.style.transform = `translate(${fittedDragOffset(x)}px, ${fittedDragOffset(y)}px)`;
+            }
+            return;
+          }
+          event.currentTarget.scrollLeft = start.left - x;
+          event.currentTarget.scrollTop = start.top - y;
           rememberPosition(
             event.currentTarget.scrollLeft,
             event.currentTarget.scrollTop,
           );
         }}
-        onPointerUp={(event) => {
-          drag.current = null;
-          if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-            event.currentTarget.releasePointerCapture(event.pointerId);
-          }
-        }}
-        onPointerCancel={() => {
-          drag.current = null;
-        }}
-        onLostPointerCapture={() => {
-          drag.current = null;
-        }}
+        onPointerUp={(event) => endDrag(event.currentTarget, event.pointerId)}
+        onPointerCancel={(event) =>
+          endDrag(event.currentTarget, event.pointerId)
+        }
+        onLostPointerCapture={(event) =>
+          endDrag(event.currentTarget, event.pointerId)
+        }
       >
         <div
-          className="ExamineGallery__readingSurface"
+          className={classes([
+            'ExamineGallery__readingSurface',
+            readerState.view === 'fitted' &&
+              'ExamineGallery__readingSurface--fitted',
+          ])}
           style={{ width: box.surfaceWidth, height: box.surfaceHeight }}
         >
           {pictures.drawable(selectedUrl) && (
             <div
+              ref={readingPictureRef}
               className="ExamineGallery__readingPicture"
               style={{
                 left: box.left,

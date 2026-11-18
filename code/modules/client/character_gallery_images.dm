@@ -172,7 +172,7 @@
 		backgrounds[image] = list("url" = link, "background" = background)
 
 /proc/is_art_opening_view(value)
-	return istext(value) && (value == "whole" || value == "scroll")
+	return istext(value) && (value == "whole" || value == "fitted" || value == "scroll")
 
 /proc/is_art_view_lock(value)
 	var/static/list/locks = list("none", "view", "zoom", "both")
@@ -181,10 +181,15 @@
 /proc/is_art_view_settings(list/settings)
 	return islist(settings) && length(settings) == 2 && is_art_opening_view(settings["opening_view"]) && is_art_view_lock(settings["lock"])
 
+/// Missing or invalid settings read as the default, which must match DEFAULT_ART_VIEW in tgui's common/artViewSettings.ts
 /proc/sanitize_art_view_settings(list/settings)
 	if(!islist(settings) || !is_art_opening_view(settings["opening_view"]) || !is_art_view_lock(settings["lock"]))
-		return list("opening_view" = "whole", "lock" = "none")
+		return list("opening_view" = "whole", "lock" = "zoom")
 	return list("opening_view" = settings["opening_view"], "lock" = settings["lock"])
+
+/proc/is_default_art_view(list/settings)
+	var/list/default_settings = sanitize_art_view_settings(null)
+	return settings["opening_view"] == default_settings["opening_view"] && settings["lock"] == default_settings["lock"]
 
 /proc/read_art_view_settings(list/settings, image, link)
 	var/list/entry = islist(settings) ? settings[image] : null
@@ -211,7 +216,7 @@
 		owner.vars["art_view_settings"] = stored
 	stored -= image
 	settings = sanitize_art_view_settings(settings)
-	if(link && (settings["opening_view"] != "whole" || settings["lock"] != "none"))
+	if(link && !is_default_art_view(settings))
 		stored[image] = list("url" = link, "opening_view" = settings["opening_view"], "lock" = settings["lock"])
 
 /// Gives row snapshots one representation for absent and explicit default source settings
@@ -272,7 +277,7 @@
 	owner.vars["card_backgrounds"] = settled["backgrounds"]
 	owner.vars["art_view_settings"] = settled["view_settings"]
 	if(length(blocked) > IMAGE_BLOCKED_MAX)
-		blocked.Cut(IMAGE_BLOCKED_MAX + 1)
+		blocked.Cut(1, length(blocked) - IMAGE_BLOCKED_MAX + 1)
 	owner.vars["blocked_links"] = blocked
 	owner.vars["image_backdrop"] = saved["backdrop"]
 
@@ -378,7 +383,7 @@
 		links[slot] = link
 		if(row["art"] && background != GALLERY_CARD_DEFAULT)
 			backgrounds[slot] = list("url" = link, "background" = background)
-		if(row["art"] && (view["opening_view"] != "whole" || view["lock"] != "none"))
+		if(row["art"] && !is_default_art_view(view))
 			view_settings[slot] = list("url" = link, "opening_view" = view["opening_view"], "lock" = view["lock"])
 		if(source)
 			alternates[slot] = clean_gallery_alternate(slot, source)
@@ -459,7 +464,7 @@
 /proc/sanitize_image_backdrop(backdrop)
 	if(is_gallery_backdrop(backdrop))
 		return backdrop
-	return GALLERY_BACKDROP_PICTURE
+	return GALLERY_BACKDROP_TAVERN
 
 /proc/sanitize_gallery_backdrop_toggle(value)
 	// A missing key reads as null, which is not FALSE under == and so stays on

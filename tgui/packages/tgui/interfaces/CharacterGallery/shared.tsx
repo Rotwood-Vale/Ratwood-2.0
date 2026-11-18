@@ -13,7 +13,7 @@ import { useBackend } from '../../backend';
 export type FormId = 'character' | 'gnoll';
 
 export type ArtViewSettings = {
-  opening_view: 'whole' | 'scroll';
+  opening_view: 'whole' | 'fitted' | 'scroll';
   lock: 'none' | 'view' | 'zoom' | 'both';
 };
 
@@ -33,6 +33,7 @@ export type ImageForm = {
   undo_removed: Record<string, number>;
   undo_clear: BooleanLike;
   undo_artwork_settings: BooleanLike;
+  artwork_feedback: string | null;
   blocked_links: { label: string; url: string }[];
   id: FormId;
   name: string;

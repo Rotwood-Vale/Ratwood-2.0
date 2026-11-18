@@ -1,3 +1,4 @@
+import { storage } from 'common/storage';
 import {
   type ReactNode,
   type RefObject,
@@ -48,12 +49,12 @@ import { useCandleFlicker } from './useCandleFlicker';
 import { useFigureBlink } from './useFigureBlink';
 import { useGallerySounds } from './useGallerySounds';
 import { usePictures } from './usePictures';
-import { ViewControls } from './ViewControls';
+import { type ControlsPanel, ViewControls } from './ViewControls';
 import { WheelThumb } from './WheelThumb';
 
 const SCROLL_STEP_MS = 75;
 const ARROW_NAVIGATION_BUTTONS =
-  '.ExamineGallery__thumb, .ExamineGallery__plainThumb, .ExamineGallery__seal, .ExamineGallery__page, .ExamineGallery__viewToggle';
+  '.ExamineGallery__thumb, .ExamineGallery__plainThumb, .ExamineGallery__seal, .ExamineGallery__page, .ExamineGallery__viewToggle, .ExamineGallery__trayToggle';
 
 const Gallery = (props: {
   images: string[];
@@ -67,6 +68,10 @@ const Gallery = (props: {
   session: GallerySession;
   settings: (ArtViewSettings | undefined)[];
   nsfw: boolean;
+  controlsPinned: boolean;
+  onControlsPinned: (pinned: boolean) => void;
+  showMouseControls: boolean;
+  onShowMouseControls: (show: boolean) => void;
 }) => {
   const {
     images,
@@ -88,7 +93,8 @@ const Gallery = (props: {
   const selected = Math.min(picked, Math.max(count - 1, 0));
   session.selected = selected;
   const [, redraw] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [panel, setPanel] = useState<ControlsPanel>(null);
+  const menuOpen = panel !== null;
   const [zoomMax, setZoomMax] = useState(5);
   const [zoomMin, setZoomMin] = useState(1);
   const controlsRef = useRef<PictureControls | null>(null);
@@ -143,8 +149,8 @@ const Gallery = (props: {
     setMove({ change: cut ? 'cut' : change, direction, from: selected });
     session.selected = index;
     setPicked(index);
-    setMenuOpen(false);
-    sounds.playChange(change);
+    setPanel(null);
+    sounds.playChange(cut ? 'fade' : change);
   };
   const step = (direction: -1 | 1, change: PictureChange) =>
     goTo((selected + direction + count) % count, direction, change);
@@ -244,6 +250,33 @@ const Gallery = (props: {
     };
   }, []);
 
+  // React's wheel listener is passive, so only a native one can stop the window zooming
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) {
+      return;
+    }
+    const onCtrlWheel = (event: globalThis.WheelEvent) => {
+      if (!event.ctrlKey) {
+        return;
+      }
+      event.preventDefault();
+      if (
+        !event.deltaY ||
+        !(event.target as Element).closest('.ExamineGallery__main')
+      ) {
+        return;
+      }
+      controlsRef.current?.zoom(
+        event.deltaY < 0 ? 1.1 : 1 / 1.1,
+        event.clientX,
+        event.clientY,
+      );
+    };
+    root.addEventListener('wheel', onCtrlWheel, { passive: false });
+    return () => root.removeEventListener('wheel', onCtrlWheel);
+  }, []);
+
   const lastScroll = useRef(0);
   const onWheel = (event: WheelEvent<HTMLDivElement>) => {
     if (
@@ -281,9 +314,7 @@ const Gallery = (props: {
         tiltOn={effects.tilt}
         glowRef={glowRef}
         faceRef={face.attach}
-        onAdvance={
-          !reading && count > 1 ? () => step(1, clickChange) : undefined
-        }
+        onAdvance={count > 1 ? () => step(1, clickChange) : undefined}
         readerState={entry.state}
         owner={entry.owner}
         sourceKey={`${artSlot(nsfw, selected + 1)}:${entry.signature}`}
@@ -299,9 +330,28 @@ const Gallery = (props: {
         onZoomMax={setZoomMax}
         onZoomMin={setZoomMin}
       />
-      <div className="ExamineGallery__strip">
-        {count > 1 && (
-          <>
+      <ViewControls
+        owner={entry.owner}
+        state={entry.state}
+        panel={panel}
+        onPanel={setPanel}
+        onView={(view) => {
+          if (!viewLocked(entry.owner)) {
+            changeReader({ ...resetReader(entry.owner), view });
+          }
+        }}
+        onZoom={(factor) => controlsRef.current?.zoom(factor)}
+        onReset={reset}
+        zoomMax={zoomMax}
+        zoomMin={zoomMin}
+        pinned={props.controlsPinned}
+        onPinned={props.onControlsPinned}
+        showMouseControls={props.showMouseControls}
+        onShowMouseControls={props.onShowMouseControls}
+        imageCount={count}
+        modes={modes}
+        numbers={
+          count > 1 ? (
             <Box className="ExamineGallery__seals">
               {images.map((_, index) => (
                 <button
@@ -323,55 +373,88 @@ const Gallery = (props: {
                 </button>
               ))}
             </Box>
-            {plain ? (
-              <PlainThumbs
-                images={images}
-                selected={selected}
-                pictures={pictures}
-                onSelect={pick}
-              />
-            ) : (
-              images.map((url, index) => {
-                const steps = wheelSteps(index, selected, count);
-                return (
-                  <WheelThumb
-                    key={index}
-                    url={url}
-                    background={backgrounds[index]}
-                    index={index}
-                    steps={steps}
-                    dealDelay={thumbDealDelay(openingDeal, index)}
-                    pictures={pictures}
-                    onSelect={() =>
-                      goTo(index, Math.sign(steps) || 1, clickChange)
-                    }
-                  />
-                );
-              })
-            )}
-          </>
-        )}
-        <div className="ExamineGallery__modes">
-          <ViewControls
-            owner={entry.owner}
-            state={entry.state}
-            open={menuOpen}
-            onOpen={setMenuOpen}
-            onView={(view) => {
-              if (!viewLocked(entry.owner)) {
-                changeReader({ ...resetReader(entry.owner), view });
-              }
-            }}
-            onZoom={(factor) => controlsRef.current?.zoom(factor)}
-            onReset={reset}
-            zoomMax={zoomMax}
-            zoomMin={zoomMin}
-          />
-          {modes}
-        </div>
-      </div>
+          ) : null
+        }
+        thumbnails={
+          count > 1 ? (
+            <div className="ExamineGallery__strip">
+              {plain ? (
+                <PlainThumbs
+                  images={images}
+                  selected={selected}
+                  pictures={pictures}
+                  onSelect={pick}
+                />
+              ) : (
+                images.map((url, index) => {
+                  const steps = wheelSteps(index, selected, count);
+                  return (
+                    <WheelThumb
+                      key={index}
+                      url={url}
+                      background={backgrounds[index]}
+                      index={index}
+                      steps={steps}
+                      dealDelay={thumbDealDelay(openingDeal, index)}
+                      pictures={pictures}
+                      onSelect={() =>
+                        goTo(index, Math.sign(steps) || 1, clickChange)
+                      }
+                    />
+                  );
+                })
+              )}
+            </div>
+          ) : null
+        }
+      />
     </div>
   );
+};
+
+const useViewerPreference = (
+  key: string | undefined,
+  fallback: boolean,
+  label: string,
+) => {
+  const [preference, setPreference] = useState<{
+    key: typeof key;
+    value: boolean;
+  }>();
+  useEffect(() => {
+    if (!key) return;
+    let mounted = true;
+    storage.get(key).then(
+      (saved) => {
+        if (mounted) {
+          // A click before the stored value arrives takes precedence
+          setPreference((current) =>
+            current?.key === key
+              ? current
+              : { key, value: typeof saved === 'boolean' ? saved : fallback },
+          );
+        }
+      },
+      (error) => console.warn(`Could not read gallery ${label}`, error),
+    );
+    return () => {
+      mounted = false;
+    };
+  }, [key, fallback, label]);
+  const change = (value: boolean) => {
+    setPreference({ key, value });
+    if (key) {
+      storage
+        .set(key, value)
+        .catch((error) =>
+          console.warn(`Could not save gallery ${label}`, error),
+        );
+    }
+  };
+  return [
+    preference?.key === key ? (preference?.value ?? fallback) : fallback,
+    change,
+  ] as const;
 };
 
 export const ImageGalleryPage = (
@@ -380,7 +463,18 @@ export const ImageGalleryPage = (
     galleryTabRef?: RefObject<HTMLDivElement | null>;
   } = {},
 ) => {
-  const { data } = useBackend<ExaminePanelData>();
+  const { config, data } = useBackend<ExaminePanelData>();
+  const viewer = config?.client?.ckey;
+  const [controlsPinned, changeControlsPinned] = useViewerPreference(
+    viewer && `gallery.controlsPinned:${viewer}`,
+    false,
+    'controls preference',
+  );
+  const [showMouseControls, changeShowMouseControls] = useViewerPreference(
+    viewer && `gallery.showMouseControls:${viewer}`,
+    true,
+    'mouse controls preference',
+  );
   const {
     img_gallery,
     nsfw_img_gallery,
@@ -426,6 +520,10 @@ export const ImageGalleryPage = (
       session={session}
       galleryTabRef={props.galleryTabRef}
       nsfw={nsfw}
+      controlsPinned={controlsPinned}
+      onControlsPinned={changeControlsPinned}
+      showMouseControls={showMouseControls}
+      onShowMouseControls={changeShowMouseControls}
       settings={images.map(
         (_, index) => data.art_view_settings?.[artSlot(nsfw, index + 1)],
       )}
@@ -444,7 +542,6 @@ export const ImageGalleryPage = (
             bold={galleryMode === 'SFW'}
             onClick={() => switchCategory('SFW')}
             textAlign="center"
-            minWidth="60px"
           >
             SFW
           </Button>
@@ -454,7 +551,6 @@ export const ImageGalleryPage = (
             bold={galleryMode === 'NSFW'}
             onClick={() => switchCategory('NSFW')}
             textAlign="center"
-            minWidth="60px"
           >
             NSFW
           </Button>

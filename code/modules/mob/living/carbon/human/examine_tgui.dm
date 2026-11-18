@@ -65,7 +65,7 @@
 	var/headshot_y = HEADSHOT_Y_DEFAULT
 	// The mob or preferences the headshot framing and the gallery backdrop are read from, none while the face is obscured
 	var/datum/framing_source
-	var/image_backdrop = GALLERY_BACKDROP_PICTURE
+	var/image_backdrop = GALLERY_BACKDROP_TAVERN
 	var/list/img_gallery = list()
 	var/list/nsfw_img_gallery = list()
 	var/ooc_extra_image = ""

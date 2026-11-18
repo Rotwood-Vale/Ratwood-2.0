@@ -2,6 +2,7 @@ import { type PointerEvent, useEffect, useRef, useState } from 'react';
 import { classes } from 'tgui-core/react';
 
 import { HeadshotFrame } from '../common/HeadshotFrame';
+import { MouseControlIcon } from '../common/MouseControlIcon';
 import {
   clampPosition,
   coverSize,
@@ -26,6 +27,7 @@ const ZOOM_KEY_STEP = 1;
 const WHEEL_ZOOM_SHARE = 0.05;
 
 type DragStart = DragOrigin & {
+  pointerId: number;
   moved: boolean;
 };
 
@@ -222,12 +224,28 @@ export const FramingCanvas = (props: {
         <span className="CharacterGallery__frameHintText" aria-hidden={locked}>
           Click to adjust framing
         </span>
-        <span className="CharacterGallery__frameHintText" aria-hidden={!locked}>
-          Drag to move
-          <SeparatorDot />
-          Scroll to zoom
-          <SeparatorDot />
-          Esc to finish
+        <span
+          className="CharacterGallery__frameHintText CharacterGallery__frameControls"
+          aria-hidden={!locked}
+        >
+          <span className="CharacterGallery__frameShortcut">
+            <MouseControlIcon control="left" label="Hold left mouse and drag" />
+            <span aria-hidden>/</span>
+            <MouseControlIcon
+              control="right"
+              label="Hold right mouse and drag"
+            />
+            Drag
+          </span>
+          <span aria-hidden>|</span>
+          <span className="CharacterGallery__frameShortcut">
+            <MouseControlIcon control="wheel" label="Scroll to zoom" />
+            Zoom
+          </span>
+          <span aria-hidden>|</span>
+          <span className="CharacterGallery__frameShortcut">
+            <kbd>Esc</kbd> Finish
+          </span>
         </span>
       </div>
       <div
@@ -241,15 +259,24 @@ export const FramingCanvas = (props: {
         ])}
         onFocus={() => setLocked(true)}
         onBlur={() => setLocked(false)}
+        onContextMenu={(event) => {
+          if (size) event.preventDefault();
+        }}
         onPointerDown={(event) => {
           const editor = editorRef.current;
-          if (event.button !== 0 || !size || !editor) {
+          if (
+            (event.button !== 0 && event.button !== 2) ||
+            !size ||
+            !editor ||
+            drag.current
+          ) {
             return;
           }
           event.preventDefault();
           editor.focus();
           editor.setPointerCapture(event.pointerId);
           drag.current = {
+            pointerId: event.pointerId,
             pointerX: event.clientX,
             pointerY: event.clientY,
             side: editor.getBoundingClientRect().width,
@@ -260,7 +287,7 @@ export const FramingCanvas = (props: {
         }}
         onPointerMove={(event) => {
           const start = drag.current;
-          if (!start) {
+          if (start?.pointerId !== event.pointerId) {
             return;
           }
           if (!start.moved) {
@@ -277,6 +304,7 @@ export const FramingCanvas = (props: {
           follow(dragTo(start, event));
         }}
         onPointerUp={(event) => {
+          if (drag.current?.pointerId !== event.pointerId) return;
           const start = endDrag();
           // Commits only a drag that passed DRAG_THRESHOLD_PX. Every set_framing the server receives marks the headshot
           // framed, so committing a plain click would frame an unframed headshot at its default crop
@@ -284,7 +312,8 @@ export const FramingCanvas = (props: {
             commit(dragTo(start, event));
           }
         }}
-        onLostPointerCapture={() => {
+        onLostPointerCapture={(event) => {
+          if (drag.current?.pointerId !== event.pointerId) return;
           if (endDrag()?.moved) {
             abandon();
           }
@@ -326,6 +355,3 @@ export const FramingCanvas = (props: {
     </>
   );
 };
-
-/** A small round separator, drawn rather than typed, since the themes' fonts lack a middle dot. */
-const SeparatorDot = () => <span className="CharacterGallery__separatorDot" />;

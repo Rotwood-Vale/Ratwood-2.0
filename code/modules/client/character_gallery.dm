@@ -22,6 +22,8 @@
 	/// Last debounced framing or size edit received from the window, however it was answered
 	var/edit_seq = 0
 	var/list/save_feedback
+	/// Each form's load generation when its last Artwork Settings Apply found nothing to change
+	var/list/artwork_feedback = list()
 	var/datum/weakref/preview_ref
 	/// Each form's Undo points by name, each a list of "scope", "before", "after" and "index"
 	var/list/undo_points = list(GALLERY_FORM_CHARACTER = list(), GALLERY_FORM_GNOLL = list())
@@ -54,6 +56,7 @@
 /datum/character_gallery/ui_close(mob/user)
 	reset_undo()
 	url_editor = null
+	artwork_feedback = list()
 	prefs.gallery_changed()
 	if(user?.client)
 		INVOKE_ASYNC(prefs, TYPE_PROC_REF(/datum/preferences, ShowChoices), user, null, TRUE)
@@ -117,6 +120,9 @@
 	for(var/image in sources)
 		var/list/source = sources[image]
 		alternates[image] = list("active_alternate" = source["active_alternate"])
+	var/artwork_message
+	if(artwork_feedback[form] == prefs.character_gallery_generation)
+		artwork_message = "Every artwork already has these settings."
 	return list(
 		"id" = form,
 		"revision" = form_revisions[form],
@@ -125,6 +131,7 @@
 		"undo_removed" = undo_removed_rows(form, links),
 		"undo_clear" = undo_available(form, GALLERY_UNDO_CLEAR, links),
 		"undo_artwork_settings" = undo_available(form, GALLERY_UNDO_ARTWORK_SETTINGS, links),
+		"artwork_feedback" = artwork_message,
 		"blocked_links" = owner.vars["blocked_links"],
 		"name" = name,
 		"headshot" = owner.vars["headshot_link"],
@@ -243,6 +250,7 @@
 		if("remove_blocked_link")
 			. = remove_blocked_link(user, form, params["index"])
 	if(.)
+		artwork_feedback -= form
 		prefs.gallery_changed()
 		addtimer(CALLBACK(src, PROC_REF(update_preview)), 0.5 SECONDS, TIMER_UNIQUE)
 
@@ -331,6 +339,7 @@
 			if(json_encode(row) != json_encode(previous_rows[index]))
 				changed_rows += "[prefix]_[index]"
 	if(!length(changed_rows))
+		artwork_feedback[form] = prefs.character_gallery_generation
 		return FALSE
 	var/list/points = undo_points[form]
 	for(var/image in changed_rows)

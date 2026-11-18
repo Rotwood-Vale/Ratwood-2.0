@@ -1,7 +1,7 @@
 import { useId, useState } from 'react';
 import { Box, Button } from 'tgui-core/components';
 
-import { DEFAULT_ART_VIEW } from '../common/artViewSettings';
+import { ART_VIEW_LABELS, DEFAULT_ART_VIEW } from '../common/artViewSettings';
 import { CardBackgroundControl } from './CardBackgroundControl';
 import { gallerySelectEvents } from './nativeSelect';
 import {
@@ -11,7 +11,6 @@ import {
   useGalleryBackend,
 } from './shared';
 
-const VIEWS = { whole: 'Whole Pic', scroll: 'Scroll View' };
 const LOCKS = {
   none: 'Unlocked',
   view: 'Lock View',
@@ -22,7 +21,7 @@ const LOCK_HELP =
   'Lock View fixes the opening view. Lock Zoom prevents magnification. Lock Both does both. Scrolling and panning remain available.';
 
 export const artViewSummary = (value: ArtViewSettings = DEFAULT_ART_VIEW) =>
-  `${VIEWS[value.opening_view]} | ${LOCKS[value.lock]}`;
+  `${ART_VIEW_LABELS[value.opening_view]} | ${LOCKS[value.lock]}`;
 
 export const ArtViewControls = (props: {
   value: Partial<ArtViewSettings>;
@@ -51,7 +50,7 @@ export const ArtViewControls = (props: {
           }
         >
           {props.allowUnchanged && <option value="">Unchanged</option>}
-          {Object.entries(VIEWS).map(([value, label]) => (
+          {Object.entries(ART_VIEW_LABELS).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
             </option>
@@ -175,6 +174,11 @@ export const ArtworkSettings = (props: { form: ImageForm }) => {
           >
             Undo Artwork Settings
           </Button>
+        </div>
+      )}
+      {!!form.artwork_feedback && (
+        <div className="CharacterGallery__artworkResult">
+          {form.artwork_feedback}
         </div>
       )}
     </div>
