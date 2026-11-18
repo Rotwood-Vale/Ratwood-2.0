@@ -141,7 +141,8 @@
 					zone_options += "Stomach"
 		if(BODY_ZONE_HEAD)
 			if(!length(zone_options) && !covered)
-				zone_options += "Head"
+				if(get_location_accessible(target, BODY_ZONE_HEAD, ignored_item = target.mouth))
+					zone_options += "Head"
 				if(!target.is_mouth_covered())
 					zone_options += "Mouth"
 				if(get_location_accessible(target, BODY_ZONE_PRECISE_NECK))
@@ -252,7 +253,7 @@
 	var/body_zone = check_zone(precise_zone)
 	var/obj/item/bodypart/writing_part = target.get_bodypart(body_zone)
 	var/writing_self = user == target
-	if(!get_location_accessible(target, user.zone_selected))
+	if(!get_location_accessible(target, precise_zone, ignored_item = precise_zone == BODY_ZONE_HEAD ? target.mouth : null))
 		to_chat(user, span_warning("That part is obstructed by clothing."))
 		return TRUE
 
