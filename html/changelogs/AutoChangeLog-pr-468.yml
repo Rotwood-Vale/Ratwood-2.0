@@ -1,0 +1,5 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - qol: "Twirl visuals update through events instead of searching held items during FOV updates."
+  - bugfix: "Turning during a twirl updates its directional sprite and layering without extending its duration."
