@@ -193,12 +193,12 @@
 				zombie.charflaw = null
 			else
 				zombie.charflaw.ephemeral = FALSE
-		
+
 		// Also clean up ephemeral vices from the vices list
 		for(var/datum/charflaw/vice in zombie.vices)
 			if(vice.ephemeral)
 				zombie.vices -= vice
-		
+
 		zombie.update_body()
 
 		// Rising swaps the lists in become_alive, this only covers admins curing someone already alive.
@@ -491,6 +491,8 @@
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
 		return
 	if(mind.has_antag_datum(/datum/antagonist/gnoll))
+		return FALSE
+	if(mind.has_antag_datum(/datum/antagonist/dragon))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		return

@@ -3753,7 +3753,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	return FALSE
 
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE, dragon_special_race = FALSE)
 	if(skip_normal_prefs)
 		// Gnoll ads use the separate gnoll preferences, never the normal slot's ad.
 		character.roleplay_ad = gnoll_prefs?.roleplay_ad
@@ -3809,7 +3809,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.age = age
 	character.dna.features = features.Copy()
 	character.gender = gender
-	character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
+	if(dragon_special_race)
+		character.set_species(/datum/species/dragon, icon_update = FALSE, pref_load = src)
+	else
+		character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
 	character.dna.update_body_size()
 
 	if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)

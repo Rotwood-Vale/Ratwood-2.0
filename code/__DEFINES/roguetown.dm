@@ -417,13 +417,14 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_LICKER_WRETCH  "CAT_LICKER_WRETCH" // Licker wretch. Nuff said.
 #define CTAG_GNOLL			"CAT_GNOLL"			// Wretch-esque gnolls, graggar's chosen.
 #define CTAG_GNOLL_IMPURE	"CAT_GNOLL_IMPURE"	// Reward for beating enough gnolls.
+#define CTAG_DRAGON			"CAT_DRAGON"		// Literally a dragon.
 
-#define CTAG_TRIBAL				"CAT_TRIBAL"			// 
-#define CTAG_TRIBALCHIEFTAIN	"CAT_TRIBALCHIEFTAIN"	// 
-#define CTAG_TRIBALSHAMAN		"CAT_TRIBALSHAMAN"		// 
-#define CTAG_TRIBALGUARD		"CAT_TRIBALGUARD"		// 
-#define CTAG_TRIBALRABBLE		"CAT_TRIBALRABBLE"		// 
-#define CTAG_TRIBALVILLAGER		"CAT_TRIBALVILLAGER"	// 
+#define CTAG_TRIBAL				"CAT_TRIBAL"			//
+#define CTAG_TRIBALCHIEFTAIN	"CAT_TRIBALCHIEFTAIN"	//
+#define CTAG_TRIBALSHAMAN		"CAT_TRIBALSHAMAN"		//
+#define CTAG_TRIBALGUARD		"CAT_TRIBALGUARD"		//
+#define CTAG_TRIBALRABBLE		"CAT_TRIBALRABBLE"		//
+#define CTAG_TRIBALVILLAGER		"CAT_TRIBALVILLAGER"	//
 
 #define CTAG_WARDEN			"CAT_WARDEN"		// Warden class - Handles warden class selector.
 #define CTAG_VANGUARD		"CAT_VANGUARD"		// Vanguard class - Handles vanguard class selector.

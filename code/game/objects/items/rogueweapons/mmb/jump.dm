@@ -213,8 +213,11 @@
 		animate(transform = prev_transform, time = 0)
 		jump_to_land(A, 1, jump_start)
 
-	if(mob_offsets)
+	if(mob_offsets) // Should probably turn this segment into a proc in living.dm.
+		var/protection_prefix = "protected_"
 		for(var/o in mob_offsets)
+			if(istext(o) && findtextEx(o, protection_prefix, 1, 11))
+				continue
 			if(mob_offsets[o])
 				reset_offsets(o)
 

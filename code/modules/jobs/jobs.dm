@@ -191,6 +191,7 @@ GLOBAL_LIST_INIT(villain_positions, list(
 	"Bandit",
 	"Wretch",
 	"Gnoll",
+	"Dragon",
 	"Assassin",
 ))
 
