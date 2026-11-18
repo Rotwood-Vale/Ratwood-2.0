@@ -1,0 +1,5 @@
+author: "GarrusVakarian"
+delete-after: True
+changes:
+  - rscadd: "There's a dragon now. It exists on Smollhill and on Rockhill. You can only queue up for dragon as a Drakian."
+  - map: "The dragon has a lair."
