@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "Items automatically rotate to fit into containers when needed."
