@@ -149,6 +149,9 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 	grid_height = 64
 	grid_width = 32
 
+/obj/item/quiver/bullet/can_store_ammo(obj/item/ammo_casing/ammo)
+	return istype(ammo, /obj/item/ammo_casing/caseless/bullet) && ammo.type != /obj/item/ammo_casing/caseless/bullet
+
 /obj/item/quiver/bullet/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
 		to_chat(user, span_warning("My [src.name] is full!"))
@@ -164,23 +167,18 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 		if(arrows.len < max_storage)
 			if(ismob(loc))
 				var/mob/M = loc
-				M.doUnEquip(A, TRUE, src, TRUE, silent = TRUE)
+				if(!M.doUnEquip(A, TRUE, src, FALSE, silent = TRUE))
+					return TRUE
 			else
 				A.forceMove(src)
-			arrows += A
+			arrows |= A
 			update_icon()
 		else
 			to_chat(loc, span_warning("Full!"))
 		return
 	if(istype(A, /obj/item/gun/ballistic/firearm))
-		var/obj/item/gun/ballistic/firearm/B = A
-		if(arrows.len && !B.chambered)
-			for(var/AR in arrows)
-				if(istype(AR, /obj/item/ammo_casing/caseless/bullet))
-					arrows -= AR
-					B.attackby(AR, loc, params)
-					break
-		return
+		load_into_weapon(A, loc, params)
+		return TRUE
 	..()
 
 /obj/item/quiver/bullet/attack_right(mob/user)
@@ -198,13 +196,13 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 /obj/item/quiver/bullet/lead/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/bullet/lead/B = new()
+		var/obj/item/ammo_casing/caseless/bullet/lead/B = new(src)
 		arrows += B
 	update_icon()
 
 /obj/item/quiver/bullet/grapeshot/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/bullet/grapeshot/B = new()
+		var/obj/item/ammo_casing/caseless/bullet/grapeshot/B = new(src)
 		arrows += B
 	update_icon()

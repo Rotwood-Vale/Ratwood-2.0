@@ -28,7 +28,7 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
 	resistance_flags = FIRE_PROOF
-	obj_flags = UNIQUE_RENAME
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	damfactor = 1.2
 	accfactor = 1.1
 	damage_from_perception = FALSE
@@ -138,10 +138,12 @@
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		if(cocked)
 			if((loc == user) && (user.get_inactive_held_item() != src) && !quiver_loading)
-				return
-			..()
+				return TRUE
+			return ..()
 		else
 			to_chat(user, span_warning("I need to cock the bow first."))
+		return TRUE
+	return ..()
 
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
