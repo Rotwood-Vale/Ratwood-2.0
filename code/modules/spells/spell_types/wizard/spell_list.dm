@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(utility_spells, (list(
 		/datum/action/cooldown/spell/readomen,
 		/datum/action/cooldown/spell/touch/rune_ward,
 		/datum/action/cooldown/spell/transcribe,
+		/datum/action/cooldown/spell/phantom_ear,
 		)
 ))
 
