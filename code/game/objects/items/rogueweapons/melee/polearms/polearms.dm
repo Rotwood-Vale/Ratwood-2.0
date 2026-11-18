@@ -74,6 +74,8 @@
 	icon_state = "inlance"
 	attack_verb = list("lances", "runs through", "skewers")
 
+/datum/intent/spear/thrust/pike/skewer/standard
+	icon_state = "inimpale"//this only exists so the standard pike thrust doesn't have two lance icons.
 
 /datum/intent/spear/thrust/blunted
 	penfactor = PEN_NONE
