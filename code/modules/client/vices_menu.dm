@@ -2232,25 +2232,32 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 			if("color")
 				var/datum/loadout_item/current = vars[slot_var]
-				if(!current)
+				if(!istype(current))
 					return
-				
-				// Use dye bin colors for more variety
-				var/list/color_choices = list("None")
-				for(var/color_name in GLOB.colorlist)
-					color_choices += color_name
-				
-				var/new_color = tgui_input_list(usr, "Choose a color for this item:", "Item Color", color_choices, vars["loadout_[slot]_hex"])
-				
-				if(new_color)
-					if(new_color == "None")
-						vars["loadout_[slot]_hex"] = null
-					else
-						// Look up the hex value from GLOB.colorlist
-						vars["loadout_[slot]_hex"] = GLOB.colorlist[new_color]
-					open_vices_menu(usr)
+				var/mob/editor = usr
+				var/editing_slot = default_slot
+				var/field = "loadout_[slot]_hex"
+				var/original_color = vars[field]
+				var/choice = tgui_input_list(editor, "Choose how to color this item:", "Item Color", list("Custom Color", "Preset Color", "None"))
+				if(!choice)
+					return
+				var/new_color
+				if(choice == "Custom Color")
+					new_color = color_pick_sanitized(editor, "Choose your item color:", "Item Color", original_color || "#ffffff")
+					if(!new_color)
+						return
+					new_color = sanitize_hexcolor(new_color, 6, TRUE)
+				else if(choice == "Preset Color")
+					var/preset = tgui_input_list(editor, "Choose a color for this item:", "Item Color", GLOB.colorlist)
+					if(!preset)
+						return
+					new_color = GLOB.colorlist[preset]
+				if(!editor || editor.client != parent || default_slot != editing_slot || vars[slot_var] != current || vars[field] != original_color)
+					return
+				vars[field] = new_color
+				open_vices_menu(editor)
 				return
-	
+
 	if(href_list["language_action"])
 		// Save state before any language change
 		save_to_history()

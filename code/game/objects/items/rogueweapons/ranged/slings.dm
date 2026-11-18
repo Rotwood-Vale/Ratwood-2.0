@@ -63,6 +63,7 @@
 //objs
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling
+	anvilrepair = /datum/skill/craft/crafting
 	name = "sling"
 	desc = "Twisted fibers manifest into a strung pouch capable of hurling stones afar."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
@@ -88,7 +89,7 @@
 	verbage = "load"
 	cartridge_wording = "stone"
 	load_sound = 'sound/foley/slingload.ogg'
-	obj_flags = UNIQUE_RENAME
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	grid_width = 32
 	grid_height = 64
 	var/atom/movable/temp_stone = null //stones are not ammo so they aren't acceptable by ballistics. this var will keep the stone temporarily stored
@@ -157,7 +158,7 @@
 			temp_stone = A //storing the stone incase it needs to be ejected
 			user.transferItemToLoc(A, temp_stone) //off to stone purgatory you go
 			A = new /obj/item/ammo_casing/caseless/rogue/sling_bullet //putting a temporary sling bullet in its place. bonus force is kept on the sling and set to 0 if shot or stone is ejected
-		..()
+	return ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/attack_self(mob/user) //more unholy code
 	if (temp_stone != null) //if there's a 'stone' in the sling, drop it and delete the temporary ammo inside

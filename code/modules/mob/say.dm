@@ -7,26 +7,33 @@
 	set name = "say_indicator"
 	set hidden = TRUE
 	set category = "IC"
-	
-	display_typing_indicator()
-	var/message = input(usr, "", "say") as text|null
-	// If they don't type anything just drop the message.
-	clear_typing_indicator(length(message) ? "sent" : "closed input")
-	if(!length(message))
+	if(!client)
 		return
-	return say_verb(message)
+	var/client/input_client = client
+	var/datum/tgui_input_text/say/prompt = new(src)
+	prompt.ui_interact(src)
+	prompt.wait()
+	var/message = prompt.entry
+	qdel(prompt)
+	if(!length(message) || client != input_client)
+		return
+	return send_say_message(message, FALSE)
 
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
 	set hidden = 1
 
+	return send_say_message(message)
+
+/mob/proc/send_say_message(message, clear_indicator = TRUE)
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(src, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	clear_typing_indicator("sent")		// clear it immediately!
+	if(clear_indicator)
+		clear_typing_indicator("sent")		// clear it immediately!
 
 	say(message)
 
@@ -51,72 +58,84 @@
 	set hidden = TRUE
 	set category = "IC"
 
-	display_typing_indicator()
-	var/message = input(usr, "", "me") as text|null
+	var/client/input_client = client
+	var/mutable_appearance/indicator = display_emote_typing_indicator()
+	var/message = input(src, "", "me") as text|null
 	// If they don't type anything just drop the message.
-	clear_typing_indicator(length(message) ? "sent" : "closed input")		// clear it immediately!
-	if(!length(message))
+	if(typing_indicator_current == indicator)
+		clear_typing_indicator(length(message) ? "sent" : "closed input")		// clear it immediately!
+	if(!length(message) || client != input_client)
 		return
-	return me_verb(message)
+	return send_me_message(message, FALSE)
 
 ///The me emote verb
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
 	set hidden = 1
+	return send_me_message(message)
+
+/mob/proc/send_me_message(message, clear_indicator = TRUE)
 #ifndef MATURESERVER
 	return
 #endif
 	// If they don't type anything just drop the message.
-	clear_typing_indicator(length(message) ? "sent" : "closed input")
+	if(clear_indicator)
+		clear_typing_indicator(length(message) ? "sent" : "closed input")
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(src, span_danger("Speech is currently admin-disabled."))
 		return
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-	message = accent_emote_quotes(message, usr)
+	message = accent_emote_quotes(message, src)
 	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	if(check_subtler(message, FALSE))
 		return
-	usr.emote("me",1,message,TRUE, custom_me = TRUE)
+	src.emote("me",1,message,TRUE, custom_me = TRUE)
 
 /mob/verb/me_big_verb_indicator()
 	set name = "me_big_indicator"
 	set category = "IC"
 	set hidden = 1
 
-	display_typing_indicator()
-	var/message = input(usr, "", "me") as message|null
+	var/client/input_client = client
+	var/mutable_appearance/indicator = display_emote_typing_indicator()
+	var/message = input(src, "", "me") as message|null
 	// If they don't type anything just drop the message.
-	clear_typing_indicator(length(message) ? "sent" : "closed input")
-	if(!length(message))
+	if(typing_indicator_current == indicator)
+		clear_typing_indicator(length(message) ? "sent" : "closed input")
+	if(!length(message) || client != input_client)
 		return
-	return me_big_verb(message)
+	return send_long_me_message(message, FALSE)
 
 ///The me emote verb
 /mob/verb/me_big_verb(message as message)
 	set name = "Me(big)"
 	set category = "IC"
 	set hidden = 1
+	return send_long_me_message(message)
+
+/mob/proc/send_long_me_message(message, clear_indicator = TRUE)
 #ifndef MATURESERVER
 	return
 #endif
 	// If they don't type anything just drop the message.
-	clear_typing_indicator(length(message) ? "sent" : "closed input")
+	if(clear_indicator)
+		clear_typing_indicator(length(message) ? "sent" : "closed input")
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(src, span_danger("Speech is currently admin-disabled."))
 		return
 
 	message = replacetext(message, regex("\\r", "g"), "")
 	message = trim(copytext_char(html_encode(message), 1, MAX_MESSAGE_BIGME))
-	message = accent_emote_quotes(message, usr)
+	message = accent_emote_quotes(message, src)
 	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	if(check_subtler(message, FALSE))
 		return
-	usr.emote("me",1,message,TRUE, custom_me = TRUE)
+	src.emote("me",1,message,TRUE, custom_me = TRUE)
 
 ///The subtle emote verb
 /mob/verb/subtle_verb()

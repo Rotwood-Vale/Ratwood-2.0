@@ -215,10 +215,6 @@
 		<head>
 			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-			<style>
-				@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-				@import url('https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap');
-			</style>
 			<link rel='stylesheet' type='text/css' href='slop_menustyle2.css'>
 		</head>
 	"}
@@ -318,11 +314,6 @@
 		<head>
 			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-			<style>
-				@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-				@import url('https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&display=swap');
-				@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
-			</style>
 			<link rel='stylesheet' type='text/css' href='slop_menustyle2.css'>
 		</head>
 		<body>

@@ -19,7 +19,6 @@ GLOBAL_LIST_EMPTY(cached_drink_flat_icons)
 		/datum/reagent/consumable/sugar/molasses,
 		/datum/reagent/consumable/oil,
 		/datum/reagent/consumable/oil/tallow,
-		/datum/reagent/consumable/milk,
 		/datum/reagent/consumable/milk/salted,
 	)
 

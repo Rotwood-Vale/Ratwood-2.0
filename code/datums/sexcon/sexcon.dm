@@ -541,7 +541,7 @@
 			if(user.getorganslot(ORGAN_SLOT_PENIS) && !(source_part & SEX_PART_TAIL_MAW))
 				add_oral_intake_reagent(splashed_user, /datum/reagent/erpjuice/cum, get_semen_volume(), repeat_intake = !!splashed_type, extra_volume = oral_extra_volume)
 			else
-				add_oral_intake_reagent(splashed_user, /datum/reagent/erpjuice/femcum, 2)
+				add_oral_intake_reagent(splashed_user, (source_part & SEX_PART_TAIL_MAW) ? get_tailmaw_fluid() : /datum/reagent/erpjuice/femcum, 2)
 			apply_cum_consumed_buff(splashed_user)
 		if(!oral && user?.dna?.species?.id == "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
@@ -837,7 +837,7 @@
 	if(!cur_loc || !isturf(cur_loc))
 		return
 	if(from_tailmaw || (!user.getorganslot(ORGAN_SLOT_PENIS) && user.getorganslot(ORGAN_SLOT_VAGINA)))
-		spill_floor_fluid(cur_loc, /datum/reagent/erpjuice/femcum, 1, do_big_puddle)
+		spill_floor_fluid(cur_loc, from_tailmaw ? get_tailmaw_fluid() : /datum/reagent/erpjuice/femcum, 1, do_big_puddle)
 	else
 		spill_floor_fluid(cur_loc, /datum/reagent/erpjuice/cum, semen_vol + floor(get_oral_intake_extra_volume()), do_big_puddle)
 
@@ -2378,3 +2378,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 #undef SEX_ZONE_MOUTH
 #undef SEX_ZONE_CHEST
 #undef SEX_ZONE_CHEST_GRAB
+
+/datum/sex_controller/proc/get_tailmaw_fluid()
+	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(user)
+	return istype(tail) ? tail.get_fluid_reagent() : /datum/reagent/erpjuice/femcum

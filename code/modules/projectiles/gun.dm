@@ -184,3 +184,11 @@
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
 	return
+
+/// Repairable ranged weapons survive ordinary breakage on the ground, like melee weapons.
+/obj/item/gun/obj_destruction(damage_flag)
+	if(!always_destroy && anvilrepair && damage_flag != "acid" && damage_flag != "fire")
+		if(!obj_broken)
+			obj_break(damage_flag)
+		return FALSE
+	return ..()
