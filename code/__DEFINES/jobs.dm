@@ -381,7 +381,6 @@
 	/datum/job/roguetown/lady,\
 	/datum/job/roguetown/lord,\
 	/datum/job/roguetown/steward,\
-	/datum/job/roguetown/dtprince,\
 	/datum/job/roguetown/cataphract,\
 
 #define KING_QUEEN_ROLES \
@@ -406,8 +405,6 @@
 	/datum/job/roguetown/orphan,\
 	/datum/job/roguetown/shophand,\
 	/datum/job/roguetown/gapprentice,\
-	/datum/job/roguetown/prisonerb,\
-	/datum/job/roguetown/hostage,\
 	/datum/job/roguetown/prisonerr
 
 #define YEOMEN_ROLES \
@@ -416,17 +413,13 @@
 	/datum/job/roguetown/niteman,\
 	/datum/job/roguetown/archivist,\
 	/datum/job/roguetown/barkeep,\
-	/datum/job/roguetown/guildsmaster,\
 	/datum/job/roguetown/guildsman,\
 	/datum/job/roguetown/tailor,\
 	/datum/job/roguetown/merchant,\
-	/datum/job/roguetown/scribe
 
 #define WANDERER_ROLES \
 	/datum/job/roguetown/pilgrim,\
 	/datum/job/roguetown/adventurer,\
-	/datum/job/roguetown/mercenary/desert_rider,\
-	/datum/job/roguetown/mercenary/grenzelhoft,\
 	/datum/job/roguetown/bandit,\
 	/datum/job/roguetown/wretch,\
 	/datum/job/roguetown/migrant
@@ -439,7 +432,6 @@
 	/datum/job/roguetown/sergeant,\
 	/datum/job/roguetown/veteran,\
 	/datum/job/roguetown/dungeoneer,\
-	/datum/job/roguetown/gatemaster,\
 	/datum/job/roguetown/manorguard,\
 	/datum/job/roguetown/squire,\
 	/datum/job/roguetown/guardsman,\

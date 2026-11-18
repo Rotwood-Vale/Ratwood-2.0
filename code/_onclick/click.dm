@@ -851,6 +851,13 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 
 /mob/proc/AltRightClickOn(atom/A, params)
 	SEND_SIGNAL(src, COMSIG_CLICK_ALT, A)
+	if(isclothing(A))
+		var/obj/item/clothing/stored = A
+		var/obj/item/clothing/head/hat = stored.get_storing_hat()
+		if(hat)
+			if(hat.loc == src)
+				hat.toggle_stored_visibility(stored, src)
+			return
 	A.AltRightClick(src)
 
 /atom/proc/AltRightClick(mob/user)

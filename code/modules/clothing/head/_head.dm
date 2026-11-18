@@ -1,3 +1,28 @@
+#define STORED_LAYER_OVER_HAT 0
+#define STORED_LAYER_UNDER_HAT 1
+#define STORED_LAYER_UNDER_HAIR 2
+
+/obj/item/clothing
+	///Where this is drawn while held in a hat's aesthetic storage.
+	var/stored_layer_mode = STORED_LAYER_OVER_HAT
+
+///The hat whose aesthetic storage is holding us, if any.
+/obj/item/clothing/proc/get_storing_hat()
+	var/obj/item/clothing/head/hat = loc
+	if(!istype(hat) || !hat.attachment_component)
+		return null
+	var/datum/component/storage/concrete/roguetown/our_component = hat.GetComponent(hat.attachment_component)
+	if(!our_component || !(src in our_component.item_to_grid_coordinates))
+		return null
+	return hat
+
+///TRUE if user has this on them, either directly or attached to a hat they have on them.
+/obj/item/clothing/proc/is_worn_or_stored_by(mob/user)
+	if(loc == user)
+		return TRUE
+	var/obj/item/clothing/head/hat = get_storing_hat()
+	return hat?.loc == user
+
 /datum/component/storage/concrete/roguetown/hat
 	screen_max_rows = 2
 	screen_max_columns = 2
@@ -81,6 +106,71 @@
 			default_examine_name += " ([examine_strings.Join(", ")])"
 	return default_examine_name
 
+/obj/item/clothing/head/get_mechanics_examine(mob/user)
+	. = ..()
+	if(attachment_component)
+		. += span_info("Shift + RMB will open aesthetic storage, allowing the user to layer extra decorations over \the [src].")
+		. += span_info("Alt + RMB allows the user to toggle aesthetic storage (Shift + RMB) items on or off.")
+		. += span_info("Inside aesthetic storage: RMB adjusts an item, MMB cycles its layer and Alt + RMB shows or hides it.")
+
+/obj/item/clothing/head/AltRightClick(mob/user)
+	. = ..()
+	if(loc != user || !attachment_component)
+		return
+	var/datum/component/storage/concrete/roguetown/storage_component = GetComponent(attachment_component)
+	if(!storage_component || !length(storage_component.item_to_grid_coordinates))
+		return
+	var/list/options = list()
+	for(var/obj/item/clothing/C in storage_component.item_to_grid_coordinates)
+		options["[C.name] ([(C.item_flags & NOT_SHOW_IN_STORAGE) ? "Hidden" : "Shown"])"] = C
+	if(!length(options))
+		return
+	. = TRUE
+	var/choice = input(user, "Choose clothing to layer:", "Layering") as null|anything in options
+	var/obj/item/clothing/chosen = options[choice]
+	if(chosen && loc == user && chosen.get_storing_hat() == src)
+		toggle_stored_visibility(chosen, user)
+
+///Shows or hides an item held in aesthetic storage, without taking it out.
+/obj/item/clothing/head/proc/toggle_stored_visibility(obj/item/clothing/C, mob/user)
+	C.item_flags ^= NOT_SHOW_IN_STORAGE
+	to_chat(user, span_info("[C] will be [(C.item_flags & NOT_SHOW_IN_STORAGE) ? "hidden" : "visible"] on \the [src]."))
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_inv_head()
+
+///Cycles where an item held in aesthetic storage is drawn: over the hat, under the hat, or under the hair.
+/obj/item/clothing/head/proc/cycle_stored_layer(obj/item/clothing/C, mob/user)
+	C.stored_layer_mode = (C.stored_layer_mode + 1) % 3
+	switch(C.stored_layer_mode)
+		if(STORED_LAYER_OVER_HAT)
+			to_chat(user, span_info("I wear \the [C] over \the [src]."))
+		if(STORED_LAYER_UNDER_HAT)
+			to_chat(user, span_info("I wear \the [C] under \the [src]."))
+		if(STORED_LAYER_UNDER_HAIR)
+			to_chat(user, span_info("I wear \the [C] under my hair."))
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_inv_head()
+
+///Mob-level overlays for stored items layered away from the hat. A child overlay can never sort against hair, so these can't be nested in the hat.
+/obj/item/clothing/head/proc/build_layered_stored_icons(default_layer, default_icon_file)
+	. = list()
+	if(!attachment_component)
+		return
+	var/datum/component/storage/concrete/roguetown/our_component = GetComponent(attachment_component)
+	if(!our_component)
+		return
+	for(var/obj/item/thing as anything in our_component.item_to_grid_coordinates)
+		if(thing.item_flags & NOT_SHOW_IN_STORAGE)
+			continue
+		var/obj/item/clothing/C = thing
+		if(!istype(C) || C.stored_layer_mode == STORED_LAYER_OVER_HAT)
+			continue
+		var/mutable_appearance/thing_appearance = thing.build_worn_icon(default_layer, default_icon_file)
+		thing_appearance.layer = C.stored_layer_mode == STORED_LAYER_UNDER_HAT ? -(HEAD_LAYER + 0.5) : -HOOD_LAYER
+		. += thing_appearance
+
 /obj/item/clothing/head/ShiftRightClick(mob/user)
 	if(attachment_component)
 		var/datum/component/storage/storage_component = GetComponent(attachment_component)
@@ -143,10 +233,17 @@
 		var/datum/component/storage/concrete/roguetown/our_component = GetComponent(attachment_component)
 		if(our_component && length(our_component.item_to_grid_coordinates))
 			for(var/obj/item/thing as anything in our_component.item_to_grid_coordinates)
+				if(thing.item_flags & NOT_SHOW_IN_STORAGE)
+					continue
+				//On the head these are drawn by build_layered_stored_icons() instead. Anywhere else there's no hair to sort against.
+				if(default_layer == HEAD_LAYER && isclothing(thing))
+					var/obj/item/clothing/layered = thing
+					if(layered.stored_layer_mode != STORED_LAYER_OVER_HAT)
+						continue
 				var/mutable_appearance/thing_appearance = thing.build_worn_icon(default_layer, default_icon_file, isinhands, femaleuniform, override_state, female, customi, sleeveindex, boobed_overlay, clip_mask)
 				thing_appearance.appearance_flags = RESET_COLOR
-				thing_appearance.pixel_x = -standing.pixel_x
-				thing_appearance.pixel_y = -standing.pixel_y
+				thing_appearance.pixel_x -= standing.pixel_x
+				thing_appearance.pixel_y -= standing.pixel_y
 				standing.add_overlay(thing_appearance)
 	return standing
 

@@ -14,6 +14,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_CON = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -211,6 +212,7 @@
 		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
@@ -353,7 +355,7 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	if(H.mind)
 		if(!istype(H?.patron, /datum/patron/old_god)) //Psydonics are special.
-			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Capped to T1 miracles.
+			C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)//Capped to T2 miracles. Devotion at T2.
 			var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Weapon")
 			var/oath_choice = input(H, "Choose your OATH.", "PROFESS YOUR BLESSINGS.") as anything in oaths
 			switch(oath_choice)
@@ -607,6 +609,7 @@
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
@@ -769,6 +772,7 @@
 		STATKEY_SPD = 1,
 		STATKEY_STR = -2,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,

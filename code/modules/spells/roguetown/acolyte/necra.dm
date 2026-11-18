@@ -188,9 +188,11 @@
 
 	if(isliving(target) && target.stat == DEAD)
 		return speakwithdead(user, target)
-	else
-		to_chat(user, "<font color='red'>They are not dead. Yet.</font>")
+	if(isliving(target) && target.looks_dead())
+		to_chat(user, "<span style='color:#aaaaaa'><i>No spirit answers your call.</i></span>")
 		return FALSE
+	to_chat(user, "<font color='red'>They are not dead. Yet.</font>")
+	return FALSE
 
 /proc/speakwithdead(mob/user, mob/living/target)
 	if(target.stat == DEAD && target.mind)
@@ -258,12 +260,12 @@
 		return FALSE
 
 	var/mob/living/target = targets[1]
-	if(target.stat < DEAD)
+	if(!target.looks_dead())
 		to_chat(user, span_warning("They're still alive!"))
 		revert_cast()
 		return FALSE
 
-	if(world.time <= target.mob_timers["lastdied"] + 15 MINUTES)
+	if(target.stat < DEAD || world.time <= target.mob_timers["lastdied"] + 15 MINUTES)
 		to_chat(user, span_warning("The body is too fresh for the rite."))
 		revert_cast()
 		return FALSE

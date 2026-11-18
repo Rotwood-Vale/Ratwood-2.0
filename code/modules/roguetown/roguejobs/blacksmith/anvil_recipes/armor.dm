@@ -1550,3 +1550,24 @@
 	name = "Ancient Blacksteel Plate Boots"
 	created_item = /obj/item/clothing/shoes/roguetown/boots/blacksteel/plateboots
 	display_category = ITEM_CAT_ARMOR_BOOTS
+
+/datum/anvil_recipe/armor/mask_rogue_facemask_xylixmask
+	name = "xylixian mask"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/mask/rogue/facemask/xylixmask
+	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_MASKS
+
+/datum/anvil_recipe/armor/mask_rogue_spectacles_sglasses
+	name = "smokey onyxa spectacles"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/mask/rogue/spectacles/sglasses
+	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_MASKS
+
+/datum/anvil_recipe/armor/mask_rogue_spectacles_thin
+	name = "thin-lensed spectacles"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/mask/rogue/spectacles/thin
+	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_MASKS

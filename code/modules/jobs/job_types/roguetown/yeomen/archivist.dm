@@ -60,6 +60,7 @@
 		STATKEY_CON = -1,
 		STATKEY_STR = -1
 	)
+	pure_heart = TRUE
 	age_mod = /datum/class_age_mod/archivist
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 2, "ward" = TRUE)
 	subclass_skills = list(

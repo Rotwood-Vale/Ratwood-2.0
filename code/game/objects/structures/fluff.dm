@@ -435,6 +435,8 @@
 	icon_state = "shutter0"
 	density = TRUE
 	opacity = TRUE
+	sound_door = TRUE
+	sound_opening = TRUE
 	redstone_structure = TRUE
 
 /obj/structure/bars/passage/shutter/redstone_triggered()
@@ -443,11 +445,11 @@
 	if(density)
 		icon_state = "shutter1"
 		density = FALSE
-		opacity = FALSE
+		set_opacity(FALSE)
 	else
 		icon_state = "shutter0"
 		density = TRUE
-		opacity = TRUE
+		set_opacity(TRUE)
 
 /obj/structure/bars/passage/shutter/open
 	icon_state = "shutter1"
@@ -460,12 +462,12 @@
 	if(density)
 		icon_state = "shutter1"
 		density = FALSE
-		opacity = FALSE
+		set_opacity(FALSE)
 		alpha = 60
 	else
 		icon_state = "shutter0"
 		density = TRUE
-		opacity = TRUE
+		set_opacity(TRUE)
 		alpha = 255
 
 /obj/structure/bars/passage/attackby(obj/item/I, mob/user, params)
@@ -596,28 +598,29 @@
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
-	var/datum/looping_sound/clockloop/soundloop
 	drag_slowdown = 3
 	metalizer_result = /obj/item/roguegear/bronze
 
 /obj/structure/fluff/clock/Initialize(mapload)
-	soundloop = new(src, FALSE)
-	soundloop.start()
 	. = ..()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/fluff/clock/Destroy()
-	if(soundloop)
-		QDEL_NULL(soundloop)
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	return ..()
 
 /obj/structure/fluff/clock/obj_break(damage_flag)
 	icon_state = "b[initial(icon_state)]"
-	if(soundloop)
-		soundloop.stop()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	..()
+
+/// Updates the clock's indexed position after movement, keeping broken clocks silent
+/obj/structure/fluff/clock/Moved(atom/OldLoc, Dir)
+	. = ..()
+	update_point_ambience_source(/datum/point_ambience_category/clock, !obj_broken)
 
 /obj/structure/fluff/clock/attack_right(mob/user)
 	handle_special_items_retrieval(user, src)
@@ -674,7 +677,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	max_integrity = 100
 	integrity_failure = 0.5
-	var/datum/looping_sound/clockloop/soundloop
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
@@ -685,8 +687,7 @@
 	handle_special_items_retrieval(user, src)
 
 /obj/structure/fluff/wallclock/Destroy()
-	if(soundloop)
-		QDEL_NULL(soundloop)
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	return ..()
 
 /obj/structure/fluff/wallclock/examine(mob/user)
@@ -716,14 +717,12 @@
 //				. += span_warning("The last boat will leave in [round(SSshuttle.emergency.timeLeft()/600)] minutes.")
 
 /obj/structure/fluff/wallclock/Initialize(mapload)
-	soundloop = new(src, FALSE)
-	soundloop.start()
 	. = ..()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
 
 /obj/structure/fluff/wallclock/obj_break(damage_flag)
 	icon_state = "b[initial(icon_state)]"
-	if(soundloop)
-		soundloop.stop()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	..()
 
@@ -1176,6 +1175,40 @@
 						flick(pick("p_dummy_smashed","p_dummy_smashedalt"),src)
 					return
 	..()
+
+//Training unarmed
+/obj/structure/fluff/statue/tdummy/attack_hand(mob/user)
+	if(user.cmode || !user.mind || !isliving(user) || user.doing)
+		return ..()
+	if(user.used_intent.type != INTENT_HARM) //Gotta punch
+		return ..()
+	var/mob/living/living_user = user
+	user.visible_message(span_notice("[user] begins training on [src]..."))
+	while(do_after(user, 1 SECONDS, target = src))
+		if(!(living_user.mobility_flags & MOBILITY_STAND))
+			to_chat(user, span_warning("You are knocked down and stop training."))
+			break
+		var/probby = (living_user.STALUC / 10) * 100
+		probby = min(probby, 99)
+		user.changeNext_move(CLICK_CD_MELEE)
+		living_user.stamina_add(rand(4,6))
+		if(living_user.STAINT < 3)
+			probby = 0
+		if(!can_train_combat_skill(user, /datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE))
+			to_chat(user, span_warning("I've learned all I can from doing this, it's time for the real thing."))
+			break
+		if(prob(probby) && !user.buckled)
+			user.visible_message(span_info("[user] trains on [src]!"))
+			var/amt2raise = living_user.STAINT * 0.35
+			if(amt2raise > 0)
+				user.mind.add_sleep_experience(/datum/skill/combat/unarmed, amt2raise, FALSE)
+			playsound(loc,pick('sound/combat/hits/onwood/education1.ogg','sound/combat/hits/onwood/education2.ogg','sound/combat/hits/onwood/education3.ogg'), rand(50,100), FALSE)
+		else
+			user.visible_message(span_danger("[user] trains on [src], but [src] ripostes!"))
+			living_user.AdjustKnockdown(1)
+			living_user.throw_at(get_step(living_user, get_dir(src,living_user)), 2, 2, living_user, spin = FALSE)
+			playsound(loc, 'sound/combat/hits/kick/stomp.ogg', 100, TRUE, -1)
+		flick(pick("p_dummy_smashed","p_dummy_smashedalt"),src)
 
 /obj/structure/fluff/statue/spider
 	name = "idol of baotha"

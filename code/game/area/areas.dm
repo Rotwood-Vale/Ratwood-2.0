@@ -68,6 +68,10 @@
 	var/list/ambientrain = null
 	var/list/ambientnight = null
 
+	/// Allows river water in this area to seed positional ambience. Inherited by subareas.
+	/// Disable where decorative water or existing area ambience should supply the sound
+	var/river_ambience = TRUE
+
 	var/min_ambience_cooldown = 70 SECONDS
 	var/max_ambience_cooldown = 120 SECONDS
 

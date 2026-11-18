@@ -25,6 +25,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
 	//eg: 32x32 sprite, 64x64 sprite, etc.
 	//allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	///Forces MALE or FEMALE worn sprites for items drawn in only one version, whoever wears them.
+	var/worn_sprite_sex
 	var/worn_x_dimension = 32
 	var/worn_y_dimension = 32
 	//Same as above but for inhands, uses the lefthand_ and righthand_ file vars

@@ -1,4 +1,4 @@
-#define COURTCHAPLAIN_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+#define COURTCHAPLAIN_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/old_god)
 
 /obj/item/storage/keyring/chaplain
 	keys = list(/obj/item/roguekey/church, /obj/item/roguekey/graveyard,  /obj/item/roguekey/manor)
@@ -43,6 +43,7 @@
 		STATKEY_PER = 2,//eye for intrigue
 		STATKEY_CON = -1,//scrawny pencil-pusher
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
@@ -138,6 +139,13 @@
 			shoes = /obj/item/clothing/shoes/roguetown/boots
 			armor = /obj/item/clothing/suit/roguetown/shirt/robe
 			backpack_contents = list(/obj/item/book/rogue/law)
+		if(/datum/patron/old_god)
+			mask = /obj/item/clothing/head/roguetown/roguehood/psydon
+			neck = /obj/item/clothing/neck/roguetown/psicross
+			cloak = /obj/item/clothing/cloak/absolutionistrobe/black
+			wrists = /obj/item/clothing/wrists/roguetown/wrappings
+			shoes = /obj/item/clothing/shoes/roguetown/boots
+			armor = /obj/item/clothing/cloak/psydontabard
 		// if(/datum/patron/divine/xylix)
 		// 	head = /obj/item/clothing/head/roguetown/roguehood
 		// 	neck = /obj/item/clothing/neck/roguetown/psicross/xylix // no more good luck charm,  you wanna cheat gambling? Xylix weeps
@@ -215,3 +223,10 @@
 	// 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 	// 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
 	// 	H.adjust_skillrank(/datum/skill/misc/music, 2, TRUE)
+	if(H.patron?.type == /datum/patron/old_god) // Same as Ravox, since if Psydonites cant use miracles well, they can atleast enhance their psydon granted body..
+		H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+		H.change_stat(STATKEY_CON, 1) // In exchange for literally no effective miralces, they get rid of con malice.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydefy) // PSYDON WILLS THE DUKE TO GET OFF HIS ASS!! (Psydonites literally have like no method of healing people with divine healing or like blood transfusion so uh.. This should help.. Can be removed if too strong.) //

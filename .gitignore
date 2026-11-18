@@ -230,6 +230,7 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/example/
 
 !/config/config.txt
+!/config/sound.txt
 /config/jukebox_music/sounds/*
 !/config/jukebox_music/sounds/exclude
 /config/title_music/sounds/*
