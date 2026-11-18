@@ -8,7 +8,7 @@
 	subclass_social_rank = SOCIAL_RANK_NOBLE
 	traits_applied = list(TRAIT_NOBLE, TRAIT_EXPERT_HUNTER)
 	class_select_category = CLASS_CAT_NOBLE
-	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
+	category_tags = list(CTAG_ADVENTURER, CTAG_LICKER_WRETCH)
 
 	cmode_music = 'sound/music/combat_knight.ogg'
 	subclass_stats = list(

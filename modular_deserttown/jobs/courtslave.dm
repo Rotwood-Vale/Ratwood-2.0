@@ -11,7 +11,7 @@
 	job_reopens_slots_on_death = FALSE
 	always_show_on_latechoices = TRUE
 	show_in_credits = TRUE
-	advclass_cat_rolls = list(CTAG_COURTAGENT = 20)
+	advclass_cat_rolls = list(CTAG_ADVENTURER = 20)
 	obsfuscated_job = FALSE
 	class_setup_examine = FALSE
 	social_rank = SOCIAL_RANK_DIRT
