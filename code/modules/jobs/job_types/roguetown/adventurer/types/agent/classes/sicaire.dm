@@ -60,7 +60,6 @@
 				shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				backpack_contents = list(
-					/obj/item/roguekey/mercenary = 1,
 					/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 					/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 					/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -91,7 +90,6 @@
 				shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				backpack_contents = list(
-							/obj/item/roguekey/mercenary = 1,
 							/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 							/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -125,7 +123,6 @@
 				shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				backpack_contents = list(
-					/obj/item/roguekey/mercenary = 1,
 					/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 					/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 					/obj/item/rogueweapon/scabbard/sheath = 1,

@@ -57,7 +57,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	backpack_contents = list(
-					/obj/item/roguekey/mercenary = 1,
 					/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 					/obj/item/rogueweapon/spellbook = 1,
 					/obj/item/lockpickring/mundane = 1,
