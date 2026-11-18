@@ -50,7 +50,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Particularly Hefty Tome of Psydon" = /obj/item/rogueweapon/mace/cudgel/psyble
+		"Particularly Hefty Tome of Psydon" = /obj/item/rogueweapon/mace/cudgel/psyble,
 		"HOUND" = /obj/item/inqhound,
 		"SNIFFER" = /obj/item/inqscanner,
 	)
