@@ -1,0 +1,5 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Restored the native Say popup following reports of slow input."
+  - rscdel: "Removed text-emote notification sounds and their audio toggle."
