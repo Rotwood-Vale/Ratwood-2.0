@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Spell-button updates no longer display false cooldown or empty-charge warnings."
