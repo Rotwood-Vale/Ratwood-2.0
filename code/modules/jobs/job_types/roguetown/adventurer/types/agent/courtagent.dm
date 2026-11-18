@@ -29,4 +29,5 @@
 			GLOB.court_agents += H.real_name
 			if(H.mind)
 				H.mind.special_role = "Court Agent" //For obfuscating them in the Actors list: _job.dm L:216
-			..()
+			to_chat(H, span_danger("You are a Court Agent, you are expected to maintain secrecy while fulfilling the whims of the crown. Do not let anyone besides the Hand or the Duke know of your true identity, compromising your secrecy could result in your death, imprisoment or firing.. Do not expect The Hand to have your back when you get arrested or caught commiting a crime.."))
+	..()
