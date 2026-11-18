@@ -1,0 +1,5 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - balance: "Increased the XP bonus for finishing wound sewing, while keeping larger wounds more rewarding."
+  - bugfix: "The final stitch and wound-closing XP now appear as one combined reward instead of the small stitch popup hiding the bonus."
