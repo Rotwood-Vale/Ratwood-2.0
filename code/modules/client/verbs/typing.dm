@@ -1,13 +1,16 @@
 /client/var/commandbar_thinking = FALSE
 /client/var/commandbar_typing = FALSE
 /client/var/commandbar_looc_typing = FALSE
+/client/var/commandbar_emote_typing = FALSE
 
 /client/proc/initialize_commandbar_spy()
 	src << output('html/typing_indicator.html', "commandbar_spy")
 
 /client/proc/handle_commandbar_typing(href_list)
-	var/is_looc = (LOWER_TEXT(href_list["verb"]) in list("looc", "loocwp", "subtlelooc"))
+	var/verb = LOWER_TEXT(href_list["verb"])
+	var/is_looc = (verb in list("looc", "loocwp", "subtlelooc"))
 	if(is_looc)
+		commandbar_emote_typing = FALSE
 		if(commandbar_thinking)
 			commandbar_thinking = FALSE
 			stop_thinking()
@@ -18,6 +21,13 @@
 	if(commandbar_looc_typing)
 		commandbar_looc_typing = FALSE
 		mob?.clear_looc_typing_indicator("changed input")
+
+	var/is_emote = (verb in list("me", "me(big)", "me_indicator", "me_big_indicator")) || (verb == "say" && href_list["emote"] == "1")
+	if(commandbar_emote_typing && !is_emote)
+		mob?.clear_emote_typing_indicator("changed input")
+		if(length(verb))
+			mob?.display_typing_indicator()
+	commandbar_emote_typing = is_emote
 
 	// Check if user has any text typed
 	if(length(href_list["verb"]) < 1)
@@ -37,6 +47,8 @@
 	if(!commandbar_typing)
 		commandbar_typing = TRUE
 		start_typing()
+	if(is_emote)
+		mob?.display_emote_typing_indicator()
 
 /** Sets the mob as "thinking" - displays typing indicator and adds trait */
 /client/proc/start_thinking()

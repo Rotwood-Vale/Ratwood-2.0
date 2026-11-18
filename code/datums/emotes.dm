@@ -17,6 +17,8 @@
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/sound //Sound to play when emote is called
+	/// Sound supplied by an interaction callback or subtype instead of get_sound().
+	var/has_action_sound = FALSE
 	var/vary = FALSE	//used for the honk borg emote
 	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 	var/nomsg = FALSE
@@ -146,6 +148,8 @@
 		var/runechat_msg_to_use = null
 		if(show_runechat)
 			runechat_msg_to_use = runechat_msg ? runechat_msg : pre_color_msg
+		if(should_play_text_cue(tmp_sound && tmp_sound.file))
+			play_text_cue(emotelocation, hidden_ghosts)
 		if(emote_type == EMOTE_AUDIBLE)
 			emotelocation.audible_message(msg, runechat_message = runechat_msg_to_use, log_seen = SEEN_LOG_EMOTE, log_seen_msg = seen_log_msg, ignored_mobs = hidden_ghosts, allow_unconscious = TRUE)
 		else
@@ -318,3 +322,14 @@
 	if(istype(H.loc, /turf/open/water) && !(H.mobility_flags & MOBILITY_STAND))
 		return FALSE
 	return TRUE
+
+/// Audible emotes stay quiet when their voice sound is unavailable or suppressed.
+/datum/emote/proc/should_play_text_cue(has_sound)
+	return !has_sound && !has_action_sound && !nomsg && !(emote_type & EMOTE_AUDIBLE)
+
+/// A visual message notification: only visible, awake listeners who opted in receive it.
+/datum/emote/proc/play_text_cue(atom/source, list/ignored_mobs)
+	for(var/mob/listener in viewers(DEFAULT_MESSAGE_RANGE, source))
+		if(!listener.client?.prefs?.hear_emote_sent_sound || listener.eye_blind || listener.stat == UNCONSCIOUS || listener.see_invisible < source.invisibility || (listener in ignored_mobs))
+			continue
+		listener.playsound_local(source, 'sound/misc/talk.ogg', 100, FALSE)

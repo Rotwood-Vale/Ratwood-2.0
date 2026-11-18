@@ -78,6 +78,7 @@
 //bow objs ฅ^•ﻌ•^ฅ
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow
+	anvilrepair = /datum/skill/craft/carpentry
 	has_item_quality = TRUE
 	name = "shortbow"
 	desc = "This simply hewn shortbow is functional enough. What it lacks in poundage or accuracy, \
@@ -95,7 +96,7 @@
 	verbage = "nock"
 	cartridge_wording = "arrow"
 	load_sound = 'sound/foley/nockarrow.ogg'
-	obj_flags = UNIQUE_RENAME
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	var/heavy_bow = FALSE //used for adding a STR check to the charge time of a bow
 	metalizer_result = /obj/item/restraints/legcuffs/beartrap/armed
 	possible_item_intents = list(

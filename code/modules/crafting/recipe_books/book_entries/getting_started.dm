@@ -38,6 +38,14 @@
 		</li>
 		</ul>
 		<p>Right-click and middle-click have context-sensitive actions. Examine an unfamiliar item or intent before experimenting on another person.</p>
+		<h3>Communicating with other players</h3>
+		<ul>
+			<li><strong>Speech:</strong> press <strong>T</strong> to open Say and type what your character says.</li>
+			<li><strong>Emotes:</strong> begin a Say message with <strong>*</strong> to describe an action, such as <code>*waves hello.</code></li>
+			<li><strong>Subtle emotes:</strong> begin a Say message with <strong>@</strong> for an action visible only to nearby characters.</li>
+			<li><strong>Dedicated emote boxes:</strong> press <strong>M</strong> for an emote or <strong>, (comma)</strong> for a longer emote. These boxes do not need a leading *. These are the default bindings; check Keybinds if yours differ.</li>
+			<li><strong>Custom speech verbs:</strong> in Say, write a speech verb followed by <strong>*</strong> and the spoken words. For example, <code>murmurs*Good evening.</code> produces speech using “murmurs” in place of “says”.</li>
+		</ul>
 	"}
 
 /datum/book_entry/getting_started/equipment

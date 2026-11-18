@@ -9,6 +9,7 @@ import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
 type TextInputData = {
+  live_typing_indicator?: boolean;
   large_buttons: boolean;
   max_length: number;
   message: string;
@@ -45,6 +46,7 @@ const pauseEvent = (event) => {
 export const TextInputModal = (props) => {
   const { act, data } = useBackend<TextInputData>();
   const {
+    live_typing_indicator,
     large_buttons,
     max_length,
     message = '',
@@ -62,6 +64,8 @@ export const TextInputModal = (props) => {
   const initialInput = useRef(placeholder || '');
   const [input, setInput] = useState(initialInput.current);
 
+  const lastTypingPrefix = useRef(false);
+
   const onType = (value: string) => {
     if (value === input) {
       return;
@@ -70,6 +74,13 @@ export const TextInputModal = (props) => {
       ? sanitizeMultiline(value)
       : removeAllSkiplines(value);
     setInput(sanitizedInput);
+    if (live_typing_indicator) {
+      const isEmote = /^[*@]/.test(sanitizedInput.trim());
+      if (isEmote !== lastTypingPrefix.current) {
+        lastTypingPrefix.current = isEmote;
+        act('typing', { emote: isEmote });
+      }
+    }
   };
 
   const visualMultiline = multiline || input.length >= 30;

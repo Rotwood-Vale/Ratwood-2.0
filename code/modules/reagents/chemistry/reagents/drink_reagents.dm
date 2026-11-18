@@ -85,6 +85,7 @@
 
 /datum/reagent/consumable/milk
 	name = "Milk"
+	nutriment_factor = 2
 	description = "An opaque white liquid produced by the mammary glands of mammals."
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_description = "milk"

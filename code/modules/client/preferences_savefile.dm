@@ -254,6 +254,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_animal_emotes
+	var/saved_emote_sent_sound
+	S["hear_emote_sent_sound"] >> saved_emote_sent_sound
+	if(!isnull(saved_emote_sent_sound))
+		hear_emote_sent_sound = !!saved_emote_sent_sound
 	S["autoconsume"]		>> autoconsume
 	S["autowoodcut"]		>> autowoodcut
 	S["autopicking"]		>> autopicking
@@ -461,6 +465,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
+	WRITE_FILE(S["hear_emote_sent_sound"], hear_emote_sent_sound)
 	WRITE_FILE(S["autoconsume"], autoconsume)
 	WRITE_FILE(S["autowoodcut"], autowoodcut)
 	WRITE_FILE(S["autopicking"], autopicking)

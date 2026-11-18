@@ -36,11 +36,17 @@
 
         if (argument_length > 0 && argument[0] == '"') argument_length -= 1;
 
+        var message = argument;
+        if (message.charAt(0) == '"') message = message.substring(1);
+        var emote = message.charAt(0) == "*" || message.charAt(0) == "@";
+
         window.location =
           "byond://?commandbar_typing=1&verb=" +
           encodeURIComponent(verb) +
           "&argument_length=" +
-          argument_length;
+          argument_length +
+          "&emote=" +
+          (emote ? "1" : "0");
       }
       setTimeout(getoutput, 2000);
     </script>

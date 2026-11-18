@@ -295,6 +295,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/top_examine = FALSE
 	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
+	var/hear_emote_sent_sound = TRUE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
 	var/autowoodcut = TRUE
@@ -598,6 +599,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		"cumflation_content",
 		"masked_examine",
 		"mute_animal_emotes",
+		"hear_emote_sent_sound",
 		"no_autopunctuate",
 		"no_examine_blocks",
 		"no_language_fonts",

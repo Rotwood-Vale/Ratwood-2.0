@@ -23,6 +23,9 @@
 		if(!(body_marking.name in zone_list_cache))
 			continue
 		compiled_list[body_marking.name] = body_marking
+		if(set_type == /datum/body_marking/nose && zone == BODY_ZONE_HEAD)
+			var/datum/body_marking/lips = global_lookup_cache[/datum/body_marking/lips]
+			compiled_list[lips.name] = lips
 	if(zone == BODY_ZONE_L_LEG && (/obj/item/bodypart/taur/equine in species.get_taur_list()))
 		for(var/horse_marking_type in list(/datum/body_marking/horse_socks, /datum/body_marking/horse_hooves))
 			var/datum/body_marking/horse_marking = GLOB.body_markings_by_type[horse_marking_type]

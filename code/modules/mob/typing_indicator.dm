@@ -1,4 +1,5 @@
 #define LOOC_TYPING_COLOR "#6699cc"
+#define EMOTE_TYPING_COLOR "#66cc66"
 
 /// state = overlay/image/object/type/whatever add_overlay will accept
 GLOBAL_LIST_EMPTY(typing_indicator_overlays)
@@ -83,4 +84,19 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	if(typing_indicator_current?.color == LOOC_TYPING_COLOR)
 		clear_typing_indicator(reason)
 
+/// Only replace the appearance when changing channels; keep the existing timeout otherwise.
+/mob/proc/display_emote_typing_indicator()
+	if(typing_indicator_current?.color == EMOTE_TYPING_COLOR)
+		return typing_indicator_current
+	clear_typing_indicator("emote input")
+	var/mutable_appearance/indicator = generate_typing_indicator()
+	indicator.color = EMOTE_TYPING_COLOR
+	display_typing_indicator(state_override = indicator)
+	return typing_indicator_current
+
+/mob/proc/clear_emote_typing_indicator(reason)
+	if(typing_indicator_current?.color == EMOTE_TYPING_COLOR)
+		clear_typing_indicator(reason)
+
+#undef EMOTE_TYPING_COLOR
 #undef LOOC_TYPING_COLOR
