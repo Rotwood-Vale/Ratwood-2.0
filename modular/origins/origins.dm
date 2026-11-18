@@ -73,8 +73,8 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/hammerhold
 	name = ORIGIN_HAMMERHOLD
-	desc = "The Hammerhold Peninsula and Isles are home to a myriad of peoples, from the Abyssor-loving Witan of the peninsula, the red-heads of Ru-Yermon, or the isles that \
-	once made up the see of seasons. Within it lies the Platinum Dwarf Fortress, the ruins of a glorious cathedral that was once the seat of northern tennite faith, and various \
+	desc = "The Hammerhold Peninsula and Isles are home to a myriad of peoples, from the Abyssor-loving Witan of the peninsula, the red-heads of Ru-Yermon, and the people of its many isles. \
+	Within it lies the Platinum Dwarf Fortress, the ruins of a glorious cathedral that was once the seat of northern tennite faith, and various \
 	petty kingdoms, or Jarldoms, all loosely agreeing to the will of the Ringbearer, Lord of the Witan."
 	origin_title = "Hammerhold"
 	origin_language = /datum/language/hammerholdian
