@@ -110,6 +110,7 @@
 	smeltresult = null
 
 /obj/item/rogueweapon/surgery/cautery
+	twirly = SKILL_LEVEL_EXPERT
 	name = "cautery iron"
 	desc = "A tool used to cauterize wounds. Heat it up before use."
 	icon_state = "cauteryiron"
@@ -749,6 +750,7 @@
 		to_chat(owner, span_userdanger("I can barely feel my lips again."))
 
 /obj/item/rogueweapon/surgery/hammer
+	twirly = SKILL_LEVEL_EXPERT
 	name = "examination hammer"
 	desc = "A small hammer used to check a patient's reactions and diagnose their condition."
 	icon_state = "kneehammer"

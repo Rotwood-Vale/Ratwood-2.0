@@ -1,4 +1,5 @@
 /obj/item/rogueweapon/shovel
+	twirly = SKILL_LEVEL_EXPERT
 	force = 21
 	possible_item_intents = list(/datum/intent/shovelscoop, /datum/intent/mace/strike/shovel)
 	gripped_intents = list(/datum/intent/shovelscoop, /datum/intent/mace/strike/shovel, /datum/intent/axe/chop/stone)

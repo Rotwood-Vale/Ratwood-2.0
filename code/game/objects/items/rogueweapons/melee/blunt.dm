@@ -84,6 +84,7 @@
 //blunt objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/mace
+	twirly = SKILL_LEVEL_EXPERT
 	force = 20
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/mace/strike)
@@ -390,6 +391,7 @@
 				return list("shrink" = 0.4,"sx" = -3,"sy" = -4,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 70,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 1,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/mace/wsword
+	twirly = 0 // Training swords use Swords, not Maces; preserve their existing behavior.
 	name = "wooden sword"
 	desc = "This wooden sword is great for training."
 	force = 5
