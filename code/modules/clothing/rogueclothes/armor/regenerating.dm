@@ -280,7 +280,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	repair_time = 30 SECONDS
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/iconoclast
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/goldenserpent
 	name = "dragon's skin"
 	desc = "We passed upon the stair, we spoke of was and when.</br> \
 	Although I wasn't there, he said I was his friend.</br> \
