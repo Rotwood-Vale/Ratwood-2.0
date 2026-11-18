@@ -149,6 +149,9 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 	grid_height = 64
 	grid_width = 32
 
+/obj/item/quiver/bullet/can_store_ammo(obj/item/ammo_casing/ammo)
+	return istype(ammo, /obj/item/ammo_casing/caseless/bullet) && ammo.type != /obj/item/ammo_casing/caseless/bullet
+
 /obj/item/quiver/bullet/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
 		to_chat(user, span_warning("My [src.name] is full!"))
@@ -168,7 +171,7 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 					return TRUE
 			else
 				A.forceMove(src)
-			arrows += A
+			arrows |= A
 			update_icon()
 		else
 			to_chat(loc, span_warning("Full!"))

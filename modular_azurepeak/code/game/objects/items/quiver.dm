@@ -20,7 +20,26 @@
 	sewrepair = TRUE
 	dropshrink = 0.9
 
+/// Match each container's normal ammunition insertion rules.
+/obj/item/quiver/proc/can_store_ammo(obj/item/ammo_casing/ammo)
+	return istype(ammo, /obj/item/ammo_casing/caseless/rogue) && ammo.type != /obj/item/ammo_casing/caseless/rogue && !istype(ammo, /obj/item/ammo_casing/caseless/rogue/javelin)
+
+/obj/item/quiver/sling/can_store_ammo(obj/item/ammo_casing/ammo)
+	return istype(ammo, /obj/item/ammo_casing/caseless/rogue/sling_bullet) && ammo.type != /obj/item/ammo_casing/caseless/rogue/sling_bullet
+
+/obj/item/quiver/javelin/can_store_ammo(obj/item/ammo_casing/ammo)
+	return istype(ammo, /obj/item/ammo_casing/caseless/rogue/javelin)
+
+/obj/item/quiver/zigs/can_store_ammo(obj/item/ammo_casing/ammo)
+	return FALSE
+
 /obj/item/quiver/quickdraw_interact(mob/living/user, obj/item/held_item)
+	if(istype(held_item, /obj/item/ammo_casing))
+		if(!can_store_ammo(held_item))
+			to_chat(user, span_warning("That ammunition does not fit in [src]."))
+			return TRUE
+		attackby(held_item, user)
+		return TRUE // Full/rejected insertion must not fall through into ordinary storage.
 	if(!istype(held_item, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) && !istype(held_item, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow) && !istype(held_item, /obj/item/gun/ballistic/revolver/grenadelauncher/sling))
 		return FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/launcher = held_item
@@ -111,7 +130,7 @@
 					return TRUE
 			else
 				A.forceMove(src)
-			arrows += A
+			arrows |= A
 			update_icon()
 		else
 			to_chat(loc, span_warning("Full!"))
@@ -408,7 +427,7 @@
 					return TRUE
 			else
 				A.forceMove(src)
-			arrows += A
+			arrows |= A
 			update_icon()
 		else
 			to_chat(loc, span_warning("Full!"))
