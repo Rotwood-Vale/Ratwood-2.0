@@ -99,6 +99,9 @@
 
 /// image(src, src) copies the body appearance, but not its animated vis_contents.
 /mob/living/proc/add_twirl_visuals(image/body_image)
+	// Active twirl visuals are attached through flick_overlay_view().
+	if(!length(vis_contents))
+		return
 	for(var/obj/item/held_item in held_items)
 		if(held_item.inhand_spinning && !QDELETED(held_item.spin_visual))
 			body_image.vis_contents += held_item.spin_visual
