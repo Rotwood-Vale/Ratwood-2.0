@@ -1,0 +1,4 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - bugfix: "Ensures blunt weapons deal a noticeable amount of integrity damage versus bladed weapons."

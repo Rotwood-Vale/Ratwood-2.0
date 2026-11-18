@@ -51,10 +51,12 @@
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
 
-			if(istype(used_weapon) && used_weapon.is_silver && ((used.smeltresult in list(/obj/item/ingot/aaslag, /obj/item/ingot/decrepit, /obj/item/ingot/gilbranze)) || used.GetComponent(/datum/component/cursed_item)))
+			if(istype(used_weapon) && used_weapon.is_silver && ((used.smeltresult in list(/obj/item/ingot/aaslag, /obj/item/ingot/decrepit, /obj/item/ingot/gilbranze)) || used.GetComponent(/datum/component/cursed_item) || used.is_cult))
 				var/datum/component/silverbless/bless = used_weapon.GetComponent(/datum/component/silverbless)
 				if(bless.is_blessed)
 					intdamage = round(intdamage * bless.cursed_item_intdamage)
+					if(used.is_cult)
+						intdamage = round(intdamage * 1.2)
 
 		if(consume_debuff)
 			if(has_status_effect(/datum/status_effect/debuff/exposed))
@@ -670,12 +672,12 @@
 			user.visible_message(span_notice("[user] examines [src]."), \
 				span_notice("I check [src] for injuries."))
 
-	if(stat < DEAD)
+	if(stat == DEAD || (user != src && looks_dead()))
+		examination += span_dead("[m1] dead.")
+	else
 		examination += "[m1] still alive."
 		if(stat >= UNCONSCIOUS)
 			examination += "[m1] [IsSleeping() ? "asleep" : "unconscious"]."
-	else
-		examination += span_dead("[m1] dead.")
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
 			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))

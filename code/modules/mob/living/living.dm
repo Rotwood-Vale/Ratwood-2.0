@@ -708,7 +708,7 @@
 		return
 	if(!reaper)
 		return
-	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE))
+	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE) || HAS_TRAIT(src, TRAIT_DEATHS_DOOR))
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 
 		if(istype(src.loc, /turf/open/water) && !HAS_TRAIT(src, TRAIT_NOBREATH) && lying && client)
@@ -722,6 +722,7 @@
 		var/word_input = stripped_input(src, "Your parting words? Leave empty if you will.", "Last Words")
 		if(word_input)
 			say(word_input)
+		SEND_SIGNAL(src, COMSIG_LIVING_SUCCUMBED)
 		death()
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = TRUE, check_immobilized = FALSE, ignore_stasis = FALSE)
@@ -872,11 +873,18 @@
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
+/mob/living/proc/is_burning_with(status_type)
+	var/datum/status_effect/fire_handler/fire_stacks/fire = has_status_effect(status_type)
+	return fire?.on_fire
+
+/mob/living/proc/looks_dead()
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH)
+
 /mob/living/proc/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
 	if(src == user)
 		return FALSE
 	if(stat < DEAD)
-		to_chat(user, span_warning("Nothing happens."))
+		to_chat(user, span_warning(looks_dead() ? "They are unresponsive to my attempts. For now." : "Nothing happens."))
 		return FALSE
 	if(!mind)
 		return FALSE
@@ -1027,6 +1035,7 @@
 	slowdown = 0
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
+	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEALED, admin_revive)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -1135,7 +1144,7 @@
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				adjust_blood_volume(-max(1, brute_ratio * 2)) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
 					newdir = newdir | direction
@@ -1311,6 +1320,16 @@
 /mob/proc/resist_grab(moving_resist)
 	return TRUE //returning 0 means we successfully broke free
 
+/mob/living/proc/grapple_str()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STASTR
+
+/mob/living/proc/grapple_con()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STACON
+
 /mob/living/resist_grab(moving_resist, freeresist = FALSE)
 	. = TRUE
 
@@ -1353,9 +1372,9 @@
 
 	resist_chance += max((wrestling_diff * 10), -20)
 	if(HAS_TRAIT(src, TRAIT_GARROTED))
-		resist_chance += (STACON - L.STASPD) * 5
+		resist_chance += (grapple_con() - L.STASPD) * 5
 	else
-		resist_chance += (STACON - (agg_grab ? L.STASTR : L.STAWIL)) * 5
+		resist_chance += (grapple_con() - (agg_grab ? L.grapple_str() : L.STAWIL)) * 5
 	resist_chance *= combat_modifier
 	resist_chance = clamp(resist_chance, 5, 95)
 
@@ -1718,6 +1737,10 @@
 	if(!blessed_sunder?.on_fire)
 		blessed_sunder?.ignite(silent)
 
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(!dark_status?.on_fire)
+		dark_status?.ignite(silent)
+
 /mob/living/proc/SoakMob(locations)
 	if(locations & CHEST)
 		extinguish_mob()
@@ -1738,6 +1761,9 @@
 	var/datum/status_effect/fire_handler/fire_stacks/sunder/blessed/blessed_sunder = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 	if(blessed_sunder?.on_fire)
 		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(dark_status?.on_fire)
+		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
 
 /**
  * Handles effects happening when mob is on normal fire

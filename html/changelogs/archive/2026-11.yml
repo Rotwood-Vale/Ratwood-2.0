@@ -237,3 +237,213 @@
   ophaq:
   - rscadd: Adds the harmonica, jaw harp, trumpet, banjo, and bagpipe to the list
       of instruments for the conjure instrument spell and alphabetizes the list.
+2026-11-11:
+  AlucardHellsingChapel:
+  - rscdel: Removed motive buff
+  - balance: 'Rebalanced Duelist stat point allocation to what it was before: 2 SPD
+      , 2 INT , 1 WIL.'
+  CentralSmith:
+  - bugfix: Shield blocks and Limbguard deflections now stop thrown nets from ensnaring
+      you.
+  HalfAwake691:
+  - balance: Paladin devotion tier raised from 1 to 2
+  Hyenh:
+  - rscadd: Silver varients of Kazengun weapons
+  Kaolin1234:
+  - bugfix: Fixed bare hands being obscured by the Weaver Spider Body.
+  - image: "Refined the Weaver Spider Body\u2019s waist, front stance, and side stripes."
+  - rscadd: Dark Elves can select Weaver Spider Body.
+  - bugfix: Resting and warming hands by fires no longer heal surgical incisions.
+  - qol: Diagnose and Secular Diagnosis report missing organs while respecting patient
+      anatomy.
+  - bugfix: "Both Diagnose and Secular Diagnosis now check the Dullahan\u2019s own\
+      \ detached head for organ slots missing from the body;  Thank you, CentralSmith"
+  - rscadd: "Arachnids can now select the Crocs de l\u2019araign\xE9e Cavalier and\
+      \ Assassin mercenary classes."
+  - spellcheck: "Updated the Cavalier\u2019s selection text to list all eligible races."
+  SirSwagmeyer:
+  - balance: blacklisted Rituos from Lunacy Embracer
+  ariaworld:
+  - rscadd: Witch spawns with pouch on neck.
+  - rscadd: Lets you train Unarmed on Training Dummies.
+  ronfino:
+  - refactor: Refactored handcart upgrade code.
+  wikimody:
+  - rscadd: Cure rot potion now cures delites without killing them, its now harder
+      to get however
+2026-11-12:
+  CentralSmith:
+  - bugfix: Adjudicators choosing the Psydonic Executioner Sword + Shield now receive
+      their shield.
+  SirSwagmeyer:
+  - bugfix: Bites no longer ignore Defend intent guarding, or Limbguard. Biting a
+      limbguarded area will instantly break your jaw.
+  - balance: hitting a Limbguard with your bare hands now does severe damage to your
+      gloves. If your gloves are broken or you are bare handed, punching a Limbguard
+      will break the offending arm.
+  - balance: hitting a Limbguard with your bare hands now does severe damage to your
+      gloves. If your gloves are broken or you are bare handed, punching a Limbguard
+      will break the offending arm.w
+  - qol: Drink now loops automatically, but you'll be left vulnerable and off-balanced
+      while doing so.
+  - balance: Bite/Chew have been adjusted to have counterplay, such as making the
+      biter vulnerable and off-balanced. Bite has a static fail rate. Bite/Chew also
+      deal recoil damage to your mouth, based if you're biting into armor or not.
+  - bugfix: There was a weird iteration that made biting display your main weapon's
+      attack animation. Fixed.
+  ronfino:
+  - spellcheck: Renamed "Messer" to "Kriegsmesser" in weapon choice
+  - code_imp: Removed greatweapon strap from Left Back Slot, swapped with crossbow
+      instead.
+2026-11-13:
+  ophaq:
+  - balance: Lessens Arlette booster pack prices and added two more cards to them.
+  - bugfix: Makes the booster packs, cards and deck grid size 1x1 instead of 2x2.
+2026-11-14:
+  Kroto-Ker:
+  - rscadd: Corpulent vice
+  UntoldTactics:
+  - code_imp: Miscellanous lore changes in preparation for new lore primer & timeline.
+  wikimody:
+  - qol: Lux revives now work on excomunicated players, wreches rejoice
+2026-11-15:
+  eirenxiv:
+  - bugfix: fixed fencing shirt/jacket layering, detail and sleeve issue on female
+      sprites
+2026-11-16:
+  Arturlang:
+  - bugfix: curses should be less buggy and actually make your lyfe miserable
+  - admin: cursing people should be more convenient now
+  - bugfix: being unable to resist out of graves
+  - bugfix: aheals removing vamp eyes
+  CentralSmith:
+  - balance: Necra's Vow no longer deals extra damage in crit. Its healing pauses
+      instead and resumes if you are saved.
+  - bugfix: Necra's Vow now counts collapsing from blood loss as crit.
+  - spellcheck: Necra's Vow descriptions and consent prompt now describe what the
+      Vow does.
+  - bugfix: Retainers can switch SCOMs to the garrison line.
+  - bugfix: Grabbing someone with Dual Wielder keeps the grabbing hand selected.
+  - bugfix: Prayer cooldowns now restart when a prayer actually goes through, not
+      when you retry early. Early attempts tell you how long is left.
+  - bugfix: Martyr self-prayer and received-prayer healing no longer overwrite each
+      other. Your own prayer can't trigger both, and Inhumen prayers no longer trigger
+      received-prayer healing.
+  - qol: Martyrs get a Prayer Recovering countdown, and active prayer heals show miracle
+      heal icons with their own timers.
+  - bugfix: Removing a net clears its stat penalties immediately.
+  IronDragoon:
+  - rscadd: Ports warden rous-skull helm from SR
+  - rscadd: Added a peddlar and potion seller cart, mobile versions of the trading
+      machines
+  - qol: Reworked the Peddlar and Potion seller interfaces with TGUI, and added a
+      bunch of QOL related changes to make them much easier to use (bulk loading/unloading/buying/etc
+  - qol: Hooked up the expandable mechanics help that we had in place from a lot of
+      AP ports. Will allow further easy implementation of this going forward to make
+      some more complex interactions easier to learn/understand for players
+  - rscadd: Wanted posters now work. They will show those with named bounties with
+      a headshot.
+  - bugfix: fixed the end credits. They should now work properly, showing a headshot
+      for all the characters from the round. Also the round end stat window 'outlaw'
+      tab will now show all wanted characters from the round
+  Kaolin1234:
+  - bugfix: Fireman-carried and piggyback riders keep their carry posture when taking
+      stairs.
+  Kroto-Ker:
+  - rscadd: New Character Preferences Menu
+  MrShibaa:
+  - rscadd: Added the ability to uppercut with bare fists.
+  - balance: allows court chaplain to be a psydonite.
+  - balance: gives court chaplain psydonite defy miracle.
+  - rscadd: Steel and Western Nodachi (Iron)
+  - rscadd: Custom sheathe for the steel nodachi variant, only obtainable via roles
+      that spawn with them.
+  - rscadd: Crafting recipes for steel and western nodachi (Steel nodachi requires
+      respective craft book)
+  - balance: gives nodachi as an option for (Retainer duelist, eastern warrior, hangyaku-kounen,
+      disgraced knight, mistwalker.
+  - code_imp: replaced "sword, great mace, spear etc.." with the respective sword
+      names for hangyaku-kounen.
+  Ripperserk:
+  - rscadd: armor_class = ARMOR_CLASS_MEDIUM to /obj/item/clothing/under/roguetown/platelegs/graggar
+  SirSwagmeyer:
+  - bugfix: fixed leather armor accidentally having brigandine-tier values.
+  - balance: Pioneer Kneestinger Traps now fade-in, fade-out radius when triggered.
+  Xander3359:
+  - balance: The fencing padded gambeson is now fireproof
+  acssination:
+  - rscadd: Added the punch intent from daggers into rapiers.
+  annikaRU:
+  - bugfix: fixes bronze shovels/spades going invisible when digging
+  - bugfix: heavy bolts now craft the actual bolt intead of the flying projectile
+  - balance: changes the cannon back to steel instead of blacksteel again
+  coffeecoffeecoffee:
+  - rscadd: Added short elf ears
+  - rscadd: Gave pick intent back to the steel lucerne
+  - balance: changed 2-tile pick from 40 AP to 50 AP
+  mushy:
+  - rscadd: Black Oak Pariah now has a ranged spellblade variant.
+  - balance: Black Oak Pariah now has three slots.
+  ophaq:
+  - balance: Message costs 1 point now.
+  - balance: Water bolt can be self casted and its CD lowered to 2 seconds. Water
+      bolt now costs 2 points.
+  - rscadd: Create campfire can be casted on top of hearths and tables but not turfs
+      like walls.
+  wikimody:
+  - rscadd: Bishop no longer gets to call divine punishment on inqusition, psydonite
+      conversion now clenses related debuffs/curses
+  - qol: Caughtery now heats up for minimum of 20 seconds when heated
+2026-11-17:
+  AlucardHellsingChapel:
+  - rscadd: Added runelock pistol
+  - rscadd: Added Testament new relic weapon
+  - image: added new icons and sprites
+  - rscadd: Added Templar spellblade
+  HalfAwake691:
+  - bugfix: Traveling scholar has magic again
+  IronDragoon:
+  - admin: fixes for admin letter panel
+  Randumb-Phantomb:
+  - qol: Adds Zebra-kin, Pegasus, Alicorn, Griffon, Unicorn, Jackalope, and Chupacabra
+      as racial subtitles to Wild-kin
+  - qol: Adds Zebravolk, Pegasus, Alicorn, Griffon, Unicorn, Jackalope, and Chupacabra
+      as racial subtitles to Critterkin
+  SirSwagmeyer:
+  - balance: brought brigandine stab protection down to 2 pips because it was brought
+      back up by accident
+  annikaRU:
+  - code_imp: items that required example cogs now require bronze cogs
+  - code_imp: the cooling table and autogrinder now use static_debris instead of debris
+  hugmeorelse:
+  - sound: Added positional point ambience for fires, torches, fountains, clocks,
+      corpses, etc.
+  - sound: Added continuous river ambience that follows nearby river coverage and
+      becomes quieter indoors.
+  - sound: Improved ambience fades, directional transitions, source handoffs and variation.
+  - sound: Updated instruments, music boxes and other persistent sounds to the new
+      sound framework.
+  - sound: Added sound occlusion, revised distance falloff and containment rules for
+      relevant sounds.
+  - qol: Reorganized Audio Settings with Master, Instruments and Point Ambience controls,
+      separate admin and streamed audio controls, editable percentages and tooltips.
+  - qol: Point Ambience can be controlled independently of Master Volume.
+  - bugfix: Corrected sound-state leakage between listeners, distant explosion and
+      church-bell attenuation, and several looping-sound startup and cleanup issues.
+  - bugfix: Repaired windowed doors retain their transparency.
+  - admin: Added sound diagnostics and live point-ambience controls and reporting.
+  - config: Added documented sound and point-ambience settings in config/sound.txt.
+  ronfino:
+  - rscadd: Picking/Blunt-attacking boulders increases Mining skill
+  - bugfix: Fixed SNIPPING tools not able to salvage footwear. You can store tools
+      in boots with other intents.
+  wikimody:
+  - rscadd: Caughterise wounds surgery now deals less damage with high skill, the
+      fumble now deals high damage though
+  - bugfix: Master or above medical skill lets you caughtorise though clothes, but
+      the target must have combat mode off
+2026-11-18:
+  MrShibaa:
+  - bugfix: Kabuto is properly craftable again.
+  coffeecoffeecoffee:
+  - bugfix: fixed lucerne pick armor penetration

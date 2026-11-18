@@ -13,6 +13,7 @@
 	cmode_music = 'sound/music/templarofpsydonia.ogg'
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_HEAVYARMOR)
+	pure_heart = TRUE
 	subclass_stats = list(
 
 		STATKEY_WIL = 3,
@@ -114,7 +115,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		if("Psydonic Executioner Sword + Shield")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/exe/psy(H))
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		if("Psydonic War Axe + Shield")
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(H), TRUE)

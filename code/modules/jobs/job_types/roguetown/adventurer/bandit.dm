@@ -51,6 +51,7 @@
 		if(!H.mind)
 			return
 		H.ambushable = FALSE
+		SSrole_class_handler.bandits_in_round = TRUE // wanted posters report bandit activity for job-spawned bandits too, not just event ones
 
 /datum/outfit/job/roguetown/bandit/pre_equip(mob/living/carbon/human/H)
 	. = ..()
@@ -92,7 +93,7 @@
 			bounty_total = rand(200, 300)
 		if("Highwayman")
 			bounty_total = rand(300, 400)
-		if("Vale Boogeyman")
+		if("Realm Boogeyman")
 			bounty_total = rand(500, 600)
 	if(bounty_severity == "Small Game")
 		add_bounty_obscure(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, TRUE, my_crime, bounty_poster)

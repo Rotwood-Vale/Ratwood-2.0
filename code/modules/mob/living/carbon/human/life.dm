@@ -46,6 +46,7 @@
 		for(var/datum/antagonist/A as anything in mind.antag_datums)
 			A.on_life(src)
 
+	handle_curses()
 	handle_vamp_dreams()
 	if(IsSleeping())
 		if(health > 0)
@@ -218,7 +219,7 @@
 							'sound/items/confessormask4.ogg', 'sound/items/confessormask5.ogg', 'sound/items/confessormask6.ogg',
 							'sound/items/confessormask7.ogg', 'sound/items/confessormask8.ogg', 'sound/items/confessormask9.ogg',
 							'sound/items/confessormask10.ogg')
-			playsound(src, mask_sound, 90, FALSE, 4, 0)
+			playsound(src, mask_sound, 90, FALSE, 4)
 			return
 
 
