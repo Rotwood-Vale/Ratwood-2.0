@@ -238,9 +238,7 @@
 	return chambered
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
-	. = ..()
-	if (.)
-		return
+	// Loading must precede generic attacks now that bows and slings can be hit.
 	if (!internal_magazine && istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine)
@@ -250,9 +248,11 @@
 				eject_magazine(user, FALSE, AM)
 			else
 				to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
-		return
+		return TRUE
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
+			if(!istype(magazine))
+				return TRUE
 			if (chambered && !chambered.BB)
 				chambered.forceMove(drop_location())
 				chambered = null
@@ -264,7 +264,10 @@
 					chamber_round()
 				A.update_icon()
 				update_icon()
-			return
+			return TRUE
+	. = ..()
+	if(.)
+		return .
 	user.update_inv_hands()
 	return FALSE
 
