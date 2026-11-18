@@ -75,7 +75,7 @@
 				H.change_stat(STATKEY_CON, 3)
 				H.change_stat(STATKEY_SPD, -3)
 				H.change_stat(STATKEY_PER, -2)
-				H.change_stats(STATKEY_INT, -2)
+				H.change_stat(STATKEY_INT, -2)
 				H.change_stat(STATKEY_WIL, 3)
 				beltl = /obj/item/rogueweapon/stoneaxe/hurlbat
 				beltr = /obj/item/rogueweapon/stoneaxe/hurlbat
