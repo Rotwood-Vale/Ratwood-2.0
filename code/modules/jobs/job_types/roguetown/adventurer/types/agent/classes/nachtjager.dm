@@ -69,12 +69,12 @@
 		neck = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-		cloak = /obj/item/clothing/suit/roguetown/armor/longcoat/orange
+		cloak = /obj/item/clothing/suit/roguetown/armor/longcoat/black
 		backr = /obj/item/storage/backpack/rogue/satchel
 		gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-		head = /obj/item/clothing/head/roguetown/puritan/armored
-		mask = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/orange
+		head = /obj/item/clothing/head/roguetown/duelisthat/black
+		mask = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/black
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 		backpack_contents = list(
@@ -87,11 +87,13 @@
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
 		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
 
-/obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/orange
-	color = CLOTHING_ORANGE
+/obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/black
+	color = CLOTHING_BLACK
 
-/obj/item/storage/belt/rogue/leather/battleskirt/faulds/orange
-	color = CLOTHING_ORANGE
+/obj/item/storage/belt/rogue/leather/battleskirt/faulds/black
+	color = CLOTHING_BLACK
 
-/obj/item/clothing/suit/roguetown/armor/longcoat/orange
-	color = CLOTHING_ORANGE
+/obj/item/clothing/suit/roguetown/armor/longcoat/black
+	color = CLOTHING_BLACK
+/obj/item/clothing/head/roguetown/duelisthat/black
+	color = CLOTHING_BLACK
