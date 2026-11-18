@@ -88,7 +88,7 @@
 		/datum/round_modifier/high_wretches,
 		/datum/round_modifier/vampire,
 		/datum/round_modifier/vampirelord,
-		/datum/round_modifier/rebel
+		/datum/round_modifier/zizocult
 	)
 	job_slots = list(
 		"Ashen Host" = 20,
@@ -123,7 +123,7 @@
 	cost = 5
 	min_chaos = 2
 	weight = 20
-	incompatible = list(/datum/round_modifier/high_wretches, /datum/round_modifier/vampire, /datum/round_modifier/vampirelord)
+	incompatible = list(/datum/round_modifier/high_wretches, /datum/round_modifier/vampire, /datum/round_modifier/vampirelord, /datum/round_modifier/ashen_host)
 	villain_events = list(/datum/round_event_control/antagonist/solo/zizo_cult)
 
 /*
