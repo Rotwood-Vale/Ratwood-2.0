@@ -606,6 +606,8 @@
   - bugfix: The Villains selection window now closes when spawning.
   - bugfix: Corrected minimum fire decay timing for incapacitated characters.
   - bugfix: Critical recovery reminders now account for deadite eligibility.
+  - qol: The Blindness vice now grants night vision.
+  - rscadd: Blindness vice holders can see nearby typing indicators.
   mypingishuge:
   - bugfix: Class-selection windows now load their intended fonts directly from the
       game.
