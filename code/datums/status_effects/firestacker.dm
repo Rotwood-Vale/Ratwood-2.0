@@ -151,10 +151,8 @@
 	pass()
 
 /datum/status_effect/fire_handler/fire_stacks/tick(wait)
-	// Magical fires retain their existing decay and extinguishing rules.
-	var/ordinary_fire = type == /datum/status_effect/fire_handler/fire_stacks
-	var/extinguish_threshold = ordinary_fire ? 0.1 : 0
-	if(stacks <= extinguish_threshold)
+	// End negligible flames before their fixed damage can keep an owner incapacitated.
+	if(stacks <= 0.1)
 		qdel(src)
 		return TRUE
 
@@ -169,11 +167,11 @@
 		decay_multiplier *= STACK_DECAY_PRONE_MULTIPLIER
 
 	var/stack_decay = decay_multiplier * owner.fire_stack_decay_rate * STACK_DECAY_MULTIPLIER * wait * 0.1
-	if(ordinary_fire && owner.stat != DEAD && owner.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE, ignore_stasis = TRUE))
+	if(owner.stat != DEAD && owner.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE, ignore_stasis = TRUE))
 		stack_decay = min(stack_decay, -0.25 * wait * 0.1) // At least 0.5 stacks per two seconds.
 	adjust_stacks(stack_decay)
 
-	if(stacks <= extinguish_threshold)
+	if(stacks <= 0.1)
 		qdel(src)
 		return TRUE
 

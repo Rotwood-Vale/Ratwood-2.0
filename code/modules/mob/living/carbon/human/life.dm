@@ -154,7 +154,7 @@
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		message += " You are immune to deadite transformation, so you will not rise as a deadite afterward."
 	else
-		message += " If you are eligible to rise as a deadite, stay in your body: this normally takes about <b>[DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes after death</b>. Once you rise, head towards town for help."
+		message += " Stay in your body for <b>[DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes after death</b> to become a deadite."
 	to_chat(src, span_notice(message))
 
 /mob/living/carbon/human/proc/on_daypass()
