@@ -1,6 +1,0 @@
-author: "GarrusVakarian"
-delete-after: True
-changes:
-  - rscadd: "The dragon now has a spell to open and close the hoard gate."
-  - balance: "Gave the dragon master tracking."
-  - map: "The merchant building on Smollhill gets a bell."
