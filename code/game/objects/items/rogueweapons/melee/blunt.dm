@@ -54,9 +54,11 @@
 
 /datum/intent/mace/strike/goden
 	reach = 2
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 
 /datum/intent/mace/smash/goden
 	reach = 2
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 
 /datum/intent/mace/rangedthrust
 	name = "thrust"
@@ -975,7 +977,7 @@
 	damfactor = 1.2
 	clickcd = CLICK_CD_GLACIAL
 	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 	cleave = /datum/cleave_pattern/frontal_arc
 	desc = "A heavy sweep that smashes through targets to the sides and front."
 
@@ -991,7 +993,7 @@
 	penfactor = PEN_NONE
 	clickcd = CLICK_CD_HEAVY
 	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 	intent_effect = /datum/status_effect/debuff/hobbled
 	target_parts = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)//Intentionally leaving out feet. If you know, you know.
 
@@ -1002,7 +1004,7 @@
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
 	swingdelay = 0
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 	penfactor = PEN_NONE
 	clickcd = CLICK_CD_HEAVY//Take a guess.
 	icon_state = "instrike"

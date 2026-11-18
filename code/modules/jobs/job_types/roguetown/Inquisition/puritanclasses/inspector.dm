@@ -8,6 +8,7 @@
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/combat_inspector.ogg'
 	category_tags = list(CTAG_PURITAN)
+	pure_heart = TRUE
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_DODGEEXPERT,
@@ -46,7 +47,9 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		"HOUND" = /obj/item/inqhound,
+		"SNIFFER" = /obj/item/inqscanner
 	)
 
 /datum/outfit/job/roguetown/puritan/inspector/pre_equip(mob/living/carbon/human/H)

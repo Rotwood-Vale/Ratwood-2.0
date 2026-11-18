@@ -84,6 +84,37 @@
 	maximum = 5
 	marquescost = 6
 
+/datum/inqports/supplies/silverblessedslingbullet
+    name = "10 Silver Blessed Psysling Bullets & Sling"
+    item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/silverblessedslingbullet
+    marquescost = 5 //this shit hurts a surprising amount
+
+/obj/structure/closet/crate/chest/inqcrate/supplies/silverblessedslingbullet/Initialize(mapload)
+    . = ..()
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+    new /obj/item/quiver/sling(src)
+    new /obj/item/gun/ballistic/revolver/grenadelauncher/sling(src)
+
+
+/datum/inqports/supplies/hound
+	name = "HOUND DEVICE"
+	item_type = /obj/item/inqhound
+	marquescost = 2
+
+/datum/inqports/supplies/scanner
+	name = "SNIFFER DEVICE"
+	item_type = /obj/item/inqscanner
+	marquescost = 2
+
 /datum/inqports/supplies/psybuns
 	name = "The 'Otavan Bakery Special' Crate"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/psybuns

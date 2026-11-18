@@ -11,6 +11,7 @@
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/combat_arbiter.ogg'
 	category_tags = list(CTAG_PURITAN)
+	pure_heart = TRUE
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_CRITICAL_RESISTANCE, //Light armor exclusive, they need this. 
@@ -50,6 +51,8 @@
 	)
 	subclass_stashed_items = list(
 		"Particularly Hefty Tome of Psydon" = /obj/item/rogueweapon/mace/cudgel/psyble
+		"HOUND" = /obj/item/inqhound,
+		"SNIFFER" = /obj/item/inqscanner,
 	)
 
 /datum/advclass/puritan/arbiter/post_equip(mob/living/carbon/human/H)
