@@ -17,7 +17,9 @@
 	class_setup_examine = FALSE
 	job_subclasses = list(
 	/datum/advclass/agent/sicaire,
-	/datum/advclass/agent/sicario)
+	/datum/advclass/agent/sicario,
+	/datum/advclass/agent/nachtjager
+	)
 //Hooking in here does not mess with their equipment procs
 /datum/job/roguetown/adventurer/courtagent/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L)

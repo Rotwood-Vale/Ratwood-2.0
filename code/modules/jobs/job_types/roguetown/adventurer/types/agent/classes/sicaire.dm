@@ -20,7 +20,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT, 
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, 
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
@@ -45,7 +45,7 @@
 			if("L'Éclaireur")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 				beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
 				beltr = /obj/item/quiver/bolts
 				belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/steel
@@ -133,7 +133,7 @@
 					/obj/item/clothing/head/inqarticles/blackbag = 1,
 					/obj/item/lockpickring/mundane = 1,
 				)
-				
+
 /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/black
 	color = CLOTHING_BLACK
 /obj/item/storage/belt/rogue/leather/battleskirt/faulds/black
