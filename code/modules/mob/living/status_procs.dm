@@ -424,6 +424,8 @@
 	REMOVE_TRAIT(src, TRAIT_BLIND, source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
+	if(source == "eyelids")
+		SEND_SIGNAL(src, COMSIG_LIVING_EYELIDS_UPDATED, eyesclosed)
 
 /mob/living/proc/become_blind(source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
@@ -431,6 +433,8 @@
 		update_blindness()
 	else
 		ADD_TRAIT(src, TRAIT_BLIND, source)
+	if(source == "eyelids")
+		SEND_SIGNAL(src, COMSIG_LIVING_EYELIDS_UPDATED, eyesclosed)
 
 /mob/living/proc/cure_nearsighted(source)
 	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)

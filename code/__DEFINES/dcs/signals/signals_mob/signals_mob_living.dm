@@ -5,3 +5,9 @@
 
 /// Sent from /mob/living/proc/look_around()
 #define COMSIG_LOOK_AROUND_SPOTTED "look_around_spotted"
+
+/// After eyelid blindness is applied or removed: (eyesclosed)
+#define COMSIG_LIVING_EYELIDS_UPDATED "living_eyelids_updated"
+
+/// After carbon/update_stat() changes consciousness: (old_stat, new_stat)
+#define COMSIG_LIVING_CONSCIOUSNESS_CHANGED "living_consciousness_changed"
