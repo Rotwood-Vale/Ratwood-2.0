@@ -151,7 +151,8 @@
 	pass()
 
 /datum/status_effect/fire_handler/fire_stacks/tick(wait)
-	if(stacks <= 0)
+	// End negligible flames before their fixed damage can keep an owner incapacitated.
+	if(stacks <= 0.1)
 		qdel(src)
 		return TRUE
 
@@ -165,9 +166,12 @@
 	if(!(owner.mobility_flags & MOBILITY_STAND))
 		decay_multiplier *= STACK_DECAY_PRONE_MULTIPLIER
 
-	adjust_stacks(decay_multiplier * owner.fire_stack_decay_rate * STACK_DECAY_MULTIPLIER * wait * 0.1)
+	var/stack_decay = decay_multiplier * owner.fire_stack_decay_rate * STACK_DECAY_MULTIPLIER * wait * 0.1
+	if(owner.stat != DEAD && owner.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE, ignore_stasis = TRUE))
+		stack_decay = min(stack_decay, -0.25 * wait * 0.1) // At least 0.5 stacks per two seconds.
+	adjust_stacks(stack_decay)
 
-	if(stacks <= 0)
+	if(stacks <= 0.1)
 		qdel(src)
 		return TRUE
 
