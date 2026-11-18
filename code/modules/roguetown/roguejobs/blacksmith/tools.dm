@@ -1,5 +1,6 @@
 //Base hammer type. (Wood / Iron / Steel)
 /obj/item/rogueweapon/hammer
+	twirly = SKILL_LEVEL_EXPERT
 	abstract_type = /obj/item/rogueweapon/hammer
 	force = 21
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
@@ -18,6 +19,19 @@
 	grid_height = 64
 	var/quality = 1
 	is_tool = TRUE
+
+/obj/item/rogueweapon/hammer/twirl_user_skill(mob/living/user)
+	return max(
+		user.get_skill_level(/datum/skill/combat/maces),
+		user.get_skill_level(/datum/skill/craft/blacksmithing),
+		user.get_skill_level(/datum/skill/craft/weaponsmithing),
+		user.get_skill_level(/datum/skill/craft/armorsmithing),
+		user.get_skill_level(/datum/skill/craft/carpentry),
+	)
+
+/obj/item/rogueweapon/hammer/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Twirling uses your highest Maces, Blacksmithing, Weaponsmithing, Armorsmithing or Carpentry skill.")
 
 /obj/item/rogueweapon/hammer/getonmobprop(tag)
 	. = ..()

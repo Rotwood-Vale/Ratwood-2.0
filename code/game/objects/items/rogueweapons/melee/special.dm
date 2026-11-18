@@ -28,6 +28,7 @@
 /// INTENT DATUMS	^
 
 /obj/item/rogueweapon/lordscepter
+	twirly = SKILL_LEVEL_EXPERT
 	force = 20
 	force_wielded = 20
 	possible_item_intents = list(/datum/intent/lordbash, /datum/intent/lord_electrocute, /datum/intent/lord_silence)
