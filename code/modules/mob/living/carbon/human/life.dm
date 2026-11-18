@@ -150,11 +150,15 @@
 	if(critical_recovery_reminded || world.time - critical_recovery_started_at < 2 MINUTES || !client || client.mob != src)
 		return
 	critical_recovery_reminded = TRUE
+	var/datum/antagonist/zombie/existing_deadite = mind.has_antag_datum(/datum/antagonist/zombie)
+	var/can_rise = existing_deadite ? (!existing_deadite.has_turned && !existing_deadite.revived) : (zombie_can_convert() && !has_world_trait(/datum/world_trait/necra_requiem))
 	var/message = "If you're stuck in critical condition, open the <b>IC</b> tab and choose <b>Embrace Necra</b> to give up and die."
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		message += " You are immune to deadite transformation, so you will not rise as a deadite afterward."
+	else if(!can_rise)
+		message += " You cannot currently rise as a deadite after death."
 	else
-		message += " Stay in your body for <b>[DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes after death</b> to become a deadite."
+		message += " If conditions remain suitable, staying in your body after death can let you rise as a deadite after about <b>[DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes</b>."
 	to_chat(src, span_notice(message))
 
 /mob/living/carbon/human/proc/on_daypass()

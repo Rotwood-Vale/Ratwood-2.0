@@ -478,24 +478,30 @@
 	if (zombie.stat >= DEAD) // Turned and died anyway. The corpse keeps its datum so it can still be cured
 		return
 
-///Making sure they're not any other antag as well as adding the zombie datum to their mind
-/mob/living/carbon/human/proc/zombie_check_can_convert()
+/// Side-effect-free eligibility shared by conversion and recovery guidance.
+/mob/living/carbon/human/proc/zombie_can_convert()
 	if(!mind)
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/vampire))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/werewolf))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/zombie))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/gnoll))
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/dragon))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
-		return
+		return FALSE
+	return TRUE
+
+/// Add the deadite antagonist only after its eligibility checks pass.
+/mob/living/carbon/human/proc/zombie_check_can_convert()
+	if(!zombie_can_convert())
+		return FALSE
 	return mind.add_antag_datum(/datum/antagonist/zombie)
 
 /atom/movable/screen/alert/status_effect/debuff/deadite_grace
