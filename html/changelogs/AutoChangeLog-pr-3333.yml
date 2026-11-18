@@ -1,4 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Grabbing someone with Dual Wielder keeps the grabbing hand selected."

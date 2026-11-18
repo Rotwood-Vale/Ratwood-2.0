@@ -1,5 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "curses should be less buggy and actually make your lyfe miserable"
-  - admin: "cursing people should be more convenient now"

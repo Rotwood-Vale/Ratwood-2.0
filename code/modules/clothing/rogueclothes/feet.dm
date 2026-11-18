@@ -53,6 +53,9 @@
 	. += span_smallnotice("Knives and lockpicks can be stowed inside.")
 
 /obj/item/clothing/shoes/roguetown/boots/attackby(obj/item/storing_item, mob/living/carbon/user, params)
+	if(user.used_intent?.type == /datum/intent/snip)
+		return ..()
+
 	if(istype(storing_item, /obj/item/rogueweapon/huntingknife))
 		if(!isnull(holdingknife))
 			to_chat(user, span_warning("My boot already holds a knife."))

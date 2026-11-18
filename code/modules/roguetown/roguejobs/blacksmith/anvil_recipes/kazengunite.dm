@@ -73,7 +73,7 @@
 	created_item = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
 	display_category = ITEM_CAT_ARMOR_BOOTS
 
-/datum/anvil_recipe/kazengunite/kabuto
+/datum/anvil_recipe/kazengunite/jingasa
 	name = "Jingasa (+1 Cloth)"
 	additional_items = list(/obj/item/natural/cloth)
 	created_item = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa

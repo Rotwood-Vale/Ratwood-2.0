@@ -8,7 +8,10 @@
 
 GLOBAL_DATUM_INIT(fax_panel_state, /datum/ui_state/fax_panel_state, new)
 GLOBAL_DATUM_INIT(fax_panel, /datum/fax_panel, new)
+/// Letter Archive entries, newest first. Holds both player HERMES mail and Letter Panel sends.
 GLOBAL_LIST_EMPTY(player_letter_history)
+
+#define LETTER_ARCHIVE_MAX 200
 
 /datum/fax_panel
 	/// Cached UI payload sections to avoid rebuilding large lists every tgui update tick.
@@ -22,6 +25,8 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 	var/kingsfield_mail_count = 0
 	/// Sender ckey -> world.time they can next trigger a Kingsfield popup.
 	var/list/kingsfield_popup_times = list()
+	/// Running id for archive entries, so the UI can key them stably.
+	var/archive_count = 0
 
 /datum/fax_panel/proc/refresh_ui_cache(force = FALSE)
 	if(force || world.time >= hermes_cache_expires)
@@ -38,7 +43,10 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 		var/list/new_player_list = list()
 		for(var/mob/living/carbon/human/H in GLOB.human_list)
 			if(H.real_name && H.client)
-				new_player_list |= H.real_name
+				new_player_list += list(list(
+					"name" = H.real_name,
+					"ckey" = H.ckey,
+				))
 		cached_player_list = new_player_list
 		player_cache_expires = world.time + 20
 
@@ -51,7 +59,33 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/fax_panel/proc/register_player_letter(sender, recipient, body, sender_ckey = null, recipient_ckey = null)
+/// Turns letter HTML into plain text for the archive. Player letters are shown escaped, so tags would only be noise.
+/datum/fax_panel/proc/letter_plain_text(text)
+	var/static/regex/line_breaks = regex("<\\s*br\\s*/?\\s*>|</\\s*p\\s*>", "gi")
+	var/static/regex/tags = regex("<\[^>\]*>", "g")
+	text = replacetext(text || "", ascii2text(13), "")
+	text = line_breaks.Replace(text, "\n")
+	text = tags.Replace(text, "")
+	text = html_decode(text)
+	return copytext(text, 1, 4000)
+
+/// Names of the items in a package, leaving out its note.
+/datum/fax_panel/proc/package_item_names(obj/item/smallDelivery/package)
+	var/list/names = list()
+	for(var/obj/item/contained in package.contents)
+		if(contained != package.note)
+			names += contained.name
+	return names
+
+/// Adds an entry to the top of the archive and pushes it to any open panels.
+/datum/fax_panel/proc/add_archive_entry(list/entry)
+	entry["id"] = ++archive_count
+	GLOB.player_letter_history = list(entry) + GLOB.player_letter_history
+	if(GLOB.player_letter_history.len > LETTER_ARCHIVE_MAX)
+		GLOB.player_letter_history.Cut(LETTER_ARCHIVE_MAX + 1)
+	SStgui.update_uis(src)
+
+/datum/fax_panel/proc/register_player_letter(sender, recipient, body, sender_ckey = null, recipient_ckey = null, obj/item/smallDelivery/package = null)
 	var/clean_sender = sanitize(copytext(sender || "Anonymous", 1, MAX_NAME_LEN))
 	if(!clean_sender)
 		clean_sender = "Anonymous"
@@ -68,22 +102,30 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 	if(!clean_recipient_ckey)
 		clean_recipient_ckey = "unknown"
 
-	var/clean_body = body || ""
-	clean_body = html_decode(clean_body)
-	clean_body = replacetext(clean_body, ascii2text(13), "")
-	clean_body = replacetext(clean_body, "\n", "<br>")
-	clean_body = copytext(clean_body, 1, 4000)
-
-	var/list/entry = list(
+	add_archive_entry(list(
+		"kind" = "player",
+		"is_html" = FALSE,
 		"sender" = clean_sender,
 		"recipient" = clean_recipient,
 		"sender_ckey" = clean_sender_ckey,
 		"recipient_ckey" = clean_recipient_ckey,
-		"body" = clean_body,
-	)
-	GLOB.player_letter_history = list(entry) + GLOB.player_letter_history
-	if(GLOB.player_letter_history.len > 200)
-		GLOB.player_letter_history.Cut(201)
+		"body" = letter_plain_text(body),
+		"contents" = package ? package_item_names(package) : null,
+		"item_path" = null,
+	))
+
+/datum/fax_panel/proc/register_admin_letter(mob/user, sender, recipient, recipient_ckey, body, list/contents = null, item_path = null)
+	add_archive_entry(list(
+		"kind" = "admin",
+		"is_html" = TRUE,
+		"sender" = sender,
+		"recipient" = recipient,
+		"sender_ckey" = user.ckey || "unknown",
+		"recipient_ckey" = recipient_ckey || "unknown",
+		"body" = body || "",
+		"contents" = contents,
+		"item_path" = item_path ? "[item_path]" : null,
+	))
 
 /// Called when mail lands at the Kingsfield HERMES. Saves a copy, posts to admin chat and prompts online admins.
 /datum/fax_panel/proc/notify_kingsfield_mail(obj/item/mail, mob/sender)
@@ -112,9 +154,8 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 	var/obj/item/smallDelivery/package = mail
 	var/note_text = package.note ? package.note.build_read_info(FALSE) : ""
 	var/list/item_names = list()
-	for(var/obj/item/contained in package.contents)
-		if(contained != package.note)
-			item_names += html_encode(contained.name)
+	for(var/item_name in package_item_names(package))
+		item_names += html_encode(item_name)
 	return "[note_text]<hr><b>Package contents:</b> [item_names.len ? jointext(item_names, ", ") : "nothing"]"
 
 /datum/fax_panel/proc/show_kingsfield_popup(mob/admin, id, message)
@@ -175,19 +216,34 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 			var/body=replacetext(params["body"] || "", "\n", "<br>")
 			body=copytext(body, 1, 5001) // cap at 5000 chars
 			var/stamp=params["stamp"]
+			if(stamp == "none")
+				stamp = null
 			var/rim=params["rim"]
 			var/send_mode=params["send_mode"]    // "player" or "hermes"
-			var/recipient=sanitize(params["recipient"])
 			var/hermes_num=text2num(params["hermes_num"])
 			var/item_path_str=trim(params["item_path"] || "")
 			var/item_name_override=sanitize(params["item_name"] || "")
 			var/item_desc_override=sanitize(params["item_desc"] || "")
-			var/package_size=max(1, min(6, text2num(params["package_size"]) || 0))
+			var/package_size=clamp(text2num(params["package_size"]) || 0, 0, 6) // 0 = size from the item
 
 			if(!sender)
 				sender = "Anonymous"
 			if(!body && !stamp && !item_path_str)
 				return TRUE
+
+			// By-name sends pick a player by ckey, so the name is whatever they're called right now.
+			var/recipient
+			var/recipient_ckey
+			if(send_mode != "hermes")
+				recipient_ckey = params["recipient_ckey"]
+				for(var/mob/living/carbon/human/H in GLOB.human_list)
+					if(H.client && H.ckey == recipient_ckey)
+						recipient = H.real_name
+						break
+				if(!recipient)
+					to_chat(user, span_warning("That player is no longer available. The recipient list has been refreshed."))
+					refresh_ui_cache(TRUE)
+					return TRUE
 
 			var/note_content = (body || stamp) ? fax_build_content(body, stamp, sender) : null
 			var/rim_css = fax_rim_body_css(rim)
@@ -198,15 +254,16 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 					to_chat(user, span_warning("Invalid item path: '[item_path_str]'"))
 					return TRUE
 				if(send_mode == "hermes")
-					return fax_send_parcel_to_hermes(user, note_content, rim_css, sender, parcel_type, hermes_num, item_name_override, item_desc_override, package_size)
+					fax_send_parcel_to_hermes(user, note_content, rim_css, sender, body, parcel_type, hermes_num, item_name_override, item_desc_override, package_size)
 				else
-					return fax_send_parcel_to_player(user, note_content, rim_css, sender, parcel_type, recipient, item_name_override, item_desc_override, package_size)
+					fax_send_parcel_to_player(user, note_content, rim_css, sender, body, parcel_type, recipient, recipient_ckey, item_name_override, item_desc_override, package_size)
+				return TRUE
 
-			var/dest_label = send_mode == "hermes" ? "HERMES #[hermes_num]" : recipient
 			if(send_mode == "hermes")
-				return fax_send_to_hermes(user, note_content, rim_css, sender, hermes_num, dest_label)
+				fax_send_to_hermes(user, note_content, rim_css, sender, body, hermes_num)
 			else
-				return fax_send_to_player(user, note_content, rim_css, sender, recipient)
+				fax_send_to_player(user, note_content, rim_css, sender, body, recipient, recipient_ckey)
+			return TRUE
 
 	return FALSE
 
@@ -263,138 +320,157 @@ GLOBAL_LIST_EMPTY(player_letter_history)
 			return "<div style='text-align:center;margin-top:12px;'><div style='display:inline-flex;width:88px;height:88px;border-radius:50%;border:4px double #8b6914;background:#fffdf0;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:bold;color:#7a5500;box-shadow:inset 0 0 12px #e0b840,0 0 6px #c9a84c;'><span>HIGH</span><span>COUNCIL</span></div></div>"
 	return ""
 
-/// Routes a fax directly to a HERMES machine by number.
-/datum/fax_panel/proc/fax_send_to_hermes(mob/user, content, rim_css, sender, hermes_num, dest_label)
-	var/found = FALSE
-	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
-		if(X.ournum == hermes_num)
-			var/obj/item/paper/P = new(X.loc)
-			P.info = content
-			P.window_rim_style = rim_css
-			P.mailer = sender
-			P.mailedto = "#[hermes_num][X.mailtag ? " ([X.mailtag])" : ""]"
-			P.update_icon()
-			X.say("New mail!")
-			playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-			found = TRUE
-			break
-	if(!found)
-		to_chat(user, span_warning("HERMES #[hermes_num] not found."))
-		return FALSE
-	log_admin("[key_name(user)] sent admin letter to HERMES #[hermes_num] from '[sender]'.")
-	message_admins("[key_name_admin(user)] sent an admin letter to HERMES #[hermes_num] from '[sender]'.")
-	return TRUE
+/datum/fax_panel/proc/hermes_label(obj/structure/roguemachine/mail/X)
+	return "HERMES #[X.ournum][X.mailtag ? " ([X.mailtag])" : ""]"
 
-/// Routes a fax to a player by name through the mastermail.
-/datum/fax_panel/proc/fax_send_to_player(mob/user, content, rim_css, sender, recipient)
-	if(!recipient)
-		return FALSE
-	if(!SSroguemachine.hermailermaster)
-		to_chat(user, span_warning("The master mailer doesn't exist. Can't send by name."))
-		return FALSE
+/// Puts mail into the Master of Mails. Warns the admin if it couldn't get a grid slot; it stays collectable at a HERMES either way.
+/datum/fax_panel/proc/deliver_to_mastermail(mob/user, obj/item/mail)
 	var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
-	var/obj/item/paper/P = new(X.loc)
-	P.info = content
-	P.window_rim_style = rim_css
-	P.mailer = sender
-	P.mailedto = recipient
-	P.update_icon()
+	mail.forceMove(X.loc)
 	var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
-	STR.handle_item_insertion(P, prevent_warning=TRUE)
+	if(!STR.handle_item_insertion(mail, prevent_warning=TRUE))
+		if(mail.loc != X)
+			mail.forceMove(X)
+		to_chat(user, span_warning("The Master of Mails has no free slot for [mail]. The recipient can still collect it at any HERMES, but it won't show up in the Master of Mails."))
 	X.new_mail = TRUE
 	X.update_icon()
-	send_ooc_note("New letter from <b>[sender].</b>", name = recipient)
+
+/// Pings the named recipient that mail is waiting.
+/datum/fax_panel/proc/notify_recipient(recipient, kind, sender)
+	send_ooc_note("New [kind] from <b>[sender].</b>", name = recipient)
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
 		if(H.real_name == recipient)
 			H.apply_status_effect(/datum/status_effect/ugotmail)
 			H.playsound_local(H, 'sound/misc/mail.ogg', 100, FALSE, -1)
 			break
-	log_admin("[key_name(user)] sent admin letter to '[recipient]' from '[sender]'.")
-	message_admins("[key_name_admin(user)] sent an admin letter to '[recipient]' from '[sender]'.")
+
+/// Builds a package holding a freshly spawned item_type and the optional note. Returns null (and warns) if nothing survived spawning.
+/datum/fax_panel/proc/build_parcel(mob/user, turf/T, note_content, rim_css, item_type, item_name_override, item_desc_override, package_size)
+	var/obj/item/smallDelivery/D = new(T)
+	// Spawn inside the package so stacks can't merge into whatever is lying on the turf.
+	var/obj/item/I = new item_type(D)
+	var/list/delivered = list()
+	for(var/obj/item/contained in D.contents)
+		delivered += contained
+	if(!length(delivered))
+		qdel(D)
+		to_chat(user, span_warning("[item_type] deleted itself when spawned (spawner or stack?), so the parcel was not sent."))
+		return null
+	if(QDELETED(I) || I.loc != D)
+		I = delivered[1]
+		to_chat(user, span_warning("[item_type] replaced itself when spawned. The parcel holds: [english_list(package_item_names(D))]. Name and description overrides were not applied."))
+	else
+		if(item_name_override)
+			I.name = item_name_override
+		if(item_desc_override)
+			I.desc = item_desc_override
+
+	var/size = package_size
+	if(!size)
+		size = clamp(round(I.w_class), 1, 6)
+		D.grid_width = I.grid_width
+		D.grid_height = I.grid_height
+	D.name = "[weightclass2text(min(size, 5))] package"
+	D.w_class = size
+	D.icon_state = "deliverypackage[min(size, 5)]"
+
+	if(note_content)
+		var/obj/item/paper/note = new(D)
+		note.info = note_content
+		note.window_rim_style = rim_css
+		note.update_icon()
+		D.note = note
+	return D
+
+/// Admin-chat summary of what a parcel holds.
+/datum/fax_panel/proc/parcel_summary(obj/item/smallDelivery/D, item_type)
+	return "[D.name] containing [english_list(package_item_names(D))] ([item_type])[D.note ? " with a letter" : ""]"
+
+/// Routes a fax directly to a HERMES machine by number.
+/datum/fax_panel/proc/fax_send_to_hermes(mob/user, content, rim_css, sender, body, hermes_num)
+	var/obj/structure/roguemachine/mail/X = find_hermes_box("#[hermes_num]")
+	if(!X)
+		to_chat(user, span_warning("HERMES #[hermes_num] not found."))
+		return FALSE
+	var/dest = hermes_label(X)
+	var/obj/item/paper/P = new(X.loc)
+	P.info = content
+	P.window_rim_style = rim_css
+	P.mailer = sender
+	P.mailedto = "#[hermes_num][X.mailtag ? " ([X.mailtag])" : ""]"
+	P.update_icon()
+	X.say("New mail!")
+	playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+	register_admin_letter(user, sender, dest, null, body)
+	log_admin("[key_name(user)] sent admin letter to [dest] from '[sender]'.")
+	message_admins("[key_name_admin(user)] sent an admin letter to [dest] from '[sender]'. It is on the floor under the machine.")
+	return TRUE
+
+/// Routes a fax to a player by name through the mastermail.
+/datum/fax_panel/proc/fax_send_to_player(mob/user, content, rim_css, sender, body, recipient, recipient_ckey)
+	if(!recipient)
+		return FALSE
+	if(!SSroguemachine.hermailermaster)
+		to_chat(user, span_warning("The master mailer doesn't exist. Can't send by name."))
+		return FALSE
+	var/obj/item/paper/P = new
+	P.info = content
+	P.window_rim_style = rim_css
+	P.mailer = sender
+	P.mailedto = recipient
+	P.update_icon()
+	deliver_to_mastermail(user, P)
+	notify_recipient(recipient, "letter", sender)
+	register_admin_letter(user, sender, recipient, recipient_ckey, body)
+	log_admin("[key_name(user)] sent admin letter to '[recipient]' ([recipient_ckey]) from '[sender]'.")
+	message_admins("[key_name_admin(user)] sent an admin letter to '[recipient]' ([recipient_ckey]) from '[sender]'. It is waiting at the Master of Mails.")
 	return TRUE
 
 /datum/fax_panel/ui_state(mob/user)
 	return GLOB.fax_panel_state
 
 /// Sends a parcel (item + optional letter note) to a HERMES machine.
-/datum/fax_panel/proc/fax_send_parcel_to_hermes(mob/user, note_content, rim_css, sender, item_type, hermes_num, item_name_override, item_desc_override, package_size)
-	var/found = FALSE
-	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
-		if(X.ournum == hermes_num)
-			var/turf/T = get_turf(X)
-			var/obj/item/smallDelivery/D = new(T)
-			var/obj/item/I = new item_type(T)
-			if(item_name_override)
-				I.name = item_name_override
-			if(item_desc_override)
-				I.desc = item_desc_override
-			var/size = package_size ? package_size : max(1, min(5, round(I.w_class)))
-			D.name = "[weightclass2text(min(size,5))] package"
-			D.w_class = size
-			D.icon_state = "deliverypackage[min(size,5)]"
-			I.forceMove(D)
-			if(note_content)
-				var/obj/item/paper/note = new(T)
-				note.info = note_content
-				note.window_rim_style = rim_css
-				note.update_icon()
-				note.forceMove(D)
-				D.note = note
-			D.mailer = sender
-			D.mailedto = "#[hermes_num][X.mailtag ? " ([X.mailtag])" : ""]"
-			X.say("New mail!")
-			playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-			found = TRUE
-			break
-	if(!found)
+/datum/fax_panel/proc/fax_send_parcel_to_hermes(mob/user, note_content, rim_css, sender, body, item_type, hermes_num, item_name_override, item_desc_override, package_size)
+	var/obj/structure/roguemachine/mail/X = find_hermes_box("#[hermes_num]")
+	if(!X)
 		to_chat(user, span_warning("HERMES #[hermes_num] not found."))
 		return FALSE
-	log_admin("[key_name(user)] sent admin parcel ([item_type]) to HERMES #[hermes_num] from '[sender]'.")
-	message_admins("[key_name_admin(user)] sent an admin parcel ([item_type]) to HERMES #[hermes_num] from '[sender]'.")
+	var/obj/item/smallDelivery/D = build_parcel(user, get_turf(X), note_content, rim_css, item_type, item_name_override, item_desc_override, package_size)
+	if(!D)
+		return FALSE
+	var/dest = hermes_label(X)
+	D.mailer = sender
+	D.mailedto = "#[hermes_num][X.mailtag ? " ([X.mailtag])" : ""]"
+	X.say("New mail!")
+	playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+	var/summary = parcel_summary(D, item_type)
+	register_admin_letter(user, sender, dest, null, body, package_item_names(D), item_type)
+	log_admin("[key_name(user)] sent admin parcel to [dest] from '[sender]': [summary].")
+	message_admins("[key_name_admin(user)] sent an admin parcel to [dest] from '[sender]': [summary]. It is on the floor under the machine.")
 	return TRUE
 
 /// Sends a parcel (item + optional letter note) to a player through the mastermail.
-/datum/fax_panel/proc/fax_send_parcel_to_player(mob/user, note_content, rim_css, sender, item_type, recipient, item_name_override, item_desc_override, package_size)
+/datum/fax_panel/proc/fax_send_parcel_to_player(mob/user, note_content, rim_css, sender, body, item_type, recipient, recipient_ckey, item_name_override, item_desc_override, package_size)
 	if(!recipient)
 		return FALSE
 	if(!SSroguemachine.hermailermaster)
 		to_chat(user, span_warning("The master mailer doesn't exist. Can't send by name."))
 		return FALSE
 	var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
-	var/turf/T = get_turf(X)
-	var/obj/item/smallDelivery/D = new(T)
-	var/obj/item/I = new item_type(T)
-	if(item_name_override)
-		I.name = item_name_override
-	if(item_desc_override)
-		I.desc = item_desc_override
-	var/size = package_size ? package_size : max(1, min(5, round(I.w_class)))
-	D.name = "[weightclass2text(min(size,5))] package"
-	D.w_class = size
-	D.icon_state = "deliverypackage[min(size,5)]"
-	I.forceMove(D)
-	if(note_content)
-		var/obj/item/paper/note = new(T)
-		note.info = note_content
-		note.window_rim_style = rim_css
-		note.update_icon()
-		note.forceMove(D)
-		D.note = note
+	var/obj/item/smallDelivery/D = build_parcel(user, get_turf(X), note_content, rim_css, item_type, item_name_override, item_desc_override, package_size)
+	if(!D)
+		return FALSE
 	D.mailer = sender
 	D.mailedto = recipient
-	var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
-	STR.handle_item_insertion(D, prevent_warning=TRUE)
-	X.new_mail = TRUE
-	X.update_icon()
-	send_ooc_note("New parcel from <b>[sender].</b>", name = recipient)
-	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		if(H.real_name == recipient)
-			H.apply_status_effect(/datum/status_effect/ugotmail)
-			H.playsound_local(H, 'sound/misc/mail.ogg', 100, FALSE, -1)
-			break
-	log_admin("[key_name(user)] sent admin parcel ([item_type]) to '[recipient]' from '[sender]'.")
-	message_admins("[key_name_admin(user)] sent an admin parcel ([item_type]) to '[recipient]' from '[sender]'.")
+	deliver_to_mastermail(user, D)
+	notify_recipient(recipient, "parcel", sender)
+	var/summary = parcel_summary(D, item_type)
+	register_admin_letter(user, sender, recipient, recipient_ckey, body, package_item_names(D), item_type)
+	log_admin("[key_name(user)] sent admin parcel to '[recipient]' ([recipient_ckey]) from '[sender]': [summary].")
+	message_admins("[key_name_admin(user)] sent an admin parcel to '[recipient]' ([recipient_ckey]) from '[sender]': [summary]. It is waiting at the Master of Mails.")
 	return TRUE
+
+#undef LETTER_ARCHIVE_MAX
 
 // Admin verb
 /client/proc/open_fax_panel()

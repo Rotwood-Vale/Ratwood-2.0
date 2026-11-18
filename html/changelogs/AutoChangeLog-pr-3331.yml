@@ -1,6 +1,0 @@
-author: "annikaRU"
-delete-after: True
-changes:
-  - bugfix: "fixes bronze shovels/spades going invisible when digging"
-  - bugfix: "heavy bolts now craft the actual bolt intead of the flying projectile"
-  - balance: "changes the cannon back to steel instead of blacksteel again"

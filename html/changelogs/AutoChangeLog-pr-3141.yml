@@ -1,6 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - balance: "Necra's Vow no longer deals extra damage in crit. Its healing pauses instead and resumes if you are saved."
-  - bugfix: "Necra's Vow now counts collapsing from blood loss as crit."
-  - spellcheck: "Necra's Vow descriptions and consent prompt now describe what the Vow does."

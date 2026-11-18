@@ -1,4 +1,0 @@
-author: "Kaolin1234"
-delete-after: True
-changes:
-  - bugfix: "Fireman-carried and piggyback riders keep their carry posture when taking stairs."
