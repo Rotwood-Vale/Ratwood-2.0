@@ -665,7 +665,7 @@
 		"wdefense" = 2
 	)
 	grip_intents = list(
-		/datum/intent/sword/thrust/long/halfsword/jab,
+		/datum/intent/effect/daze/longsword2h,
 		/datum/intent/shield/block,
 		/datum/intent/sword/thrust/long/deep/halfsword/frei,
 		/datum/intent/sword/thrust/long/halfsword/frei
