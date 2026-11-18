@@ -85,3 +85,86 @@
 		icon_state = "[initial(icon_state)]"
 	update_icon()
 
+/obj/item/speaker/agent
+	name = "whispering clam"
+	desc = "Ever whispering secrets into your ears..."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "cosmic_clam"
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH|ITEM_SLOT_RING|ITEM_SLOT_HANDS
+	gripped_intents = null
+	dropshrink = 0.75
+	possible_item_intents = list(INTENT_GENERIC)
+	force = 10
+	throwforce = 10
+	w_class = WEIGHT_CLASS_SMALL
+	experimental_inhand = FALSE
+	sleeved = 'icons/roguetown/clothing/onmob/neck.dmi'
+	grid_width = 32
+	grid_height = 32
+	var/speaking = TRUE
+	var/fakename = "whispering clam"
+
+/obj/item/speaker/agent/Initialize(mapload)
+	. = ..()
+	if(speaking)
+		icon_state = "[initial(icon_state)]_active"
+	update_icon()
+	SSroguemachine.scomm_machines += src
+
+/obj/item/speaker/agent/Destroy()
+	SSroguemachine.scomm_machines -= src
+	return ..()
+
+/obj/item/speaker/agent/proc/repeat_message(message, atom/A, tcolor, message_language)
+	if(A == src)
+		return
+	if(!ismob(loc))
+		return
+	if(tcolor)
+		voicecolor_override = tcolor
+	if(speaking && message)
+		var/mob/living/carbon/human/wearer = loc
+		wearer.playsound_local(wearer, 'sound/vo/mobs/rat/rat_life.ogg', 50, TRUE)
+		say(message, language = message_language)
+	voicecolor_override = null
+
+/obj/item/speaker/agent/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!can_speak())
+		return
+	if(message == "" || !message)
+		return
+	spans |= speech_span
+	if(!language)
+		language = get_default_language()
+	if(istype(loc, /obj/item))
+		var/obj/item/I = loc
+		I.send_speech(message, 0, I, , spans, message_language=language)
+	else
+		send_speech(message, 0, src, , spans, message_language=language)
+
+/obj/item/speaker/agent/MiddleClick(mob/user)
+	if(.)
+		return
+	user.changeNext_move(CLICK_CD_INTENTCAP)
+	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+	speaking = !speaking
+	to_chat(user, span_info("I [speaking ? "unsilence" : "silence"] the whispering clam"))
+	if(speaking)
+		icon_state = "[initial(icon_state)]_active"
+	else
+		icon_state = "[initial(icon_state)]"
+	update_icon()
+
+/obj/item/speaker/agent/equipped(mob/user, slot)
+	. = ..()
+	switch(slot)
+		if(SLOT_RING)
+			fakename = "silver weddingband"
+			name = fakename
+	return TRUE
+
+/obj/item/speaker/agent/dropped(mob/user, silent)
+	. = ..()
+	name = initial(name)
+	sleeved = null
+	mob_overlay_icon = null

@@ -304,6 +304,7 @@
 #define TRAIT_AGENT_MERCHANT "Agent of the Merchant Guild"
 #define TRAIT_AGENT_BATHHOUSE "Agent of the Bathhouse"
 #define TRAIT_COURTAGENT "Agent of the Court"
+#define TRAIT_AGENTHIDEOUT "Court Agent Hideout"
 #define TRAIT_AGENT_CHURCH "Ecclesiastical Benefactor"
 #define TRAIT_OWNED_SLAVE "Owned Slave"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"

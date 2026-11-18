@@ -55053,8 +55053,8 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "kYC" = (
-/obj/item/listeningdevice,
-/obj/item/listeningdevice,
+/obj/item/listeningdevice/inq,
+/obj/item/listeningdevice/inq,
 /obj/item/speakerinq,
 /obj/item/speakerinq,
 /obj/item/rope/inqarticles/inquirycord,

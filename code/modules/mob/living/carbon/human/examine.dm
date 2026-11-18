@@ -1227,8 +1227,8 @@
 				. += span_greentext("<b>I can see their branding; they are owned by [ownership_info["name"]].</b>")
 
 		if(name in GLOB.court_agents || (HAS_TRAIT(src, TRAIT_COURTAGENT)))
-			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
-			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
+			var/user_role = user.mind?.assigned_role || user.job
+			if((user_role in list("Grand Duke", "Grand Duchess", "Hand")) || (user.mind && HAS_TRAIT(user.mind, TRAIT_AGENTHIDEOUT)))
 				. += span_greentext("<b>[m1] an agent of the court!</b>")
 
 		if(user != src && !HAS_TRAIT(src, TRAIT_GUARD_RAISED) && ishuman(user))

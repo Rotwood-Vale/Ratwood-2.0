@@ -53,7 +53,7 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat/white
 				backr = /obj/item/storage/backpack/rogue/satchel/black
-				gloves = /obj/item/clothing/gloves/roguetown/otavan
+				gloves = /obj/item/clothing/gloves/roguetown/angle
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 				head = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/white
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -64,7 +64,6 @@
 					/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 					/obj/item/rogueweapon/scabbard/sheath = 1,
 					/obj/item/lockpickring/mundane = 1,
-					/obj/item/grapplinghook = 1,
 				)
 
 			if("Bruiser")
