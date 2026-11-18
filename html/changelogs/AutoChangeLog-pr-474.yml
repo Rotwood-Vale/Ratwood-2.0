@@ -1,5 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Mace-class weapons and tools can now be twirled."
-  - rscadd: "Repair hammers and mallets use your highest Maces, Blacksmithing, Weaponsmithing, Armorsmithing or Carpentry skill when twirling."

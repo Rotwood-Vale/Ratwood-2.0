@@ -1,5 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - bugfix: "Mouth-held items no longer block head bodywriting or hide its examine text."
-  - bugfix: "Putting on headgear during a writing attempt prevents writing through the covering."

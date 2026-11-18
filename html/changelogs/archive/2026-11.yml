@@ -641,3 +641,10 @@
   - bugfix: Corrected loose-stone loading, unloading and consumption in slings.
   - bugfix: Crossbows support normal repair interactions, and invalid launchers avoid
       missing-magazine chambering errors.
+  - rscadd: Mace-class weapons and tools can now be twirled.
+  - rscadd: Repair hammers and mallets use your highest Maces, Blacksmithing, Weaponsmithing,
+      Armorsmithing or Carpentry skill when twirling.
+  - bugfix: Mouth-held items no longer block head bodywriting or hide its examine
+      text.
+  - bugfix: Putting on headgear during a writing attempt prevents writing through
+      the covering.
