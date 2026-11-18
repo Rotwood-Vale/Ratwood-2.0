@@ -611,3 +611,5 @@
   - rscadd: 'Tailmaw customization can choose its fluid: Default, Emberwine or Honey.'
   - qol: Chairs no longer topple when someone walks through them.
   - balance: Increased Rookie slots from 1 to 4; Smollhill keeps the role disabled.
+  - bugfix: Restored the native Say popup following reports of slow input.
+  - rscdel: Removed text-emote notification sounds and their audio toggle.
