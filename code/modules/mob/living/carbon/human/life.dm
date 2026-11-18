@@ -20,6 +20,8 @@
 	var/leprosy = 2
 	var/allmig_reward = 0
 	var/last_sleep
+	var/critical_recovery_started_at
+	var/critical_recovery_reminded = FALSE
 
 /mob/living/carbon/human/Life()
 	if (notransform)
@@ -32,6 +34,8 @@
 
 	if (QDELETED(src))
 		return 0
+
+	update_critical_recovery_reminder()
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_LIFE)
 
@@ -133,6 +137,25 @@
 
 	. = ..()
 	name = get_visible_name()
+	update_critical_recovery_reminder()
+
+/// One private reminder per continuous critical episode, using the existing life tick.
+/mob/living/carbon/human/proc/update_critical_recovery_reminder()
+	if(!mind?.key || (stat != SOFT_CRIT && stat != UNCONSCIOUS) || !can_succumb())
+		critical_recovery_started_at = null
+		critical_recovery_reminded = FALSE
+		return
+	if(isnull(critical_recovery_started_at))
+		critical_recovery_started_at = world.time
+	if(critical_recovery_reminded || world.time - critical_recovery_started_at < 2 MINUTES || !client || client.mob != src)
+		return
+	critical_recovery_reminded = TRUE
+	var/message = "If you're stuck in critical condition, open the <b>IC</b> tab and choose <b>Embrace Necra</b> to give up and die."
+	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
+		message += " You are immune to deadite transformation, so you will not rise as a deadite afterward."
+	else
+		message += " If you are eligible to rise as a deadite, stay in your body: this normally takes about <b>[DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes after death</b>. Once you rise, head towards town for help."
+	to_chat(src, span_notice(message))
 
 /mob/living/carbon/human/proc/on_daypass()
 	if(dna?.species)
