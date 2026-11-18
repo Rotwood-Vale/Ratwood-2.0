@@ -146,7 +146,7 @@
 		STATKEY_SPD = -3,
 		STATKEY_INT = 5,
 		STATKEY_PER = 5,
-		STATKEY_FOR = 5
+		STATKEY_LCK = 5
 	)
 	// Great wrestlers and butchers. Okay swimmers and climbers. Not very good at anything else.
 	subclass_skills = list(
