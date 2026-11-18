@@ -126,7 +126,6 @@
 
 	/// If we're on fire
 	var/on_fire = FALSE
-	/// Last burning tick, used for minimum decay independently of the processing subsystem cadence.
 	var/last_stack_decay_at
 	/// Reference to the mob light emitter itself
 	var/obj/effect/dummy/lighting_obj/moblight
@@ -171,7 +170,7 @@
 	var/elapsed = world.time - last_stack_decay_at
 	last_stack_decay_at = world.time
 	var/stack_decay = decay_multiplier * owner.fire_stack_decay_rate * STACK_DECAY_MULTIPLIER * wait * 0.1
-	if(owner.stat != DEAD && owner.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE, ignore_stasis = TRUE))
+	if(owner.stat == DEAD || owner.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE, ignore_stasis = TRUE))
 		stack_decay = min(stack_decay, -0.25 * elapsed * 0.1) // At least 0.5 stacks per two seconds.
 	adjust_stacks(stack_decay)
 
