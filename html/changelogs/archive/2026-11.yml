@@ -633,3 +633,11 @@
       for incapacitated victims.
   - qol: Players stuck in critical condition for two minutes receive guidance about
       Embrace Necra and, where applicable, deadite recovery.
+  - bugfix: Restored ammunition loading for repairable bows and slings, including
+      loading through quivers.
+  - bugfix: Prefilled and manually inserted ammunition is properly contained in quivers
+      and pouches. Rejected loads retain their ammunition, and hotkeys ignore rounds
+      outside their container.
+  - bugfix: Corrected loose-stone loading, unloading and consumption in slings.
+  - bugfix: Crossbows support normal repair interactions, and invalid launchers avoid
+      missing-magazine chambering errors.
