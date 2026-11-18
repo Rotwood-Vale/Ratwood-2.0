@@ -20,6 +20,10 @@
 	sewrepair = TRUE
 	dropshrink = 0.9
 
+/obj/item/quiver/Destroy()
+	arrows.Cut()
+	return ..()
+
 /// Match each container's normal ammunition insertion rules.
 /obj/item/quiver/proc/can_store_ammo(obj/item/ammo_casing/ammo)
 	return istype(ammo, /obj/item/ammo_casing/caseless/rogue) && ammo.type != /obj/item/ammo_casing/caseless/rogue && !istype(ammo, /obj/item/ammo_casing/caseless/rogue/javelin)
