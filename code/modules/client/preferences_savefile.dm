@@ -9,7 +9,7 @@
 //	This also works with decimals.
 #define SAVEFILE_VERSION_MAX 39
 
-// Safely extract a type path from datums or type values; returns null if unset/invalid.
+/// Safely extract a type path from datums or type values. Returns null if unset or invalid
 /proc/preferences_typepath_or_null(value)
 	if(isnull(value))
 		return null
@@ -240,12 +240,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parchment_skin"]		>> parchment_skin
 	S["buttons_locked"]		>> buttons_locked
 	S["windowflash"]		>> windowflashing
-	S["be_special"] 		>> be_special
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
+	S["adminmusicvol"]		>> adminmusicvol
+	S["streamedmusicvol"]	>> streamedmusicvol
 	S["combatmusicvol"]		>> combatmusicvol
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
+	S["pointambiencevol"]	>> pointambiencevol
+	S["pointambience_independent"] >> pointambience_independent
+	S["point_ambience_toggles"] >> point_ambience_toggles
+	S["overallvol"]		>> overallvol
+	S["instrumentvol"]	>> instrumentvol
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
@@ -255,7 +261,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["show_mouseover_role"] >> show_mouseover_role
 	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
-	S["mute_animal_emotes"]	>> mute_animal_emotes
+	S["mute_animal_emotes"]	>> mute_anthro_noises
 	S["autoconsume"]		>> autoconsume
 	S["autoblooddrink"]		>> autoblooddrink
 	S["autowoodcut"]		>> autowoodcut
@@ -370,16 +376,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(admin_ghost_name && !istext(admin_ghost_name))
 		admin_ghost_name = null
 	menuoptions		= SANITIZE_LIST(menuoptions)
-	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
 	musicvol = sanitize_integer(musicvol, 0, 100, initial(musicvol))
+	// Initialize the new admin slider from the saved shared music level to preserve the listener's
+	// volume
+	if(!isnum(adminmusicvol))
+		adminmusicvol = musicvol
+	adminmusicvol = sanitize_integer(adminmusicvol, 0, 100, initial(adminmusicvol))
+	streamedmusicvol = sanitize_integer(streamedmusicvol, 0, 100, initial(streamedmusicvol))
 	if(!isnum(combatmusicvol))
 		combatmusicvol = musicvol
 	combatmusicvol = sanitize_integer(combatmusicvol, 0, 100, initial(combatmusicvol))
 	lobbymusicvol = sanitize_integer(lobbymusicvol, 0, 100, initial(lobbymusicvol))
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
+	pointambiencevol = sanitize_integer(pointambiencevol, 0, 100, initial(pointambiencevol))
+	pointambience_independent = sanitize_integer(pointambience_independent, 0, 1, initial(pointambience_independent))
+	point_ambience_toggles = sanitize_integer(point_ambience_toggles, 0, SOUND_DISABLE_POINT_AMBIENCE | SOUND_DISABLE_TORCH_AMBIENCE, initial(point_ambience_toggles))
+	overallvol = sanitize_integer(overallvol, 0, 100, initial(overallvol))
+	instrumentvol = sanitize_integer(instrumentvol, 0, 100, initial(instrumentvol))
 	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
 	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
 	full_examine = sanitize_integer(full_examine, 0, 1, initial(full_examine))
@@ -438,9 +454,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["triumphs"], triumphs)
 	WRITE_FILE(S["musicvol"], musicvol)
+	WRITE_FILE(S["adminmusicvol"], adminmusicvol)
+	WRITE_FILE(S["streamedmusicvol"], streamedmusicvol)
 	WRITE_FILE(S["combatmusicvol"], combatmusicvol)
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
+	WRITE_FILE(S["pointambiencevol"], pointambiencevol)
+	WRITE_FILE(S["pointambience_independent"], pointambience_independent)
+	WRITE_FILE(S["point_ambience_toggles"], point_ambience_toggles)
+	WRITE_FILE(S["overallvol"], overallvol)
+	WRITE_FILE(S["instrumentvol"], instrumentvol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
 	WRITE_FILE(S["full_examine"], full_examine)
@@ -449,7 +472,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
-	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
+	WRITE_FILE(S["mute_animal_emotes"], mute_anthro_noises)
 	WRITE_FILE(S["autoconsume"], autoconsume)
 	WRITE_FILE(S["autoblooddrink"], autoblooddrink)
 	WRITE_FILE(S["autowoodcut"], autowoodcut)
@@ -496,7 +519,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parchment_skin"], parchment_skin)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
-	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["default_slot"], default_slot)
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
@@ -906,6 +928,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_quirks(S)
 	_load_flaw(S)
 
+	S["be_special"] >> be_special
+	be_special = SANITIZE_LIST(be_special)
+
 	_load_culinary_preferences(S)
 
 	// LETHALSTONE edit: jank-ass load our statpack choice
@@ -1176,6 +1201,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"]			, randomise)
 	WRITE_FILE(S["species"]				, pref_species?.name)
 	WRITE_FILE(S["charflaw"]				, preferences_typepath_or_null(charflaw))
+	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["family"], family)
 	WRITE_FILE(S["gender_choice"], gender_choice)
 	WRITE_FILE(S["setspouse"], setspouse)

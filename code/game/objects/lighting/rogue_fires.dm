@@ -25,6 +25,9 @@
 	can_damage = TRUE
 	flags_1 = NONE
 	heat_level = 4
+	point_ambience_category = /datum/point_ambience_category/fire
+	/// Slightly quieter than the category's full-sized fire
+	point_ambience_volume_scale = 0.9
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -96,6 +99,8 @@
 	density = FALSE
 	max_integrity = 100
 	heat_level = 3
+	/// Torch ambience for the smaller flame
+	point_ambience_category = /datum/point_ambience_category/torch
 
 
 /obj/machinery/light/rogue/firebowl/standing/blue
@@ -354,7 +359,7 @@
 	var/obj/item/flashlight/flare/torch/torchy
 	fueluse = FALSE //we use the torch's fuel
 	no_refuel = TRUE
-	soundloop = null
+	point_ambience_category = /datum/point_ambience_category/torch
 	crossfire = FALSE
 	plane = GAME_PLANE_UPPER
 	cookonme = FALSE
@@ -428,6 +433,8 @@
 		on = FALSE
 		set_light(0)
 		update_icon()
+		// Torch removal bypasses update(). Refresh index membership explicitly
+		update_point_ambience()
 		playsound(src.loc, 'sound/foley/torchfixturetake.ogg', 70)
 
 /obj/machinery/light/rogue/torchholder/update_icon()
@@ -524,7 +531,7 @@
 	climb_offset = 14
 	on = FALSE
 	cookonme = TRUE
-	soundloop = /datum/looping_sound/fireloop
+	point_ambience_category = /datum/point_ambience_category/fire
 	heat_level = 3
 	var/obj/item/attachment = null
 	var/obj/item/food = null
@@ -758,8 +765,9 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
 				attachment.reagents.expose_temperature(400, 0.033)
-				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.loop_started)
-					boilloop.start()
+				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE)
+					if(!boilloop.is_active())
+						boilloop.start()
 				else
 					boilloop.stop()
 	update_icon()
@@ -827,7 +835,7 @@
 	no_refuel = TRUE
 	status = LIGHT_BURNED
 	crossfire = FALSE
-	soundloop = /datum/looping_sound/blank  //datum path is a blank.ogg
+	point_ambience_category = null // Silent, unlike the hearth it inherits from
 
 /obj/machinery/light/rogue/hearth/mobilestove/MiddleClick(mob/user, params)
 	. = ..()
@@ -921,7 +929,9 @@
 	bulb_colour = "#da5e21"
 	cookonme = TRUE
 	max_integrity = 30
-	soundloop = /datum/looping_sound/fireloop
+	point_ambience_category = /datum/point_ambience_category/fire
+	/// Slightly quieter than the category's full-sized fire
+	point_ambience_volume_scale = 0.9
 	heat_level = 5
 	/// Whether a wooden spit can be constructed over this fire.
 	var/can_support_spit = TRUE
