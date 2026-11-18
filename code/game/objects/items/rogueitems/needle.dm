@@ -29,7 +29,7 @@
 #define XP_ON_SUCCESS 0.5
 /// The minimum delay between automatic sewing attempts.
 #define AUTO_SEW_DELAY CLICK_CD_MELEE
-#define SEW_HP_EXP_NORMALIZER 600
+#define SEW_HP_EXP_NORMALIZER 100
 #define SEW_EXP_PER_STEP 0.1
 #define SEW_EXP_FINISH 5
 
@@ -235,10 +235,13 @@
 		stringamt >= 1)
 		if(!do_after(doctor, 2 SECONDS, target = patient))
 			break
-		if(doctor.mind)
-			doctor.mind.add_sleep_experience(skill_used, doctor.STAINT * SEW_EXP_PER_STEP)
 		playsound(loc, 'sound/foley/sewflesh.ogg', 100, TRUE, -2)
 		target_wound.sew_progress = min(target_wound.sew_progress + moveup, target_wound.sew_threshold)
+		if(doctor.mind)
+			var/experience = doctor.STAINT * SEW_EXP_PER_STEP
+			if(target_wound.sew_progress >= target_wound.sew_threshold)
+				experience += doctor.STAINT * SEW_EXP_FINISH * (target_wound.sew_threshold / SEW_HP_EXP_NORMALIZER)
+			doctor.mind.add_sleep_experience(skill_used, experience)
 
 		var/bleedreduction = max((doctor_skill / 2), 1)	//Half of medicine skill, or 1, whichever is higher.
 		target_wound.set_bleed_rate(max( (target_wound.bleed_rate - bleedreduction), 0))
@@ -253,10 +256,6 @@
 				dynwound.is_armor_maxed = FALSE
 		if(target_wound.sew_progress < target_wound.sew_threshold)
 			continue
-		if(doctor.mind)
-			var/exp_scale = target_wound.sew_threshold / SEW_HP_EXP_NORMALIZER
-			var/base_exp = doctor.STAINT * SEW_EXP_FINISH
-			doctor.mind.add_sleep_experience(skill_used, base_exp * exp_scale)
 		use(1)
 		target_wound.sew_wound()
 		if(patient == doctor)
