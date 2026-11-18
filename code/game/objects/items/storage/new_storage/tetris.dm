@@ -650,43 +650,39 @@
 	grid_remove_item(item)
 	grid_add_item(item, "[coordinate_x],[coordinate_y]")
 
-/datum/component/storage/concrete/slave_can_insert_object(datum/component/storage/slave, obj/item/storing, stop_messages = FALSE, mob/user, params, storage_click = FALSE)
-	//This is where the pain begins
-	if(grid)
+/datum/component/storage/proc/find_grid_slot(obj/item/storing, width, height)
+	var/grid_box_ratio = world.icon_size / grid_box_size
+	var/last_column = (screen_max_columns * grid_box_ratio) - 1
+	var/last_row = (screen_max_rows * grid_box_ratio) - 1
+	for(var/row in 0 to last_row)
+		for(var/column in 0 to last_column)
+			var/coordinates = "[column],[row]"
+			if(validate_grid_coordinates(coordinates, width, height, storing))
+				return coordinates
+	return null
+
+/// Finds a placement without changing the item, so this can also be used for fit checks.
+/datum/component/storage/proc/find_grid_placement(obj/item/storing, params, storage_click)
+	var/width = storing.grid_width
+	var/height = storing.grid_height
+	if(storage_click)
 		var/list/modifiers = params2list(params)
-		var/coordinates = LAZYACCESS(modifiers, "screen-loc")
-		var/grid_box_ratio = (world.icon_size/grid_box_size)
+		var/clicked_coordinates = screen_loc_to_grid_coordinates(LAZYACCESS(modifiers, "screen-loc"))
+		if(validate_grid_coordinates(clicked_coordinates, width, height, storing))
+			return list("coordinates" = clicked_coordinates, "rotate" = FALSE)
+		return null
 
-		var/used_gridwidth = storing.grid_width
-		var/used_gridheight = storing.grid_height
+	var/coordinates = find_grid_slot(storing, width, height)
+	if(coordinates)
+		return list("coordinates" = coordinates, "rotate" = FALSE)
+	if(width != height)
+		coordinates = find_grid_slot(storing, height, width)
+		if(coordinates)
+			return list("coordinates" = coordinates, "rotate" = TRUE)
+	return null
 
-		//if it's not a storage click, find the first cell that happens to be valid
-		if(!storage_click)
-			var/final_x = 0
-			var/final_y = 0
-			var/final_coordinates = ""
-			var/grid_location_found = FALSE
-			var/x_value = ((screen_max_columns*grid_box_ratio)-1)
-			for(var/current_y in 0 to ((screen_max_rows*grid_box_ratio)-1))
-				for(var/current_x in 0 to x_value)
-					final_y = current_y
-					final_x = current_x
-					final_coordinates = "[final_x],[final_y]"
-					if(validate_grid_coordinates(final_coordinates, used_gridwidth, used_gridheight, storing))
-						coordinates = final_coordinates
-						grid_location_found = TRUE
-						break
-				if(grid_location_found)
-					break
-			if(!grid_location_found)
-				return FALSE
-		else
-			coordinates = screen_loc_to_grid_coordinates(coordinates)
-
-
-		if(!validate_grid_coordinates(coordinates, used_gridwidth, used_gridheight, storing))
-			return FALSE
-	return TRUE
+/datum/component/storage/concrete/slave_can_insert_object(datum/component/storage/slave, obj/item/storing, stop_messages = FALSE, mob/user, params, storage_click = FALSE)
+	return !grid || !!find_grid_placement(storing, params, storage_click)
 
 //Remote is null or the slave datum
 /datum/component/storage/concrete/handle_item_insertion(obj/item/storing, prevent_warning = FALSE, mob/user, datum/component/storage/remote, params, storage_click = FALSE)
@@ -695,9 +691,14 @@
 	var/moved = FALSE
 	if(!istype(storing))
 		return FALSE
-	if(user)
-		if(!worn_check(parent, user))
+	if(user && !worn_check(parent, user))
+		return FALSE
+	var/list/grid_placement
+	if(grid)
+		grid_placement = find_grid_placement(storing, params, storage_click)
+		if(!grid_placement)
 			return FALSE
+	if(user)
 		if(!user.temporarilyRemoveItemFromInventory(storing))
 			return FALSE
 		else
@@ -729,37 +730,12 @@
 			parent.add_fingerprint(user)
 			if(!prevent_warning)
 				mob_item_insertion_feedback(usr, user, storing)
-	if(grid)
-		var/list/modifiers = params2list(params)
-		var/coordinates = LAZYACCESS(modifiers, "screen-loc")
-		var/grid_box_ratio = (world.icon_size/grid_box_size)
-
-		//if it's not a storage click, find the first cell that happens to be valid
-		if(!storage_click)
-			var/final_x = 0
-			var/final_y = 0
-			var/final_coordinates = ""
-			var/grid_location_found = FALSE
-			var/x_value = ((screen_max_columns*grid_box_ratio)-1)
-			for(var/current_y in 0 to ((screen_max_rows*grid_box_ratio)-1))
-				for(var/current_x in 0 to x_value)
-					final_y = current_y
-					final_x = current_x
-					final_coordinates = "[final_x],[final_y]"
-					var/used_gridwidth = storing.grid_width
-					var/used_gridheight = storing.grid_height
-
-					if(validate_grid_coordinates(final_coordinates, used_gridwidth, used_gridheight, storing))
-						coordinates = final_coordinates
-						grid_location_found = TRUE
-						break
-				if(grid_location_found)
-					break
-			if(!grid_location_found)
-				return FALSE
-		else
-			coordinates = screen_loc_to_grid_coordinates(coordinates)
-		grid_add_item(storing, coordinates)
+	if(grid_placement)
+		if(grid_placement["rotate"])
+			storing.inventory_flip(null, TRUE)
+			// Physical insertion can draw the old outline while storage is open.
+			storing.underlays = null
+		grid_add_item(storing, grid_placement["coordinates"])
 	update_icon()
 	refresh_mob_views()
 	return TRUE
