@@ -599,6 +599,13 @@
   - qol: Items automatically rotate to fit into containers when needed.
   - bugfix: Spell-button updates no longer display false cooldown or empty-charge
       warnings.
+  - rscadd: Added verb OOC -> Set Credits Mugshot allowing updating your credits mugshot.
+  - bugfix: Credits portraits now queue after character equipment is ready, including
+      migrant and event arrivals.
+  - bugfix: Credits portraits now frame different sprite sizes proportionally.
+  - bugfix: The Villains selection window now closes when spawning.
+  - bugfix: Corrected minimum fire decay timing for incapacitated characters.
+  - bugfix: Critical recovery reminders now account for deadite eligibility.
   mypingishuge:
   - bugfix: Class-selection windows now load their intended fonts directly from the
       game.

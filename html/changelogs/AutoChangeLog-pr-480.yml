@@ -1,5 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - bugfix: "Corrected minimum fire decay timing for incapacitated characters."
-  - bugfix: "Critical recovery reminders now account for deadite eligibility."
