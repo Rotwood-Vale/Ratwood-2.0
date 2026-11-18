@@ -591,44 +591,141 @@
 	.[INHAND_FRONT] = inhand_overlay
 	.[INHAND_BEHIND] = behindhand_overlay
 
-/mob/living/carbon/proc/start_spin(obj/item/I, speed = 4)
-	if(QDELETED(I) || I.inhand_spinning || !(I in held_items))
-		return
+/// A stationary puller also needs a fresh foreground image at spin boundaries.
+/mob/living/carbon/proc/update_twirl_puller_vision()
+	if(isliving(pulledby))
+		var/mob/living/puller = pulledby
+		puller.request_overlay_vision_update()
+
+/// Resolve the same hand/facing rules as the ordinary in-hand appearance.
+/mob/living/carbon/proc/build_spin_appearance(obj/item/I, facing)
 	var/mirrored = !(get_held_index_of_item(I) % 2 == 0)
 	var/list/built = build_inhand_overlays(I)
-	var/index = I.inhand_index(dir, mirrored)
+	var/index = I.inhand_index(facing, mirrored)
 	var/mutable_appearance/spin_appearance = built[index]
 	if(!spin_appearance)
 		index = built[INHAND_FRONT] ? INHAND_FRONT : INHAND_BEHIND
 		spin_appearance = built[index]
+	if(spin_appearance)
+		spin_appearance.layer = layer + (index == INHAND_FRONT ? 0.1 : -0.1)
+		spin_appearance.appearance_flags |= KEEP_APART
+	return spin_appearance
+
+/mob/living/carbon/proc/start_spin(obj/item/I, speed = 4)
+	if(QDELETED(I) || I.inhand_spinning || !(I in held_items) || speed <= 0)
+		return
+	var/mutable_appearance/spin_appearance = build_spin_appearance(I, dir)
 	if(!spin_appearance)
+		return
+	var/atom/movable/flick_visual/spin = flick_overlay_view(spin_appearance, speed + 2)
+	if(!spin)
 		return
 
 	I.inhand_spinning = TRUE
+	I.spin_owner = src
+	I.spin_visual = spin
+	I.spin_started_at = world.time
+	I.spin_duration = speed
+	LAZYADD(active_twirl_visuals, spin)
+	// Only active twirls subscribe to these events; idle characters have no listeners.
+	I.RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/obj/item, on_spin_direction))
+	I.RegisterSignal(src, COMSIG_QDELETING, TYPE_PROC_REF(/obj/item, on_spin_deleted))
+	I.RegisterSignal(I, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/obj/item, on_spin_moved))
+	I.RegisterSignal(I, COMSIG_ITEM_EQUIPPED, TYPE_PROC_REF(/obj/item, on_spin_equipped))
+	I.RegisterSignal(I, COMSIG_QDELETING, TYPE_PROC_REF(/obj/item, on_spin_deleted))
+	I.RegisterSignal(spin, COMSIG_QDELETING, TYPE_PROC_REF(/obj/item, on_spin_deleted))
+	I.spin_timer = addtimer(CALLBACK(I, TYPE_PROC_REF(/obj/item, end_spin)), speed, TIMER_STOPPABLE)
+	I.refresh_spin(dir, spin_appearance)
 	update_inv_hands()
+	update_twirl_puller_vision()
 
-	var/list/grip = I.grip_offset(dir, mirrored)
-	// Match the normal hand's side of the flattened body, including in FOV images.
-	spin_appearance.layer = layer + (index == INHAND_FRONT ? 0.1 : -0.1)
-	spin_appearance.appearance_flags |= KEEP_APART // Do not flatten the flourish into the human's KEEP_TOGETHER body.
+/obj/item/proc/on_spin_direction(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	if(old_dir != new_dir)
+		refresh_spin(new_dir)
 
-	var/atom/movable/flick_visual/spin = flick_overlay_view(spin_appearance, speed + 2)
-	if(spin)
-		spin.vis_flags |= VIS_INHERIT_PLANE
-		spin.dir = dir
-		spin.SpinAnimationAround(grip[1], grip[2], speed, 1)
-		I.spin_visual = spin
-		request_overlay_vision_update()
+/obj/item/proc/on_spin_moved(datum/source)
+	SIGNAL_HANDLER
+	if(loc != spin_owner)
+		end_spin()
 
-	addtimer(CALLBACK(I, TYPE_PROC_REF(/obj/item, end_spin)), speed)
+/obj/item/proc/on_spin_equipped(datum/source, mob/user, slot)
+	SIGNAL_HANDLER
+	if(user != spin_owner || slot != ITEM_SLOT_HANDS)
+		end_spin()
+	else
+		refresh_spin(spin_owner.dir)
+
+/obj/item/proc/on_spin_deleted(datum/source)
+	SIGNAL_HANDLER
+	end_spin()
+
+/// Turning changes the directional sprite/grip/layer, without restarting the flourish.
+/obj/item/proc/refresh_spin(facing, mutable_appearance/spin_appearance)
+	var/mob/living/carbon/holder = spin_owner
+	if(!inhand_spinning || QDELETED(holder) || QDELETED(spin_visual) || loc != holder || !(src in holder.held_items))
+		end_spin()
+		return
+	var/elapsed = max(0, world.time - spin_started_at)
+	if(elapsed >= spin_duration)
+		end_spin()
+		return
+	if(!spin_appearance)
+		spin_appearance = holder.build_spin_appearance(src, facing)
+	if(!spin_appearance)
+		end_spin()
+		return
+	var/mirrored = !(holder.get_held_index_of_item(src) % 2 == 0)
+	var/list/grip = grip_offset(facing, mirrored)
+	var/atom/movable/flick_visual/spin = spin_visual
+	// Replace the old animation queue, retaining the elapsed angle and original deadline.
+	animate(spin)
+	spin.appearance = spin_appearance
+	spin.vis_flags |= VIS_INHERIT_PLANE
+	spin.dir = facing
+	var/angle = 360 * elapsed / spin_duration
+	var/matrix/current = matrix()
+	current.Translate(-grip[1], -grip[2])
+	current.Turn(angle)
+	current.Translate(grip[1], grip[2])
+	spin.transform = current
+	var/first_segment = TRUE
+	for(var/segment in 1 to 12)
+		var/next_angle = segment * 30
+		if(next_angle <= angle)
+			continue
+		var/matrix/next = matrix()
+		next.Translate(-grip[1], -grip[2])
+		next.Turn(next_angle)
+		next.Translate(grip[1], grip[2])
+		var/segment_time = (next_angle - angle) * spin_duration / 360
+		if(first_segment)
+			animate(spin, transform = next, time = segment_time)
+			first_segment = FALSE
+		else
+			animate(transform = next, time = segment_time)
+		angle = next_angle
 
 /obj/item/proc/end_spin()
 	if(!inhand_spinning)
 		return
 	inhand_spinning = FALSE
-	qdel(spin_visual)
+	var/mob/living/carbon/holder = spin_owner
+	var/atom/movable/flick_visual/spin = spin_visual
+	UnregisterSignal(holder, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_QDELETING))
+	UnregisterSignal(src, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_EQUIPPED, COMSIG_QDELETING))
+	UnregisterSignal(spin, COMSIG_QDELETING)
+	if(holder)
+		LAZYREMOVE(holder.active_twirl_visuals, spin)
+		UNSETEMPTY(holder.active_twirl_visuals)
+	if(spin_timer)
+		deltimer(spin_timer)
+	spin_timer = null
+	spin_owner = null
 	spin_visual = null
-
-	var/mob/living/carbon/holder = loc
-	if(istype(holder))
-		holder.update_inv_hands()
+	if(!QDELETED(spin))
+		qdel(spin)
+	if(!QDELETED(holder))
+		if(!QDELETED(src))
+			holder.update_inv_hands()
+		holder.update_twirl_puller_vision()
