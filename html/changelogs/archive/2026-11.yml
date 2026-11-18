@@ -613,3 +613,7 @@
   - balance: Increased Rookie slots from 1 to 4; Smollhill keeps the role disabled.
   - bugfix: Restored the native Say popup following reports of slow input.
   - rscdel: Removed text-emote notification sounds and their audio toggle.
+  - qol: Twirl visuals update through events instead of searching held items during
+      FOV updates.
+  - bugfix: Turning during a twirl updates its directional sprite and layering without
+      extending its duration.
