@@ -896,7 +896,7 @@
 			var/brand_text = ""
 			if(length(branded_bodypart.body_writing))
 				brand_text = branded_bodypart.body_writing
-			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone))
+			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone, ignored_item = branded_bodypart.body_zone == BODY_ZONE_HEAD ? mouth : null))
 				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been written on: ") + "[span_beautiful_fem(brand_text)]."
 			if(istype(branded_bodypart, /obj/item/bodypart/chest))
 				var/obj/item/bodypart/chest/chest = branded_bodypart
