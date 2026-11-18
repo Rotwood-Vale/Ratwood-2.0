@@ -462,7 +462,6 @@
 	only_forced_audio = TRUE
 
 /datum/emote/living/kiss
-	has_action_sound = TRUE
 	key = "kiss"
 	key_third_person = "kisses"
 	message = "blows a kiss."
@@ -527,7 +526,6 @@
 		SEND_SIGNAL(user, COMSIG_MOB_KISS)
 
 /datum/emote/living/lick
-	has_action_sound = TRUE
 	key = "lick"
 	key_third_person = "licks"
 	message = "licking."
@@ -577,7 +575,6 @@
 	playsound(target.loc, pick("sound/vo/lick.ogg"), 100, FALSE, -1)
 
 /datum/emote/living/spit
-	has_action_sound = TRUE
 	key = "spit"
 	key_third_person = "spits"
 	message = "spits on the ground."
@@ -613,7 +610,6 @@
 
 
 /datum/emote/living/hug
-	has_action_sound = TRUE
 	key = "hug"
 	key_third_person = "hugs"
 	message = ""
@@ -684,7 +680,6 @@
 	return TRUE
 
 /datum/emote/living/pat
-	has_action_sound = TRUE
 	key = "pat"
 	key_third_person = "pats"
 	message = ""
@@ -727,7 +722,6 @@
 			message_param = "pats %t' ass"
 
 /datum/emote/living/slap
-	has_action_sound = TRUE
 	key = "slap"
 	key_third_person = "slaps"
 	message = ""

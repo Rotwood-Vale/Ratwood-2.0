@@ -10,11 +10,11 @@
 	if(!client)
 		return
 	var/client/input_client = client
-	var/datum/tgui_input_text/say/prompt = new(src)
-	prompt.ui_interact(src)
-	prompt.wait()
-	var/message = prompt.entry
-	qdel(prompt)
+	display_typing_indicator()
+	var/mutable_appearance/indicator = typing_indicator_current
+	var/message = input(src, "", "say") as text|null
+	if(typing_indicator_current == indicator)
+		clear_typing_indicator(length(message) ? "sent" : "closed input")
 	if(!length(message) || client != input_client)
 		return
 	return send_say_message(message, FALSE)

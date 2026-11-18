@@ -66,7 +66,6 @@
 	stamina_add(rand(15,35))
 
 /datum/emote/living/standard_position
-	has_action_sound = TRUE
 	key = "standard_position"
 	message = "plants the standard!"
 	emote_type = EMOTE_VISIBLE
@@ -90,7 +89,6 @@
 	stamina_add(rand(15,35))
 
 /datum/emote/living/standard_rally
-	has_action_sound = TRUE
 	key = "standard_rally"
 	message = "plants the standard!"
 	emote_type = EMOTE_VISIBLE
@@ -138,7 +136,6 @@
 	energy_add(-200)//Law of exchange, or something.
 
 /datum/emote/living/standard_recuperate
-	has_action_sound = TRUE
 	key = "standard_recuperate"
 	message = "plants the standard!"
 	emote_type = EMOTE_VISIBLE
@@ -166,7 +163,6 @@
 	energy_add(-300)//Ooough... help me!!!!
 
 /datum/emote/living/standard_steady
-	has_action_sound = TRUE
 	key = "standard_steady"
 	message = "plants the standard!"
 	emote_type = EMOTE_VISIBLE
