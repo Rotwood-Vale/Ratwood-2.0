@@ -235,6 +235,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	/// WARNING - This is a very simple implementation. Not meant for carbons composed of limbs!
 	var/custom_rotation_icon = null
 	var/custom_base_icon = null
+	/// Optional credits head rectangle: left, bottom, right, top; 1-based native body-canvas pixels.
+	/// Null uses the upper half of the canvas. Keep overrides within the canvas bounds.
+	var/list/credits_portrait_crop = null
 
 //Used for expanded lore blurbs on species.
 	var/expanded_desc

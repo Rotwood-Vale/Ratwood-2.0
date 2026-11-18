@@ -18,6 +18,8 @@
 	id = "dragon"
 	custom_rotation_icon = TRUE
 	custom_base_icon = "dragon"
+	// The head sits below substantial transparent padding in this 96x96 sprite.
+	credits_portrait_crop = list(25, 11, 72, 58)
 	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
 	inherent_traits = list(
 		TRAIT_ORGASM_DENIER,

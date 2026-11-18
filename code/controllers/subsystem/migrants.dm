@@ -269,6 +269,8 @@ SUBSYSTEM_DEF(migrants)
 
 	var/mob/living/character = newplayer.create_character(TRUE)	//creates the human and transfers vars and mind
 
+	var/mob/living/carbon/human/portrait_character = character
+	portrait_character.credits_setup_depth++
 	character.islatejoin = TRUE
 	SSjob.EquipRank(character, rank, TRUE)
 
@@ -340,6 +342,9 @@ SUBSYSTEM_DEF(migrants)
 	else
 		// Apply a special if we're not applying an adv class, otherwise let the adv class apply it afterwards
 		try_apply_character_post_equipment(character, character.client)
+	portrait_character.credits_setup_depth--
+	if(!role.advclass_cat_rolls || portrait_character.credits_equipment_ready)
+		portrait_character.add_credit()
 
 /datum/controller/subsystem/migrants/proc/get_priority_players(list/players, role_type, wave_type)
 	var/list/weighted = list()

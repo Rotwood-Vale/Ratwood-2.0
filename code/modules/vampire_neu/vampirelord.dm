@@ -30,6 +30,7 @@
 		owner.person_knows_me(MF)
 
 	var/mob/living/carbon/human/H = owner.current
+	H.begin_credits_setup()
 	H.equipOutfit(/datum/outfit/job/vamplord)
 	H.set_patron(/datum/patron/inhumen/zizo)
 	H.verbs |= /mob/living/carbon/human/proc/demand_submission
@@ -38,6 +39,7 @@
 	for(var/S in MOBSTATS)
 		H.change_stat(S, 2)
 	H.forceMove(pick(GLOB.vlord_starts))
+	H.add_credit()
 
 /datum/antagonist/vampire/lord/greet()
 	to_chat(owner.current, span_userdanger("I am ancient. I am the Land. And I am now awoken to trespassers upon my domain."))

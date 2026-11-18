@@ -105,7 +105,9 @@
 		B.skeletonize(FALSE)
 
 	equip_and_traits()
+	L.begin_credits_setup()
 	L.equipOutfit(/datum/outfit/job/roguetown/lich)
+	L.add_credit()
 	L.set_patron(/datum/patron/inhumen/zizo)
 	owner.current.forceMove(pick(GLOB.lich_starts)) // as opposed to spawning at their normal role spot as a skeleton; which is le bad
 

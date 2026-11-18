@@ -160,6 +160,9 @@
 /datum/round_event/antagonist/solo/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		add_datum_to_mind(antag_mind, antag_mind.current)
+		if(ishuman(antag_mind.current))
+			var/mob/living/carbon/human/character = antag_mind.current
+			character.add_credit()
 
 /datum/round_event/antagonist/solo/proc/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.add_antag_datum(antag_datum)
@@ -188,6 +191,9 @@
 /datum/round_event/antagonist/solo/ghost/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		add_datum_to_mind(antag_mind)
+		if(ishuman(antag_mind.current))
+			var/mob/living/carbon/human/character = antag_mind.current
+			character.add_credit()
 
 /datum/round_event/antagonist/solo/ghost/setup()
 	var/datum/round_event_control/antagonist/solo/cast_control = control

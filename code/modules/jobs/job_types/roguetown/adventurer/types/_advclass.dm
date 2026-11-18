@@ -72,6 +72,9 @@
 	if(!H)
 		return FALSE
 
+	if(!dummy)
+		H.begin_credits_setup()
+
 	if(outfit)
 		H.equipOutfit(outfit, dummy)
 
@@ -154,9 +157,9 @@
 
 	if(!dummy)
 		H.schedule_getting_started_reminder()
+		H.add_credit()
 
 /datum/advclass/proc/post_equip(mob/living/carbon/human/H)
-	addtimer(CALLBACK(H,TYPE_PROC_REF(/mob/living/carbon/human, add_credit), TRUE), 20)
 	if(cmode_music)
 		H.cmode_music = cmode_music
 

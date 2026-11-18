@@ -45,3 +45,12 @@
 	log_manifest(ckey,mind,src,latejoin = TRUE)
 	for(var/datum/antagonist/A as anything in mind.antag_datums)
 		A.after_name_change()
+
+	// Some arrivals choose their name after their outfit has already finished.
+	if(mind && credits_equipment_ready)
+		var/list/credit = GLOB.credits_icons[REF(mind)]
+		if(credit)
+			credit["name"] = real_name
+		if(!mind.credits_manual_updates)
+			begin_credits_setup()
+			add_credit()

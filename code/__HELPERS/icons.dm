@@ -1062,7 +1062,21 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 				if(copy_appearance)
 					human_gear_override.dna.transfer_identity(body)
-					body.updateappearance(icon_update=1, mutcolor_update=1)
+					if(hide_portrait_headgear)
+						// DNA transfer creates a fresh species datum; retain the live custom pelt.
+						body.dna.species.custom_base_icon = human_gear_override.dna.species.custom_base_icon
+						if(body.dna.species.custom_base_icon)
+							body.icon_state = body.dna.species.custom_base_icon
+						// Portraits follow the actual character, even if another preference slot is open.
+						// Legacy DNA blocks do not encode all current skin/eye formats or hairstyles.
+						var/static/list/portrait_fields = list("gender", "pronouns", "skin_tone", "mutant_skin", "eye_color", "hair_color", "facial_hair_color", "hairstyle", "facial_hairstyle", "detail", "detail_color", "lip_style", "lip_color", "age")
+						for(var/field in portrait_fields)
+							body.vars[field] = human_gear_override.vars[field]
+						body.update_body()
+						body.update_hair()
+						body.update_body_parts()
+					else
+						body.updateappearance(icon_update=1, mutcolor_update=1)
 			else if(J)
 				J.equip(body, TRUE, FALSE, outfit_override = outfit_override)
 			else if (outfit_override)

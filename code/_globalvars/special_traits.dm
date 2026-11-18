@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		// Apply the stuff if we dont have a job for some reason
 		apply_character_post_equipment(character, player)
 		character.schedule_getting_started_reminder()
+		character.add_credit()
 		return
 	if(length(job.advclass_cat_rolls))
 		// Dont apply the stuff, let adv class handler do it later
@@ -32,6 +33,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	// Apply the stuff if we have a job that has no adv classes
 	apply_character_post_equipment(character, player)
 	character.schedule_getting_started_reminder()
+	character.add_credit()
 
 /proc/apply_character_post_equipment(mob/living/carbon/human/character, client/player)
 	if(!player)
