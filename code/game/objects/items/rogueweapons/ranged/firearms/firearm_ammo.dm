@@ -173,14 +173,8 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 			to_chat(loc, span_warning("Full!"))
 		return
 	if(istype(A, /obj/item/gun/ballistic/firearm))
-		var/obj/item/gun/ballistic/firearm/B = A
-		if(arrows.len && !B.chambered)
-			for(var/AR in arrows)
-				if(istype(AR, /obj/item/ammo_casing/caseless/bullet))
-					arrows -= AR
-					B.attackby(AR, loc, params)
-					break
-		return
+		load_into_weapon(A, loc, params)
+		return TRUE
 	..()
 
 /obj/item/quiver/bullet/attack_right(mob/user)

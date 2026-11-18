@@ -152,23 +152,45 @@
 	return
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/natural/stone))
-		if(temp_stone == null && istype(A, /obj/item/natural/stone)) //code of the damned. this must be done since regular stone objects cannot be loaded into the magazine and I did not want to change stones to be an ammo type
-			bonus_stone_force = A.force - 10 //base stone force is 10. regular stone will yield 0 additional damage
-			temp_stone = A //storing the stone incase it needs to be ejected
-			user.transferItemToLoc(A, temp_stone) //off to stone purgatory you go
-			A = new /obj/item/ammo_casing/caseless/rogue/sling_bullet //putting a temporary sling bullet in its place. bonus force is kept on the sling and set to 0 if shot or stone is ejected
-	return ..()
+	if(!istype(A, /obj/item/natural/stone))
+		return ..()
+	if(temp_stone || chambered || !istype(magazine) || length(magazine.stored_ammo))
+		to_chat(user, span_warning("There is no room for another stone in [src]."))
+		return TRUE
+	if(!user.transferItemToLoc(A, src))
+		return TRUE
+	var/obj/item/ammo_casing/caseless/rogue/sling_bullet/replacement = new(src)
+	..(replacement, user, params)
+	if(chambered == replacement || (istype(magazine) && (replacement in magazine.stored_ammo)))
+		temp_stone = A
+		bonus_stone_force = A.force - 10
+	else
+		qdel(replacement)
+		A.forceMove(drop_location())
+		user.put_in_hands(A)
+	return TRUE
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/sling/attack_self(mob/user) //more unholy code
-	if (temp_stone != null) //if there's a 'stone' in the sling, drop it and delete the temporary ammo inside
-		user.dropItemToGround(temp_stone) //pulling the stone from stone purgatory and dropping it
-		temp_stone = null //clearing the temp reference var
-		bonus_stone_force = 0 //the sling no longer has a stone so bonus magical stone damage is set to 0
-		for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
-			qdel(CB) //taking the temporary bullet out
-		icon_state = "sling" //manually making it look empty
-	..()
+/obj/item/gun/ballistic/revolver/grenadelauncher/sling/attack_self(mob/user)
+	if(!temp_stone)
+		return ..()
+	var/obj/item/stone = temp_stone
+	temp_stone = null
+	bonus_stone_force = 0
+	var/list/rounds = get_ammo_list(FALSE, TRUE)
+	chambered = null
+	if(istype(magazine))
+		magazine.stored_ammo.Cut()
+	for(var/obj/item/ammo_casing/round in rounds)
+		qdel(round)
+	stone.forceMove(drop_location())
+	user.put_in_hands(stone)
+	update_icon()
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/sling/Destroy()
+	if(temp_stone)
+		temp_stone.forceMove(drop_location())
+		temp_stone = null
+	return ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(user.client)
@@ -178,23 +200,38 @@
 			spread = 150 - (150 * (user.client.chargedprog / 100))
 	else
 		spread = 0
+	var/list/prepared_projectiles = list()
 	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
 		var/obj/projectile/BB = CB.BB
+		if(!istype(BB))
+			continue
+		prepared_projectiles[BB] = list(BB.damage, BB.accuracy, BB.bonus_accuracy, BB.embedchance)
 		BB.embedchance = 0.1 //for some reason, if the embedchance is 0, the reusable projectile will not drop after hitting a mob. so it's a 1/1000 chance now
 		BB.accuracy += accfactor * (user.STAPER - 8) * 3 // 8+ PER gives +3 per level. Exponential.
 		BB.bonus_accuracy += (user.STAPER - 8) // 8+ PER gives +1 per level. Does not decrease over range.
 		BB.bonus_accuracy += (user.get_skill_level(/datum/skill/combat/slings) * 5) // +5 per Sling level.
 		BB.damage *= damfactor
-		if(user.client.chargedprog < 100)
+		if(user.client && user.client.chargedprog < 100)
 			BB.damage -= BB.damage - (BB.damage * (user.client.chargedprog / 100))
 		else
 			BB.damage = BB.damage
 		BB.damage = BB.damage * (((user.STAPER / 1.25) + (user.STASTR / 5)) / 10) * damfactor + bonus_stone_force
 		// each point of perception is 8% damage. each point of strength is 2% damage. 100% damage at 10 in both. the stone's bonus force is added as a flat amount
-		if (temp_stone != null) //reseting after stone ammo use
-			bonus_stone_force = 0 //stone is thrown, so the bonus is lost
-			temp_stone = null //stone is gone, forever.
 	. = ..()
+	if(.)
+		QDEL_NULL(temp_stone)
+		bonus_stone_force = 0
+	else
+		// A blocked shot must not consume the stone or stack projectile bonuses on retry.
+		for(var/obj/projectile/projectile as anything in prepared_projectiles)
+			if(QDELETED(projectile))
+				continue
+			var/list/original = prepared_projectiles[projectile]
+			projectile.damage = original[1]
+			projectile.accuracy = original[2]
+			projectile.bonus_accuracy = original[3]
+			projectile.embedchance = original[4]
+
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/update_icon()
 	. = ..()

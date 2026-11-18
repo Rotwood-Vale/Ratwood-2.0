@@ -39,21 +39,31 @@
 	if(!length(arrows))
 		to_chat(user, span_warning("[src] is empty!"))
 		return TRUE
-	for(var/obj/item/ammo_casing/caseless/rogue/ammo in arrows)
-		if(!launcher.magazine || ammo.caliber != launcher.magazine.caliber)
+	launcher.quiver_loading = TRUE
+	var/handled = load_into_weapon(launcher, user)
+	launcher.quiver_loading = FALSE
+	if(handled)
+		return TRUE
+	to_chat(user, span_warning("Nothing in [src] fits [launcher]."))
+	return TRUE
+
+/// A round stays indexed until the weapon really moves it out of this container.
+/obj/item/quiver/proc/load_into_weapon(obj/item/gun/ballistic/weapon, mob/user, params)
+	if(!istype(weapon) || !istype(user) || weapon.chambered || !istype(weapon.magazine))
+		return FALSE
+	for(var/obj/item/ammo_casing/ammo in arrows)
+		if(QDELETED(ammo) || ammo.loc != src)
 			continue
-		launcher.quiver_loading = TRUE
-		launcher.attackby(ammo, user)
-		launcher.quiver_loading = FALSE
-		// Only remove ammunition that the weapon actually accepted.
-		if(ammo.loc != src)
+		if(weapon.magazine.caliber ? ammo.caliber != weapon.magazine.caliber : ammo.type != weapon.magazine.ammo_type)
+			continue
+		weapon.attackby(ammo, user, params)
+		if(!QDELETED(ammo) && ammo.loc != src)
 			arrows -= ammo
 			update_icon()
 			if(HAS_TRAIT(user, TRAIT_COMBAT_AWARE))
 				user.balloon_alert(user, "[length(arrows)] left...")
 		return TRUE
-	to_chat(user, span_warning("Nothing in [src] fits [launcher]."))
-	return TRUE
+	return FALSE
 
 /obj/item/quiver/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -106,18 +116,8 @@
 			to_chat(loc, span_warning("Full!"))
 		return
 	if(istype(A, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
-		var/obj/item/gun/ballistic/revolver/grenadelauncher/bow/B = A
-		if(arrows.len && !B.chambered)
-			for(var/AR in arrows)
-				if(istype(AR, /obj/item/ammo_casing/caseless/rogue/arrow))
-					arrows -= AR
-					B.attackby(AR, loc, params)
-					if(ismob(loc))
-						var/mob/M = loc
-						if(HAS_TRAIT(M, TRAIT_COMBAT_AWARE))
-							M.balloon_alert(M, "[length(arrows)] left...")
-					break
-		return
+		load_into_weapon(A, loc, params)
+		return TRUE
 	..()
 
 /obj/item/quiver/attack_right(mob/user)
@@ -412,14 +412,8 @@
 			to_chat(loc, span_warning("Full!"))
 		return
 	if(istype(A, /obj/item/gun/ballistic/revolver/grenadelauncher/sling))
-		var/obj/item/gun/ballistic/revolver/grenadelauncher/sling/B = A
-		if(arrows.len && !B.chambered)
-			for(var/AR in arrows)
-				if(istype(AR, /obj/item/ammo_casing/caseless/rogue/sling_bullet))
-					arrows -= AR
-					B.attackby(AR, loc, params)
-					break
-		return
+		load_into_weapon(A, loc, params)
+		return TRUE
 	..()
 
 /obj/item/quiver/sling/attack_right(mob/user)
