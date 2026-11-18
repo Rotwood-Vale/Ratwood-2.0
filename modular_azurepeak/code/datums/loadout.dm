@@ -2684,3 +2684,8 @@ GLOBAL_LIST_INIT(loadout_items, init_loadout_items())
 /datum/loadout_item/doublehennin
 	name = "Dual Hennin"
 	path = /obj/item/clothing/head/roguetown/doublehennin
+
+/datum/loadout_item/improvised_surgery_saw
+	name = "Improvised Surgery Saw"
+	path = /obj/item/rogueweapon/surgery/saw/improv
+	triumph_cost = 1

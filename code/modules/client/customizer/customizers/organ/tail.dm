@@ -49,7 +49,7 @@
 			var/editing_slot = prefs.default_slot
 			var/old_choice = entry.customizer_choice_type
 			var/old_fluid = tail_entry.tailmaw_fluid
-			var/choice = tgui_input_list(user, "Choose your tailmaw's fluid. Emberwine and honey retain their normal reagent effects.", "Tailmaw Fluid", GLOB.tailmaw_fluid_options, old_fluid)
+			var/choice = tgui_input_list(user, "Choose your tailmaw's fluid.", "Tailmaw Fluid", GLOB.tailmaw_fluid_options, old_fluid)
 			if(!(choice in GLOB.tailmaw_fluid_options) || !user || user.client != prefs.parent || prefs.default_slot != editing_slot || prefs.get_customizer_entry_for_customizer_type(customizer_type) != entry || entry.customizer_choice_type != old_choice || tail_entry.tailmaw_fluid != old_fluid)
 				return
 			tail_entry.tailmaw_fluid = choice

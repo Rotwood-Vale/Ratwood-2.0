@@ -124,8 +124,6 @@
 		user.log_message(msg, LOG_EMOTE)
 		if(suppress_chat)
 			return
-		if(should_play_text_cue(tmp_sound && tmp_sound.file))
-			playsound(emotelocation, 'sound/misc/talk.ogg', 100, FALSE, -1)
 		var/pre_color_msg = msg
 		if (use_params_for_runechat) // apply puncutation stripping here where appropriate
 			var/static/regex/regex = regex(@"[,.!?]", "g")
@@ -150,6 +148,8 @@
 		var/runechat_msg_to_use = null
 		if(show_runechat)
 			runechat_msg_to_use = runechat_msg ? runechat_msg : pre_color_msg
+		if(should_play_text_cue(tmp_sound && tmp_sound.file))
+			play_text_cue(emotelocation, hidden_ghosts)
 		if(emote_type == EMOTE_AUDIBLE)
 			emotelocation.audible_message(msg, runechat_message = runechat_msg_to_use, log_seen = SEEN_LOG_EMOTE, log_seen_msg = seen_log_msg, ignored_mobs = hidden_ghosts, allow_unconscious = TRUE)
 		else
@@ -326,3 +326,10 @@
 /// Audible emotes stay quiet when their voice sound is unavailable or suppressed.
 /datum/emote/proc/should_play_text_cue(has_sound)
 	return !has_sound && !has_action_sound && !nomsg && !(emote_type & EMOTE_AUDIBLE)
+
+/// A visual message notification: only visible, awake listeners who opted in receive it.
+/datum/emote/proc/play_text_cue(atom/source, list/ignored_mobs)
+	for(var/mob/listener in viewers(DEFAULT_MESSAGE_RANGE, source))
+		if(!listener.client?.prefs?.hear_emote_sent_sound || listener.eye_blind || listener.stat == UNCONSCIOUS || listener.see_invisible < source.invisibility || (listener in ignored_mobs))
+			continue
+		listener.playsound_local(source, 'sound/misc/talk.ogg', 100, FALSE)

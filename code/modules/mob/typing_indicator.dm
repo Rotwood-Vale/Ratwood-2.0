@@ -1,5 +1,5 @@
 #define LOOC_TYPING_COLOR "#6699cc"
-#define EMOTE_TYPING_COLOR "#cc6666"
+#define EMOTE_TYPING_COLOR "#66cc66"
 
 /// state = overlay/image/object/type/whatever add_overlay will accept
 GLOBAL_LIST_EMPTY(typing_indicator_overlays)

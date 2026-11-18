@@ -178,3 +178,41 @@
 	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
 		src.entry = trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length))
+
+/// Say uses the normal text modal, with boolean-only live prefix updates.
+/datum/tgui_input_text/say
+	var/mob/typing_actor
+	var/client/typing_client
+	var/mutable_appearance/indicator
+
+/datum/tgui_input_text/say/New(mob/user)
+	..(user, "", "Say", "", MAX_MESSAGE_LEN, FALSE, FALSE, 0, GLOB.always_state, FALSE, FALSE, null)
+	typing_actor = user
+	typing_client = user.client
+	user.display_typing_indicator()
+	indicator = user.typing_indicator_current
+
+/datum/tgui_input_text/say/ui_static_data(mob/user)
+	. = ..()
+	.["live_typing_indicator"] = TRUE
+
+/datum/tgui_input_text/say/ui_act(action, list/params, datum/tgui/ui)
+	if(action != "typing")
+		return ..()
+	if(!typing_actor || !typing_client || ui?.user != typing_actor || typing_actor.client != typing_client || typing_actor.typing_indicator_current != indicator)
+		return FALSE
+	if(params["emote"] == TRUE)
+		typing_actor.display_emote_typing_indicator()
+	else
+		typing_actor.clear_emote_typing_indicator("Say prefix changed")
+		typing_actor.display_typing_indicator()
+	indicator = typing_actor.typing_indicator_current
+	return TRUE
+
+/datum/tgui_input_text/say/Destroy()
+	if(typing_actor && typing_actor.typing_indicator_current == indicator)
+		typing_actor.clear_typing_indicator("closed Say input")
+	typing_actor = null
+	typing_client = null
+	indicator = null
+	return ..()

@@ -96,7 +96,7 @@
 	verbage = "nock"
 	cartridge_wording = "arrow"
 	load_sound = 'sound/foley/nockarrow.ogg'
-	obj_flags = UNIQUE_RENAME
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	var/heavy_bow = FALSE //used for adding a STR check to the charge time of a bow
 	metalizer_result = /obj/item/restraints/legcuffs/beartrap/armed
 	possible_item_intents = list(
