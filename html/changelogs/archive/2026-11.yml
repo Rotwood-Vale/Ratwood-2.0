@@ -597,6 +597,8 @@
   - map: The merchant building on Smollhill gets a bell.
   _Rarity:
   - qol: Items automatically rotate to fit into containers when needed.
+  - bugfix: Spell-button updates no longer display false cooldown or empty-charge
+      warnings.
   mypingishuge:
   - bugfix: Class-selection windows now load their intended fonts directly from the
       game.
