@@ -325,9 +325,9 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, //Crossbow is your main weapon
+		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE, //Ranged babies are made to be grabbed
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
@@ -395,7 +395,7 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/slings = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/slings = SKILL_LEVEL_JOURNEYMAN, // Man of the woods, knows how to make do without their bow
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
@@ -410,7 +410,7 @@
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 	)
-	extra_context = "This subclass gains Journeyman skill in their weapon of choice, be it axes or knives. Furthermore, this subclass possesses less stats compared to others to compensate for its Woodsman trait granting it a higher overall stat total when its conditions are met."
+	extra_context = "This subclass gains Expert skill in their weapon of choice, be it axes or knives. Furthermore, this subclass possesses less stats compared to others to compensate for its Woodsman trait granting it a higher overall stat total when its conditions are met."
 
 /datum/outfit/job/roguetown/mercenary/ferentia_longbowman/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -421,11 +421,11 @@
 		switch(weapon_choice)
 			if("Axe")
 				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/pick
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 			if("Dagger")
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
 				beltl = /obj/item/rogueweapon/scabbard/sheath
-				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	belt = /obj/item/storage/belt/rogue/leather
 	head = /obj/item/clothing/head/roguetown/roguehood/reinforced
