@@ -607,9 +607,8 @@
 	update_inv_hands()
 
 	var/list/grip = I.grip_offset(dir, mirrored)
-	// Keep the flourish visible even when this hand normally renders behind the body.
-	// Use the character's floating overlay stack, above cosmetics, not a world layer.
-	spin_appearance.layer = FLOAT_LAYER - 0.1
+	// vis_contents is a separate atom: put it above the body's flattened appearance.
+	spin_appearance.layer = layer + 0.1
 	spin_appearance.appearance_flags |= KEEP_APART // Do not flatten the flourish into the human's KEEP_TOGETHER body.
 
 	var/atom/movable/flick_visual/spin = flick_overlay_view(spin_appearance, speed + 2)
@@ -618,6 +617,7 @@
 		spin.dir = dir
 		spin.SpinAnimationAround(grip[1], grip[2], speed, 1)
 		I.spin_visual = spin
+		request_overlay_vision_update()
 
 	addtimer(CALLBACK(I, TYPE_PROC_REF(/obj/item, end_spin)), speed)
 
