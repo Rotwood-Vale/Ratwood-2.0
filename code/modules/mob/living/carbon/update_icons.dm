@@ -599,7 +599,8 @@
 	var/index = I.inhand_index(dir, mirrored)
 	var/mutable_appearance/spin_appearance = built[index]
 	if(!spin_appearance)
-		spin_appearance = built[INHAND_FRONT] || built[INHAND_BEHIND]
+		index = built[INHAND_FRONT] ? INHAND_FRONT : INHAND_BEHIND
+		spin_appearance = built[index]
 	if(!spin_appearance)
 		return
 
@@ -607,8 +608,8 @@
 	update_inv_hands()
 
 	var/list/grip = I.grip_offset(dir, mirrored)
-	// vis_contents is a separate atom: put it above the body's flattened appearance.
-	spin_appearance.layer = layer + 0.1
+	// Match the normal hand's side of the flattened body, including in FOV images.
+	spin_appearance.layer = layer + (index == INHAND_FRONT ? 0.1 : -0.1)
 	spin_appearance.appearance_flags |= KEEP_APART // Do not flatten the flourish into the human's KEEP_TOGETHER body.
 
 	var/atom/movable/flick_visual/spin = flick_overlay_view(spin_appearance, speed + 2)
