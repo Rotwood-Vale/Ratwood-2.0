@@ -249,24 +249,41 @@ SUBSYSTEM_DEF(crediticons)
 /// (64x64 weapons with negative pixel offsets) are clipped like the client clips them. Running
 /// getFlatIcon() on the whole portrait doesn't work: its canvas-resize path mixes up its bounds and
 /// draws every later layer off-canvas, giving a blank poster.
+/datum/controller/subsystem/crediticons/proc/build_poster_icon(mutable_appearance/portrait)
+	var/icon/canvas = icon('icons/blanks/32x32.dmi', "nothing")
+	for(var/image/overlay as anything in sorted_poster_overlays(portrait))
+		blend_poster_overlay(canvas, overlay)
+	finish_poster_icon(canvas)
+	return canvas
+
+/datum/controller/subsystem/crediticons/proc/sorted_poster_overlays(mutable_appearance/portrait)
+	. = list()
+	for(var/image/overlay as anything in portrait.overlays)
+		if(overlay.alpha)
+			. += overlay
+	sortTim(., GLOBAL_PROC_REF(cmp_atom_layer_asc))
+
+/datum/controller/subsystem/crediticons/proc/blend_poster_overlay(icon/canvas, image/overlay)
+	var/icon/part = getFlatIcon(image(overlay), SOUTH)
+	if(part)
+		canvas.Blend(part, ICON_OVERLAY, overlay.pixel_x + 1, overlay.pixel_y + 1)
+
+/datum/controller/subsystem/crediticons/proc/finish_poster_icon(icon/canvas)
+	canvas.Crop(1, 17, 32, 32)
+	canvas.Scale(96, 48)
+
 /datum/controller/subsystem/crediticons/fire(resumed = FALSE)
 	while(length(poster_building))
 		var/mutable_appearance/portrait = poster_building[1]
 		if(portrait != building_portrait)
 			building_portrait = portrait
-			building_overlays = list()
-			for(var/image/overlay as anything in portrait.overlays)
-				if(overlay.alpha)
-					building_overlays += overlay
-			sortTim(building_overlays, GLOBAL_PROC_REF(cmp_atom_layer_asc))
+			building_overlays = sorted_poster_overlays(portrait)
 			building_canvas = icon('icons/blanks/32x32.dmi', "nothing")
 
 		while(length(building_overlays))
 			var/image/overlay = building_overlays[1]
 			building_overlays.Cut(1, 2)
-			var/icon/part = getFlatIcon(image(overlay), SOUTH)
-			if(part)
-				building_canvas.Blend(part, ICON_OVERLAY, overlay.pixel_x + 1, overlay.pixel_y + 1)
+			blend_poster_overlay(building_canvas, overlay)
 			if(MC_TICK_CHECK)
 				return
 
@@ -275,8 +292,7 @@ SUBSYSTEM_DEF(crediticons)
 		building_portrait = null
 		building_overlays = null
 		building_canvas = null
-		canvas.Crop(1, 17, 32, 32)
-		canvas.Scale(96, 48)
+		finish_poster_icon(canvas)
 		poster_cache[portrait] = icon2base64(canvas)
 		if(MC_TICK_CHECK)
 			return
