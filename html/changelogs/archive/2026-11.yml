@@ -588,6 +588,10 @@
   - bugfix: Old taur-selection dialogs no longer overwrite a different character or
       race after switching.
 2026-11-18:
+  GarrusVakarian:
+  - rscadd: There's a dragon now. It exists on Smollhill and on Rockhill. You can
+      only queue up for dragon as a Drakian.
+  - map: The dragon has a lair.
   _Rarity:
   - qol: Items automatically rotate to fit into containers when needed.
   mypingishuge:
