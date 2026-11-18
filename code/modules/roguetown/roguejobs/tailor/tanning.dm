@@ -37,7 +37,7 @@
 		else
 			to_chat(user, span_warning("The rack is already occupied!"))
 			return
-	if((user.used_intent.type == /datum/intent/dagger/cut || user.used_intent.type == /datum/intent/sword/cut || user.used_intent.type == /datum/intent/axe/cut || user.used_intent.type == /datum/intent/simple/gnoll_cut) && hide)
+	if((istype(user.used_intent, /datum/intent/dagger/cut) || istype(user.used_intent, /datum/intent/sword/cut) || istype(user.used_intent, /datum/intent/axe/cut) || istype(user.used_intent, /datum/intent/simple/gnoll_cut)) && hide)
 		if(anchored)
 			var/skill_level = max(user.get_skill_level(/datum/skill/craft/tanning))
 			var/work_time = (120 - (skill_level * 15))
