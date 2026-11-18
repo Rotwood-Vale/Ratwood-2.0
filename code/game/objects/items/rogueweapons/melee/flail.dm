@@ -39,6 +39,7 @@
 /datum/intent/flail/strike/matthiosflail
 	reach = 2
 	damfactor = 1.3 // More damage than peasant flail, not sure why the gilded one had worse intents before, but here we are!
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 
 
 /datum/intent/flail/strikerange
@@ -54,7 +55,7 @@
 	reach = 2
 	icon_state = "instrike"
 	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 
 /datum/intent/mace/smash/flail
 	name = "flail smash"
@@ -71,6 +72,7 @@
 /datum/intent/mace/smash/flail/matthiosflail
 	reach = 2
 	damfactor = 1.6 // so it's better than the militia counterpart.
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 
 /datum/intent/mace/smash/flail/militia
 	damfactor = 0.9
@@ -84,6 +86,7 @@
 	chargedrain = 1
 	recovery = 30
 	damfactor = 1.5
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 	reach = 2
 	chargedloop = /datum/looping_sound/flailswing
 	keep_looping = TRUE

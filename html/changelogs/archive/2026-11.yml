@@ -442,3 +442,8 @@
       fumble now deals high damage though
   - bugfix: Master or above medical skill lets you caughtorise though clothes, but
       the target must have combat mode off
+2026-11-18:
+  MrShibaa:
+  - bugfix: Kabuto is properly craftable again.
+  coffeecoffeecoffee:
+  - bugfix: fixed lucerne pick armor penetration
