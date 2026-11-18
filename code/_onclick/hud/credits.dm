@@ -65,6 +65,7 @@
 	icon = I
 	parent = P
 	var/voicecolor = "dc0174"
+	var/credited_name = GLOB.credits_icons[credited]["name"]
 	var/credited_title = GLOB.credits_icons[credited]["title"]
 	if(GLOB.credits_icons[credited])
 		if(GLOB.credits_icons[credited]["vc"])
@@ -73,7 +74,7 @@
 	maptext = {"<span style='vertical-align:top; text-align:center;
 				color: #[voicecolor]; font-size: 100%;
 				text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-				font-family: "Pterra";'>[credited] the [credited_title]</span>"}
+				font-family: "Pterra";'>[credited_name] the [credited_title]</span>"}
 	creditee = credited
 	maptext_x = -32
 	maptext_y = 8

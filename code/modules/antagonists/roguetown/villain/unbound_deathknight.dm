@@ -63,7 +63,9 @@
 	var/mob/living/carbon/human/H = owner.current
 	H.cmode_music = 'sound/music/combat_cult.ogg'
 	H.faction = list("undead")
+	H.begin_credits_setup()
 	H.equipOutfit(/datum/outfit/job/roguetown/unbound_deathknight)
+	H.add_credit()
 
 /datum/antagonist/unbound_death_knight/greet()
 	sleep(5 SECONDS) // Lets all other messages finish before we start.

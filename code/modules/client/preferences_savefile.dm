@@ -919,6 +919,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/load_character(slot)
+	// Invalidate queued portraits even if the player switches away and back.
+	credits_revision++
 	if(!path)
 		return FALSE
 	if(!fexists(path))
