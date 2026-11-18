@@ -14,6 +14,11 @@ TWIRL CODE
 	var/inhand_spinning = FALSE
 	/// Store the viscontent to cut spins short.
 	var/atom/movable/flick_visual/spin_visual
+	/// Explicit owner: loc can already have changed when movement/drop cleanup runs.
+	var/mob/living/carbon/spin_owner
+	var/spin_started_at
+	var/spin_duration
+	var/spin_timer
 
 	COOLDOWN_DECLARE(twirl_cooldown)
 
