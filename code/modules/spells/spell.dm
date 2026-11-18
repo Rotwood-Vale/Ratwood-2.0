@@ -630,17 +630,19 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	record_featured_stat(FEATURED_STATS_MAGES, user)
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/charge_check(mob/user)
+/obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
 	if(skipcharge)
 		return TRUE
 	switch(charge_type)
 		if("recharge")
 			if(charge_counter < recharge_time)
-				to_chat(user, still_recharging_msg)
+				if(!silent)
+					to_chat(user, still_recharging_msg)
 				return FALSE
 		if("charges")
 			if(!charge_counter)
-				to_chat(user, span_warning("[name] has no charges left!"))
+				if(!silent)
+					to_chat(user, span_warning("[name] has no charges left!"))
 				return FALSE
 	return TRUE
 
