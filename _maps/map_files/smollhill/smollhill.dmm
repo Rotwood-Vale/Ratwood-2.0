@@ -7422,6 +7422,13 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/eora)
+"dsx" = (
+/obj/structure/lever/wall/dragon_gate_control{
+	dir = 8;
+	tag = "pdragonexit"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet)
 "dsy" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/newbranch/connector,
@@ -16758,6 +16765,14 @@
 "hIk" = (
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/under/dungeon/tricksntraps)
+"hIl" = (
+/obj/structure/bell_common{
+	dir = 1;
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/outdoors/rtfield/rockhill)
 "hIr" = (
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woodsrat/safe)
@@ -18576,14 +18591,6 @@
 	},
 /turf/open/floor/rogue/metal,
 /area/rogue/outdoors/rtfield/rockhill)
-"iBb" = (
-/obj/structure/lever/wall{
-	name = "Exit";
-	dir = 8;
-	redstone_id = "pdragonexit"
-	},
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cavewet)
 "iBJ" = (
 /obj/item/natural/rock/salt,
 /turf/open/water/swamp,
@@ -175795,7 +175802,7 @@ uDv
 ies
 ies
 gPF
-dUZ
+hIl
 fxx
 fxx
 sjP
@@ -191841,7 +191848,7 @@ fyc
 fyc
 fyc
 fyc
-aaf
+dsx
 aaf
 aaf
 fyc
@@ -192443,7 +192450,7 @@ tHv
 aaj
 fyc
 aaf
-iBb
+aaf
 aaf
 aaf
 aaf
