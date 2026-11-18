@@ -16,6 +16,7 @@
 @include meta.load-css('~tgui-core/styles/all-themes.scss');
 
 // Themes
+@include meta.load-css('./themes/azure_ascendant.scss');
 @include meta.load-css('./themes/azure_default.scss');
 @include meta.load-css('./themes/azure_green.scss');
 @include meta.load-css('./themes/azure_lane.scss');

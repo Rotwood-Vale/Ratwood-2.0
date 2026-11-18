@@ -13,6 +13,9 @@
 		var/datum/status_effect/fire_handler/fire_stacks/divine_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/divine)
 		if(divine_status?.stacks > fire_status?.stacks)
 			new_fire_overlay.color = list(0,0,0, 0,0,0, 0,0,0, 1,1,1)
+		var/datum/status_effect/fire_handler/fire_stacks/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+		if(dark_status && dark_status.stacks > fire_status?.stacks && dark_status.stacks > divine_status?.stacks)
+			new_fire_overlay.color = list(0,0,0, 0,0,0, 0,0,0, 0.15,0.03,0.22)
 		new_fire_overlay.appearance_flags = RESET_COLOR
 		overlays_standing[FIRE_LAYER] = new_fire_overlay
 

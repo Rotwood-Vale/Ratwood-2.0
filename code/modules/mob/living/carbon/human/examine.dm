@@ -425,8 +425,8 @@
 			str = "[m3] something on [m2] wrists!"
 		. += str
 
-	if(istype(skin_armor, /obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward))
-		var/obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward/ward = skin_armor
+	var/obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward/ward = skin_armor
+	if(istype(ward) && !ward.hidden)
 		var/str = "[m3] <font color='[ward.ward_color]'>[ward.generate_tooltip(ward.get_examine_string(user))] shimmering around [user == src ? "me" : p_them()].</font>"
 		str += ward.integrity_check(is_smart)
 		if (is_stupid)
@@ -975,6 +975,10 @@
 		else
 			. += "ø ------------ ø"
 
+	if(HAS_TRAIT(src, TRAIT_MONSTROUS))
+		. += span_userdanger("A MONSTER! INHUMEN!")
+		to_chat(user, span_danger("[uppertext(m1)] IS INHUMEN! THE GODS DESPISE THIS HERESY!"))
+
 	if(name in unknown_names)
 		. += span_info("This is <EM>[name]</EM>.")
 		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
@@ -1174,6 +1178,13 @@
 			var/mob/living/carbon/human/H = user
 			if(H.marriedto == name)
 				. += span_love("It's my spouse.")
+			if((H.patron.type == /datum/patron/inhumen/zizo) || (H.patron.type == /datum/patron/inhumen/baotha))
+				if(src.purity == TRUE)
+					. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
+				if(HAS_TRAIT(src, TRAIT_LUX_RIPPED))
+					. += span_danger("<b>[capitalize(m2)] lux is torn!</b>")
+				if(src.virginity == TRUE)
+					. += span_aiprivradio("VIRGIN!")
 
 		var/gang_message = get_gang_text(user)
 		if (gang_message)
