@@ -588,6 +588,8 @@
   - bugfix: Old taur-selection dialogs no longer overwrite a different character or
       race after switching.
 2026-11-18:
+  _Rarity:
+  - qol: Items automatically rotate to fit into containers when needed.
   mypingishuge:
   - bugfix: Class-selection windows now load their intended fonts directly from the
       game.
