@@ -213,13 +213,11 @@ SUBSYSTEM_DEF(crediticons)
 
 /datum/controller/subsystem/crediticons/proc/push_pending_posters(client/viewer, window_id, list/pending)
 	set waitfor = FALSE
-	var/static/last_token = 0
-	var/token = ++last_token
 	// lets make sure nobody can just spam queue it up
 	var/push_key = "[viewer.ckey]|[window_id]"
-	poster_pushes[push_key] = token
+	poster_pushes[push_key] = pending
 	sleep(POSTER_PAGE_LOAD_DELAY)
-	while(length(pending) && viewer && poster_pushes[push_key] == token)
+	while(length(pending) && viewer && poster_pushes[push_key] == pending)
 		for(var/element_id in pending)
 			var/mutable_appearance/portrait = pending[element_id]
 			var/poster_base64 = poster_cache[portrait]
@@ -229,7 +227,7 @@ SUBSYSTEM_DEF(crediticons)
 				continue
 			pending -= element_id
 		sleep(0.5 SECONDS)
-	if(poster_pushes[push_key] == token)
+	if(poster_pushes[push_key] == pending)
 		poster_pushes -= push_key
 
 /datum/controller/subsystem/crediticons/proc/queue_poster(mutable_appearance/portrait)
