@@ -201,7 +201,7 @@
 	else
 		spread = 0
 	var/list/prepared_projectiles = list()
-	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
+	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, FALSE))
 		var/obj/projectile/BB = CB.BB
 		if(!istype(BB))
 			continue
@@ -231,6 +231,11 @@
 			projectile.accuracy = original[2]
 			projectile.bonus_accuracy = original[3]
 			projectile.embedchance = original[4]
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/sling/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
+	if(from_firing && istype(magazine) && chambered)
+		magazine.stored_ammo -= chambered
+	return ..()
 
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/update_icon()
