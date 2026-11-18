@@ -140,7 +140,6 @@
 	var/list/audio_entries = list(
 		list("id" = "lobby_music", "label" = "Lobby Music", "enabled" = !!(owner.prefs.toggles & SOUND_LOBBY), "desc" = "Play music while in the lobby."),
 		list("id" = "hear_instruments", "label" = "Hear Instruments", "enabled" = !!(owner.prefs.toggles & SOUND_INSTRUMENTS), "desc" = "Hear bard instruments, jukeboxes, and boomboxes."),
-		list("id" = "hear_emote_sent_sound", "label" = "Hear Emote Sent Sound", "enabled" = !!owner.prefs.hear_emote_sent_sound, "desc" = "Hear the Talk cue for otherwise silent emotes, including your own. Does not mute voices, other emote sounds or Subtle notifications."),
 	)
 
 	var/list/content_entries = list(
@@ -255,9 +254,6 @@
 					owner.update_persistent_sound_loop(persistent_loop)
 				owner.update_sounds()
 				owner.sync_instrument_audio_toggle()
-			if("hear_emote_sent_sound")
-				owner.prefs.hear_emote_sent_sound = !owner.prefs.hear_emote_sent_sound
-				owner.prefs.save_preferences()
 			if("animal_emotes")
 				owner.mute_animal_emotes()
 			if("erp_panel")
