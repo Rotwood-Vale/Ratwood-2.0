@@ -1,5 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - bugfix: "Ordinary and magical fire reliably burn out, with a minimum decay rate for incapacitated victims."
-  - qol: "Players stuck in critical condition for two minutes receive guidance about Embrace Necra and, where applicable, deadite recovery."
