@@ -1,0 +1,5 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "The Blindness vice now grants night vision."
+  - rscadd: "Blindness vice holders can see nearby typing indicators."
