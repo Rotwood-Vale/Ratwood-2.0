@@ -17,6 +17,8 @@
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/sound //Sound to play when emote is called
+	/// Sound supplied by an interaction callback or subtype instead of get_sound().
+	var/has_action_sound = FALSE
 	var/vary = FALSE	//used for the honk borg emote
 	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 	var/nomsg = FALSE
@@ -122,6 +124,8 @@
 		user.log_message(msg, LOG_EMOTE)
 		if(suppress_chat)
 			return
+		if(should_play_text_cue(tmp_sound && tmp_sound.file))
+			playsound(emotelocation, 'sound/misc/talk.ogg', 100, FALSE, -1)
 		var/pre_color_msg = msg
 		if (use_params_for_runechat) // apply puncutation stripping here where appropriate
 			var/static/regex/regex = regex(@"[,.!?]", "g")
@@ -318,3 +322,7 @@
 	if(istype(H.loc, /turf/open/water) && !(H.mobility_flags & MOBILITY_STAND))
 		return FALSE
 	return TRUE
+
+/// Audible emotes stay quiet when their voice sound is unavailable or suppressed.
+/datum/emote/proc/should_play_text_cue(has_sound)
+	return !has_sound && !has_action_sound && !nomsg && !(emote_type & EMOTE_AUDIBLE)
