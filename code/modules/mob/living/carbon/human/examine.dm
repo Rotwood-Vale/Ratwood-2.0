@@ -1226,7 +1226,7 @@
 			else
 				. += span_greentext("<b>I can see their branding; they are owned by [ownership_info["name"]].</b>")
 
-		if(name in GLOB.court_agents)
+		if(name in GLOB.court_agents || (HAS_TRAIT(src, TRAIT_COURTAGENT)))
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
 				. += span_greentext("<b>[m1] an agent of the court!</b>")

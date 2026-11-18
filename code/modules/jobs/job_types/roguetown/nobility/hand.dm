@@ -249,7 +249,8 @@
 	if(!.)
 		return
 	GLOB.court_agents += recruit.real_name
-
+	ADD_TRAIT(recruit, TRAIT_COURTAGENT, TRAIT_GENERIC)
+	
 /datum/outfit/job/roguetown/hand/advisor
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold

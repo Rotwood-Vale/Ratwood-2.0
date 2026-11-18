@@ -8,6 +8,7 @@
 	category_tags = list(CTAG_COURTAGENT)
 	cmode_music = 'sound/music/templarofpsydonia.ogg'
 	traits_applied = list(TRAIT_DARKVISION, TRAIT_DODGEEXPERT, TRAIT_LEAPER)
+	subclass_languages = list(/datum/language/thievescant, /datum/language/otavan)
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_PER = 2,
@@ -132,9 +133,7 @@
 					/obj/item/clothing/head/inqarticles/blackbag = 1,
 					/obj/item/lockpickring/mundane = 1,
 				)
-
-	H.merctype = 10
-
+				
 /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/black
 	color = CLOTHING_BLACK
 /obj/item/storage/belt/rogue/leather/battleskirt/faulds/black
