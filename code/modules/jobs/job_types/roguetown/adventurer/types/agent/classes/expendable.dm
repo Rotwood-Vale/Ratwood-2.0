@@ -12,8 +12,7 @@
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_INT = 2,
-		STATKEY_SPD = 3,
-		STATKEY_STR = -1
+		STATKEY_SPD = 2
 	)
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
@@ -72,12 +71,12 @@
 				ADD_TRAIT(H,TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
-				H.change_stat(STATKEY_STR, 3)
+				H.change_stat(STATKEY_STR, 2)
 				H.change_stat(STATKEY_CON, 3)
 				H.change_stat(STATKEY_SPD, -3)
 				H.change_stat(STATKEY_PER, -2)
+				H.change_stats(STATKEY_INT, -2)
 				H.change_stat(STATKEY_WIL, 3)
-				H.change_stat(STATKEY_LCK, -1)
 				beltl = /obj/item/rogueweapon/stoneaxe/hurlbat
 				beltr = /obj/item/rogueweapon/stoneaxe/hurlbat
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/faulds/white
@@ -115,10 +114,10 @@
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_EXP_JOURNEYMAN, TRUE)
-				H.change_stat(STATKEY_SPD,-3)
+				H.change_stat(STATKEY_SPD,-2)
 				H.change_stat(STATKEY_WIL, 2)
 				H.change_stat(STATKEY_CON, 2)
-				H.change_stat(STATKEY_INT -1)
+				H.change_stat(STATKEY_INT, -1)
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/faulds/white

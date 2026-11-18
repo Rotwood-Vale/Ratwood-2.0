@@ -12,6 +12,7 @@
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_PER = 2,
+		STATKEY_INT = 1
 		STATKEY_SPD = 2,
 		STATKEY_STR = -1
 	)

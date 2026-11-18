@@ -11,7 +11,7 @@
 	traits_applied = list(TRAIT_EXPERT_HUNTER, TRAIT_DODGEEXPERT, TRAIT_SILVER_BLESSED, TRAIT_COURTAGENT)
 	subclass_languages = list(/datum/language/thievescant, /datum/language/grenzelhoftian)
 	subclass_stats = list(
-		STATKEY_WIL = 3,
+		STATKEY_WIL = 2,
 		STATKEY_PER = 1,
 		STATKEY_SPD = 1,
 		STATKEY_STR = 2
