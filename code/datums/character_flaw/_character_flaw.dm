@@ -333,6 +333,33 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!H.wear_mask)
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/blindfold(H), SLOT_WEAR_MASK)
 	H.overlay_fullscreen("blind_flaw", /atom/movable/screen/fullscreen/impaired, 2)
+	ADD_TRAIT(H, TRAIT_BLIND_NITE_VISION, "[type]")
+	RegisterSignal(H, list(
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_BECAME_ALIVE,
+		COMSIG_LIVING_EYELIDS_UPDATED,
+		COMSIG_LIVING_CONSCIOUSNESS_CHANGED,
+	), PROC_REF(on_awareness_changed), TRUE)
+	H.update_sight()
+	H.refresh_blind_typing_indicators()
+
+/datum/charflaw/noeyeall/on_removal(mob/user)
+	..()
+	UnregisterSignal(user, list(
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_BECAME_ALIVE,
+		COMSIG_LIVING_EYELIDS_UPDATED,
+		COMSIG_LIVING_CONSCIOUSNESS_CHANGED,
+	))
+	REMOVE_TRAIT(user, TRAIT_BLIND_NITE_VISION, "[type]")
+	user.clear_fullscreen("blind_flaw")
+	user.update_sight()
+	user.refresh_blind_typing_indicators()
+
+/datum/charflaw/noeyeall/proc/on_awareness_changed(mob/living/source)
+	SIGNAL_HANDLER
+	if(source.client)
+		source.refresh_blind_typing_indicators()
 
 /datum/charflaw/colorblind
 	name = "Colorblind"

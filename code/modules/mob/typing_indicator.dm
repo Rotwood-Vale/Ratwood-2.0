@@ -44,6 +44,11 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	// panel context only, like its stop below. On disk it would bury the combat an admin is grepping for
 	log_message("started typing", LOG_ATTACK, log_globally = FALSE)
 	add_overlay(state_override)
+	var/image/blind_indicator = image(loc = src)
+	blind_indicator.appearance = state_override
+	blind_indicator.plane = HUD_PLANE
+	blind_indicator.appearance_flags |= KEEP_APART
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/blind_typing, "blind_typing", blind_indicator, NONE)
 	update_vision_cone()
 	typing_indicator_timerid = addtimer(CALLBACK(src, PROC_REF(clear_typing_indicator), "timed out"), timeout_override, TIMER_STOPPABLE)
 
@@ -51,6 +56,7 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
  * Removes typing indicator. reason, if given, is appended to the stopped typing log entry.
  */
 /mob/proc/clear_typing_indicator(reason)
+	remove_alt_appearance("blind_typing")
 	if(typing_indicator_current)
 		log_message("stopped typing[reason ? " ([reason])" : ""]", LOG_ATTACK, log_globally = FALSE)
 	cut_overlay(typing_indicator_current)
@@ -69,6 +75,32 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	layer = HUD_LAYER
 	plane = FULLSCREEN_PLANE
 	alpha = 175
+
+/// Only Blindness vice holders receive the copy above their fullscreen restriction.
+/datum/atom_hud/alternate_appearance/basic/blind_typing/New(key, image/I, options = NONE)
+	..()
+	for(var/mob/viewer in GLOB.player_list)
+		onNewMob(viewer)
+
+/datum/atom_hud/alternate_appearance/basic/blind_typing/mobShouldSee(mob/viewer)
+	if(!ishuman(viewer) || !HAS_TRAIT_FROM(viewer, TRAIT_BLIND_NITE_VISION, "[/datum/charflaw/noeyeall]"))
+		return FALSE
+	var/mob/living/carbon/human/human_viewer = viewer
+	return human_viewer.stat < UNCONSCIOUS && !human_viewer.eyesclosed && !human_viewer.IsSleeping()
+
+/datum/atom_hud/alternate_appearance/basic/blind_typing/onNewMob(mob/viewer)
+	if(mobShouldSee(viewer))
+		if(!hudusers[viewer])
+			next_time_allowed[viewer] = 0
+			add_hud_to(viewer)
+		else
+			add_to_single_hud(viewer, target)
+	else if(hudusers[viewer])
+		remove_hud_from(viewer)
+
+/mob/proc/refresh_blind_typing_indicators()
+	for(var/datum/atom_hud/alternate_appearance/basic/blind_typing/indicator in GLOB.active_alternate_appearances)
+		indicator.onNewMob(src)
 
 /// Reuse the current blue appearance instead of allocating one on each keystroke.
 /mob/proc/display_looc_typing_indicator()

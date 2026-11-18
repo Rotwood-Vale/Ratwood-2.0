@@ -900,6 +900,10 @@
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
 		see_in_dark = max(see_in_dark, 12)
 
+	if(HAS_TRAIT(src, TRAIT_BLIND_NITE_VISION))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+		see_in_dark = max(see_in_dark, 12)
+
 	if(HAS_TRAIT(src, TRAIT_LIGHT_SENSITIVITY))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
 		see_in_dark = max(see_in_dark, 12)
@@ -1200,6 +1204,7 @@
 	update_spd()
 	if(stat != old_stat)
 		update_action_buttons_icon()
+		SEND_SIGNAL(src, COMSIG_LIVING_CONSCIOUSNESS_CHANGED, old_stat, stat)
 	update_critical_alert()
 
 /// Repeat the active collapse balloon while its cause still applies.
