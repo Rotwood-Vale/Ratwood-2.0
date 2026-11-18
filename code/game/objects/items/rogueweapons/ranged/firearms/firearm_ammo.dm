@@ -164,7 +164,8 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 		if(arrows.len < max_storage)
 			if(ismob(loc))
 				var/mob/M = loc
-				M.doUnEquip(A, TRUE, src, TRUE, silent = TRUE)
+				if(!M.doUnEquip(A, TRUE, src, FALSE, silent = TRUE))
+					return TRUE
 			else
 				A.forceMove(src)
 			arrows += A
@@ -192,13 +193,13 @@ A reminder that staggered, at time of addition, is a slow of 50% (1.5 multiplica
 /obj/item/quiver/bullet/lead/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/bullet/lead/B = new()
+		var/obj/item/ammo_casing/caseless/bullet/lead/B = new(src)
 		arrows += B
 	update_icon()
 
 /obj/item/quiver/bullet/grapeshot/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/bullet/grapeshot/B = new()
+		var/obj/item/ammo_casing/caseless/bullet/grapeshot/B = new(src)
 		arrows += B
 	update_icon()
