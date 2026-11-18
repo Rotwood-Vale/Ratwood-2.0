@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Drying racks now accept Cut intent variants, including the Wardens' seax's Heavy Cut."
