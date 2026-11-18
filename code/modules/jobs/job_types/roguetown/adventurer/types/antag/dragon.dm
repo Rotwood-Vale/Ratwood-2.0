@@ -104,8 +104,9 @@
 		H.apply_dragon_preferences()
 		H.set_blindness(0)
 		H.regenerate_icons()
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/claws/dragon)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/dragon_gate_control)
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/message)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/claws/dragon)
 		H.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
 		H.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball)
 		H.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater)
@@ -158,6 +159,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/hunting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,
 	)
 
 /datum/outfit/job/roguetown/dragon/pre_equip(mob/living/carbon/human/H)
