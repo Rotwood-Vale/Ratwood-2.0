@@ -184,6 +184,8 @@
 	name = "caparison"
 	desc = "A decorative piece of cloth meant to be used as a saddle decoration. This one fits on a Fogbeast."
 	caparison_icon = 'icons/roguetown/mob/monster/fogbeast.dmi'
+	// Fogbeasts share caparison sprites between mares and stallions.
+	female_caparison_state = null
 	valid_animal_types = list(/mob/living/simple_animal/hostile/retaliate/rogue/fogbeast)
 	color = COLOR_WHITE
 	detail_types = list("Quad" = "quad")
