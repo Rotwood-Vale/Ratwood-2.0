@@ -35,7 +35,10 @@
 	icon_state = "book4_0"
 	base_icon_state = "book4"
 
-	types = list(/datum/crafting_recipe/roguetown/engineering)
+	types = list(
+		/datum/crafting_recipe/roguetown/engineering,
+		/datum/anvil_recipe/cannon,
+		)
 
 // I gave up I will make better names later lol
 // Was gonna do a carpenter + masonry handbook but
