@@ -1,0 +1,4 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - rscadd: "Added mage dex to the Traveling Scholar"

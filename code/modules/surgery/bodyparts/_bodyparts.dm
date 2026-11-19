@@ -653,8 +653,8 @@
 	// Organ overlays
 	if(!skeletonized && draw_organ_features)
 		// i don't know if this will actually work since these aren't sorted?
-		for(var/obj/item/organ/organ as anything in get_organs())
-			if(organ.is_visible())
+		for(var/obj/item/organ/organ as anything in owner?.internal_organs)
+			if(organ.zone_checked == body_zone && organ.is_visible())
 				var/extra_keys = organ.get_icon_cache_key(src)
 				key_parts += extra_keys
 
