@@ -662,3 +662,7 @@
       text.
   - bugfix: Putting on headgear during a writing attempt prevents writing through
       the covering.
+2026-11-19:
+  _Rarity:
+  - bugfix: Fixed switching spells allowing instant casts using leftover charge.
+  - bugfix: Fixed duplicate spell fizzle messages when releasing before fully charged.
