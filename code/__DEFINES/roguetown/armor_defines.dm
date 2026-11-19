@@ -6,7 +6,7 @@
 // If penfactor > armor tier: 100% of damage penetrates armor.
 // If penfactor == armor tier: 20% of damage penetrates armor.
 // If penfactor < armor tier: fully blocked (0 through).
-// Blunt uses DR Absorb — damage multiplied by 1 / (1 + 0.2 * DR tier), all absorbed by armor (none to HP).
+// Blunt uses DR Absorb — all damage is absorbed by armor; its integrity damage is reduced by BLUNT_DR_COEFFICIENT.
 // Fire/Acid use DR Pierce — same DR formula, but reduced damage still hits HP.
 
 // Penetration tiers (0-4). Weapon attacks.
@@ -24,8 +24,8 @@
 #define DBLOCK_BSTEEL		4	// Blacksteel, antagonist.
 
 // Damage reduction tiers (0-5). Used by blunt (absorb), fire, acid (pierce).
-// Note that blunt by default have 1.6x Integrity Multiplier.
-// Damage multiplier = 1 / (1 + 0.2 * tier)
+// Blunt intents have a 2x integrity factor; blunt DR still reduces the final damage to armor.
+// Fire/Acid damage multiplier = 1 / (1 + 0.2 * tier); blunt integrity uses BLUNT_DR_COEFFICIENT.
 // Blunt: all damage absorbed by armor. Fire/Acid: reduced damage still hits HP.
 #define DR_NONE				0	// Nothing. 100% damage. EDPS: 160%
 #define DR_LIGHT			1	// Plate / Metal. 20% EHP increase. EDPS: 133%

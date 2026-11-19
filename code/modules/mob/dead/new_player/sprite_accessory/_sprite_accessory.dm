@@ -105,7 +105,7 @@
 
 		accessory_icon_cache[key] = icon_bundle
 
-	var/icon/cached_icon = icon(accessory_icon_cache[key])
+	var/icon/cached_icon = accessory_icon_cache[key]
 	/// Generate mutable appearances from the icon
 	var/appearance_list = list()
 	if(relevant_layers)
