@@ -16,12 +16,13 @@
 	tutorial = "Through birthright, favors or intrigue you have landed yourself in the position of being the baron of the outer reaches of the duchy. You swore fealty to the duke and are given significant independence to run lowtown as you see fit, you hold sway in its dealings and in absence of higher authority the local garrison will answer to you. You hold command over the lowtown garrison, although upon request the crown can call upon your men to join their greater army."
 	whitelist_req = FALSE
 	give_bank_account = 40
-	min_pq = 20
+	min_pq = 9
 	max_pq = null
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_noble.ogg'
 	advclass_cat_rolls = list(CTAG_BARON = 20)
 	social_rank = SOCIAL_RANK_NOBLE
+	quirk_restrictions = list(/datum/quirk/hunted)
 	job_traits = list(TRAIT_NOBLE)
 	job_subclasses = list(
 		/datum/advclass/baron/shrewd_nobleman,

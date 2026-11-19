@@ -30,11 +30,11 @@
 /obj/effect/proc_holder/spell/targeted/blesscrop/update_icon()
 	if(!action)
 		return
-	action.button_icon_state = "[base_icon_state][active]"
+	action.background_icon_state = "[base_icon_state][active]"
 	if(overlay_state)
-		action.overlay_state = overlay_state
+		action.button_icon_state = overlay_state
 	action.name = name
-	action.UpdateButtonIcon()
+	action.build_all_button_icons(force = TRUE)
 
 /obj/effect/proc_holder/spell/targeted/blesscrop/Click()
 	var/mob/living/user = usr
@@ -127,7 +127,7 @@
 	charge_counter = 0
 	START_PROCESSING(SSfastprocess, src)
 	if(action)
-		action.UpdateButtonIcon()
+		action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/targeted/blesscrop/proc/spend_all_bless_charges()
 	charge_counter = 0
@@ -156,7 +156,7 @@
 			charge_regen_elapsed = 0
 			charge_counter = max_bless_charges
 			if(action)
-				action.UpdateButtonIcon()
+				action.build_all_button_icons()
 			STOP_PROCESSING(SSfastprocess, src)
 		return
 	if(charge_counter < max_bless_charges)
@@ -165,7 +165,7 @@
 			charge_regen_elapsed -= 10 SECONDS
 			charge_counter++
 		if(action)
-			action.UpdateButtonIcon()
+			action.build_all_button_icons()
 		if(charge_counter >= max_bless_charges)
 			charge_counter = max_bless_charges
 			STOP_PROCESSING(SSfastprocess, src)
@@ -435,7 +435,7 @@
 		if(active)
 			add_ranged_ability(user, null, TRUE)
 	if(action)
-		action.UpdateButtonIcon()
+		action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/targeted/beasttame/process()
 	if(empty_refill_active)
@@ -446,7 +446,7 @@
 			charge_regen_elapsed = 0
 			charge_counter = 2
 			if(action)
-				action.UpdateButtonIcon()
+				action.build_all_button_icons()
 			STOP_PROCESSING(SSfastprocess, src)
 		return
 	if(charge_counter < 2)
@@ -455,7 +455,7 @@
 			charge_regen_elapsed -= 10 SECONDS
 			charge_counter++
 		if(action)
-			action.UpdateButtonIcon()
+			action.build_all_button_icons()
 		if(charge_counter >= 2)
 			STOP_PROCESSING(SSfastprocess, src)
 		return
@@ -831,11 +831,11 @@
 /obj/effect/proc_holder/spell/targeted/lesser_dryad_special/update_icon()
 	if(!action)
 		return
-	action.button_icon_state = "[base_icon_state][active]"
+	action.background_icon_state = "[base_icon_state][active]"
 	if(overlay_state)
-		action.overlay_state = overlay_state
+		action.button_icon_state = overlay_state
 	action.name = name
-	action.UpdateButtonIcon()
+	action.build_all_button_icons(force = TRUE)
 
 /obj/effect/proc_holder/spell/targeted/lesser_dryad_special/Click()
 	var/mob/living/user = usr
@@ -899,7 +899,7 @@
 		D.ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 	// For old-style AI mobs, clear the enemies list, lose current target, and set
 	// non-aggressive so the dryad doesn't re-acquire an enemy mid-transit.
-	D.enemies = list()
+	D.clear_enemies()
 	D.target = null
 	D.LoseTarget()
 	D.aggressive = FALSE
@@ -951,7 +951,7 @@
 	switch(order_type)
 		if("goto")
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = target_location
@@ -961,7 +961,7 @@
 				D.faction -= "neutral"
 			to_chat(caster, span_notice("[D.name] moves to guard that position."))
 		if("follow")
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.lastattacker_weakref = null
@@ -978,7 +978,8 @@
 			D.follow_target = null
 			D.guard_turf = null
 			walk(D, 0)
-			D.enemies = list(target)
+			D.clear_enemies()
+			D.add_enemy(target)
 			D.target = target
 			D.aggressive = FALSE
 			if("neutral" in D.faction)
@@ -996,7 +997,7 @@
 			else
 				D.follow_target = caster
 				D.guard_turf = null
-				D.enemies = list()
+				D.clear_enemies()
 				D.target = null
 				D.LoseTarget()
 				D.lastattacker_weakref = null
@@ -1008,7 +1009,7 @@
 		if("aggressive")
 			// Clicking an ally — send dryad to their tile as a guard position.
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = get_turf(target)

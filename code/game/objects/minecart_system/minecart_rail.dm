@@ -207,6 +207,7 @@
 	icon_state = "track_break"
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
+	buckle_blocks_spells = TRUE
 	var/force_disabled = FALSE
 	//buckle_lying = NO_BUCKLE_LYING
 

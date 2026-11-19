@@ -1,0 +1,31 @@
+{
+    "full": {
+		"yes": "oui",
+		"no": "non",
+		"do": "du",
+		"don't": "dun't",
+		"am": "ahm", 
+        "and": "et",
+		"with": "weeth",
+		"it": "eet",
+		"hi": "'allo"
+    },
+    "start": {
+		"ga": "ge",
+		"th": "zh",
+		"h": "'"
+
+    },
+    "end": {
+		"er": "eur",
+		"ing": "eeng"
+
+    },
+	"multiword": {
+
+	},
+    "syllable": {
+        "shi": "shee",
+        "thi": "thee"
+    }
+}

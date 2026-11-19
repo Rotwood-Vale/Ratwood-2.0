@@ -369,3 +369,13 @@
 	var/obj/item/organ/ears/E = H.getorganslot(ORGAN_SLOT_EARS)
 	E.is_flicking = FALSE
 	H.update_body_parts(TRUE)
+
+/datum/species/proc/can_jiggle_breasts(mob/living/carbon/human/H)
+	if(!H || H.cmode)
+		return FALSE
+	var/obj/item/organ/breasts/B = H.getorganslot(ORGAN_SLOT_BREASTS)
+	if(!B || B.is_jiggling)
+		return FALSE
+	if(!B.can_jiggle || B.breast_size < MIN_JIGGLE_BREASTS_SIZE)
+		return FALSE
+	return TRUE

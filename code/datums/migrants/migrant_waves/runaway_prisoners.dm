@@ -3,39 +3,16 @@
 /datum/migrant_wave/runaway_prisoners
 	name = "Runaway Prisoners"
 	max_spawns = 1
-	shared_wave_type = /datum/migrant_wave/runaway_prisoners
-	downgrade_wave = /datum/migrant_wave/runaway_prisoners_down_one
 	weight = 50
-	roles = list(
-		/datum/migrant_role/runaway_prisoner = 4
+	track = MIGRANT_TRACK_SPECIAL
+	required_roles = list(
+		/datum/migrant_role/runaway_prisoner = 1,
 	)
+	optional_roles = list(
+		/datum/migrant_role/runaway_prisoner = 4,
+	)
+	min_optional_fills = 0
 	greet_text = "You've been rotting for years in a cell. Though you escaped, you have nothing - your body atrophied, your mind dulled. But one thing you kknow clearlyu - you are not going back." 
-
-/datum/migrant_wave/runaway_prisoners_down_one
-	name = "Runaway Prisoners"
-	can_roll = FALSE
-	shared_wave_type = /datum/migrant_wave/runaway_prisoners
-	downgrade_wave = /datum/migrant_wave/runaway_prisoners_down_two
-	roles = list(
-		/datum/migrant_role/runaway_prisoner = 3
-	)
-
-/datum/migrant_wave/runaway_prisoners_down_two
-	name = "Runaway Prisoners"
-	can_roll = FALSE
-	shared_wave_type = /datum/migrant_wave/runaway_prisoners
-	downgrade_wave = /datum/migrant_wave/runaway_prisoners_down_three
-	roles = list(
-		/datum/migrant_role/runaway_prisoner = 2
-	)
-
-/datum/migrant_wave/runaway_prisoners_down_three
-	name = "Runaway Prisoners"
-	can_roll = FALSE
-	shared_wave_type = /datum/migrant_wave/runaway_prisoners
-	roles = list(
-		/datum/migrant_role/runaway_prisoner = 1
-	)
 
 /datum/migrant_role/runaway_prisoner
 	name = "Escaped Prisoner"
@@ -112,9 +89,8 @@
 	name = "Runaway Prisoner (Mage)"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/mage
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_ALCHEMY_EXPERT)
 	category_tags = list(CTAG_RUNAWAY_PRISONER)
-	subclass_spellpoints = 18
 	subclass_stats = list(
 		STATKEY_LCK = 3,
 		STATKEY_CON = -1,
@@ -165,6 +141,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
 	neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
+	H.mind?.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
 
 
 /datum/outfit/job/roguetown/adventurer/runaway_prisoner/commoner/pre_equip(mob/living/carbon/human/H, visualsOnly)
@@ -209,4 +186,3 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
 	neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)

@@ -22,7 +22,7 @@
 
 /obj/structure/dungeontool/trigger/proc/triggerquiet()
 	for(var/obj/structure/O in redstone_attached)
-		spawn(0) O.redstone_triggered()
+		addtimer(CALLBACK(O, TYPE_PROC_REF(/obj/structure, redstone_triggered)), 0)
 
 /obj/structure/dungeontool/triggered // A simple obj that does a thing when activated by redstone. Create subtypes, do not use this parent obj
 	name = "triggered obj"
@@ -81,6 +81,8 @@
 	desc = "Can only be opened, but not closed by a redstone trigger."
 	density = TRUE
 	opacity = TRUE
+	sound_door = TRUE
+	sound_opening = TRUE
 	dir = SOUTH
 	invisibility = 101 //cannot be seen or interacted with and has density and opacity until triggered
 	activated = FALSE
@@ -94,7 +96,7 @@
 	if(!activated)
 		activated = TRUE
 		density = FALSE
-		opacity = FALSE
+		set_opacity(FALSE)
 
 /obj/structure/dungeontool/mover //moves mobs and objs in the dir, checks every 1.5 seconds, used for monster closet
 	name = "mob mover"

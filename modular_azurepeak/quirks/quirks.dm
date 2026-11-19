@@ -1,0 +1,462 @@
+// Quirks are mostly for flavor or provide very little (or focused on roleplay) benefits.
+// At best they should be very minor conveniences as a reward for leaning into vices.
+// The baseline point_cost is one.
+
+/datum/quirk/acquiredtastes
+	name = "Acquired Tastes"
+	desc = "Despite my unorthodox tastes, I'm always prepared to handle a guest with the toys I keep stashed."
+	custom_text = "This quirk adds a bag containing various sexual instruments including a small vial of emberwine to your stash."
+	added_stashed_items = list("Bag of Fetish Gear" = /obj/item/storage/roguebag/fetish)
+
+/datum/quirk/annoyingface
+	name = "Annoying Face"
+	desc = "I am cursed with an odd voice and appearance."
+	point_cost = 0
+	added_traits = list(TRAIT_COMICSANS)
+
+/datum/quirk/deadnose
+	name = "Dead Nose"
+	desc = "My nose is numb to the smell of decay."
+	added_traits = list(TRAIT_NOSTINK)
+	incompatible_traits = list(TRAIT_NOSTINK)
+
+/datum/quirk/disgracednoble
+	name = "Disgraced Noble"
+	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
+	added_traits = list(TRAIT_DISGRACED_NOBLE)
+	incompatible_traits = list(TRAIT_NOBLE)
+
+/datum/quirk/dwarvenchef
+	name = "Dwarven Chef"
+	desc = "A dwarf once showed me the trick to cutting a proper pretzel from butterdough."
+	custom_text = "Lets you cut pretzels from butterdough."
+	warning_text = "This quirk does nothing if you are already a dwarf!"
+	added_traits = list(TRAIT_DWARVEN_CHEF)
+
+/datum/quirk/empath
+	name = "Empath"
+	desc = "I can notice when people are in pain."
+	added_traits = list(TRAIT_EMPATH)
+	incompatible_virtues = list(/datum/virtue/utility/socialite)
+	incompatible_traits = list(TRAIT_EMPATH)
+
+/datum/quirk/fabledlover
+	name = "Fabled Lover"
+	desc = "It's a lucky thing to share my bed."
+	point_cost = 2
+	added_traits = list(TRAIT_GOODLOVER)
+	incompatible_virtues = list(/datum/virtue/utility/socialite, /datum/virtue/utility/performer)
+	incompatible_traits = list(TRAIT_GOODLOVER)
+
+/datum/quirk/gossiper
+	name = "Gossiper"
+	desc = "Despite my lowborn blood, I've made a habit out of brushing shoulders with the nobility and learning their secrets."
+	custom_text = "Lets you view noble gossip."
+	point_cost = 2
+	added_traits = list(TRAIT_GOSSIPER)
+	incompatible_virtues = list(/datum/virtue/utility/tracker)
+	incompatible_traits = list(TRAIT_NOBLE)
+
+/datum/quirk/hobbyistmusician
+	name = "Hobbyist Musician"
+	desc = "I've dabbled in music over the years, and I've stashed away an instrument of my own."
+	custom_text = "Comes with a stashed instrument of your choice. You choose the instrument after spawning in."
+	added_skills = list(list(/datum/skill/misc/music, 1, 6))
+
+/datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
+
+/datum/quirk/linguist
+	name = "Trilingual"
+	desc = "Through education, travel, or circumstance, I have picked up a third language."
+	custom_text = "Start with one extra language of your choice."
+	configurable = TRUE
+	incompatible_quirks = list(/datum/quirk/quadrilingual)
+	var/language
+
+/datum/quirk/linguist/apply_to_human(mob/living/carbon/human/recipient)
+	if(ispath(language, /datum/language))
+		recipient.grant_language(language)
+
+/datum/quirk/linguist/config_summary()
+	if(!ispath(language, /datum/language))
+		return "<b>Language</b>: None chosen"
+	var/datum/language/L = language
+	return "<b>Language</b>: [initial(L.name)]"
+
+/datum/quirk/linguist/save_config()
+	return list("language" = language)
+
+/datum/quirk/linguist/load_config(list/data, savefile/S)
+	if(islist(data))
+		language = string_to_typepath(data["language"])
+
+/datum/quirk/linguist/configure(mob/user)
+	var/datum/preferences/prefs = user.client?.prefs
+	if(!prefs)
+		return
+	var/list/choices = prefs.get_language_choices()
+	choices -= "None"
+	var/choice = tgui_input_list(user, "Choose Language:", "Linguist", choices)
+	if(choice)
+		language = choices[choice]
+
+/datum/quirk/quadrilingual
+	name = "Quadrilingual"
+	desc = "I have an abundance of experience with different languages!"
+	custom_text = "Start with two extra languages of your choice."
+	point_cost = 2
+	configurable = TRUE
+	incompatible_quirks = list(/datum/quirk/linguist)
+	var/list/languages = list()
+
+/datum/quirk/quadrilingual/apply_to_human(mob/living/carbon/human/recipient)
+	for(var/language in languages)
+		recipient.grant_language(language)
+
+/datum/quirk/quadrilingual/config_summary()
+	var/list/names = list()
+	for(var/datum/language/L as anything in languages)
+		names += initial(L.name)
+	if(!length(names))
+		return "<b>Languages</b>: None chosen"
+	return "<b>Languages</b>: [names.Join(", ")]"
+
+/datum/quirk/quadrilingual/save_config()
+	return list("languages" = languages)
+
+/datum/quirk/quadrilingual/load_config(list/data, savefile/S)
+	languages = list()
+	if(!islist(data) || !islist(data["languages"]))
+		return
+	for(var/language in data["languages"])
+		var/language_path = string_to_typepath(language)
+		if(ispath(language_path, /datum/language) && !(language_path in languages))
+			languages += language_path
+
+/datum/quirk/quadrilingual/configure(mob/user)
+	var/datum/preferences/prefs = user.client?.prefs
+	if(!prefs)
+		return
+	var/list/chosen = list()
+	for(var/i in 1 to 2)
+		var/list/choices = prefs.get_language_choices()
+		choices -= "None"
+		for(var/language_name in choices.Copy())
+			if(choices[language_name] in chosen)
+				choices -= language_name
+		var/choice = tgui_input_list(user, "Choose language [i] of 2:", "Quadrilingual", choices)
+		if(!choice)
+			return
+		chosen += choices[choice]
+	languages = chosen
+
+/datum/quirk/largeframe
+	name = "Large Frame"
+	desc = "I'm simply built bigger than most. My strength and hardiness has nothing to show for my size, though."
+	custom_text = "This quirk increases your sprite size. Incompatible with the Giant virtue."
+	point_cost = 3
+	incompatible_virtues = list(/datum/virtue/size/giant)
+
+/datum/quirk/largeframe/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.transform = recipient.transform.Scale(1.25, 1.25)
+	recipient.transform = recipient.transform.Translate(0, (0.25 * 16))
+	recipient.update_transform()
+
+/datum/quirk/redolent
+	name = "Redolent"
+	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
+	point_cost = 1
+	added_traits = list(TRAIT_REDOLENT)
+	configurable = TRUE
+	var/scent_type = "Neutral"
+	var/scent = ""
+
+/datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.redolent_scent_type = scent_type
+	recipient.redolent_scent = scent
+
+/datum/quirk/redolent/proc/default_scent(type)
+	switch(type)
+		if("Gross")
+			return "rotting meat and sour sweat"
+		if("Pleasant")
+			return "wildflowers and clean rain"
+	return "earth and sweat"
+
+/datum/quirk/redolent/config_summary()
+	return "<b>[scent_type]</b>: [scent || default_scent(scent_type)]"
+
+/datum/quirk/redolent/save_config()
+	return list("type" = scent_type, "scent" = scent)
+
+/datum/quirk/redolent/load_config(list/data, savefile/S)
+	if(islist(data))
+		scent_type = data["type"]
+		scent = data["scent"]
+	// ppl will get pissed if they have 2 rewrite their stink text
+	else if(S)
+		S["redolent_type"] >> scent_type
+		S["redolent_scent"] >> scent
+		if(isnull(scent_type))
+			S["malodorous_type"] >> scent_type
+			S["malodorous_scent"] >> scent
+	if(scent_type == "Positive")
+		scent_type = "Pleasant"
+	if(!(scent_type in list("Gross", "Neutral", "Pleasant")))
+		scent_type = "Neutral"
+	if(isnull(scent))
+		scent = ""
+
+/datum/quirk/redolent/configure(mob/user)
+	var/new_scent_type = tgui_input_list(user, "Choose how others perceive your scent:", "Redolent", list("Gross", "Neutral", "Pleasant"))
+	if(!new_scent_type)
+		return
+	var/scent_action = tgui_input_list(user, "Describe the scent:", "Redolent", list("Describe scent", "Use default"))
+	if(!scent_action)
+		return
+	var/new_scent = default_scent(new_scent_type)
+	if(scent_action == "Describe scent")
+		var/leadin = "They smell of"
+		if(new_scent_type == "Gross")
+			leadin = "They reek of"
+		new_scent = tgui_input_text(user, "Describe the scent:", "Redolent", scent, max_length = 100, multiline = TRUE, preview_leadin = leadin)
+		if(isnull(new_scent))
+			return
+		if(!length(trim(new_scent)))
+			new_scent = default_scent(new_scent_type)
+	scent_type = new_scent_type
+	scent = new_scent
+	to_chat(user, span_notice("Set my Redolent scent to [scent_type]."))
+
+// Redolent scent state and behavior. This is purely quirk-driven now: the quirk applies
+// TRAIT_REDOLENT, the mob holds the scent state, and life.dm drives handle_redolent_scent().
+/mob/living/carbon/human
+	/// How others perceive our scent: "Gross", "Neutral" or "Pleasant".
+	var/redolent_scent_type = "Neutral"
+	/// Player-written description of our scent.
+	var/redolent_scent = ""
+	/// Bathing suppresses our scent until this world.time.
+	var/redolent_suppressed_until = 0
+	/// The last time our scent aura pulsed.
+	var/redolent_last_aura_tick = 0
+
+/mob/living/carbon/human/proc/is_redolent_reeking()
+	return HAS_TRAIT(src, TRAIT_REDOLENT) && world.time >= redolent_suppressed_until
+
+/mob/living/carbon/human/proc/redolent_on_bath()
+	redolent_suppressed_until = world.time + 30 MINUTES
+	remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+	to_chat(src, span_notice("I scrub the stink away. I should stay fresh for a while."))
+
+/mob/living/carbon/human/proc/redolent_apply_contact_stink(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/debuff/stinky_contact, redolent_scent_type, redolent_scent)
+
+/mob/living/carbon/human/proc/handle_redolent_scent()
+	var/should_reek = is_redolent_reeking() && can_smell()
+
+	if(should_reek && mind?.antag_datums)
+		for(var/datum/antagonist/D in mind.antag_datums)
+			if(istype(D, /datum/antagonist/vampire/lord) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie) || istype(D, /datum/antagonist/lich))
+				should_reek = FALSE
+				break
+
+	if(should_reek && redolent_scent_type != "Pleasant")
+		apply_status_effect(/datum/status_effect/debuff/redolent_stink)
+	else
+		remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+
+	if(!should_reek)
+		return
+	if(world.time < redolent_last_aura_tick + redolent_aura_tick_delay(redolent_scent_type))
+		return
+	redolent_last_aura_tick = world.time
+	redolent_visual_effect(src, redolent_scent_type)
+	redolent_stink_aura(src, redolent_scent_type)
+
+/proc/redolent_aura_tick_delay(scent_type)
+	return 30 SECONDS
+
+/proc/redolent_examine_text(scent_type, scent)
+	var/scent_text = html_encode(scent || "an unusual scent")
+	switch(scent_type)
+		if("Gross")
+			return span_greentext("They reek of [scent_text].")
+		if("Pleasant")
+			return "<span style='color:#FFB6C1'>They smell of [scent_text].</span>"
+	return "<span style='color:#d8cf8a'>They smell of [scent_text].</span>"
+
+/proc/redolent_visual_effect(mob/living/carbon/human/H, scent_type)
+	switch(scent_type)
+		if("Gross")
+			new /obj/effect/temp_visual/flies(get_turf(H))
+		if("Pleasant")
+			new /obj/effect/temp_visual/pleasant_scent(get_turf(H))
+
+/proc/redolent_stink_aura(mob/living/carbon/human/H, scent_type)
+	for(var/mob/living/nearby in view(2, H))
+		if(nearby == H)
+			continue
+		if(nearby.stat)
+			continue
+		if(!nearby.can_smell())
+			continue
+		if(HAS_TRAIT(nearby, TRAIT_NOSTINK))
+			continue
+		if(HAS_TRAIT(nearby, TRAIT_NOBREATH))
+			continue
+		switch(scent_type)
+			if("Gross")
+				if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
+					to_chat(nearby, "<span class='warning' style='color:#48c75a'>Something nearby reeks.</span>")
+					nearby.add_stress(/datum/stressevent/stinky_aura)
+			if("Neutral")
+				if(!nearby.has_stress_event(/datum/stressevent/prominent_scent))
+					to_chat(nearby, "<span class='warning' style='color:#d8cf8a'>There's a prominent scent in the air.</span>")
+					nearby.add_stress(/datum/stressevent/prominent_scent)
+			if("Pleasant")
+				if(!nearby.has_stress_event(/datum/stressevent/pleasant_scent))
+					to_chat(nearby, "<span class='warning' style='color:#ffb6c1'>A pleasant scent drifts through the air.</span>")
+					nearby.add_stress(/datum/stressevent/pleasant_scent)
+
+/datum/quirk/hunted
+	name = "Marked by Gnolls"
+	desc = "For one reason or another, I have been deemed a target worthy of Graggar's champions. I hear their cackles anywhere I go."
+	warning_text = "<span style='font-size:120%;'>THIS QUIRK ENCOURAGES GNOLLS TO HUNT YOU DOWN!</span><br>\
+	You may potentially be killed in the process!"
+	point_cost = 0
+	added_traits = list(TRAIT_GNOLL_HUNTED)
+	var/attempts_left = 10
+
+// I genuinely couldn't tell you why this needs to be a thing, but it existed when hunted was a vice.
+// Therefore, we're keeping the behavior now that it's a quirk.
+/datum/quirk/hunted/apply_to_human(mob/living/carbon/human/recipient)
+	log_hunted_pick(recipient)
+
+/datum/quirk/hunted/proc/log_hunted_pick(mob/living/carbon/human/H)
+	if(!H.name) // The vice version of hunted used Life() for its timing, so deleted mobs would automatically stop timing.
+		if(attempts_left <= 0) // We're not riding off of that anymore, so let's have it give up after ten attemps a la Lawless.
+			return
+		attempts_left--
+		addtimer(CALLBACK(src, PROC_REF(log_hunted_pick), H), 1 SECONDS)
+		return
+	log_hunted("[H.ckey] playing as [H.name] had the hunted trait by quirk.")
+
+/datum/quirk/assassintarget
+	name = "Marked for Death"
+	desc = "Something in my past has made me a target. I'm always looking over my shoulder."
+	warning_text = "<span style='font-size:120%;'>THIS QUIRK ENCOURAGES ASSASSINS TO HUNT YOU DOWN!</span><br>\
+	You may be PERMANENTLY KILLED WITHOUT ESCALATION in the process!"
+	point_cost = 0
+	added_traits = list(TRAIT_ASSASSIN_TARGET)
+
+/datum/quirk/nightowl
+	name = "Night Owl"
+	desc = "I've always preferred Noc over his other half."
+	added_traits = list(TRAIT_NIGHT_OWL)
+
+// Gives minor nobility, but what is a minor noble anyways?
+// If we were being realistic then only the grand duke and baron would be real nobles.
+// I guess we're saying that real nobility is people who are recognized by Astrata??????????
+// Who fucking cares, bro.
+/datum/quirk/noble
+	name = "Noble"
+	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
+	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax."
+	point_cost = 4
+	added_traits = list(TRAIT_NOBLE)
+	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
+	added_stashed_items = list(
+	"Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
+	"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch
+	)
+	incompatible_vices = list(/datum/charflaw/lawless)
+	incompatible_quirks = list(/datum/quirk/disgracednoble, /datum/quirk/gossiper)
+	incompatible_traits = list(TRAIT_NOBLE)
+
+/datum/quirk/noble/apply_to_human(mob/living/carbon/human/recipient)
+	SStreasury.noble_incomes[recipient] += 15
+	recipient.social_rank = max(recipient.social_rank, SOCIAL_RANK_MINOR_NOBLE)
+
+/datum/quirk/outdoorsy
+	name = "Outdoorsy"
+	desc = "My experience in the wilds allows me to fall asleep on surfaces like treebranches as if they were beds."
+	custom_text = "This does not make branches effective beds or allow you to walk on them, simply that you can sleep on them easily."
+	added_traits = list(TRAIT_OUTDOORSMAN)
+	incompatible_virtues = list(/datum/virtue/utility/woodwalker)
+
+/datum/quirk/pretty
+	name = "Pretty"
+	desc = "I'm no great beauty, but people seem to like looking at my face well enough."
+	point_cost = 2
+	added_traits = list(TRAIT_PRETTY)
+	incompatible_virtues = list(/datum/virtue/utility/socialite)
+	incompatible_quirks = list(/datum/quirk/ugly)
+	incompatible_traits = list(TRAIT_BEAUTIFUL)
+
+/datum/quirk/rawdiet
+	name = "Raw Diet"
+	desc = "Be it from unnatural anatomy or simply a bizarre tolerance, I can eat raw meat and uncooked food as if it were natural."
+	custom_text = "Lets you eat raw meat and uncooked food without getting poisoned. Rotten food, organs, and dirty water will still poison you."
+	point_cost = 2
+	added_traits = list(TRAIT_RAW_EATER)
+	incompatible_virtues = list(/datum/virtue/utility/feral_appetite)
+	incompatible_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER, TRAIT_WILD_EATER)
+
+/datum/quirk/roughlover
+	name = "Rough Lover"
+	desc = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike."
+	point_cost = 2
+	added_traits = list(TRAIT_DEATHBYSNUSNU)
+	incompatible_traits = list(TRAIT_DEATHBYSNUSNU)
+
+/datum/quirk/scarred
+	name = "Scarred"
+	desc = "My face bears terrible scars that make identification difficult, but not impossible."
+	point_cost = 0
+	added_traits = list(TRAIT_SCARRED)
+
+/datum/quirk/secondvoice
+	name = "Second Voice"
+	desc = "From performance, deception, or by a need to change yourself in uncanny ways, you've acquired a second, perfect voice. You may switch between them at any point."
+	custom_text = "Grants access to a new 'Memory' tab. It will have the options for setting and changing your voice."
+	incompatible_vices = list(/datum/charflaw/mute, /datum/charflaw/unintelligible)
+
+/datum/quirk/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.verbs += /mob/living/carbon/human/proc/changevoice
+	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
+
+/datum/quirk/tolerant
+	name = "Tolerant"
+	desc = "Whether fostered through travel or care, you just don't see an issue with certain folks."
+	custom_text = "Prevents you from experiencing negative stress events or examine text when looking at select species and origins."
+	point_cost = 0
+	added_traits = list(TRAIT_TOLERANT)
+
+/datum/quirk/ugly
+	name = "Ugly"
+	desc = "My face is ugly and makes everyone who looks at me miserable."
+	point_cost = 0
+	added_traits = list(TRAIT_UNSEEMLY)
+	incompatible_virtues = list(/datum/virtue/utility/socialite)
+
+/datum/quirk/underdarkchef
+	name = "Underdark Chef"
+	desc = "I've picked up a few culinary secrets from the Underdark. Spider meat is more versatile than you'd think."
+	custom_text = "Allows you to prepare recipes utilizing spider meat."
+	warning_text = "This quirk does nothing if you are already a drow!"
+	added_traits = list(TRAIT_UNDERDARK_CHEF)
+
+/datum/quirk/unsettling
+	name = "Unsettling"
+	desc = "My appearance is deeply unsettling to most. There's something profoundly wrong about my features."
+	point_cost = 1
+	added_traits = list(TRAIT_UNSETTLING)
+	incompatible_virtues = list(/datum/virtue/utility/socialite)
+	incompatible_quirks = list(/datum/quirk/ugly, /datum/quirk/pretty)
+
+/datum/quirk/selfaware
+	name = "Self Aware"
+	desc = "I've always been conscious about how hurt my body can get."
+	added_traits = list(TRAIT_SELF_AWARE)
+	incompatible_traits = list(TRAIT_SELF_AWARE)

@@ -53,7 +53,6 @@
 		TRAIT_BIGGUY,
 	)
 	inherent_biotypes = MOB_HUMANOID
-	armor = 15
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE)
 	nojumpsuit = 1
 	sexes = 1
@@ -104,7 +103,6 @@
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
 	armor = ARMOR_LEATHER 
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PIERCE)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
@@ -123,6 +121,7 @@
 	miss_text = "slashes the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "slash"
+	demolition_mod = 2.5 //I'M A MOLE AND I'M DIGGING A HOLE
 
 /datum/intent/simple/mole/dig
 	name = "DIG"
@@ -134,7 +133,6 @@
 	attack_verb = list("digs", "excavates", "perforates")
 	animname = "cut"
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
 	miss_text = "smashes the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "blunt"
@@ -149,7 +147,6 @@
 	max_blade_int = 300
 	max_integrity = 300
 	force = 25
-	demolition_mod = 2.5 //I'M A MOLE AND I'M DIGGING A HOLE
 	block_chance = 0
 	wdefense = 4 //Very long, decent defense (for wildshape).
 	associated_skill = /datum/skill/combat/unarmed

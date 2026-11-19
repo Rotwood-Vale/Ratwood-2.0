@@ -824,6 +824,18 @@ h2.alert {
 .beautifulnb {
 	color: #9656c9;
 }
+.prettymasc {
+	color: #7b9bdb;
+	font-size: 0.9em;
+}
+.prettyfem {
+	color: #e785b6;
+	font-size: 0.9em;
+}
+.prettynb {
+	color: #c3a2e0;
+	font-size: 0.9em;
+}
 
 .revennotice {
 	color: #1d2953;

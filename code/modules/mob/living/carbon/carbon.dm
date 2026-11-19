@@ -12,6 +12,22 @@
 	GLOB.carbon_list += src
 	if(GLOB.blood_sight_viewers)
 		AddComponent(/datum/component/blood_glow)
+	RegisterSignal(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_PARALYSIS),
+		SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS),
+		SIGNAL_ADDTRAIT(TRAIT_SPELLCOCKBLOCK),
+		SIGNAL_REMOVETRAIT(TRAIT_SPELLCOCKBLOCK),
+		SIGNAL_ADDTRAIT(TRAIT_MUTE),
+		SIGNAL_REMOVETRAIT(TRAIT_MUTE),
+		SIGNAL_ADDTRAIT(TRAIT_BAGGED),
+		SIGNAL_REMOVETRAIT(TRAIT_BAGGED),
+		SIGNAL_ADDTRAIT(TRAIT_GARGLE_SPEECH),
+		SIGNAL_REMOVETRAIT(TRAIT_GARGLE_SPEECH),
+	), PROC_REF(on_spell_availability_trait_changed))
+
+/mob/living/carbon/proc/on_spell_availability_trait_changed(datum/source, trait)
+	SIGNAL_HANDLER
+	update_mob_action_buttons()
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -30,6 +46,7 @@
 	if(underwear)
 		QDEL_NULL(underwear)
 	last_mind = null
+	STOP_PROCESSING(SSiconupdates, src)
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/ZImpactDamage(turf/T, levels)
@@ -492,7 +509,6 @@
 	I.item_flags &= ~BEING_REMOVED
 
 //drops both cuffs to the floor. This is from SS13, not Roguetown.
-//predates nets, so it needs netted status cleanup before anything calls it again
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
 		var/obj/item/W = handcuffed
@@ -534,10 +550,6 @@
 	if(cuff_break)
 		playsound(src, 'sound/misc/chain_snap.ogg', 100, FALSE, 10)
 	to_chat(src, "<span class='notice'>I [cuff_break ? "break" : "slip"] out of [I]!</span>")
-
-	if(istype(I, /obj/item/net))
-		if(has_status_effect(/datum/status_effect/debuff/netted))
-			remove_status_effect(/datum/status_effect/debuff/netted)
 
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
@@ -627,6 +639,14 @@
 	var/nausea = 0
 	var/pain_threshold = 0
 	var/bleeding_tier = 0
+	var/chem_pain = 0
+
+/mob/living/carbon/proc/update_chem_pain()
+	chem_pain = 0
+	for(var/datum/reagent/r in reagents?.reagent_list)
+		if(r.pain && r.metabolizing)
+			chem_pain += r.pain
+	mark_pain_hud_dirty()
 
 /mob/living/carbon/proc/add_nausea(amt)
 	nausea = clamp(nausea + amt, 0, 300)
@@ -735,7 +755,7 @@
 				if(vomitrelay && blood_volume > 0)
 					var/mob/living/carbon/human/parent = vomitrelay.loc
 					var/amt = 5 * parent.physiology.bleed_mod
-					blood_volume = max(blood_volume - amt, 0)
+					adjust_blood_volume(-amt)
 					GLOB.azure_round_stats[STATS_BLOOD_SPILT] += amt
 					if(isturf(vomit_source.loc))
 						add_drip_floor(vomit_source.loc, amt)
@@ -790,7 +810,6 @@
 	if(status_flags & GODMODE)
 		return
 	var/total_burn	= 0
-//	var/total_brute	= 0
 	var/total_stamina = 0
 	var/total_tox = getToxLoss()
 	var/total_oxy = getOxyLoss()
@@ -869,6 +888,12 @@
 	if(HAS_TRAIT(src, TRAIT_DARKVISION))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
 		see_in_dark = max(see_in_dark, 12)
+
+	if(HAS_TRAIT(src, TRAIT_LIGHT_SENSITIVITY))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
+		see_in_dark = max(see_in_dark, 12)
+		if(HAS_TRAIT(src, TRAIT_DARKVISION))
+			lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_SENSITIVE_DARKVISION)
 
 	if(HAS_TRAIT(src, TRAIT_NOCSHADES))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NOCSHADES)
@@ -961,7 +986,7 @@
 	else
 		clear_fullscreen("CMODE")
 
-	if(health <= crit_threshold || ((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE)))
+	if(health <= crit_threshold || ((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS)) || HAS_TRAIT(src, TRAIT_DEATHS_DOOR))
 		var/severity = 0
 		switch(health)
 			if(-20 to -10)
@@ -1105,6 +1130,7 @@
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
+	var/old_stat = stat
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_NEARDEATH && HAS_TRAIT(src, TRAIT_DEATHBARGAIN))
 			src.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
@@ -1114,8 +1140,23 @@
 			death()
 			cure_blind(UNCONSCIOUS_BLIND)
 			return
-		if(((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE)) || IsUnconscious() || IsSleeping() || getOxyLoss() > 75 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
+		if(((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS)) || IsUnconscious() || IsSleeping() || getOxyLoss() > 75 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
+			if(stat != UNCONSCIOUS) // Transition into hardcrit — announce once
+				if((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
+					visible_message(span_danger("<b>[src] collapses, [src.p_their()] skin pale as parchment!</b>"), \
+						span_userdanger("My blood... there is nothing left. I cannot feel my limbs."))
+				else if(getOxyLoss() > 75)
+					visible_message(span_danger("<b>[src] collapses, [src.p_their()] lips turning blue!</b>"), \
+						span_userdanger("I cannot breathe... the world grows dark."))
+				else if(health <= HEALTH_THRESHOLD_FULLCRIT)
+					if(getBruteLoss() >= getFireLoss())
+						visible_message(span_danger("<b>[src] collapses, broken and bloodied!</b>"), \
+							span_userdanger("My bones are shattered... I cannot go on."))
+					else
+						visible_message(span_danger("<b>[src] collapses, [src.p_their()] flesh charred and smoking!</b>"), \
+							span_userdanger("The burning... it has taken everything from me."))
 			stat = UNCONSCIOUS
+			cure_holdbreath() // In case you passed out from holding breathe
 			if(ishuman(src))
 				var/mob/living/carbon/human/H = src
 				H.dna?.species?.stop_wagging_tail(H)
@@ -1136,6 +1177,8 @@
 	update_health_hud()
 //	update_tod_hud()
 	update_spd()
+	if(stat != old_stat)
+		update_mob_action_buttons()
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
@@ -1145,21 +1188,21 @@
 		throw_alert("handcuffed", /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 	else
 		clear_alert("handcuffed")
-	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
+	update_mob_action_buttons() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 	update_mobility()
 
 // sole owner of legcuffed, every path that changes the slot comes through here
-// There are three states that must be maintained consistently with the slot:
-// the movespeed slowdown, the alert, and the overlay!
-// Otherwise, it will keep breaking. If we know it's always true,
-// encapsulate instead of writing it directly every time you need itz`
+// Keep the restraint's slowdown, net debuff, alert, and overlay in sync with the slot.
 /mob/living/carbon/proc/set_legcuffed(obj/item/cuffs, mob/user)
 	if(legcuffed == cuffs)
 		return
 	var/obj/item/old_cuffs = legcuffed
 	legcuffed = cuffs
+	// Inventory removal can move the net before the slot is cleared.
+	if(istype(old_cuffs, /obj/item/net))
+		remove_status_effect(/datum/status_effect/debuff/netted)
 	//must hold: the movespeed slowdown is applied exactly when the slot holds a slowing item
 	remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)
 	if(legcuffed)

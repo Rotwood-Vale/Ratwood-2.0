@@ -6,10 +6,12 @@
 	name = "Arbiter"
 	tutorial = "Unlike Ordinators or Inspectors, Arbiters serve an entirely different purpose. \
 	Drawn from a flock of warrior-priests, they still fight to this day within rot-scoured lands. Uniquely attuned to the rot's touch. \
-	With the aid of rare and dangerous greater miracles, they sniff out the taint. One heretic at a time, to be put to a pyre."
+	Armed with the purported \"miracles\" of the LYVING GOD, arcane lux manipulations of the orders of the Saints Pestra & Noc, the Arbiter seeks \
+	the unholy, the heretic, and the rotted."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
+	pure_heart = TRUE
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
@@ -18,7 +20,8 @@
 		TRAIT_ZOMBIE_IMMUNE,
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
-		TRAIT_OUTLANDER
+		TRAIT_OUTLANDER,
+		TRAIT_NOBLE
 		)//-1 stats over Ordinator/Inspector, if counting STR/SPD as 2 each. +1 over in a respective area when selecting their sect.
 	subclass_stats = list(
 		STATKEY_CON = 3,
@@ -40,7 +43,9 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		"HOUND" = /obj/item/inqhound,
+		"SNIFFER" = /obj/item/inqscanner
 	)
 
 /datum/outfit/job/roguetown/puritan/arbiter/pre_equip(mob/living/carbon/human/H)
@@ -59,7 +64,7 @@
 	beltl = /obj/item/quiver/bolts
 	mask = /obj/item/clothing/mask/rogue/sack/psy/arbiter
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,

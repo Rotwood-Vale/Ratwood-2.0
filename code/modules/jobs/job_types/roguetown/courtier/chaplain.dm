@@ -1,4 +1,4 @@
-#define COURTCHAPLAIN_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+#define COURTCHAPLAIN_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/old_god)
 
 /obj/item/storage/keyring/chaplain
 	keys = list(/obj/item/roguekey/church, /obj/item/roguekey/graveyard,  /obj/item/roguekey/manor)
@@ -23,7 +23,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
-	virtue_restrictions = list(/datum/virtue/utility/noble)//Hmm. I duno, they're PRETTY noble-like.
+	quirk_restrictions = list(/datum/quirk/noble)//Hmm. I duno, they're PRETTY noble-like.
 	job_traits = list(TRAIT_EMPATH)//no homestead expert because we want them doing intrigue intead of gardening?
 	advclass_cat_rolls = list(CTAG_CHAPLAIN = 2)
 	job_subclasses = list(
@@ -43,6 +43,7 @@
 		STATKEY_PER = 2,//eye for intrigue
 		STATKEY_CON = -1,//scrawny pencil-pusher
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
@@ -138,6 +139,13 @@
 			shoes = /obj/item/clothing/shoes/roguetown/boots
 			armor = /obj/item/clothing/suit/roguetown/shirt/robe
 			backpack_contents = list(/obj/item/book/rogue/law)
+		if(/datum/patron/old_god)
+			mask = /obj/item/clothing/head/roguetown/roguehood/psydon
+			neck = /obj/item/clothing/neck/roguetown/psicross
+			cloak = /obj/item/clothing/cloak/absolutionistrobe/black
+			wrists = /obj/item/clothing/wrists/roguetown/wrappings
+			shoes = /obj/item/clothing/shoes/roguetown/boots
+			armor = /obj/item/clothing/cloak/psydontabard
 		// if(/datum/patron/divine/xylix)
 		// 	head = /obj/item/clothing/head/roguetown/roguehood
 		// 	neck = /obj/item/clothing/neck/roguetown/psicross/xylix // no more good luck charm,  you wanna cheat gambling? Xylix weeps
@@ -172,9 +180,7 @@
 		H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE) // Really good at reading... does this really do anything? No. BUT it's soulful.
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE) // for their arcane spells, very little CDR and cast speed.
-		if(H.mind)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC) // So that they can take arcyne potential and not break.
+		H.mind?.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
 	if(H.patron?.type == /datum/patron/divine/abyssor) // The Sea and Weather - probably would be good at fishing - I'm not... REALLY sure what they'd be whispering into the duke's ear about. Other than some cthuluisms
 		H.adjust_skillrank(/datum/skill/labor/fishing, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
@@ -217,3 +223,10 @@
 	// 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 	// 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
 	// 	H.adjust_skillrank(/datum/skill/misc/music, 2, TRUE)
+	if(H.patron?.type == /datum/patron/old_god) // Same as Ravox, since if Psydonites cant use miracles well, they can atleast enhance their psydon granted body..
+		H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+		H.change_stat(STATKEY_CON, 1) // In exchange for literally no effective miralces, they get rid of con malice.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydefy) // PSYDON WILLS THE DUKE TO GET OFF HIS ASS!! (Psydonites literally have like no method of healing people with divine healing or like blood transfusion so uh.. This should help.. Can be removed if too strong.) //

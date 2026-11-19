@@ -200,6 +200,8 @@ GLOBAL_LIST_EMPTY(brewing_recipe_by_reagent)
 		var/datum/supply_pack/PA = SSmerchant.supply_packs[pack_path]
 		if(!PA)
 			continue
+		if(!prob(PA.ship_chance))
+			continue
 		var/key = "[pack_path]"
 		var/list/override = realm.cultural_overrides[key]
 		var/qty_mult = override ? override["qty_mult"] : 1.0

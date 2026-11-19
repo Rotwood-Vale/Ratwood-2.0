@@ -6,7 +6,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/builder
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
-	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON)
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_LEGENDARY_MINER)
 	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
@@ -80,3 +80,6 @@
 		H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 5, TRUE)
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)

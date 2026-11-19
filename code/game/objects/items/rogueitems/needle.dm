@@ -30,8 +30,8 @@
 /// The minimum delay between automatic sewing attempts.
 #define AUTO_SEW_DELAY CLICK_CD_MELEE
 #define SEW_HP_EXP_NORMALIZER 600
-#define SEW_EXP_PER_STEP 0.05
-#define SEW_EXP_FINISH 2.5
+#define SEW_EXP_PER_STEP 0.1
+#define SEW_EXP_FINISH 5
 
 /obj/item/needle
 	name = "needle"
@@ -136,7 +136,7 @@
 				to_chat(user, span_warning("I can't repair that with a needle."))
 				return
 
-			if(HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE))
+			if(HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || HAS_TRAIT(user, TRAIT_DWARF_REPAIR))
 				unskilled = FALSE
 
 			// if we're stupid and the object isn't broken and it's had a field repair, we can't fix it any further for the moment

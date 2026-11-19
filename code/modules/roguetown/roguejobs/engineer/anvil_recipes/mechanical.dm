@@ -1,4 +1,5 @@
 /datum/anvil_recipe/engineering
+	abstract_type = /datum/anvil_recipe/engineering
 	i_type = "Engineering"
 	appro_skill = /datum/skill/craft/engineering
 	craftdiff = 1
@@ -36,26 +37,27 @@
 	createditem_num = 1
 	craftdiff = 0
 
-/datum/anvil_recipe/engineering/roughbarrel
-	name = "Rough Iron Barrel (+5 iron)"
-	req_bar = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron)
-	created_item = /obj/item/bombard_roughbarrel
-	createditem_num = 1
-	craftdiff = 5
+/datum/anvil_recipe/engineeredsmithing
+	abstract_type = /datum/anvil_recipe/engineeredsmithing
+	i_type = "Engineering"
+	appro_skill = /datum/skill/craft/engineering
+	craftdiff = 4
+	req_trait = TRAIT_ENGINEER
+	hides_from_books = TRUE
+	req_bar = /obj/item/ingot/bronze
 
-/datum/anvil_recipe/engineering/sandedbarrel
-	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 partially refined barrel)"
-	req_bar = /obj/item/ingot/iron
-	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_partiallyrefinedbarrel)
-	created_item = /obj/item/bombard_sandedbarrel
+/datum/anvil_recipe/engineeredsmithing/dolabra
+	name = "Blacksteel Dolabra"
+	req_bar = /obj/item/ingot/blacksteel
+	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/blacksteel
 	createditem_num = 1
-	craftdiff = 5
+	craftdiff = 4
 
-/datum/anvil_recipe/engineering/repairedsandedbarrel
-	name = "Repair Sanded Barrel (+4 iron, +1 Sanded Iron Barrel)"
-	req_bar = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedbarrel)
-	created_item = /obj/item/bombard_sandedrepairedbarrel
+/datum/anvil_recipe/engineeredsmithing/dolabra/albranze
+	name = "Albranze Dolabra"
+	req_bar = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/albranze
 	createditem_num = 1
-	craftdiff = 5
+	craftdiff = 3

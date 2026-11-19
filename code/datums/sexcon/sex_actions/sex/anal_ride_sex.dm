@@ -9,7 +9,7 @@
 
 /datum/sex_action/anal_ride_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] gets on top of [target] and begins riding [target.p_them()] with [user.p_their()] butt!"))
-	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
+	playsound_erp(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, extrarange = 0, travel = SOUND_TRAVEL_LEAKING)
 
 /datum/sex_action/anal_ride_sex/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!user.sexcon.do_knot_action_as_bottom)
@@ -23,20 +23,20 @@
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			user.sexcon.try_pelvis_crush(target)
 
-	target.sexcon.perform_sex_action(target, 2, 0, TRUE)
+	target.sexcon.perform_sex_action(target, 2, 0, TRUE, involved_penis = target.getorganslot(ORGAN_SLOT_PENIS))
 	if(target.sexcon.check_active_ejaculation())
 		target.visible_message(span_love("[target] cums into [user]'s butt!"))
 		for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
-			target.sexcon.cum_into(splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, orifice = SEX_PART_ANUS)
+			target.sexcon.cum_into(splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, orifice = SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE)
 			if(HAS_TRAIT(user, TRAIT_BAOTHA_FERTILITY_BOON) && !user.getorganslot(ORGAN_SLOT_VAGINA))
 				target.try_impregnate(user)
 			sleep(10)
 		target.virginity = FALSE
 
 	if(target.sexcon.considered_limp())
-		target.sexcon.perform_sex_action(user, 1.2, 4, FALSE)
+		target.sexcon.perform_sex_action(user, 1.2, 4, FALSE, involved_penis = target.getorganslot(ORGAN_SLOT_PENIS))
 	else
-		target.sexcon.perform_sex_action(user, 2.4, 9, FALSE)
+		target.sexcon.perform_sex_action(user, 2.4, 9, FALSE, involved_penis = target.getorganslot(ORGAN_SLOT_PENIS))
 	user.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/anal_ride_sex/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)

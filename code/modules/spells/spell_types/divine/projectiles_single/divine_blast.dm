@@ -73,7 +73,7 @@
 			damage += 20
 		if(HAS_TRAIT(H, TRAIT_SILVER_WEAK) && !H.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			H.visible_message("<font color='white'>The unholy strike weakens the curse temporarily!</font>")
-			to_chat(H, span_userdanger("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
+			to_chat(H, span_silver("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
 			H.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
 		var/mob/living/carbon/human/caster
 		if (ishuman(firer))
@@ -95,7 +95,7 @@
 						H.ignite_mob()
 				if(/datum/patron/divine/pestra)
 					H.vomit(stun = 0)
-					H.adjustToxLoss(10)
+					H.reagents.remove_reagent(/datum/reagent/medicine, 10)
 					H.visible_message(span_warning("[H] expels some leeches out of them!"), span_warning("Something roils within me!"))
 					new /obj/item/natural/worms/leech(get_turf(H))
 				if(/datum/patron/divine/eora)

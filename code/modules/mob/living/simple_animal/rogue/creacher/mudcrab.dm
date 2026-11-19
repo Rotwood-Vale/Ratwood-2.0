@@ -94,6 +94,5 @@
 		return
 	spawning = TRUE
 	update_icon()
-	spawn(2 SECONDS)
-		createcrab()
+	addtimer(CALLBACK(src, PROC_REF(createcrab)), 2 SECONDS)
 	//addtimer(CALLBACK(src, PROC_REF(creategob)), 4 SECONDS)

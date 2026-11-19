@@ -23,6 +23,8 @@
 	sleevetype = "laciedress"
 	icon = 'modular_azurepeak/icons/clothing/donor_clothes.dmi'
 	mob_overlay_icon = 'modular_azurepeak/icons/clothing/onmob/donor_clothes.dmi'
+	hiked_base_icon = 'modular_azurepeak/icons/clothing/onmob/donor_clothes.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_donor_clothes.dmi'
 	sleeved = 'modular_azurepeak/icons/clothing/onmob/donor_sleeves_armor.dmi'
 
 //Strudles donator item - mage vest (same as robes)

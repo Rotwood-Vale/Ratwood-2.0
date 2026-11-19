@@ -247,6 +247,7 @@
 #define STATS_DRUGS_SNORTED "drugs_snorted"
 #define STATS_ALCOHOL_CONSUMED "alcohol_consumed"
 #define STATS_ALCOHOLICS "alcoholics"
+#define FEATURED_STATS_SMOKERS "smokers"
 #define STATS_JUNKIES "junkies"
 #define STATS_KNOTTED "knottings"
 #define STATS_KNOTTED_NOT_LUPIANS "knottings_by_non_lupians"
@@ -512,6 +513,7 @@ GLOBAL_LIST_EMPTY(patron_follower_counts)
 #define FEATURED_STATS_VIRTUES	"virtues"
 #define FEATURED_STATS_STATPACKS "statpacks"
 #define FEATURED_STATS_VICES	"vices"
+#define FEATURED_STATS_QUIRKS	"quirks"
 
 // Featured objects stats
 #define FEATURED_STATS_CRAFTED_ITEMS "crafted_items"
@@ -601,6 +603,11 @@ GLOBAL_LIST_INIT(featured_stats, list(
 		"color" = "#945d96",
 		"entries" = list()
 	),
+	FEATURED_STATS_SMOKERS = list(
+		"name" = "TOP Smokers",
+		"color" = "#2e201c",
+		"entries" = list()
+	),
 	FEATURED_STATS_MAGES = list(
 		"name" = "TOP Mages",
 		"color" = "#9eaceb",
@@ -631,6 +638,12 @@ GLOBAL_LIST_INIT(featured_stats, list(
 		"color" = "#791368",
 		"entries" = list(),
 		"object_stat" = TRUE
+	),
+	FEATURED_STATS_QUIRKS = list(
+		"name" = "TOP 10 Quirks",
+		"color" = "#5cb896",
+		"entries" = list(),
+		"object_stat" = TRUE,
 	),))
 
 // Chronicle statistics

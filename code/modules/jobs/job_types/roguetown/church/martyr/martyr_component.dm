@@ -381,13 +381,13 @@
 				adjust_stats(current_state)	//Lowers the damage of the sword due to safe activation.
 				current_holder.energy = current_holder.max_energy
 				current_holder.stamina = 0
-				I.sharpness = I.max_blade_int
+				I.blade_int = I.max_blade_int
 			if(STATE_MARTYR)
 				end_activation = world.time + martyr_duration
 				I.max_integrity = 2000				//If you're committing, we repair the weapon and give it a boost so it lasts the whole fight
 				I.obj_integrity = I.max_integrity
 				I.max_blade_int = 9999
-				I.sharpness = I.max_blade_int
+				I.blade_int = I.max_blade_int
 				adjust_stats(current_state)	//Gives them extra stats.
 
 				current_holder.stamina = 0
@@ -400,7 +400,7 @@
 				I.obj_integrity = I.max_integrity
 				
 				I.max_blade_int = 9999
-				I.sharpness = I.max_blade_int
+				I.blade_int = I.max_blade_int
 				
 				current_holder.adjust_skillrank(/datum/skill/misc/athletics, 6, FALSE)
 
@@ -417,6 +417,9 @@
 
 				current_holder.adjust_skillrank_down_to(/datum/skill/combat/wrestling, SKILL_LEVEL_NONE, TRUE)
 				current_holder.adjust_skillrank(/datum/skill/combat/swords, 6, FALSE)
+				current_holder.adjust_skillrank(/datum/skill/combat/axes, 6, FALSE)
+				current_holder.adjust_skillrank(/datum/skill/combat/polearms, 6, FALSE)
+				current_holder.adjust_skillrank(/datum/skill/combat/maces, 6, FALSE)
 				current_holder.adjust_skillrank(/datum/skill/combat/unarmed, 6, FALSE)
 
 				ADD_TRAIT(current_holder, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)

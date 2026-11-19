@@ -6,7 +6,6 @@
 	item_state = "chain_legs"
 	sewrepair = FALSE
 	armor = ARMOR_MAILLE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = CHAINHIT
 	max_integrity = ARMOR_INT_LEG_STEEL_CHAIN
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
@@ -31,8 +30,7 @@
 	icon_state = "splintlegs"
 	item_state = "splintlegs"
 	max_integrity = ARMOR_INT_LEG_BRIGANDINE
-	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	armor = ARMOR_BRIGANDINE
 	blocksound = SOFTHIT
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
@@ -48,9 +46,17 @@
 	smeltresult = /obj/item/ingot/steel
 	dropshrink = 0.9
 
+/obj/item/clothing/under/roguetown/splintlegs/kneelpad
+	name = "steel poleyns"
+	desc = "Two smalls plate kneel pads designed for good flexibility."
+	icon_state = "platekneelpad"
+	item_state = "platekneelpad"
+	body_parts_covered = LEGS
+
 /obj/item/clothing/under/roguetown/splintlegs/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/under/roguetown/splintlegs/iron
 	name = "splinted leggings"
@@ -58,8 +64,7 @@
 	icon_state = "ironsplintlegs"
 	item_state = "ironsplintlegs"
 	max_integrity = ARMOR_INT_LEG_IRON_CHAIN
-	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	armor = ARMOR_LEATHER
 	blocksound = SOFTHIT
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
@@ -83,8 +88,19 @@
 	desc = "A knee-length maille skirt, warding cuts against the thighs without slowing the feet."
 	icon_state = "chain_skirt"
 	item_state = "chain_skirt"
-	body_parts_covered = GROIN
+	body_parts_covered = LEGS
 	armor_class = ARMOR_CLASS_LIGHT
+
+/obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
+	name = "bronze chain skirt"
+	desc = "A knee-length maille skirt, made with hundreds of small bronze rings. It wards cuts against the thighs without slowing the feet."
+	icon_state = "chain_skirt"
+	item_state = "chain_skirt"
+	color = "#f9d690"
+	blocksound = CHAINHIT
+	smeltresult = /obj/item/ingot/bronze
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt
 	name = "steel chain kilt"
@@ -103,6 +119,8 @@
 	sleevetype = "achainkilt"
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/skill/craft/armorsmithing
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit
 	name = "decrepit chain kilt"
@@ -113,7 +131,7 @@
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt/bronze
 	name = "bronze chain kilt"
-	desc = "An ankle-length bronze maille skirt, warding cuts against the thighs without slowing the feet."
+	desc = "Interlinked bronze rings that drape down all the way to the ankles."
 	icon_state = "bchainkilt"
 	item_state = "bchainkilt"
 	sleevetype = "bchainkilt"
@@ -138,7 +156,7 @@
 	desc = "Cuisses made of plated steel, offering additional protection against blunt force and projectiles. These are specially fitted for the captain."
 	icon_state = "capplateleg"
 	item_state = "capplateleg"
-	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
+	armor = ARMOR_PLATE // Unique armor, uniquely good value coverage.
 	max_integrity = ARMOR_INT_LEG_STEEL_PLATE // Integrity of plate chausses.
 	armor_class = ARMOR_CLASS_HEAVY
 	icon = 'icons/roguetown/clothing/special/captain.dmi'

@@ -4,7 +4,6 @@
 	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_CUNT
-	subtle_supported = TRUE
 
 /datum/sex_action/magic/masturbate_other_vagina_prestidigitation/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] conjures arcyne hands toward [target]'s cunt..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))

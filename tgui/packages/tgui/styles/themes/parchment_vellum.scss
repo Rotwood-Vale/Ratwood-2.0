@@ -128,4 +128,16 @@
     text-decoration: underline;
     color: var(--p-ink);
   }
+
+  /* Native <select> dropdowns: keep the open option list on-theme. */
+  select option {
+    color: var(--p-ink);
+    background-color: var(--p-bg);
+  }
+
+  select option:checked,
+  select option:hover {
+    color: var(--p-ink);
+    background-color: var(--p-bg-deep);
+  }
 }

@@ -5,6 +5,16 @@
 	var/list/customizers = species.customizers
 	/// Check if we have any customizer entries that don't match.
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)
+		// Preserve saved tail choices and colors when adding the fertility setting.
+		if(entry.type == /datum/customizer_entry && ispath(entry.customizer_choice_type, /datum/customizer_choice/organ/tail))
+			var/datum/customizer_entry/organ/tail/tail_entry = new
+			tail_entry.customizer_type = entry.customizer_type
+			tail_entry.customizer_choice_type = entry.customizer_choice_type
+			tail_entry.accessory_type = entry.accessory_type
+			tail_entry.accessory_colors = entry.accessory_colors
+			tail_entry.disabled = entry.disabled
+			customizer_entries[customizer_entries.Find(entry)] = tail_entry
+			entry = tail_entry
 		var/validated = FALSE
 		for(var/customizer_type as anything in customizers)
 			if(customizer_type != entry.customizer_type)

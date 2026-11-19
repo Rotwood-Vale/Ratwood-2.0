@@ -29,7 +29,8 @@
 	"Goat-Kin", "Rous-Kin", "Possum-Kin", "Pig-Kin", "Boar-Kin", "Rabbit-Kin", "Cabbit-Kin", "Hare-Kin", "Horse-Kin",
 	"Donkey-Kin", "Hyena-Kin", "Deer-Kin", "Bear-Kin", "Panda-Kin", "Coyote-Kin", "Moose-Kin",
 	"Jackal-Kin", "Panther-Kin", "Lynx-Kin", "Leopard-Kin", "Monkey-Kin", "Bird-Kin", "Seal-Kin", "Frog-Kin",
-	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Drakian-Kin", "Dragon-Kin", "Insect-Kin", "Spider-Kin", "Monster-Kin", "Chimera", "Moth-Kin"
+	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Drakian-Kin", "Dragon-Kin", "Insect-Kin", "Spider-Kin", "Monster-Kin", "Chimera-Kin", "Moth-Kin",
+	"Zebra-Kin", "Pegasus-Kin", "Alicorn-Kin", "Griffon-Kin", "Unicorn-Kin", "Jackalope-Kin", "Chupacabra-Kin", "Raccoon-Kin"
 	)
 
 	default_color = "444"
@@ -119,6 +120,7 @@
 		/datum/customizer/bodypart_feature/underwear,
 		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/tail/anthro,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/tail_feature/anthro,
 		/datum/customizer/organ/snout/anthro,
 		/datum/customizer/organ/ears/anthro,
@@ -133,7 +135,7 @@
 		/datum/customizer/organ/vagina/anthro,
 		/datum/customizer/bodypart_feature/pubes/furry,
 		/datum/customizer/bodypart_feature/pits/furry,
-		/datum/customizer/organ/horns/tusks,
+		/datum/customizer/organ/tusks/humanoid,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -149,6 +151,7 @@
 		/datum/body_marking/tall_eyes,
 		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
+		/datum/body_marking/face_paint,
 		/datum/body_marking/wolf,
 		/datum/body_marking/plain,
 		/datum/body_marking/tiger,

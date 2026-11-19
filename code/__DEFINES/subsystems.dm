@@ -57,8 +57,21 @@
 ///In most cases you want a subsystem instead, so don't use this unless you have a good reason
 #define TIMER_LOOP				(1<<5)
 
+///Delete the timer on parent datum Destroy() and when deltimer'd
+#define TIMER_DELETE_ME			(1<<6)
+
 ///Empty ID define
 #define TIMER_ID_NULL -1
+
+/**
+	Create a new timer and add it to the queue.
+	* Arguments:
+	* * callback the callback to call on timer finish
+	* * wait deciseconds to run the timer for
+	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+	* * timer_subsystem the subsystem to insert this timer into
+*/
+#define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
 //! ## Initialization subsystem
 
@@ -129,6 +142,7 @@
 // SStreasury rides at INIT_ORDER_ECONOMY + 1 and so stays ahead of SSeconomy.
 #define INIT_ORDER_ECONOMY			-2
 #define INIT_ORDER_OUTPUTS			35
+#define INIT_ORDER_PLAYER_ARCHIVES	32 // Before SSatoms, so mapped bookshelves and paintings can draw from the archives.
 #define INIT_ORDER_ATOMS			30
 #define INIT_ORDER_TREES			29
 #define INIT_ORDER_MAPGEN			28 //Can we possibly move this to BEFORE atom init in some way? I sure fuckin hope so.
@@ -150,6 +164,8 @@
 // rolls cultural stock / victualling lines against SSmerchant.supply_packs at Initialize().
 #define INIT_ORDER_MERCHANT_TRADE	-23
 #define INIT_ORDER_MINOR_MAPPING	-40
+/// Initializes after map and template placement so river fill sees the completed terrain
+#define INIT_ORDER_POINT_AMBIENCE	-45
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
 #define INIT_ORDER_PERSISTENCE		-95
@@ -159,6 +175,7 @@
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
 #define FIRE_PRIORITY_IDLE_NPC		5
+#define FIRE_PRIORITY_SLOW_OBJECTS 5
 #define FIRE_PRIORITY_ROLE_CLASS_HANDLER 10
 #define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_WET_FLOORS	10
@@ -186,6 +203,7 @@
 #define FIRE_PRIORITY_ACID			40
 #define FIRE_PRIORITY_BURNING		40
 #define FIRE_PRIORITY_DEFAULT		50
+#define FIRE_PRIORITY_SOUND_LOOPS	55 // TG: 800
 #define FIRE_PRIORITY_PARALLAX		65
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110

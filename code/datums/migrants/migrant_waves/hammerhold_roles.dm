@@ -124,11 +124,9 @@
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/create_campfire)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
 
 
+	H.mind.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)	//T3. We are NOT giving you Abyssal Infusion.
 

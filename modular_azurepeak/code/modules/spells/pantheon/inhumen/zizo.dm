@@ -2,7 +2,7 @@
 
 /obj/effect/proc_holder/spell/invoked/projectile/profane
 	name = "Profane"
-	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
+	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand (or are wearing a zcross around your neck), you will coax a much stronger lance of bone into being, which is capable of severing limbs. 50% stronger versus simple-minded creechers."
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -15,8 +15,10 @@
 	invocation_type = "whisper"
 	releasedrain = 30
 	chargedrain = 0
-	chargetime = 15
-	recharge_time = 10 SECONDS
+	chargetime = 1
+	no_early_release = TRUE
+	movement_interrupt = FALSE
+	recharge_time = 4 SECONDS
 	hide_charge_effect = TRUE // Left handed magick babe
 
 /obj/effect/proc_holder/spell/invoked/projectile/profane/miracle
@@ -29,16 +31,22 @@
 
 	var/obj/item/held_item = user.get_active_held_item()
 	var/big_cast = FALSE
-	if (istype(held_item, /obj/item/natural/bundle/bone))
+	if (ishuman(user)) // if we're wearing a zcross, always big-cast
+		var/mob/living/carbon/human/human_user = user
+		if (istype(human_user.wear_neck, /obj/item/clothing/neck/roguetown/psicross/inhumen)) 
+			projectile_type = /obj/projectile/magic/profane/major
+			big_cast = TRUE
+	
+	if (!big_cast && istype(held_item, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/bonez = held_item
 		if (bonez.use(1))
 			projectile_type = /obj/projectile/magic/profane/major
 			big_cast = TRUE
-	else if (istype(held_item, /obj/item/natural/bone))
+	else if (!big_cast && istype(held_item, /obj/item/natural/bone))
 		qdel(held_item)
 		projectile_type = /obj/projectile/magic/profane/major
 		big_cast = TRUE
-	else if (istype(held_item, /obj/item/natural/bundle/bone))
+	else if (!big_cast && istype(held_item, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/boney_bundle = held_item
 		if (boney_bundle.use(1))
 			projectile_type = /obj/projectile/magic/profane/major
@@ -63,19 +71,29 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	var/embed_prob = 10
+	woundclass = BCLASS_PIERCE
+	npc_simple_damage_mult = 1.5
 
 /obj/projectile/magic/profane/major
 	name = "profaned bone lance"
-	damage = 35
+	damage = 55
 	embed_prob = 30
+	woundclass = BCLASS_CUT
+	npc_simple_damage_mult = 2
 
 /obj/projectile/magic/profane/on_hit(atom/target, blocked)
 	. = ..()
 	if (iscarbon(target) && prob(embed_prob))
+		if (HAS_TRAIT(target, TRAIT_SIMPLE_WOUNDS))
+			var/mob/living/simple_animal/simple_target = target
+			simple_target.simple_bleeding += 10
+			simple_target.visible_message(span_danger("[src] tears into [target]!"), span_userdanger("[src] tears into you, causing violent bleeding!"))
+			return
 		var/mob/living/carbon/carbon_target = target
 		var/obj/item/bodypart/victim_limb = pick(carbon_target.bodyparts)
 		var/obj/item/bone/splinter/our_splinter = new
 		victim_limb.add_embedded_object(our_splinter, FALSE, TRUE)
+		return
 
 /obj/item/bone/splinter
 	name = "bone splinter"
@@ -83,6 +101,7 @@
 		"embed_chance" = 100,
 		"embedded_pain_chance" = 25,
 		"embedded_fall_chance" = 5,
+		"embedded_bloodloss" = 5,
 	)
 
 /obj/item/bone/splinter/dropped(mob/user, silent)
@@ -103,99 +122,6 @@
 /obj/effect/proc_holder/spell/invoked/tame_undead/miracle
 	miracle = TRUE
 	devotion_cost = 100
-
-// T3: Rituos (usable once per sleep cycle, allows you to choose any 1 arcane spell to use for the duration w/ an associated devotion cost. each time you change it, 1 of your limbs is skeletonized, if all of your limbs are skeletonized, you gain access to arcane magic. continuing to use rituos after being fully skeletonized gives you additional spellpoints). Gives you the MOB_UNDEAD flag (needed for skeletonize to work) on first use.
-
-/obj/effect/proc_holder/spell/invoked/rituos
-	name = "Rituos"
-	desc = "Do a ritual for she of Z that skeletonises a part of your body and bestows upon you arcyne magycks until you next sleep. Once your whole body has become skeletonised you gain full access to the Arcyne, bolstering your knowledge of spells with each additional ritual."
-	clothes_req = FALSE
-	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
-	action_icon = 'icons/mob/actions/zizomiracles.dmi'
-	overlay_state = "rituos"
-	associated_skill = /datum/skill/magic/arcane
-	chargedloop = /datum/looping_sound/invokeholy
-	chargedrain = 0
-	chargetime = 50
-	releasedrain = 90
-	no_early_release = TRUE
-	movement_interrupt = TRUE
-	recharge_time = 2 MINUTES
-	hide_charge_effect = TRUE
-	/// List of limbs that don't get skeletonized. Chest has special handling once you are at that point
-	var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bodypart/chest)
-	/// How many times Rituos has been casted
-	var/rituos_counter = 0
-
-/obj/effect/proc_holder/spell/invoked/rituos/miracle
-	miracle = TRUE
-	devotion_cost = 120
-	associated_skill = /datum/skill/magic/holy
-
-/obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
-	. = ..()
-	if(!user || !user.mind)
-		return FALSE
-
-	if(user.mind.has_rituos)
-		to_chat(user, span_warning("I have not the mental fortitude to enact the Lesser Work again. I must rest first..."))
-		return FALSE
-
-	// Find a bodypart to skeletonize
-	var/list/potential_bodypart = list()
-	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
-		if(limb.type in excluded_bodyparts)
-			continue
-		if(limb.skeletonized)
-			continue
-		potential_bodypart += limb
-
-	if(!length(potential_bodypart) && rituos_counter < 4)
-		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
-		return FALSE
-
-	var/obj/item/bodypart/part_to_bonify
-	if(rituos_counter == 4)
-		part_to_bonify = locate(/obj/item/bodypart/chest) in user.bodyparts
-	else
-		part_to_bonify = pick(potential_bodypart)
-
-	if(!part_to_bonify)
-		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
-		return FALSE
-
-	if(!(user.mob_biotypes & MOB_UNDEAD))
-		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
-		user.mob_biotypes |= MOB_UNDEAD
-		to_chat(user, span_smallred("I have forsaken the living. I am now closer to a deadite than a mortal... but I still yet draw breath and bleed."))
-
-	part_to_bonify.skeletonize(FALSE)
-	user.update_body_parts()
-	user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
-
-	user.mind.has_rituos = TRUE
-	rituos_counter++
-	switch(rituos_counter)
-		if(1)
-			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-			ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
-			user.mind?.adjust_spellpoints(3)
-		if(2,4)
-			user.mind?.adjust_spellpoints(3)
-		if(3)
-			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-			user.mind?.adjust_spellpoints(3)
-		if(5)
-			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-			user.grant_language(/datum/language/undead)
-			user.mind?.adjust_spellpoints(6)
-			user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
-			ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
-			ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
-			ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
-			if(prob(33))
-				to_chat(user, span_small("...what have I done?"))
-			user.mind?.RemoveSpell(src)
 
 // T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)
 
@@ -250,6 +176,8 @@
 	var/break_time = 100
 	var/tear_time = 50
 
+	if(!iscarbon(target))
+		return
 	if(target == user)
 		to_chat(user, span_alert("I shouldn't rip out my own lux! I need that."))
 		return
@@ -264,6 +192,8 @@
 		return
 	if((target.mobility_flags & MOBILITY_STAND))
 		to_chat(user, span_info("My target must be lying down to have their lux torn."))
+		return
+	if(zizo_target_error(user, target))
 		return
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || (target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) || target.mob_biotypes & MOB_UNDEAD)) //can't farm your skeletons
 		to_chat(user, span_notice("This one's lux is already disturbed!"))
@@ -287,7 +217,9 @@
 		target.add_stress(/datum/stressevent/myfuckingluxman)
 	playsound(src, 'sound/items/blackmirror_needle.ogg', 60, FALSE, 3)
 	user.visible_message(span_alert("[user] tears a glob of lux from [target]'s chest!"))
-	new /obj/item/reagent_containers/lux_impure(target.loc)
+	new /obj/item/necro_relics/necro_crystal(target.loc)
+	zizo_award(user, 5)
+	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 	record_round_statistic(STATS_LUX_HARVESTED)
@@ -584,3 +516,221 @@
 			if(I.type == item_type)
 				needed--
 				qdel(I)
+
+/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance
+	name = "Avenging Spirits"
+	desc = "Summon three spiteful skulls in Zizo's name to harry a chosen foe."
+	range = 7
+	sound = list('sound/magic/magnet.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargetime = 3
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 45 SECONDS
+	hide_charge_effect = TRUE
+	miracle = TRUE
+	devotion_cost = 50
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "spirits"
+	action_icon_state = "spirits"
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	invocations = list("Woe to the restless who spite Her name!")
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance/cast(list/targets, mob/living/user)
+	. = ..()
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(user.dir == SOUTH || user.dir == NORTH)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_turf(user),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, EAST),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, WEST),user)
+		else
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_turf(user),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, NORTH),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, SOUTH),user)
+		for(var/mob/living/simple_animal/hostile/rogue/spirit_vengeance/swarm in view(2, user))
+			swarm.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		return TRUE
+	revert_cast()
+	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite
+	name = "Summon Avatar"
+	desc = "Call forth a towering skeletal aspect of Zizo, granting your foe the only respite she permits."
+	range = 7
+	sound = list('sound/magic/necra_sight.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargetime = 3
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 1 MINUTES
+	hide_charge_effect = TRUE
+	miracle = TRUE
+	devotion_cost = 100
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "raise_avatar"
+	action_icon_state = "raise_avatar"
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	invocations = list("Pallida dominae, vocat!")
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite/cast(list/targets, mob/living/user)
+	. = ..()
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(user.dir == SOUTH || user.dir == NORTH)
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		else
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		for(var/mob/living/simple_animal/hostile/rogue/spirit_respite/avatar in view(2, user))
+			avatar.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		return TRUE
+	revert_cast()
+	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/silence/miracle/zizo
+	name = "Profane Silence"
+	desc = "Fill their throat with profane silence - ensure neither mage-nor-man shall interrupt you, be it invocation or insult."
+	overlay_state = "silencezizo"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "silencezizo"
+
+/obj/effect/proc_holder/spell/invoked/cascade
+	name = "Flensing Cataclysm"
+	desc = "Woe to the despairing in the face of Ambition. Unleash a cascade of unholy devotion upon the unbeliever - the more devotion they've consumed, the stronger the effect."
+	range = 7
+	sound = list('sound/magic/churn.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "cataclysm"
+	releasedrain = 40
+	chargedrain = 0
+	chargetime = 30
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 90 SECONDS
+	hide_charge_effect = TRUE
+	movement_interrupt = FALSE
+	miracle = TRUE
+	devotion_cost = 100
+
+/obj/effect/proc_holder/spell/invoked/cascade/cast(list/targets, mob/living/user)
+	. = ..()
+
+	if(!targets || !length(targets) || !ishuman(targets[1]))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/target = targets[1]
+
+	if(user.z != target.z)
+		to_chat(user, span_warning("Zizo demands that progress be witnessed on the same level."))
+		revert_cast()
+		return FALSE
+
+	// target.devotion is the devotion DATUM, not a number - the numeric values are on the datum itself.
+	var/datum/devotion/target_devotion = target.devotion
+	var/current_devotion = target_devotion?.devotion
+	var/maximum_devotion = target_devotion?.max_devotion
+
+	if(!isnum(current_devotion) || maximum_devotion <= 0)
+		to_chat(user, span_warning("[target] has no devotion for Zizo to measure."))
+		revert_cast()
+		return FALSE
+
+	var/missing_devotion = maximum_devotion - current_devotion
+
+	if(missing_devotion <= 10)
+		to_chat(user, span_warning("[target]'s faith is not weakened enough to yield."))
+		revert_cast()
+		return FALSE
+
+	if(missing_devotion <= 250)
+		user.say("Yield to the Pale Damsel!")
+		target.visible_message(span_danger("[target] is seared by Zizo's cascade!"), span_userdanger("My weakened faith burns under the weight of dark ambition!"))
+		target.adjustFireLoss(30)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 500)
+		user.say("Falter in the face of TRUE FAITH!")
+		target.visible_message(span_danger("[target] is burned by Zizo's cascade!"), span_userdanger("My devotion falters under searing aspiration!"))
+		target.adjustFireLoss(60)
+		target.adjust_fire_stacks(5, /datum/status_effect/fire_handler/fire_stacks/divine)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 600)
+		user.say("PALE IN THE PATH OF MY DAMSEL'S PROGRESS!!")
+		target.visible_message(span_danger("[target] staggers as Zizo's cascade strikes them!"), span_userdanger("My faith buckles, a burning pain engulfing me!"))
+		target.adjustFireLoss(80)
+		target.adjust_fire_stacks(7, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.Stun(20)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 750)
+		user.say("KNEEL! KNEEL AND WEEP FOR MY LADY!!")
+		target.visible_message(span_danger("[target] is consumed by a cascading, unholy force!"), span_userdanger("My devotion is weakened as a looming, burning darkness fills the gap!"))
+		target.adjustFireLoss(100)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.Stun(20)
+		target.ignite_mob()
+		explosion(get_turf(target), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 800) //something bad happens
+		user.say("YOUR GOD'S FAITH ENDS HERE!!")
+		target.visible_message(span_danger("[target] is wreathed in Zizo's cascading flame!"), span_userdanger("MY SOUL IS NEARLY BURNT ASUNDER - WHERE HAS MY PATRON GONE? IT HURTS."))
+		target.adjustFireLoss(120)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		target.Stun(40)
+		explosion(get_turf(target), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 900) //NOTE - THIS IS NOT A CHURN WEALTHY INSTAKILL MOVE. YOU CAN REASONABLY SURVIVE THIS WITH PEOPLE AROUND. 
+		user.say("ZIZO!! ZIZO!! ZIZO!!")
+		target.visible_message(span_danger("[target] begins to SMOLDER AND SCREAM - THE SCENT IS THICK IN FAITHLESS PETRICHOR."), span_userdanger("I CAN ENDVRE NO LONGER - I BRIEFLY LOSE GRIP UPON THE FIRMAMENT OF MY FAITH - A GRAND MISTAKE. THE FINAL SIGHT UPON MYNE VISION IS A PALE FIGURE, ENCROACHING THE APPROACHING DARKNESS. SHE SMILES. I BURN INTO NAUGHT BUT BLOOD AND BONE."))
+		target.Stun(60)
+		target.emote("agony")
+		target.adjustFireLoss(140)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
+		sleep(80)
+		return TRUE
+
+	else //NOTE - THIS IS IMPOSSIBLE TO ACTUALLY ACHIEVE UNLESS YOU VAREDIT THEIR MAX DEVOTION ABOVE 1000. 
+		user.say("ZIZO BLAST!!") //hilarious
+		target.visible_message(span_danger("[target] begins to SMOLDER AND SCREAM - THE SCENT IS THICK IN FAITHLESS PETRICHOR."), span_userdanger("I CAN ENDVRE NO LONGER - I BRIEFLY LOSE GRIP UPON THE FIRMAMENT OF MY FAITH - A GRAND MISTAKE. THE FINAL SIGHT UPON MYNE VISION IS A PALE FIGURE, ENCROACHING THE APPROACHING DARKNESS. SHE SMILES. I BURN INTO NAUGHT BUT BLOOD AND BONE."))
+		target.Stun(80)
+		target.emote("agony")
+		target.adjustFireLoss(160)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
+		return TRUE

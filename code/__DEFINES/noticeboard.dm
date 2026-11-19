@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(noticeboard_listings)
 #define POSTING_TIER_NOTICE "notice"
 #define POSTING_TIER_LISTING "listing"
 
-#define NOTICEBOARD_NOTICE_LIFETIME (30 MINUTES)
+#define NOTICEBOARD_NOTICE_LIFETIME (180 MINUTES)
 
 #define NOTICEBOARD_TITLE_MAX_LENGTH 50
 #define NOTICEBOARD_BODY_MAX_LENGTH 500
@@ -42,4 +42,13 @@ GLOBAL_LIST_EMPTY(noticeboard_listings)
 	"Marshal", \
 	"Hand", \
 	"Grand Duke", \
+	"Bishop", \
+	"Martyr", \
+	"Watch Captain", \
+	"Cataphract", \
+	"Janissary", \
+	"Janissary Sergeant", \
+	"Retainer", \
+	"Baron", \
+	"Consort", \
 )

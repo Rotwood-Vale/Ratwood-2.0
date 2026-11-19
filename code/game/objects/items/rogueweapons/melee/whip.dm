@@ -7,7 +7,7 @@
 	icon = 'icons/roguetown/weapons/whips32.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.75
-	wlength = WLENGTH_NORMAL
+	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BELT
 	associated_skill = /datum/skill/combat/whipsflails
@@ -39,7 +39,7 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
 	recovery = 7
-	penfactor = 30
+	penfactor = PEN_LIGHT
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -53,7 +53,7 @@
 	chargetime = 0
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -67,7 +67,7 @@
 	chargetime = 0
 	recovery = 5
 	damfactor = 1.2							//No range, gets bonus damage - using this even on weak SHOULD let you get perma-scars then.
-	penfactor = BLUNT_DEFAULT_PENFACTOR		//No pen cus punishment intent.
+	penfactor = PEN_NONE		//No pen cus punishment intent.
 	reach = 1								//No range, cus not meant to be a flat-out combat intent.
 	icon_state = "inpunish"
 	item_d_type = "slash"
@@ -80,16 +80,16 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
 	recovery = 7
-	penfactor = 30 // Total AP potential of 53-55, discounting strength bonuses. Will likely penetrate non-slash resistant light armor, but fail to chunk through maille and plate.
+	penfactor = PEN_MEDIUM // Total AP potential of 53-55, discounting strength bonuses. Will likely penetrate non-slash resistant light armor, but fail to chunk through maille and plate.
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
 
 //Ranged mace-like mode - merc unique for Nagaika (steppesman)
 /datum/intent/whip/crack/blunt
-	name = "bludgen"
+	name = "bludgeon"
 	blade_class = BCLASS_BLUNT
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	recovery = 6
 	reach = 2			//Less range than a normal whip by 1 compared to crack.
 	icon_state = "instrike"
@@ -229,10 +229,11 @@
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	chargetime = 0.5 SECONDS
 	recovery = 7
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/lash/urumi/heavy
 	name = "heavy urumi lash"//i'm a hack
@@ -241,7 +242,7 @@
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	chargetime = 0.8 SECONDS // longer charge cause heavy balance I guess
 	recovery = 7
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -254,7 +255,7 @@
 	chargetime = 0.7 SECONDS
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 25
+	penfactor = PEN_MEDIUM
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -267,10 +268,11 @@
 	chargetime = 0.9 SECONDS
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 15
+	penfactor = PEN_NONE
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust // elden ring nonsense, but cool
 	name = "urumi thrust"
@@ -283,10 +285,11 @@
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust/heavy // elden ring nonsense, but cool
 	name = "urumi thrust"
@@ -295,11 +298,13 @@
 	animname = "stab"
 	icon_state = "instab"
 	reach = 3
-	chargetime = 1.2 SECONDS // can't spam
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 40
+	penfactor = PEN_HEAVY
+	swingdelay_type = SWINGDELAY_CANCEL
+	parriable_intent = FALSE
+	dodgeable_intent = FALSE
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
@@ -362,6 +367,51 @@
 		added_def = 0,\
 	)
 
+/obj/item/rogueweapon/whip/urumi/spider
+	name = "drow urumi"
+	desc = "Two darkly shimmering and flexible blades coiling outwards from a gilded hilt wrapped with a small piece of spider-silk. \
+	The knuckleguarded handle betrays the weapon's grim purpose: to bring the enemies of the drow to their knees, be it through blade or bludgeon."
+	icon_state = "spider_urumi"
+	force = 31//+1, same as spider whip
+	minstr = 10
+	max_integrity = 150
+	special = /datum/special_intent/greatsword_swing
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic
+	name = "psydonic urumi"
+	desc = "Three lengths of shimmering silver coiling outwards from psycross wrapped handle of boswellia wood. This trio of blades, although hefty, can move with devestating speed in a trained hand."
+	icon_state = "psy_urumi"
+	force = 30//less force than tennite silver cause swift balance
+	minstr = 11//taut can reasonably reach this + make use of the swift balance
+	possible_item_intents = list(/datum/intent/whip/lash/urumi, /datum/intent/whip/crack/urumi, /datum/intent/whip/thrust, /datum/intent/dagger/sucker_punch)
+	max_integrity = 125//more blades equals less overall integ, i guess
+	max_blade_int = 200//3 blades, more blade for your buck!
+	is_silver = TRUE
+	wbalance = WBALANCE_SWIFT
+	smeltresult = /obj/item/ingot/silverblessed
+	special = /datum/special_intent/greatsword_swing//GET BEHIND ME ZIZO
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic/old
+	name = "enduring urumi"
+	desc = "Three lengths of tarnished silver coiling outwards from psycross wrapped handle of cut-marred boswellia wood. This trio of blades, although hefty, can move with devestating speed in a trained hand."
+	is_silver = FALSE
+	smeltresult = /obj/item/ingot/steel
+	color = COLOR_FLOORTILE_GRAY
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic/old/ComponentInitialize()
+	return
+
 /obj/item/rogueweapon/whip/urumi/blacksteel
 	name = "blacksteel urumi"
 	desc = "Two lengths of precious blacksteel coiling outwards from a finely ornamented hilt. As much an artpiece as it is weapon."
@@ -370,4 +420,5 @@
 	minstr = 11
 	max_integrity = 280
 	max_blade_int = 280
+	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/blacksteel

@@ -2,7 +2,6 @@
 	name = "Jerk off with magehand"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_COCK
-	subtle_supported = TRUE
 	solo = TRUE
 
 /datum/sex_action/magic/masturbate_penis_prestidigitation/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

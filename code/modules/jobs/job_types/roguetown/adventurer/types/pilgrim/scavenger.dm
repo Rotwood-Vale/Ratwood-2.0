@@ -79,7 +79,7 @@
 	outfit = /datum/outfit/job/roguetown/refugee/prospector
 
 	category_tags = list(CTAG_PILGRIM)
-	traits_applied = list(TRAIT_SMITHING_EXPERT, TRAIT_TRAINED_SMITH, TRAIT_HOMESTEAD_EXPERT)
+	traits_applied = list(TRAIT_SMITHING_EXPERT, TRAIT_TRAINED_SMITH, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_CON = 2,

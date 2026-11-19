@@ -230,6 +230,9 @@
 	. = ..()
 
 /turf/closed/attack_hand(mob/user)
+	if(istype(user.buckled, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
+		var/mob/living/simple_animal/hostile/retaliate/rogue/drider/mount = user.buckled
+		return mount.climb_terrain(src, user)
 	if(wallclimb)
 		if(isliving(user))
 			var/mob/living/L = user

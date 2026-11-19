@@ -21,7 +21,7 @@
 /datum/supply_pack/rogue/underdark/slurbow
 	name = "Underdark Slurbow"
 	cost = 150
-	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow)
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser)
 	ship_qty_min = 1
 	ship_qty_max = 1
 

@@ -65,16 +65,17 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
-#define MOB_MINERAL		1 << 1
-#define MOB_ROBOTIC 	1 << 2
-#define MOB_UNDEAD		1 << 3
-#define MOB_HUMANOID 	1 << 4
-#define MOB_BUG 		1 << 5
-#define MOB_BEAST		1 << 6
-#define MOB_EPIC		1 << 7 //megafauna
-#define MOB_REPTILE		1 << 8
-#define MOB_SPIRIT		1 << 9
+// Parenthesised because unary ~ binds tighter than <<, so a bare 1 << N clears every lower bit too
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -283,6 +284,8 @@
 #define SHOCK_ILLUSION (1 << 2)
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
+///Visual and sound effects only, no damage applied.
+#define SHOCK_VISUAL_ONLY (1 << 4)
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
@@ -551,6 +554,7 @@
 #define SKIN_COLOR_VELOTHEL "87a665"
 #define SKIN_COLOR_KROSEC "f9f9f9"
 #define SKIN_COLOR_ASHOL "9D807A"
+#define SKIN_COLOR_PYRIS "BDE5ED"
 
 //GOBLIN SKIN TONES
 #define SKIN_COLOR_OCHRE "968127"
@@ -632,10 +636,16 @@
 #define DOLL_EBON "4e3729"
 
 // Pixel shifting
+#define PIXEL_ROTATION_STANDING_LIMIT 30
 #define PIXEL_SHIFT_MAXIMUM 16
 #define PIXEL_SHIFT_PASSABLE_THRESHOLD 8
 
 #define TYPING_INDICATOR_TIMEOUT 20 MINUTES
+#ifdef NPC_THINK_DEBUG
+#define AI_THINK(pawn, message) pawn.visible_message(message, runechat_message = message)
+#else
+#define AI_THINK(pawn, message)
+#endif
 
 // NPC Debugging
 #ifdef NPC_THINK_DEBUG
@@ -643,3 +653,7 @@
 #else
 #define NPC_THINK(message)
 #endif
+
+/// Rot accumulated before a corpse rises as a deadite. Lives here rather than in rotting.dm because
+/// the ghost lock in observer.dm uses it too
+#define DEAD_TO_ZOMBIE_TIME (5 MINUTES)

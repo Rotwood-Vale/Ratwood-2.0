@@ -93,7 +93,7 @@
 	blade_class = BCLASS_BLUNT
 	hitsound = 'sound/combat/hits/onstone/wallhit.ogg'
 	chargetime = 0
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	swingdelay = 0
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
@@ -177,7 +177,7 @@
 /// Create a laser in the direction we are facing
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/proc/fire_laser()
 	src.visible_message(span_danger("[src] fires a aberrant beam!"))
-	playsound(src, 'sound/magic/obeliskbeam.ogg', 150, FALSE, 0, 3)
+	playsound(src, 'sound/magic/obeliskbeam.ogg', 150, FALSE, 0)
 	var/turf/target_turf = get_ranged_target_turf(src, src.dir, beam_range)
 	var/turf/origin_turf = get_turf(src)
 	var/list/affected_turfs = get_line(origin_turf, target_turf) - origin_turf

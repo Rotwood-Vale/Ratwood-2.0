@@ -27,7 +27,7 @@
 /datum/supply_pack/rogue/merc_weapons/naledistaff
 	name = "Naledi Warstaff"
 	cost = 300
-	contains = list(/obj/item/rogueweapon/woodstaff/naledi)
+	contains = list(/obj/item/rogueweapon/woodstaff/implement/grand/naledi)
 
 /datum/supply_pack/rogue/merc_weapons/pulaxe
 	name = "Pulaski Axe"
@@ -101,7 +101,7 @@
 
 /datum/supply_pack/rogue/merc_weapons/etruscanlongsword
 	name = "Etruscan Longsword"
-	cost = 200
+	cost = 1409 // 1409 because the Flos Duellatorum was written between 1400-1409 & Fiore is part of the reason frei gets an etruscan class
 	contains = list(/obj/item/rogueweapon/sword/long/etruscan)
 
 /datum/supply_pack/rogue/merc_weapons/handclaw_iron
@@ -117,4 +117,4 @@
 /datum/supply_pack/rogue/merc_weapons/grenzelstaff
 	name = "Grenzelhoftian Blacksteel Staff"
 	cost = 150
-	contains = list(/obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff)
+	contains = list(/obj/item/rogueweapon/woodstaff/implement/greater/blacksteel)

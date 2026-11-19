@@ -110,6 +110,11 @@
 	cost = 25
 	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/pick)
 
+/datum/supply_pack/rogue/Pioneer/dolabra
+	name = "Eleonora"
+	cost = 150
+	contains = list(/obj/item/rogueweapon/pick/woodcutter/dolabra/pioneer)
+
 /datum/supply_pack/rogue/Pioneer/
 
 //Tools of the trade.
@@ -143,6 +148,16 @@
 	name = "Artificer's Wrench"
 	cost = 20
 	contains = list(/obj/item/contraption/linker)
+
+/datum/supply_pack/rogue/Pioneer/polishing_cream
+	name = "Polishing Cream"
+	cost = 50
+	contains = list(/obj/item/polishing_cream)
+
+/datum/supply_pack/rogue/Pioneer/armor_brush
+	name = "Armor Brush"
+	cost = 50
+	contains = list(/obj/item/armor_brush)
 
 /datum/supply_pack/rogue/Pioneer/Sarrows
 	name = "Steel Bodkin Arrow"

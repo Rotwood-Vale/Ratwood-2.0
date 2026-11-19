@@ -40,21 +40,11 @@
 	var/area/A = get_area(src)
 	dna?.species?.stop_wagging_tail(src)
 
-	//OV edit
-	if(isooze(src))
-		var/obj/shapeshift_holder/ooze_death/H = locate() in src
-		if(!H)
-			var/shapeshift_type = /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering
-			var/mob/living/shape = new shapeshift_type(src.loc)
-			shape.color = "#[dna.features["mcolor"]]"
+	if(dna?.species?.intercept_death(src, gibbed))
+		return
 
-			H = new(shape,src)
-			shape.name = "[shape]"
-
-			shape.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/shapeshift/ooze)
-
-			return
-	//OV edit end
+	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_DEATH, gibbed) & COMPONENT_CANCEL_DEATH)
+		return
 
 	if(client)
 		SSdroning.kill_droning(client)
@@ -62,12 +52,6 @@
 		SSdroning.kill_rain(client)
 
 	if(mind)
-		if(!gibbed)
-			var/datum/antagonist/vampire/VD = mind.has_antag_datum(/datum/antagonist/vampire)
-			if(VD)
-				dust(just_ash=TRUE,drop_items=TRUE)
-				return
-
 		var/datum/antagonist/lich/L = mind.has_antag_datum(/datum/antagonist/lich)
 		if (L && !L.out_of_lives)
 			if(L.consume_phylactery())
@@ -104,7 +88,7 @@
 			ZOMBIFICATION BY DEATH BEGINS HERE
 		*/
 		if(!has_world_trait(/datum/world_trait/necra_requiem))
-			if(!is_in_roguetown(src) || has_world_trait(/datum/world_trait/zizo_defilement))
+			if(!is_in_roguetown(src) || has_world_trait(/datum/world_trait/zizo_defilement) || has_world_trait(/datum/world_trait/zizo_bite))
 				if(!zombie_check_can_convert()) //Gives the dead unit the zombie antag flag
 					to_chat(src, span_userdanger("..is this to be my end..?"))
 					to_chat(src, span_danger("The cold consumes the final flicker of warmth in your chest and begins to seep into your limbs..."))
@@ -173,6 +157,8 @@
 
 	dizziness = 0
 	jitteriness = 0
+	if(!dna)
+		return
 	dna.species.spec_death(gibbed, src)
 
 	if(isdullahan(src))
@@ -191,12 +177,24 @@
 		if(client || mind)
 			var/death_admin_message = "[key_name(src)] [loc_name(src)] [ADMIN_FLW(src)] has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])"
 			message_admins(death_admin_message)
+			for(var/client/admin_client in GLOB.admins)
+				if(check_rights_for(admin_client, R_ADMIN) && (admin_client.prefs.toggles & SOUND_DEATH_ALARM))
+					SEND_SOUND(admin_client, sound('sound/misc/death_alarm.ogg'))
 			log_admin(death_admin_message)
 
-/mob/living/carbon/human/revive(full_heal, admin_revive)
+/// A foreign brain refuses mundane revival in become_alive(), the Fulmenor chair pierces it.
+/// Either way a successful revival of one remakes the flesh for the soul that now owns it
+/mob/living/carbon/human/revive(full_heal, admin_revive, bypass_foreign_brain_check)
+	var/needs_binding = (stat == DEAD) && has_foreign_brain()
 	. = ..()
 	if(!.)
 		return
+	if(needs_binding && mind?.player_card)
+		visible_message(span_danger("[src]'s flesh ripples and reshapes as the soul within claims it for its own!"))
+		mind.player_card.apply_identity_to(src)
+		// The conversion regenerates organs and replaces the brain, so re-fetch rather than reuse a stale ref
+		var/obj/item/organ/brain/new_brain = getorganslot(ORGAN_SLOT_BRAIN)
+		new_brain?.original_body_ref = WEAKREF(src)
 	switch(job)
 		if("Grand Duke", "Grand Duchess")
 			removeomen(OMEN_NOLORD)

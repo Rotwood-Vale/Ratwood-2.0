@@ -1159,3 +1159,15 @@
 	if(!T)
 		return
 	new /obj/structure/forcefield_weak/arcyne_prison(T)
+
+/obj/effect/temp_visual/trap_wall
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "trap"
+	light_outer_range = 2
+	duration = 1 SECONDS
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/structure/forcefield_weak/arcyne_prison
+	desc = "A wall of pure arcyne force. This looks like it would be easily broken."
+	name = "Arcyne Prison"
+	max_integrity = 50 // Ultra 

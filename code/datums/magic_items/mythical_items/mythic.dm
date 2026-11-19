@@ -69,6 +69,10 @@
 
 /datum/magic_item/mythic/briarcurse/on_apply(obj/item/i)
 	.=..()
+	if(istype(i, /obj/item/clothing/gloves/roguetown/bandages))
+		var/obj/item/clothing/gloves/roguetown/glove = i
+		glove.unarmed_bonus += 1
+		return
 	i.force = i.force + 10
 	i.force_wielded = i.force_wielded + 10
 
@@ -132,6 +136,7 @@
 			if(2)
 				targeted.apply_damage(10, BRUTE)
 				targeted.Knockdown(20)
+				targeted.drop_all_held_items()
 				to_chat(targeted, span_warning("Chaotic force slams into you!"))
 			if(3)
 				targeted.electrocute_act(12, source, 1)

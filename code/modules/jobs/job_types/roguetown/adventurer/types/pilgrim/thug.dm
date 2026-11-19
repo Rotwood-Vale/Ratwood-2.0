@@ -25,7 +25,9 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/beer = 1)
 
-	var/classes = list("Goon", "Miscreant", "Muscle", "Longshoreman")
+	H.adjust_skillrank_up_to(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
+
+	var/classes = list("Goon", "Miscreant", "Big Man", "Muscle", "Longshoreman")
 	var/classchoice = input(H, "What kind of thug are you?", "TAKE UP ARMS") as anything in classes
 
 	switch(classchoice)
@@ -65,7 +67,7 @@
 					r_hand = /obj/item/cooking/pan
 				if("Knuckles")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
-					r_hand = /obj/item/rogueweapon/knuckles
+					r_hand = /obj/item/clothing/gloves/roguetown/knuckles
 				if("Navaja")
 					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/rogueweapon/huntingknife/idagger/navaja
@@ -111,8 +113,6 @@
 					l_hand = /obj/item/quiver/sling
 				if("Magic Bricks")
 					H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
-					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
-					ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 				if("Lockpicking Equipment")
 					H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_EXPERT, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_EXPERT, TRUE)
@@ -158,7 +158,17 @@
 				if("Big Stick")
 					H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/mace
-
+			var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
+			var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
+			switch(technique_choice)
+				if("Dropkick - Pushback + Extra Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+				if("Chokeslam - Stamina Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+				if("Stunner - Dazed Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+				if("Headbutt - Vulnerable Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 		if("Longshoreman")
 			H.mind.cosmetic_class_title = "Longshoreman"
 			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \

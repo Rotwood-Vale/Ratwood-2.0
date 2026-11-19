@@ -81,6 +81,7 @@
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 	var/sleptonground = FALSE
+	var/nightmare_time = 0
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
@@ -95,6 +96,8 @@
 			carbon_owner = owner
 		if(ishuman(owner))
 			human_owner = owner
+			if(prob(50) && has_world_trait(/datum/world_trait/zizo_strand) && !is_zizo(owner) && !owner.has_status_effect(/datum/status_effect/dream_teleport))
+				nightmare_time = world.time + rand(5 SECONDS, 30 SECONDS)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	if(human_owner && human_owner.client)
@@ -108,6 +111,10 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
+	if(nightmare_time && world.time >= nightmare_time)
+		nightmare_time = 0
+		send_to_dream(human_owner, /datum/status_effect/dream_teleport/strand/nightmare)
+		return
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = -0.2
@@ -603,11 +610,27 @@
 	desc = "I used it. I must wait."
 	icon_state = "strikecd"
 
+/datum/status_effect/debuff/bindcd
+	id = "bindcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/bindcd
+	duration = 15 SECONDS
+
+/datum/status_effect/debuff/bindcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/bindcd
+	name = "Bind Cooldown"
+	desc = "Can't expect the magic to work every time."
+	icon_state = "bindcd"
+
 //---- Special CD
 /datum/status_effect/debuff/specialcd
 	id = "specialcd"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
 	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
 
 /datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
 	if(new_dur)
@@ -615,7 +638,7 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/specialcd
-	name = "Precise Strike Cooldown"
+	name = "Special Manoeuvre Cooldown"
 	desc = "I used it. I must wait."
 	icon_state = "strikecd"
 
@@ -964,3 +987,41 @@
 	name = "Knockback Cooldown"
 	desc = "I have been knocked back recently by an attack and cannot be knocked back again"
 	icon_state = "debuff" // Placeholder
+
+/datum/status_effect/debuff/cast_disrupted
+	id = "cast_disrupted"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/cast_disrupted
+	duration = EXPOSED_CAST_LOCKOUT
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/debuff/cast_disrupted/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/datum/status_effect/debuff/feinted
+	id = "feinted"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/feinted
+	mob_effect_icon = 'icons/mob/mob_effects.dmi'
+	mob_effect_icon_state = "eff_feinted"
+	mob_effect_offset_y = 10
+	mob_effect_layer = MOB_EFFECT_LAYER_FEINTED
+	duration = 30 SECONDS
+
+/datum/status_effect/debuff/feinted/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+//Unused
+
+/atom/movable/screen/alert/status_effect/debuff/cast_disrupted
+	name = "Casting Disrupted"
+	desc = "My concentration is broken. I cannot gather magicka until I recover."
+	icon = 'icons/mob/screen_alert_combat.dmi'
+	icon_state = "castdisrupted"
+
+/atom/movable/screen/alert/status_effect/debuff/feinted
+	name = "Feinted"
+	desc = "I've been feinted. It won't happen again so soon."
+	icon_state = "feinted"

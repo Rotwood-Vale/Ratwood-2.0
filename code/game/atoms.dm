@@ -157,8 +157,7 @@
  * * /turf/Initialize
  * * /turf/open/space/Initialize
  */
-/// Mechanics help lines for the extended examine of machines (ported roguemachines override this).
-/// Not yet surfaced anywhere in Ratwood's examine flow; overrides compile and can be wired later.
+/// Mechanics help lines, shown in a collapsible "Mechanics" dropdown under the examine text (see /mob/verb/examinate).
 /atom/proc/get_mechanics_examine(mob/user)
 	return list()
 
@@ -389,9 +388,20 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
+/**
+ * Get the chat icon of this specific atom for examine or an empty string if it has none.
+ *
+ * Uses cached base64 rather than icon2html(), as sending new assets with browse_rsc stalls the client.
+ * Atoms without a real icon state are skipped, as icon() would otherwise return the entire dmi as a sprite sheet.
+ */
+/atom/proc/get_examine_icon(mob/user)
+	if(!user?.client || !icon_exists(icon, icon_state) || !get_icon_dmi_path(src))
+		return ""
+	return "[icon2base64html(src)] "
+
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	return "[thats? "That's ":""][get_examine_name(user)]"
+	return "[thats? "That's [get_examine_icon(user)]":""][get_examine_name(user)]"
 
 /atom/proc/get_inspect_button()
 	return ""
@@ -1088,7 +1098,7 @@
  * 5 is any additional text, which will be appended to the rest of the log line
  * severe marks crits, dismemberment and death so they are colour coded in the individual log panel
  */
-/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE, severe = FALSE)
+/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE, zone=null, intent=null, damtype=null, severe = FALSE)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
@@ -1101,8 +1111,11 @@
 	var/saddition = ""
 	if(addition)
 		saddition = " [addition]"
+	var/sintent = intent ? " (INTENT: [uppertext(intent)])" : ""
+	var/sdamtype = damtype ? " (DAMTYPE: [uppertext(damtype)])" : ""
+	var/szone = zone ? " (ZONE: [uppertext(zone)])" : ""
 
-	var/postfix = "[sobject][saddition][hp]"
+	var/postfix = "[sobject][saddition][sintent][sdamtype][szone][hp]"
 
 	var/message = "has [what_done] [starget][postfix]"
 	// one id shared by all three writes below, so the panels can tell three renderings of one hit from three hits.

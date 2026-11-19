@@ -23,17 +23,19 @@ SUBSYSTEM_DEF(sounds)
 	/// higher reserve position - decremented and incremented to reserve sound channels, anything above this is reserved. The channel at this index is the highest unreserved channel.
 	var/channel_reserve_high
 
-	/// all sound files
-	var/list/all_sounds = list()
-	/// all music files
 	var/list/all_music_sounds = list()
 
 /datum/controller/subsystem/sounds/Initialize()
+	// Read at boot only. See GLOB.sound_storey_tiles
+	GLOB.sound_storey_tiles = CONFIG_GET(number/sound_storey_tiles)
 	setup_available_channels()
-	find_all_available_sounds()
+	all_music_sounds = pathwalk("sound/ambience/", ".ogg")
 	. = ..()
-
 	preload_music_for_clients()
+
+/datum/controller/subsystem/sounds/proc/preload_music_for_clients()
+	for(var/client/player as anything in GLOB.clients)
+		player.preload_music()
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
 	channel_list = list()
@@ -45,42 +47,18 @@ SUBSYSTEM_DEF(sounds)
 	channel_random_low = 1
 	channel_reserve_high = length(channel_list)
 
-/datum/controller/subsystem/sounds/proc/find_all_available_sounds()
-	all_sounds = list()
-	// Put more common extensions first to speed this up a bit
-	var/static/list/valid_file_extensions = list(
-		".ogg",
-		".wav",
-		".mid",
-		".midi",
-		".mod",
-		".it",
-		".s3m",
-		".xm",
-		".oxm",
-		".raw",
-		".wma",
-		".aiff",
-	)
-
-	all_sounds = pathwalk("sound/", valid_file_extensions)
-
-	all_music_sounds = pathwalk("sound/ambience/", valid_file_extensions)
-	all_music_sounds += pathwalk("sounds/music/", valid_file_extensions)
-
-/datum/controller/subsystem/sounds/proc/preload_music_for_clients()
-	for(var/client/player as anything in GLOB.clients)
-		player.preload_music()
-
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)
 	var/text_channel = num2text(channel)
 	var/using = using_channels[text_channel]
 	using_channels -= text_channel
-	if(using != TRUE)		// datum channel
+	if(using != DATUMLESS) // datum channel
 		using_channels_by_datum[using] -= channel
 		if(!length(using_channels_by_datum[using]))
-			using_channels_by_datum -= using
+			stop_tracking_datum(using)
+	else
+		// DATUMLESS has no deletion signal. Remove its channel entry directly
+		using_channels_by_datum[DATUMLESS] -= channel
 	free_channel(channel)
 
 /// Frees all the channels a datum is using.
@@ -91,14 +69,14 @@ SUBSYSTEM_DEF(sounds)
 	for(var/channel in L)
 		using_channels -= num2text(channel)
 		free_channel(channel)
-	using_channels_by_datum -= D
+	stop_tracking_datum(D)
 
 /// Frees all datumless channels
 /datum/controller/subsystem/sounds/proc/free_datumless_channels()
 	free_datum_channels(DATUMLESS)
 
-/// NO AUTOMATIC CLEANUP - If you use this, you better manually free it later! Returns an integer for channel.
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel_datumless()
+/// Reserve a sound channel. NO AUTOMATIC CLEANUP, free it later with free_sound_channel(). Returns an integer for channel
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel()
 	. = reserve_channel()
 	if(!.)		//oh no..
 		return FALSE
@@ -107,17 +85,37 @@ SUBSYSTEM_DEF(sounds)
 	LAZYINITLIST(using_channels_by_datum[DATUMLESS])
 	using_channels_by_datum[DATUMLESS] += .
 
-/// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel(datum/D)
+/// Reserves a channel for a datum. Automatic cleanup when the datum is deleted. Returns an integer for channel
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/D)
 	if(!D)		//i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)
+		// Let instrument callers report an exhausted channel pool without aborting playback setup
 		return FALSE
 	var/text_channel = num2text(.)
 	using_channels[text_channel] = D
 	LAZYINITLIST(using_channels_by_datum[D])
 	using_channels_by_datum[D] += .
+
+	RegisterSignal(D, COMSIG_QDELETING, PROC_REF(tracked_datum_deleted))
+
+/// Stops tracking a datum's channels. Private proc
+/datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/D)
+	PRIVATE_PROC(TRUE)
+
+	using_channels_by_datum -= D
+	if(isdatum(D)) // DATUMLESS is a string key with nothing to unregister
+		UnregisterSignal(D, COMSIG_QDELETING)
+
+/**
+ * Frees channels when their owning datum is deleted and removes the registry references.
+ */
+/datum/controller/subsystem/sounds/proc/tracked_datum_deleted(datum/source)
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	free_datum_channels(source)
 
 /**
  * Reserves a channel and updates the datastructure. Private proc.
@@ -166,5 +164,20 @@ SUBSYSTEM_DEF(sounds)
 /// How many channels we have left.
 /datum/controller/subsystem/sounds/proc/available_channels_left()
 	return length(channel_list) - random_channels_min
+
+/**
+ * Returns a sound file's duration in deciseconds using rustg_sound_length()'s cache.
+ *
+ * Accepts a file path or a sound datum. Unsupported file values and nonnumeric durations return
+ * zero.
+ */
+/datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
+	if(istype(file_path, /sound))
+		var/sound/as_datum = file_path
+		file_path = as_datum.file
+	// Reject values rustg_sound_length() cannot accept before calling it
+	if(!istext(file_path) && !(isfile(file_path) && length("[file_path]")))
+		return 0
+	return rustg_sound_length(file_path) || 0
 
 #undef DATUMLESS

@@ -18,6 +18,13 @@
 	ship_qty_min = 1
 	ship_qty_max = 2
 
+/datum/supply_pack/rogue/kazengun/nodachi
+	name = "Nodachi"
+	cost = 300
+	contains = list(/obj/item/rogueweapon/greatsword/nodachi)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
 /datum/supply_pack/rogue/kazengun/haraate
 	name = "Haraate Brigandine"
 	cost = 200
@@ -129,3 +136,25 @@
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
+
+/datum/supply_pack/rogue/kazengun/puzzlebox_easy
+	name = "Wooden Puzzle-Box"
+	cost = 20
+	contains = list(/obj/item/mundane/puzzlebox/easy)
+	ship_qty_min = 1
+	ship_qty_max = 3
+
+/datum/supply_pack/rogue/kazengun/puzzlebox_medium
+	name = "Ebony Puzzle-Box"
+	cost = 40
+	contains = list(/obj/item/mundane/puzzlebox/medium)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/kazengun/puzzlebox_royal
+	name = "Royal Puzzle-Box"
+	cost = 1800
+	contains = list(/obj/item/mundane/puzzlebox/impossible)
+	ship_qty_min = 1
+	ship_qty_max = 1
+	ship_chance = 15

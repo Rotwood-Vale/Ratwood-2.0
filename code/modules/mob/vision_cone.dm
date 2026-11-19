@@ -305,6 +305,8 @@
 		if(H.wear_mask)
 			if(H.wear_mask.block2add)
 				fovangle |= H.wear_mask.block2add
+		if(H.has_status_effect(/datum/status_effect/debuff/sun_blinded))
+			fovangle |= FOV_LEFT|FOV_RIGHT
 		if(cyclops_left)
 			fovangle |= FOV_LEFT
 		if(cyclops_right)

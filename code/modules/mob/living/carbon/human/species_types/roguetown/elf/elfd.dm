@@ -42,6 +42,7 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,OLDGREY)
 	allowed_taur_types = list(
 		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/spider/weaver,
 	)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = 1
@@ -118,6 +119,7 @@
 		/datum/body_marking/tall_eyes,
 		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
+		/datum/body_marking/face_paint,
 		/datum/body_marking/tonage,
 		/datum/body_marking/nose,
 		/datum/body_marking/bangs,

@@ -120,7 +120,7 @@
 	var/prefix_text = span_prefix("[pfx]:")
 
 	var/msg_reg = "<font color='#9DCCFF'><b>[prefix_text] <EM>[s_name] → [recipient_label]:</EM> <span class='message'>[msg]</span></b></font>"
-	var/msg_adm = "<font color='#9DCCFF'><b>[prefix_text] <EM>[s_name][admin_info] → [recipient_admin_label]:</EM> <span class='message'>[msg]</span></b></font>"
+	var/msg_adm = "<font color='#2F74A8'><b>[prefix_text] <EM>[s_name][admin_info] → [recipient_admin_label]:</EM> <span class='message'>[msg]</span></b></font>"
 	var/msg_rem = "<font color='#2F74A8'><b>(R) [prefix_text] <EM>[s_name][admin_info] → [recipient_admin_label]:</EM> <span class='message'>[msg]</span></b></font>"
 
 	var/list/seen = list()

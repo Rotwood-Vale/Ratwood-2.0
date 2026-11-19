@@ -22,4 +22,5 @@
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/rags
 	else if(should_wear_masc_clothes(H))
+		H.dna.species.soundpack_m = new /datum/voicepack/male/chosen()
 		pants = /obj/item/clothing/under/roguetown/loincloth

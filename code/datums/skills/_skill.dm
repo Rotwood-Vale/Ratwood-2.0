@@ -23,6 +23,8 @@
 	// Example:
 	// list(TRAIT_EXAMPLE = SKILL_LEVEL_MAXIMUM_WITH_TRAIT, TRAIT_EXAMPLE2 = SKILL_LEVEL_MAXIMUM_WITH_TRAIT2)
 	// Originally designed for Medicine Expert and now used to protect economic roles's niche
+	// Can this skill be trained through sleep/dreams at all? Skills gated to a granting profession (e.g. Arcyne Armament) set this FALSE.
+	var/learnable_in_sleep = TRUE
 
 /datum/skill/proc/get_skill_speed_modifier(level)
 	return

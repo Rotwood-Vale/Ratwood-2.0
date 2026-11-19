@@ -20,7 +20,7 @@
 /datum/mob_descriptor/penis
 	name = "penis"
 	slot = MOB_DESCRIPTOR_SLOT_PENIS
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -31,6 +31,8 @@
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penis)
+		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_PENIS in H.sexcon.hidden_genitals))
 		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
@@ -49,11 +51,13 @@
 	var/adjective
 	var/arousal_modifier
 	switch(penis.penis_size)
-		if(1)
+		if(MIN_PENIS_SIZE)
+			adjective = pick("a tiny","a pathetic","a micro","a worthless","an ornamental","a laughably small","a uselessly small")
+		if(SMALL_PENIS_SIZE)
 			adjective = "a small"
-		if(2)
+		if(DEFAULT_PENIS_SIZE)
 			adjective = "an average"
-		if(3)
+		if(MAX_PENIS_SIZE)
 			adjective = "a large"
 	if(H.sexcon)
 		switch(H.sexcon.arousal)
@@ -71,9 +75,11 @@
 	if(penis.erect_state != ERECT_STATE_HARD && penis.sheath_type != SHEATH_TYPE_NONE)
 		switch(penis.sheath_type)
 			if(SHEATH_TYPE_NORMAL)
-				if(penis.penis_size == 3)
+				if(penis.penis_size == MAX_PENIS_SIZE)
 					used_name = "a fat sheath"
-				else if(penis.penis_size == 1)
+				else if(penis.penis_size == MIN_PENIS_SIZE)
+					used_name = "a tiny sheath"
+				else if(penis.penis_size == SMALL_PENIS_SIZE)
 					used_name = "a meager sheath"
 				else
 					used_name = "a sheath"
@@ -101,7 +107,7 @@
 /datum/mob_descriptor/testicles
 	name = "balls"
 	slot = MOB_DESCRIPTOR_SLOT_TESTICLES
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -115,6 +121,8 @@
 	if(penis && penis.sheath_type == SHEATH_TYPE_SLIT) //If our penis hides in a slit, dont describe testicles
 		return FALSE
 	if(!testes)
+		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_TESTICLES in H.sexcon.hidden_genitals))
 		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
@@ -155,7 +163,7 @@
 /datum/mob_descriptor/vagina
 	name = "vagina"
 	slot = MOB_DESCRIPTOR_SLOT_VAGINA
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -166,6 +174,8 @@
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vagina)
+		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_VAGINA in H.sexcon.hidden_genitals))
 		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
@@ -224,7 +234,7 @@
 /datum/mob_descriptor/breasts
 	name = "breasts"
 	slot = MOB_DESCRIPTOR_SLOT_BREASTS
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -285,12 +295,14 @@
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	if(breasts.breast_size == 0)
 		return "[adjective][branded]"
+	if(breasts.is_pecs())
+		return "[adjective] pair of pecs[branded]"
 	return "[adjective] pair of breasts[branded]"
 
 /datum/mob_descriptor/pubes
 	name = "pubes"
 	slot = MOB_DESCRIPTOR_SLOT_PUBES
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/pubes/proc/get_pubes_feature(mob/living/carbon/human/H)
@@ -365,7 +377,7 @@
 /datum/mob_descriptor/pits
 	name = "armpits"
 	slot = MOB_DESCRIPTOR_SLOT_PITS
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/pits/proc/get_pits_feature(mob/living/carbon/human/H)

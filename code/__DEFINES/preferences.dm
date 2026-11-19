@@ -10,7 +10,7 @@
 #define MEMBER_PUBLIC			(1<<4)
 #define INTENT_STYLE			(1<<5)
 #define MIDROUND_ANTAG			(1<<6)
-#define SOUND_INSTRUMENTS		(1<<7)
+#define SOUND_UPLOADED_SONGS	(1<<7)
 #define SOUND_SHIP_AMBIENCE		(1<<8)
 #define SOUND_PRAYERS			(1<<9)
 #define ANNOUNCE_LOGIN			(1<<10)
@@ -18,10 +18,10 @@
 #define DISABLE_DEATHRATTLE		(1<<12)
 #define DISABLE_ARRIVALRATTLE	(1<<13)
 #define COMBOHUD_LIGHTING		(1<<14)
-
 #define DEADMIN_ALWAYS			(1<<15)
 #define DEADMIN_ANTAGONIST		(1<<16)
 #define DEADMIN_POSITION_HEAD	(1<<17)
+#define SOUND_DEATH_ALARM		(1<<18)
 
 #define TOGGLE_FULLSCREEN		(1<<20)
 #define SCHIZO_VOICE			(1<<21)
@@ -30,9 +30,19 @@
 
 #define FLOATING_TEXT			(1<<0)
 #define XP_TEXT					(1<<1)
-#define TOGGLES_TEXT_DEFAULT (FLOATING_TEXT|XP_TEXT)
+#define HITZONE_TEXT			(1<<2)
+#define TOGGLES_TEXT_DEFAULT (FLOATING_TEXT|XP_TEXT|HITZONE_TEXT)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|TOGGLE_FULLSCREEN|ROLEPLAY_ADS)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_UPLOADED_SONGS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_DEATH_ALARM|TOGGLE_FULLSCREEN|ROLEPLAY_ADS)
+
+/**
+ * Point ambience preferences stored separately from the main preference flags.
+ *
+ * These flags disable features when set, so existing saves with a zero value keep ambience enabled.
+ */
+#define SOUND_DISABLE_POINT_AMBIENCE	(1<<0)
+/// Disables ambience from sconces, standing torches and held torches
+#define SOUND_DISABLE_TORCH_AMBIENCE	(1<<1)
 
 //Chat toggles
 #define CHAT_OOC			(1<<0)
@@ -165,6 +175,7 @@ GLOBAL_LIST_INIT(voice_types_list, list(VOICE_TYPE_MASC, VOICE_TYPE_FEM, VOICE_T
 #define VOICE_PACK_FEM_ELF	"Elvish (Fem)"
 #define VOICE_PACK_FEM_DWARF "Dwarvish (Fem)"
 #define VOICE_PACK_ROTWOMAN "Rotman (Fem)"
+#define VOICE_PACK_CHOSEN "Chosen (Masc)"
 
 GLOBAL_LIST_INIT(voice_packs_list, list(
 	VOICE_PACK_DEFAULT = null,
@@ -184,5 +195,10 @@ GLOBAL_LIST_INIT(voice_packs_list, list(
 	VOICE_PACK_FEM_HAUGHTY = /datum/voicepack/female/haughty,
 	VOICE_PACK_FEM_ELF = /datum/voicepack/female/elf,
 	VOICE_PACK_FEM_DWARF = /datum/voicepack/female/dwarf,
-	VOICE_PACK_ROTWOMAN = /datum/voicepack/female/rotman
+	VOICE_PACK_ROTWOMAN = /datum/voicepack/female/rotman,
+	VOICE_PACK_CHOSEN = /datum/voicepack/male/chosen
 ))
+
+#define VICE_SLOTS 6
+#define LOADOUT_SLOTS 10
+#define PRESET_SLOTS 3

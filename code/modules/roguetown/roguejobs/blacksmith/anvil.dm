@@ -100,42 +100,7 @@
 
 		advance_multiplier = 1
 		user.doing = FALSE
-		spawn(1)
-			while(current_workpiece && forging_comp?.forging_stage == FORGING_STAGE_ACTIVE)
-				// Blades don't need to be hot, only check for ingots
-				if(!hott && istype(current_workpiece, /obj/item/ingot))
-					to_chat(user, span_warning("It's too cold."))
-					return
-
-				var/used_str = user.STASTR
-				if(iscarbon(user))
-					var/mob/living/carbon/carbon_user = user
-					if(carbon_user.domhand)
-						used_str = carbon_user.get_str_arms(carbon_user.used_hand)
-					if(HAS_TRAIT(carbon_user, TRAIT_FORGEBLESSED))
-						carbon_user.stamina_add(max(21 - (used_str * 3), 0)*advance_multiplier)
-					else
-						carbon_user.stamina_add(max(40 - (used_str * 3), 0)*advance_multiplier)
-
-				var/total_chance = 7 * user.get_skill_level(forging_comp.current_recipe.appro_skill) * user.STAPER/10 * hammer.quality
-				var/breakthrough = 0
-				if(prob((1 + total_chance)*advance_multiplier))
-					user.fullscreen_redflash("whiteflash")
-					var/datum/effect_system/spark_spread/S = new()
-					var/turf/front = get_turf(src)
-					S.set_up(1, 1, front)
-					S.start()
-					breakthrough = 1
-					forging_comp.numberofbreakthroughs++
-
-				// Send hammer signal to the workpiece
-				SEND_SIGNAL(current_workpiece, COMSIG_ITEM_HAMMERED_ON_ANVIL, src, user, hammer, breakthrough)
-
-				playsound(src,pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
-				if(do_after(user, 20, target = src))
-					advance_multiplier = 0.50
-				else
-					break
+		addtimer(CALLBACK(src, PROC_REF(forging_loop), user, hammer, forging_comp), 1)
 		return
 
 	// Handle adding materials to current forging
@@ -160,6 +125,45 @@
 		W.forceMove(src.loc)
 		return
 	..()
+
+
+/obj/machinery/anvil/proc/forging_loop(mob/living/user, obj/item/rogueweapon/hammer/hammer, datum/component/forging/forging_comp)
+	while(current_workpiece && forging_comp?.forging_stage == FORGING_STAGE_ACTIVE)
+		// Blades don't need to be hot, only check for ingots
+		if(!hott && istype(current_workpiece, /obj/item/ingot))
+			to_chat(user, span_warning("It's too cold."))
+			return
+
+		var/used_str = user.STASTR
+		if(iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			if(carbon_user.domhand)
+				used_str = carbon_user.get_str_arms(carbon_user.used_hand)
+			if(HAS_TRAIT(carbon_user, TRAIT_FORGEBLESSED))
+				carbon_user.stamina_add(max(21 - (used_str * 3), 0)*advance_multiplier)
+			else
+				carbon_user.stamina_add(max(40 - (used_str * 3), 0)*advance_multiplier)
+
+		var/total_chance = 7 * user.get_skill_level(forging_comp.current_recipe.appro_skill) * user.STAPER/10 * hammer.quality
+		var/breakthrough = 0
+		if(prob((1 + total_chance)*advance_multiplier))
+			user.fullscreen_redflash("whiteflash")
+			var/datum/effect_system/spark_spread/S = new()
+			var/turf/front = get_turf(src)
+			S.set_up(1, 1, front)
+			S.start()
+			breakthrough = 1
+			forging_comp.numberofbreakthroughs++
+
+		// Send hammer signal to the workpiece
+		SEND_SIGNAL(current_workpiece, COMSIG_ITEM_HAMMERED_ON_ANVIL, src, user, hammer, breakthrough)
+
+		playsound(src,pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
+		if(do_after(user, 20, target = src))
+			advance_multiplier = 0.50
+		else
+			break
+	return
 
 /obj/machinery/anvil/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

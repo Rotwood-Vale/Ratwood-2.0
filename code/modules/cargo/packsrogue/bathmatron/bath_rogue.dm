@@ -37,7 +37,6 @@
 /datum/supply_pack/rogue/bath_rogue/mirrortransform
 	name = "Scroll of Mirror Transform"
 	cost = 50
-	contains = list(/obj/item/book/granter/spell/blackstone/mirror_transform)
 
 /datum/supply_pack/rogue/bath_rogue/waterarrows
 	name = "Water Arrows"

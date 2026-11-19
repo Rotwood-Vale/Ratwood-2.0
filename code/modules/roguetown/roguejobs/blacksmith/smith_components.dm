@@ -210,6 +210,7 @@
 	material_quality = floor(material_quality/current_recipe.num_of_materials)-4
 	skill_quality = floor((skill_quality/current_recipe.num_of_materials)/1500)+material_quality
 	skill_quality -= floor(numberofhits * 0.25)
+	skill_quality = clamp(skill_quality, BLACKSMITH_LEVEL_MIN, BLACKSMITH_LEVEL_MAX)
 
 	var/modifier
 	switch(skill_quality)
@@ -239,6 +240,7 @@
 		var/obj/item/I = new current_recipe.created_item(create_turf)
 		// Apply the quality to each item
 		I.name = initial(I.name) // Reset the name first
+		I.was_crafted = TRUE
 		if(modifier != 1)
 			switch(modifier)
 				if(0.3)

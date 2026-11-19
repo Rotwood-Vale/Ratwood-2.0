@@ -200,9 +200,9 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/tamed()
 	del_on_deaggro = 0
 	aggressive = 0
-	if(enemies.len)
+	if(LAZYLEN(enemies))
 		if(prob(23))
-			enemies = list()
+			clear_enemies()
 			src.visible_message(span_notice("[src] calms down."))
 			LoseTarget()
 		else
@@ -216,13 +216,13 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/Life()
 	. = ..()
 	if(.)
-		if(enemies.len)
+		if(LAZYLEN(enemies))
 			if(prob(4))
 				emote("cidle")
 			if(prob(deaggroprob))
 				if(mob_timers["aggro_time"])
 					if(world.time > mob_timers["aggro_time"] + 30 SECONDS)
-						enemies = list()
+						clear_enemies()
 						src.visible_message(span_info("[src] calms down."))
 						LoseTarget()
 				else
@@ -255,8 +255,8 @@
 //		retreat_distance = 10
 //		minimum_distance = 10
 	if(is_apple_pacified_mount())
-		if(enemies.len)
-			enemies = list()
+		if(LAZYLEN(enemies))
+			clear_enemies()
 			LoseTarget()
 		return 0
 	mob_timers["aggro_time"] = world.time

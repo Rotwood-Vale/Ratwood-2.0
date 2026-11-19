@@ -24,7 +24,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnleatherarmor"
 	item_state = "gronnleatherarmor"
-	armor = ARMOR_GRONN_LIGHT
+	armor = ARMOR_LEATHER
 	cold_protection = CHEST
 	min_cold_protection_temperature = 50
 
@@ -34,12 +34,11 @@
 			A wild design that offers superior protection against blunt and slashing. The attack of beasts."
 	icon_state = "gronnleatherpants"
 	item_state = "gronnleatherpants"
-	armor = ARMOR_GRONN_LIGHT
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	armor = ARMOR_GRONN_LIGHT
+	armor = ARMOR_LEATHER
 	cold_protection = GROIN
 	min_cold_protection_temperature = 50
 
@@ -63,7 +62,7 @@
 	item_state = "gronnfurgloves"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	unarmed_bonus = 1.25
+	unarmed_bonus = 5
 	max_integrity = 250
 	color = "#ffffff"
 	cold_protection = HAND_LEFT | HAND_RIGHT
@@ -72,18 +71,17 @@
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
 	name = "moose hood"
-	desc = "A deceptively strong hood of hide with a pair of large heavy antlers. It is the reward of the fourth trial of the Iskarn Shamans, To slay a Grinning moose in the final hunt alone and fashion a hood from it's head."
+	desc = "A deceptively strong hood of hide with a pair of large heavy antlers. It is the reward of the fourth trial of the Zayran Shamans, To slay a Grinning moose in the final hunt alone and fashion a hood from it's head."
 	body_parts_covered = HEAD|HAIR|EARS|NOSE
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/gronn.dmi'
 	icon_state = "gronnfurhood"
 	item_state = "gronnfurhood"
 	bloody_icon = 'icons/effects/blood64.dmi'
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	flags_inv = HIDEEARS|HIDEFACE
 	worn_x_dimension = 32
 	worn_y_dimension = 48
-	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST)
 	anvilrepair = null
 	smeltresult = null
 	sewrepair = TRUE
@@ -173,7 +171,7 @@
 
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/AdjustClothes(mob/user)
-	if(loc == user)
+	if(is_worn_or_stored_by(user))
 		if(adjustable == CAN_CADJUST)
 			playsound(src, 'sound/foley/equip/rummaging-03.ogg', 50, TRUE)
 			if(on)
@@ -238,7 +236,7 @@
 // HEAVY ARMOR -- ditto
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn
-	name = "norsii horned helmet"
+	name = "kheshig horned helmet"
 	desc = "A horned iron helmet, An exotic foreign design. \
 		Styled after the appearance of invading knights of legends from a distant land. Brutal and plain."
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
@@ -255,19 +253,19 @@
 	worn_y_dimension = 64
 
 /obj/item/clothing/suit/roguetown/armor/plate/iron/gronn
-	name = "norsii iron plate"
+	name = "kheshig iron plate"
 	desc = "A strange iron chestplate adorned with tassets and roundels. It is said to be a sight to shake armies."
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnplate"
 	item_state = "gronnplate"
 	boobed = FALSE
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/gloves/roguetown/plate/iron/gronn
-	name = "norsii iron gauntlets"
+	name = "kheshig iron gauntlets"
 	desc = "Iron gauntlets, Simple and protective in design. A single punch leaves a nasty mark."
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
@@ -275,7 +273,7 @@
 	item_state = "gronnplategloves"
 
 /obj/item/clothing/under/roguetown/platelegs/iron/gronn
-	name = "norsii iron chausses"
+	name = "kheshig iron chausses"
 	desc = "Iron chausses with an added set of leather for comfort and padding, The knees are adorned with a skull like shape and that of the moon."
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
@@ -283,7 +281,7 @@
 	item_state = "gronnplatepants"
 
 /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn
-	name = "norsii iron boots"
+	name = "kheshig iron boots"
 	desc = "Iron boots, tied with leather strapping. \
 			Protective, an ancient legend tells of a great warrior who fought for aeons until a \
 			hero speared him in the foot. Many follow this example by protecting their feet heavily."

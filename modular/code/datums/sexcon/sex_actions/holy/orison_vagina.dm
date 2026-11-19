@@ -4,7 +4,6 @@
 	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_CUNT
-	subtle_supported = TRUE
 
 /datum/sex_action/holy/masturbate_other_vagina_orison/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] offers a quiet orison, directing the energies toward [target]'s clit..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
@@ -22,7 +21,7 @@
 	if(!do_subtle)
 		user.sexcon.generic_sex_noise()
 	if(data["jingle"])
-		playsound(user, SFX_JINGLE_BELLS, 30, TRUE, -2, ignore_walls = FALSE)
+		playsound_erp(user, SFX_JINGLE_BELLS, 30, TRUE, -2)
 
 	var/skill_level = max(user.get_skill_level(/datum/skill/magic/holy), 1)
 	user.sexcon.perform_sex_action(target, (data["arousal_mult"] * skill_level), data["pain"], TRUE)

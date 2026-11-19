@@ -67,7 +67,6 @@
 	name = "goblin"
 	desc = "A green changeling creature."
 	icon_state = "goblin"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	max_integrity = 200
 	body_parts_covered = FULL_HEAD
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
@@ -99,7 +98,7 @@
 		var/mob/living/carbon/C = user
 		var/used_hand_zone = C.used_hand == 1 ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
 		to_chat(user, span_warning("[src] bites!"))
-		if(!C.apply_damage(5, BRUTE, used_hand_zone, C.run_armor_check(used_hand_zone, "stab", damage = 5)))
+		if(!C.apply_damage(5, BRUTE, used_hand_zone, C.run_armor_check(used_hand_zone, "stab", armor_penetration = PEN_NONE, damage = 5)))
 			to_chat(user, span_warning("Armor stops the damage."))
 		playsound(get_turf(src), pick('sound/vo/mobs/gob/aggro (1).ogg','sound/vo/mobs/gob/aggro (2).ogg','sound/vo/mobs/gob/aggro (3).ogg','sound/vo/mobs/gob/aggro (4).ogg'), 100, FALSE, -1)
 		return
@@ -222,15 +221,14 @@
 		var/datum/cb = CALLBACK(src, PROC_REF(eat_head))
 		for(var/i in 1 to 10)
 			addtimer(cb, (i - 1) * 1.5 SECONDS)
-		spawn(16 SECONDS)
-			qdel(src)
+		QDEL_IN(src, 16 SECONDS)
 	return TRUE
 
 /obj/item/clothing/mask/rogue/goblin_mask/proc/eat_head()
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		to_chat(C, span_warning("[src] is eating your face!"))
-		if(!C.apply_damage(5, BRUTE, BODY_ZONE_HEAD, C.run_armor_check(BODY_ZONE_HEAD, "stab", damage = 5)))
+		if(!C.apply_damage(5, BRUTE, BODY_ZONE_HEAD, C.run_armor_check(BODY_ZONE_HEAD, "stab", armor_penetration = PEN_NONE, damage = 5)))
 			to_chat(C, span_warning("Armor stops the damage."))
 
 /obj/fae_trickery_trap
@@ -278,11 +276,14 @@
 				var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING)
-			spawn(15 SECONDS)
-				for(var/screen_type in L.hud_used?.plane_masters)
-					var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
-					animate(whole_screen, transform = matrix(), time = 0.5 SECONDS, easing = QUAD_EASING)
+			// Global: the trap qdels itself immediately below, the un-spin must outlive it
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fae_reset_plane_spin), L), 15 SECONDS)
 			qdel(src)
+
+/proc/fae_reset_plane_spin(mob/living/L)
+	for(var/screen_type in L.hud_used?.plane_masters)
+		var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
+		animate(whole_screen, transform = matrix(), time = 0.5 SECONDS, easing = QUAD_EASING)
 
 /obj/fae_trickery_trap/drop
 	name = "fae trap"

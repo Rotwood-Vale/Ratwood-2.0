@@ -54,9 +54,9 @@
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/black
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	beltr = /obj/item/rogueweapon/mace/cudgel
-	belt = /obj/item/storage/belt/rogue/leather/citywatch
+	belt = /obj/item/storage/belt/rogue/leather
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad/garrison
 
@@ -103,16 +103,16 @@
 	..()
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Shield","Polehammer", "Maul - +STR/CON, -SPD/PER/INT", "Crossbow - +SPD/PER, -STR/CON")
+		var/weapons = list("Stunmace & Shield","Lucerne", "Maul - +STR/CON, -SPD/PER/INT", "Crossbow - +SPD/PER, -STR/CON")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Stunmace & Shield")
 				r_hand = /obj/item/rogueweapon/mace/stunmace
-				backl = /obj/item/rogueweapon/shield/iron/citywatch
+				backl = /obj/item/rogueweapon/shield/iron
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-			if("Polehammer")
+			if("Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
@@ -143,20 +143,3 @@
 			)
 
 	H.verbs |= /mob/proc/haltyell
-
-
-#define CLOTHING_CITYWATCH		"#557d8f"
-#define CLOTHING_CITYWATCHLIGHT	"#60a0dbbb"
-
-/obj/item/storage/belt/rogue/leather/citywatch
-	name = "watchman's belt"
-	color = CLOTHING_CITYWATCHLIGHT
-
-/obj/item/clothing/head/roguetown/helmet/kettle/citywatch
-	color = CLOTHING_CITYWATCH
-
-/obj/item/clothing/wrists/roguetown/bracers/citywatch
-	color = CLOTHING_CITYWATCH
-
-/obj/item/rogueweapon/shield/iron/citywatch
-	color = CLOTHING_CITYWATCHLIGHT

@@ -60,7 +60,7 @@
 	name = "Rosestone"
 	base_price = SELLPRICE_ROSESTONE
 	source_region_id = TRADE_REGION_ROCKHILL
-	item_type = /obj/item/carvedgem/rose
+	item_type = /obj/item/carvedgem/rose/rawrose
 
 /datum/trade_good/gem/rare
 	category = TRADE_CATEGORY_GEM_RARE

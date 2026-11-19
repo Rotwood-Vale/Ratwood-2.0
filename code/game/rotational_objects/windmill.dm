@@ -1,7 +1,7 @@
 /// The output is halved for every z-level the windmill sits below the top.
-#define WINDMILL_TOP_RPM_MAX 16
+#define WINDMILL_TOP_RPM_MAX 32
 /// Stress a spinning windmill feeds into its rotation network.
-#define WINDMILL_STRESS_GENERATION 256
+#define WINDMILL_STRESS_GENERATION 1024
 
 /obj/structure/windmill
 	name = "windmill"
@@ -17,6 +17,7 @@
 	stress_generator = TRUE
 	rotation_structure = TRUE
 	initialize_dirs = CONN_DIR_FORWARD | CONN_DIR_FLIP
+	static_debris = list(/obj/item/natural/wood/plank = 4, /obj/item/natural/cloth = 2, /obj/item/grown/log/tree/stick = 2)
 	/// RPM produced on the top z-level before per-level falloff. Rolled once on Initialize so a network's speed stays stable.
 	var/base_rpm = 0
 	/// Direction of rotation output (EAST spins clockwise, WEST counter-clockwise).
@@ -30,7 +31,6 @@
 	. = ..()
 	. += span_info("Place it somewhere with a clear view of the sky - a roof or an upper floor stops it catching the wind.")
 	. += span_info("It spins fastest on the highest level; the wind weakens, halving its output, for each z-level it sits below the top.")
-	. += span_info("Middle-click it with an engineering wrench to disassemble it.")
 
 /obj/structure/windmill/find_rotation_network()
 	. = ..()

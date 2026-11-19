@@ -290,6 +290,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			var/mob/living/carbon/M = loc
 			M.dropItemToGround(src, silent = TRUE)
 			M.mouth = new type_butt(M)
+			record_featured_stat(FEATURED_STATS_SMOKERS, M)
 		else
 			new type_butt(location)
 		qdel(src)
@@ -313,16 +314,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(M.on_fire && !lit)
 		light(span_notice("[user] lights [src] with [M]'s burning body. What a cold-blooded badass."))
 		return
-	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.used_intent.type == INTENT_HELP)
-		if(cig.lit)
-			to_chat(user, span_warning("The [cig.name] is already lit!"))
-		if(M == user)
-			cig.attackby(src, user)
-		else
-			cig.light(span_notice("[user] holds the [name] out for [M], and lights [M.p_their()] [cig.name]."))
-	else
-		return ..()
+	if(lit && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
+		if(cig)
+			if(cig.lit)
+				to_chat(user, span_warning("[cig.name] is already lit!"))
+				return TRUE
+			if(M == user)
+				cig.attackby(src, user)
+			else
+				cig.light(span_notice("[user] holds [src] out for [M], and lights [cig]."))
+			return TRUE
+	return ..()
 
 /obj/item/clothing/mask/cigarette/fire_act(added, maxstacks)
 	light()
@@ -340,6 +343,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/equipped(mob/user, slot)
 	. = ..()
 	update_icon()
+
+/obj/item/clothing/mask/cigarette/attack_right(mob/user)
+	if(lit)
+		user.visible_message(span_notice("[user] pinches out [src] with [user.p_their()] fingers."), \
+				span_notice("I pinch out [src] with my fingers."))
+		extinguish()
+		return 1
+	return ..()
 
 // Rollies.
 
@@ -684,14 +695,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	smoketime = max(smoketime -1, 0)
 	if(smoketime <= 0)
+		lit = FALSE
+		packeditem = FALSE
+		name = "empty [initial(name)]"
+		set_light_on(FALSE)
+		update_icon_state()
 		if(ismob(loc))
 			var/mob/living/M = loc
 			to_chat(M, span_notice("The [name] goes out."))
-			lit = 0
-			update_icon_state()
 			M.update_inv_mouth()
-			packeditem = 0
-			name = "empty [initial(name)]"
+			M.update_inv_hands()
+			record_featured_stat(FEATURED_STATS_SMOKERS, M)
 		STOP_PROCESSING(SSobj, src)
 		return
 	open_flame()
@@ -747,7 +761,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		update_icon_state()
 		STOP_PROCESSING(SSobj, src)
 		return
-	if(!lit && smoketime > 0)
+	if(!lit && (packeditem || smoketime > 0))
 		smoketime = 0
 		to_chat(user, span_notice("I empty [src] onto [location]."))
 		new /obj/item/ash(location)

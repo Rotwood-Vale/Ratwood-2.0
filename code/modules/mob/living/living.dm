@@ -1,6 +1,8 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	/// Mobs this living mob is actively hostile toward.
+	var/list/enemies
 	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
 	var/no_head_bounty = FALSE
 	/// Marks a mob as belonging to a contract warband; its corpse dusts itself after death.
@@ -26,8 +28,7 @@
 	cancel_disconnected_admin_alert()
 	surgeries = null
 	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
+		for(var/datum/status_effect/S as anything in status_effects.Copy())
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
 				qdel(S)
 			else
@@ -52,7 +53,36 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	clear_enemies()
+	enemies = null
 	return ..()
+
+/// Adds a mob to our enemies list, dropping the reference if that mob is ever destroyed.
+/mob/living/proc/add_enemy(mob/living/new_enemy)
+	if(!new_enemy || new_enemy == src || (new_enemy in enemies))
+		return
+	LAZYSET(enemies, new_enemy, null)
+	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed))
+
+/// As add_enemy, but stores an associated value against the mob.
+/mob/living/proc/set_enemy(mob/living/new_enemy, value)
+	if(!new_enemy || new_enemy == src)
+		return
+	add_enemy(new_enemy)
+	enemies[new_enemy] = value
+
+/mob/living/proc/add_enemies(list/new_enemies)
+	for(var/mob/living/new_enemy as anything in new_enemies)
+		add_enemy(new_enemy)
+
+/mob/living/proc/on_enemy_destroyed(datum/source)
+	SIGNAL_HANDLER
+	enemies -= source
+
+/mob/living/proc/clear_enemies()
+	for(var/mob/living/enemy as anything in enemies)
+		UnregisterSignal(enemy, COMSIG_QDELETING)
+	enemies = list()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
@@ -175,461 +205,6 @@
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
 
-	// LANCE / TWO-HANDED SPEAR CHARGE
-	// Triggered by: rider or mount run bump + combat mode + intent-gated weapon use.
-	if(isliving(M))
-		var/mob/living/charger = src
-		var/mob/living/simple_animal/charger_mount = null
-		if(istype(src, /mob/living/simple_animal))
-			var/mob/living/simple_animal/src_mount = src
-			for(var/mob/living/rider in src_mount.buckled_mobs)
-				charger = rider
-				charger_mount = src_mount
-				break
-		else
-			charger_mount = charger.get_buckled_animal_mount()
-
-		var/mob/living/defender = M
-		var/mob/living/simple_animal/defender_mount = null
-		if(istype(M, /mob/living/simple_animal))
-			var/mob/living/simple_animal/target_mount = M
-			for(var/mob/living/rider in target_mount.buckled_mobs)
-				defender = rider
-				defender_mount = target_mount
-				break
-		else
-			defender_mount = defender.get_buckled_animal_mount()
-
-		var/is_charge_bump = FALSE
-		if(src.m_intent == MOVE_INTENT_RUN && src.dir == get_dir(src, M))
-			is_charge_bump = TRUE
-		else if(charger && defender && charger.m_intent == MOVE_INTENT_RUN && charger.dir == get_dir(charger, defender))
-			is_charge_bump = TRUE
-
-		if(!is_charge_bump)
-			return FALSE
-		if(!charger || !defender)
-			return FALSE
-		if(!charger.cmode)
-			return FALSE
-		if(HAS_TRAIT(charger, TRAIT_PACIFISM))
-			return FALSE
-		var/mob/living/charge_runner = charger
-		if(charger_mount && charger_mount.sprinted_tiles >= charger.sprinted_tiles)
-			charge_runner = charger_mount
-
-		var/obj/item/charge_weapon = null
-		// Use a_intent (live HUD intent) — used_intent is only set on LMB click and is stale during movement bumps
-		var/datum/intent/charger_intent = charger.a_intent
-		var/lance_charge_intent = istype(charger_intent, /datum/intent/lance) || istype(charger_intent, /datum/intent/spear/thrust/lance)
-		var/spear_charge_intent = istype(charger_intent, /datum/intent/spear/thrust) || istype(charger_intent, /datum/intent/stab) || (charger_intent?.blade_class == BCLASS_STAB)
-		var/obj/item/active_weapon = charger.get_active_held_item()
-		var/spearclass_charge_weapon = istype(active_weapon, /obj/item/rogueweapon/spear) || istype(active_weapon, /obj/item/rogueweapon/halberd)
-		if(istype(active_weapon, /obj/item/rogueweapon/spear/lance))
-			if(lance_charge_intent)
-				charge_weapon = active_weapon
-		else if(spearclass_charge_weapon && !istype(active_weapon, /obj/item/rogueweapon/spear/lance))
-			if(spear_charge_intent)
-				charge_weapon = active_weapon
-		if(!charge_weapon)
-			for(var/obj/item/cw in charger.held_items)
-				var/spearclass_held_weapon = istype(cw, /obj/item/rogueweapon/spear) || istype(cw, /obj/item/rogueweapon/halberd)
-				if(istype(cw, /obj/item/rogueweapon/spear/lance))
-					if(lance_charge_intent)
-						charge_weapon = cw
-						break
-				else if(spearclass_held_weapon && !istype(cw, /obj/item/rogueweapon/spear/lance))
-					if(spear_charge_intent)
-						charge_weapon = cw
-						break
-
-		if(charge_weapon)
-			var/base_damage = max(round(get_complex_damage(charge_weapon, charger)), 1)
-			var/charger_sprinted_tiles = charger.sprinted_tiles
-			var/charger_sprint_dir = charger.sprint_dir
-			var/runner_sprinted_tiles = charge_runner.sprinted_tiles
-			var/runner_sprint_dir = charge_runner.sprint_dir
-			// Force walk intent immediately, bypassing the mounted do_after delay in toggle_rogmove_intent
-			charger.m_intent = MOVE_INTENT_WALK
-			charger.sprinted_tiles = 0
-			charger.sprint_dir = charger.dir
-			charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-			if(charger.hud_used?.static_inventory)
-				for(var/atom/movable/screen/rogmove/S in charger.hud_used.static_inventory)
-					S.update_icon()
-			if(charger_mount)
-				charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-			var/has_charger_shield = FALSE
-			for(var/obj/item/my_item in charger.held_items)
-				if(istype(my_item, /obj/item/rogueweapon/shield))
-					has_charger_shield = TRUE
-					break
-			var/has_defender_shield = FALSE
-			var/obj/item/defender_shield_item = null
-			for(var/obj/item/def_item in defender.held_items)
-				if(istype(def_item, /obj/item/rogueweapon/shield))
-					has_defender_shield = TRUE
-					defender_shield_item = def_item
-					break
-
-			if(!charger_mount)
-				// Keep unmounted lance/spear charge behavior aligned with the legacy on-foot contest logic
-				var/sprint_distance = charger_sprinted_tiles
-				var/instafail_foot = FALSE
-				var/self_points = FLOOR((charger.STACON + charger.STASTR) / 2, 1)
-				var/target_points = FLOOR((defender.STACON + defender.STASTR) / 2, 1)
-				var/foot_target_zone = charger.zone_selected
-				if(!foot_target_zone)
-					foot_target_zone = BODY_ZONE_CHEST
-
-				switch(sprint_distance)
-					if(0 to 1)
-						self_points -= 99
-						instafail_foot = TRUE
-					if(2 to 3)
-						self_points -= 2
-					if(6 to INFINITY)
-						self_points += 1
-
-				if(defender.dir == get_dir(charger, defender))
-					self_points += 2
-
-				self_points += rand(-1, 1)
-
-				if(charger.dir != charger_sprint_dir)
-					self_points -= 99
-					instafail_foot = TRUE
-					to_chat(charger, span_warning("I changed direction too late!"))
-
-				var/clash_blocked_foot = FALSE
-				if(defender.has_status_effect(/datum/status_effect/buff/clash) && !instafail_foot)
-					self_points -= 99
-					defender.remove_status_effect(/datum/status_effect/buff/clash)
-					to_chat(charger, span_warning("[defender] was ready for me!"))
-					if(prob(10))
-						playsound(charger, 'sound/combat/clash_charge_meme.ogg', 100)
-					else
-						playsound(charger, 'sound/combat/clash_charge.ogg', 100)
-					clash_blocked_foot = TRUE
-
-				if(self_points > target_points)
-					defender.Knockdown(1)
-				if(self_points < target_points)
-					charger.Knockdown(30)
-				if(self_points == target_points)
-					defender.Knockdown(1)
-					charger.Knockdown(30)
-
-				if(instafail_foot || clash_blocked_foot || self_points <= target_points)
-					// On-foot failed spear/lance charge: mounted fail stun plus one extra second.
-					charger.Stun(25)
-
-				charger.Immobilize(10)
-
-				var/hit_sound = FALSE
-				var/foot_effective_str = charger.STASTR + (charge_weapon.wielded ? 1 : 0)
-				var/foot_charge_damage = max(base_damage + max(round(sprint_distance / 2), 0) + FLOOR(foot_effective_str / 5, 1), 1)
-				if(foot_target_zone != BODY_ZONE_CHEST)
-					foot_charge_damage += 2
-				var/foot_penetration = 35
-				var/foot_armor_block = defender.run_armor_check(foot_target_zone, "stab", armor_penetration = foot_penetration, damage = foot_charge_damage)
-				var/effective_foot_block = min(foot_armor_block, max(foot_charge_damage - 5, 0))
-				if(defender.apply_damage(foot_charge_damage, BRUTE, foot_target_zone, effective_foot_block))
-					hit_sound = TRUE
-
-				if(self_points >= target_points && !instafail_foot && !clash_blocked_foot)
-					var/foot_wound_chance = 35
-					if(sprint_distance > 5)
-						foot_wound_chance += 15
-					if(iscarbon(defender))
-						var/mob/living/carbon/CF = defender
-						var/obj/item/bodypart/foot_part = CF.get_bodypart(foot_target_zone)
-						if(!foot_part && (foot_target_zone in list(BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)))
-							foot_part = CF.get_bodypart(BODY_ZONE_HEAD)
-						if(!foot_part)
-							foot_part = CF.get_bodypart(BODY_ZONE_CHEST)
-						if(foot_part)
-							foot_part.try_crit(BCLASS_STAB, foot_charge_damage + 12, charger, foot_target_zone, FALSE, TRUE)
-						if(prob(foot_wound_chance))
-							if(foot_part)
-								foot_part.add_wound(/datum/wound/puncture/large)
-						if((defender.mob_biotypes & MOB_UNDEAD) && prob(35))
-							var/obj/item/bodypart/foot_fracture_part = CF.get_bodypart(foot_target_zone)
-							if(!foot_fracture_part)
-								foot_fracture_part = CF.get_bodypart(BODY_ZONE_HEAD)
-							if(!foot_fracture_part)
-								foot_fracture_part = CF.get_bodypart(BODY_ZONE_CHEST)
-							if(foot_fracture_part)
-								foot_fracture_part.add_wound((foot_target_zone in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)) ? /datum/wound/fracture/head : /datum/wound/fracture)
-								defender.Knockdown(40)
-								defender.Stun(25)
-								defender.Immobilize(20)
-					else if((defender.mob_biotypes & MOB_UNDEAD) && HAS_TRAIT(defender, TRAIT_SIMPLE_WOUNDS))
-						if(prob(foot_wound_chance))
-							defender.simple_add_wound(/datum/wound/puncture/large, silent = FALSE, crit_message = TRUE)
-							defender.simple_woundcritroll(BCLASS_STAB, foot_charge_damage + 12, charger, foot_target_zone, silent = FALSE, crit_message = TRUE)
-							defender.Knockdown(40)
-							defender.Stun(25)
-							defender.Immobilize(20)
-
-				if(instafail_foot)
-					if(charger.apply_damage(15, BRUTE, "head", charger.run_armor_check("head", "blunt", damage = 20)))
-						hit_sound = TRUE
-
-				if(hit_sound)
-					playsound(charger, "genblunt", 100, TRUE)
-
-				if(instafail_foot || clash_blocked_foot)
-					if(instafail_foot)
-						visible_message(span_crit("<big><b>[charger] smashes into [defender] with no headstart!</b></big>"), span_crit("<big><b>I charge into [defender] too early!</b></big>"))
-					if(clash_blocked_foot)
-						visible_message(span_crit("<big><b>[charger] gets tripped by [defender]!</b></big>"), span_crit("<big><b>I get tripped by [defender]!</b></big>"))
-				else
-					if(self_points >= target_points)
-						defender.Knockdown(35)
-						defender.Stun(15)
-					visible_message(span_crit("<big><b>[charger] drives [charge_weapon] into [defender]!</b></big>"), span_crit("<big><b>I drive [charge_weapon] into [defender]!</b></big>"))
-
-				return TRUE
-
-			// CON scaling — +2 bonus while mounted, representing the stability of a horse
-			var/effective_con = charger.STACON + (charger_mount ? 2 : 0)
-
-			var/charge_distance = runner_sprinted_tiles
-			if(charger_mount)
-				charge_distance = max(charge_distance, charger_sprinted_tiles)
-			var/effective_str = charger.STASTR + (charge_weapon.wielded ? 1 : 0)
-			var/charge_damage_bonus = max(round(charge_distance / 4), 0) + FLOOR(effective_str / 5, 1)
-			var/charge_damage = max(base_damage + charge_damage_bonus, 1)
-			var/charge_points = effective_con + charge_distance
-			var/instafail = FALSE
-			switch(charge_distance)
-				if(0 to 1)
-					if(charger_mount)
-						charge_points -= 2
-					else
-						charge_points -= 99
-						instafail = TRUE
-				if(2 to 3)
-					charge_points -= 2
-				if(5 to INFINITY)
-					charge_points += 2
-			if(charge_distance > 0)
-				var/valid_charge_direction = FALSE
-				if(runner_sprint_dir && charge_runner.dir == runner_sprint_dir)
-					valid_charge_direction = TRUE
-				else if(charger_mount && charger_sprint_dir && charger.dir == charger_sprint_dir)
-					valid_charge_direction = TRUE
-				if(!valid_charge_direction)
-					charge_points -= 99
-					instafail = TRUE
-					to_chat(charger, span_warning("I changed direction too late!"))
-
-			// Mounted head-on charges can resolve as a joust clash where one rider is unhorsed.
-			if(charger_mount && defender_mount && !instafail)
-				var/obj/item/defender_charge_weapon = null
-				var/datum/intent/defender_intent = defender.a_intent
-				var/defender_lance_charge_intent = istype(defender_intent, /datum/intent/lance) || istype(defender_intent, /datum/intent/spear/thrust/lance)
-				var/defender_spear_charge_intent = istype(defender_intent, /datum/intent/spear/thrust) || istype(defender_intent, /datum/intent/stab) || (defender_intent?.blade_class == BCLASS_STAB)
-				var/obj/item/defender_active_item = defender.get_active_held_item()
-				var/defender_spearclass_charge_weapon = istype(defender_active_item, /obj/item/rogueweapon/spear) || istype(defender_active_item, /obj/item/rogueweapon/halberd)
-				if(istype(defender_active_item, /obj/item/rogueweapon/spear/lance))
-					if(defender_lance_charge_intent)
-						defender_charge_weapon = defender_active_item
-				else if(defender_spearclass_charge_weapon && !istype(defender_active_item, /obj/item/rogueweapon/spear/lance))
-					if(defender_spear_charge_intent)
-						defender_charge_weapon = defender_active_item
-
-				if(defender_charge_weapon && defender.cmode && defender.m_intent == MOVE_INTENT_RUN && defender.dir == get_dir(defender, charger))
-					var/mob/living/def_charge_runner = defender
-					if(defender_mount && defender_mount.sprinted_tiles >= defender.sprinted_tiles)
-						def_charge_runner = defender_mount
-					var/def_effective_con = defender.STACON
-					var/def_charge_distance = def_charge_runner.sprinted_tiles
-					if(defender_mount)
-						def_charge_distance = max(def_charge_distance, defender.sprinted_tiles)
-					var/def_charge_points = def_effective_con + def_charge_distance
-					switch(def_charge_distance)
-						if(0 to 1)
-							if(defender_mount)
-								def_charge_points -= 2
-							else
-								def_charge_points -= 99
-						if(2 to 3)
-							def_charge_points -= 2
-						if(5 to INFINITY)
-							def_charge_points += 2
-					if(def_charge_runner.sprinted_tiles > 0)
-						var/valid_def_charge_direction = FALSE
-						if(def_charge_runner.sprint_dir && def_charge_runner.dir == def_charge_runner.sprint_dir)
-							valid_def_charge_direction = TRUE
-						else if(defender_mount && defender.sprint_dir && defender.dir == defender.sprint_dir)
-							valid_def_charge_direction = TRUE
-						if(!valid_def_charge_direction)
-							def_charge_points -= 99
-					if(istype(charge_weapon, /obj/item/rogueweapon/spear/lance) && has_charger_shield)
-						charge_points += 2
-					if(istype(defender_charge_weapon, /obj/item/rogueweapon/spear/lance) && has_defender_shield)
-						def_charge_points += 2
-					charge_points += rand(-1, 1)
-					def_charge_points += rand(-1, 1)
-
-					var/mob/living/unhorsed_rider = null
-					if(charge_points > def_charge_points)
-						unhorsed_rider = defender
-					else if(charge_points < def_charge_points)
-						unhorsed_rider = charger
-					else
-						unhorsed_rider = prob(50) ? defender : charger
-
-					var/mob/living/simple_animal/unhorsed_mount = unhorsed_rider?.get_buckled_animal_mount()
-					if(unhorsed_mount)
-						unhorsed_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-					if(unhorsed_rider?.buckled)
-						unhorsed_rider.buckled.unbuckle_mob(unhorsed_rider, TRUE)
-					// Force walk intent for the unhorsed rider immediately
-					unhorsed_rider.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-					unhorsed_rider.Knockdown(40)
-					unhorsed_rider.Stun(20)
-					unhorsed_rider.Immobilize(20)
-					playsound(charger, 'sound/combat/clash_charge.ogg', 100)
-					visible_message(span_crit("<big><b>[charger] and [defender] collide in a brutal joust clash! [unhorsed_rider] is thrown from their mount!</b></big>"), span_crit("<big><b>Our charges crash together and [unhorsed_rider == charger ? "I am" : "[defender] is"] thrown from [unhorsed_rider == charger ? "my" : "their"] mount!</b></big>"))
-					return TRUE
-
-			// Target braced with defensive stance: likely to stop the charge via CON contest.
-			if(defender.has_status_effect(/datum/status_effect/buff/clash) && !instafail)
-				var/block_points = defender.STACON
-				if(has_defender_shield)
-					block_points += 2
-				var/stance_block_chance = 45 + ((block_points - charge_points) * 8)
-				if(charge_distance >= 4)
-					stance_block_chance -= 15
-				if(stance_block_chance < 10)
-					stance_block_chance = 10
-				if(stance_block_chance > 85)
-					stance_block_chance = 85
-				if(prob(stance_block_chance))
-					defender.remove_status_effect(/datum/status_effect/buff/clash)
-					if(defender_shield_item)
-						defender_shield_item.take_damage(max(round(base_damage * 2), 1), BRUTE, "blunt", TRUE, armor_penetration = 100)
-					if(charger_mount)
-						charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-					if(charger.buckled)
-						charger.buckled.unbuckle_mob(charger, TRUE)
-					charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-					charger.Knockdown(40)
-					charger.Stun(20)
-					charger.Immobilize(10)
-					if(ishuman(charger))
-						var/mob/living/carbon/human/HS = charger
-						HS.bad_guard(span_danger("I charged straight into a braced defender! My momentum is completely shattered!"))
-					playsound(charger, 'sound/combat/clash_charge.ogg', 100)
-					visible_message(span_crit("<big><b>[charger] is stopped dead by [defender]'s braced stance!</b></big>"), span_crit("<big><b>I charge headlong into [defender]'s braced stance and am thrown to the ground!</b></big>"))
-					return TRUE
-
-			// Shield-only reactive block without defensive stance.
-			if(has_defender_shield && !defender.has_status_effect(/datum/status_effect/buff/clash) && !instafail)
-				var/shield_block_points = defender.STACON + 2
-				var/shield_block_chance = 20 + ((shield_block_points - charge_points) * 8)
-				if(charge_distance >= 4)
-					shield_block_chance -= 20
-				if(shield_block_chance < 5)
-					shield_block_chance = 5
-				if(shield_block_chance > 55)
-					shield_block_chance = 55
-				if(prob(shield_block_chance))
-					defender_shield_item.take_damage(max(round(base_damage * 2), 1), BRUTE, "blunt", TRUE, armor_penetration = 100)
-					if(charger_mount)
-						charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-					if(charger.buckled)
-						charger.buckled.unbuckle_mob(charger, TRUE)
-					charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-					charger.Knockdown(30)
-					charger.Stun(15)
-					charger.Immobilize(8)
-					playsound(charger, 'sound/combat/clash_charge.ogg', 100)
-					visible_message(span_crit("<big><b>[defender] absorbs [charger]'s charge on [defender.p_their()] shield!</b></big>"), span_crit("<big><b>My charge is turned aside by [defender]'s shield!</b></big>"))
-					return TRUE
-
-			if(!instafail)
-				// Successful charge: armor-penetrating strike and knockdown
-				var/target_zone = charger.zone_selected
-				if(!target_zone)
-					target_zone = BODY_ZONE_CHEST
-				var/armor_block = defender.run_armor_check(target_zone, "stab", armor_penetration = 40, damage = charge_damage)
-				// Mounted charge impacts should always transfer some force, even through heavy armor.
-				var/effective_armor_block = min(armor_block, max(charge_damage - 10, 0))
-				defender.apply_damage(charge_damage, BRUTE, target_zone, effective_armor_block)
-				if(defender_mount && defender.buckled)
-					defender_mount.unbuckle_mob(defender, TRUE)
-					defender.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-				defender.Knockdown(35)
-				defender.Stun(15)
-				charger.Immobilize(10)
-				// Mounted spear/lance charges are much more likely to create severe puncture trauma
-				if(iscarbon(defender))
-					var/mob/living/carbon/C = defender
-					var/obj/item/bodypart/target_part = C.get_bodypart(target_zone)
-					if(!target_part && (target_zone in list(BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)))
-						target_part = C.get_bodypart(BODY_ZONE_HEAD)
-					if(!target_part)
-						target_part = C.get_bodypart(BODY_ZONE_CHEST)
-					if(target_part)
-						target_part.try_crit(BCLASS_STAB, charge_damage + 15, charger, target_zone, FALSE, TRUE)
-					var/puncture_chance = 20
-					if(charge_distance > 5)
-						puncture_chance += 10
-					if(prob(puncture_chance))
-						var/obj/item/bodypart/pierced_part = C.get_bodypart(target_zone)
-						if(!pierced_part)
-							pierced_part = C.get_bodypart(BODY_ZONE_CHEST)
-						if(pierced_part)
-							pierced_part.add_wound(/datum/wound/puncture/large)
-							to_chat(defender, span_danger("A deep puncture tears through me!"))
-
-					// Higher fracture chance on long charges; significantly higher against undead
-					var/crit_chance = 10
-					if(charge_distance > 5)
-						crit_chance += 15 + min((charge_distance - 5) * 2, 12)
-					if(defender.mob_biotypes & MOB_UNDEAD)
-						crit_chance += 10
-					if(prob(crit_chance))
-						var/obj/item/bodypart/BP = C.get_bodypart(target_zone)
-						if(!BP)
-							BP = C.get_bodypart(BODY_ZONE_HEAD)
-						if(!BP)
-							BP = C.get_bodypart(BODY_ZONE_CHEST)
-						if(BP)
-							BP.add_wound((target_zone in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)) ? /datum/wound/fracture/head : /datum/wound/fracture)
-							if(defender.mob_biotypes & MOB_UNDEAD)
-								defender.Knockdown(45)
-								defender.Stun(30)
-								defender.Immobilize(20)
-							to_chat(defender, span_danger("I hear a sickening crack — something broke!"))
-
-				// Undead that are not carbon mobs should still receive wound crit attempts from mounted lance/spear impacts.
-				if((defender.mob_biotypes & MOB_UNDEAD) && !iscarbon(defender))
-					defender.simple_add_wound(/datum/wound/puncture/large, silent = FALSE, crit_message = TRUE)
-					defender.simple_woundcritroll(BCLASS_STAB, charge_damage + 18, charger, target_zone, silent = FALSE, crit_message = TRUE)
-					defender.Knockdown(45)
-					defender.Stun(30)
-					defender.Immobilize(20)
-				playsound(charger, 'sound/combat/hits/bladed/genstab (1).ogg', 100, TRUE)
-				visible_message(span_crit("<big><b>[charger] drives [charge_weapon] into [defender]!</b></big>"), span_crit("<big><b>I drive [charge_weapon] into [defender]!</b></big>"))
-			else
-				// No run-up: fumbled charge, charger takes the brunt
-				if(charger_mount)
-					charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-				if(charger.buckled)
-					charger.buckled.unbuckle_mob(charger, TRUE)
-				charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-				charger.apply_damage(15, BRUTE, "head", charger.run_armor_check("head", "blunt", damage = 15))
-				charger.Knockdown(30)
-				charger.Stun(15)
-				visible_message(span_crit("<big><b>[charger] fumbles a charge into [defender]!</b></big>"), span_crit("<big><b>I fumble my charge into [defender]!</b></big>"))
-
-			return TRUE
-
 	if(m_intent == MOVE_INTENT_RUN && dir == get_dir(src, M))
 		if(isliving(M))
 			var/sprint_distance = sprinted_tiles
@@ -643,13 +218,10 @@
 			var/target_points = FLOOR((L.STACON + L.STASTR)/2, 1)
 
 			switch(sprint_distance)
-				// Point blank
-				if(0 to 1)
+				// Point blank to 2 tiles
+				if(0 to 3)
 					self_points -= 99
 					instafail = TRUE
-				// One to two tile between the people
-				if(2 to 3)
-					self_points -= 2
 				// Five or above tiles between people
 				if(6 to INFINITY)
 					self_points += 1
@@ -679,6 +251,8 @@
 				L.Knockdown(1)
 			if(self_points < target_points)
 				Knockdown(30)
+				apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+				apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
 			if(self_points == target_points)
 				L.Knockdown(1)
 				Knockdown(30)
@@ -929,6 +503,7 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			O.update_grabbed_spell_hud()
 			if(BP)
 				C.update_hud_hand_slot(BP.held_index)
 				C.mark_zone_selector_hud_dirty()
@@ -1133,7 +708,7 @@
 		return
 	if(!reaper)
 		return
-	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE))
+	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE) || HAS_TRAIT(src, TRAIT_DEATHS_DOOR))
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 
 		if(istype(src.loc, /turf/open/water) && !HAS_TRAIT(src, TRAIT_NOBREATH) && lying && client)
@@ -1147,6 +722,7 @@
 		var/word_input = stripped_input(src, "Your parting words? Leave empty if you will.", "Last Words")
 		if(word_input)
 			say(word_input)
+		SEND_SIGNAL(src, COMSIG_LIVING_SUCCUMBED)
 		death()
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = TRUE, check_immobilized = FALSE, ignore_stasis = FALSE)
@@ -1297,11 +873,18 @@
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/proc/check_revive(mob/living/user)
+/mob/living/proc/is_burning_with(status_type)
+	var/datum/status_effect/fire_handler/fire_stacks/fire = has_status_effect(status_type)
+	return fire?.on_fire
+
+/mob/living/proc/looks_dead()
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH)
+
+/mob/living/proc/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
 	if(src == user)
 		return FALSE
 	if(stat < DEAD)
-		to_chat(user, span_warning("Nothing happens."))
+		to_chat(user, span_warning(looks_dead() ? "They are unresponsive to my attempts. For now." : "Nothing happens."))
 		return FALSE
 	if(!mind)
 		return FALSE
@@ -1331,35 +914,72 @@
 
 	return TRUE
 
+/// Whether this body holds a brain that belongs to a different body, see is_foreign_to()
+/mob/living/carbon/proc/has_foreign_brain()
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	return B?.is_foreign_to(src)
+
+/mob/living/carbon/human/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians too now, go forth flesh abominations!)
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair brimming with elixir under a master's hand or a power of the fleshtwisting pestrian could bind it."))
+		return FALSE
+
+/// The single DEAD-to-alive transition, every revival and rise routes through it.
+/// Returns whether the flip happened, NOT whether they stayed alive, updatehealth re-kills if the caller skipped a health floor
+/mob/living/proc/become_alive(new_stat = CONSCIOUS, bypass_foreign_brain_check = FALSE)
+	if(stat != DEAD)
+		return FALSE
+	if(!bypass_foreign_brain_check && iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.has_foreign_brain())
+			return FALSE
+	GLOB.dead_mob_list -= src
+	GLOB.alive_mob_list += src
+	stat = new_stat
+	updatehealth() //then we check if the mob should wake up.
+	update_mobility()
+	update_sight()
+	reload_fullscreen()
+	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
+
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians too now, go forth flesh abominations!)
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive, break_restraints = admin_revive)
 	if(stat == DEAD && (admin_revive || can_be_revived())) //in some cases you can't revive (e.g. no brain)
-		GLOB.dead_mob_list -= src  //If any more forms of revival are added, better to use a proc to do this - easier to search
-		GLOB.alive_mob_list += src
+		if(!become_alive(CONSCIOUS, admin_revive || bypass_foreign_brain_check)) // Refused, nothing flipped, nothing to tidy
+			return
+		// Runs even if become_alive's updatehealth re-killed us, or the corpse keeps its
+		// rot, its dormant deadite datum and the monochrome death filter
 		set_suicide(FALSE)
-		stat = CONSCIOUS
-		updatehealth() //then we check if the mob should wake up.
-		update_mobility()
-		update_sight()
 		clear_alert("not_enough_oxy")
-		reload_fullscreen()
 		remove_client_colour(/datum/client_colour/monochrome)
-		// Add message about struggling to recall death circumstances
-		to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
-		to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
-		. = TRUE
-		var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-		if(heart)
-			heart.Restart()
+		set_sunder(0) //Just in case we didn't
+		. = (stat < DEAD) // The flip happened, but only report success if they actually stayed alive
+		if(.)
+			// Add message about struggling to recall death circumstances
+			to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
+			to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
+			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+			if(heart)
+				heart.Restart()
 		if(mind)
 			if(admin_revive)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
-			for(var/obj/effect/proc_holder/spell/spell as anything in mind.spell_list)
-				spell.updateButtonIcon()
-		qdel(GetComponent(/datum/component/rot))
+			for(var/spell as anything in mind.spell_list)
+				var/obj/effect/proc_holder/spell/newspell = spell
+				var/datum/action/cooldown/spell/oldspell = spell
+				if(istype(newspell))
+					newspell.action?.build_all_button_icons()
+				else if (istype(oldspell))
+					oldspell.build_all_button_icons()
+		if(.) // A re-died corpse is a corpse again, it keeps its rot and its pending rise
+			qdel(GetComponent(/datum/component/rot))
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
 	SetStun(0, FALSE)
@@ -1368,6 +988,7 @@
 	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
 	setStaminaLoss(0)
+	set_sunder(0)
 	SetUnconscious(0, FALSE)
 	if(should_update_mobility)
 		update_mobility()
@@ -1386,6 +1007,7 @@
 	setCloneLoss(0, 0)
 	remove_CC(FALSE)
 	set_disgust(0)
+	set_sunder(0)
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
@@ -1413,6 +1035,7 @@
 	slowdown = 0
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
+	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEALED, admin_revive)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -1521,7 +1144,7 @@
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				adjust_blood_volume(-max(1, brute_ratio * 2)) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
 					newdir = newdir | direction
@@ -1632,8 +1255,10 @@
 	vis_contents += flaggy
 	Stun(300)
 	Knockdown(300)
+	drop_all_held_items()
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
+	apply_status_effect(/datum/status_effect/debuff/omegamale)
 	src.visible_message(span_notice("[src] yields!"))
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
@@ -1695,6 +1320,16 @@
 /mob/proc/resist_grab(moving_resist)
 	return TRUE //returning 0 means we successfully broke free
 
+/mob/living/proc/grapple_str()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STASTR
+
+/mob/living/proc/grapple_con()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STACON
+
 /mob/living/resist_grab(moving_resist, freeresist = FALSE)
 	. = TRUE
 
@@ -1737,9 +1372,9 @@
 
 	resist_chance += max((wrestling_diff * 10), -20)
 	if(HAS_TRAIT(src, TRAIT_GARROTED))
-		resist_chance += (STACON - L.STASPD) * 5
+		resist_chance += (grapple_con() - L.STASPD) * 5
 	else
-		resist_chance += (STACON - (agg_grab ? L.STASTR : L.STAWIL)) * 5
+		resist_chance += (grapple_con() - (agg_grab ? L.grapple_str() : L.STAWIL)) * 5
 	resist_chance *= combat_modifier
 	resist_chance = clamp(resist_chance, 5, 95)
 
@@ -2102,6 +1737,10 @@
 	if(!blessed_sunder?.on_fire)
 		blessed_sunder?.ignite(silent)
 
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(!dark_status?.on_fire)
+		dark_status?.ignite(silent)
+
 /mob/living/proc/SoakMob(locations)
 	if(locations & CHEST)
 		extinguish_mob()
@@ -2122,6 +1761,9 @@
 	var/datum/status_effect/fire_handler/fire_stacks/sunder/blessed/blessed_sunder = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 	if(blessed_sunder?.on_fire)
 		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(dark_status?.on_fire)
+		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
 
 /**
  * Handles effects happening when mob is on normal fire
@@ -2133,7 +1775,10 @@
  */
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
+	var/fire_resist_mult = 1
+	if(HAS_TRAIT(src, TRAIT_FIRE_RESIST))
+		fire_resist_mult = 0.5
+	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick * fire_resist_mult)
 
 /**
  * Adjust the amount of fire stacks on a mob
@@ -2588,7 +2233,7 @@
 			if(marked)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					if(H.current_mark == M && HAS_TRAIT(H, TRAIT_SLEUTH))
+					if(H.current_mark == M)
 						found_ping(get_turf(M), client, "trap")
 					else
 						found_ping(get_turf(M), client, "hidden")
@@ -2611,6 +2256,9 @@
 				found_ping(get_turf(O), client, "trap")
 			if(istype(O, /obj/structure/quicksand))
 				found_ping(get_turf(O), client, "trap")
+			if(istype(O, /obj/item/bodypart/head)) // Bodies ping as mobs already, a loose head is an item and would be invisible otherwise
+				if(isturf(O.loc)) // Only one lying loose, not one in a bag or held
+					found_ping(get_turf(O), client, "hidden")
 			//Hearthstone port - Tracking
 		for(var/obj/effect/track/potential_track in orange(7, src)) //Can't use view because they're invisible by default.
 			if(!can_see(src, potential_track, 10))
@@ -2620,7 +2268,41 @@
 			found_ping(get_turf(potential_track), client, "hidden")
 			potential_track.handle_revealing(src)
 		//Hearthstone end.
+		// Hunting Tracks Logic
+		check_nearby_hunting_tracks()
 
+///Finds the closest nearby hunting track visible to our party and reports its distance/direction.
+/mob/living/proc/check_nearby_hunting_tracks()
+	var/obj/effect/hunting_track/closest_track
+	var/min_dist = 8
+	for(var/obj/effect/hunting_track/nearby_track in range(7, src))
+		// Check if we are part of the party that can see this track
+		var/can_see_track = FALSE
+		for(var/datum/weakref/party_weakref in nearby_track.party_refs)
+			if(party_weakref.resolve() == src)
+				can_see_track = TRUE
+				break
+		if(!can_see_track)
+			continue
+		found_ping(get_turf(nearby_track), client, "paws")
+		var/dist = get_dist(src, nearby_track)
+		if(dist < min_dist)
+			min_dist = dist
+			closest_track = nearby_track
+	if(!closest_track)
+		return
+	var/dir_text = dir2text(get_dir(src, closest_track))
+	var/dist_text = ""
+	switch(min_dist)
+		if(0 to 1)
+			dist_text = "right beneath your feet"
+		if(2 to 3)
+			dist_text = "very close by"
+		if(4 to 5)
+			dist_text = "a few paces away"
+		else
+			dist_text = "in the distance"
+	to_chat(src, span_notice("You spot a faint trail [dist_text] to the [dir_text]."))
 
 /proc/found_ping(atom/A, client/C, state)
 	if(!A || !C || !state)
@@ -2724,8 +2406,8 @@
 			_y = min(0,_y)
 	else if(STAPER > 11)
 		var/offset = STAPER - 10
-		if(offset > 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
-			offset = 5
+		if(offset >= 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
+			offset = 4
 		if(STAPER >= 12)
 			message = span_info("[src] easily peers afar.")
 		if(_x > 0)
@@ -2894,7 +2576,10 @@
 
 /mob/living/proc/accept_offered_item(mob/living/offerer, obj/offered_item, stealthy)
 	transferItemToLoc(offered_item, src)
-	put_in_active_hand(offered_item)
+	if(!put_in_active_hand(offered_item))
+		offered_item.forceMove(drop_location())
+		offerer.stop_offering_item()
+		return
 	if(stealthy)
 		to_chat(offerer, span_notice("[src] takes the secretly offered [offered_item]."))
 		to_chat(src, span_notice("I take the secretly offered [offered_item] from [offerer]."))
@@ -2935,3 +2620,22 @@
 	if(QDELETED(src) || stat != DEAD) // skip if it was somehow revived in the meantime
 		return
 	dust()
+
+/// Cancels a spell currently being channeled, covering both the old proc_holder system
+/// (which sets client.charging during mouse-hold) and the new spell_cooldown datum system
+/// (tracked via /mob/channeling_spell set in on_start_charge).
+/// Returns TRUE if a channel was actually interrupted.
+/mob/living/proc/interrupt_spell_channel()
+	. = FALSE
+	if(channeling_spell)
+		channeling_spell.cancel_casting()
+		// before_cast drives non-click charge spells through do_after; cancel_casting alone
+		// sets currently_charging=FALSE but the do_after loop only breaks on user.doing=FALSE
+		// or movement, so we need to explicitly break it.
+		stop_all_doing()
+		. = TRUE
+	if(client?.charging && used_intent?.tranged && !used_intent.tshield)
+		stop_attack()
+		. = TRUE
+	if(.)
+		to_chat(src, span_danger("My spell is disrupted!"))

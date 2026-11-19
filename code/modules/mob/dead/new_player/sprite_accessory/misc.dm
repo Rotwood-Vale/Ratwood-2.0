@@ -183,3 +183,9 @@
 	icon_state = "eyeliner"
 	layer = BODY_FRONT_LAYER
 	color_disabled = FALSE
+
+/datum/sprite_accessory/accessory/outereye
+	name = "Outer Eyes"
+	icon_state = "outereye"
+	layer = BODY_FRONT_LAYER
+	color_disabled = FALSE

@@ -4,6 +4,7 @@
 	icon_state = "bombdolier1"
 	item_state = "bombdolier"
 	icon = 'modular_azurepeak/icons/obj/items/bombdolier.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/obj/items/bombdolier.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -22,23 +23,22 @@
 	var/list/fill_list = list() //use for custome fill that
 	var/list/storable_types = list(
 		/obj/item/bomb,
-		/obj/item/tntstick,
 		/obj/item/impact_grenade
 	)
 	sewrepair = TRUE
+
+/obj/item/bmbstrap/proc/can_store(obj/item/I)
+	for(var/typepath in storable_types)
+		if(istype(I, typepath))
+			return TRUE
+	return FALSE
 
 /obj/item/bmbstrap/attackby(obj/A, mob/living/carbon/user, params)
 	var/obj/item/I = A
 	if(!I)
 		return ..()
 
-	var/can_store = FALSE
-	for(var/typepath in storable_types)
-		if(istype(I, typepath))
-			can_store = TRUE
-			break
-
-	if(!can_store)
+	if(!can_store(I))
 		return ..()
 
 	if(length(tweps) >= max_storage)
@@ -52,6 +52,16 @@
 		tweps += I
 
 	update_icon()
+	return TRUE
+
+/obj/item/bmbstrap/quickdraw_interact(mob/living/user, obj/item/held_item)
+	if(held_item)
+		if(!can_store(held_item))
+			to_chat(user, span_warning("I can't fit [held_item] in [src]!"))
+			return TRUE
+		attackby(held_item, user)
+		return TRUE
+	attack_right(user)
 	return TRUE
 
 /obj/item/bmbstrap/MiddleClick(mob/living/user)
@@ -97,30 +107,38 @@
 		. += "Its current capacity is: ([tweps.len]/[max_storage])"
 		. += "It contains: [counting_english_list(tweps)]"
 
+/obj/item/bmbstrap/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	if(!isinhands)
+		override_state = "onbomb[min(CEILING(tweps.len / 2, 1), 5)]"
+	return ..()
+
 /obj/item/bmbstrap/update_icon()
 	switch(tweps.len)
 		if(1)
-			icon_state = "[item_state]1"
+			icon_state = "[item_state]2"
 		if(2)
-			icon_state = "[item_state]1"
+			icon_state = "[item_state]2"
 		if(3)
-			icon_state = "[item_state]2"
+			icon_state = "[item_state]3"
 		if(4)
-			icon_state = "[item_state]2"
+			icon_state = "[item_state]3"
 		if(5)
-			icon_state = "[item_state]3"
+			icon_state = "[item_state]4"
 		if(6)
-			icon_state = "[item_state]3"
+			icon_state = "[item_state]4"
 		if(7)
-			icon_state = "[item_state]4"
+			icon_state = "[item_state]5"
 		if(8)
-			icon_state = "[item_state]4"
+			icon_state = "[item_state]5"
 		if(9)
-			icon_state = "[item_state]5"
+			icon_state = "[item_state]6"
 		if(10)
-			icon_state = "[item_state]5"
+			icon_state = "[item_state]6"
 		else
-			icon_state = "[item_state]0"
+			icon_state = "[item_state]1"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		wearer.update_inv_back()
 
 
 /obj/item/bmbstrap/Initialize()
@@ -131,14 +149,14 @@
 		to_chat(user, span_warning("My [src.name] is full!"))
 		return
 	to_chat(user, span_notice("I begin to gather the ammunition..."))
-	for(var/obj/item/bomb in T.contents)
-		if(istype(bomb, /obj/item/bomb) || istype(bomb, /obj/item/tntstick) || istype(bomb, /obj/item/impact_grenade))
+	for(var/obj/item/explosive in T.contents)
+		if(can_store(explosive))
 			if(do_after(user, 5))
-				if(!eatbomb(bomb))
+				if(!eatbomb(explosive))
 					break
 
 /obj/item/bmbstrap/proc/eatbomb(obj/A)
-	if(istype(A, /obj/item/bomb) || istype(A, /obj/item/tntstick) || istype(A, /obj/item/impact_grenade))
+	if(can_store(A))
 		if(tweps.len < max_storage)
 			A.forceMove(src)
 			tweps += A
@@ -153,12 +171,11 @@
 	if (!tweps.len)
 		return
 	to_chat(user, span_warning("I begin to take out the ammunition from [src], one by one..."))
-	for(var/obj/item/bomb in tweps)
-		if(istype(bomb, /obj/item/bomb) || istype(bomb, /obj/item/tntstick) || istype(bomb, /obj/item/impact_grenade))
-			if(!do_after(user, 0.5 SECONDS))
-				return
-			bomb.forceMove(user.loc)
-			tweps -= bomb
+	for(var/obj/item/explosive in tweps)
+		if(!do_after(user, 0.5 SECONDS))
+			return
+		explosive.forceMove(user.loc)
+		tweps -= explosive
 
 	update_icon()
 
@@ -168,8 +185,8 @@
 	/obj/item/bomb,
 	/obj/item/bomb,
 	/obj/item/bomb,
-	/obj/item/tntstick,
-	/obj/item/tntstick,
+	/obj/item/impact_grenade/explosion,
+	/obj/item/impact_grenade/explosion,
 	/obj/item/impact_grenade/explosion,
 	/obj/item/impact_grenade/explosion,
 	/obj/item/impact_grenade/smoke/fire_gas,

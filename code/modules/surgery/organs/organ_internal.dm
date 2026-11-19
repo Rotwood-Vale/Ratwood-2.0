@@ -91,7 +91,8 @@
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	SEND_SIGNAL(owner, COMSIG_MOB_ORGAN_REMOVED, src, special, drop_if_replaced)
+	if(owner)
+		SEND_SIGNAL(owner, COMSIG_MOB_ORGAN_REMOVED, src, special, drop_if_replaced)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -170,7 +171,7 @@
 	var/obj/item/organ/organ_inside
 
 /obj/item/reagent_containers/food/snacks/organ/On_Consume(mob/living/eater)		//Graggarites looove eating organs, they loooove eating organs!
-	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
+	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER) || HAS_TRAIT(eater, TRAIT_WILD_EATER))
 		eat_effect = /datum/status_effect/buff/snackbuff
 		check_culling(eater)
 		foodtype = RAW | MEAT

@@ -75,13 +75,8 @@
 
 /datum/supply_pack/rogue/armor_bronze/skirt
 	name = "Bronze Skirt"
-	cost = 35 // 1 Iron 2 Leather
-	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt)
-
-/datum/supply_pack/rogue/armor_bronze/chainkilt
-	name = "Chain Kilt"
 	cost = 25
-	contains = list(/obj/item/clothing/under/roguetown/chainlegs/kilt/bronze)
+	contains = list(/obj/item/clothing/under/roguetown/chainlegs/skirt/bronze)
 
 /datum/supply_pack/rogue/armor_bronze/maskbronze
 	name = "Mask"

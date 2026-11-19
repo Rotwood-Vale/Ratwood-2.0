@@ -35,6 +35,7 @@
 #define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core
 
 #define STATUS_EFFECT_ANTIMAGIC /datum/status_effect/antimagic //grants antimagic (and reapplies if lost) for the duration
+#define STATUS_EFFECT_BLINDED /datum/status_effect/debuff/blindness // "new" noc blind effect. see noc.dm for details.
 
 /////////////
 // DEBUFFS //
@@ -55,6 +56,8 @@
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
 #define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
+#define STATUS_EFFECT_GRAGGAR_FEAR /datum/status_effect/debuff/graggar_fear
+#define STATUS_EFFECT_GRAGGAR_REGENERATE /datum/status_effect/buff/graggar_regenerate
 
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 

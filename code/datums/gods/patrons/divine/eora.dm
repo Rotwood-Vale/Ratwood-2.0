@@ -19,6 +19,7 @@
 					/obj/effect/proc_holder/spell/invoked/pomegranate			= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/eora		= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_EORA
 	confess_lines = list(
 		"EORA BRINGS US TOGETHER!",
 		"HER BEAUTY IS EVEN IN THIS TORMENT!",

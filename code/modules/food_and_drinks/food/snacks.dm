@@ -124,7 +124,7 @@ All foods are distributed among various categories. Use common sense.
 	..()
 	if(rotprocess)
 		if(!istype(loc, /obj/structure/closet/crate/chest) && ! istype(loc, /obj/item/cooking/platter)  && !istype(loc, /obj/structure/roguemachine/vendor) && !istype (loc, /obj/item/storage/backpack/rogue/artibackpack)&& !istype (loc, /obj/structure/table/cooling))
-			if(!locate(/obj/structure/table) in loc)
+			if(!has_table_surface(loc))
 				warming -= 20 //ssobj processing has a wait of 20
 			else
 				if(locate(/obj/structure/table/cooling) in loc)
@@ -265,6 +265,18 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 
+	var/datum/charflaw/addiction/corpulent/gluttony = eater.get_flaw(/datum/charflaw/addiction/corpulent)
+	if(gluttony && !gluttony.sated)
+		gluttony.bites += 1 + (faretype >= FARE_FINE)
+		if(gluttony.bites >= gluttony.bites_needed)
+			gluttony.bites = 0
+			eater.sate_addiction(/datum/charflaw/addiction/corpulent)
+		else
+			to_chat(eater, span_warning("I need more..."))
+
+	if(HAS_TRAIT(eater, TRAIT_HEMOPHAGE)) //trait desc states that normal food would make them ill, adjusted accordingly
+		eater.adjustToxLoss(2)
+
 	var/apply_effect = TRUE
 	// check to see if what we're eating is appropriate fare for our "social class" (aka nobles shouldn't be eating sticks of butter you troglodytes)
 	if (ishuman(eater))
@@ -306,10 +318,10 @@ All foods are distributed among various categories. Use common sense.
 					if(human_eater.add_stress(/datum/stressevent/hated_food))
 						to_chat(human_eater, span_red("Yuck! My hated food!"))
 
-		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER))
+		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER) && !HAS_TRAIT(human_eater, TRAIT_WILD_EATER))
 			if (human_eater.is_noble())
 				if (!portable)
-					if(!(locate(/obj/structure/table) in range(1, eater)))
+					if(!has_table_surface(range(1, eater)))
 						eater.add_stress(/datum/stressevent/noble_ate_without_table) // look i just had to okay?
 						if (prob(25))
 							to_chat(eater, span_red("I should really eat this at a table..."))
@@ -453,7 +465,7 @@ All foods are distributed among various categories. Use common sense.
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
-				var/amt2take = reagents.total_volume / (bitesize - bitecount)
+				var/amt2take = reagents.total_volume / max(bitesize - bitecount, 1)
 				if((bitecount >= bitesize) || (bitesize == 1))
 					amt2take = reagents.total_volume
 				reagents.trans_to(M, amt2take, transfered_by = user, method = INGEST)
@@ -513,7 +525,8 @@ All foods are distributed among various categories. Use common sense.
 	var/rot_text = ""
 	if(!rotprocess)
 		return "This food does not rot."
-	switch(initial(rotprocess))
+	var/shelf_life = initial(rotprocess) || rotprocess
+	switch(shelf_life)
 		if(0 to SHELFLIFE_TINY)
 			rot_text = "This food will rot in less than a third of a dae."
 		if(SHELFLIFE_TINY to SHELFLIFE_SHORT)
@@ -524,7 +537,7 @@ All foods are distributed among various categories. Use common sense.
 			rot_text = "This food will last a dae and a half."
 		if(SHELFLIFE_LONG to SHELFLIFE_EXTREME)
 			rot_text = "This food will last three daes."
-	switch(-1 * warming / initial(rotprocess))
+	switch(-1 * warming / shelf_life)
 		if(-INFINITY to 0.25)
 			rot_text += " It is very fresh."
 		if(0.25 to 0.5)
@@ -645,7 +658,7 @@ All foods are distributed among various categories. Use common sense.
 
 	if ( \
 			!isturf(src.loc) || \
-			!(locate(/obj/structure/table) in src.loc) && \
+			!has_table_surface(src.loc) && \
 			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/storage/bag/tray) in src.loc) \
 		)

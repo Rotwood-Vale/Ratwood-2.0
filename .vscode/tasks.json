@@ -141,12 +141,14 @@
 			"type": "process",
 			"command": "tools/build/build.sh",
 			"args": [
-				"-DLOWMEMORYMODE"
+				"-DLOWMEMORYMODE",
+				"-DNO_DUNGEON"
 			],
 			"windows": {
 				"command": ".\\tools\\build\\build.bat",
 				"args": [
-					"-DLOWMEMORYMODE"
+					"-DLOWMEMORYMODE",
+					"-DNO_DUNGEON"
 				]
 			},
 			"options": {

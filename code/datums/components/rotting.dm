@@ -1,10 +1,15 @@
-#define DEAD_TO_ZOMBIE_TIME 5 MINUTES	//Time before death -> raised as zombie (when outside of the city)
-										//(This might not be the exact time)
+// DEAD_TO_ZOMBIE_TIME lives in __DEFINES/mobs.dm, the ghost lock in observer.dm uses it too
+
+#define SIMPLE_CORPSE_ROT_START 15 MINUTES
+#define SIMPLE_CORPSE_DUST_TIME 25 MINUTES
+#define HUNT_CORPSE_ROT_START 20 MINUTES
+#define HUNT_CORPSE_DUST_TIME 35 MINUTES
 
 /datum/component/rot
 	var/amount = 0
 	var/last_process = 0
-	var/datum/looping_sound/fliesloop/soundloop
+	/// Whether this corpse has flies. Heard only while it lies on a turf, see place_flies()
+	var/flies_playing = FALSE
 
 /datum/component/rot/Initialize(new_amount)
 	..()
@@ -14,14 +19,53 @@
 	if(new_amount)
 		amount = new_amount
 
-	soundloop = new(parent, FALSE)
-
 	START_PROCESSING(SSroguerot, src)
 
 /datum/component/rot/Destroy()
-	if(soundloop)
-		QDEL_NULL(soundloop)
+	set_flies(FALSE)
 	. = ..()
+
+/**
+ * Enables or removes this corpse's point ambience source.
+ *
+ * Mobs at or below MOB_SIZE_TINY cannot produce flies. Source placement is handled by place_flies()
+ * so corpses inside containers remain silent.
+ *
+ * Arguments:
+ * * state - TRUE enables flies for an eligible parent. FALSE removes them.
+ */
+/datum/component/rot/proc/set_flies(state)
+	if(state)
+		var/mob/living/rotting_mob = parent
+		if(istype(rotting_mob) && rotting_mob.mob_size <= MOB_SIZE_TINY)
+			state = FALSE
+	// The rot process polls this state repeatedly. Only transitions need registration work
+	if(!state == !flies_playing)
+		return
+	flies_playing = state
+	if(!state)
+		UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
+		return
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_body_moved))
+	place_flies()
+
+/datum/component/rot/proc/on_body_moved(datum/source)
+	SIGNAL_HANDLER
+	place_flies()
+
+/**
+ * Updates fly ambience when the corpse moves.
+ *
+ * Only corpses directly on a turf produce sound. Container movement does not move the corpse
+ * itself, so contained corpses are unregistered until placed back on a turf.
+ */
+/datum/component/rot/proc/place_flies()
+	var/atom/movable/body = parent
+	if(isturf(body.loc))
+		SSpoint_ambience.register_source(parent, /datum/point_ambience_category/rot)
+	else
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
 
 /datum/component/rot/process()
 
@@ -63,7 +107,17 @@
 			return
 
 	var/area/A = get_area(C)
-	if (istype(A, /area/rogue/indoors/town))	//Stops rotting inside town buildings; will stop your zombification such as at church or appothocary.
+	// Only the apothecary and church protects from turning deadite, should be limited to sacred spaces and sterile wards, not just some guy's house
+	var/static/list/rot_protected_areas = typecacheof(list(
+		/area/rogue/indoors/town/physician,
+		/area/rogue/indoors/town/church,
+		/area/rogue/outdoors/exposed/church,
+		/area/rogue/outdoors/town/church,
+		/area/rogue/outdoors/town/graveyard,
+		/area/rogue/outdoors/town/roofs/church,
+		/area/rogue/outdoors/town/roofs/desert/church,
+	))
+	if(is_type_in_typecache(A, rot_protected_areas) && !has_world_trait(/datum/world_trait/zizo_bite))
 		return
 	if (istype(A, /area/rogue/indoors/deathsedge))	//Stops rotting inside Death's Edge (Death's Door spell area)
 		return
@@ -74,7 +128,10 @@
 		qdel(src)
 		return
 
-	if(amount > DEAD_TO_ZOMBIE_TIME)
+	var/zombie_time = DEAD_TO_ZOMBIE_TIME
+	if(has_world_trait(/datum/world_trait/zizo_bite))
+		zombie_time = 1 MINUTES
+	if(amount > zombie_time)
 		if(is_zombie)
 			var/datum/antagonist/zombie/Z = C.mind.has_antag_datum(/datum/antagonist/zombie)
 			if(Z && !Z.has_turned && !Z.revived && C.stat == DEAD)
@@ -116,22 +173,22 @@
 		var/turf/open/T = C.loc
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
-			if(soundloop && soundloop.stopped && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		else
-			if(soundloop && !soundloop.stopped)
-				soundloop.stop()
+			set_flies(FALSE)
 	else
-		if(soundloop && !soundloop.stopped)
-			soundloop.stop()
+		set_flies(FALSE)
 	if(shouldupdate)
 		if(findonerotten)
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.skin_tone = "878f79" //elf ears
-			if(soundloop && soundloop.stopped && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		C.update_body()
+
+/datum/component/rot/simple
+	var/rot_start = SIMPLE_CORPSE_ROT_START
+	var/dust_time = SIMPLE_CORPSE_DUST_TIME
 
 /datum/component/rot/simple/process()
 	..()
@@ -139,23 +196,24 @@
 	if(L.stat != DEAD)
 		qdel(src)
 		return
-	if(amount > 15 MINUTES)
-		if(soundloop && soundloop.stopped)
-			soundloop.start()
+	if(amount > rot_start)
 		var/turf/open/T = get_turf(L)
+		// Gated on an open turf like /rot/corpse, since nothing else in this branch turns the flies off
+		set_flies(istype(T))
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
-	if(amount > 25 MINUTES)
+	if(amount > dust_time)
 		qdel(src)
 		return L.dust(drop_items=TRUE)
+
+/datum/component/rot/simple/hunt
+	rot_start = HUNT_CORPSE_ROT_START
+	dust_time = HUNT_CORPSE_DUST_TIME
 
 /datum/component/rot/gibs
 	amount = MIASMA_GIBS_MOLES
 
-/datum/looping_sound/fliesloop
-	mid_sounds = list('sound/misc/fliesloop.ogg')
-	mid_length = 60
-	volume = 50
-	extra_range = 0
-
-#undef DEAD_TO_ZOMBIE_TIME
+#undef SIMPLE_CORPSE_ROT_START
+#undef SIMPLE_CORPSE_DUST_TIME
+#undef HUNT_CORPSE_ROT_START
+#undef HUNT_CORPSE_DUST_TIME

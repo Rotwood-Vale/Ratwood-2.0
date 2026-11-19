@@ -1,0 +1,26 @@
+/datum/voicepack/male/chosen/get_sound(soundin, modifiers)
+	var/used
+	switch(soundin)
+		if("pain")
+			used = list('sound/vo/male/chosen_undead/pain (1).ogg','sound/vo/male/chosen_undead/pain (2).ogg','sound/vo/male/chosen_undead/pain (3).ogg','sound/vo/male/chosen_undead/pain (4).ogg','sound/vo/male/chosen_undead/pain (5).ogg',
+			'sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg'
+			)
+		if("paincrit")
+			used = list('sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg')
+		if("painscream")
+			used = list('sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg')
+		if("painmoan")
+			used = list('sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg')	
+		if("groan")
+			used = list('sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg')
+		if("moan")
+			used = list('sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg')
+		if("groin")
+			used = list('sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg')
+		if("embed")
+			used = list('sound/vo/male/chosen_undead/painmoan (1).ogg','sound/vo/male/chosen_undead/painmoan (2).ogg','sound/vo/male/chosen_undead/painmoan (3).ogg','sound/vo/male/chosen_undead/painmoan (4).ogg','sound/vo/male/chosen_undead/painmoan (5).ogg')
+		if("deathgurgle")
+			used = list('sound/vo/male/chosen_undead/deathgurgle (1).ogg','sound/vo/male/chosen_undead/deathgurgle (2).ogg')
+	if(!used)
+		used = ..(soundin, modifiers)
+	return used

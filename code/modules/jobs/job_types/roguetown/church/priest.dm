@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble, /datum/quirk/hunted)
 	job_traits = list(
 		TRAIT_CHOSEN,
 		TRAIT_RITUALIST,
@@ -67,9 +67,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
 
-		spawn(50)
-			if(H && H.client)
-				_delayed_path_choice(H)
+		addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
 
 /datum/advclass/bishop
 	name = "Bishop"
@@ -99,6 +97,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 	)
+	pure_heart = TRUE
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
 	)
@@ -368,18 +367,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
 		return FALSE
 
-	//Flavor messages for cursing certain god's faithful.
-	//Dendor works in mysterious ways.
-	if (istype(H.patron, /datum/patron/divine/dendor))
-		to_chat(src, span_warning("The mad god Dendor is felt strongly. The wolf in this one balks and trashes as it is faintly restrained."))
-		//If we check this here there's no need to apply this trait preemtively to a bunch of people, and allows for greater fluff feedback.
-		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
+	if(HAS_TRAIT(H, TRAIT_LUX_FREAK))
+		to_chat(src, span_warning("The curse is undone before it could take root in [H] lux!"))
+		return
 
-	//Abyssor's clergy are gripped by his dream.
-	if (istype(H.patron, /datum/patron/divine/abyssor))
-		to_chat(src, span_warning("The Dreamer, Abyssor has his clutches grasped firmly around this one. The light of the ten only barely penetrates the depths."))
-		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
-
+	if(HAS_TRAIT(H, TRAIT_INQUISITION))
+		to_chat(src, span_warning("Dammed octavian's runic arrays dampen divine punishment directed against their agents!"))
+		return FALSE
+		
 	//Let's not curse heretical antags.
 	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
 		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
@@ -395,7 +390,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		return
 
 	var/found = FALSE
-	var/inputty = input("Put an apostasy on someone, removing their ability to use miracles... (apostasy them again to remove it)", "Sinner Name") as text|null
+	var/inputty = input("Mark a member of the clergy as an apostate, removing their ability to use miracles... (apostasy them again to remove it)", "Sinner Name") as text|null
 
 	if (!inputty)
 		return
@@ -569,10 +564,8 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 	var/curse_type = curse_choices[curse_pick]
 
 	if (H.real_name == target_name)
-		var/datum/curse/temp = new curse_type()
-
-		if (H.is_cursed(temp))
-			H.remove_curse(temp)
+		if (H.is_cursed(curse_type))
+			H.remove_curse(curse_type)
 			priority_announce("[real_name] has lifted [curse_pick] from [H.real_name]! They are once again part of the flock!", title = "REDEMPTION", sound = 'sound/misc/bell.ogg')
 			message_admins("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name]) ") //[ADMIN_LOOKUPFLW(user)] Maybe add this here if desirable but dunno.
 			log_game("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name])")

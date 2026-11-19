@@ -2,7 +2,7 @@
 	icon = 'icons/mob/sprite_accessory/genitals/pintle.dmi'
 	color_keys = 2
 	color_key_names = list("Member", "Skin")
-	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER) //Vrell - Yes I know this is hacky but it works for now
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_GENITAL_LAYER) //Vrell - Yes I know this is hacky but it works for now
 	var/uses_size_sprites = TRUE
 
 /datum/sprite_accessory/penis/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
@@ -24,10 +24,12 @@
 					return "slit_2"
 
 	if(uses_size_sprites)
+		// Tiny shares sprites with small pintles, might add something later on
+		var/sprite_size = clamp(pp.penis_size, SMALL_PENIS_SIZE, DEFAULT_PENIS_SIZE)
 		if(pp.erect_state == ERECT_STATE_HARD)
-			return "[icon_state]_2_[min(pp.penis_size, 2)]"
+			return "[icon_state]_2_[sprite_size]"
 		else
-			return "[icon_state]_1_[min(pp.penis_size, 2)]"
+			return "[icon_state]_1_[sprite_size]"
 	else
 		if(pp.erect_state == ERECT_STATE_HARD)
 			return "[icon_state]_2"
@@ -141,10 +143,13 @@
 /datum/sprite_accessory/breasts
 	icon = 'icons/mob/sprite_accessory/genitals/breasts.dmi'
 	color_key_name = "Breasts"
-	relevant_layers = list(BODY_ADJ_LAYER, BODY_BEHIND_LAYER)
+	relevant_layers = list(BODY_BREASTS_LAYER, BODY_BEHIND_LAYER)
+	var/can_jiggle = FALSE
 
 /datum/sprite_accessory/breasts/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	var/obj/item/organ/breasts/badonkers = organ
+	if(can_jiggle && owner && badonkers.is_jiggling)
+		return "[icon_state]_[badonkers.breast_size]_jiggle"
 	return "[icon_state]_[badonkers.breast_size]"
 
 /datum/sprite_accessory/breasts/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
@@ -159,21 +164,45 @@
 	icon_state = "pair"
 	name = "Pair"
 	color_key_defaults = list(KEY_CHEST_COLOR)
+	can_jiggle = TRUE
 
 /datum/sprite_accessory/breasts/quad
 	icon_state = "quad"
 	name = "Quad"
 	color_key_defaults = list(KEY_CHEST_COLOR)
+	can_jiggle = TRUE
 
 /datum/sprite_accessory/breasts/sextuple
 	icon_state = "sextuple"
 	name = "Sextuple"
 	color_key_defaults = list(KEY_CHEST_COLOR)
+	can_jiggle = TRUE
+
+/datum/sprite_accessory/breasts/pecs
+	icon_state = "pecs"
+	name = "Pecs"
+	color_key_defaults = list(KEY_CHEST_COLOR)
+	can_jiggle = TRUE
+
+/datum/sprite_accessory/breasts/pecs/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	var/obj/item/organ/breasts/badonkers = organ
+	if(can_jiggle && owner && badonkers.is_jiggling)
+		return "[icon_state]_1_jiggle"
+	return "[icon_state]_1"
+
+/datum/sprite_accessory/breasts/pecs/nippleless
+	name = "Pecs (Nippleless)"
+
+/datum/sprite_accessory/breasts/pecs/nippleless/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	var/obj/item/organ/breasts/badonkers = organ
+	if(can_jiggle && owner && badonkers.is_jiggling)
+		return "[icon_state]_2_jiggle"
+	return "[icon_state]_2"
 
 /datum/sprite_accessory/vagina
 	icon = 'icons/mob/sprite_accessory/genitals/nethers.dmi'
 	color_key_name = "Nethers"
-	relevant_layers = list(BODY_FRONT_LAYER)
+	relevant_layers = list(BODY_GENITAL_LAYER)
 
 /datum/sprite_accessory/vagina/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)

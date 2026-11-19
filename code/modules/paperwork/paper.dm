@@ -65,6 +65,8 @@
 	var/extra_headers //For additional styling or other js features.
 
 	var/info		//What's actually written on the paper.
+	/// Ckeys of everyone who wrote on the paper, so a book bound from it can be checked against the archive upload bans.
+	var/list/writer_ckeys
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamps		//The (text for the) stamps on the paper.
 	var/fields = 0	//Amount of user created fields
@@ -162,6 +164,7 @@
 			info += "<br>[chunk_html]"
 		else
 			info = chunk_html
+		LAZYOR(writer_ckeys, user.ckey)
 
 	writer_draft = ""
 
@@ -598,6 +601,7 @@
 
 /obj/item/paper/proc/clearpaper()
 	info = null
+	writer_ckeys = null
 	stamps = null
 	seal_label = null
 	seal_color = initial(seal_color)
@@ -728,6 +732,7 @@
 				to_chat(usr, "<span class='warning'>Too long. Try again.</span>")
 				return
 			addtofield(field_num, t) // Field-only writing via read links.
+			LAZYOR(writer_ckeys, usr.ckey)
 			playsound(src, 'sound/items/write.ogg', 100, FALSE)
 			format_browse(build_read_info(TRUE), usr)
 			update_icon_state()
@@ -818,6 +823,8 @@
 			var/obj/item/manuscript/M = new /obj/item/manuscript(get_turf(P.loc))
 			M.page_texts = list(src.info, p.info)
 			M.compiled_pages = "<p>[src.info]</p><p>[p.info]</p>"
+			if(writer_ckeys || p.writer_ckeys)
+				M.writer_ckeys = (writer_ckeys || list()) | (p.writer_ckeys || list())
 			qdel(p)
 			if(user.Adjacent(M))
 				M.add_fingerprint(user)
@@ -915,28 +922,36 @@
 	for(var/atom/movable/AM in contents)
 		AM.ex_act()
 
-/obj/item/smallDelivery/attack_self(mob/user)
+
+/obj/item/smallDelivery/proc/open_package(mob/user, activation_chance = 100)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	for(var/X in contents)
-		var/atom/movable/AM = X
-		user.put_in_hands(AM)
-	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
+	var/list/package_contents = contents.Copy()
+	for(var/obj/item/contained_item in package_contents)
+		user.put_in_hands(contained_item)
+		if(prob(activation_chance))
+			contained_item.on_package_opened(user)
+	playsound(src.loc, 'sound/foley/dropsound/paper_drop.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] opens [src]."))
 	if(note)
 		note.forceMove(user.loc)
 	qdel(src)
 
+/obj/item/smallDelivery/attack_self(mob/user)
+	open_package(user)
+
 /obj/item/smallDelivery/attack_self_tk(mob/user)
 	if(ismob(loc))
 		var/mob/M = loc
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
-		for(var/X in contents)
-			var/atom/movable/AM = X
-			M.put_in_hands(AM)
+		var/list/package_contents = contents.Copy()
+		for(var/obj/item/contained_item in package_contents)
+			M.put_in_hands(contained_item)
+			contained_item.on_package_opened(user)
 	else
-		for(var/X in contents)
-			var/atom/movable/AM = X
-			AM.forceMove(src.loc)
+		var/list/package_contents = contents.Copy()
+		for(var/obj/item/contained_item in package_contents)
+			contained_item.forceMove(src.loc)
+			contained_item.on_package_opened(user)
 	if(note)
 		note.forceMove(user.loc)
 	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
@@ -954,6 +969,11 @@
 		. += "It's from [mailer], addressed to [mailedto].</a>"
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rogueweapon/huntingknife))
+		user.visible_message(span_warning("[user] starts cutting open [src]."))
+		if(do_after(user, 5 SECONDS, target = src))
+			open_package(user, 20)
+		return
 	if(istype(W, /obj/item/natural/feather))
 		if(!user.is_literate())
 			to_chat(user, span_notice("I scribble illegibly on the side of [src]!"))

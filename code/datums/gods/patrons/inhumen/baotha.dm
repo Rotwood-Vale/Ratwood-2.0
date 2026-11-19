@@ -1,7 +1,7 @@
 /datum/patron/inhumen/baotha
 	name = "Baotha"
 	domain = "Hedonism, Debauchery, Addiction, Heartbreak"
-	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, having been kept by the Naledi as a concubine. Until one dae, She was consumed by Her depravity and addiction, stealing a shard of SYON from Her captors and ascending to godhood. Her followers desire only to experience mind-rotting pleasures."
+	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, mere coincidence of being present in the most magically warded structure in Grimoria. The horrific ritual left her lux agonizingly half-anchored and hollow. Her pain dulled by spices and dust, Her soul soothed by intimacy. It would never be enough. The first succubus borne and consumed by depravity and addiction, upon the discovery of a shard of SYON took it from her beloved Noc and ascended to Godhood. Her followers desire only to experience mind-rotting pleasures."
 	worshippers = "Widows, Gamblers, Addicts, Scorned Lovers, Far-Gone Prostitutes"
 	virtues = "Lust, Gluttony, Thrill-Seeking"
 	sins = "Chastity, Temperance, Gloom"
@@ -19,6 +19,7 @@
 					/obj/effect/proc_holder/spell/invoked/painkiller					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/baotha				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_BAOTHA
 	confess_lines = list(
 		"BAOTHA DEMANDS PLEASURE!",
 		"LIVE, LAUGH, LOVE!",
@@ -31,10 +32,10 @@
 	// Allows prayer in the Zzzzzzzurch(!)
 	if(istype(get_area(follower), /area/rogue/indoors/shelter/mountains))
 		return TRUE
-	// Allows prayer near EEEVIL psycross
-	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
+	// Allows prayer at any heretical cross, but interrupts it when near holy ones.
+	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
+			to_chat(follower, span_danger("That accursed cross interupts my prayers!"))
 			return FALSE
 		return TRUE
 	// Allows prayers in the bath house - whore.
@@ -49,7 +50,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/baotha in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Baotha to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, within the town's bathhouse, or actively partaking in one of various types of nose-candy!"))
+	to_chat(follower, span_danger("For Baotha to hear my prayers I must either be in the church of the abandoned, near an unholy cross, within the town's bathhouse, atop a drawn Baothan symbol, or actively partaking in drugs or alcohol!"))
 	return FALSE
 
 #define BAOTHA_SUFFERING_DIVIDER 3.535 // max bonus at 50 pain/bleedrate and pain_mod = 1

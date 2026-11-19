@@ -1,3 +1,5 @@
+import { type BooleanLike } from 'tgui-core/react';
+
 import { type RoutedActFunctionType } from '../../backend';
 
 export type FundEntry = {
@@ -62,13 +64,13 @@ export type Patron = {
 };
 
 export type PatronRosterStatic = {
-  label: string;
-  cap: number;
-  can_manage: boolean;
   explanation: string;
 };
 
 export type PatronRoster = {
+  label: string;
+  cap: number;
+  can_manage: boolean;
   patrons: Patron[];
 };
 
@@ -110,6 +112,13 @@ export type Data = {
   bathhouse_ordinance_active: boolean;
   bathhouse_tithe_round_total: number;
   bathhouse_ordinance_cooldown_seconds: number;
+  bathhouse_worker_withdraw_limit: number;
+  bathhouse_agent_withdraw_limit: number;
+  bathhouse_worker_suspended: BooleanLike;
+  bathhouse_agent_suspended: BooleanLike;
+  bathhouse_withdraw_remaining: number;
+  bathhouse_viewer_suspended: BooleanLike;
+  is_bathmaster: boolean;
 };
 
 export type TabKey =

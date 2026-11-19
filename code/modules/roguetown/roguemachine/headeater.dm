@@ -12,6 +12,10 @@
 
 /obj/structure/roguemachine/headeater/examine(mob/user)
 	. = ..()
+	. += examine_extra(user)
+
+/obj/structure/roguemachine/headeater/proc/examine_extra(mob/user)
+	. = list()
 	. += span_info("Left-click to deposit a head into the machine, and right-click to deposit all heads in front of the machine.")
 	if(isliving(user) && SStreasury.is_tax_exempt(user, TAX_CATEGORY_HEADEATER_LEVY))
 		. += span_smallnotice("Crown's Headeater Levy: exempt by decree")

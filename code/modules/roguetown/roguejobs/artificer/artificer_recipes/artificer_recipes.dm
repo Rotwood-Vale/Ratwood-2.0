@@ -165,7 +165,7 @@
 /datum/artificer_recipe/bronze/tools/skillcore
 	name = "Golem Skill Exhibitor (+2 Cog)"
 	created_item = /obj/item/construct_skill_core
-	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze)
 	hammers_per_item = 10
 	skill_level = 3
 
@@ -244,9 +244,9 @@
 	skill_level = 3
 
 /datum/artificer_recipe/contraptions/mess_kit
-	name = "Mess Kit (+2 Iron)" // 3 Iron, cuz you get a pot, a pan and other things for free.
+	name = "Mess Kit (+1 Iron)" // reduced to two iron because it really isn't worth three
 	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
+	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/storage/gadget/messkit
 	hammers_per_item = 5
 	skill_level = 2
@@ -322,7 +322,15 @@
 	name = "Voltic Gauntlet (+1 Tin ingot)(+2 Bronze gear)(+1 cinnabar ore)"
 	required_item = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze,/obj/item/ingot/tin, /obj/item/rogueore/cinnabar)
-	created_item = /obj/item/clothing/gloves/roguetown/contraption/voltic
+	created_item = /obj/item/clothing/gloves/roguetown/chain/contraption/voltic
+	hammers_per_item = 12
+	skill_level = 4
+
+/datum/artificer_recipe/contraptions/steamshield
+	name = "Steam Shield (+1 wood plank)(+1 Bronze gear)(+1 bronze ingot)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/natural/wood/plank, /obj/item/ingot/bronze)
+	created_item = /obj/item/rogueweapon/shield/steam
 	hammers_per_item = 12
 	skill_level = 4
 
@@ -341,37 +349,13 @@
 	hammers_per_item = 14
 	skill_level = 5
 
-/datum/artificer_recipe/contraptions/bombardframe
-	name = "Bombard Frame (+1 Steel Ingot, +2 Bronze Cog, +3 Wooden Plank)"
-	required_item = /obj/item/ingot/steel
-	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/ingot/steel)
-	created_item = /obj/item/bombard_frame
-	hammers_per_item = 8
-	skill_level = 3
-
-/datum/artificer_recipe/contraptions/partiallyrefinedbarrel
-	name = "Partially refined barrel (5 iron ingot + rough iron barrel)"
-	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_roughbarrel)
-	created_item = /obj/item/bombard_partiallyrefinedbarrel
-	hammers_per_item = 10
-	skill_level = 5
-
-/datum/artificer_recipe/contraptions/bombardbarrel
-	name = "Bombard Barrel (+5 iron ingot + repaired sanded barrel)"
-	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedrepairedbarrel, /obj/item/ingot/iron, /obj/item/ingot/iron)
-	created_item = /obj/item/bombard_barrel
-	hammers_per_item = 8
-	skill_level = 5
-
 /datum/artificer_recipe/contraptions/dwarven_music_box
 	name = "Dwarven Music Box (+2 Bronze) (+2 Bronze Cog) (+1 Amethyst)"
 	required_item = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/roguegem/amethyst)
 	created_item = /obj/item/dmusicbox
 	hammers_per_item = 6
-	skill_level = 6
+	skill_level = 5
 
 // --------- WEAPON -----------
 
@@ -423,13 +407,6 @@
 
 /obj/item/rogueweapon/shield/heater/crafted
 	sellprice = 6
-
-/datum/artificer_recipe/wood/weapons/steamshield
-	name = "Steam Shield (+1 wood plank)(+2 Bronze gear)(+2 bronze ingot)"
-	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze,/obj/item/natural/wood/plank, /obj/item/ingot/bronze,/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/shield/steam
-	hammers_per_item = 12
-	skill_level = 3
 
 /// CROSSBOW
 
@@ -740,7 +717,7 @@
 /datum/artificer_recipe/general/smokebomb
 	name = "Gas belcher shells (x3) (+Cog)"
 	required_item = /obj/item/ingot/bronze
-	additional_items = list(/obj/item/roguegear)
+	additional_items = list(/obj/item/roguegear/bronze)
 	created_item = list(/obj/item/smokeshell,
 						/obj/item/smokeshell,
 						/obj/item/smokeshell)

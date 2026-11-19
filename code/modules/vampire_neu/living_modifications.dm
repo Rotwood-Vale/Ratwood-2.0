@@ -34,8 +34,6 @@
 	var/frenzy_chance_boost = 10
 	var/humanity = 7
 
-	var/potence_weapon_buff = 0
-
 	/// List of covens this mob possesses
 	var/list/datum/coven/covens
 	var/datum/clan_menu_interface/clan_menu_interface
@@ -48,6 +46,27 @@
 
 /mob/living/proc/is_kindred()
 	return !isnull(mind?.has_antag_datum(/datum/antagonist/vampire))
+
+/// Full-antagonists only, and supernatural ones only too.
+/// Yes, Gnolls aren't immune. They can just use cmode, but this gives hunted vampires a card to play to maybe get (1/2 free escapes)
+///
+/// Again, do not give it to virtues. Not blackblooded, not rotcured. Period. This is your quiet take-a-person-down unsuspectingly immunity list.
+/// If you want protection get a silver cross. Do not give people inherent and unexplainable protection, period. Not even constructs/reverents,
+/// it doesn't need to make sense or realistic here. Its a mechanical nessessity.
+/mob/living/proc/is_immune_to_vampire_domination()
+	if(!mind)
+		return FALSE
+	if(mind.has_antag_datum(/datum/antagonist/vampire))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/zombie))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/skeleton))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/werewolf))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/lich))
+		return TRUE
+	return FALSE
 
 /mob/living/proc/is_clanmate(mob/living/other)
 	if(isnull(clan) || isnull(other?.clan))
@@ -96,13 +115,19 @@
 	maxbloodpool = initial(maxbloodpool)
 
 /mob/living/proc/set_bloodpool(newblood)
+	var/old_bloodpool = bloodpool
 	bloodpool = CLAMP(newblood, 0, maxbloodpool)
+	if(bloodpool != old_bloodpool)
+		SEND_SIGNAL(src, COMSIG_LIVING_BLOODPOOL_CHANGED, bloodpool, old_bloodpool)
 	hud_used?.bloodpool?.name = "Bloodpool: [bloodpool]"
 	hud_used?.bloodpool?.desc = "Bloodpool: [bloodpool]/[maxbloodpool]"
 	hud_used?.bloodpool?.set_value((100 / (maxbloodpool / bloodpool)) / 100, 1 SECONDS)
 
 /mob/living/proc/adjust_bloodpool(adjust, visible = TRUE)
+	var/old_bloodpool = bloodpool
 	bloodpool = CLAMP(bloodpool + adjust, 0, maxbloodpool)
+	if(bloodpool != old_bloodpool)
+		SEND_SIGNAL(src, COMSIG_LIVING_BLOODPOOL_CHANGED, bloodpool, old_bloodpool)
 	if(!visible)
 		return
 
@@ -310,19 +335,6 @@
 	// Handle low bloodpool effects
 	handle_bloodpool_effects()
 	blood_volume = BLOOD_VOLUME_NORMAL
-
-	// Coffin regeneration
-	var/total_damage = getBruteLoss() + getFireLoss()
-	var/obj/structure/closet/crate/coffin/coffin = loc
-	if(istype(coffin) && total_damage && (src in coffin.contents))
-		if(!HAS_TRAIT(src, TRAIT_DEATHCOMA))
-			to_chat(src, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
-			ADD_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
-		heal_overall_damage(5, 5)
-		adjust_bloodpool(-2)
-	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
-		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
-		to_chat(src, span_warning("You have recovered from Torpor."))
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()
 	// Apply thirst effects based on bloodpool levels

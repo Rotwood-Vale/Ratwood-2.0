@@ -39,7 +39,7 @@
 	req_bar = /obj/item/ingot/gold
 
 /datum/anvil_recipe/weapons/silver
-	abstract_type = /datum/anvil_recipe/weapons/
+	abstract_type = /datum/anvil_recipe/weapons/silver
 	req_bar = /obj/item/ingot/silver
 	craftdiff = SKILL_LEVEL_EXPERT
 
@@ -87,12 +87,12 @@
 
 /datum/anvil_recipe/weapons/ancient/knuckles
 	name = "Knuckles, Ancient"
-	created_item = /obj/item/rogueweapon/knuckles/ancient
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/ancient
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/decrepit/knuckles
 	name = "Knuckles, Decrepit"
-	created_item = /obj/item/rogueweapon/knuckles/ancient/decrepit
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/decrepit
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/ancient/shortsword
@@ -281,7 +281,7 @@
 
 /datum/anvil_recipe/weapons/bronze/bronzeknuckle
 	name = "Knuckledusters, Bronze"
-	created_item = /obj/item/rogueweapon/knuckles/bronzeknuckles
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/bronze
 	display_category = ITEM_CAT_WEAPONS_MACES
 	display_category = ITEM_CAT_WEAPONS_MACES
 
@@ -437,11 +437,25 @@
 	created_item = /obj/item/rogueweapon/sword/short/messer/iron
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
+/datum/anvil_recipe/weapons/iron/messer/virtue
+	name = "Dueling Messer (+1 Iron)"
+	req_blade = /obj/item/blade/iron_sword
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/short/messer/iron/virtue
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
 /datum/anvil_recipe/weapons/iron/broadsword
 	name = "Broadsword, Iron (+1 Iron, 1 Small Log)"
 	req_blade = /obj/item/blade/iron_sword
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/sword/long/broadsword
+
+/datum/anvil_recipe/weapons/iron/nodachi
+	name = "Western Nodachi, Iron (+2 Iron)"
+	req_blade = /obj/item/blade/iron_sword
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/greatsword/nodachi/iron
+	display_category = ITEM_CAT_WEAPONS_SWORDS
 
 /datum/anvil_recipe/weapons/iron/shotel
 	name = "Shotel, Iron (+1 Iron)"
@@ -668,7 +682,7 @@
 
 /datum/anvil_recipe/weapons/steel/steelknuckle
 	name = "Knuckles, Steel"
-	created_item = /obj/item/rogueweapon/knuckles
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/steel/hurlbat
@@ -730,12 +744,6 @@
 	created_item = /obj/item/rogueweapon/sword/sabre/steppesman
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
-/datum/anvil_recipe/weapons/steel/hook
-	name = "Hook Sword, Steel"
-	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/sabre/hook
-	display_category = ITEM_CAT_WEAPONS_SWORDS
-
 /datum/anvil_recipe/weapons/steel/flail
 	name = "Flail, Steel"
 	req_blade = /obj/item/blade/steel_sword
@@ -756,25 +764,12 @@
 	created_item = /obj/item/rogueweapon/sword/long
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
-/datum/anvil_recipe/weapons/steel/sharpfeder
-	name = "Dueling Longsword, Steel (+1 Steel)"
-	req_blade = /obj/item/blade/steel_sword
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/frei
-	display_category = ITEM_CAT_WEAPONS_SWORDS
-
-/datum/anvil_recipe/weapons/steel/elongsword
-	name = "Basket-Hilted Longsword, Steel (+1 Steel)"
-	req_blade = /obj/item/blade/steel_sword
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/etruscan
-	display_category = ITEM_CAT_WEAPONS_SWORDS
-
 /datum/anvil_recipe/weapons/steel/broadsword
 	name = "Broadsword, Steel (+1 Steel, +1 Small Log)"
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/sword/long/broadsword/steel
+	display_category = ITEM_CAT_WEAPONS_SWORDS
 
 /datum/anvil_recipe/weapons/steel/shalal
 	name = "Shalal Saber, Steel (+1 Steel)"
@@ -866,6 +861,13 @@
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 	display_category = ITEM_CAT_WEAPONS_AXES
 
+/datum/anvil_recipe/weapons/steel/woodcutter
+	name = "Woodcutter's Axe, Steel (+1 Steel, +1 Small Log)"
+	req_blade = /obj/item/blade/steel_axe
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	display_category = ITEM_CAT_WEAPONS_AXES
+
 /datum/anvil_recipe/weapons/steel/pulaski
 	name = "Pulaski axe (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
@@ -901,7 +903,7 @@
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
 /datum/anvil_recipe/weapons/steel/eaglebeak
-	name = "Eagle's Beak (+1 Steel, +1 Small Log)"
+	name = "Lucerne, Steel (+1 Steel, +1 Small Log)"
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/eaglebeak
@@ -919,13 +921,6 @@
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/spear/partizan
-	display_category = ITEM_CAT_WEAPONS_POLEARMS
-
-/datum/anvil_recipe/weapons/steel/naginata
-	name = "Naginata, Steel (+1 Big Log)"
-	req_blade = /obj/item/blade/steel_polearm
-	additional_items = list(/obj/item/grown/log/tree/) //looong spear
-	created_item = /obj/item/rogueweapon/spear/naginata
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
 /datum/anvil_recipe/weapons/steel/boarspear
@@ -1123,6 +1118,11 @@
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/sword/long/kriegmesser/silver
 	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/silver/exec
+	name = "Executioners Sword, Silver (+2 Silver, +1 Small Log)"
+	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/sword/long/exe/silver
 
 /datum/anvil_recipe/weapons/silver/waraxe
 	name = "War Axe, Silver (+2 Silver, +1 Small Log)"
@@ -1400,10 +1400,37 @@
 	i_type = "Ammo"
 	display_category = ITEM_CAT_WEAPONS_AMMO
 
+/datum/anvil_recipe/weapons/steel/slingbullets
+	name = "Sling Bullets, Steel (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steel
+	createditem_num = 10
+	i_type = "Ammo"
+	display_category = ITEM_CAT_WEAPONS_AMMO
+
 /datum/anvil_recipe/weapons/bronze/slingbullets
 	name = "Sling Bullets, Bronze (x10)"
 	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze
 	display_category = ITEM_CAT_WEAPONS_AMMO
+	createditem_num = 10
+	i_type = "Ammo"
+
+/datum/anvil_recipe/weapons/silver/slingbullets
+	name = "Sling Bullets, Silver (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silver
+	createditem_num = 10
+	i_type = "Ammo"
+	display_category = ITEM_CAT_WEAPONS_AMMO
+
+/datum/anvil_recipe/weapons/psy/slingbullets
+	name = "Sling Bullets, Blessed silver (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed
+	createditem_num = 10
+	i_type = "Ammo"
+	display_category = ITEM_CAT_WEAPONS_AMMO
+
+/datum/anvil_recipe/weapons/holysteel/slingbullets
+	name = "Sling Bullets, Holy Steel (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steelblessed
 	createditem_num = 10
 	i_type = "Ammo"
 	display_category = ITEM_CAT_WEAPONS_AMMO
@@ -1429,6 +1456,51 @@
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
 	created_item = /obj/item/rogueweapon/sword/long/exe
 	craftdiff = 4
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/valuables/iron/rawheapofiron
+	name = "Heap of Raw Iron (+4 Iron Ore)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/rogueore/iron, /obj/item/rogueore/iron, /obj/item/rogueore/iron, /obj/item/rogueore/iron)
+	created_item = /obj/item/ingot/component/heapofrawiron
+	appro_skill = /datum/skill/craft/weaponsmithing
+	craftdiff = 5
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/valuables/iron/berserkswordgrip
+	name = "Grip of the Berserker's Sword (+1 Executioner Sword, +2 Small Logs, +2 Cured Leather)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/rogueweapon/sword/long/exe, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
+	created_item = /obj/item/ingot/component/berserkswordgrip
+	appro_skill = /datum/skill/craft/weaponsmithing
+	craftdiff = 5
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/valuables/iron/berserkswordblade
+	name = "Blade of the Berserker's Sword (+4 Iron Ingots, +1 Heap of Raw Iron)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/component/heapofrawiron)
+	created_item = /obj/item/ingot/component/berserkswordblade
+	appro_skill = /datum/skill/craft/weaponsmithing
+	craftdiff = 5
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/valuables/iron/berserksword
+	name = "Berserker's Sword (+1 B. Sword's Blade)"
+	req_bar = /obj/item/ingot/component/berserkswordgrip
+	additional_items = list(/obj/item/ingot/component/berserkswordblade)
+	created_item = /obj/item/rogueweapon/sword/long/exe/berserk
+	appro_skill = /datum/skill/craft/weaponsmithing
+	craftdiff = 5
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/valuables/iron/berserkswordalt
+	name = "Berserker's Sword (+1 B. Sword's Grip)"
+	req_bar = /obj/item/ingot/component/berserkswordblade
+	additional_items = list(/obj/item/ingot/component/berserkswordgrip)
+	created_item = /obj/item/rogueweapon/sword/long/exe/berserk
+	appro_skill = /datum/skill/craft/weaponsmithing
+	craftdiff = 5
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
 // BLACKSTEEL
@@ -1481,8 +1553,8 @@
 	created_item = /obj/item/rogueweapon/halberd/blacksteel
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
-/datum/anvil_recipe/weapons/blacksteel/polehammer
-	name = "Blacksteel Polehammer (+3 Blacksteel, +1 Toper, +1 Small Log, +1 Silk)"
+/datum/anvil_recipe/weapons/blacksteel/Lucerne
+	name = "Blacksteel Lucerne (+3 Blacksteel, +1 Toper, +1 Small Log, +1 Silk)"
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/roguegem/yellow, /obj/item/grown/log/tree/small, /obj/item/natural/silk)
 	created_item = /obj/item/rogueweapon/eaglebeak/blacksteel
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
@@ -1502,7 +1574,7 @@
 /datum/anvil_recipe/weapons/blacksteel/knuckles
 	name = "Blacksteel Knuckles (+1 Dorpel, +1 Silk)"//unarmed chuds get fucked
 	additional_items = list(/obj/item/roguegem/diamond, /obj/item/natural/silk)
-	created_item = /obj/item/rogueweapon/knuckles/blacksteel
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/blacksteel
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/blacksteel/hurlbat
@@ -1588,9 +1660,9 @@
 	display_category = ITEM_CAT_WEAPONS_AMMO
 
 /datum/anvil_recipe/weapons/blacksteel/slingbullet
-	name = "Sling Bullet, Blacksteel (x5)"
+	name = "Sling Bullet, Blacksteel (x10)"
 	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
-	createditem_num = 5
+	createditem_num = 10
 	display_category = ITEM_CAT_WEAPONS_AMMO
 
 /datum/anvil_recipe/weapons/blacksteel/shield
@@ -1687,7 +1759,7 @@
 
 /datum/anvil_recipe/weapons/psy/knuckles
 	name = "Psydonic Knuckledusters"
-	created_item = /obj/item/rogueweapon/knuckles/psydon
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/psydon
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/psy/cudgel
@@ -1713,10 +1785,21 @@
 	additional_items = list(/obj/item/ingot/silverblessed)
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
+/datum/anvil_recipe/weapons/psy/exesword
+	name = "Psydonic Executioner Sword (+1 Blessed Silver)"
+	created_item = /obj/item/rogueweapon/sword/long/exe/psy
+	additional_items = list(/obj/item/ingot/silverblessed)
+
 /datum/anvil_recipe/weapons/psy/whip
 	name = "Psydonic Whip (+3 Cured Leather)"
 	created_item = /obj/item/rogueweapon/whip/psywhip_lesser
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
+	display_category = ITEM_CAT_WEAPONS_FLAILS
+
+/datum/anvil_recipe/weapons/psy/urumi
+	name = "Psydonic Urumi (+2 Blessed Silver)"
+	created_item = /obj/item/rogueweapon/whip/urumi/silver/psydonic
+	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)//3 blades so 1 more buillion over non-psydonite silver urumi
 	display_category = ITEM_CAT_WEAPONS_FLAILS
 
 /// BLESSED SILVER, BULLION VARIANTS - FALLBACK
@@ -1757,5 +1840,11 @@
 /datum/anvil_recipe/weapons/psy/sword/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
+/datum/anvil_recipe/weapons/psy/exesword/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
 /datum/anvil_recipe/weapons/psy/whip/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
+/datum/anvil_recipe/weapons/psy/urumi/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion

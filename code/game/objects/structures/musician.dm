@@ -76,9 +76,11 @@
 		if(HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
-		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+		if(!M.client)
 			continue
-		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
+		// max_distance applies attenuation across the same range used to gather listeners
+		var/datum/preferences/prefs = M.client.prefs
+		M.playsound_local(source, null, 100, S = music_played, max_distance = 15, volume_pref = prefs ? prefs.at_overall(prefs.instrumentvol) : null)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise

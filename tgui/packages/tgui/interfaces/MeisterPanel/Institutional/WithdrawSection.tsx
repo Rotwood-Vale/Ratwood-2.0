@@ -4,11 +4,9 @@ import {
   fieldLabelStyle,
   fieldRowStyle,
   fieldValueStyle,
-  FONT_BODY,
   INK_FAINT,
   inkButtonStyle,
   inkInputStyle,
-  SEAL_AMBER,
   sectionHeaderStyle,
 } from '../../common/parchment';
 import { type FundEntry, type TabProps } from '../types';
@@ -29,17 +27,6 @@ export const WithdrawSection = ({
   return (
     <>
       <div style={sectionHeaderStyle}>Direct Withdrawal</div>
-      {!!fund.withdraw_rule && (
-        <div
-          style={{
-            color: SEAL_AMBER,
-            marginBottom: 8,
-            fontSize: FONT_BODY,
-          }}
-        >
-          {fund.withdraw_rule}
-        </div>
-      )}
       <div style={fieldRowStyle}>
         <div style={fieldLabelStyle}>Amount</div>
         <div style={fieldValueStyle}>

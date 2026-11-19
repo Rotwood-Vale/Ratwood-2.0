@@ -26,8 +26,6 @@
 	var/user_sex_part = SEX_PART_NULL
 	/// Set which part/oriface the target will be using
 	var/target_sex_part = SEX_PART_NULL
-	/// Only allow select actions to be done subtly
-	var/subtle_supported = FALSE
 	/// Only allow select actions to end with a knot-tie
 	var/knot_on_finish = FALSE
 	/// Requires can_use_penis() to be TRUE for the user in standard sex part checks.
@@ -70,6 +68,9 @@
 	if(!user_required_spell_type)
 		return TRUE
 	return user.mind?.has_spell(user_required_spell_type)
+
+/datum/sex_action/proc/get_display_name(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return name
 
 /datum/sex_action/proc/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(solo)
@@ -134,6 +135,8 @@
 			return FALSE
 	if((parts_to_check & SEX_PART_TAIL) && !actor.getorganslot(ORGAN_SLOT_TAIL) && !islamia(actor))
 		return FALSE
+	if((parts_to_check & SEX_PART_TAIL_MAW) && !get_manticore_tail(actor))
+		return FALSE
 	return TRUE
 
 // this proc is fail-open, e.g. it returns TRUE by default and all checks are early false returns
@@ -143,6 +146,8 @@
 	if(parts_to_check == SEX_PART_NULL) // & doesn't work here because it's 0
 		return TRUE // no further checks
 	var/needs_groin_check = FALSE
+	if((parts_to_check & SEX_PART_TAIL_MAW) && !get_manticore_tail(actor))
+		return FALSE
 	if((parts_to_check & SEX_PART_ANUS))
 		if(needs_chastity != !!actor.sexcon.has_chastity_anal())
 			return FALSE
@@ -258,7 +263,7 @@
 	return "chastity device"
 
 // Unified sound helper: supports single sound or list input with optional chance gating.
-/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, frequency = -1)
+/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, extrarange = -1)
 	if(!target || !sound_to_play)
 		return FALSE
 	if(chance < 100 && !prob(chance))
@@ -266,7 +271,7 @@
 	if(islist(sound_to_play))
 		if(!length(sound_to_play))
 			return FALSE
-		playsound(get_turf(target), pick(sound_to_play), volume, vary, frequency)
+		playsound_erp(get_turf(target), pick(sound_to_play), volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 		return TRUE
-	playsound(get_turf(target), sound_to_play, volume, vary, frequency)
+	playsound_erp(get_turf(target), sound_to_play, volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 	return TRUE

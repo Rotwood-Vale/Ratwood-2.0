@@ -154,6 +154,7 @@
 
 	var/list/virtue_restrictions
 	var/list/vice_restrictions
+	var/list/quirk_restrictions
 
 	///The job's stats
 	var/list/job_stats
@@ -211,6 +212,8 @@
 	if(job_traits)
 		for(var/trait in job_traits)
 			ADD_TRAIT(H, trait, JOB_TRAIT)
+		if(H.client && (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR)))
+			H.def_intent_change(INTENT_PARRY)
 
 	if(!ishuman(H))
 		return
@@ -218,6 +221,9 @@
 	if(spells && H.mind)
 		for(var/S in spells)
 			H.mind.AddSpell(new S)
+
+	var/mob/living/carbon/human/human_mob = H
+	human_mob.check_secret_passphrases(M)
 
 	if(length(job_stats))
 		for(var/stat in job_stats)
@@ -272,7 +278,7 @@
 			SStreasury.grant_estate_income(H, noble_income, TRUE)
 
 	if(show_in_credits)
-		SScrediticons.processing += H
+		SScrediticons.queue_capture(H)
 
 	if(cmode_music)
 		H.cmode_music = cmode_music
@@ -302,29 +308,6 @@
 		hugboxify_for_class_selection(H)
 
 	log_admin("[department] >> [H.key]/([H.real_name]) has joined as [H.mind.assigned_role].")
-
-/mob/living/carbon/human/proc/add_credit(generate_for_adv_class = FALSE) //Evil code to get the proper image for adv classes after they spawn in.
-	if(!mind || !client)
-		return
-	var/thename = "[real_name]"
-	var/datum/job/J = SSjob.GetJob(mind.assigned_role)
-	var/used_title = get_role_title()
-
-	GLOB.credits_icons[thename] = list()
-	var/client/C = client
-	var/datum/preferences/P = C.prefs
-	var/icon/I
-	if(generate_for_adv_class)
-		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH), human_gear_override = src)
-	else if (P)
-		I = get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, list(SOUTH))
-	if(I)
-		var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="credits")
-		I.Blend(female_s, ICON_MULTIPLY)
-		I.Scale(96,96)
-		GLOB.credits_icons[thename]["title"] = used_title
-		GLOB.credits_icons[thename]["icon"] = I
-		GLOB.credits_icons[thename]["vc"] = voice_color
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 
@@ -524,8 +507,6 @@
 					for(var/stat in adv_ref.adv_stat_ceiling)
 						dat += "["[capitalize(stat)]: <b>\Roman[adv_ref.adv_stat_ceiling[stat]]</b>"] | "
 					dat += "<i><br>Regardless of your statpacks or race choice, you will not be able to exceed these stats on spawn.</i></font>"
-				if(adv_ref.subclass_spellpoints > 0)
-					dat += "<font color = '#a3a7e0'>Starting Spellpoints: <b>[adv_ref.subclass_spellpoints]</b></font>"
 				if(length(adv_ref.subclass_languages))
 					dat += "<details><summary><i>Known Languages</i></summary>"
 					for(var/i in 1 to length(adv_ref.subclass_languages))
@@ -619,13 +600,7 @@
 			winset(usr, "classhelp", "focus=true")
 	if(href_list["jobsubclassinfo"])
 		var/list/dat = list()
-		var/list/subclasses_to_show = job_subclasses
-		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
-			subclasses_to_show = list()
-			for(var/ctag in advclass_cat_rolls)
-				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
-					subclasses_to_show += ctag_class.type
-		for(var/adv in subclasses_to_show)
+		for(var/adv in get_all_subclass_types())
 			var/datum/advclass/advpath = adv
 			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
 			if(subclass.maximum_possible_slots != -1)
@@ -640,12 +615,51 @@
 		popup.open(FALSE)
 		if(winexists(usr, "subclassslots"))
 			winset(usr, "subclassslots", "focus=true")
+	if(href_list["jobadvincomp"])
+		var/mob/dead/D = usr
+		if(!isdead(D) || !D.client)
+			return
+		var/list/dat = list()
+		var/list/blocked = get_blocked_subclasses(D.client)
+		for(var/subname in blocked)
+			dat += "<font color = '#e4e1e1'><b>[subname]</b></font><br>"
+			for(var/pick in blocked[subname])
+				dat += "[pick]<br>"
+		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>Subclass Incompatibilities</div>", nwidth = 200, nheight = 300)
+		popup.set_content(dat.Join())
+		popup.open(FALSE)
+		if(winexists(usr, "subclassslots"))
+			winset(usr, "subclassslots", "focus=true")
 	. = ..()
 
+/datum/job/proc/get_blocked_subclasses(client/player)
+	. = list()
+	var/datum/preferences/prefs = player?.prefs
+	if(!prefs)
+		return
+	var/list/picks = list(prefs.virtue, prefs.virtuetwo)
+	for(var/adv in get_all_subclass_types())
+		var/datum/advclass/subclass = SSrole_class_handler.classes_by_type[adv]
+		if(!length(subclass?.virtue_restrictions))
+			continue
+		var/list/hits = list()
+		for(var/datum/virtue/virtue as anything in picks)
+			for(var/restricted in subclass.virtue_restrictions)
+				if(istype(virtue, restricted))
+					hits |= virtue.name
+		if(length(hits))
+			.[subclass.name] = hits
+
+/datum/job/proc/get_all_subclass_types()
+	if(length(job_subclasses))
+		return job_subclasses
+	. = list()
+	for(var/ctag in advclass_cat_rolls)
+		for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
+			. += ctag_class.type
+
 /datum/job/proc/has_limited_subclasses()
-	if(length(job_subclasses) <= 0)
-		return FALSE
-	for(var/adv in job_subclasses)
+	for(var/adv in get_all_subclass_types())
 		var/datum/advclass/subclass = adv
 		if(initial(subclass.maximum_possible_slots) != -1)
 			return TRUE

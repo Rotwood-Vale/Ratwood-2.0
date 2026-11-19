@@ -305,6 +305,41 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.adjustToxLoss(4.5) // just enough so 5u will kill you dead with no help
 	return ..()
 
+/datum/reagent/deaditerot         // Gives people the deadite rot or speeds up transformation on corpses. As simple as that
+	name =  "Concentrated Rot"
+	description = ""
+	reagent_state = LIQUID
+	color = "#000000"
+	taste_description = "sour meat"
+	metabolization_rate = 1 // handled by on add, any amount is dangerous
+	harmful = TRUE
+	self_consuming = TRUE // shouldn't matter, but yes, its liver independent
+
+/datum/reagent/deaditerot/on_mob_add(mob/living/carbon/M)
+	if(!ishuman(M))
+		return ..()
+	var/mob/living/carbon/human/H = M
+	
+	var/already_zombied= FALSE
+	var/datum/status_effect/zombie_infection/infection = H.has_status_effect(/datum/status_effect/zombie_infection)
+	if(infection)
+		already_zombied = TRUE
+	var/datum/antagonist/zombie/zomb = H.mind?.has_antag_datum(/datum/antagonist/zombie)
+	if(zomb)
+		already_zombied = TRUE
+	if(!already_zombied)
+		if(H.zombie_check_can_convert())
+			H.infected = TRUE //Is this in use? Just in case it is
+			H.apply_status_effect(/datum/status_effect/zombie_infection, 3 MINUTES, "potion")
+
+	if(H.stat == DEAD || H.InCritical())
+		var/datum/antagonist/zombie/Z = H.mind?.has_antag_datum(/datum/antagonist/zombie)
+		if(Z)
+			Z.wake_zombie(TRUE)
+		
+	M.reagents.remove_reagent(src, 1000000000000000)
+	return ..()
+
 /datum/reagent/bloodacid // Quietus Poison for Vampires
 	name = "Vitae Acid"
 	description = ""
@@ -320,12 +355,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.add_nausea(5.5)
 			M.adjustToxLoss(7.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
-			M.playsound_local('sound/magic/heartbeat.ogg', 50)
+			M.playsound_local(M, 'sound/magic/heartbeat.ogg', 50)
 		else
 			M.add_nausea(6.5)
 			M.adjustToxLoss(8.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
-			M.playsound_local('sound/magic/heartbeat.ogg', 50)
+			M.playsound_local(M, 'sound/magic/heartbeat.ogg', 50)
 	return ..()
 
 /datum/reagent/organpoison
@@ -339,7 +374,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 
 
 /datum/reagent/organpoison/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M, TRAIT_NASTY_EATER) && !HAS_TRAIT(M, TRAIT_ORGAN_EATER))
+	if(!HAS_TRAIT(M, TRAIT_NASTY_EATER) && !HAS_TRAIT(M, TRAIT_ORGAN_EATER) && !HAS_TRAIT(M, TRAIT_WILD_EATER))
 		M.add_nausea(9)
 		M.adjustToxLoss(2)
 	return ..()
@@ -350,13 +385,15 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	reagent_state = LIQUID
 	color = "#083b1c"
 	taste_description = "breathlessness"
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM * 3
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	harmful = TRUE
 
 
 /datum/reagent/stampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
 		M.energy_add(-45) //Slowly leech energy
+	if(volume >= 30)
+		M.reagents.remove_reagent(/datum/reagent/stampoison, 2) //No infinite energy drain
 	return ..()
 
 /datum/reagent/strongstampoison
@@ -365,13 +402,15 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	reagent_state = LIQUID
 	color = "#041d0e"
 	taste_description = "frozen air"
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM * 9
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	harmful = TRUE
 
 
 /datum/reagent/strongstampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
 		M.energy_add(-180) //Rapidly leech energy
+	if(volume >= 30)
+		M.reagents.remove_reagent(/datum/reagent/strongstampoison, 2) //No infinite energy drain
 	return ..()
 
 /datum/reagent/toxin/killersice
@@ -382,6 +421,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = 0.1
 	toxpwr = 0
 	harmful = TRUE
+	pain = 500
 
 /datum/reagent/toxin/killersice/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(20, 0)

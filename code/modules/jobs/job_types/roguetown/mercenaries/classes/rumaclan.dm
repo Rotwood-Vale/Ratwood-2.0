@@ -2,7 +2,7 @@
 	name = "Ruma Clan Gun-in"
 	tutorial = "A swordfighter from a band of Kazengite foreigners. The Ruma Clan were outcasts from the Xinyi Dynasty, believed to be associated with the rebels at the time. The clan departed to avoid repercussion. It is no organized group of soldiers, but rather a loose collection of experienced fighters."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = NON_DWARVEN_RACE_TYPES //no dwarf sprites
+	allowed_races = ALL_BUT_BLOODLESS_DWARF //no dwarf sprites
 	outfit = /datum/outfit/job/roguetown/mercenary/rumaclan
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_KAZENGUN
@@ -36,7 +36,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/rogueweapon/scabbard/sword/kazengun/steel
 	beltl = /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
+	shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/ruma
 	cloak = /obj/item/clothing/cloak/eastcloak1
 	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
@@ -84,7 +84,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/quiver/arrows
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
+	shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/ruma
 	cloak = /obj/item/clothing/cloak/eastcloak1
 	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2

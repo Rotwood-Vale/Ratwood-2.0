@@ -56,12 +56,15 @@
 	sellprice = 100
 
 /obj/item/clothing/head/roguetown/circlet
+	is_gold = TRUE
 	no_loot_taint = TRUE
 	name = "golden circlet"
 	icon_state = "circlet"
 	item_state = "circlet"
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
+	nudist_approved = TRUE
+	resistance_flags = FIRE_PROOF
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem

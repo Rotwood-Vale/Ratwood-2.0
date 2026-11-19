@@ -36,6 +36,8 @@ SUBSYSTEM_DEF(role_class_handler)
 		CTAG_ALLCLASS = list(every single class datum that exists outside of the parent)
 */
 	var/list/sorted_class_categories = list()
+	/// advclass type -> instance
+	var/list/classes_by_type = list()
 
 
 	/// Whether bandits have been injected in the game
@@ -66,6 +68,7 @@ SUBSYSTEM_DEF(role_class_handler)
 
 	//Time to sort these classes, and sort them we shall.
 	for(var/datum/advclass/class in all_classes)
+		classes_by_type[class.type] = class
 		for(var/ctag in class.category_tags)
 			if(!sorted_class_categories[ctag]) // New cat
 				sorted_class_categories[ctag] = list()
@@ -78,11 +81,14 @@ SUBSYSTEM_DEF(role_class_handler)
 	We will cache it per server session via an assc list with a ckey leading to the datum.
 */
 /datum/controller/subsystem/role_class_handler/proc/setup_class_handler(mob/living/carbon/human/H, advclass_rolls_override = null, register_id = null)
+	if(!H?.client)
+		return
+	var/client_ckey = H.client.ckey
 	if(!register_id)
 		if(H.job == "Towner")
 			register_id = "towner"
 	// insure they somehow aren't closing the datum they got and opening a new one w rolls
-	var/datum/class_select_handler/GOT_IT = class_select_handlers[H.client.ckey]
+	var/datum/class_select_handler/GOT_IT = class_select_handlers[client_ckey]
 	if(GOT_IT)
 		if(!GOT_IT.linked_client) // this ref will disappear if they disconnect neways probably, as its a client
 			GOT_IT.linked_client = H.client // Thus we just give it back to them
@@ -98,24 +104,34 @@ SUBSYSTEM_DEF(role_class_handler)
 		//XTRA_MEATY.PQ_boost_divider = 10
 	else
 		var/datum/job/roguetown/RT_JOB = SSjob.GetJob(H.job)
-		if(RT_JOB.advclass_cat_rolls.len)
-			XTRA_MEATY.class_cat_alloc_attempts = RT_JOB.advclass_cat_rolls
+		if(!length(RT_JOB?.advclass_cat_rolls))
+			qdel(XTRA_MEATY)
+			return // Job has no subclasses
+		XTRA_MEATY.class_cat_alloc_attempts = RT_JOB.advclass_cat_rolls
 
 		//if(RT_JOB.PQ_boost_divider)
 			//XTRA_MEATY.PQ_boost_divider = RT_JOB.PQ_boost_divider
 
-	if(H.client.ckey in special_session_queue)
+	if(client_ckey in special_session_queue)
 		XTRA_MEATY.special_session_queue = list()
-		for(var/funny_key in special_session_queue[H.client.ckey])
-			var/datum/advclass/XTRA_SPECIAL = special_session_queue[H.client.ckey][funny_key]
+		for(var/funny_key in special_session_queue[client_ckey])
+			var/datum/advclass/XTRA_SPECIAL = special_session_queue[client_ckey][funny_key]
 			if(XTRA_SPECIAL.maximum_possible_slots > XTRA_SPECIAL.total_slots_occupied)
 				XTRA_MEATY.special_session_queue += XTRA_SPECIAL
 
 	XTRA_MEATY.register_id = register_id
 	if(!XTRA_MEATY.initial_setup())
 		return // There was just one advclass that got automatically selected
-	class_select_handlers[H.client.ckey] = XTRA_MEATY
+	class_select_handlers[client_ckey] = XTRA_MEATY
 
+/datum/controller/subsystem/role_class_handler/proc/cancel_class_handler(client_ckey)
+	if(!client_ckey)
+		return
+	var/datum/class_select_handler/GOT_IT = class_select_handlers[client_ckey]
+	if(!GOT_IT)
+		return
+	class_select_handlers -= client_ckey
+	qdel(GOT_IT)
 
 /*
 	Attempt to finish the class handling ordeal, aka they picked something

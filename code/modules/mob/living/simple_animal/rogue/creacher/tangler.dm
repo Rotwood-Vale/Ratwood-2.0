@@ -14,6 +14,7 @@
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 	var/list/eatablez = list(/obj/item/organ, /obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/compost, /obj/item/natural/poo)
 	var/last_eat
 	var/aggroed = TRUE

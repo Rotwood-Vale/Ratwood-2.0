@@ -437,7 +437,7 @@
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
-			mymob.client.screen -= alerts[alerts[i]]
+			mymob.client?.screen -= alerts[alerts[i]]
 			mymob.push_screen_to_observers(alerts[alerts[i]], TRUE)
 		return 1
 	var/list/buffs = list()
@@ -524,7 +524,7 @@
 					else
 						. = ""
 		alert.screen_loc = .
-		mymob.client.screen |= alert
+		mymob.client?.screen |= alert
 		mymob.push_screen_to_observers(alert)
 	return 1
 

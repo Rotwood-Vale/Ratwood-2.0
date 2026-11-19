@@ -3,8 +3,8 @@
 	flag = CHURCHLING
 	department_flag = YOUNGFOLK
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 4
+	spawn_positions = 4
 
 	allowed_races = ACCEPTED_RACES
 	allowed_sexes = list(MALE, FEMALE)
@@ -22,7 +22,7 @@
 	social_rank = SOCIAL_RANK_PEASANT
 
 	//You've given up your life for the Church. Why would you be noble?
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble)
 
 	advclass_cat_rolls = list(CTAG_CHURCHLING = 20)
 	job_subclasses = list(
@@ -41,6 +41,7 @@
 		STATKEY_SPD = 2,
 		STATKEY_PER = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
@@ -112,6 +113,7 @@
 		STATKEY_STR = 1,
 		STATKEY_WIL = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_NOVICE,

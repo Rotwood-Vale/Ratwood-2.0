@@ -40,7 +40,7 @@
 		if(medskill > SKILL_LEVEL_EXPERT)
 			burndam = 0
 
-	var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
+	var/datum/antagonist/zombie/was_zombie = get_deadite_antag_for_body(target)
 	var/fully_turned = was_zombie?.has_turned //Make sure someone hasn't yet turned before we knock them dead
 	if(target.infected == FALSE)
 		if(target.stat == DEAD || fully_turned)
