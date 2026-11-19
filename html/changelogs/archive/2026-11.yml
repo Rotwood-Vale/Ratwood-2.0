@@ -682,3 +682,5 @@
       Combat Aware adds the grabbed body part.
   - bugfix: Switching out of alternate grip now retains two-handed wielding on weapons
       that support it.
+  - qol: Wound-sewing bonus XP is awarded when stitching stops the bleeding, with
+      a completion fallback for wounds that still bleed.

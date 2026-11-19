@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - qol: "Wound-sewing bonus XP is awarded when stitching stops the bleeding, with a completion fallback for wounds that still bleed."
