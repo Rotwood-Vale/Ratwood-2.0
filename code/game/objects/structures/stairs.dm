@@ -55,7 +55,14 @@
 		return FALSE
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		if(C.badluck(5) || (C.has_status_effect(/datum/status_effect/buff/drunk) && prob(10)) || (C.has_status_effect(/datum/status_effect/incapacitating/off_balanced) && prob(50)))
+		var/chance = 0
+		chance -= (C.STALUC-10) * 10
+		if(C.has_status_effect(/datum/status_effect/buff/drunk))
+			chance += 20
+		if(C.has_status_effect(/datum/status_effect/incapacitating/off_balanced))
+			chance += 50
+		chance = clamp(chance, 0, 100)
+		if(prob(chance))
 			C.visible_message("<span class='danger'>You stumble on the stairs!</span>")
 			C.Stun(1 SECONDS)
 			C.Knockdown(1 SECONDS)
