@@ -1,5 +1,0 @@
-author: "ronfino"
-delete-after: True
-changes:
-  - bugfix: "Tongs are smeltable again via SNEAK."
-  - rscdel: "Removed duplicate tongs from code."

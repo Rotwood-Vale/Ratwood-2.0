@@ -2,7 +2,7 @@
 
 /obj/effect/proc_holder/spell/invoked/projectile/profane
 	name = "Profane"
-	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
+	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand (or are wearing a zcross around your neck), you will coax a much stronger lance of bone into being, which is capable of severing limbs. 50% stronger versus simple-minded creechers."
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -15,8 +15,10 @@
 	invocation_type = "whisper"
 	releasedrain = 30
 	chargedrain = 0
-	chargetime = 15
-	recharge_time = 10 SECONDS
+	chargetime = 1
+	no_early_release = TRUE
+	movement_interrupt = FALSE
+	recharge_time = 4 SECONDS
 	hide_charge_effect = TRUE // Left handed magick babe
 
 /obj/effect/proc_holder/spell/invoked/projectile/profane/miracle
@@ -29,16 +31,22 @@
 
 	var/obj/item/held_item = user.get_active_held_item()
 	var/big_cast = FALSE
-	if (istype(held_item, /obj/item/natural/bundle/bone))
+	if (ishuman(user)) // if we're wearing a zcross, always big-cast
+		var/mob/living/carbon/human/human_user = user
+		if (istype(human_user.wear_neck, /obj/item/clothing/neck/roguetown/psicross/inhumen)) 
+			projectile_type = /obj/projectile/magic/profane/major
+			big_cast = TRUE
+	
+	if (!big_cast && istype(held_item, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/bonez = held_item
 		if (bonez.use(1))
 			projectile_type = /obj/projectile/magic/profane/major
 			big_cast = TRUE
-	else if (istype(held_item, /obj/item/natural/bone))
+	else if (!big_cast && istype(held_item, /obj/item/natural/bone))
 		qdel(held_item)
 		projectile_type = /obj/projectile/magic/profane/major
 		big_cast = TRUE
-	else if (istype(held_item, /obj/item/natural/bundle/bone))
+	else if (!big_cast && istype(held_item, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/boney_bundle = held_item
 		if (boney_bundle.use(1))
 			projectile_type = /obj/projectile/magic/profane/major
@@ -63,19 +71,29 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	var/embed_prob = 10
+	woundclass = BCLASS_PIERCE
+	npc_simple_damage_mult = 1.5
 
 /obj/projectile/magic/profane/major
 	name = "profaned bone lance"
-	damage = 35
+	damage = 55
 	embed_prob = 30
+	woundclass = BCLASS_CUT
+	npc_simple_damage_mult = 2
 
 /obj/projectile/magic/profane/on_hit(atom/target, blocked)
 	. = ..()
 	if (iscarbon(target) && prob(embed_prob))
+		if (HAS_TRAIT(target, TRAIT_SIMPLE_WOUNDS))
+			var/mob/living/simple_animal/simple_target = target
+			simple_target.simple_bleeding += 10
+			simple_target.visible_message(span_danger("[src] tears into [target]!"), span_userdanger("[src] tears into you, causing violent bleeding!"))
+			return
 		var/mob/living/carbon/carbon_target = target
 		var/obj/item/bodypart/victim_limb = pick(carbon_target.bodyparts)
 		var/obj/item/bone/splinter/our_splinter = new
 		victim_limb.add_embedded_object(our_splinter, FALSE, TRUE)
+		return
 
 /obj/item/bone/splinter
 	name = "bone splinter"
@@ -83,6 +101,7 @@
 		"embed_chance" = 100,
 		"embedded_pain_chance" = 25,
 		"embedded_fall_chance" = 5,
+		"embedded_bloodloss" = 5,
 	)
 
 /obj/item/bone/splinter/dropped(mob/user, silent)
@@ -174,6 +193,8 @@
 	if((target.mobility_flags & MOBILITY_STAND))
 		to_chat(user, span_info("My target must be lying down to have their lux torn."))
 		return
+	if(zizo_target_error(user, target))
+		return
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || (target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) || target.mob_biotypes & MOB_UNDEAD)) //can't farm your skeletons
 		to_chat(user, span_notice("This one's lux is already disturbed!"))
 		return
@@ -196,7 +217,9 @@
 		target.add_stress(/datum/stressevent/myfuckingluxman)
 	playsound(src, 'sound/items/blackmirror_needle.ogg', 60, FALSE, 3)
 	user.visible_message(span_alert("[user] tears a glob of lux from [target]'s chest!"))
-	new /obj/item/reagent_containers/lux_impure(target.loc)
+	new /obj/item/necro_relics/necro_crystal(target.loc)
+	zizo_award(user, 5)
+	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 	record_round_statistic(STATS_LUX_HARVESTED)

@@ -487,7 +487,7 @@
 		/obj/item/natural/silk = 1,
 		/obj/item/ash = 1)
 	skillcraft = /datum/skill/misc/medicine
-	craftdiff = 2
+	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/ironore
 	name = "iron ore"
@@ -556,3 +556,13 @@
 		)
 	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 4 //Expert
+
+/datum/crafting_recipe/roguetown/survival/head_roguetown_onhelm_tw_d_basic
+	name = "helm's chaperon"
+	result = /obj/item/clothing/head/roguetown/onhelm/tw_d_basic
+	reqs = list(/obj/item/natural/cloth = 3)
+	tools = list(/obj/item/needle)
+	skillcraft = /datum/skill/craft/sewing
+	craftdiff = 2
+	verbage_simple = "sew"
+	verbage = "sews"

@@ -1,5 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "You can no longer raise your guard while vulnerable from a successful feint."
-  - bugfix: "Right-click Defend and the guard hotkey now use the same checks, including preventing guard from stacking with limbguard."

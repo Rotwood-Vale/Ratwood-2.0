@@ -697,6 +697,14 @@
 	sheathe_icon = "tanto"
 	picklvl = 1.2
 
+/obj/item/rogueweapon/huntingknife/idagger/silver/kazengun
+	name = "silver tanto"
+	desc = "A silver dagger imported from the Kazengunese archipelago. A sturdy blade bears a subtle curve, set into a decorated circular crossguard. A waxed \
+	wrapping of twisted cordage provides a secure grip."
+	icon_state = "silvereastdagger"
+	sheathe_icon = "silver_tanto"
+	picklvl = 1.2
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/elvish
 	name = "elvish dirk"
 	desc = "A wave-bladed dagger of Elven design, whose elegant steel craftsmanship is only rivaled by its deceptive lethality."
@@ -741,6 +749,10 @@
 	equip_delay_self = 0 //No delay when stowing away, without a scabbard.
 	unequip_delay_self = 0 //No delay when drawing.
 	inv_storage_delay = 0 //No delay when retrieving from a storage slot.
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/heart_stake)
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/ComponentInitialize()
 	AddComponent(\

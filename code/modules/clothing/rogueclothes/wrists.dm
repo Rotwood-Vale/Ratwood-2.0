@@ -12,14 +12,15 @@
 	grid_height = 64
 	var/overarmor
 
+/obj/item/clothing/wrists/roguetown/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Middle-clicking adjusts its layer, so it can be worn either above-or-below any armor and gloves.")
+
 /obj/item/clothing/wrists/roguetown/MiddleClick(mob/user, params)
 	. = ..()
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear \the [src] over my armor" : "wear \the [src] under my armor"]."))
-	if(overarmor)
-		alternate_worn_layer = WRISTS_LAYER
-	else
-		alternate_worn_layer = UNDER_ARMOR_LAYER
+	alternate_worn_layer = overarmor ? OVER_ARMOR_LAYER : initial(alternate_worn_layer)
 	user.update_inv_wrists()
 	user.update_inv_gloves()
 	user.update_inv_armor()
@@ -302,6 +303,32 @@
 /obj/item/clothing/wrists/roguetown/bracers/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
+
+/obj/item/clothing/wrists/roguetown/bracers/graggar
+	name = "vicious bracers"
+	desc = "Oh, to plunge hands into cold water; to play a melody upon an ivory-keyed piano; to watch steam rise from boiling, twisting entrails.."
+	icon_state = "graggarbracers"
+	item_state = "graggarbracers"
+	max_integrity = ARMOR_INT_SIDE_ANTAG - 100
+	armor = ARMOR_PLATE_BSTEEL
+
+/obj/item/clothing/wrists/roguetown/bracers/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR")
+
+/obj/item/clothing/wrists/roguetown/bracers/graggar/heavy
+	name = "vicious wristguards"
+	desc = "Swaying chains, padded with a mixture of twine, leather and entrails. Steel and bone on the outside. It won't survive the onslaught - but it's \
+	not meant to. </br>Everything He did, He did for Ravox. To see them squander such power in favor of mortality's chains - it broke Him. Yils of resentment, \
+	of jealousy and frustration; released all at once. Through flowing tears, He disemboweled the divine filament and shattered His chains once and for all.. \
+	for if He would not be loved, then He would settle for hatred instead."
+	icon_state = "graggarplatebracer_heavy"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_PLATE_BSTEEL
+
+/obj/item/clothing/wrists/roguetown/bracers/graggar/heavy/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR")
 
 /obj/item/clothing/wrists/roguetown/splintarms/iron
 	name = "splint bracers"

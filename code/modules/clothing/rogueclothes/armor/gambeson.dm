@@ -156,7 +156,7 @@
 		detail_color = playerchoice
 		detail_tag = "_detail"
 		update_icon()
-		if(loc == user && ishuman(user))
+		if(is_worn_or_stored_by(user) && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_shirt()
 			H.update_icon()
@@ -188,12 +188,14 @@
 	altdetail_color = "#c08955"
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
+	resistance_flags = FIRE_PROOF
 	var/shiftable = FALSE
 	var/picked = FALSE
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
 	sellprice = 25
 	blocksound = SOFTUNDERHIT
+	boobed = FALSE
 	blade_dulling = DULLING_BASHCHOP
 	pickup_sound = 'sound/foley/equip/equip_armor.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor.ogg'
@@ -219,7 +221,7 @@
 		detail_color = playerchoice
 		detail_tag = "_detail"
 		update_icon()
-		if(loc == user && ishuman(user))
+		if(is_worn_or_stored_by(user) && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_shirt()
 			H.update_icon()
@@ -287,7 +289,7 @@
 		detail_color = playerchoice
 		detail_tag = "_detail"
 		update_icon()
-		if(loc == user && ishuman(user))
+		if(is_worn_or_stored_by(user) && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_shirt()
 

@@ -126,6 +126,20 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	/// Aspect reset budget used. Major costs 2, Minor/Utility costs 1. Max 2. Resets on sleep.
 	var/aspect_resets_used = 0
 
+	var/list/zizo_researched = list(
+		/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
+		/datum/ritual/servantry/heartache,
+		/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
+		/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
+		/datum/ritual/transmutation/summonoutfit, /datum/ritual/transmutation/raiseshrine,
+		/datum/ritual/servantry/guidance,
+		/datum/ritual/servantry/sleepcurse, /datum/ritual/transmutation/silencerleech, /datum/ritual/transmutation/propaganda,
+		/datum/ritual/servantry/misfortune,
+		)
+	var/zizo_points = 0
+	var/list/antag_setup_stats
+	var/antag_setup_trait
+
 /datum/mind/New(key)
 	src.key = key
 	soulOwner = src
@@ -142,6 +156,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	RemoveAllSpells()
+	spell_list.Cut()
 	if(current)
 		if(current.mind == src)
 			current.mind = null
@@ -381,6 +396,14 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(active || force_key_move)
 		testing("dotransfer to [new_character]")
 		new_character.key = key		//now transfer the key to link the client to our new body
+		// A slumbering player carried into a new body (a werewolf at dawn, a shapeshift ending) gets no Login or Logout,
+		// so move the deep slumber over here or the body is never alerted on or listed.
+		if(isliving(new_character) && new_character.ckey && !new_character.client)
+			var/mob/living/slumbering = new_character
+			var/old_is_living = isliving(old_current)
+			slumbering.mark_disconnected(old_is_living && old_current.last_logout_time ? old_current.last_logout_time : world.time)
+			if(old_is_living && old_current != slumbering)
+				old_current.clear_disconnected()
 	new_character.update_fov_angles()
 	if(old_current)
 		SEND_SIGNAL(old_current, COMSIG_MIND_TRANSFER, new_character)
@@ -924,7 +947,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/RemoveAllSpells()
 	for(var/datum/S in spell_list)
 		RemoveSpell(S)
-	for(var/datum/SP in current.actions)
+	for(var/datum/SP in current?.actions)
 		RemoveSpell(SP)
 
 //removes spells that have miracle = true on them
@@ -1130,8 +1153,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 							else
 								I.desc = "The overall look and feel of the item suggests this may be a mere reproduction."
 
-							// Set sellprice to 0
-							I.sellprice = 0
+							// Make quality suck
+							I.item_quality = ITEM_QUALITY_CRUDE 
 
 							// Make items smelt to ash instead of original materials
 							I.smeltresult = /obj/item/ash
@@ -1152,8 +1175,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 									// Set armor class to LIGHT for all loadout armor
 									if(C.armor_class != ARMOR_CLASS_NONE)
 										C.armor_class = ARMOR_CLASS_LIGHT
-									// Apply ARMOR_MIND_PROTECTION with slight randomization (±10%)
-									// Randomize max integrity around light base by ±10% and ensure full integrity
+									C.armor = C.armor.setRating(C.armor.blunt > 0 ? max(1, C.armor.blunt - 2) : 0, C.armor.slash > 0 ? max(1, C.armor.slash - 2) : 0, C.armor.stab > 0 ? max(1, C.armor.stab - 2) : 0, C.armor.piercing > 0 ? max(1, C.armor.piercing - 2) : 0)
 									var/_base_int = ARMOR_INT_CHEST_LIGHT_BASE
 									var/_variance = round(_base_int * 0.1)
 									C.max_integrity = _base_int + rand(-_variance, _variance)
@@ -1296,6 +1318,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/datum/action/cooldown/spell/conjure_arcyne_ward/base_ward
 		var/datum/action/cooldown/spell/conjure_arcyne_ward/variant_ward
 		for(var/datum/action/cooldown/spell/conjure_arcyne_ward/ward in spell_list)
+			if(istype(ward, /datum/action/cooldown/spell/conjure_arcyne_ward/zizo))
+				continue
 			if(ward.type == /datum/action/cooldown/spell/conjure_arcyne_ward)
 				base_ward = ward
 			else

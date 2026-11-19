@@ -105,6 +105,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 1,
 	)
+	pure_heart = TRUE
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 6, "ward" = TRUE)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
@@ -123,6 +124,7 @@
 
 /datum/outfit/job/roguetown/wapprentice/apprentice/pre_equip(mob/living/carbon/human/H)
 	beltl = /obj/item/storage/magebag/associate
+	head = /obj/item/clothing/head/roguetown/roguehood
 	backpack_contents = list(
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/recipe_book/alchemy = 1,

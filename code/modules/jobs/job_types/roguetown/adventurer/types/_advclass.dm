@@ -22,6 +22,8 @@
 
 	var/noble_income = FALSE //Passive income every day from noble estate
 
+	var/pure_heart = FALSE
+
 	/// This class is immune to species-based swapped gender locks
 	var/immune_to_genderswap = FALSE
 
@@ -85,7 +87,9 @@
 		return FALSE
 
 	if(outfit)
-		H.equipOutfit(outfit, dummy)
+		var/datum/outfit/O = new outfit
+		O.skip_pre_equip = dummy
+		H.equipOutfit(O, dummy)
 
 		if(dummy)	//This means we're doing a Char Sheet preview. We don't need to equip the dummy with anything else, the outfits are likely to runtime on their own.
 			return
@@ -138,6 +142,9 @@
 	if(subclass_social_rank)
 		H.social_rank = subclass_social_rank
 
+	if(pure_heart)
+		H.purity = TRUE
+
 	// After the end of adv class equipping, apply a SPECIAL trait if able
 
 	if(length(subclass_virtues))
@@ -156,7 +163,7 @@
 			apply_character_post_equipment(H)
 
 /datum/advclass/proc/post_equip(mob/living/carbon/human/H)
-	addtimer(CALLBACK(H,TYPE_PROC_REF(/mob/living/carbon/human, add_credit), TRUE), 20)
+	SScrediticons.queue_capture(H)
 	if(cmode_music)
 		H.cmode_music = cmode_music
 

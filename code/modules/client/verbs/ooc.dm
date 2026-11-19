@@ -591,7 +591,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		repeat = TRUE,
 		wait = 0,
 		channel = CHANNEL_CMUSIC4,
-		volume = clamp((prefs?.combatmusicvol || 50) * 1.2, 0, 100),
+		volume = overall_volume(src, clamp((prefs?.combatmusicvol || 50) * 1.2, 0, 100)),
 	)
 	SEND_SOUND(src, preview_sound)
 	combat_music_preview_active = TRUE
