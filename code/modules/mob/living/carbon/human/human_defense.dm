@@ -244,7 +244,7 @@
 
 	return ..()
 
-/mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
+/mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE, show_balloon = TRUE)
 	if(wear_pants)
 		wear_pants.add_fingerprint(user)
 	retaliate(user)
