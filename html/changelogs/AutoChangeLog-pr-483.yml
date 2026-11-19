@@ -1,4 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - bugfix: "Fixed bags spilling their contents at spawn and refusing to take items back."

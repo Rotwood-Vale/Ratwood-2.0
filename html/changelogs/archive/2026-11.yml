@@ -666,3 +666,5 @@
   _Rarity:
   - bugfix: Fixed switching spells allowing instant casts using leftover charge.
   - bugfix: Fixed duplicate spell fizzle messages when releasing before fully charged.
+  - bugfix: Fixed bags spilling their contents at spawn and refusing to take items
+      back.
