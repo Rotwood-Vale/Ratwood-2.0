@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Hats and open-faced helmets no longer hide head brands when the face remains visible."
