@@ -131,7 +131,7 @@
 		to_chat(user, span_warning("Action interrupted!"))
 		revert_cast()
 		return FALSE
-	user.set_blood_volume = max(user.blood_volume - 150, BLOOD_VOLUME_BAD) //226
+	user.set_blood_volume(max(user.get_blood_volume()-150, 0)) //226
 	user.apply_status_effect(/datum/status_effect/buff/empowered_strike, bloodbuff_duration)
 	to_chat(user, span_notice("Calm as the mountain lake. Inevitable as the raging tides."))
 	playsound(user, 'sound/combat/hits/bladed/genthrust (1).ogg', 100, TRUE)
