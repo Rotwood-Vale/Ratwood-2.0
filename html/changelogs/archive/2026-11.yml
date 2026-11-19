@@ -668,3 +668,6 @@
   - bugfix: Fixed duplicate spell fizzle messages when releasing before fully charged.
   - bugfix: Fixed bags spilling their contents at spawn and refusing to take items
       back.
+  mypingishuge:
+  - rscadd: Grabs and reinforced grabs show private balloons to both participants.
+      Combat Aware adds the grabbed body part.

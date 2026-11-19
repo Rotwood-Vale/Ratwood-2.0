@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Grabs and reinforced grabs show private balloons to both participants. Combat Aware adds the grabbed body part."
