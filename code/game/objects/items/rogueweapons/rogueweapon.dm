@@ -111,7 +111,10 @@
 /obj/item/rogueweapon/rmb_self(mob/user)
 	if(length(alt_intents) && (wielded || user.cmode || !twirly))
 		if(altgripped)
-			ungrip(user)
+			var/keep_two_handed = wielded && length(gripped_intents)
+			ungrip(user, !keep_two_handed)
+			if(keep_two_handed)
+				wield(user)
 			return
 		if(wielded)
 			ungrip(user)
