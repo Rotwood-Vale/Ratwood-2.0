@@ -757,7 +757,7 @@
 	name = "Stigmata"
 	tutorial = "PSYDON weeps. You are a devout cleric of the Allfather whom takes the suffering of others upon themselves. You have eschewn violence. You will suffer. You will endure."
 	outfit = /datum/outfit/job/roguetown/adventurer/stigmata
-	allowed_races = RACES_NO_CONSTRUCT
+	allowed_races = ALL_BUT_BLOODLESS //Ooze exploit
 
 	traits_applied = list(
 		TRAIT_PACIFISM,
