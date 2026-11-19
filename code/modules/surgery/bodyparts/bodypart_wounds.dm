@@ -109,6 +109,8 @@
 
 /// Returns the total bleed rate on this bodypart
 /obj/item/bodypart/proc/get_bleed_rate()
+	if(!is_organic_limb())
+		return 0
 	var/bleed_rate = bleeding
 	if(bandage && !HAS_BLOOD_DNA(bandage))
 		process_bandage(bleed_rate)
@@ -138,6 +140,8 @@
 
 /// Returns the bleed amount that matters for HUD visuals without mutating bandages.
 /obj/item/bodypart/proc/get_hud_bleed_rate()
+	if(!is_organic_limb())
+		return 0
 	var/hud_bleed_rate = bleeding
 	if(bandage && !HAS_BLOOD_DNA(bandage))
 		var/obj/item/natural/cloth/cloth = bandage
