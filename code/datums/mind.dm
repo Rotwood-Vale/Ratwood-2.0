@@ -126,6 +126,20 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	/// Aspect reset budget used. Major costs 2, Minor/Utility costs 1. Max 2. Resets on sleep.
 	var/aspect_resets_used = 0
 
+	var/list/zizo_researched = list(
+		/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
+		/datum/ritual/servantry/heartache,
+		/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
+		/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
+		/datum/ritual/transmutation/summonoutfit, /datum/ritual/transmutation/raiseshrine,
+		/datum/ritual/servantry/guidance,
+		/datum/ritual/servantry/sleepcurse, /datum/ritual/transmutation/silencerleech, /datum/ritual/transmutation/propaganda,
+		/datum/ritual/servantry/misfortune,
+		)
+	var/zizo_points = 0
+	var/list/antag_setup_stats
+	var/antag_setup_trait
+
 /datum/mind/New(key)
 	src.key = key
 	soulOwner = src
@@ -142,6 +156,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	RemoveAllSpells()
+	spell_list.Cut()
 	if(current)
 		if(current.mind == src)
 			current.mind = null
@@ -932,7 +947,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/RemoveAllSpells()
 	for(var/datum/S in spell_list)
 		RemoveSpell(S)
-	for(var/datum/SP in current.actions)
+	for(var/datum/SP in current?.actions)
 		RemoveSpell(SP)
 
 //removes spells that have miracle = true on them
@@ -1303,6 +1318,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/datum/action/cooldown/spell/conjure_arcyne_ward/base_ward
 		var/datum/action/cooldown/spell/conjure_arcyne_ward/variant_ward
 		for(var/datum/action/cooldown/spell/conjure_arcyne_ward/ward in spell_list)
+			if(istype(ward, /datum/action/cooldown/spell/conjure_arcyne_ward/zizo))
+				continue
 			if(ward.type == /datum/action/cooldown/spell/conjure_arcyne_ward)
 				base_ward = ward
 			else

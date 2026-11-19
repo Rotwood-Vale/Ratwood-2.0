@@ -46,7 +46,7 @@
 	var/empty_alert = FALSE
 
 	var/datum/looping_sound/autogrinder_work/soundloop
-	debris = list(/obj/item/roguegear = 2, /obj/item/natural/wood/plank = 2, /obj/item/natural/stone = 2)
+	static_debris = list(/obj/item/roguegear/bronze = 3, /obj/item/natural/wood/plank = 4, /obj/item/natural/stone = 4, /obj/item/ingot/iron = 2)
 
 /obj/structure/autogrinder/Initialize(mapload)
 	. = ..()
