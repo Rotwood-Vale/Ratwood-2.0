@@ -65,6 +65,10 @@
 	var/charge_progress = client?.progress // This is in seconds, same unit as chargetime
 	var/goal = get_chargetime() //if we have no chargetime then we can freely cast (and no early release flag was not set)
 	var/minimum = get_minimum_cast_time()
+	if((goal || minimum) && (!client || client.charging_spell != src))
+		to_chat(caller, span_warning("[name] was not finished charging! It fizzles."))
+		revert_cast(caller)
+		return FALSE
 	if(minimum)
 		// Preserve early-release spells above the floor, but never permit an instant cast.
 		// Mouse progress is capped at the goal captured when this charge started.

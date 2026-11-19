@@ -74,6 +74,8 @@
 	var/show_lobby_ooc = TRUE // Admin preference: see lobby OOC even when not in lobby
 	var/charge_start_time = 0
 	var/charge_start_timeofday = 0
+	/// Spell that earned the current mouse charge, retained until release is handled.
+	var/obj/effect/proc_holder/spell/charging_spell
 	var/last_cooldown_warn = 0
 	var/charge_was_blocked_by_cooldown = FALSE
 
@@ -82,6 +84,7 @@
 
 /client/MouseDown(object, location, control, params)
 	charge_was_blocked_by_cooldown = FALSE
+	charging_spell = null
 	var/list/modifiers = params2list(params)
 
 	if(mob.incapacitated())
@@ -109,6 +112,8 @@
 	mob.atkswinging = null
 	charging = 0
 	chargedprog = 0
+	progress = 0
+	goal = 0
 
 	if(was_charging)
 		STOP_PROCESSING(SSmousecharge, src)
@@ -278,6 +283,8 @@
 		charge_start_timeofday = world.timeofday
 		sections = null //commented //From what I can tell, this used to be for the mouse icon changing per % of the cast.
 		goal = L.used_intent.get_chargetime() //How much charge to get in order to cast
+		if(L.used_intent.type == INTENT_SPELL)
+			charging_spell = L.ranged_ability
 		part = 1
 		lastplayed = 0
 		doneset = 0
