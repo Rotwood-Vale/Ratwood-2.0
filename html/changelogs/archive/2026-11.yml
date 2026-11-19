@@ -671,3 +671,5 @@
   mypingishuge:
   - rscadd: Grabs and reinforced grabs show private balloons to both participants.
       Combat Aware adds the grabbed body part.
+  - bugfix: Switching out of alternate grip now retains two-handed wielding on weapons
+      that support it.
