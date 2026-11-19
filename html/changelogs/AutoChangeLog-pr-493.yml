@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "Added a warning when readying up or latejoining with insufficient Triumphs for your character setup."
