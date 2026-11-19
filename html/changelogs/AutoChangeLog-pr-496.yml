@@ -1,4 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - bugfix: "Face-hiding hoods equipped in the mask slot now conceal your identity at spawn without needing to be lowered and raised again."

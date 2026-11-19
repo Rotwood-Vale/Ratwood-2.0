@@ -678,6 +678,8 @@
   - qol: Added a warning when readying up or latejoining with insufficient Triumphs
       for your character setup.
   - bugfix: Fixed caparisons being invisible on mares
+  - bugfix: Face-hiding hoods equipped in the mask slot now conceal your identity
+      at spawn without needing to be lowered and raised again.
   mypingishuge:
   - rscadd: Grabs and reinforced grabs show private balloons to both participants.
       Combat Aware adds the grabbed body part.
