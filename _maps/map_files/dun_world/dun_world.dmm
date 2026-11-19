@@ -7138,7 +7138,7 @@
 "boz" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	secret_door_access = list(/datum/job/roguetown/niteman, /datum/job/roguetown/nightmaiden);
-	secret_door_locale = 'escapetunnel-gamblingden'
+	secret_door_locale = "escapetunnel-gamblingden"
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/bath)
