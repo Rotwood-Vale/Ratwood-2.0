@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "The character sheet now shows your numeric triumph total alongside the Roman numeral."
