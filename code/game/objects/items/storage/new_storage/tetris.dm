@@ -10,10 +10,8 @@
 /atom/proc/reset_grid_inventory()
 	var/drop_location = drop_location()
 	for(var/obj/item/item_in_source in contents)
-		if(drop_location)
-			item_in_source.forceMove(drop_location)
-		else
-			item_in_source.moveToNullspace()
+		// Clear the item's occupied cells before trying to place it again.
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, item_in_source, drop_location, TRUE)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, item_in_source, null, TRUE, TRUE, FALSE)
 
 /obj/item
@@ -44,14 +42,7 @@
 	update_grid_inventory()
 
 /obj/item/storage/proc/update_grid_inventory()
-	//this is stupid shitcode but grid inventory sadly requires it
-	var/drop_location = drop_location()
-	for(var/obj/item/item_in_source in contents)
-		if(drop_location)
-			item_in_source.forceMove(drop_location)
-		else
-			item_in_source.moveToNullspace()
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, item_in_source, null, TRUE, TRUE, FALSE)
+	reset_grid_inventory()
 
 /datum/component/storage
 	screen_max_columns = 3
