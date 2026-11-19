@@ -1813,6 +1813,9 @@
 	if(client)
 		client.charging = 0
 		client.chargedprog = 0
+		client.progress = 0
+		client.goal = 0
+		client.charging_spell = null
 		client.tcompare = null //so we don't shoot the attack off
 		client.mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 		STOP_PROCESSING(SSmousecharge, client)
