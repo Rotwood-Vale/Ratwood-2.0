@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Cannon, cannonball, and grapeshot recipes now appear in the encyclopedia. FAFO"
