@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/noflaw/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
-	if(H.get_triumphs() < 3)
+	if(H.get_triumphs() < NO_FLAW_TRIUMPH_COST)
 		var/flawz = GLOB.character_flaws.Copy()
 		var/charflaw = pick_n_take(flawz)
 		charflaw = GLOB.character_flaws[charflaw]
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.charflaw = new charflaw()
 		H.charflaw.on_mob_creation(H)
 	else
-		H.adjust_triumphs(-3)
+		H.adjust_triumphs(-NO_FLAW_TRIUMPH_COST)
 
 /datum/charflaw/badsight
 	name = "Bad Eyesight"

@@ -186,6 +186,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					return
 
 			if(ready != tready)
+				if(tready == PLAYER_READY_TO_PLAY)
+					warn_triumph_shortfall()
 				ready = tready
 		//if it's post initialisation and they're trying to observe we do the needful
 
@@ -637,9 +639,41 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	if(character.client)
 		character.client.update_ooc_verb_visibility()
 
+/mob/dead/new_player/proc/warn_triumph_shortfall()
+	var/datum/preferences/prefs = client?.prefs
+	if(!prefs)
+		return
+
+	// Estimate the cost of the saved build before role and trait restrictions are applied.
+	var/required_triumphs = prefs.get_triumph_collateral()
+	var/heretic = istype(prefs.selected_patron, /datum/patron/inhumen)
+	if(virtue_check(prefs.virtue, heretic))
+		required_triumphs += prefs.virtue.triumph_cost
+	if(prefs.statpack?.name == "Virtuous" && virtue_check(prefs.virtuetwo, heretic))
+		required_triumphs += prefs.virtuetwo.triumph_cost
+	if(background_check(prefs.virtue_background))
+		required_triumphs += prefs.virtue_background.triumph_cost
+
+	var/list/vices = list()
+	for(var/i = 1 to 6)
+		var/datum/charflaw/vice = prefs.vars["vice[i]"]
+		if(vice)
+			vices += vice
+	if(!length(vices) && prefs.charflaw)
+		vices += prefs.charflaw
+	for(var/datum/charflaw/noflaw/no_flaw in vices)
+		required_triumphs += NO_FLAW_TRIUMPH_COST
+
+	if(required_triumphs <= 0)
+		return
+	var/available_triumphs = get_triumphs()
+	if(available_triumphs < required_triumphs)
+		to_chat(src, span_boldwarning("Your character setup costs [required_triumphs] Triumphs, and you have [available_triumphs]. You can still play, but some paid choices may be skipped. You can change them in Character Setup."))
+
 /mob/dead/new_player/proc/LateChoices()
 	if(!client)
 		return
+	warn_triumph_shortfall()
 	var/list/dat = list("<div class='notice' style='font-style: normal; font-size: 14px; margin-bottom: 2px; padding-bottom: 0px'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time, 1)]</div>")
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
