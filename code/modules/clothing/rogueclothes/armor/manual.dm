@@ -485,10 +485,10 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/body/weak
 	desc = "Toughened from abuse, training, or by sheer privilege of birth. Resting will restore its strength."
-	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE - 50
+	body_parts_covered = COVERAGE_NEARLY_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	body_parts_inherent = COVERAGE_NEARLY_FULL
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/body/thug
 	name = "calloused skin"
