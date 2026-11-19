@@ -123,7 +123,7 @@
 	if(!ishuman(user))
 		revert_cast()
 		return FALSE
-	if(user.blood_volume <= BLOOD_VOLUME_OKAY) //336
+	if(user.get_blood_volume() <= BLOOD_VOLUME_OKAY) //336
 		to_chat(user, span_warning("I can't let go of more willingly!"))
 		revert_cast()
 		return FALSE
