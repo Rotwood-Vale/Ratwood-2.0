@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Switching out of alternate grip now retains two-handed wielding on weapons that support it."
