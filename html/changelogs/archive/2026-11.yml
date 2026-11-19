@@ -672,6 +672,7 @@
       back.
   - bugfix: Cannon, cannonball, and grapeshot recipes now appear in the encyclopedia.
       FAFO
+  - bugfix: Wooden and metal limbs no longer bleed from embedded weapons.
   mypingishuge:
   - rscadd: Grabs and reinforced grabs show private balloons to both participants.
       Combat Aware adds the grabbed body part.
