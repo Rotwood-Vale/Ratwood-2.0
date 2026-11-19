@@ -218,3 +218,8 @@
 
 	var/branded = FALSE // Saves time during examine if character hasn't been branded at all
 
+	var/list/deadites_controlled
+	var/purity = FALSE
+	var/zizo_goals_cd = 0
+	var/list/zizo_goals = list()
+	var/list/zizo_goals_complete = list()
