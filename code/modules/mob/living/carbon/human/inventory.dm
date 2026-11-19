@@ -419,6 +419,7 @@
 /mob/living/carbon/human/proc/smart_equipbag(slot_id) // take most recent item out of bag or place held item in bag
 	if(incapacitated())
 		return
+	var/storage_name = slot_id == SLOT_CLOAK ? "cloak" : "backpack"
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_back = get_item_by_slot(slot_id)
 	if(equipped_back?.quickdraw_interact(src, thing))
@@ -427,7 +428,7 @@
 		return
 	if(!equipped_back) // We also let you equip a backpack like this
 		if(!thing)
-			to_chat(src, span_warning("I have no backpack to take something out of!"))
+			to_chat(src, span_warning("I have no [storage_name] to take something out of!"))
 			return
 		if(equip_to_slot_if_possible(thing, slot_id))
 			update_inv_hands()
@@ -440,19 +441,25 @@
 		return
 	if(thing) // put thing in backpack
 		if(thing.inv_storage_delay)
-			if(!move_after(src, thing.inv_storage_delay, target = thing, progress = TRUE))
+			if(!move_after(src, thing.inv_storage_delay, target = thing, progress = TRUE, extra_checks = CALLBACK(src, PROC_REF(can_finish_storage_hotkey), equipped_back, thing, slot_id)))
 				return
+		if(!can_finish_storage_hotkey(equipped_back, thing, slot_id))
+			return
 		if(!SEND_SIGNAL(equipped_back, COMSIG_TRY_STORAGE_INSERT, thing, src))
 			to_chat(src, span_warning("I can't fit anything in!"))
 		return
 	if(!equipped_back.contents.len) // nothing to take out
-		to_chat(src, span_warning("There's nothing in your backpack to take out!"))
+		to_chat(src, span_warning("There's nothing in your [storage_name] to take out!"))
 		return
 	var/obj/item/stored = equipped_back.contents[equipped_back.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from backpack
 	return
+
+/// Rechecked during and after delayed hotkey insertion, including container swaps.
+/mob/living/carbon/human/proc/can_finish_storage_hotkey(obj/item/container, obj/item/held_item, slot_id)
+	return !QDELETED(src) && !QDELETED(container) && !QDELETED(held_item) && !incapacitated() && get_item_by_slot(slot_id) == container && get_active_held_item() == held_item && held_item.loc == src
 
 /mob/living/carbon/human/proc/smart_equipbelt() // put held thing in belt or take most recent item out of belt
 	if(incapacitated())
