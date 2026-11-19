@@ -629,3 +629,12 @@
 		if(istype(accessory))
 			visual_dna.accessory_colors = accessory.get_default_colors(color_key_source_list_from_prefs(prefs))
 	return visual_dna
+
+/datum/customizer/organ/tail/arachnid
+	customizer_choices = list(/datum/customizer_choice/organ/tail/arachnid)
+	allows_disabling = TRUE
+	default_disabled = TRUE
+
+/datum/customizer_choice/organ/tail/arachnid
+	name = "Tentacle Tail"
+	sprite_accessories = list(/datum/sprite_accessory/tail/tentacle)
