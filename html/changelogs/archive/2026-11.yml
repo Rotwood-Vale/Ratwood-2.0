@@ -675,6 +675,8 @@
   - bugfix: Wooden and metal limbs no longer bleed from embedded weapons.
   - qol: The character sheet now shows your numeric triumph total alongside the Roman
       numeral.
+  - qol: Added a warning when readying up or latejoining with insufficient Triumphs
+      for your character setup.
   mypingishuge:
   - rscadd: Grabs and reinforced grabs show private balloons to both participants.
       Combat Aware adds the grabbed body part.
