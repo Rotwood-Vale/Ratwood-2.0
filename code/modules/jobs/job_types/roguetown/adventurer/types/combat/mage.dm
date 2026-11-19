@@ -218,6 +218,97 @@
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 
+/datum/advclass/mage/spellfist
+	name = "Spellfist"
+	tutorial = "You are a Spellfist, an unarmed warrior who combines martial prowess with arcyne magyck. Your art descends from the Pontifexes of Naledi, warrior-monks who first learned to channel arcyne power through their fists, though the technique has since spread across the world — especially to Lingyuese Psydonites in the east. You eschew most weapons in favor of using magyck to accelerate and strengthen your own body, striking enemies with blows from afar and storms of fists up close."
+	outfit = /datum/outfit/job/roguetown/adventurer/spellfist
+	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_ARCYNE)
+	subclass_stats = list(
+		STATKEY_STR = 2,
+		STATKEY_WIL = 1,
+		STATKEY_CON = 2
+	)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 5, ward = TRUE)
+	subclass_skills = list(
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/arcyne = SKILL_LEVEL_JOURNEYMAN, // Bare-handed abilities no weapon and read AA. Match unarmed.
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
+	)
+
+/datum/outfit/job/roguetown/adventurer/spellfist
+	var/sidearm_selected
+
+/datum/outfit/job/roguetown/adventurer/spellfist/Topic(href, href_list)
+	. = ..()
+	if(href_list["sidearm"])
+		sidearm_selected = href_list["sidearm"]
+
+/datum/outfit/job/roguetown/adventurer/spellfist/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/roguetown/headband/monk
+	shoes = /obj/item/clothing/shoes/roguetown/boots
+	pants = /obj/item/clothing/under/roguetown/trou/leather
+	shirt =	/obj/item/clothing/suit/roguetown/armor/gambeson
+	armor =	/obj/item/clothing/suit/roguetown/armor/leather/heavy
+	gloves = /obj/item/clothing/gloves/roguetown/angle
+	neck = /obj/item/clothing/neck/roguetown/leather
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
+	belt = /obj/item/storage/belt/rogue/leather/rope/upgraded
+	backl = /obj/item/storage/backpack/rogue/satchel
+	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+	beltr = /obj/item/rogueweapon/huntingknife
+	var/naledi_book = pick(/obj/item/book/rogue/naledi1, /obj/item/book/rogue/naledi2, /obj/item/book/rogue/naledi3, /obj/item/book/rogue/naledi4)
+	backpack_contents = list(
+		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		(naledi_book) = 1,
+		/obj/item/rogueweapon/spellbook = 1,
+		/obj/item/chalk = 1,
+	)
+
+	var/origin = input(H, "Did you study under the Naledi Yogis?", "ORIGIN") as anything in list("Yes", "No")
+	if(origin == "Yes")
+		head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/black
+		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
+
+	if(H.mind)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/fist_of_psydon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/grasp_of_psydon)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/storm_of_psydon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/empower_weapon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/mending)
+
+	var/datum/status_effect/buff/arcyne_momentum/momentum = H.apply_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(momentum)
+		momentum.set_chant("unarmed")
+
+	sidearm_selected = null
+	var/chant_html = get_spellfist_chant_html(src, H)
+	H << browse(chant_html, "window=spellfist_tutorial;size=650x700")
+	onclose(H, "spellfist_tutorial", src)
+
+	var/open_time = world.time
+	while(!sidearm_selected && world.time - open_time < 5 MINUTES)
+		stoplag(1)
+	H << browse(null, "window=spellfist_tutorial")
+
+	if(!sidearm_selected)
+		sidearm_selected = "katar"
+
+	switch(sidearm_selected)
+		if("katar")
+			H.put_in_hands(new /obj/item/rogueweapon/katar/bronze(H))
+		if("knuckledusters")
+			H.put_in_hands(new /obj/item/clothing/gloves/roguetown/knuckles/bronze(H))
+
+	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
+
 /datum/advclass/mage/spellsinger
 	name = "Spellsinger"
 	tutorial = "You belong to a school of bards renowned for their study of both the arcane and the arts."
