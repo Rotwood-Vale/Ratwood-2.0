@@ -13,6 +13,7 @@
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	mask_override = TRUE
 	sleevetype = null
 	sleeved = null
 	dynamic_hair_suffix = ""
@@ -103,7 +104,6 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	blocksound = SOFTHIT
-	mask_override = TRUE
 	overarmor = FALSE
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
