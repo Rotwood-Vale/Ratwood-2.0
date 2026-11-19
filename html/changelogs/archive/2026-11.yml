@@ -394,3 +394,56 @@
   - rscadd: Bishop no longer gets to call divine punishment on inqusition, psydonite
       conversion now clenses related debuffs/curses
   - qol: Caughtery now heats up for minimum of 20 seconds when heated
+2026-11-17:
+  AlucardHellsingChapel:
+  - rscadd: Added runelock pistol
+  - rscadd: Added Testament new relic weapon
+  - image: added new icons and sprites
+  - rscadd: Added Templar spellblade
+  HalfAwake691:
+  - bugfix: Traveling scholar has magic again
+  IronDragoon:
+  - admin: fixes for admin letter panel
+  Randumb-Phantomb:
+  - qol: Adds Zebra-kin, Pegasus, Alicorn, Griffon, Unicorn, Jackalope, and Chupacabra
+      as racial subtitles to Wild-kin
+  - qol: Adds Zebravolk, Pegasus, Alicorn, Griffon, Unicorn, Jackalope, and Chupacabra
+      as racial subtitles to Critterkin
+  SirSwagmeyer:
+  - balance: brought brigandine stab protection down to 2 pips because it was brought
+      back up by accident
+  annikaRU:
+  - code_imp: items that required example cogs now require bronze cogs
+  - code_imp: the cooling table and autogrinder now use static_debris instead of debris
+  hugmeorelse:
+  - sound: Added positional point ambience for fires, torches, fountains, clocks,
+      corpses, etc.
+  - sound: Added continuous river ambience that follows nearby river coverage and
+      becomes quieter indoors.
+  - sound: Improved ambience fades, directional transitions, source handoffs and variation.
+  - sound: Updated instruments, music boxes and other persistent sounds to the new
+      sound framework.
+  - sound: Added sound occlusion, revised distance falloff and containment rules for
+      relevant sounds.
+  - qol: Reorganized Audio Settings with Master, Instruments and Point Ambience controls,
+      separate admin and streamed audio controls, editable percentages and tooltips.
+  - qol: Point Ambience can be controlled independently of Master Volume.
+  - bugfix: Corrected sound-state leakage between listeners, distant explosion and
+      church-bell attenuation, and several looping-sound startup and cleanup issues.
+  - bugfix: Repaired windowed doors retain their transparency.
+  - admin: Added sound diagnostics and live point-ambience controls and reporting.
+  - config: Added documented sound and point-ambience settings in config/sound.txt.
+  ronfino:
+  - rscadd: Picking/Blunt-attacking boulders increases Mining skill
+  - bugfix: Fixed SNIPPING tools not able to salvage footwear. You can store tools
+      in boots with other intents.
+  wikimody:
+  - rscadd: Caughterise wounds surgery now deals less damage with high skill, the
+      fumble now deals high damage though
+  - bugfix: Master or above medical skill lets you caughtorise though clothes, but
+      the target must have combat mode off
+2026-11-18:
+  MrShibaa:
+  - bugfix: Kabuto is properly craftable again.
+  coffeecoffeecoffee:
+  - bugfix: fixed lucerne pick armor penetration
