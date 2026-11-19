@@ -44,6 +44,9 @@
 #define ARMOR_LAYER				31
 #define TABARD_LAYER			30
 #define BELT_LAYER				29		//only when looking south
+#define BODY_BREASTS_LAYER		33.2
+#define BODY_BELLY_LAYER		33.4
+#define BODY_GENITAL_LAYER		33.6
 #define UNDER_CLOAK_LAYER		28
 #define HANDS_PART_LAYER		27
 #define GLOVES_LAYER			26
@@ -73,6 +76,9 @@
 #define FIRE_LAYER				2		//If you're on fire
 #define TURF_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			56		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+
+/// Name given to blood overlays on worn clothing and hands, so snapshots (credits portraits) can strip them.
+#define BLOOD_OVERLAY_NAME "blood overlay"
 
 #define BACK_CLOAK_SOUTH_LAYER		(BODY_BEHIND_LAYER+1)
 

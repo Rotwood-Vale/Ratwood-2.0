@@ -153,6 +153,11 @@
 		return FALSE
 	return TRUE
 
+/datum/stressevent/triumph_noise
+	timer = 10 MINUTES
+	stressadd = 3
+	desc = span_red("The memory of my triumph turns to rot!")
+
 /datum/stressevent/freakout
 	timer = 15 SECONDS
 	stressadd = 2
@@ -603,6 +608,12 @@
 
 /datum/stressevent/prejudice/kazengun
 	desc = span_red("Who invited Kazengunites to Ferentia?")
+
+/datum/stressevent/prejudice/avar
+	desc = span_red("Aavnics are always so dour, so mirthless.")
+
+/datum/stressevent/prejudice/gronn
+	desc = span_red("I just saw a Gronnite! How uncivilized!")
 
 /datum/stressevent/prejudice/underdark
 	desc = span_red("That underdweller should be underground, where it belongs.")

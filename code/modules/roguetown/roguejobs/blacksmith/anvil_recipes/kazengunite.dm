@@ -48,6 +48,15 @@
 	created_item = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
+/datum/anvil_recipe/kazengunite/nodachi
+	name = "Nodachi (+2 Steel)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	appro_skill = /datum/skill/craft/weaponsmithing
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/greatsword/nodachi
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
 // I do not know why the kazen craftbook is so limited, so here is some more stuff because YAAAY more kazen stuff! //
 
 /datum/anvil_recipe/kazengunite/mulyeog
@@ -64,7 +73,7 @@
 	created_item = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
 	display_category = ITEM_CAT_ARMOR_BOOTS
 
-/datum/anvil_recipe/kazengunite/kabuto
+/datum/anvil_recipe/kazengunite/jingasa
 	name = "Jingasa (+1 Cloth)"
 	additional_items = list(/obj/item/natural/cloth)
 	created_item = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa

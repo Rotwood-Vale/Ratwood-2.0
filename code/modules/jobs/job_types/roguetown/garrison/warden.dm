@@ -124,6 +124,7 @@
 			"Skull of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
 			"Skull of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
 			"Skull of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
+			"Skull of the Rous"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/rat,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets
@@ -221,6 +222,7 @@
 			"Skull of the Volf"         = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf/melee,
 			"Skull of the Ram"          = /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat/melee,
 			"Skull of the Bear"         = /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear/melee,
+			"Skull of the Rous"         = /obj/item/clothing/head/roguetown/helmet/sallet/warden/rat/melee,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets
