@@ -280,9 +280,8 @@
 			prob2break = 0
 		if(L.m_intent == MOVE_INTENT_RUN)
 			prob2break = 100
-		if(prob(prob2break))
-			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) || HAS_TRAIT(L, TRAIT_WOODWALKER) && L.m_intent != MOVE_INTENT_RUN))
-				playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
+		if(prob(prob2break) && !L.treads_lightly())
+			playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
 			qdel(src)
 			if (L.alpha == 0 && L.rogue_sneaking) // not anymore you're not
 				L.update_sneak_invis(TRUE)
@@ -405,6 +404,7 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
+	AddElement(/datum/element/heart_stake, 10 SECONDS)
 
 /obj/item/grown/log/tree/stake/attack_obj(obj/O, mob/living/user)
 	if(!isitem(O))

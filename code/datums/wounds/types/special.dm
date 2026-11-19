@@ -328,7 +328,8 @@
 	// this skips the mortal check and just kills you outright. we also give a short window of dismemberment immunity to increase the chances that the zerg pulls back
 	if (affected && affected.two_stage_death && !affected.grievously_wounded)
 		affected.grievously_wounded = TRUE
-		affected.owner?.death()
+		if(!HAS_TRAIT(affected.owner, TRAIT_NODEATH))
+			affected.owner?.death()
 		bodypart_owner?.dismemberable = FALSE
 		addtimer(CALLBACK(src, PROC_REF(reset_dismemberment_immunity)), immunity_time)
 		playsound(affected?.owner, 'sound/combat/dismemberment/grievous-behead.ogg', 250, FALSE, -1)

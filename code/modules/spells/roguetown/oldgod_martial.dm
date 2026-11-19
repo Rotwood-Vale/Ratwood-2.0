@@ -33,7 +33,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return FALSE
 	user.adjust_blood_volume(-50) //Lowered from -100. An empowering hit that does more damage to you than the enemy even if you debuff them is never a good trade.
 	user.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(user.loc, user.get_blood_color())
+	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	user.apply_status_effect(/datum/status_effect/psydonic_retribution, user.get_active_held_item())
 	return TRUE
 
@@ -125,7 +125,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_inspire/cast(list/targets,mob/living/user = usr)
 	user.adjust_blood_volume(-130)//Lowered from -200 due to how useless this miracle was, leaving you almost dead if you had any kind of bleeding.
 	user.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(user.loc, user.get_blood_color())
+	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	for(var/mob/living/carbon/target in view(6, get_turf(user)))
 		if(!istype(target.patron, /datum/patron/old_god))
 			to_chat(target, span_danger("A presence witnesses you. For a time, it weeps."))
@@ -210,7 +210,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return FALSE
 	user.adjust_blood_volume(-300)//RAAAA!!!!
 	user.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(user.loc, user.get_blood_color())
+	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	user.apply_damage(200, BRUTE, spread_damage = TRUE) //300 damage is a lot and enough to cripple one limb instantly, lowering to 200.
 	user.apply_status_effect(/datum/status_effect/buff/inviolability)
 	return TRUE
@@ -284,7 +284,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		span_userdanger("My own spark, my <b>lyfe</b>, flashes afore me. What have I done?"))
 	target.adjust_blood_volume(-200)//Take a guess.
 	target.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(target.loc, target.get_blood_color())
+	new /obj/effect/decal/cleanable/blood/puddle(target.loc)
 	target.apply_damage(250, BRUTE, spread_damage = TRUE) //Lowered from 300. At 300, it's enough to literally cripple limbs, which renders the miracle only useful if you have the absolver ready to take damage or in bed. It's limited to one bolt at a time anyways, so at most you'll only use it once in battle.
 	playsound(target.loc, 'sound/magic/woundheal_crunch.ogg', 100, FALSE)
 
@@ -366,7 +366,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		S.start()
 	// Everything from this point has to do with what is damaged, additional structures can be added to the list to have different damage/effects!
 	for(var/obj/structure/damaged in range(radius, fallzone))
-		damaged.take_damage(structure_damage, BRUTE, "blunt", 1)
+		damaged.take_damage_from(ismob(firer) ? firer : null, structure_damage, BRUTE, "blunt", 1, cause = "with [format_text(name)]")
 	for(var/turf/closed/wall/damagedwalls in range(radius, fallzone))
 		damagedwalls.take_damage(structure_damage, BRUTE, "blunt", 1)
 	for(var/turf/closed/mineral/aoemining in range(radius, fallzone))

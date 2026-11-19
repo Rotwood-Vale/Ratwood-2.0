@@ -66,7 +66,7 @@
 										"<span class='danger'>I catch [I] in mid-air!</span>")
 						throw_mode_off()
 						return 1
-	..()
+	return ..()
 
 
 /mob/living/carbon/check_projectile_wounding(obj/projectile/P, def_zone, blocked)
@@ -107,8 +107,9 @@
 						span_userdanger("[src] grabs me!"), span_hear("I hear shuffling."), null, src)
 		to_chat(src, span_danger("I grab [target]."))
 
-	if(used_limb && target.client && target.hud_used && target.hud_used.zone_select)
-		var/atom/movable/screen/zone_sel/zone_sel = target.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/zone_sel = target.client ? target.hud_used?.zone_select : null
+	// used_limb defaults to the chest even without a grab item. Reading sublimb_grabbed requires I
+	if(I && zone_sel)
 		zone_sel.flash_limb(I.sublimb_grabbed, "#d19e13") // grab = orange
 
 /mob/living/carbon/send_grabbed_message(mob/living/carbon/user)
@@ -233,7 +234,7 @@
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 				var/splatter_dir = get_dir(user, src)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(loc, splatter_dir, get_blood_color())
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(loc, splatter_dir)
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)

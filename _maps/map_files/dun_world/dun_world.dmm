@@ -6391,7 +6391,7 @@
 	},
 /area/rogue/outdoors/exposed/town/keep)
 "bie" = (
-/obj/item/roguebin/water,
+/obj/structure/roguemachine/vendor/mobile,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/bath)
 "bij" = (
@@ -29031,6 +29031,7 @@
 	name = "Shutters";
 	redstone_id = "keeper"
 	},
+/obj/structure/roguemachine/potionseller/mobile,
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/indoors/town/church/basement)
 "fkR" = (
@@ -74405,6 +74406,7 @@
 /area/rogue/under/cave/orcdungeon)
 "nqR" = (
 /obj/machinery/light/rogue/candle/l,
+/obj/structure/roguemachine/potionseller/mobile,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/town/physician)
 "nqX" = (
@@ -97860,6 +97862,7 @@
 /area/rogue/outdoors/rtfield/eora)
 "rzr" = (
 /obj/machinery/light/rogue/torchholder/c,
+/obj/structure/roguemachine/vendor/mobile,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/dwarfin)
 "rzs" = (
@@ -112888,6 +112891,10 @@
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/mountains/decap/stepbelow)
+"uhX" = (
+/obj/structure/roguemachine/vendor/mobile,
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/town/basement/tavern)
 "uhY" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -201026,7 +201033,7 @@ yjV
 wrE
 yjV
 pff
-vKP
+uhX
 yjV
 kbm
 aHc

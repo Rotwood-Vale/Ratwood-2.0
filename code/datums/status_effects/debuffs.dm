@@ -81,6 +81,7 @@
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 	var/sleptonground = FALSE
+	var/nightmare_time = 0
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
@@ -95,6 +96,8 @@
 			carbon_owner = owner
 		if(ishuman(owner))
 			human_owner = owner
+			if(prob(50) && has_world_trait(/datum/world_trait/zizo_strand) && !is_zizo(owner) && !owner.has_status_effect(/datum/status_effect/dream_teleport))
+				nightmare_time = world.time + rand(5 SECONDS, 30 SECONDS)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	if(human_owner && human_owner.client)
@@ -108,6 +111,10 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
+	if(nightmare_time && world.time >= nightmare_time)
+		nightmare_time = 0
+		send_to_dream(human_owner, /datum/status_effect/dream_teleport/strand/nightmare)
+		return
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = -0.2
@@ -259,24 +266,15 @@
 	underlay_state = "bleed"
 	var/bleed_damage = 200
 
-/datum/status_effect/stacking/saw_bleed/prepare_overlay()
-	if(QDELETED(src) || !owner || !status_overlay || !status_underlay)
-		return
-	var/bleed_color = owner.get_blood_color()
-	status_overlay.icon = get_greyscale_blood_icon(overlay_file, "[overlay_state][stacks]")
-	status_overlay.color = bleed_color
-	status_underlay.icon = get_greyscale_blood_icon(underlay_file, "[underlay_state][stacks]")
-	status_underlay.color = bleed_color
-
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
-	new /obj/effect/temp_visual/bleed(get_turf(owner), null, owner.get_blood_color())
+	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
 	var/turf/T = get_turf(owner)
-	new /obj/effect/temp_visual/bleed/explode(T, null, owner.get_blood_color())
+	new /obj/effect/temp_visual/bleed/explode(T)
 	for(var/d in GLOB.alldirs)
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d, owner.get_blood_color())
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
 	playsound(T, "desceration", 100, TRUE, -1)
 
 /datum/status_effect/neck_slice

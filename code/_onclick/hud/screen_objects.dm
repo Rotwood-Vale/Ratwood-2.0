@@ -948,7 +948,7 @@
 	hud.mymob.playsound_local(hud.mymob, 'sound/misc/click.ogg', 100)
 	if(isliving(hud?.mymob))
 		var/mob/living/L = hud.mymob
-		if(L.eyesclosed)
+		if(L.eyesclosed && !(SEND_SIGNAL(L, COMSIG_LIVING_TRY_OPEN_EYES) & COMPONENT_BLOCK_OPEN_EYES))
 			L.eyesclosed = 0
 			L.cure_blind("eyelids")
 
@@ -958,6 +958,7 @@
 				var/mob/living/L = hud.mymob
 				L.eyesclosed = 1
 				L.become_blind("eyelids")
+				SEND_SIGNAL(L, COMSIG_LIVING_CLOSED_EYES)
 		else
 			toggle(usr)
 
@@ -1937,7 +1938,7 @@
 			state2use = "mood_drunkorhigh"
 		if(H.has_status_effect(/datum/status_effect/buff/starsugar))
 			state2use = "mood_starsugar"
-		if(H.has_status_effect(/datum/status_effect/buff/bloodrage))
+		if(H.has_status_effect(/datum/status_effect/buff/avatar))
 			state2use = "mood_ult"
 
 		//We go down a janky list of exceptions for total overrides
@@ -2014,7 +2015,10 @@
 				to_chat(M, span_warning("I haven't TRIUMPHED."))
 				return
 			if(alert("Do you want to remember a TRIUMPH?", "", "Yes", "No") == "Yes")
-				M.add_stress(/datum/stressevent/triumph)
+				if(has_world_trait(/datum/world_trait/zizo_noise) && !is_zizo(M))
+					M.add_stress(/datum/stressevent/triumph_noise)
+				else
+					M.add_stress(/datum/stressevent/triumph)
 				M.adjust_triumphs(-1)
 				M.playsound_local(M, 'sound/misc/notice (2).ogg', 100, FALSE)
 				if(M.sexcon)

@@ -8,6 +8,7 @@
 	price is right and it serves whatever higher ambition they might have."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
+		/datum/species/arachnid,
 		/datum/species/elf/dark,
 		/datum/species/human/halfelf, // Because half-drows are half-elves, guh.
 	)
@@ -43,7 +44,7 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 
 	)
-	extra_context = "This subclass is race-limited to: Dark Elves Only. \
+	extra_context = "This subclass is race-limited to: Dark Elves, Half-Elves, and Arachnids. \
 	Female drow recieve nutcracker and bedbreaker. Male drow \
 	lose -1 STR & -1 LCK, but gain 1 SPD & 1 WIL."
 
@@ -173,6 +174,7 @@
 	tutorial = "The Crocs de l'araignée, translated literally to mean \"Spider's Teeth\", is a renowned collective of blades, whips, and riders for hire often employed in the vast drow undercity complexes and occasionally the surface above. Infamous for their battlefrenzy, sadism, and mastery over arachnid cavalry, a member of the Spider's Teeth stands among some of the fiercest if cruelest warriors in Psydonia. Dark elves ultimately are only truly aligned to themselves and their own interests; this trait makes them surprisingly pragmatic and straightforward mercenaries, as a drow can be counted on to do any job so long as the price is right and it serves whatever higher ambition they might have."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
+		/datum/species/arachnid,
 		/datum/species/elf/dark,
 		/datum/species/human/halfelf, // Because half-drows are half-elves, guh.
 	)

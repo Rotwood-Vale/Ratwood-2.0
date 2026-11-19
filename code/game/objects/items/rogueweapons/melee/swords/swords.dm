@@ -1104,6 +1104,18 @@
 	icon_state = "eastshortsword"
 	sheathe_icon = "kodachi"
 
+/obj/item/rogueweapon/sword/short/silver/kazengun
+	name = "silver kodachi"
+	desc = "A razor-edged sword with a wavy pattern weld apparent on its blade of pure silver."
+	icon = 'icons/roguetown/weapons/swords32.dmi'
+	possible_item_intents = list(
+		/datum/intent/sword/cut/short,
+		/datum/intent/sword/thrust/short,
+		/datum/intent/sword/chop/short,
+		)
+	icon_state = "silvereastshortsword"
+	sheathe_icon = "silver_kodachi"
+
 /obj/item/rogueweapon/sword/short/falchion
 	name = "falchion"
 	desc = "A single-edged sword that is similar to a messer in appearance, its origins trace back to Otava. An implement of commoners and knights alike. It's good for cutting and thrusting."
@@ -1490,7 +1502,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	dropshrink = 0.75
-	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/thrust/rapier/lunge, /datum/intent/sword/cut/rapier)
+	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/thrust/rapier/lunge, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
 	special = /datum/special_intent/piercing_lunge
 	gripped_intents = null
 	parrysound = list(
@@ -2249,6 +2261,14 @@
 	sheathe_icon = "ssangsudo"
 	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
 
+/obj/item/rogueweapon/sword/long/kriegmesser/silver/ssangsudo
+	name = "silver ssangsudo"
+	desc = "A Kazengun style of long blade forged with pure silver. A weapon supremely skilled in the art of cutting."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "silverssangsudo"
+	sheathe_icon = "silver_ssangsudo"
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
+
 /obj/item/rogueweapon/sword/long/dec
 	no_loot_taint = TRUE
 	name = "decorated longsword"
@@ -2267,6 +2287,27 @@
 	icon_state = "eastsword1"
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 3
+
+/obj/item/rogueweapon/sword/sabre/mulyeog/silver
+	force = 22
+	minstr = 7
+	name = "silver hwando"
+	desc = "A foreign single-edged sword forged with pure silver. There's a red tassel on the hilt, said to bring about good fortune."
+	sheathe_icon = "silver_mulyeog"
+	icon_state = "silvereastsword"
+	smeltresult = /obj/item/ingot/silver
+	is_silver = TRUE
+
+/obj/item/rogueweapon/sword/sabre/mulyeog/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
 	name = "ruma hwando"
@@ -2750,6 +2791,65 @@
 	max_blade_int = 330
 	sellprice = 50
 	sheathe_icon = "elfsword"
+
+
+/obj/item/rogueweapon/sword/rapier/psy/folding/relic // Yes, the path is rapier, but it's a sabre. Why, you ask me? Well, Getonmob was being weird and made cuts come from the side, and I am not educated enough on how to fix it.
+	name = "\"Testament\""
+	desc = "Commissioned by the Inquisition and wrought by the blacksmiths of Arkenfeit, this peculiar blade was made for those \
+	who could ill afford to announce their calling before the time came to draw steel. Its silvered edge folds neatly into \
+	the hilt, concealing a weapon fit for the most delicate of investigations. Many a heretic has mistaken its bearer for \
+	a harmless clerk, only to learn that the Inquisition keeps its sharpest judgements close at hand."
+	force = 25 // Same as Hwando and Elvish Sabre 
+	max_integrity = 250
+	max_blade_int = 250
+	var/extended = FALSE
+	special = /datum/special_intent/shin_swipe
+	bigboy = TRUE
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "psyfoldingblade_on"
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/cut/sabre/heavy, /datum/intent/sword/thrust/sabre, /datum/intent/sword/strike)
+
+/obj/item/rogueweapon/sword/rapier/psy/folding/relic/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/rapier/psy/folding/relic/attack_self(mob/user)
+	extended = !extended
+	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
+	if(extended)
+		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/cut/sabre/heavy, /datum/intent/sword/thrust/sabre, /datum/intent/sword/strike)
+		wlength = WLENGTH_NORMAL
+		w_class = WEIGHT_CLASS_BULKY
+		sharpness = IS_SHARP
+		slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
+		equip_delay_self = initial(equip_delay_self)
+		unequip_delay_self = initial(unequip_delay_self)
+		inv_storage_delay = initial(inv_storage_delay)
+		icon_state = "psyfoldingblade_on"
+		playsound(user, 'sound/items/knife_open.ogg', 100, TRUE)
+	else
+		possible_item_intents = list(/datum/intent/sword/strike)
+		wlength = WLENGTH_SHORT
+		w_class = WEIGHT_CLASS_SMALL
+		sharpness = IS_BLUNT
+		slot_flags = ITEM_SLOT_HIP
+		equip_delay_self = 0 SECONDS
+		unequip_delay_self = 0 SECONDS
+		inv_storage_delay = 0 SECONDS
+		icon_state = "psyfoldingblade_off"
+	if(user.a_intent)
+		var/datum/intent/I = user.a_intent
+		if(istype(I))
+			I.afterchange()
+	user.update_a_intents()
+	update_icon()
 
 #undef LONGSWORD_STOCK_INTENTS
 #undef LONGSWORD_STOCK_GRIPPED_INTENTS

@@ -399,6 +399,7 @@
 	wlength = WLENGTH_SHORT
 	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
+	gripped_intents = null
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = 300
 	grid_height = 64

@@ -85,7 +85,8 @@
 		C.visible_message(span_userdanger("[C]'s [to_remove.name] is torn off by the tendrils!"))
 		to_remove.dismember(damage = 999)
 
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(C), pick(GLOB.cardinals), C.get_blood_color())
+		var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(C), pick(GLOB.cardinals))
+		splatter.color = "#880000"
 		limb_removed = TRUE
 
 /datum/status_effect/territorial_rage/proc/remove_head(mob/living/carbon/C)
@@ -94,7 +95,8 @@
 		C.visible_message(span_userdanger("[C]'s head is violently torn off by the tendrils!"))
 		head.dismember(damage = 999, vorpal = TRUE)
 		C.adjustBruteLoss(200)
-		var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(C), pick(GLOB.cardinals), C.get_blood_color())
+		var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(C), pick(GLOB.cardinals))
+		splatter.color = "#880000"
 		splatter.transform *= 2
 
 #undef TERRITORIAL_FILTER

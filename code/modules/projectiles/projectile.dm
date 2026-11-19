@@ -124,6 +124,8 @@
 
 	var/accuracy = 65 //How likely the project will hit it's intended target area. Decreases over distance moved, increased from perception.
 	var/bonus_accuracy = 0 //bonus accuracy that cannot be affected by range drop off.
+	/// If TRUE, skips the hit accuracy roll and lands exactly where you aim
+	var/true_aim = FALSE
 
 	var/target_z = 0
 	/// If TRUE, Guard-deflecting this projectile exposes its firer (riposte punish). Arcyne/wizard bolts opt in.
@@ -264,7 +266,7 @@
 			var/splatter_dir = dir
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, L.get_blood_color())
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
 
@@ -330,7 +332,7 @@
 				if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
 					temporary_unstoppable_movement = TRUE
 					ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
-				M.playsound_local(T, "whiz", 100, FALSE, pressure_affected = FALSE)
+				M.playsound_local(T, "whiz", 100, FALSE, pressure_affected = FALSE, max_distance = SOUND_RANGE)
 				return process_hit(T, qdel_self=2, hit_something=TRUE)
 		return process_hit(T, select_target(T, A))
 	else

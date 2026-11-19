@@ -1,4 +1,29 @@
 
+/// Names of absent organs expected by this patient's species and customized anatomy.
+/mob/living/carbon/human/proc/get_missing_organs()
+	var/list/missing_organs = list()
+	var/datum/species/species = dna?.species
+	if(!species)
+		return missing_organs
+	var/list/expected_organs = species.organs.Copy()
+	for(var/slot in dna.organ_dna)
+		var/datum/organ_dna/organ_dna = dna.organ_dna[slot]
+		expected_organs[slot] = organ_dna.can_create_organ() ? organ_dna.organ_type : null
+	// A detached Dullahan head stores its organs directly.
+	var/list/detached_head_slots
+	var/datum/species/dullahan/dullahan = species
+	if(istype(dullahan) && dullahan.headless && !QDELETED(dullahan.my_head))
+		for(var/obj/item/organ/organ in dullahan.my_head.contents)
+			LAZYSET(detached_head_slots, organ.slot, TRUE)
+	for(var/slot in expected_organs)
+		if(getorganslot(slot) || detached_head_slots?[slot] || !species.is_organ_slot_allowed(src, slot))
+			continue
+		var/obj/item/organ/organ_type = expected_organs[slot]
+		if(!organ_type)
+			continue
+		missing_organs += initial(organ_type.name)
+	return missing_organs
+
 /mob/living/carbon/human/proc/change_name(new_name)
 	real_name = new_name
 

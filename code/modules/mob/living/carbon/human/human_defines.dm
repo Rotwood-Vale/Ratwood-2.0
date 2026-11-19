@@ -35,6 +35,8 @@
 	var/eye_color = "000"
 
 	var/voice_color = "a0a0a0"
+	/// The saved name real_name was built from. Roles may add to it, such as "Ser" or the lord's surname. See get_refreshed_name()
+	var/pref_base_name
 	var/nickname = "Please Change Me"
 	var/highlight_color = "#FF0000"
 	var/detail_color = "000"
@@ -216,3 +218,8 @@
 
 	var/branded = FALSE // Saves time during examine if character hasn't been branded at all
 
+	var/list/deadites_controlled
+	var/purity = FALSE
+	var/zizo_goals_cd = 0
+	var/list/zizo_goals = list()
+	var/list/zizo_goals_complete = list()

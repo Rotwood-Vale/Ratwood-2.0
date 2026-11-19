@@ -92,6 +92,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	hud.leave_hud(mob_override)
 	set_antag_hud(mob_override, null)
 
+/// Removes this antag's own hud, unless a later antag has since moved the player onto a different one
+/datum/antagonist/proc/remove_own_antag_hud()
+	if(!owner?.current || !antag_hud_type || owner.antag_hud != GLOB.huds[antag_hud_type])
+		return
+	remove_antag_hud(antag_hud_type, owner.current)
+
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/proc/create_team(datum/team/team)
 	return

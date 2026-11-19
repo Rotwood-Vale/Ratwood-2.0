@@ -21,6 +21,8 @@
 
 	init_combat_music()
 
+	ccg_build_card_registry()
+
 /proc/init_subtypes_assoc(prototype)
 	. = list()
 	for(var/path in subtypesof(prototype))

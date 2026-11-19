@@ -24,6 +24,7 @@
 	round_contrib_points = 2
 	advjob_examine = TRUE
 	cmode_music = 'sound/music/cmode/towner/combat_towner.ogg'
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor, /datum/virtue/utility/mining) //Mining virtue gives you smithing expert for... some reason.
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_EMPATH, TRAIT_GOODLOVER, TRAIT_HOMESTEAD_EXPERT, TRAIT_BATHHOUSE_DANCER)
 	job_subclasses = list(

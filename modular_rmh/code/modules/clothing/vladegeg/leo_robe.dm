@@ -14,7 +14,7 @@
 	toggle_icon_state = TRUE
 
 /obj/item/clothing/suit/roguetown/shirt/leo_robe/AdjustClothes(mob/user)
-	if(loc == user)
+	if(is_worn_or_stored_by(user))
 		if(adjustable == CAN_CADJUST)
 			adjustable = CADJUSTED
 			if(toggle_icon_state)

@@ -58,6 +58,7 @@
 
 	var/naledicolor = FALSE
 	var/chunkcolor = "#5e5e5e"
+	var/is_cult = FALSE
 	var/material_category = ARMOR_MAT_LEATHER
 
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?
@@ -862,3 +863,7 @@ BLIND     // can't see anything
 			return VISMSG_ARMOR_INT_STAGETWO
 		if(0 to 0.24)
 			return VISMSG_ARMOR_INT_STAGETHREE
+
+/obj/item/clothing
+	var/base_icon_state
+	var/custom_design

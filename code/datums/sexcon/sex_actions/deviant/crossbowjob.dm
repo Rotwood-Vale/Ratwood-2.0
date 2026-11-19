@@ -6,7 +6,7 @@
 	if(user == target)
 		return FALSE
 	var/obj/item/held_item = user.get_active_held_item()
-	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow))
+	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow) && !istype(held_item, /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle))
 		return FALSE
 	return TRUE
 
@@ -17,12 +17,13 @@
 	if(user == target)
 		return FALSE
 	var/obj/item/held_item = user.get_active_held_item()
-	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow))
+	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow) && !istype(held_item, /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/grind_crossbow/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] begins grinding the stock of [user.p_their()] crossbow into [target] groin..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	var/obj/item/held_item = user.get_active_held_item()
+	user.visible_message(span_warning("[user] begins grinding the stock of [user.p_their()] [held_item.name] into [target] groin..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/grind_crossbow/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
