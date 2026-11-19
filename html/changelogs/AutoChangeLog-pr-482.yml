@@ -1,0 +1,5 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Fixed switching spells allowing instant casts using leftover charge."
+  - bugfix: "Fixed duplicate spell fizzle messages when releasing before fully charged."
