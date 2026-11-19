@@ -861,8 +861,11 @@
 					brand_text = "[brand_text], a mark of ownership"
 			else if(branded_bodypart.enslavement_mark && !is_surface_handled_separately)
 				brand_text = "a mark of ownership"
-			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone))
-				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(brand_text)]."
+			if(length(brand_text))
+				// Head brands are facial: use current concealment, not surgical head access.
+				var/brand_visible = branded_bodypart.body_zone == BODY_ZONE_HEAD ? (!skipface && !(wear_neck && (wear_neck.flags_inv & HIDEFACE))) : get_location_accessible(src, branded_bodypart.body_zone)
+				if(brand_visible)
+					. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(brand_text)]."
 			if(istype(branded_bodypart, /obj/item/bodypart/chest))
 				var/obj/item/bodypart/chest/chest = branded_bodypart
 				var/chest_brand_text = ""
