@@ -53,6 +53,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/sewn_woundpain = 0
 	/// Sewing progress, because sewing wounds is snowflakey
 	var/sew_progress = 0
+	/// Prevents repeated sewing bonuses when this wound reopens or treatment resumes.
+	var/sewing_bonus_awarded = FALSE
 	/// When sew_progress reaches this, the wound is sewn
 	var/sew_threshold = 100
 
