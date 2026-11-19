@@ -1,0 +1,4 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - bugfix: "fixed chainmail to have lower pierce protection than plate armor, making it no longer identical to plate armor protection wise."
