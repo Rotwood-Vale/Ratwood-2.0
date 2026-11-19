@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Added Shift+N to stash items in your cloak or draw its latest stored item. The shortcut can be changed in Keybinds."

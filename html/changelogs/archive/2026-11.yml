@@ -686,3 +686,5 @@
       a completion fallback for wounds that still bleed.
   - bugfix: Hats and open-faced helmets no longer hide head brands when the face remains
       visible.
+  - rscadd: Added Shift+N to stash items in your cloak or draw its latest stored item.
+      The shortcut can be changed in Keybinds.
