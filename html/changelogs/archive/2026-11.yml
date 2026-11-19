@@ -447,3 +447,22 @@
   - bugfix: Kabuto is properly craftable again.
   coffeecoffeecoffee:
   - bugfix: fixed lucerne pick armor penetration
+2026-11-19:
+  AlucardHellsingChapel:
+  - rscadd: Added mage dex to the Traveling Scholar
+  Ketrai:
+  - rscadd: Added two new raccoon tail variants.
+  - rscadd: Added raccoon race titles (Volk, wildkin, halfkin)
+  Kroto-Ker:
+  - rscadd: Zizo Cult
+  - rscadd: Zizo Rituals
+  SirSwagmeyer:
+  - balance: Added bathmaster and bath attendant to the list of roles restricted from
+      taking legendary crafting virtues.
+  - bugfix: Ensures blunt weapons deal a noticeable amount of integrity damage versus
+      bladed weapons.
+  ronfino:
+  - balance: "Doppelsoldner, Hellebardier and Armbrustsch\xFCtze get steel gorgets."
+  - balance: "Armbrustsch\xFCtze gets Expert in Axes"
+  vitoras228322-ai:
+  - rscadd: Added spellsinger robes into loadout.
