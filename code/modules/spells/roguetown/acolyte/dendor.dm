@@ -978,7 +978,8 @@
 			D.follow_target = null
 			D.guard_turf = null
 			walk(D, 0)
-			D.enemies = list(target)
+			D.clear_enemies()
+			D.add_enemy(target)
 			D.target = target
 			D.aggressive = FALSE
 			if("neutral" in D.faction)

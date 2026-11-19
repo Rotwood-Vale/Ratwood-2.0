@@ -108,7 +108,11 @@
 			if(VVictim.generation > VDrinker.generation)
 				VDrinker.generation = VVictim.generation
 			VDrinker.research_points += VVictim.research_points + VVictim.research_spent
-			victim.death()
+			var/datum/component/vampire_torpor/victim_torpor = victim.GetComponent(/datum/component/vampire_torpor)
+			if(victim_torpor)
+				victim_torpor.die_for_good(ash = FALSE)
+			else
+				victim.death()
 			victim.adjustBruteLoss(-50, TRUE)
 			victim.adjustFireLoss(-50, TRUE)
 			return

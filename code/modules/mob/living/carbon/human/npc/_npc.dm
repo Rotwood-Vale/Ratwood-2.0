@@ -198,7 +198,7 @@
 	if(aggressive)
 		for(var/mob/living/L in view(3)) // scan for enemies
 			if( should_target(L) && (L != src))
-				if(L.stat != DEAD)
+				if(!L.looks_dead())
 					retaliate(L)
 					return FALSE
 	if(!target)
@@ -531,7 +531,8 @@
 	if(!is_in_zweb(src.z,L.z))
 		return FALSE
 
-	if(L.stat == DEAD)
+	// a body that looks dead is left alone, whether or not it really is
+	if(L.looks_dead())
 		return FALSE
 
 	if(L.InFullCritical())

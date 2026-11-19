@@ -1,5 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - balance: "Lessens Arlette booster pack prices and added two more cards to them."
-  - bugfix: "Makes the booster packs, cards and deck grid size 1x1 instead of 2x2."

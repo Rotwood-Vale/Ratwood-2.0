@@ -378,6 +378,7 @@
 /area/rogue/under/tomb/indoors)
 "fb" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	redstone_id = "CastleSecret6"
 	},
 /turf/closed/wall/mineral/rogue/decostone,
@@ -1212,6 +1213,7 @@
 /area/rogue/under/tomb/indoors)
 "oa" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	redstone_id = "CastleSecret5";
 	floor_turf = /turf/open/floor/rogue/cobble
 	},
@@ -1573,6 +1575,7 @@
 /area/rogue/under/tomb/indoors)
 "tD" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	redstone_id = "CastleSecret1";
 	floor_turf = /turf/open/floor/rogue/tile/masonic/spiral
 	},
@@ -2772,6 +2775,7 @@
 /area/rogue/under/tomb/indoors/magic)
 "Hi" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	redstone_id = "CastleSecret4";
 	floor_turf = /turf/open/floor/rogue/hexstone
 	},
@@ -4189,6 +4193,7 @@
 /area/rogue/under/tomb/indoors)
 "YI" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	redstone_id = "CastleSecret3";
 	floor_turf = /turf/open/floor/rogue/tile
 	},
