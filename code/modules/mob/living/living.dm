@@ -879,6 +879,7 @@
 	return TRUE
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE, obj/item/item_override)
+	var/obj/item/grabbing/new_grab
 	if(!AM || !src)
 		return FALSE
 	if(!(AM.can_be_pulled(src, state, force)))
@@ -983,9 +984,10 @@
 				C.mark_zone_selector_hud_dirty()
 			put_in_hands(O)
 			O.update_hands(src)
+			new_grab = O
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
 				supress_message = TRUE
-				C.grippedby(src)
+				C.grippedby(src, show_balloon = FALSE)
 			if(!supress_message)
 				send_pull_message(target)
 			var/signal_result = SEND_SIGNAL(target, COMSIG_LIVING_GRAB_SELF_ATTEMPT, target, used_limb)
@@ -1002,9 +1004,10 @@
 				O.sublimb_grabbed = target.simple_limb_hit(zone_selected)
 			put_in_hands(O)
 			O.update_hands(src)
+			new_grab = O
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
 				supress_message = TRUE
-				target.grippedby(src)
+				target.grippedby(src, show_balloon = FALSE)
 			if(!supress_message)
 				send_pull_message(target)
 			var/signal_result = SEND_SIGNAL(target, COMSIG_LIVING_GRAB_SELF_ATTEMPT, target, zone_selected)
@@ -1038,6 +1041,8 @@
 			if(M.cmode && M.stat == CONSCIOUS && !M.restrained(ignore_grab = TRUE))
 				if(M.get_skill_level(/datum/skill/combat/wrestling) >= 5 || src.get_skill_level(/datum/skill/combat/wrestling) <= 3)
 					M.resist_grab(freeresist = TRUE) //Automatically attempt to break a passive grab if defender's combat mode is on. Anti-grabspam measure.
+	if(!QDELETED(new_grab))
+		new_grab.show_grab_balloon()
 
 /mob/living/proc/is_limb_covered(obj/item/bodypart/limb)
 	if(!limb)

@@ -36,6 +36,21 @@
 	var/bleed_suppressing = 0.75 //multiplier for how much we suppress bleeding, can accumulate so two grabs means 50% less bleeding; each grab being 25% basically.
 	var/chokehold = FALSE
 
+/// One private, viewer-specific balloon over the victim for each participant.
+/obj/item/grabbing/proc/show_grab_balloon()
+	if(QDELETED(src) || !isliving(grabbed) || !isliving(grabbee) || grabbed == grabbee || isitem(sublimb_grabbed) || !(src in grabbee.held_items))
+		return
+	var/mob/living/victim = grabbed
+	var/label = grab_state >= GRAB_AGGRESSIVE ? "tight grab!" : "grabbed!"
+	var/color = grab_state >= GRAB_AGGRESSIVE ? "#e57373" : "#ffd966"
+	var/location_name
+	if(istext(sublimb_grabbed))
+		location_name = parse_zone(sublimb_grabbed)
+	var/generic_text = "<font color='[color]'>[label]</font>"
+	var/detailed_text = location_name ? "<font color='[color]'>[html_encode(location_name)] [label]</font>" : generic_text
+	victim.balloon_alert(grabbee, HAS_TRAIT(grabbee, TRAIT_COMBAT_AWARE) ? detailed_text : generic_text)
+	victim.balloon_alert(victim, HAS_TRAIT(victim, TRAIT_COMBAT_AWARE) ? detailed_text : generic_text)
+
 /obj/item/grabbing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
 	. = ..()
 	. |= FALL_NO_MESSAGE
