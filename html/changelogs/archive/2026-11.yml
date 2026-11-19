@@ -670,6 +670,8 @@
   - bugfix: Fixed duplicate spell fizzle messages when releasing before fully charged.
   - bugfix: Fixed bags spilling their contents at spawn and refusing to take items
       back.
+  - bugfix: Cannon, cannonball, and grapeshot recipes now appear in the encyclopedia.
+      FAFO
   mypingishuge:
   - rscadd: Grabs and reinforced grabs show private balloons to both participants.
       Combat Aware adds the grabbed body part.
