@@ -31,7 +31,7 @@
 	///bandit stuff
 	/// Mammons' worth offered to Matthios's idol by the whole band this round
 	var/bandit_contribute = 0
-	/// ckeys already paid hoard triumphs, so a bandit who respawned as a new bandit is paid once
+	/// ckey -> hoard triumphs already paid, so a bandit who respawned as a new bandit is not paid twice
 	var/list/bandit_hoard_paid_ckeys = list()
 
 /proc/vampire_werewolf()

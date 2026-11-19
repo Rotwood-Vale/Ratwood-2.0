@@ -222,6 +222,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/roundend_panel_header_extra()
 	return
 
+/// Order within a round-end category: higher numbers are listed later
+/datum/antagonist/proc/roundend_sort_order()
+	return 0
+
 //BRIEFING
 
 /datum/antagonist/proc/has_briefing()
@@ -268,7 +272,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /mob/proc/antagonist_briefing()
 	set name = "Antagonist Briefing"
-	set category = "OOC"
+	set category = "IC"
 
 	var/list/options = list()
 	for(var/datum/antagonist/antag as anything in mind?.antag_datums)

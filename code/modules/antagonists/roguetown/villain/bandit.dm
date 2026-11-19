@@ -13,7 +13,7 @@
 	rogue_enabled = TRUE
 	briefing_title = "You are a BANDIT"
 	briefing_flavour = "At some point in your lyfe, you fell to the wrong side of the carriage. Whether by butchery or finesse, your face now hangs on the wall of the local inn, one of many told of in hushed tavern tales. You lyve among the Freefolk in a hidden camp, beyond the reach of the realm's laws, in reverence to MATTHIOS, the Transactor, who teaches that what the few hoard belongs to all."
-	briefing_explanation = "The idol of Matthios in your camp hungers for the treasures of the civilized wretches: coin, gems, metals and finery. Every offering grants favour to the whole band, which the Hoardmaster trades for arms, armour and supplies. What the idol swallows counts toward the band's hoard, and spending favour never takes it away. Rob, ambush, extort and raid. Make the realm feel your presence."
+	briefing_explanation = "The idol of Matthios in your camp hungers for the treasures of the civilized wretches: coin, gems, metals and finery. Every offering grants favour to the whole band, which the Hoardmaster trades for arms, armour and supplies. What the idol swallows counts toward the brigand's hoard, and spending favour never takes it away. Rob, ambush, extort and raid. Make the realm feel your presence."
 	briefing_live_goals = TRUE
 	/// Spendable at the Hoardmaster. Every offering by anyone credits every connected bandit.
 	var/favor = 150
@@ -80,52 +80,78 @@
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		the_name = H.real_name
-	var/triumphs = bandit_hoard_triumphs(bandit_hoard_tier(SSmapping.retainer.bandit_contribute))
-	if(triumphs)
-		to_chat(world, "<b>[the_name]</b> was a bandit. They personally offered [personal_offered] mammons, and they have earned [triumphs] triumphs.")
-	else
-		to_chat(world, "<b>[the_name]</b> was a bandit. They personally offered [personal_offered] mammons.")
+	var/line = "<b>[the_name]</b> was a bandit. They personally offered [personal_offered] mammons[personal_result_text()]"
+	if(is_top_offerer())
+		line = "<font color='#e6b422'>[line]</font>"
+	to_chat(world, line)
 
-/// The band's shared result, printed once above the bandits
+/// The gang's shared result, printed once above the bandits
 /datum/antagonist/bandit/roundend_report_header()
+	to_chat(world, "<span class='reallybig'><b>BANDITS</b></span>")
 	to_chat(world, bandit_hoard_summary())
-	to_chat(world, "<span class='header'>The [roundend_category] were:</span>")
+
+/// The top offerer is listed last
+/datum/antagonist/bandit/roundend_sort_order()
+	return is_top_offerer() ? 1 : 0
 
 /datum/antagonist/bandit/roundend_panel_header_extra()
 	return bandit_hoard_summary()
 
 /datum/antagonist/bandit/roundend_panel_extra()
-	var/triumphs = bandit_hoard_triumphs(bandit_hoard_tier(SSmapping.retainer.bandit_contribute))
-	. = "Personally offered [personal_offered] mammons"
-	if(triumphs)
-		. += ", earned [triumphs] triumphs"
-	. += "."
+	. = "Personally offered [personal_offered] mammons[personal_result_text()]"
+	if(is_top_offerer())
+		. = "<span style='color: #e6b422;'>[.]</span>"
 
-/// One line with the band's highest tier and total, green if any tier was reached
+/// The end of this bandit's round-end line: tier triumphs and the top offerer's bonus
+/datum/antagonist/bandit/proc/personal_result_text()
+	var/triumphs = bandit_hoard_triumphs(bandit_hoard_tier(SSmapping.retainer.bandit_contribute))
+	var/top = is_top_offerer()
+	if(top)
+		return ", earned [triumphs] triumphs, and earned the favour of Matthios! (+[BANDIT_TOP_OFFERER_TRIUMPHS] triumphs)"
+	if(triumphs)
+		return ", and they have earned [triumphs] triumphs."
+	return "."
+
+/// TRUE if the gang reached a tier, this bandit offered something, and no bandit offered more. Ties all count.
+/datum/antagonist/bandit/proc/is_top_offerer()
+	if(personal_offered <= 0 || !bandit_hoard_tier(SSmapping.retainer.bandit_contribute))
+		return FALSE
+	for(var/datum/antagonist/bandit/other in GLOB.antagonists)
+		if(other.owner && other.personal_offered > personal_offered)
+			return FALSE
+	return TRUE
+
+/// One line with the gang's highest tier and total, green if any tier was reached
 /proc/bandit_hoard_summary()
 	var/total = SSmapping.retainer.bandit_contribute
 	var/tier = bandit_hoard_tier(total)
 	if(tier)
-		return "[span_greentext("The band amassed a [uppertext(bandit_hoard_tier_name(tier))]!")] ([total] mammons stolen)"
-	return "[span_redtext("The band failed to amass a hoard.")] ([total] mammons stolen)"
+		return "[span_greentext("The brigand gang amassed a [uppertext(bandit_hoard_tier_name(tier))]!")] ([total] mammons stolen)"
+	return "[span_redtext("The brigand gang failed to amass a hoard.")] ([total] mammons stolen)"
 
-/// Pays this bandit's ckey the triumphs for the band's highest tier, once per round
+/**
+ * Pays this bandit's ckey the tier triumphs plus the top offerer bonus.
+ * Tracked per ckey so a player who respawned as a new bandit is paid their best datum's amount once.
+ */
 /datum/antagonist/bandit/proc/award_hoard_triumphs()
-	var/triumphs = bandit_hoard_triumphs(bandit_hoard_tier(SSmapping.retainer.bandit_contribute))
-	if(!triumphs || !owner?.key)
+	if(!owner?.key)
 		return
+	var/owed = bandit_hoard_triumphs(bandit_hoard_tier(SSmapping.retainer.bandit_contribute))
+	if(is_top_offerer())
+		owed += BANDIT_TOP_OFFERER_TRIUMPHS
 	var/paid_key = ckey(owner.key)
-	if(paid_key in SSmapping.retainer.bandit_hoard_paid_ckeys)
+	var/already_paid = SSmapping.retainer.bandit_hoard_paid_ckeys[paid_key] || 0
+	if(owed <= already_paid)
 		return
-	SSmapping.retainer.bandit_hoard_paid_ckeys += paid_key
-	owner.adjust_triumphs(triumphs)
+	SSmapping.retainer.bandit_hoard_paid_ckeys[paid_key] = owed
+	owner.adjust_triumphs(owed - already_paid)
 
 /datum/antagonist/bandit/get_briefing_progress(mob/user)
 	var/list/marks = list()
 	for(var/tier in 1 to 3)
 		marks += list(list("at" = bandit_hoard_tier_amount(tier), "label" = bandit_hoard_tier_name(tier)))
 	return list(
-		"label" = "The band's hoard",
+		"label" = "The brigand gang's hoard",
 		"value" = SSmapping.retainer.bandit_contribute,
 		"max" = BANDIT_HOARD_MASSIVE,
 		"unit" = "mammons",
@@ -185,7 +211,7 @@
 		if(!bandit_datum)
 			continue
 		bandit_datum.favor += amount
-		to_chat(player, "<font color='yellow'>[offerer.name] donates [amount] to the shrine! You now have [bandit_datum.favor] favor. The band's hoard stands at [total] mammons.</font>")
+		to_chat(player, "<font color='yellow'>[offerer.name] donates [amount] to the shrine! You now have [bandit_datum.favor] favor. The brigand gang's hoard stands at [total] mammons.</font>")
 		if(new_tier > old_tier)
-			to_chat(player, span_greentext("Matthios is pleased. The band has amassed a [bandit_hoard_tier_name(new_tier)]!"))
+			to_chat(player, span_greentext("Matthios is pleased. The brigand gang has amassed a [bandit_hoard_tier_name(new_tier)]!"))
 			player.playsound_local(get_turf(player), 'sound/misc/triumph.ogg', 60, FALSE, pressure_affected = FALSE)

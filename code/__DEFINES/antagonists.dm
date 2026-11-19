@@ -75,3 +75,5 @@
 #define BANDIT_HOARD_TRIUMPHS_SMALL 3
 #define BANDIT_HOARD_TRIUMPHS_DECENT 5
 #define BANDIT_HOARD_TRIUMPHS_MASSIVE 10
+//Extra triumphs for the bandit who personally offered the most
+#define BANDIT_TOP_OFFERER_TRIUMPHS 2

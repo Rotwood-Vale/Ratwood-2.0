@@ -524,7 +524,9 @@
 	return result.Join()
 
 /proc/cmp_antag_category(datum/antagonist/A,datum/antagonist/B)
-	return sorttext(B.roundend_category,A.roundend_category)
+	. = sorttext(B.roundend_category,A.roundend_category)
+	if(!.)
+		. = A.roundend_sort_order() - B.roundend_sort_order()
 
 /datum/controller/subsystem/ticker/proc/give_show_report_button(client/C)
 	var/datum/action/report/R = new

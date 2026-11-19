@@ -59,6 +59,8 @@ const markLabelStyle = (left: number): CSSProperties => ({
   fontSize: FONT_SMALL,
   color: INK_SOFT,
   whiteSpace: 'nowrap',
+  lineHeight: 1.2,
+  textAlign: left >= 99 ? 'right' : left <= 1 ? 'left' : 'center',
 });
 
 const ProgressCard = (props: { progress: Progress }) => {
@@ -82,7 +84,7 @@ const ProgressCard = (props: { progress: Progress }) => {
       <div
         style={{
           position: 'relative',
-          height: '40px',
+          height: '52px',
           margin: '0 4px',
         }}
       >
@@ -131,7 +133,8 @@ const ProgressCard = (props: { progress: Progress }) => {
                   fontWeight: reached ? 'bold' : 'normal',
                 }}
               >
-                {mark.label} ({mark.at})
+                <div>{mark.label}</div>
+                <div>{mark.at}</div>
               </div>
             </div>
           );
@@ -187,7 +190,7 @@ export const AntagBriefing = () => {
   const { act, data } = useBackend<Data>();
   const { title, flavour, explanation, goals, progress } = data;
   return (
-    <Window width={520} height={640} title={title} theme="parchment">
+    <Window width={640} height={780} title={title} theme="parchment">
       <Window.Content scrollable>
         <div style={pageStyle}>
           <div style={{ ...titleStyle, color: SEAL_RED, letterSpacing: '1px' }}>
