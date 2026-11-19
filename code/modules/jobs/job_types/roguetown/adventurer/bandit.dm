@@ -65,6 +65,8 @@
 		H.grant_language(/datum/language/thievescant)
 		H.choose_name_popup("BANDIT")
 		bandit_select_bounty(H)
+		var/datum/antagonist/bandit/bandit_datum = H.mind.has_antag_datum(/datum/antagonist/bandit)
+		bandit_datum?.show_briefing(H)
 
 // Changed up proc from Wretch to suit bandits bit more
 /proc/bandit_select_bounty(mob/living/carbon/human/H)

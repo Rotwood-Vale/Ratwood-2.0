@@ -688,6 +688,9 @@
 										data += "[completed ? "(COMPLETED)" : "(FAILED)"]</span>"
 										data += "</div>"
 										obj_count++
+								var/extra = A.roundend_panel_extra()
+								if(extra)
+									data += "<div style='margin-top: 3px; color: #c8b89a;'>[extra]</div>"
 							data += "</div>"
 						data += "</div>"
 					data += "</div></div>"
@@ -701,6 +704,9 @@
 						if(previous_category)
 							data += "</div></div>"
 						data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
+						var/header_extra = A.roundend_panel_header_extra()
+						if(header_extra)
+							data += "<div style='margin-bottom: 8px;'>[header_extra]</div>"
 						data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[capitalize(A.roundend_category)]</div>"
 						data += "<div style='margin-left: 10px;'>"
 						current_category = A.roundend_category
@@ -734,6 +740,9 @@
 							data += "</div>"
 							obj_count++
 						data += "</div>"
+					var/extra = A.roundend_panel_extra()
+					if(extra)
+						data += "<div style='margin-left: 15px; margin-top: 3px; color: #c8b89a;'>[extra]</div>"
 					data += "</div>"
 
 				if(all_antagonists.len)

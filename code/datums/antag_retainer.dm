@@ -29,8 +29,10 @@
 	var/delf_goal = 1
 
 	///bandit stuff
-	var/bandit_goal = 1
+	/// Mammons' worth offered to Matthios's idol by the whole band this round
 	var/bandit_contribute = 0
+	/// ckeys already paid hoard triumphs, so a bandit who respawned as a new bandit is paid once
+	var/list/bandit_hoard_paid_ckeys = list()
 
 /proc/vampire_werewolf()
 	var/vampyr = 0

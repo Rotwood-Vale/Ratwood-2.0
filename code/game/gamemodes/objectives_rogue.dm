@@ -1,14 +1,30 @@
-/datum/objective/bandit
-	name = "bandit"
-	explanation_text = "Feed valuables to the idol."
+/// One tier of the band-wide hoard. Completed once the whole band has offered target_amount to the idol.
+/datum/objective/bandit_hoard
+	name = "bandit hoard"
+	martyr_compatible = TRUE
+	/// 1 small, 2 decent, 3 massive; see bandit_hoard_tier()
+	var/tier = 1
 
-/datum/objective/bandit/check_completion()
-	if(SSmapping.retainer.bandit_contribute >= SSmapping.retainer.bandit_goal)
-		return TRUE
+/datum/objective/bandit_hoard/New(text, datum/mind/owner)
+	target_amount = bandit_hoard_tier_amount(tier)
+	triumph_count = bandit_hoard_triumphs(tier)
+	. = ..()
+	update_explanation_text()
 
-/datum/objective/bandit/update_explanation_text()
-	..()
-	explanation_text = "Feed [SSmapping.retainer.bandit_goal] mammon to an idol of greed."
+/datum/objective/bandit_hoard/check_completion()
+	return SSmapping.retainer.bandit_contribute >= target_amount
+
+/datum/objective/bandit_hoard/update_explanation_text()
+	explanation_text = "[bandit_hoard_tier_name(tier)]: offer [target_amount] mammons' worth of loot to Matthios's idol."
+
+/datum/objective/bandit_hoard/small
+	tier = 1
+
+/datum/objective/bandit_hoard/decent
+	tier = 2
+
+/datum/objective/bandit_hoard/massive
+	tier = 3
 
 
 /datum/objective/delf

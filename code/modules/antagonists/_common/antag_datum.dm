@@ -30,11 +30,24 @@ GLOBAL_LIST_EMPTY(antagonists)
 	///flags used by storytellers
 	var/antag_flags = NONE
 
+	//Briefing popup. An antag opts in by setting briefing_title; goals come from objectives.
+	/// Banner shown at the top of the briefing window. No title means no briefing.
+	var/briefing_title
+	/// Lore paragraph under the banner
+	var/briefing_flavour
+	/// How-to-play paragraph
+	var/briefing_explanation
+	/// If TRUE the briefing ticks off objectives as they are completed during the round
+	var/briefing_live_goals = FALSE
+	/// The briefing window handler, made on first open
+	var/datum/antag_briefing/briefing
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
 /datum/antagonist/Destroy()
+	QDEL_NULL(briefing)
 	GLOB.antagonists -= src
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
@@ -70,6 +83,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	remove_innate_effects(old_body)
 	apply_innate_effects(new_body)
+	if(old_body && old_body != new_body)
+		old_body.verbs -= /mob/proc/antagonist_briefing
+	update_briefing_verb(new_body)
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
@@ -116,6 +132,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 //		if(!silent)
 //			greet()
 		apply_innate_effects()
+		update_briefing_verb(owner.current)
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -144,6 +161,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+		update_briefing_verb(owner.current)
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
@@ -196,6 +214,79 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/roundend_report_footer()
 	return
 
+/// One extra line of HTML shown under this antag's objectives in the round-end panel, or null
+/datum/antagonist/proc/roundend_panel_extra()
+	return
+
+/// One line of HTML shown once under this antag's category title in the round-end panel, or null
+/datum/antagonist/proc/roundend_panel_header_extra()
+	return
+
+//BRIEFING
+
+/datum/antagonist/proc/has_briefing()
+	return !!briefing_title
+
+/// Opens the briefing window for user (defaults to the owner's current mob)
+/datum/antagonist/proc/show_briefing(mob/user)
+	if(!has_briefing())
+		return
+	if(!user)
+		user = owner?.current
+	if(!user?.client)
+		return
+	if(!briefing)
+		briefing = new(src)
+	briefing.ui_interact(user)
+
+/// Goal rows for the briefing window: list of list("text", "completed"). completed is null when not tracked live.
+/datum/antagonist/proc/get_briefing_goals()
+	var/list/goals = list()
+	for(var/datum/objective/objective as anything in objectives)
+		goals += list(list(
+			"text" = objective.explanation_text,
+			"completed" = briefing_live_goals ? !!objective.check_completion() : null,
+		))
+	return goals
+
+/**
+ * Optional progress bar for the briefing window, or null for none.
+ * Shape: list("label", "value", "max", "unit", "marks" = list(list("at", "label")), "lines" = list(text))
+ */
+/datum/antagonist/proc/get_briefing_progress(mob/user)
+	return
+
+/// Gives or takes the briefing verb on M, depending on whether its mind still holds any antag with a briefing
+/datum/antagonist/proc/update_briefing_verb(mob/M)
+	if(!M)
+		return
+	for(var/datum/antagonist/antag as anything in M.mind?.antag_datums)
+		if(antag.has_briefing())
+			M.verbs |= /mob/proc/antagonist_briefing
+			return
+	M.verbs -= /mob/proc/antagonist_briefing
+
+/mob/proc/antagonist_briefing()
+	set name = "Antagonist Briefing"
+	set category = "OOC"
+
+	var/list/options = list()
+	for(var/datum/antagonist/antag as anything in mind?.antag_datums)
+		if(antag.has_briefing())
+			options[antag.name] = antag
+	if(!length(options))
+		to_chat(src, span_warning("I have no briefing to read."))
+		return
+	var/datum/antagonist/chosen
+	if(length(options) == 1)
+		chosen = options[options[1]]
+	else
+		var/choice = tgui_input_list(src, "Which briefing?", "Antagonist Briefing", options)
+		if(!choice)
+			return
+		chosen = options[choice]
+	chosen.show_briefing(src)
+
 
 //ADMIN TOOLS
 
@@ -204,6 +295,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	new_owner.add_antag_datum(datum_type_or_instance = src, team = null, admin_panel = TRUE)
+	show_briefing()
 
 //Called when removing antagonist using admin tools
 /datum/antagonist/proc/admin_remove(mob/user)
