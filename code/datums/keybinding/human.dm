@@ -33,6 +33,22 @@
 	H.smart_equipbelt()
 	return TRUE
 
+/datum/keybinding/human/quick_equipcloak
+	hotkey_keys = list("ShiftN")
+	name = "quick_equipcloak"
+	full_name = "Quick equip cloak"
+	description = "Put held item in your cloak or draw its most recently stored item"
+
+/datum/keybinding/human/quick_equipcloak/down(client/user)
+	if(!istype(user) || !ishuman(user.mob))
+		return FALSE
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/H = user.mob
+	H.smart_equipbag(SLOT_CLOAK)
+	return TRUE
+
 /datum/keybinding/human/bag_equip_backl
 	hotkey_keys = list("ShiftQ")
 	name = "bag_equip_backl"
