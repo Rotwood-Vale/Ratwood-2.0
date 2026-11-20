@@ -35,13 +35,17 @@
 #define DR_ULTRA			5	// Best quality light armor. 100% EHP increase. EDPS: 80%
 
 // Armor damage type categories
-// DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt.
-// DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Fire, acid, bullet
+// DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt, fire.
+// DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Acid, bullet
 // DBLOCK: tier pass/fail penetration system. Slash, stab, piercing.
 #define BLUNT_DR_COEFFICIENT 0.3 // Blunt only: 1 / (1 + 0.3 * tier) = 60% reduction at tier 5
 #define ARMOR_DR_ABSORB_TYPES list("blunt")
-#define ARMOR_DR_PIERCE_TYPES list("fire", "acid", "bullet")
+#define ARMOR_DR_PIERCE_TYPES list("acid", "bullet")
 #define ARMOR_DR_TYPES list("blunt", "fire", "acid", "bullet")
+// Resist DR types: worn real armor absorbs these even at a 0 rating (metal shows no fire pips but still
+#define ARMOR_DR_RESIST_TYPES list("fire")
+// DR types that land on a single armor layer instead of distributing across every worn layer. Blunt still distributes.
+#define ARMOR_DR_SINGLE_LAYER_TYPES list("fire")
 #define ARMOR_DBLOCK_TYPES list("slash", "stab", "piercing")
 
 // Penetration passthrough fractions
@@ -184,7 +188,7 @@
 #define ARMOR_BRIGANDINE list("blunt" = DR_MEDIUM, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE)
 
 // MAILLE — Chainmail. Medium: Plate level protection but weak vs Bodkin (100% through)
-#define ARMOR_MAILLE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_LIGHT, "acid" = DR_NONE, "bullet" = DR_NONE)
+#define ARMOR_MAILLE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_LIGHT, "fire" = DR_LIGHT, "acid" = DR_NONE, "bullet" = DR_NONE)
 
 // PLATE — Brigandine, cuirass, plate. All plate-tier items; differentiated by integrity, not rating. Spear (PEN_HEAVY) gets 20% through stab. Bodkin goes through 20% - HEAVY rating. Weak vs Blunt. 
 #define ARMOR_PLATE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_LIGHT, "acid" = DR_NONE, "bullet" = DR_NONE)

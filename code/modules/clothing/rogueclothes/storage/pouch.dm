@@ -20,6 +20,14 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fibers
 
+/obj/item/storage/belt/rogue/pouch/update_icon_state()
+	if(length(contents))
+		icon_state = "pouch"
+		item_state = "pouch"
+	else
+		icon_state = "pouch_e"
+		item_state = "pouch_e"
+
 /obj/item/storage/belt/rogue/pouch/coins/poor/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/copper/pile/H = new(loc)

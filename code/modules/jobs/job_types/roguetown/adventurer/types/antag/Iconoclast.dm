@@ -19,6 +19,7 @@
 		STATKEY_CON = 2, //We have a total of +10 in stats. +13 if we have a visible bounty.
 	)
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
