@@ -38,7 +38,7 @@
 	/obj/item/rogueweapon/surgery/retractor,
 	/obj/item/rogueweapon/surgery/retractor,
 	/obj/item/rogueweapon/surgery/bonesetter,
-	/obj/item/rogueweapon/surgery/cautery/blessed, // And special caughtery!
+	/obj/item/rogueweapon/surgery/cautery,
 	/obj/item/natural/bundle/cloth/bandage/full,
 	/obj/item/rogueweapon/surgery/hammer,
 	/obj/item/needle/pestra //Gets the special needle!
