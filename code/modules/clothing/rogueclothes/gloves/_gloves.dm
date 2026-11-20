@@ -71,6 +71,7 @@
 
 /obj/item/clothing/gloves/roguetown/get_mechanics_examine(mob/user)
 	. = ..()
+	. += span_notice("You can slot in gloves with no armor as cosmetic.")
 	if(unarmed_bonus > 0)
 		. += span_notice("Unarmed damage bonus: +[unarmed_bonus] (flat, applied after strength scaling).")
 
@@ -112,7 +113,7 @@
 		if(our_component && length(our_component.item_to_grid_coordinates))
 			for(var/obj/item/thing as anything in our_component.item_to_grid_coordinates)
 				var/mutable_appearance/thing_appearance = thing.build_worn_icon(default_layer, default_icon_file, isinhands, femaleuniform, override_state, female, customi, sleeveindex, boobed_overlay, clip_mask)
-				thing_appearance.appearance_flags = RESET_COLOR
+				thing_appearance.appearance_flags = RESET_COLOR|RESET_ALPHA
 				thing_appearance.pixel_x += standing.pixel_x
 				thing_appearance.pixel_y += standing.pixel_y
 				standing.add_overlay(thing_appearance)
