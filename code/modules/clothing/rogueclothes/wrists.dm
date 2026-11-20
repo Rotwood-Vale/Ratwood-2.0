@@ -10,21 +10,16 @@
 	experimental_inhand = FALSE
 	grid_width = 32
 	grid_height = 64
-	var/overarmor
-
-/obj/item/clothing/wrists/roguetown/get_mechanics_examine(mob/user)
-	. = ..()
-	. += span_info("Middle-clicking adjusts its layer, so it can be worn either above-or-below any armor and gloves.")
+	/// If TRUE, the bracer is worn but not drawn
+	var/hide_worn = FALSE
 
 /obj/item/clothing/wrists/roguetown/MiddleClick(mob/user, params)
 	. = ..()
-	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear \the [src] over my armor" : "wear \the [src] under my armor"]."))
-	alternate_worn_layer = overarmor ? OVER_ARMOR_LAYER : initial(alternate_worn_layer)
+	if(!ishuman(user))
+		return
+	hide_worn = !hide_worn
+	to_chat(user, span_info("I [hide_worn ? "hide \the [src] from view" : "show \the [src]"]."))
 	user.update_inv_wrists()
-	user.update_inv_gloves()
-	user.update_inv_armor()
-	user.update_inv_shirt()
 
 /obj/item/clothing/wrists/roguetown/bracers
 	name = "bracers"
@@ -44,6 +39,7 @@
 
 /obj/item/clothing/wrists/roguetown/bracers/get_mechanics_examine(mob/user)
 	. = ..()
+	. += span_notice("Middle click to show/hide bracers")
 	. += span_notice("Allows unarmed parrying. Takes integrity damage when parrying.")
 	. += span_notice("Unarmed attacks are swift-balanced: faster attackers are harder to parry and dodge.")
 
