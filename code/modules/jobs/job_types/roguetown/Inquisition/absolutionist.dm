@@ -30,7 +30,8 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
 		TRAIT_RITUALIST, //Handles conversions, too, now.
-		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
+		TRAIT_SELF_AWARE, //Shows full damage numbers on self-diagnosis, for QOL.
+		TRAIT_MEDICINE_EXPERT,
 	)
 	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 
@@ -57,7 +58,7 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN, // A hobbyist.
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE, // Parry things.
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/fishing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
@@ -92,6 +93,7 @@
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
 	cloak = /obj/item/clothing/cloak/absolutionistrobe
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
+	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
@@ -109,6 +111,7 @@
 		/obj/item/natural/worms/leech/cheele = 1,
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/ritechalk = 1,
+		/obj/item/storage/belt/rogue/surgery_bag/full/physician = 1,
 		)
 	
 	if(H.age == AGE_OLD)

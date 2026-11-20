@@ -766,6 +766,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_SELF_AWARE,
 		TRAIT_LUX_FREAK,
+		TRAIT_MEDICINE_EXPERT,
 		TRAIT_RITUALIST
 	)
 	subclass_stats = list(
@@ -806,6 +807,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+	beltr = /obj/item/storage/belt/rogue/surgery_bag/full
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,

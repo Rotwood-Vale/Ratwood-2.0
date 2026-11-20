@@ -173,6 +173,7 @@
 		TRAIT_SELF_AWARE,
 		TRAIT_RITUALIST,
 		TRAIT_LUX_FREAK,
+		TRAIT_MEDICINE_EXPERT,
 		TRAIT_OUTLANDER
 	)
 	subclass_stats = list(
@@ -213,6 +214,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather
+	beltr = /obj/item/storage/belt/rogue/surgery_bag/full
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
