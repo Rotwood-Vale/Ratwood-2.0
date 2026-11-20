@@ -2856,3 +2856,101 @@
 	. = ..()
 	if(!istype(owner.get_active_held_item(), held_dagger))
 		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)
+
+//Baothan Stat Drain
+
+/atom/movable/screen/alert/status_effect/buff/baothasbanquet
+	name = "Baotha's Banquet (I)"
+	desc = "I feel invigorated after partaking in another's energy."
+	icon_state = "baothasbanquet"
+
+/datum/status_effect/buff/baothasbanquet
+	id = "baothasbanquet"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/baothasbanquet
+	effectedstats = list(STATKEY_WIL = 1, STATKEY_LCK = 1)
+	duration = 30 MINUTES
+	examine_text = "SUBJECTPRONOUN is brimming with stolen vitality."
+	tick_interval = 2 SECONDS
+	var/tier = 1
+	var/list/poor_bastards = list()
+
+/datum/status_effect/buff/baothasbanquet/proc/get_tier_stats(for_tier)
+	return list(STATKEY_WIL = for_tier, STATKEY_LCK = for_tier)
+
+/datum/status_effect/buff/baothasbanquet/proc/tier_up(mob/living/victim)
+	if(victim in poor_bastards)
+		return FALSE
+	poor_bastards += victim
+	refresh()
+	if(tier >= 3)
+		return FALSE
+	set_tier(tier + 1)
+	return TRUE
+
+/datum/status_effect/buff/baothasbanquet/proc/set_tier(new_tier)
+	if(!owner || new_tier == tier)
+		return
+	for(var/stat in effectedstats)
+		owner.change_stat(stat, -effectedstats[stat])
+	tier = new_tier
+	effectedstats = get_tier_stats(tier)
+	for(var/stat in effectedstats)
+		owner.change_stat(stat, effectedstats[stat])
+	switch(tier)
+		if(1)
+			linked_alert?.name = "Baotha's Banquet (I)"
+			linked_alert?.desc = "I feel invigorated after partaking in another's energy."
+		if(2)
+			linked_alert?.name = "Baotha's Banquet (II)"
+			linked_alert?.desc = "The strength of others nourishes me!"
+		if(3)
+			linked_alert?.name = "Baotha's Banquet (III)"
+			linked_alert?.desc = "This power is ADDICTING!"
+			to_chat(owner, span_warning("Stolen vigor floods my veins. I could go on forever..."))
+
+/datum/status_effect/buff/baothasbanquet/tick()
+	if(tier >= 3)
+		owner.energy_add(2)
+
+/datum/status_effect/buff/baothasbanquet/on_remove()
+	. = ..()
+
+/atom/movable/screen/alert/status_effect/debuff/baothadrained
+	name = "Vitality Drained (I)"
+	desc = "That was exhausting..."
+	icon_state = "baothadrained"
+
+/datum/status_effect/debuff/baothadrained
+	id = "baothadrained"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/baothadrained
+	effectedstats = list("strength" = -1, "intelligence" = -1, "perception" = -1 , "speed" = -1, "willpower" = -1, "constitution" = -1)
+	duration = 10 MINUTES
+	var/tier = 1
+
+/datum/status_effect/debuff/baothadrained/proc/tier_up()
+	refresh()
+	if(tier < 3)
+		on_remove()
+		tier++
+		switch(tier)
+			if(2)
+				effectedstats = list("strength" = -2, "intelligence" = -2, "perception" = -2 , "speed" = -2, "willpower" = -2, "constitution" = -2)
+				linked_alert.name = "Vitality Drained (II)"
+				linked_alert.desc = "That really took it out of me..."
+			if(3)
+				effectedstats = list("strength" = -3, "intelligence" = -3, "perception" = -3 , "speed" = -3, "willpower" = -3, "constitution" = -3)
+				linked_alert.name = "Vitality Drained (III)"
+				linked_alert.desc = "I feel like I lost a part of myself..."
+		on_apply()
+
+/datum/status_effect/debuff/false_drain
+	id = "false_drain"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/false_drain
+	effectedstats = null
+	duration = 2 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/false_drain
+	name = "False Drain"
+	desc = "My arousal is hollow and false. There is nothing here to feed on."
+	icon_state = "debuff"
