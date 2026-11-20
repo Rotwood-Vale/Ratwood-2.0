@@ -101,6 +101,9 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 		return FALSE
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_LUX_FREAK))
+		target.visible_message(span_danger("[target]'s lux resists taking, moving and coiling to avoid being grasped!"))
+		return FALSE
 	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped)
 	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	new /obj/effect/temp_visual/cult/sac(get_turf(target))
