@@ -45,13 +45,8 @@
 	icon_state = "freigloves"
 	item_state = "freigloves"
 
-/obj/item/clothing/gloves/roguetown/angle/pontifex
+/obj/item/clothing/gloves/roguetown/bandages/pontifex
 	name = "rune-scrybed wrappings"
 	desc = "Paper and cloth bandages enscrybed with powerful naledian runes. They do an ample job of protecting their user's hands in combat."
-	icon_state = "clothwraps"
-	item_state = "clothwraps"
 	color = "#ffffff"
-
-/obj/item/clothing/gloves/roguetown/angle/pontifex/ComponentInitialize()
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+	unarmed_bonus = 5
