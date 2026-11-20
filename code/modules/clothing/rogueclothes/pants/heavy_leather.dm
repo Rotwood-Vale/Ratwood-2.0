@@ -21,7 +21,6 @@
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 	name = "hardened leather shorts"
@@ -43,7 +42,6 @@
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/shepherd
 	name = "shepherd's pants"
@@ -93,7 +91,6 @@
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY) //If every mage starts rushing these pants at roundstart, this is going away.
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/attack_right(mob/user)
 	..()

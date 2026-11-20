@@ -8,7 +8,7 @@
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	townie_contract_gate_exempt = TRUE
 	townie_contract_gate_hide_in_list = TRUE
-	traits_applied = list(TRAIT_ARCYNE, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_ARCYNE, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_PER = 2,

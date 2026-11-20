@@ -369,7 +369,6 @@
 
 /obj/item/clothing/shoes/roguetown/boots/armor/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/ancient
 	name = "ancient boots"
@@ -515,7 +514,6 @@
 
 /obj/item/clothing/shoes/roguetown/boots/maille/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/shoes/roguetown/boots/maille/iron
 	name = "iron maille boots"
@@ -675,7 +673,6 @@
 
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/plateboots
 	name = "ancient blacksteel plate boots"

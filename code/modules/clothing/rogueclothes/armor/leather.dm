@@ -20,7 +20,6 @@
 
 /obj/item/clothing/suit/roguetown/armor/leather/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket
 	name = "winter jacket"
@@ -141,7 +140,6 @@
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
 	name = "cuir-bouilli armor"
@@ -162,7 +160,6 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/ComponentInitialize()
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	name = "hardened leather coat"
