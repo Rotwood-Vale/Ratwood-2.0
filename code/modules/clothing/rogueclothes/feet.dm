@@ -89,9 +89,9 @@
 	playsound(user, 'sound/foley/equip/swordsmall1.ogg')
 	return TRUE
 
-/obj/item/clothing/shoes/roguetown/boots/MiddleClick(mob/user)
+/obj/item/clothing/shoes/roguetown/boots/MiddleClick(mob/user, params)
 	if(isnull(holdinglockpick))
-		return
+		return ..()
 	user.visible_message(span_warning("[user] is drawing something from [src]!"), span_warning("I begin drawing a lockpick from [src]!"))
 	if(!do_after(user, 2 SECONDS))
 		return
