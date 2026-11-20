@@ -56,7 +56,7 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		var/chance = 0
-		chance -= (C.STALUC-10) * 10
+		chance -= (C.STALUC-10) * 5
 		if(C.has_status_effect(/datum/status_effect/buff/drunk))
 			chance += 20
 		if(C.has_status_effect(/datum/status_effect/incapacitating/off_balanced))
