@@ -62,6 +62,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT, //Druids know the forest and when it has been disturbed
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN, //On par w/ missionary, because they explore more
 		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE, //To help them defend themselves with parrying
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
