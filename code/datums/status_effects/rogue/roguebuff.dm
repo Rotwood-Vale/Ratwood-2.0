@@ -2907,6 +2907,7 @@
 			linked_alert?.name = "Baotha's Banquet (III)"
 			linked_alert?.desc = "This power is ADDICTING!"
 			to_chat(owner, span_warning("Stolen vigor floods my veins. I could go on forever..."))
+			ADD_TRAIT(owner, TRAIT_EVYL_DRAINER, "baothasbanquet")
 
 /datum/status_effect/buff/baothasbanquet/tick()
 	if(tier >= 3)
