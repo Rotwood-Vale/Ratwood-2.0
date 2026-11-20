@@ -102,7 +102,7 @@
 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/absolver
 	id = /obj/item/clothing/ring/signet/silver/inqscomm
-	backpack_contents = list( // currently full
+	backpack_contents = list(
 		/obj/item/book/rogue/bibble/psy = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
@@ -112,6 +112,7 @@
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/ritechalk = 1,
 		/obj/item/storage/belt/rogue/surgery_bag/full/physician = 1,
+		/obj/item/bedroll = 1,
 		)
 	
 	if(H.age == AGE_OLD)
