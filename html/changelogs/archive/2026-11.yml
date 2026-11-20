@@ -466,3 +466,11 @@
   - balance: "Armbrustsch\xFCtze gets Expert in Axes"
   vitoras228322-ai:
   - rscadd: Added spellsinger robes into loadout.
+2026-11-20:
+  Ketrai:
+  - rscadd: Added two new fennec ear variants to relevant races
+  SirSwagmeyer:
+  - balance: Readjusted upgraded warden armor to have armor values and coverage relevant
+      to its item descriptions.
+  - bugfix: fixed chainmail to have lower pierce protection than plate armor, making
+      it no longer identical to plate armor protection wise.
