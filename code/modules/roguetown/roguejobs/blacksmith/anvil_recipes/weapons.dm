@@ -1693,6 +1693,12 @@
 
 // HOLY STEEL
 
+/datum/anvil_recipe/weapons/holysteel/astrata_sword
+	name = "Executioner Sword, Astrata (+2 Holy Steel)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/sword/long/exe/astrata
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
 /datum/anvil_recipe/weapons/holysteel/church_longsword
 	name = "Longsword, Templaric"
 	created_item = /obj/item/rogueweapon/sword/long/church
