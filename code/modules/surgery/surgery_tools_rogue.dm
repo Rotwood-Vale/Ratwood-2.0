@@ -184,6 +184,18 @@
 		tool_behaviour = null
 	update_icon()
 
+/obj/item/rogueweapon/surgery/cautery/blessed
+	name = "malums cautery"
+	desc = "The mith says that Pestra cut the tendons of Malums forging arm, only healing them once he agreed to bless the tools of her followers. This blesing manifests in the iron never losing its heat once heated up even once."
+
+/obj/item/rogueweapon/surgery/cautery/blessed/update_heated(new_heated)
+	if(new_heated)
+		heated = new_heated
+	if(heated)
+		damtype = BURN
+		tool_behaviour = TOOL_CAUTERY
+	update_icon()
+
 /obj/item/rogueweapon/surgery/cautery/branding
 	name = "branding iron"
 	desc = "A iron that is well-writ upon flesh. Heat it up before use."
