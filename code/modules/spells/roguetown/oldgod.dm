@@ -436,7 +436,7 @@
 	// Notify the user and target
 	to_chat(user, span_warning("You pull on [H]'s lux, ABSOLVING them of their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(user, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
+		to_chat(H, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm
 		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns lighten."))
@@ -521,7 +521,7 @@
 	// Notify the user and target
 	to_chat(user, span_warning("You pull on [H]'s lux, AMENDING their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(user, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
+		to_chat(H, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // someone just torn away something from your lux, that isn't calm
 		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burdens lighten."))
@@ -571,7 +571,7 @@
 		return FALSE
 
 	if(extractcast)
-		if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
+		if(H.has_status_effect(/datum/status_effect/debuff/devitalised) || H.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 			to_chat(H, span_notice("My lux is strained, I cannot bring out more of it."))
 			revert_cast()
 			return FALSE
@@ -600,7 +600,7 @@
 		qdel(hand_item)
 		return TRUE
 
-	if(luxcast)
+	if(imluxcast)
 		to_chat(H, span_silver("Impurities removed, the lingering will is dead. This lux can now merge with another."))
 		new /obj/item/reagent_containers/lux(H.loc)
 		qdel(hand_item)
