@@ -235,7 +235,7 @@
 	desc = "This ingot of steel has been touched by Malum. It radiates heat, even when outside a forge."
 	icon_state = "ingotsteelholy"
 	smeltresult = /obj/item/ingot/steel //Smelting it removes the blessing
-	sellprice = 20
+	sellprice = 40 //Twice of steel, needs an actual malum ritualist to even make
 
 /obj/item/ingot/silverblessed/
 	name = "blessed silver bar"

@@ -1724,8 +1724,8 @@
 	display_category = ITEM_CAT_WEAPONS_AXES
 
 /datum/anvil_recipe/weapons/holysteel/necra_flail
-	name = "Flail, Necra (+1 Holy Steel, +1 Skull)"
-	additional_items = list(/obj/item/ingot/steelholy, /obj/item/skull)
+	name = "Flail, Necra (+1 Holy Steel, +3 Bones)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/natural/bone, /obj/item/natural/bone, /obj/item/natural/bone)
 	created_item = /obj/item/rogueweapon/flail/sflail/necraflail
 	display_category = ITEM_CAT_WEAPONS_FLAILS
 
