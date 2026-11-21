@@ -14,7 +14,7 @@
 	C.on_gain(src, C.resist)
 	if(HAS_TRAIT(src, TRAIT_LUX_FREAK))
 		var/time = 30 
-		to_chat(src, span_userdanger("Divine curse buries into my lux, it will take [time] minutes for me to unveave it."))
+		to_chat(src, span_userdanger("A Divine curse buries into my lux, it will take [time] minutes for me to unweave it."))
 		addtimer(CALLBACK(src, PROC_REF(remove_curse), C), time MINUTES)
 	return TRUE
 

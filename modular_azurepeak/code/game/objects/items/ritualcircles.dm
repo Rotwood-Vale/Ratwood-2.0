@@ -2288,9 +2288,9 @@
 		if(target.remove_curse(C))
 			target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 			if(HAS_TRAIT(user, TRAIT_INQUISITION)) // aka absolver
-				loc.visible_message(span_warning("With masterfull precision, the divine curse on [target] is unvowen."))
+				loc.visible_message(span_warning("With masterful precision, the divine curse on [target] is unwoven."))
 			else
-				loc.visible_message(span_warning("The divine curse on [target] is transferred to the [user] to be weakened and unvowen"))
+				loc.visible_message(span_warning("The divine curse on [target] is transferred to [user]"))
 				user.add_curse(C.type)
 
 	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
