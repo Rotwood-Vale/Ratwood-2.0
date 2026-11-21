@@ -131,6 +131,9 @@
 	var/heated = FALSE
 	// If we mark them as a slave (applies trait, needs pref toggle)
 	var/enslave = FALSE
+	var/firedust = FALSE
+	var/fuel = 10
+	var/maxfuel = 10
 	smeltresult = null
 
 /obj/item/rogueweapon/surgery/cautery/examine(mob/user)
@@ -163,8 +166,10 @@
 	if(!heated)
 		playsound(src, 'sound/items/firelight.ogg', 100, vary = TRUE)
 	update_heated(TRUE)
-	if(added < 120)
-		added = 120
+	if(added < 60)
+		added = 60
+	if(firedust)
+		added = added * 2
 	if(cool_timer)
 		deltimer(cool_timer)
 	cool_timer = addtimer(CALLBACK(src, PROC_REF(update_heated), FALSE), added SECONDS, TIMER_STOPPABLE)
