@@ -7,6 +7,8 @@
 	var/category = CATEGORY_MISC
 	var/weight = WEIGHT_LOWEST
 	var/keybind_signal
+	/// Whether to track the keys that need to stay held after down().
+	var/hold_binding = FALSE
 	/// Is this a clientside verb trigger? If so, this should be set to the name of the verb.
 	var/clientside
 
