@@ -436,7 +436,7 @@
 	// Notify the user and target
 	to_chat(user, span_warning("You pull on [H]'s lux, ABSOLVING them of their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(H, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
+		to_chat(H, span_notice("You feel a pull on your soul as [user], ABSOLVES you of your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm
 		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns lighten."))
@@ -530,8 +530,8 @@
 
 
 /obj/effect/proc_holder/spell/self/psydonluxextract
-	name = "BESTOVAL"
-	desc = "By carfully manipulating my lux i can extract some of my own, or affect one alredy outside my body."
+	name = "BESTOWAL"
+	desc = "By carefully manipulating my lux I can extract some of my own, or affect Lux already outside of my body."
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "INSPIRE"
@@ -566,13 +566,13 @@
 	else if (istype(hand_item, /obj/item/reagent_containers/lux_impure))
 		imluxcast = TRUE
 	else
-		to_chat(H, span_notice("You need empty hand to extract, pure lux to split or impure to puryfy."))
+		to_chat(H, span_notice("You need an empty hand to extract pure lux, split impure lux or purify it."))
 		revert_cast()
 		return FALSE
 
 	if(extractcast)
 		if(H.has_status_effect(/datum/status_effect/debuff/devitalised) || H.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
-			to_chat(H, span_notice("My lux is strained, I cannot bring out more of it."))
+			to_chat(H, span_notice("My lux is strained, I cannot extract more yet."))
 			revert_cast()
 			return FALSE
 		to_chat(H, span_silver("Strand after strand, move myself from the heart to the palm..."))
