@@ -182,6 +182,9 @@
 		var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
 			return
+		if(!affecting.is_organic_limb())
+			to_chat(user, span_warning("There is no blood in [affecting] for [src] to latch onto."))
+			return
 		if(!pierce_armor && !get_location_accessible(H, check_zone(user.zone_selected)))
 			to_chat(user, span_warning("Something in the way."))
 			return

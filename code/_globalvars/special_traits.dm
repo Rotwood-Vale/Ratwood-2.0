@@ -98,6 +98,9 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	if (character.job)
 		var/datum/job/players_job = SSjob.GetJob(character.job)
 		if(players_job && players_job.no_virtue)
+			// Virtues don't apply here at all, but a chosen limb replacement is worth a word.
+			player.prefs.virtue?.prosthetics_fit_or_warn(character)
+			player.prefs.virtuetwo?.prosthetics_fit_or_warn(character)
 			return
 
 	var/virtuous = FALSE
@@ -141,6 +144,8 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		var/conflicting_trait = Q.blocked_by_incompatible_traits(character)
 		if(conflicting_trait)
 			to_chat(character, span_warning("[Q.name] conflicts with [conflicting_trait], something I already have. It will not be applied."))
+			continue
+		if(!Q.prosthetics_fit_or_warn(character))
 			continue
 
 		if(available_points >= Q.point_cost)

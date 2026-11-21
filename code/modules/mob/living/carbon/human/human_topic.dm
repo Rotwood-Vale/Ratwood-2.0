@@ -63,9 +63,9 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			var/hort = FALSE
 			hort = L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 			usr.put_in_hands(I)
-			if (hort)
+			if (hort && L.is_organic_limb())
 				emote("pain", TRUE)
-			playsound(loc, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
+			playsound(loc, L.is_organic_limb() ? 'sound/foley/flesh_rem.ogg' : 'sound/foley/stone_scrape.ogg', 100, TRUE, -2)
 			if(usr == src)
 				usr.visible_message("<span class='notice'>[usr] rips [I] out of [usr.p_their()] [L.name]!</span>", "<span class='notice'>I successfully remove [I] from my [L.name].</span>")
 			else
