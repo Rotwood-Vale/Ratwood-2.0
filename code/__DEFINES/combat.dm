@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define UNARMED_DAMAGE_CIVILBARB	5
 //Base weapon-defense for an unarmed parry. Multiplied by PARRY_PER_WDEF_POINT to become a parry percentage.
 #define UNARMED_BASE_WDEF_BARE 2		// Bare fists — still bad, but not hopeless
-#define UNARMED_BASE_WDEF_EQUIPPED 8	// Bracers / knuckles / bandages — 80 base parry for expert pugilists
+#define UNARMED_BASE_WDEF_EQUIPPED 10	// Bracers / knuckles / bandages — 80 base parry for expert pugilists
 
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
@@ -462,7 +462,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define IN_COMBAT_DELAY 10 SECONDS
 
 // Critical Resistance Defines //
-#define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5
+#define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.2
 /// Alternate attack defines. Return these at the end of procs like afterattack_secondary.
 /// Calls the normal attack proc. For example, if returned in afterattack_secondary, will call afterattack.
 /// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.
