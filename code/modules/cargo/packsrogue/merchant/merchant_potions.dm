@@ -7,6 +7,20 @@
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
+//Only two since that's 4 uses total; two sips each. You only need one sip for cure.
+/datum/supply_pack/rogue/potions/rotcure
+	name = "Rot Cure Potion"
+	cost = 300
+	contains = list(
+					/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure,
+					/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure,
+				)
+
+/datum/supply_pack/rogue/potions/fireresist
+	name = "Fire Resistance Potion"
+	cost = 250//bit of a raw deal, but its master alchmey item
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/fireresist)
+
 /datum/supply_pack/rogue/potions/healthpot
 	name = "Healing Potion"
 	cost = 25
