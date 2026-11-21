@@ -18,6 +18,12 @@
 	rank_level = level
 	..()
 
+/datum/clan_hierarchy_node/Destroy(force)
+	remove_member()
+	superior = null
+	subordinates.Cut()
+	return ..()
+
 /datum/clan_hierarchy_node/proc/assign_member(mob/living/carbon/human/member)
 	if(!member || !member.clan)
 		return FALSE

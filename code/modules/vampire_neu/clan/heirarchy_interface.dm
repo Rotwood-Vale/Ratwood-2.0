@@ -4,6 +4,7 @@
 	var/datum/clan/user_clan
 	var/datum/clan_hierarchy_node/selected_position
 	COOLDOWN_DECLARE(last_creation)
+	COOLDOWN_DECLARE(last_layout_action)
 
 /datum/clan_hierarchy_interface/New(mob/living/carbon/human/target_user)
 	user = target_user
@@ -86,6 +87,16 @@
 
 	// Start with the root and position recursively
 	position_node_and_children(user_clan.hierarchy_root, base_x, base_y, horizontal_spacing, vertical_spacing)
+
+	var/left_margin = 20
+	var/min_x = user_clan.hierarchy_root.node_x
+	for(var/datum/clan_hierarchy_node/position as anything in user_clan.all_positions)
+		min_x = min(min_x, position.node_x)
+	if(min_x >= left_margin)
+		return
+	var/shift = left_margin - min_x
+	for(var/datum/clan_hierarchy_node/position as anything in user_clan.all_positions)
+		position.node_x += shift
 
 /datum/clan_hierarchy_interface/proc/position_node_and_children(datum/clan_hierarchy_node/node, center_x, y_pos, h_spacing, v_spacing)
 	if(!node)
@@ -226,6 +237,7 @@
 		<div class="sidebar-content" id="sidebar-content">
 			[selected_position ? generate_position_details_html() : "<p>Select a position to view details</p>"]
 		</div>
+		[generate_layout_panel_html()]
 	</div>
 
 	<style>
@@ -322,6 +334,78 @@
 			background: #d32f2f;
 		}
 
+		.layout-panel {
+			margin-top: 15px;
+			padding-top: 10px;
+			border-top: 1px solid #444;
+		}
+
+		.layout-panel h3 {
+			margin: 0 0 8px 0;
+			color: #fff;
+			font-size: 14px;
+		}
+
+		.layout-row {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			padding: 4px 0;
+			border-bottom: 1px solid #333;
+		}
+
+		.layout-label {
+			flex: 1;
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			color: #ccc;
+			font-size: 12px;
+		}
+
+		.layout-label em {
+			color: #777;
+		}
+
+		.layout-row button {
+			padding: 3px 8px;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+			font-size: 11px;
+		}
+
+		.layout-row button:disabled {
+			background: #333;
+			color: #666;
+			cursor: default;
+		}
+
+		.layout-public {
+			display: block;
+			width: 100%;
+			margin: 4px 0 8px 0;
+			padding: 6px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 12px;
+		}
+
+		.layout-public:disabled {
+			background: #333;
+			color: #666;
+			cursor: default;
+		}
+
+		.layout-hint {
+			color: #888;
+			font-style: italic;
+			font-size: 11px;
+			margin: 6px 0 0 0;
+		}
+
 		/* Make sidebar responsive */
 		@media (max-width: 1200px) {
 			.hierarchy-sidebar {
@@ -342,6 +426,96 @@
 	</style>
 	"}
 	return sidebar_html
+
+/datum/clan_hierarchy_interface/proc/generate_layout_panel_html()
+	if(!can_manage_hierarchy())
+		return ""
+
+	var/can_load = (user == user_clan.clan_leader)
+	var/list/public_layout = vampire_clan_public_layout()
+	var/list/rows = list()
+	var/list/slots = get_vampire_clan_layouts(user.ckey)
+	for(var/slot in 1 to CLAN_LAYOUT_PERSONAL_SLOTS)
+		var/list/entry = slots ? slots[slot] : null
+		rows += layout_row_html("Slot [slot]", entry ? entry["name"] : null, "[slot]", TRUE, can_load && entry)
+
+	return {"
+	<div class="layout-panel">
+		<h3>Library</h3>
+		<button class='btn-primary layout-public' onclick='loadLayout("[CLAN_LAYOUT_PUBLIC_SLOT]")' [can_load ? "" : "disabled"]>[html_encode(public_layout["name"])]</button>
+		[jointext(rows, "")]
+		[can_load ? "" : "<p class='layout-hint'>Only the clan leader can load a layout.</p>"]
+	</div>
+	"}
+
+/datum/clan_hierarchy_interface/proc/layout_row_html(label, layout_name, slot_id, can_save, can_load)
+	var/name_html = layout_name ? html_encode(layout_name) : "<em>Empty</em>"
+	var/save_button = can_save ? "<button class='btn-secondary' onclick='saveLayout(\"[slot_id]\")'>Save</button>" : ""
+	var/load_button = "<button class='btn-primary' onclick='loadLayout(\"[slot_id]\")' [can_load ? "" : "disabled"]>Load</button>"
+	return "<div class='layout-row'><span class='layout-label'>[label]: [name_html]</span>[save_button][load_button]</div>"
+
+/datum/clan_hierarchy_interface/proc/parse_layout_slot(slot_text)
+	var/slot = text2num(slot_text)
+	if(!isnum(slot) || slot != round(slot) || slot < 1 || slot > CLAN_LAYOUT_PERSONAL_SLOTS)
+		return null
+	return slot
+
+/datum/clan_hierarchy_interface/proc/save_layout(slot_text)
+	var/slot = parse_layout_slot(slot_text)
+	if(!slot || !can_manage_hierarchy() || !COOLDOWN_FINISHED(src, last_layout_action))
+		return
+
+	var/list/slots = get_vampire_clan_layouts(user.ckey)
+	if(!slots)
+		return
+
+	var/list/current = slots[slot]
+	var/layout_name = tgui_input_text(user, "Name this layout:", "Save Layout", current ? current["name"] : user_clan.name, CLAN_LAYOUT_NAME_MAX_LENGTH, encode = FALSE)
+	if(isnull(layout_name))
+		return
+	layout_name = copytext_char(trim(strip_html_simple(layout_name)), 1, CLAN_LAYOUT_NAME_MAX_LENGTH + 1)
+	if(!length(layout_name))
+		layout_name = "Slot [slot]"
+
+	if(current && tgui_alert(user, "Replace \"[current["name"]]\" in slot [slot]?", "Save Layout", list("Replace", "Cancel")) != "Replace")
+		return
+	if(QDELETED(src) || user.clan != user_clan || !can_manage_hierarchy())
+		return
+
+	COOLDOWN_START(src, last_layout_action, CLAN_LAYOUT_SAVE_COOLDOWN)
+	slots[slot] = user_clan.export_hierarchy_layout(layout_name)
+	write_vampire_clan_layouts(user.ckey, slots)
+	to_chat(user, span_notice("Saved the clan hierarchy to slot [slot] as \"[html_encode(layout_name)]\"."))
+	refresh_hierarchy()
+
+/datum/clan_hierarchy_interface/proc/load_layout(slot_text)
+	if(user != user_clan.clan_leader)
+		to_chat(user, span_warning("Only the clan leader can load a layout."))
+		return
+	if(!COOLDOWN_FINISHED(src, last_layout_action))
+		return
+
+	var/list/layout
+	if(slot_text == CLAN_LAYOUT_PUBLIC_SLOT)
+		layout = vampire_clan_public_layout()
+	else
+		var/slot = parse_layout_slot(slot_text)
+		var/list/slots = slot ? get_vampire_clan_layouts(user.ckey) : null
+		layout = slots ? slots[slot] : null
+	if(!islist(layout))
+		return
+
+	if(tgui_alert(user, "Load \"[layout["name"]]\"? Every position is replaced, and everyone but you loses their post.", "Load Layout", list("Load", "Cancel")) != "Load")
+		return
+	if(QDELETED(src) || user.clan != user_clan || user != user_clan.clan_leader)
+		return
+
+	COOLDOWN_START(src, last_layout_action, CLAN_LAYOUT_SAVE_COOLDOWN)
+	to_chat(user, span_notice(user_clan.apply_hierarchy_layout(layout, user)))
+	for(var/mob/living/carbon/human/member in user_clan.clan_members)
+		if(member != user)
+			to_chat(member, span_notice("[user.real_name] has reshaped the hierarchy of [user_clan.name]."))
+	refresh_hierarchy()
 
 /datum/clan_hierarchy_interface/proc/generate_position_details_html()
 	if(!selected_position)
@@ -461,6 +635,14 @@
 			}
 		}
 
+		function saveLayout(slot) {
+			window.location.href = '?src=[REF(src)];action=layout_save;slot=' + slot;
+		}
+
+		function loadLayout(slot) {
+			window.location.href = '?src=[REF(src)];action=layout_load;slot=' + slot;
+		}
+
 		function closeHierarchyModal() {
 			document.getElementById('management-modal').style.display = 'none';
 		}
@@ -567,10 +749,16 @@
 		user << browse(menu.generate_combined_html(updated_html), "window=clan_menu")
 
 /datum/clan_hierarchy_interface/Topic(href, href_list)
-	if(!user || !user_clan)
+	if(!user || !user_clan || usr != user)
 		return
 
 	switch(href_list["action"])
+		if("layout_save")
+			save_layout(href_list["slot"])
+
+		if("layout_load")
+			load_layout(href_list["slot"])
+
 		if("select_position")
 			var/position_ref = href_list["position_id"]
 			for(var/datum/clan_hierarchy_node/position in user_clan.all_positions)
