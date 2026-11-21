@@ -1,5 +1,5 @@
 /datum/advclass/mercenary/hangyaku
-	name = "Hangyaku-Kounen"
+	name = "Hangyaku-Kouken"
 	tutorial = "Rebel. Outlaw. Failure. Once, you served the upper echelons of Kazengun society as more than just a 'knight'- you were a champion, a beacon of virtue, a legend in the making. Now you wander distant Psydonia, seeking a fresh start... or fresh coin, at least."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT //do they have constructs in kazengun?
@@ -10,13 +10,12 @@
 	traits_applied = list(TRAIT_NOBLE) //i hate nobles but it's thematic
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	maximum_possible_slots = 3
-	subclass_stats = list(  // mounted knight, but slower.
+	subclass_stats = list(  // mounted knight
 		STATKEY_STR = 2,
 		STATKEY_INT = 1,
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1,
 		STATKEY_PER = 2,
-		STATKEY_SPD = -1
 	)
 	subclass_skills = list( //impressively limited in terms of what they can do. this is a wall that doesn't do much else.
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
@@ -46,25 +45,28 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/kote
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
 		/obj/item/flashlight/flare/torch/lantern,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/rogueweapon/scabbard/sheath/kazengun
+		/obj/item/rogueweapon/scabbard/sheath/kazengun,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 		)
 	H.merctype = 9
 
 /datum/outfit/job/roguetown/mercenary/hangyaku/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Sword (Ssangsudo)","Mace (Kanabo)","Spear (Naginata)","Bow","Greatsword (Nodachi)") 
+	var/weapons = list("Sword (Ssangsudo) + Bow","Mace (Kanabo)","Spear (Naginata)","Greatsword (Nodachi)") 
 	var/weapon_choice = input(H, "Choose your weapon.", "WHEN STEEL MUST SPEAK...") as anything in weapons
 	switch(weapon_choice)
-		if("Sword (Ssangsudo)")
+		if("Sword (Ssangsudo) + Bow")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword/kazengun/noparry, SLOT_BELT_L, TRUE)	
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword/kazengun/noparry, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/quiver/arrows, SLOT_BELT_L, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve, SLOT_BACK_R, TRUE)
 		if("Mace (Kanabo)")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/kanabo, TRUE)
@@ -73,10 +75,6 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/spear/naginata, TRUE) 
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-		if("Bow")
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
-			H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve, TRUE) 
-			H.equip_to_slot_or_del(new /obj/item/quiver/arrows, SLOT_BELT_L, TRUE) 
 		if("Greatsword (Nodachi)")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/nodachi, TRUE) 
@@ -86,7 +84,7 @@
 	switch(armor_choice)
 		if("Heavy Armor")
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/full/samsibsa, SLOT_ARMOR, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/brigandine/samsibsa, SLOT_ARMOR, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk, SLOT_SHIRT, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs, SLOT_PANTS, TRUE)
 		if("Medium Armor")
