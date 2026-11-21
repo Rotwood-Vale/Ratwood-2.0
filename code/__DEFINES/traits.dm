@@ -44,6 +44,9 @@
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
 #define TRAIT_CRIT_THRESHOLD "NPC Respect Crit Threshold"
 #define TRAIT_JOURNEYS_END "Journey's End"
+/// Source-scoped pressure from an intact rescue cocoon; never changes wound data.
+#define TRAIT_SILK_COMPRESSION "silk_compression"
+
 #define TRAIT_BLOOD_RESISTANCE "Thick Blooded" //50% less bleeding
 #define TRAIT_RAGE "Rage"
 #define TRAIT_IRONMAN "Construct" // basically rotman but not really, used for diff flavor of some things
