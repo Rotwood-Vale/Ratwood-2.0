@@ -508,6 +508,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/lich
 	name = "lich"
 	icon_state = "arrow"
+	jobspawn_override = list("Ashen Host")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/lich/Initialize(mapload)

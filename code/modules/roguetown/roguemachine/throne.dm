@@ -13,6 +13,7 @@ GLOBAL_VAR(king_throne)
 	obj_flags = NONE
 	var/rebel_leader_sit_time = 0
 	var/notified_rebel_able = FALSE
+	var/datum/usurpation_rite/active_rite
 
 /obj/structure/roguethrone/post_buckle_mob(mob/living/M)
 	..()
@@ -23,6 +24,8 @@ GLOBAL_VAR(king_throne)
 	..()
 	density = FALSE
 	M.reset_offsets("bed_buckle")
+	if(active_rite?.contester == M)
+		active_rite.cancel_counter_claim()
 
 /obj/structure/roguethrone/Initialize(mapload)
 	. = ..()
@@ -31,12 +34,55 @@ GLOBAL_VAR(king_throne)
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
+	become_hearing_sensitive()
 
 /obj/structure/roguethrone/Destroy()
+	lose_hearing_sensitivity()
+	if(active_rite)
+		active_rite.fail("The throne has been destroyed.")
 	if(GLOB.king_throne == src)
 		GLOB.king_throne = null
 	GLOB.lordcolor -= src
 	return ..()
+
+/obj/structure/roguethrone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+	if(!ishuman(speaker) || radio_freq || get_dist(speaker, src) > RITE_ASSENT_RANGE)
+		return
+	var/mob/living/carbon/human/H = speaker
+	handle_rite_speech(H, raw_message || message)
+
+/obj/structure/roguethrone/proc/handle_rite_speech(mob/living/carbon/human/speaker, spoken_message)
+	if(findtext(spoken_message, "status of the rite") || findtext(spoken_message, "rite status"))
+		if(active_rite)
+			to_chat(speaker, span_notice(active_rite.get_status_text()))
+		else
+			to_chat(speaker, span_notice("No rite is currently active at the throne."))
+		return TRUE
+	if(findtext(spoken_message, "i ascend"))
+		if(active_rite)
+			to_chat(speaker, span_warning("A rite is already being performed at the throne."))
+			return TRUE
+		var/datum/usurpation_rite/ambitious_dominion/rite = new
+		if(!rite.can_invoke(speaker))
+			qdel(rite)
+			to_chat(speaker, span_warning("Only the Ashen Host Commander may invoke the Rite of Ambitious Dominion."))
+			return TRUE
+		if(!rite.begin(speaker, src))
+			qdel(rite)
+			to_chat(speaker, span_warning("The rite cannot begin here."))
+		return TRUE
+	if(!active_rite)
+		return FALSE
+	if(findtext(spoken_message, "i assent"))
+		active_rite.try_assent(speaker)
+		return TRUE
+	if(findtext(spoken_message, "i abdicate"))
+		active_rite.try_abdication(speaker)
+		return TRUE
+	if(findtext(spoken_message, "stop ascent") && (speaker in buckled_mobs))
+		active_rite.start_counter_claim(speaker)
+		return TRUE
+	return FALSE
 
 /obj/structure/roguethrone/process()
 	var/dt = 1 SECONDS
