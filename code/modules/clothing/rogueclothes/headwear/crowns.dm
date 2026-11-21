@@ -5,6 +5,7 @@
 
 /obj/item/clothing/head/roguetown/crown/fakecrown
 	no_loot_taint = TRUE
+	nudist_approved = TRUE
 	name = "fake crown"
 	desc = "You shouldn't be seeing this."
 	icon_state = "serpcrown"
