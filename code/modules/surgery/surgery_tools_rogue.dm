@@ -111,7 +111,7 @@
 
 /obj/item/rogueweapon/surgery/cautery
 	name = "cautery iron"
-	desc = "A tool used to cauterize wounds. Heat it up before use. Small alchemical heater lets the cautery heat itself up, as long as its suplied with coaldust, sticks, fibers or thorns."
+	desc = "A tool used to cauterize wounds. Heat it up before use. A small alchemical heater lets the cautery heat itself up, as long as its supplied with coal dust, sticks, fibers or thorns."
 	icon_state = "cauteryiron"
 	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike, /datum/intent/mace/smash)
 	slot_flags = ITEM_SLOT_HIP
