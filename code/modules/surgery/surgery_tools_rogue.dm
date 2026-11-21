@@ -139,9 +139,9 @@
 /obj/item/rogueweapon/surgery/cautery/examine(mob/user)
 	. = ..()
 	if(maxfuel)
-		. += span_notice("Cautery has [fuel] out of [maxfuel] fuel avaliable.")
+		. += span_notice("[name] has [fuel] out of [maxfuel] fuel avaliable.")
 	if(!firedust)
-		. += span_notice("Cautery can be made to keep the heat longer with help of some fire dust.")
+		. += span_notice("[name] can be made to keep the heat longer with help of some fire dust.")
 	if(heated)
 		. += span_warning("The tip is hot to the touch.")
 
