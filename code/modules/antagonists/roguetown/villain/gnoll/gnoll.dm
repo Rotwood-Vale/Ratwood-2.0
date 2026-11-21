@@ -8,6 +8,9 @@
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
 	armor = ARMOR_GNOLL_STANDARD
+	// being able to crit through gnoll skin would make them to weak.
+	prevents_crit_wounds = TRUE
+	prevents_dismemberment = TRUE
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE

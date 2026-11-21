@@ -34,10 +34,14 @@
 				return FALSE
 
 	if(body_zone != BODY_ZONE_HEAD)
-		var/mob/living/carbon/human/victim = owner
 		var/d_type = "slash"
-		if(victim.run_armor_check(zone_precise, d_type, armor_penetration = PEN_NONE, damage = damage))
-			to_chat(victim, span_warning("My armour just saved me from losing my [C.get_bodypart(body_zone).name]!"))
+		var/armor_prevents_dismemberment = TRUE//TRUE by default for everything but regenerating armor and the head
+		if(ishuman(C))
+			var/mob/living/carbon/human/victim = C
+			armor_prevents_dismemberment = victim.get_best_worn_armor(zone_precise, d_type, require_dismemberment_protection = TRUE) || (victim.physiology?.armor?.getRating(d_type) > 0)
+		var/armor_block = C.run_armor_check(zone_precise, d_type, armor_penetration = PEN_NONE, damage = damage)
+		if(armor_block && armor_prevents_dismemberment)
+			to_chat(C, span_warning("My armour just saved me from losing my [C.get_bodypart(body_zone).name]!"))
 			return FALSE
 
 	if(C.status_flags & GODMODE)

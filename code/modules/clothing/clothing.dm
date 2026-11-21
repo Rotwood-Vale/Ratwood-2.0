@@ -55,6 +55,10 @@
 	var/list/allowed_race = CLOTHED_RACES_TYPES
 	var/immune_to_genderswap = FALSE
 	var/armor_class = ARMOR_CLASS_NONE
+	/// Mainly for natural armor, allows crits through our armor if false, even if it's not broken.
+	var/prevents_crit_wounds = TRUE
+	/// Same as above, but for delimbs.
+	var/prevents_dismemberment = TRUE
 
 	var/naledicolor = FALSE
 	var/chunkcolor = "#5e5e5e"

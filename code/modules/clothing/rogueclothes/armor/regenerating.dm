@@ -75,8 +75,7 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 
 	resistance_flags = FIRE_PROOF
-	body_parts_covered = COVERAGE_FULL
-	body_parts_inherent = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET//DO NOT USE COVERAGE_FULL, this was changed with the combat 2.0 port and now covers hands+feet, we DONT want this, use COVERAGE_ALL_BUT_HANDFEET instead.
 	flags_inv = null //Exposes the chest and-or breasts.
 	surgery_cover = FALSE //Should permit surgery and other invasive processes.
 	r_sleeve_status = SLEEVE_NORMAL
@@ -84,8 +83,10 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	blocksound = SOFTUNDERHIT
 	blade_dulling = DULLING_BASHCHOP
-	armor = ARMOR_PADDED
+	armor = ARMOR_SKINFULL//lesser padded
 	nudist_approved = TRUE
+	prevents_crit_wounds = FALSE//we want crit wounds through our bare chest, sire
+	prevents_dismemberment = FALSE
 
 	repairmsg_begin = "My skin begins to slowly mend its abuse.."
 	repairmsg_continue = "My skin mends some of its abuse.."
@@ -114,8 +115,8 @@
 	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
 	HAPPINESS MUST BE FOUGHT FOR.'"
 	armor = ARMOR_PADDED
-	repair_time = 20 SECONDS
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
+	repair_time = 60 SECONDS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM//250
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple/equipped(mob/living/user, slot)
 	. = ..()
@@ -135,132 +136,126 @@
 	HAPPINESS MUST BE FOUGHT FOR.'"
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
 	armor = ARMOR_LEATHER
-	repair_time = 20 SECONDS
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
+	repair_time = 60 SECONDS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
 	name = "tough skin"
 	desc = "My skin has always been tough enough to stop most cuts and bruises, with time it will mend."
 	armor = ARMOR_REGENERATING_WEAK
 	max_integrity = 300
-	body_parts_covered = FULL_BODY
-	body_parts_inherent = FULL_BODY
+	body_parts_covered = FULL_BODY//virtue nat armor, rare exception of TRUE full coverage
 	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator
 	name = "pit-hardened chest"//pit? hnnnnhhhffgggg
 	desc = "Are you not entertained?!"
 	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
 	blocksound = SOFTHIT
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-	repair_time = 15 SECONDS//less armor and integ so faster regen
+	armor = ARMOR_SKINPECS//lesser leather
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	repair_time = 20 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator
 	name = "pit-hardened skin"
 	desc = "Are you not entertained?!"
-	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
-	repair_time = 15 SECONDS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
+	armor = ARMOR_SKINFULL//lesser padded
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	repair_time = 20 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk
 	name = "trained skin"
 	desc = "They say I've taken the first step on a path older than memory."
-	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
-	repair_time = 15 SECONDS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
+	armor = ARMOR_SKINFULL
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	repair_time = 20 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk
 	name = "trained chest"
 	desc = "I don't fully understand what those names mean yet, but I repeat them as I was taught."
 	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
 	blocksound = SOFTHIT
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	repair_time = 15 SECONDS//less armor and integ so faster regen
+	armor = ARMOR_SKINPECS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	repair_time = 20 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
 	name = "unstoppable skin"
 	desc = "I've endured enough. The onslaught has lost its meaning."
-	armor = ARMOR_BRONZE//scary, but longer regen
-	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
-	body_parts_inherent = COVERAGE_FULL
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	repair_time = 20 SECONDS
+	armor = ARMOR_PADDED
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM//+50 over ARMOR_INT_CHEST_LIGHT_BASE (i.e. our none antag/one slot role nat armors)
+	repair_time = 60 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berzerker
 	name = "unstoppable chest"
 	desc = "The callouses could stop arrows! But only so many."
-	armor = ARMOR_MAILLE//covers stabs
+	armor = ARMOR_MAILLE//covers stabs, antags get better skin armor but still
 	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
-	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
-	repair_time = 30 SECONDS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL//180
+	repair_time = 60 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/iconclast
 	name = "gilded skin"
 	desc = "The Many-Faced smiles on me. Wreath me in gold melted from crowns, let my skin shine radiant and glittering."
 	armor = ARMOR_BRONZE
 	blocksound = PLATEHIT
-	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
-	body_parts_inherent = COVERAGE_FULL
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	repair_time = 40 SECONDS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
+	repair_time = 60 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/iconoclast
 	name = "gilded chest"
 	desc = "The Many-Faced smiles on me. Shield my heart O' Matthios, cover my ribs with drake scales."
-	armor = ARMOR_BRIGANDINE//neither bronze nor brig cover stab damage well, meaning nat armor icono has a chink in the armor
+	armor = ARMOR_LEATHER
 	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL
-	repair_time = 40 SECONDS
+	repair_time = 60 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
 	name = "hardened skin"
 	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
-	body_parts_covered = COVERAGE_FULL
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
-	repair_time = 15 SECONDS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
+	armor = ARMOR_SKINFULL
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	repair_time = 20 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/barbarian
 	name = "hardened chest"
 	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
 	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
 	blocksound = SOFTHIT
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-	repair_time = 15 SECONDS
+	armor = ARMOR_SKINPECS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	repair_time = 20 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/bodybuilder//dedicated gachi-muchi armor
 	name = "strongman's pride"
 	desc = "Toughened from rigorous routine and mettle. A physique that could hold up the sky."
-	body_parts_covered = COVERAGE_FULL
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
+	armor = ARMOR_SKINFULL
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM//these guys get +50 integ over the other barb armor
 	repair_time = 30 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/bodybuilder
 	name = "strongman's pecs"
 	desc = "Akin to marble hewn by the old Etruscan masters. The skin is pulled taut revealing intricate vascularity beneath."
 	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
 	blocksound = PLATEHIT//I HAVE BALLS OF STEEL
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-	repair_time = 30 SECONDS//better armor, longer repair
+	armor = ARMOR_SKINPECS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
+	repair_time = 30 SECONDS
+	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/ruma
 	name = "bouhoi bujeog tattoos"
@@ -268,17 +263,17 @@
 	resistance_flags = FIRE_PROOF
 	icon_state = "easttats"
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	armor = ARMOR_LEATHER
-	body_parts_covered = COVERAGE_FULL
-	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_SKINPECS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_race = NON_DWARVEN_RACE_TYPES
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 	repair_time = 30 SECONDS
+	combat_taggable = TRUE
 
 #undef COMBAT_TAG_DURATION
 
