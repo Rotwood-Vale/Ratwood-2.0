@@ -71,7 +71,7 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	var/datum/browser/popup = new(user, "wanted_notices", "<center>Wanted</center>", 680, 620, src)
-	popup.set_content(render_wanted_posters(collect_wanted_posters(), "The board is bare. No one is wanted, for now."))
+	popup.set_content(render_wanted_posters(collect_wanted_posters(), "The board is bare. No one is wanted, for now.", user.client, "wanted_notices"))
 	popup.open()
 
 /obj/structure/fluff/walldeco/innsign
