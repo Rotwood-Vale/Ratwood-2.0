@@ -474,3 +474,8 @@
       to its item descriptions.
   - bugfix: fixed chainmail to have lower pierce protection than plate armor, making
       it no longer identical to plate armor protection wise.
+2026-11-21:
+  petwir1:
+  - bugfix: drow greatsabre pen
+  ronfino:
+  - rscadd: Pouch switches to an empty pouch sprite when no items are inside

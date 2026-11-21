@@ -1,4 +1,0 @@
-author: "ronfino"
-delete-after: True
-changes:
-  - rscadd: "Pouch switches to an empty pouch sprite when no items are inside"
