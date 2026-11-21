@@ -11,11 +11,16 @@
 	if(!can_see_cone(attacker))
 		return FALSE
 	var/paired_swing = src?.dualwield_twoswing
-	if(!paired_swing && world.time < (last_parry + parrydelay))
+	// Chained Defense
+	var/chained_parry = FALSE
+	var/datum/status_effect/buff/defense_chain/chain = has_status_effect(/datum/status_effect/buff/defense_chain)
+	if(chain && ref(attacker) != chain.opener_ref) // anyone except the attacker whose attack opened the window
+		chained_parry = TRUE
+	if(!paired_swing && !chained_parry && world.time < (last_parry + parrydelay))
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			return FALSE
 
-	if(!paired_swing)
+	if(!paired_swing && !chained_parry)
 		last_parry = world.time
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			var/parrytime = setparrytime
@@ -214,6 +219,8 @@
 		if(HAS_TRAIT(attacker, TRAIT_FENCERDEXTERITY))
 			prob2defend -= 20
 
+	if(chained_parry)
+		prob2defend += 10 // +10% parry chance, they're getting teamed on, anyway
 	prob2defend = clamp(prob2defend, 5, 90)
 	if(HAS_TRAIT(attacker, TRAIT_HARDSHELL) && client) //Dwarf-merc specific limitation w/ their armor on in pvp
 		prob2defend = clamp(prob2defend, 5, 70)
@@ -270,6 +277,8 @@
 			return FALSE
 
 	stamina_drained = max(stamina_drained, 5)
+	if(chained_parry)
+		stamina_drained = 0
 
 	var/exp_multi = 1
 
@@ -289,6 +298,10 @@
 	if(weapon_parry == TRUE)
 		if(!do_parry(used_weapon, stamina_drained, attacker)) //show message
 			return FALSE
+		if(chained_parry)
+			refresh_defense_chain(attacker)
+		else
+			register_paid_defense(attacker)
 		//only gain experience if attacker and defender aren't using non-combat skills for their weapons
 		if(ispath(attacker_skill_type, /datum/skill/combat) && ispath(used_weapon.associated_skill, /datum/skill/combat))
 			if ((mobility_flags & MOBILITY_STAND))
@@ -326,7 +339,7 @@
 
 		if(AB)
 			var/dam2take = round((get_complex_damage(AB,attacker,used_weapon.blade_dulling)/2),1)
-			if(dam2take)
+			if(dam2take && !chained_parry)
 				var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
 				var/sharp_loss = SHARPNESS_ONHIT_DECAY
 				if(used_weapon == offhand)
@@ -349,7 +362,7 @@
 			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
 				intdam *= intenty.intent_intdamage_factor
 
-			if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
+			if(!has_status_effect(/datum/status_effect/buff/weapon_binded) && !chained_parry)
 				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
 			if(mind)
 				dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
@@ -361,6 +374,10 @@
 		if(!do_unarmed_parry(stamina_drained, attacker))
 			testing("failparry")
 			return FALSE
+		if(chained_parry)
+			refresh_defense_chain(attacker)
+		else
+			register_paid_defense(attacker)
 		//only gain experience if attacker isn't using a non-combat skill for their weapon
 		if(ispath(attacker_skill_type, /datum/skill/combat))
 			if((mobility_flags & MOBILITY_STAND))
@@ -372,25 +389,26 @@
 				if(can_train_combat_skill(src, /datum/skill/combat/unarmed, skill_target))
 					mind?.add_sleep_experience(/datum/skill/combat/unarmed, max(round(STAINT*exp_multi), 0), FALSE)
 
-		if(unarmed_bracers)
-			unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
-		else if(unarmed_knuckles)
-			unarmed_knuckles.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
-		else if(unarmed_bandages)
-			unarmed_bandages.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
-		else
-			// Unarmed attacker
-			var/intdam = INTEG_PARRY_DECAY_UNARMED
-			var/sharp_loss = SHARPNESS_ONHIT_DECAY
+		if(!chained_parry) // free chained parries cost no bracer, knuckle, bandage or weapon wear
+			if(unarmed_bracers)
+				unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
+			else if(unarmed_knuckles)
+				unarmed_knuckles.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
+			else if(unarmed_bandages)
+				unarmed_bandages.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
+			else
+				// Unarmed attacker
+				var/intdam = INTEG_PARRY_DECAY_UNARMED
+				var/sharp_loss = SHARPNESS_ONHIT_DECAY
 
-			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
-				sharp_loss += STRONG_SHP_BONUS
-				intdam += STRONG_INTG_BONUS
+				if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
+					sharp_loss += STRONG_SHP_BONUS
+					intdam += STRONG_INTG_BONUS
 
-			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
-				intdam *= intenty.intent_intdamage_factor
-			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
-			used_weapon.remove_bintegrity(sharp_loss, attacker)
+				if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+					intdam *= intenty.intent_intdamage_factor
+				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
+				used_weapon.remove_bintegrity(sharp_loss, attacker)
 		flash_fullscreen("blackflash2")
 		if(mind)
 			dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
@@ -404,7 +422,7 @@
 		return TRUE
 
 	var/mob/living/carbon/human/blocker = src
-	if(!blocker.stamina_add(parrydrain))
+	if(parrydrain > 0 && !blocker.stamina_add(parrydrain))
 		to_chat(src, span_warning("I'm too tired to parry!"))
 		return FALSE //crush through
 	if(weapon)
@@ -427,7 +445,7 @@
 /mob/living/proc/do_unarmed_parry(parrydrain as num, mob/living/attacker)
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.stamina_add(parrydrain))
+		if(parrydrain <= 0 || H.stamina_add(parrydrain))
 			playsound(get_turf(src), pick(parry_sound), 100, FALSE)
 			visible_message(span_warning("<b>[src]</b> parries [attacker]!"))
 			if(client)
