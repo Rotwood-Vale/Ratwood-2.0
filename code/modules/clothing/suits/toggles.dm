@@ -119,6 +119,14 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 
 /obj/item/clothing/head/hooded/Destroy()
+	// The hood is temporary, but its cosmetic attachments are not.
+	var/turf/drop_turf = get_turf(src)
+	if(drop_turf)
+		var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
+		if(storage_component)
+			for(var/obj/item/attachment in storage_component.contents())
+				storage_component.remove_from_storage(attachment, drop_turf)
+				attachment.item_flags &= ~IN_STORAGE
 	if(connected_cloak)
 		connected_cloak.RemoveHood() // Notify the linked cloak.
 		connected_cloak = null
