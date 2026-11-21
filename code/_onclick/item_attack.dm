@@ -512,9 +512,30 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/newforce = get_complex_damage(I, user, blade_dulling) * user.used_intent.demolition_mod
-	if(isclothing(src) || istype(src, /obj/item/rogueweapon))
-		newforce = min(newforce, 5)
+	if(I.damtype == BURN && (obj_flags & CLAMP_BREAK))
+		var/do_melt = FALSE
+		var/need_scrap = FALSE
+		if(obj_broken)
+			do_melt = TRUE
+		if(isitem(src))
+			var/obj/item/IS = src
+			if(IS.anvilrepair && IS.smeltresult == /obj/item/ingot/iron)
+				do_melt = TRUE
+				need_scrap = TRUE
+		if(do_melt)
+			user.visible_message(span_warningbig("[user] begins melting and deforming \the [src] with [I]!"))
+			if(do_after(user, 8 SECONDS, TRUE, target = src, same_direction = TRUE, no_interrupt = TRUE))
+				var/target_name = "\the [src]"
+				obj_destruction(need_scrap ? BRUTE : BURN)
+				if(QDELETED(src))
+					user.visible_message(span_warning("[user] destroys [target_name] with [I]!"))
+				else
+					to_chat(user, span_warning("I can't destroy [target_name]."))
+			return TRUE
+
+	var/newforce = get_complex_damage(I, user, blade_dulling)
+	if(!(obj_flags & CLAMP_BREAK))
+		newforce *= user.used_intent.demolition_mod
 	if(!newforce)
 		testing("dam33")
 		return 0
@@ -537,8 +558,38 @@
 	take_damage(newforce, I.damtype, I.d_type, 1)
 	if(newforce > 1)
 		I.take_damage(1, BRUTE, I.d_type)
+	try_damage_pushback(user)
+
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, I, user)
 	return TRUE
+
+/obj/proc/try_damage_pushback(mob/user)
+
+
+	if((obj_flags & CLAMP_BREAK) && !density && !anchored && isturf(loc))
+		var/sfx = 'sound/items/hit_normalobj.ogg'
+		if(isclothing(src))	// Lazy check for fluffy sparks
+			var/obj/item/clothing/CL = src
+			var/try_sparks = FALSE
+			if(CL.material_category == ARMOR_MAT_PLATE)
+				sfx = pick('sound/items/hit_plateobj1.ogg', 'sound/items/hit_plateobj2.ogg', 'sound/items/hit_plateobj3.ogg')
+				try_sparks = TRUE
+			if(CL.material_category == ARMOR_MAT_CHAINMAIL)
+				sfx = 'sound/items/hit_chainobj.ogg'
+				try_sparks = TRUE
+			if(try_sparks && prob(50))
+				do_sparks(2, TRUE, get_turf(src))
+		var/dist = 1
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			dist++
+		if(obj_broken)
+			dist++
+		var/current_turf = get_turf(src)
+		var/throwdir = get_dir(get_turf(user), current_turf)
+		var/target_turf = get_ranged_target_turf(current_turf, throwdir, dist)
+		playsound(current_turf, sfx, 100, TRUE)
+		throw_at(target_turf, dist, 12, user, FALSE)
+
 
 /turf/proc/attacked_by(obj/item/I, mob/living/user, multiplier)
 	var/newforce = get_complex_damage(I, user, blade_dulling)

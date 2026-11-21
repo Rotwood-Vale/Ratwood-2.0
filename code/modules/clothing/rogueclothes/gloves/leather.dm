@@ -7,7 +7,6 @@
 	max_integrity = ARMOR_INT_SIDE_LEATHER
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
-	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	unarmed_bonus = 1
@@ -28,7 +27,6 @@
 	icon_state = "fingerless_gloves"
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
-	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	nudist_approved = TRUE
@@ -56,7 +54,6 @@
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_CLOTH
-	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	salvage_result = /obj/item/natural/hide/cured
@@ -74,7 +71,6 @@
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
-	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -106,7 +102,6 @@
 	armor = ARMOR_LEATHER
 	resistance_flags = null
 	blocksound = SOFTHIT
-	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 
@@ -118,7 +113,6 @@
 	armor = ARMOR_LEATHER
 	resistance_flags = null
 	blocksound = SOFTHIT
-	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 
