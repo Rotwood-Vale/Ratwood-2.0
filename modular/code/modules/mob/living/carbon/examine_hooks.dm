@@ -13,13 +13,9 @@
 	if(ssd_text)
 		lines += ssd_text
 	var/user_is_gnoll = FALSE
-	var/user_is_clergy = FALSE
-	var/user_is_inquisition = FALSE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		user_is_gnoll = H.dna?.species?.id == "gnoll"
-		user_is_inquisition = HAS_TRAIT(H, TRAIT_INQUISITION) || (H.mind?.assigned_role in GLOB.inquisition_positions)
-		user_is_clergy = user_is_inquisition || (H.mind?.assigned_role in GLOB.church_positions)
 		if(user_is_gnoll)
 			if(src.has_gnoll_scent_this_round)
 				lines += span_cultsmall("They have gnoll scent, a breeder!")
