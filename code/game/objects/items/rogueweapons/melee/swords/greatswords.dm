@@ -176,7 +176,7 @@
 	name = "forgefiend flamberge"
 	desc = "This sword's creation took a riddle in its own making. A great sacrifice was made for a blade of perfect quality."
 	icon_state = "malumflamberge"
-	max_integrity = 200
+	max_integrity = 777//Costs a riddle to make, so being comically durable is fair while not gamebreaking.
 	max_blade_int = 200
 
 /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
