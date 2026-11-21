@@ -194,7 +194,7 @@
 	mob_timers["puke"] = world.time
 	vomit(1, blood = TRUE, stun = FALSE)
 	src.infected = TRUE //Is this in use? Just in case it is
-	apply_status_effect(/datum/status_effect/zombie_infection, 5 MINUTES, "wound")
+	apply_status_effect(/datum/status_effect/zombie_infection, ZOMBIE_INFECTION_TIME, "wound")
 	return zombie_antag
 
 /mob/living/carbon/human/proc/wake_zombie()

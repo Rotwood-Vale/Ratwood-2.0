@@ -21,7 +21,7 @@
 		"I can smell my own flesh, it smells foul."
 	)
 
-/datum/status_effect/zombie_infection/on_creation(mob/living/new_owner, time_to_transform = 5 MINUTES, from_infected_wake = "wound")
+/datum/status_effect/zombie_infection/on_creation(mob/living/new_owner, time_to_transform = ZOMBIE_INFECTION_TIME, from_infected_wake = "wound")
 	. = ..()
 	if(HAS_TRAIT(new_owner, TRAIT_DEADITE_RESISTANCE))
 		time_to_transform *= 2
