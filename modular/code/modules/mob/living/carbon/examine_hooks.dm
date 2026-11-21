@@ -23,13 +23,6 @@
 		if(user_is_gnoll)
 			if(src.has_gnoll_scent_this_round)
 				lines += span_cultsmall("They have gnoll scent, a breeder!")
-	if(src.has_gnoll_scent_this_round && !user_is_gnoll)
-		if(user_is_inquisition)
-			lines += span_warning("They reek of profane beast-taint. This demands scrutiny.")
-		else if(user_is_clergy)
-			lines += span_warning("A profane, feral scent clings to them.")
-		else
-			lines += span_warning("They have a strange scent about them...")
 
 	return lines
 
