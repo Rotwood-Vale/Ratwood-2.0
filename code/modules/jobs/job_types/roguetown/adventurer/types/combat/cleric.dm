@@ -603,7 +603,7 @@
 	name = "Missionary"
 	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith. Preachers focus on homesteading while Shepards preach through example and protecting their would-be flock."
 	outfit = /datum/outfit/job/roguetown/adventurer/missionary
-	traits_applied = list(TRAIT_EMPATH)
+	traits_applied = list(TRAIT_EMPATH, TRAIT_RITUALIST)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_PER = 2,
@@ -653,11 +653,8 @@
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/ritechalk - 1,
 		)
-	var/is_non_pantheon_missionary = istype(H.patron, /datum/patron/inhumen/zizo) || istype(H.patron, /datum/patron/inhumen/matthios) || istype(H.patron, /datum/patron/inhumen/baotha) || istype(H.patron, /datum/patron/inhumen/graggar)
-	if(!is_non_pantheon_missionary)
-		backpack_contents[/obj/item/ritechalk] = 1
-		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
