@@ -92,6 +92,7 @@
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/humanoid,
 		/datum/customizer/organ/vagina/anthro,
 		/datum/customizer/bodypart_feature/pubes/feathered,
 		/datum/customizer/bodypart_feature/pits/feathered,

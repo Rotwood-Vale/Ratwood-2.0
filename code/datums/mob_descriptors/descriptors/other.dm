@@ -299,6 +299,48 @@
 		return "[adjective] pair of pecs[branded]"
 	return "[adjective] pair of breasts[branded]"
 
+/datum/mob_descriptor/butt
+	name = "butt"
+	slot = MOB_DESCRIPTOR_SLOT_BUTT
+	verbage = "%HAVE%"
+	show_obscured = TRUE
+	descriptor_color = "#ff66cc"
+	// aroused_descriptor_color = "#ff5555"
+
+/datum/mob_descriptor/butt/can_describe(mob/living/described)
+	if(!ishuman(described))
+		return FALSE
+	var/mob/living/carbon/human/H = described
+	var/obj/item/organ/butt/butt = H.getorganslot(ORGAN_SLOT_BUTT)
+	if(!butt)
+		return FALSE
+	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
+		return TRUE
+	if(H.underwear && H.underwear.covers_rear)
+		return FALSE
+	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
+		return FALSE
+	return TRUE
+
+/datum/mob_descriptor/butt/get_description(mob/living/described)
+	var/mob/living/carbon/human/H = described
+	var/obj/item/organ/butt/butt = H.getorganslot(ORGAN_SLOT_BUTT)
+	var/adjective
+	switch(butt.butt_size)
+		if(0)
+			adjective = "a flat"
+		if(1)
+			adjective = "a small"
+		if(2)
+			adjective = "a moderate"
+		if(3)
+			adjective = "a large"
+		if(4)
+			adjective = "a huge"
+		else
+			adjective = "a"
+	return "[adjective] butt"
+
 /datum/mob_descriptor/pubes
 	name = "pubes"
 	slot = MOB_DESCRIPTOR_SLOT_PUBES

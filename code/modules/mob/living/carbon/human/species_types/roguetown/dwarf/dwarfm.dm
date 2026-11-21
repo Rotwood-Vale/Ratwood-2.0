@@ -40,6 +40,7 @@
 	soundpack_f = /datum/voicepack/female/dwarf
 	custom_clothes = TRUE
 	offset_features = list(
+		OFFSET_BUTT = list(0,-4),\
 		OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_WRISTS = list(0,0),\
 		OFFSET_CLOAK = list(0,0), OFFSET_FACEMASK = list(0,-4), OFFSET_HEAD = list(0,-4), \
 		OFFSET_FACE = list(0,-4), OFFSET_BELT = list(0,-5), OFFSET_BACK = list(0,-4), \
@@ -67,6 +68,7 @@
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/humanoid,
 		/datum/customizer/organ/vagina/human,
 		/datum/customizer/bodypart_feature/pubes/braids,
 		/datum/customizer/bodypart_feature/pits/braids,
