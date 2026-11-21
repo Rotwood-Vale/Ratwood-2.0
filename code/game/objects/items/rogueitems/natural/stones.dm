@@ -144,6 +144,21 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	sharpening_factor = 12
 	spark_chance = 35
 
+/obj/item/natural/stone/enduring
+	name = "ENDURING stone"
+	desc = "A stone manifested out of sheer force of WILL. Mundane in appearance, yet hefty with its caster's FAITH."
+	force = 10
+	throwforce = 25
+	magic_power = 5
+	sharpening_factor = 10
+	spark_chance = 80
+	is_silver = TRUE //hilarious
+
+/obj/item/natural/stone/enduring/stone_lore()
+	. = ..()
+	name = "ENDURING stone"
+	magic_power = 15
+
 /obj/item/natural/stone/Initialize(mapload)
 	. = ..()
 	stone_lore()

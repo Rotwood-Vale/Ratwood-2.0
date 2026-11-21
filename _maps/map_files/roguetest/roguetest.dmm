@@ -52,7 +52,6 @@
 /obj/item/paper,
 /obj/item/paper/inqslip/accusation,
 /obj/item/paper/inqslip/arrival/abso,
-/obj/item/paper/inqslip/arrival/adju,
 /obj/item/paper/inqslip/arrival/inq,
 /obj/item/paper/inqslip/arrival/ortho,
 /obj/item/paper/inqslip/confession,
