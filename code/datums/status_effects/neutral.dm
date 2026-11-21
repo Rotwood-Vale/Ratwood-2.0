@@ -106,41 +106,6 @@
 		rewarded.adjustOxyLoss(-25)
 		rewarded.adjustCloneLoss(-25)
 
-/datum/status_effect/bugged //Lets another mob hear everything you can
-	id = "bugged"
-	duration = -1
-	status_type = STATUS_EFFECT_MULTIPLE
-	alert_type = /atom/movable/screen/alert/bugged
-	var/obj/item/listeningdevice/device
-
-/datum/status_effect/bugged/on_apply(mob/living/new_owner, obj/item/listeningdevice/tracker)
-	. = ..()
-
-/datum/status_effect/bugged/on_remove()
-	..()
-	if(device)
-		owner.contents.Remove(device)
-		device.forceMove(owner.loc)
-		owner.put_in_hands(device)
-
-/atom/movable/screen/alert/bugged
-	name = "BUGGED"
-	desc = "AN AUDIO-PARASITE ON ME."
-	icon_state = "blackeye"	
-
-/atom/movable/screen/alert/bugged/handle_click()
-	var/mob/living/L = usr
-
-	if(!L.has_status_effect(/datum/status_effect/bugged))
-		return FALSE
-
-	to_chat(L, span_notice("I tug and rip out the parasite."))
-	playsound(L, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
-
-	L.remove_status_effect(/datum/status_effect/bugged)
-
-	return TRUE
-
 /datum/status_effect/ugotmail
 	id = "mail"
 	alert_type = /atom/movable/screen/alert/status_effect/ugotmail

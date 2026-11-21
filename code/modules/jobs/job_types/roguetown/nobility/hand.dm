@@ -21,7 +21,7 @@
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
 	quirk_restrictions = list(/datum/quirk/hunted)
-	job_traits = list(TRAIT_NOBLE, TRAIT_EXPERT_HUNTER)
+	job_traits = list(TRAIT_NOBLE, TRAIT_EXPERT_HUNTER, TRAIT_DECEIVING_MEEKNESS)
 	job_subclasses = list(
 		/datum/advclass/hand/blademaster,
 		/datum/advclass/hand/spymaster,
@@ -33,7 +33,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather/steel
-	id = /obj/item/scomstone/garrison
+	id = /obj/item/scomstone/garrison/hand
 	job_bitflag = BITFLAG_ROYALTY
 
 /datum/outfit/job/roguetown/hand/pre_equip(mob/living/carbon/human/H)
@@ -97,6 +97,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,//You don't get killer's ice for this because you're the gross swordsmaster and I HATE YOU!!!!
 		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/storage/keyring/hand = 1,
+		/obj/item/listeningdevice_hand = 2
 	)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
@@ -107,12 +108,11 @@
 /datum/advclass/hand/spymaster
 	name = "Spymaster"
 	tutorial = " You have played spymaster and confidant to the Noble-Family for so long that you are a vault of intrigue, something you exploit with potent conviction. Let no man ever forget whose ear you whisper into. You've killed more men with those lips than any blademaster could ever claim to."
-	extra_context = "This subclass recieves 'Perfect Tracker' and 'Keen Ears' for free."
 	outfit = /datum/outfit/job/roguetown/hand/spymaster
 
 	category_tags = list(CTAG_HAND)
 	subclass_languages = list(/datum/language/thievescant)
-	traits_applied = list(TRAIT_KEENEARS, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER)//Spy not a royal champion
+	traits_applied = list(TRAIT_KEENEARS, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER, TRAIT_CICERONE)//Spy not a royal champion
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_PER = 2,
@@ -145,6 +145,7 @@
 		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//Just like the wizard, since he can dip the blade.
+		/obj/item/listeningdevice_hand = 6
 	)
 	if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
@@ -210,6 +211,7 @@
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//starts with a vial of poison, like all wizened evil advisors do!
 		/obj/item/rogueweapon/spellbook = 1,
+		/obj/item/listeningdevice_hand = 4
 	)
 
 ////////////////////
