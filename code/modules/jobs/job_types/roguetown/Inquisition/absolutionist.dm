@@ -28,6 +28,7 @@
 		TRAIT_BLOOD_RESISTANCE,
 		TRAIT_SILVER_BLESSED,
 		TRAIT_STEELHEARTED,
+		TRAIT_SQUIRE_REPAIR,
 		TRAIT_INQUISITION,
 		TRAIT_RITUALIST, //Handles conversions, too, now.
 		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
