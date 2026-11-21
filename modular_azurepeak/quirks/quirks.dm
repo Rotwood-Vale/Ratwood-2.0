@@ -66,6 +66,14 @@
 /datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
+/datum/quirk/ovipositor
+	name = "Oviposition"
+	desc = "My species reproduces via egg-laying. Getting pregnant will fill me with eggs. If I have a penis, I shall deposit eggs inside my partner during climax."
+	point_cost = 0
+	added_traits = list(TRAIT_OVIPOSITOR)
+	// there MUSTN'T be egg-laying humens. I shan't stand for it !
+	allowed_species = list(/datum/species/anthromorph, /datum/species/kobold, /datum/species/harpy, /datum/species/akula, /datum/species/anthromorphsmall, /datum/species/lamia, /datum/species/arachnid, /datum/species/dullahan, /datum/species/ooze, /datum/species/moth)
+
 /datum/quirk/linguist
 	name = "Trilingual"
 	desc = "Through education, travel, or circumstance, I have picked up a third language."
