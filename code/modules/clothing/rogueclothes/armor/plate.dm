@@ -410,6 +410,7 @@
 	detail_tag = "_detail"
 	color = "#FFFFFF"
 	detail_color = "#5058c1"
+	armor_class = ARMOR_CLASS_MEDIUM
 	var/swapped_color // holder for corset colour when the corset is toggled off.
 
 /obj/item/clothing/suit/roguetown/armor/plate/otavan/update_icon()

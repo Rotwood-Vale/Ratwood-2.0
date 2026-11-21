@@ -82,6 +82,9 @@
 
 /datum/outfit/job/roguetown/bandit/sellsword/post_equip(mob/living/carbon/human/H)
 	. = ..()
+	var/datum/antagonist/bandit/bandit_antag = H.mind?.has_antag_datum(/datum/antagonist/bandit)
+	if(bandit_antag)
+		bandit_antag.favor = 300
 	for(var/datum/bounty/b in GLOB.head_bounties)
 		if(b.target == H.real_name || b.target_hidden == H.real_name)
 			H.change_stat(STATKEY_SPD, 1)

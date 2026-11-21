@@ -73,6 +73,16 @@
 	cost = 40
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle)
 
+/datum/supply_pack/rogue/Knight/barbute
+	name = "Barbute"
+	cost = 70
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/barbute/great)
+
+/datum/supply_pack/rogue/Knight/barbutevisored
+	name = "Visored Barbute"
+	cost = 70
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor)
+
 //////////
 // NECK //
 //////////
