@@ -555,7 +555,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/output = span_info("How durable your item is. On weapons, [INTEG_PARRY_DECAY] is lost on parry on a main hand bladed weapon. \n\
 		Blunt weapon or off-hand weapon loses [INTEG_PARRY_DECAY_NOSHARP] per parry instead. \n\
 		On armor, the blunt rating of an armor multiplies its effective durability against blunt damage.")
-		output += span_info("\nParrying a chop instead uses half the attack's calculated damage as the integrity damage base.")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
@@ -568,7 +567,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(href_list["explainshieldcoverage"])
 		var/output = span_info("Chance to passively block incoming projectiles. Only works from the front.\nShields take quarter damage from blocked projectiles and fixed durability damage from melee parries.\nHeavy weapons deal more durability damage to shields — the higher of the attacker's Anti-Object Mod or Integrity Damage is used as a multiplier.")
-		output += span_info("\nParried chops instead use half the attack's calculated damage as the integrity damage base.")
+		output += span_info("\nParrying chop attacks will suffer increased integrity damage against shields.")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
