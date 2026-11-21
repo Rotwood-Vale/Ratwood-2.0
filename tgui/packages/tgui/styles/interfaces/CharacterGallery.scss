@@ -1,0 +1,624 @@
+// Fits a bold Horizontal in Verdana, the widest of the theme fonts at 5.83em
+$label-column: 6.5rem;
+// Must match EDITOR_SIZE in CharacterGallery/FramingCanvas.tsx
+$editor-size: 256px;
+// The chat headshot's side, .chat_headshot in tgui-panel's chat-dark.scss
+$chat-size: 125px;
+$empty-background: rgba(0, 0, 0, 0.3);
+$image-outline: 1px solid rgba(255, 255, 255, 0.3);
+
+@keyframes CharacterGallery__busyStatus {
+  from {
+    opacity: 0;
+  }
+}
+
+.CharacterGallery {
+  min-height: 0;
+  max-width: 48rem;
+
+  &--expanded {
+    max-width: none;
+
+    .CharacterGallery__navigation,
+    .CharacterGallery__footer {
+      max-width: var(--gallery-overview-width, 48rem);
+    }
+  }
+
+  &--expanding {
+    .CharacterGallery__viewport {
+      overflow-x: hidden;
+    }
+
+    .CharacterGallery__editor {
+      visibility: hidden;
+    }
+  }
+
+  &--folding {
+    max-width: var(--gallery-overview-width, 48rem);
+  }
+
+  &__root {
+    height: 100%;
+  }
+
+  &__ledger {
+    height: 100%;
+    min-height: 0;
+
+    &--expanded {
+      display: grid;
+      grid-template-columns: var(--gallery-overview-width, 48rem) minmax(
+          var(--gallery-editor-width, 440px),
+          1fr
+        );
+      gap: 1rem;
+
+      > .CharacterGallery__editor {
+        border-left: 1px solid
+          var(--section-separator-color, rgba(255, 255, 255, 0.2));
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  &__navigation {
+    flex-wrap: wrap;
+  }
+
+  // Some themes animate every button property, which makes buttons slide as the layout settles
+  .CharacterGallery__viewport .CharacterGallery__ledger .Button {
+    transition-property: background-color, border-color, color, opacity;
+  }
+
+  &__stableLabel {
+    display: inline-grid;
+
+    > span {
+      grid-area: 1 / 1;
+    }
+
+    > [aria-hidden='true'] {
+      visibility: hidden;
+    }
+  }
+
+  // The 0.4s delay before the fade means an action the server answers within 0.4 seconds never dims the controls,
+  // so ordinary edits do not flicker to half opacity and back
+  &__busy {
+    opacity: 0.5;
+    transition: opacity 0.1s 0.4s;
+  }
+
+  &__busyStatus {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1;
+    padding: 0.15rem 0.4rem;
+    color: var(--color-label, rgba(255, 255, 255, 0.6));
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 2px;
+    animation: CharacterGallery__busyStatus 0.1s 0.4s both;
+  }
+
+  &__urlModal {
+    width: 38rem;
+    max-width: calc(100vw - 3rem);
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  &__sourceRow {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    align-items: center;
+  }
+
+  &__urlInput {
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__viewFields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+
+    > label {
+      display: grid;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+  }
+
+  &__viewFields select,
+  &__bulkBackground select {
+    min-width: 0;
+    width: 100%;
+    color: var(--color-text);
+    background: var(--input-background, var(--modal-background));
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    border-radius: 2px;
+    padding: 0.25rem;
+    font: inherit;
+  }
+
+  &__lockHelp {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &__artworkSettings {
+    margin-bottom: 0.75rem;
+  }
+
+  &__artworkPanel {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: var(--section-background);
+  }
+
+  &__bulkBackground {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 14rem) max-content;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__artworkResult {
+    margin-top: 0.5rem;
+  }
+
+  &__urlFooter {
+    position: sticky;
+    bottom: -1rem;
+    z-index: 1;
+    margin: 0 -1rem -1rem;
+    padding: 0.75rem 1rem 1rem;
+    background: var(--modal-background);
+  }
+
+  &__viewport {
+    min-height: 0;
+    overflow-x: auto;
+  }
+
+  &__scroll {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 2px;
+  }
+
+  &__workspace {
+    > .Section {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__headshot {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  &__headshotColumn {
+    width: $editor-size;
+  }
+
+  &__headshotEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    color: var(--color-label, rgba(255, 255, 255, 0.6));
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+  }
+
+  &__framing {
+    width: 100%;
+    max-width: 36rem;
+
+    .CharacterGallery__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      min-width: 0;
+
+      .CharacterGallery__url,
+      .CharacterGallery__url > div {
+        display: contents;
+      }
+
+      .CharacterGallery__actions {
+        flex-basis: 100%;
+        gap: 0.35rem;
+
+        &:empty {
+          display: none;
+        }
+      }
+
+      .CharacterGallery__revealedUrl,
+      [role='status'] {
+        order: 1;
+        flex-basis: 100%;
+        width: 0;
+        min-width: 100%;
+      }
+
+      [role='status']:empty {
+        position: absolute;
+      }
+    }
+
+    .CharacterGallery__details {
+      margin-top: 1rem;
+    }
+  }
+
+  &__editorToggle.Button--disabled {
+    filter: grayscale(1);
+  }
+
+  &__headshotControlRow {
+    display: grid;
+    grid-template-columns: $label-column minmax(0, 1fr);
+    align-items: start;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    .Button {
+      margin: 0;
+    }
+  }
+
+  &__framingActions {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  &__framingSlider > .Stack > .Stack__item:first-child {
+    flex-basis: $label-column !important;
+  }
+
+  &__frameHint {
+    display: grid;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    border: 1px solid transparent;
+
+    &--active {
+      border-color: var(--section-separator-color, rgba(255, 255, 255, 0.4));
+      font-weight: bold;
+    }
+  }
+
+  &__frameHintText {
+    grid-area: 1 / 1;
+
+    &:first-child {
+      align-self: center;
+    }
+
+    &[aria-hidden='true'] {
+      visibility: hidden;
+    }
+  }
+
+  &__frameControls,
+  &__frameShortcut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+  }
+
+  &__frameControls {
+    gap: 0.35rem;
+    font-size: 0.85em;
+  }
+
+  &__frameCanvas {
+    position: relative;
+    width: $editor-size;
+    height: $editor-size;
+    background-color: $empty-background;
+    outline: $image-outline;
+    cursor: grab;
+    touch-action: none;
+
+    &--locked {
+      outline: 2px solid
+        var(--section-separator-color, rgba(255, 255, 255, 0.6));
+    }
+
+    &--dragging {
+      cursor: grabbing;
+    }
+  }
+
+  &__chatOptions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__chatOption.Button {
+    flex: 1 1 12rem;
+    max-width: 20rem;
+    margin: 0;
+    padding: 0.75rem;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.03);
+    color: inherit;
+    white-space: normal;
+    line-height: normal;
+
+    &.CharacterGallery__chatOption--selected {
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    &:hover,
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  &__chatPreview {
+    height: $chat-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  &__chatSquare {
+    width: $chat-size;
+  }
+
+  &__chatOriginal {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: $chat-size;
+    max-height: $chat-size;
+  }
+
+  &__chatLabel {
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--button-border-radius, 3px);
+    background-color: var(
+      --button-background-default,
+      var(--button-background)
+    );
+    color: var(--button-color);
+  }
+
+  &__summary {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  &__details > summary,
+  &__guidelines > summary {
+    cursor: pointer;
+    padding: 0.35rem 0;
+  }
+
+  &__keyboardHelp {
+    color: var(--color-label);
+    font-size: 0.8em;
+
+    dl {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      align-items: center;
+      gap: 0.1rem 0.65rem;
+      margin: 0 0 0.35rem;
+    }
+
+    dd {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin: 0;
+    }
+  }
+
+  &__frameControls kbd,
+  &__keyboardHelp kbd {
+    min-width: 1em;
+    padding-inline: 0.2em;
+    color: var(--color-text);
+    border: 1px solid var(--color-label);
+    border-radius: 2px;
+    font: inherit;
+    text-align: center;
+  }
+
+  &__guidelines {
+    margin-bottom: 1rem;
+
+    ul {
+      padding-left: 1.5rem;
+    }
+
+    li + li {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__framing,
+  &__rowBody,
+  &__url {
+    min-width: 0;
+  }
+
+  &__clear,
+  &__footer {
+    border-top: 1px solid
+      var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    padding-top: 0.75rem;
+  }
+
+  &__save,
+  &__links,
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  &__save {
+    justify-content: space-between;
+  }
+
+  &__url {
+    flex: 1 1 9rem;
+  }
+
+  &__revealedUrl {
+    margin-top: 0.5rem;
+    user-select: all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__removedRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__row--light,
+  &__row--dark,
+  &__row--flash {
+    border-radius: 3px;
+    transition: background-color 0.6s ease;
+  }
+
+  &__row--light {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  &__row--dark {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &__row--flash {
+    background-color: var(
+      --button-background-selected,
+      rgba(255, 255, 255, 0.2)
+    );
+  }
+
+  &__thumbnail {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: $empty-background;
+    outline: $image-outline;
+  }
+
+  &__thumbnailCard {
+    position: absolute;
+    inset: 0;
+    width: 0;
+    height: 0;
+    margin: auto;
+  }
+
+  &__thumbnailMedia {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__rowDetails {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__error {
+    margin-top: 0.5rem;
+  }
+
+  &__extraSize {
+    margin-top: 0.25rem;
+  }
+
+  &__materialOption {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__materialSwatch {
+    display: inline-block;
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--color-label);
+  }
+
+  &__inactivePosition {
+    padding: 0.5rem;
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+  }
+}
+
+// Dropdown menus are portalled outside the editor modal
+.Dropdown__menu--wrapper:has(.CharacterGallery__materialOption) {
+  z-index: 101;
+}
+
+@media (max-width: 600px) {
+  .CharacterGallery__summary {
+    grid-template-columns: max-content minmax(0, 1fr);
+
+    > :last-child {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+}

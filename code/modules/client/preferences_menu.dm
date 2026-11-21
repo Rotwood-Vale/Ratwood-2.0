@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(pref_categories, list(
 ))
 
 // skips char preview update on these options 2 avoid topic lag
-GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "headshot", "rumour", "gossip", "rumour_preview", "ooc_extra", "ooc_extra_img", "nsfw_ooc_extra_img", "change_title", "change_artist", "img_gallery", "nsfw_img_gallery", "clear_gallery", "clear_nsfw_gallery", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkvolume", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
+GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "character_gallery", "rumour", "gossip", "rumour_preview", "ooc_extra", "change_title", "change_artist", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkvolume", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
 
 GLOBAL_LIST_INIT(pref_columns, list(
 	list("Identity", "Origin", "Voice", "Customization"),
@@ -75,11 +75,6 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 
 /datum/preferences/proc/pref_color_row(label, hex, preference)
 	return pref_line(list(pref_item(label, "<span style='border: 1px solid #161616; background-color: #[hex];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> [pref_link("Change", preference)]")))
-
-/datum/preferences/proc/pref_image(link)
-	if(link == null)
-		return ""
-	return "<img src='[link]' width='100px' height='100px'><br>"
 
 // da categories get built here
 /datum/preferences/proc/get_character_page(mob/user)
@@ -429,20 +424,14 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	if(length(ooc_notes) < MINIMUM_OOC_NOTES)
 		ooc_label = "<font color='#802929'>OOC Notes</font>"
 	var/help = pref_link("(?)", "formathelp")
-	var/html = pref_line(list(pref_item(flavor_label, "[help] [pref_link("Change", "flavortext")]")))
+	var/html = pref_line(list(pref_item("Character Gallery", pref_link("Change", "character_gallery"))))
+	html += character_gallery_headshot_thumbnail()
+	html += pref_line(list(pref_item(flavor_label, "[help] [pref_link("Change", "flavortext")]")))
 	html += pref_line(list(pref_item("NSFW Flavortext", "[help] [pref_link("Change", "nsfwflavortext")]")))
 	html += pref_line(list(pref_item(ooc_label, "[help] [pref_link("Change", "ooc_notes")]")))
 	html += pref_line(list(pref_item("ERP Preferences", "[help] [pref_link("Change", "erpprefs")]")))
-	html += pref_line(list(pref_item("Headshot", pref_link("Change", "headshot"))))
-	html += pref_image(headshot_link)
 	html += pref_line(list(pref_item("Rumours & Noble Gossip", help), "[pref_link("Set Rumours", "rumour")] [pref_link("Set Gossip", "gossip")] [pref_link("<i>Preview</i>", "rumour_preview")]"))
 	html += pref_line(list(pref_item("Song", ""), "[pref_link("Change URL", "ooc_extra")] [pref_link("Title", "change_title")] [pref_link("Artist", "change_artist")]"))
-	html += pref_line(list(pref_item("OOC Extra", pref_link("Change", "ooc_extra_img"))))
-	html += pref_image(ooc_extra_img_link)
-	html += pref_line(list(pref_item("NSFW OOC Extra", pref_link("Change", "nsfw_ooc_extra_img"))))
-	html += pref_image(nsfw_ooc_extra_img_link)
-	html += pref_line(list(pref_item("Image Gallery", ""), "[pref_link("Add", "img_gallery")] [pref_link("Clear Gallery", "clear_gallery")]"))
-	html += pref_line(list(pref_item("Nsfw Image Gallery", ""), "[pref_link("Add", "nsfw_img_gallery")] [pref_link("Clear Nsfw Gallery", "clear_nsfw_gallery")]"))
 	html += pref_line(list(pref_link("<b>Preview Examine</b>", "ooc_preview")))
 	return html
 

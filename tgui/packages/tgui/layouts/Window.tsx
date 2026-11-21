@@ -36,6 +36,7 @@ type Props = Partial<{
   buttons: ReactNode;
   canClose: BooleanLike;
   height: number;
+  onBeforeClose: () => void;
   theme: string;
   title: string;
   width: number;
@@ -51,6 +52,7 @@ export const Window = (props: Props) => {
     buttons,
     width,
     height,
+    onBeforeClose,
   } = props;
 
   const { config, suspended } = useBackend();
@@ -119,6 +121,7 @@ export const Window = (props: Props) => {
         onDragStart={dragStartHandler}
         onClose={() => {
           logger.log('pressed close');
+          onBeforeClose?.();
           dispatch(backendSuspendStart());
         }}
         canClose={canClose}
@@ -165,7 +168,6 @@ const WindowContent = (props: ContentProps) => {
     <Layout.Content
       className={classes(['Window__content', className])}
       {...rest}
-      
     >
       {(fitted && children) || (
         <div className="Window__contentPadding">{children}</div>

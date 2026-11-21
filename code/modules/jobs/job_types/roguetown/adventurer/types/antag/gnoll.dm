@@ -176,6 +176,7 @@
 
 	// Copy gnoll flavortext to gnoll mob
 	headshot_link = prefs.headshot_link
+	COPY_GALLERY_PRESENTATION(src, prefs)
 	flavortext = prefs.flavortext
 	ooc_notes = prefs.ooc_notes
 	rumour = prefs.rumour
