@@ -14,13 +14,7 @@
 	eye_color = random_eye_color()
 	if(ft_reset)
 		slot_randomized = TRUE
-		// Moved as begin_gallery_load() moves it, since the images below are replaced. An open Character Gallery then
-		// refuses its pending edits and drops its Undo points, which would otherwise write the old images onto the random character
-		character_gallery_generation++
-		gallery_alternates = list()
-		card_backgrounds = list()
-		art_view_settings = list()
-		blocked_links = list()
+		reset_gallery_links()
 		flavortext = null
 		nsfwflavortext = null
 		ooc_extra_img = null
@@ -35,7 +29,7 @@
 		song_title = null
 		song_artist = null
 		headshot_link = null
-		set_gallery_frame(src, sanitize_gallery_frame(null))
+		reset_gallery_frame(src)
 		headshot_frame_chat = FALSE
 		image_backdrop = GALLERY_BACKDROP_TAVERN
 		img_gallery = null

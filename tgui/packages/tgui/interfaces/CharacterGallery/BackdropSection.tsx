@@ -1,6 +1,7 @@
 import { Box, Button, Section } from 'tgui-core/components';
 
-import { type ImageForm, useGalleryBackend } from './shared';
+import { useGalleryBackend } from './galleryBackend';
+import type { ImageForm } from './types';
 
 export const BackdropSection = (props: { form: ImageForm }) => {
   const { act, data, isBusy } = useGalleryBackend();

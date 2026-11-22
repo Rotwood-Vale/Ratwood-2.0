@@ -6,55 +6,57 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-  type WheelEvent,
 } from 'react';
-import { Box, Button } from 'tgui-core/components';
+import { Button } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { artSlot, type ArtViewSettings } from '../CharacterGallery/shared';
+import { type ArtViewSettings, viewLocked } from '../common/artViewSettings';
+import { CARD_DEFAULT } from '../common/CardBackground';
+import type { Area } from '../common/cardLayout';
+import { artSlot } from '../common/gallerySlots';
+import { opensOnlyInScrolling } from '../common/pictureSize';
 import type { ExaminePanelData } from '../ExaminePanelData';
+import { ArtworkViewport } from './ArtworkViewport';
 import {
   type Backdrop,
   type BackdropFigure,
   shownBackdrop,
   shownFigures,
-} from './backdrops';
+} from './Backdrop/backdrops';
+import { createFigureFace, type FigureFace } from './Backdrop/figureFace';
+import { useCandleFlicker } from './Backdrop/useCandleFlicker';
+import { useFigureBlink } from './Backdrop/useFigureBlink';
 import { type GalleryEffects, galleryEffects } from './effects';
-import { createFigureFace, type FigureFace } from './figureFace';
-import {
-  dealDelays,
-  dealMainDelay,
-  type PictureChange,
-  thumbDealDelay,
-  wheelSteps,
-} from './galleryWheel';
-import {
-  MainPicture,
-  type PictureControls,
-  type PictureMove,
-} from './MainPicture';
-import { PlainThumbs } from './PlainThumbs';
 import {
   createGallerySession,
   type GallerySession,
+  readingEntry,
+} from './gallerySession';
+import {
+  dealMainDelay,
+  type PictureChange,
+  type PictureMove,
+} from './pictureChange';
+import { MainPicture, type PictureControls } from './Reader/MainPicture';
+import { READER_ZOOM_MAX } from './Reader/readingGeometry';
+import {
   isReading,
   type ReaderState,
-  readingEntry,
   resetReader,
-  viewLocked,
-} from './readingState';
-import { openCanvasContext } from './StillThumb';
-import { useCandleFlicker } from './useCandleFlicker';
-import { useFigureBlink } from './useFigureBlink';
+} from './Reader/readingState';
+import { SealNumbers } from './Thumbs/SealNumbers';
+import { openCanvasContext } from './Thumbs/StillThumb';
+import { ThumbStrip } from './Thumbs/ThumbStrip';
+import { useThumbWheel } from './Thumbs/useThumbWheel';
+import type { ControlsPanel } from './Tray/TrayControls';
+import { ViewControls } from './Tray/ViewControls';
+import { useArrowNavigation } from './useArrowNavigation';
 import { useGallerySounds } from './useGallerySounds';
+import { useGalleryWheel } from './useGalleryWheel';
+import { useOpeningDeal } from './useOpeningDeal';
 import { usePictures } from './usePictures';
-import { type ControlsPanel, ViewControls } from './ViewControls';
-import { WheelThumb } from './WheelThumb';
-
-const SCROLL_STEP_MS = 75;
-const ARROW_NAVIGATION_BUTTONS =
-  '.ExamineGallery__thumb, .ExamineGallery__plainThumb, .ExamineGallery__seal, .ExamineGallery__page, .ExamineGallery__viewToggle, .ExamineGallery__trayToggle';
+import { useSettleAnimations } from './useSettleAnimations';
 
 const Gallery = (props: {
   images: string[];
@@ -64,7 +66,7 @@ const Gallery = (props: {
   face: FigureFace;
   effects: GalleryEffects;
   modes: ReactNode;
-  galleryTabRef?: RefObject<HTMLDivElement | null>;
+  galleryTabRef: RefObject<HTMLDivElement | null>;
   session: GallerySession;
   settings: (ArtViewSettings | undefined)[];
   nsfw: boolean;
@@ -95,18 +97,21 @@ const Gallery = (props: {
   const [, redraw] = useState(0);
   const [panel, setPanel] = useState<ControlsPanel>(null);
   const menuOpen = panel !== null;
-  const [zoomMax, setZoomMax] = useState(5);
+  const [zoomMax, setZoomMax] = useState(READER_ZOOM_MAX);
   const [zoomMin, setZoomMin] = useState(1);
   const controlsRef = useRef<PictureControls | null>(null);
+  const pictures = usePictures(images, selected);
   const entryAt = (index: number) =>
     readingEntry(
       session,
       artSlot(nsfw, index + 1),
       images[index],
       settings[index],
-      backgrounds[index] ?? 'transparent',
+      backgrounds[index] ?? CARD_DEFAULT,
+      pictures.sizeOf(images[index]),
     );
   const entry = entryAt(selected);
+  const selectedSize = session.sizes.get(images[selected]);
   const reading = isReading(entry.state);
   const changeReader = (state: ReaderState) => {
     entry.state = state;
@@ -118,20 +123,11 @@ const Gallery = (props: {
     direction: 1,
     from: null,
   });
-  // Each thumbnail's delay in the deal played as the gallery opens, from dealDelays() in the useState initializer so
-  // it is computed once. Recomputing it on a new selection or picture count would deal every thumbnail again
-  const [openingDeal, setOpeningDeal] = useState(() =>
-    effects.deal && !session.opened ? dealDelays(selected, count) : null,
-  );
-  const pictures = usePictures(images, selected);
   const sounds = useGallerySounds(effects.sounds, effects.eggs, effects.volume);
   const rootRef = useRef<HTMLDivElement>(null);
-  const glowRef = useCandleFlicker(rootRef, effects.flicker && !reading);
-  useFigureBlink(
-    rootRef,
-    face,
-    effects.flicker && !reading && figures.some((figure) => figure.blink),
-  );
+  const lit = effects.flicker && !reading;
+  const glowRef = useCandleFlicker(rootRef, lit);
+  useFigureBlink(rootRef, face, lit && figures.some((figure) => figure.blink));
   useEffect(() => {
     session.opened = true;
   }, []);
@@ -156,7 +152,6 @@ const Gallery = (props: {
     goTo((selected + direction + count) % count, direction, change);
   const pick = (index: number) =>
     goTo(index, index > selected ? 1 : -1, clickChange);
-  const marker = plain ? 'ExamineGallery__page' : 'ExamineGallery__seal';
 
   // openCanvasContext must run before the opening frame is painted
   useLayoutEffect(() => {
@@ -165,20 +160,14 @@ const Gallery = (props: {
     }
   }, []);
 
-  useEffect(() => {
-    if (!openingDeal || !count) {
-      return;
-    }
-    const timers = [
-      ...(count > 1 ? openingDeal : []).map((delay) =>
-        setTimeout(sounds.playDealtThumbnail, delay),
-      ),
-      ...(!reading
-        ? [setTimeout(sounds.playDealtPicture, dealMainDelay(count))]
-        : []),
-    ];
-    return () => timers.forEach(clearTimeout);
-  }, []);
+  const { delays: openingDeal, cancel: cancelOpeningDeal } = useOpeningDeal({
+    effects,
+    session,
+    selected,
+    count,
+    reading,
+    sounds,
+  });
 
   // Plain Gallery turns effects.deal off but leaves openingDeal and a 'deal' move in state, so they are cleared here.
   // Without this, turning Plain Gallery off again replays whatever was left of the deal
@@ -186,228 +175,221 @@ const Gallery = (props: {
     if (!plain) {
       return;
     }
-    setOpeningDeal(null);
+    cancelOpeningDeal();
     setMove((last) =>
       last.change === 'deal' ? { ...last, change: 'fade' } : last,
     );
   }, [plain]);
 
-  useEffect(() => {
-    if (count < 2) {
-      return;
-    }
-    const onKeyDown = (event: KeyboardEvent) => {
-      const { target } = event;
-      if (
-        event.defaultPrevented ||
-        reading ||
-        menuOpen ||
-        !(target instanceof HTMLElement) ||
-        target.isContentEditable ||
-        target.closest('input, textarea, select, dialog, [role="dialog"]')
-      ) {
-        return;
-      }
-      if (!galleryTabRef?.current?.contains(target)) {
-        const button = target.closest('button, .Button');
-        if (
-          !rootRef.current?.contains(target) ||
-          (button && !button.matches(ARROW_NAVIGATION_BUTTONS))
-        ) {
-          return;
+  useArrowNavigation({
+    count,
+    selected,
+    clickChange,
+    reading,
+    menuOpen,
+    galleryTabRef,
+    rootRef,
+    step,
+  });
+  useSettleAnimations(rootRef);
+  useGalleryWheel(rootRef, controlsRef);
+  const onWheel = useThumbWheel(step);
+
+  const picture = (
+    <MainPicture
+      images={images}
+      backgrounds={backgrounds}
+      crops={settings.map((setting) => setting?.crop)}
+      selected={selected}
+      pictures={pictures}
+      move={move}
+      openingDelay={openingDeal ? dealMainDelay(count) : 0}
+      backdrop={backdrop}
+      figures={figures}
+      plain={plain}
+      tiltOn={effects.tilt}
+      glowRef={glowRef}
+      faceRef={face.attach}
+      onAdvance={count > 1 ? () => step(1, clickChange) : undefined}
+      readerState={entry.state}
+      owner={entry.owner}
+      sourceKey={`${artSlot(nsfw, selected + 1)}:${entry.signature}`}
+      controlsRef={controlsRef}
+      menuOpen={menuOpen}
+      onReaderChange={changeReader}
+      onReaderPosition={(left, top, anchor, framed) => {
+        // Changed in place, as a new state ends a pan already under way
+        const unframed = !!entry.state.framed && !framed;
+        entry.state.left = left;
+        entry.state.top = top;
+        entry.state.anchor = anchor;
+        entry.state.framed = framed;
+        if (unframed) {
+          redraw((version) => version + 1);
         }
-      }
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        step(-1, clickChange);
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        step(1, clickChange);
-      }
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [count, selected, clickChange, reading, menuOpen, galleryTabRef]);
-
-  // A hidden or unfocused window can freeze an animation partway, so everything lands at once before that
-  useEffect(() => {
-    const settle = () => {
-      for (const animation of rootRef.current?.getAnimations({
-        subtree: true,
-      }) ?? []) {
-        if (animation.effect?.getTiming().iterations !== Infinity) {
-          animation.finish();
+      }}
+      onReset={reset}
+      onZoomLimits={({ min, max }) => {
+        setZoomMax(max);
+        setZoomMin(min);
+      }}
+    />
+  );
+  const controls = (
+    <ViewControls
+      owner={entry.owner}
+      scrollingOnly={!!selectedSize && opensOnlyInScrolling(...selectedSize)}
+      state={entry.state}
+      panel={panel}
+      onPanel={setPanel}
+      onView={(view) => {
+        if (!viewLocked(entry.owner)) {
+          changeReader({ ...resetReader(entry.owner), view });
         }
+      }}
+      onZoom={(factor) => controlsRef.current?.zoom(factor)}
+      onReset={reset}
+      zoomMax={zoomMax}
+      zoomMin={zoomMin}
+      pinned={props.controlsPinned}
+      onPinned={props.onControlsPinned}
+      showMouseControls={props.showMouseControls}
+      onShowMouseControls={props.onShowMouseControls}
+      imageCount={count}
+      modes={modes}
+      numbers={
+        count > 1 ? (
+          <SealNumbers
+            images={images}
+            selected={selected}
+            plain={plain}
+            onPick={pick}
+          />
+        ) : null
       }
-    };
-    window.addEventListener('blur', settle);
-    window.addEventListener('focus', settle);
-    document.addEventListener('visibilitychange', settle);
-    return () => {
-      window.removeEventListener('blur', settle);
-      window.removeEventListener('focus', settle);
-      document.removeEventListener('visibilitychange', settle);
-    };
-  }, []);
-
-  // React's wheel listener is passive, so only a native one can stop the window zooming
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) {
-      return;
-    }
-    const onCtrlWheel = (event: globalThis.WheelEvent) => {
-      if (!event.ctrlKey) {
-        return;
+      thumbnails={
+        count > 1 ? (
+          <ThumbStrip
+            images={images}
+            settings={images.map((_, index) => entryAt(index).owner)}
+            backgrounds={backgrounds}
+            selected={selected}
+            pictures={pictures}
+            plain={plain}
+            openingDeal={openingDeal}
+            onPick={pick}
+            onGoTo={(index, direction) => goTo(index, direction, clickChange)}
+          />
+        ) : null
       }
-      event.preventDefault();
-      if (
-        !event.deltaY ||
-        !(event.target as Element).closest('.ExamineGallery__main')
-      ) {
-        return;
-      }
-      controlsRef.current?.zoom(
-        event.deltaY < 0 ? 1.1 : 1 / 1.1,
-        event.clientX,
-        event.clientY,
-      );
-    };
-    root.addEventListener('wheel', onCtrlWheel, { passive: false });
-    return () => root.removeEventListener('wheel', onCtrlWheel);
-  }, []);
-
-  const lastScroll = useRef(0);
-  const onWheel = (event: WheelEvent<HTMLDivElement>) => {
-    if (
-      event.ctrlKey ||
-      !(event.target as Element).closest(
-        '.ExamineGallery__thumb, .ExamineGallery__plainThumb',
-      )
-    ) {
-      return;
-    }
-    const now = performance.now();
-    if (!event.deltaY || now - lastScroll.current < SCROLL_STEP_MS) {
-      return;
-    }
-    lastScroll.current = now;
-    step(event.deltaY > 0 ? 1 : -1, 'fade');
-  };
-
+    />
+  );
   return (
     <div
       ref={rootRef}
       className={classes(['ExamineGallery', plain && 'ExamineGallery--plain'])}
       onWheel={onWheel}
     >
-      <MainPicture
-        images={images}
-        backgrounds={backgrounds}
-        selected={selected}
-        pictures={pictures}
-        move={move}
-        openingDelay={openingDeal ? dealMainDelay(count) : 0}
-        backdrop={backdrop}
-        figures={figures}
-        plain={plain}
-        tiltOn={effects.tilt}
-        glowRef={glowRef}
-        faceRef={face.attach}
-        onAdvance={count > 1 ? () => step(1, clickChange) : undefined}
-        readerState={entry.state}
-        owner={entry.owner}
-        sourceKey={`${artSlot(nsfw, selected + 1)}:${entry.signature}`}
-        controlsRef={controlsRef}
-        menuOpen={menuOpen}
-        onReaderChange={changeReader}
-        onReaderPosition={(left, top, anchor) => {
-          entry.state.left = left;
-          entry.state.top = top;
-          entry.state.anchor = anchor;
-        }}
-        onReset={reset}
-        onZoomMax={setZoomMax}
-        onZoomMin={setZoomMin}
-      />
-      <ViewControls
-        owner={entry.owner}
-        state={entry.state}
-        panel={panel}
-        onPanel={setPanel}
-        onView={(view) => {
-          if (!viewLocked(entry.owner)) {
-            changeReader({ ...resetReader(entry.owner), view });
+      {picture}
+      {controls}
+    </div>
+  );
+};
+
+const GalleryModes = (props: {
+  nsfw: boolean;
+  nsfwDisabled: boolean;
+  onSwitch: (category: 'SFW' | 'NSFW') => void;
+}) => {
+  const { nsfw, onSwitch } = props;
+  return (
+    <>
+      <Button
+        selected={!nsfw}
+        bold={!nsfw}
+        onClick={() => onSwitch('SFW')}
+        textAlign="center"
+      >
+        SFW
+      </Button>
+      <Button
+        selected={nsfw}
+        disabled={props.nsfwDisabled}
+        bold={nsfw}
+        onClick={() => onSwitch('NSFW')}
+        textAlign="center"
+      >
+        NSFW
+      </Button>
+    </>
+  );
+};
+
+/**
+ * The viewer as viewers first see it, scaled to fit, on one draft picture among the gallery's saved ones.
+ * It is drawn by the viewer itself and takes no input
+ */
+export const ArtworkPreview = (props: {
+  /** The whole viewer's size in the examine window */
+  area: Area;
+  /** The gallery's saved links, view settings and card backgrounds */
+  images: string[];
+  settings: Record<string, ArtViewSettings> | undefined;
+  backgrounds: Record<string, string> | undefined;
+  /** The draft's position counted from 0, after the saved links for a new picture */
+  index: number;
+  url: string;
+  view: ArtViewSettings;
+  background: string;
+  backdrop?: string;
+  gallery: ExaminePanelData['gallery'];
+  nsfw: boolean;
+}) => {
+  const { index, nsfw } = props;
+  const [session] = useState(() => ({
+    ...createGallerySession(),
+    selected: index,
+  }));
+  const [face] = useState(() => createFigureFace(nsfw));
+  useEffect(() => face.stop, []);
+  const tab = useRef<HTMLDivElement>(null);
+  const effects = galleryEffects(props.gallery);
+  const images = [...props.images];
+  images[index] = props.url;
+  const slots = images.map((_, position) => artSlot(nsfw, position + 1));
+  return (
+    <div inert>
+      <ArtworkViewport area={props.area}>
+        <Gallery
+          images={images}
+          settings={slots.map((slot, position) =>
+            position === index ? props.view : props.settings?.[slot],
+          )}
+          backgrounds={slots.map((slot, position) =>
+            position === index
+              ? props.background
+              : (props.backgrounds?.[slot] ?? CARD_DEFAULT),
+          )}
+          backdrop={shownBackdrop(effects.backdrop, props.backdrop)}
+          figures={[]}
+          face={face}
+          effects={{ ...effects, deal: false, sounds: false, eggs: false }}
+          modes={
+            <GalleryModes
+              nsfw={nsfw}
+              nsfwDisabled={!nsfw}
+              onSwitch={() => {}}
+            />
           }
-        }}
-        onZoom={(factor) => controlsRef.current?.zoom(factor)}
-        onReset={reset}
-        zoomMax={zoomMax}
-        zoomMin={zoomMin}
-        pinned={props.controlsPinned}
-        onPinned={props.onControlsPinned}
-        showMouseControls={props.showMouseControls}
-        onShowMouseControls={props.onShowMouseControls}
-        imageCount={count}
-        modes={modes}
-        numbers={
-          count > 1 ? (
-            <Box className="ExamineGallery__seals">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  className={classes([
-                    marker,
-                    index === selected && `${marker}--current`,
-                  ])}
-                  aria-label={`Picture ${index + 1}`}
-                  aria-current={index === selected}
-                  onClick={() => pick(index)}
-                >
-                  <span
-                    className={plain ? undefined : 'ExamineGallery__sealNumber'}
-                  >
-                    {index + 1}
-                  </span>
-                </button>
-              ))}
-            </Box>
-          ) : null
-        }
-        thumbnails={
-          count > 1 ? (
-            <div className="ExamineGallery__strip">
-              {plain ? (
-                <PlainThumbs
-                  images={images}
-                  selected={selected}
-                  pictures={pictures}
-                  onSelect={pick}
-                />
-              ) : (
-                images.map((url, index) => {
-                  const steps = wheelSteps(index, selected, count);
-                  return (
-                    <WheelThumb
-                      key={index}
-                      url={url}
-                      background={backgrounds[index]}
-                      index={index}
-                      steps={steps}
-                      dealDelay={thumbDealDelay(openingDeal, index)}
-                      pictures={pictures}
-                      onSelect={() =>
-                        goTo(index, Math.sign(steps) || 1, clickChange)
-                      }
-                    />
-                  );
-                })
-              )}
-            </div>
-          ) : null
-        }
-      />
+          galleryTabRef={tab}
+          session={session}
+          nsfw={nsfw}
+          controlsPinned={false}
+          onControlsPinned={() => {}}
+          showMouseControls
+          onShowMouseControls={() => {}}
+        />
+      </ArtworkViewport>
     </div>
   );
 };
@@ -457,13 +439,19 @@ const useViewerPreference = (
   ] as const;
 };
 
-export const ImageGalleryPage = (
-  props: {
-    session?: GallerySession;
-    galleryTabRef?: RefObject<HTMLDivElement | null>;
-  } = {},
-) => {
-  const { config, data } = useBackend<ExaminePanelData>();
+const slotSettings = (data: ExaminePanelData, nsfw: boolean, index: number) =>
+  data.art_view_settings?.[artSlot(nsfw, index + 1)];
+
+const slotBackground = (data: ExaminePanelData, nsfw: boolean, index: number) =>
+  data.card_backgrounds?.[artSlot(nsfw, index + 1)] ?? CARD_DEFAULT;
+
+export const ImageGalleryPage = (props: {
+  data: ExaminePanelData;
+  session: GallerySession;
+  galleryTabRef: RefObject<HTMLDivElement | null>;
+}) => {
+  const { config } = useBackend();
+  const { data } = props;
   const viewer = config?.client?.ckey;
   const [controlsPinned, changeControlsPinned] = useViewerPreference(
     viewer && `gallery.controlsPinned:${viewer}`,
@@ -484,8 +472,7 @@ export const ImageGalleryPage = (
     image_backdrop,
     gallery_figures,
   } = data;
-  const [localSession] = useState(createGallerySession);
-  const session = props.session ?? localSession;
+  const { session } = props;
   const [galleryMode, setGalleryMode] = useState(session.category);
   const switchCategory = (category: 'SFW' | 'NSFW') => {
     if (category === galleryMode) return;
@@ -499,8 +486,8 @@ export const ImageGalleryPage = (
       session,
       slot,
       nextImages[0],
-      data.art_view_settings?.[slot],
-      data.card_backgrounds?.[slot] ?? 'transparent',
+      slotSettings(data, category === 'NSFW', 0),
+      slotBackground(data, category === 'NSFW', 0),
     );
     first.state = resetReader(first.owner);
     setGalleryMode(category);
@@ -524,37 +511,20 @@ export const ImageGalleryPage = (
       onControlsPinned={changeControlsPinned}
       showMouseControls={showMouseControls}
       onShowMouseControls={changeShowMouseControls}
-      settings={images.map(
-        (_, index) => data.art_view_settings?.[artSlot(nsfw, index + 1)],
-      )}
-      backgrounds={images.map(
-        (_, index) =>
-          data.card_backgrounds?.[artSlot(nsfw, index + 1)] ?? 'transparent',
-      )}
+      settings={images.map((_, index) => slotSettings(data, nsfw, index))}
+      backgrounds={images.map((_, index) => slotBackground(data, nsfw, index))}
       backdrop={backdrop}
       figures={effects.eggs ? shownFigures(backdrop, gallery_figures) : []}
       face={face}
       effects={effects}
       modes={
-        <>
-          <Button
-            selected={galleryMode === 'SFW'}
-            bold={galleryMode === 'SFW'}
-            onClick={() => switchCategory('SFW')}
-            textAlign="center"
-          >
-            SFW
-          </Button>
-          <Button
-            selected={galleryMode === 'NSFW'}
-            disabled={!nsfw_img_gallery || (!is_naked && !nsfw_examine_always)}
-            bold={galleryMode === 'NSFW'}
-            onClick={() => switchCategory('NSFW')}
-            textAlign="center"
-          >
-            NSFW
-          </Button>
-        </>
+        <GalleryModes
+          nsfw={nsfw}
+          nsfwDisabled={
+            !nsfw_img_gallery || (!is_naked && !nsfw_examine_always)
+          }
+          onSwitch={switchCategory}
+        />
       }
     />
   );

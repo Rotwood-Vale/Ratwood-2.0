@@ -1,23 +1,22 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { Box, Icon, Section } from 'tgui-core/components';
+import { Box, Button, Icon, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { DragSlider } from '../../components';
-import { artViewSummary } from './ArtworkSettings';
+import { CARD_DEFAULT } from '../common/CardBackground';
+import { artScope, artSlot } from '../common/gallerySlots';
+import { ArtViewSummary } from './ArtViewControls';
+import { cardBackgroundLabel } from './CardBackgroundControl';
+import { useGalleryBackend, useSettled } from './galleryBackend';
 import { LinkControls, LinkRow } from './LinkRow';
 import {
   artLabel,
-  artScope,
-  artSlot,
   extraLabel,
   extraSlot,
   galleryLabel,
-  type ImageForm,
   removedPoint,
-  RemovedRow,
-  useGalleryBackend,
-  useSettled,
-} from './shared';
+} from './slots';
+import type { ImageForm } from './types';
 
 export const ExtraRow = (props: { form: ImageForm; nsfw: boolean }) => {
   const { act, data, isBusy } = useGalleryBackend();
@@ -150,16 +149,16 @@ export const ArtSection = (props: { form: ImageForm; nsfw: boolean }) => {
       {shown.map((url, index) => {
         const position = index + 1;
         const sourceSlot = artSlot(nsfw, shownIndices[index] + 1);
-        const background = form.card_backgrounds?.[sourceSlot] ?? 'transparent';
+        const background = form.card_backgrounds?.[sourceSlot] ?? CARD_DEFAULT;
         const backgroundLabel =
-          data.card_background_options.find(
-            (option) => option.value === background,
-          )?.label ?? 'Transparent';
+          cardBackgroundLabel(data.card_background_options, background) ??
+          'Transparent';
         return (
           <Fragment key={keys[index]}>
             {removedRow(position)}
             <LinkRow
               disabled={busy}
+              artworkLimits
               label={artLabel(nsfw, position)}
               url={url}
               setText="Edit"
@@ -170,7 +169,16 @@ export const ArtSection = (props: { form: ImageForm; nsfw: boolean }) => {
               form={form}
               image={sourceSlot}
               background={background}
-              summary={`${artViewSummary(form.art_view_settings?.[sourceSlot])} | ${backgroundLabel}`}
+              view={form.art_view_settings?.[sourceSlot]}
+              summary={(size) => (
+                <>
+                  <ArtViewSummary
+                    value={form.art_view_settings?.[sourceSlot]}
+                    size={size}
+                  />
+                  {` | ${backgroundLabel}`}
+                </>
+              )}
               move={{
                 first: busy || index === 0,
                 last: busy || index === shown.length - 1,
@@ -209,7 +217,7 @@ export const BlockedLinks = (props: { form: ImageForm }) => {
       title={
         <Box inline color="average">
           <Icon name="exclamation-triangle" mr={0.5} />
-          Hidden from others
+          Hidden from Others
         </Box>
       }
     >
@@ -244,3 +252,16 @@ export const BlockedLinks = (props: { form: ImageForm }) => {
     </Section>
   );
 };
+
+const RemovedRow = (props: {
+  text: string;
+  busy: boolean;
+  onUndo: () => void;
+}) => (
+  <div className="CharacterGallery__removedRow">
+    <Box color="label">{props.text}</Box>
+    <Button icon="undo" disabled={props.busy} onClick={props.onUndo}>
+      Undo
+    </Button>
+  </div>
+);

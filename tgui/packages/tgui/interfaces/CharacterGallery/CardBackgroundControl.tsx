@@ -1,46 +1,54 @@
 import { Dropdown, Tooltip } from 'tgui-core/components';
 
 import { CardBackground, cardMaterial } from '../common/CardBackground';
-import { gallerySelectEvents } from './nativeSelect';
-import { useGalleryBackend } from './shared';
+import { useGalleryBackend } from './galleryBackend';
+import { GallerySelect } from './GallerySelect';
+import type { Data } from './types';
 
-export const CardBackgroundControl = (props: {
+/** The name the server's options give a card background, none for a value they do not list */
+export const cardBackgroundLabel = (
+  options: Data['card_background_options'],
+  value: string,
+) => options.find((option) => option.value === value)?.label;
+
+/** Artwork Settings' card backdrop for all artwork, a native select whose empty value leaves each card unchanged */
+export const BulkCardBackgroundSelect = (props: {
   value: string;
   disabled?: boolean;
-  allowUnchanged?: boolean;
+  onSelected: (background: string) => void;
+}) => {
+  const { data } = useGalleryBackend();
+  return (
+    <label>
+      <span className="CharacterGallery__bulkBackdropLabel">
+        Card Backdrop
+        {!!props.value && (
+          <span className="CharacterGallery__materialSwatch">
+            <CardBackground value={cardMaterial(props.value)} />
+          </span>
+        )}
+      </span>
+      <GallerySelect
+        aria-label="All Artwork Card Backdrop"
+        value={props.value}
+        disabled={props.disabled}
+        allowUnchanged
+        options={data.card_background_options}
+        onChange={props.onSelected}
+      />
+    </label>
+  );
+};
+
+/** One card's backdrop in the Edit dialog, a dropdown showing each material's swatch */
+export const CardBackgroundDropdown = (props: {
+  value: string;
+  disabled?: boolean;
   onSelected: (background: string) => void;
 }) => {
   const { data } = useGalleryBackend();
   const value = cardMaterial(props.value);
-  if (props.allowUnchanged) {
-    return (
-      <label className="CharacterGallery__bulkBackground">
-        Card Backdrop
-        <select
-          aria-label="All artwork card backdrop"
-          value={props.value}
-          disabled={props.disabled}
-          {...gallerySelectEvents}
-          onChange={(event) => props.onSelected(event.target.value)}
-        >
-          <option value="">Unchanged</option>
-          {data.card_background_options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        {!!props.value && (
-          <span className="CharacterGallery__materialSwatch">
-            <CardBackground value={value} />
-          </span>
-        )}
-      </label>
-    );
-  }
-  const label = data.card_background_options.find(
-    (option) => option.value === value,
-  )?.label;
+  const label = cardBackgroundLabel(data.card_background_options, value);
   const options = data.card_background_options.map((option) => ({
     value: option.value,
     displayText: (

@@ -6,7 +6,6 @@ GLOBAL_LIST_INIT(pref_categories, list(
 	"Character Settings" = /datum/preferences/proc/page_character_settings,
 	"Voice" = /datum/preferences/proc/page_voice,
 	"Body" = /datum/preferences/proc/page_features,
-	"Flavor Text" = /datum/preferences/proc/page_flavor_text,
 ))
 
 // skips char preview update on these options 2 avoid topic lag
@@ -40,14 +39,16 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 /datum/preferences
 	var/list/open_categories = list("Identity", "Origin", "Body", "Flavor Text")
 	var/scroll_pos = 0
+	/// Thumbnail HTML last sent to the Flavor Text section
+	var/displayed_gallery_headshot
 
 /datum/preferences/proc/yes_no(value)
 	if(value)
 		return "Yes"
 	return "No"
 
-/datum/preferences/proc/pref_link(label, preference, task = "input")
-	var/href = "?_src_=prefs;preference=[preference]"
+/datum/preferences/proc/pref_link(label, preference, task = "input", byond_link = FALSE)
+	var/href = "[byond_link ? "byond://" : ""]?_src_=prefs;preference=[preference]"
 	if(task)
 		href += ";task=[task]"
 	return "<a href='[href]'>[label]</a>"
@@ -92,6 +93,16 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		.cbox a, .box a { background: none; border-color: transparent; padding: 0; margin: 0 8px 0 0; }
 		</style>
 		<script>
+		[js_byjax]
+		function syncFlavorTextToggle() {
+			var toggle = document.getElementById('preferences_flavor_toggle');
+			var content = document.getElementById('preferences_flavor_content');
+			if(!toggle || !content)
+				return;
+			var open = !!content.firstElementChild;
+			toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+			toggle.innerHTML = (open ? '- ' : '+ ') + 'Flavor Text';
+		}
 		function stamp(e) {
 			e = e || window.event;
 			var t = e.target || e.srcElement;
@@ -126,6 +137,11 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		else
 			html += "<td width='38%' valign='top'>"
 		for(var/category in column)
+			if(category == "Flavor Text")
+				var/expanded = (category in open_categories)
+				html += "<div class='lab'><a id='preferences_flavor_toggle' href='byond://?_src_=prefs;preference=category;name=[url_encode(category)]' aria-controls='preferences_flavor_content' aria-expanded='[expanded ? "true" : "false"]'>[expanded ? "-" : "+"] [category]</a></div>"
+				html += "<div id='preferences_flavor_content'>[expanded ? page_flavor_text() : ""]</div>"
+				continue
 			var/page = call(src, GLOB.pref_categories[category])(user)
 			var/arrow = "+"
 			if(category in open_categories)
@@ -416,24 +432,27 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	html += pref_line(list(pref_item("Update feature colors with change", pref_link(yes_no(update_mutant_colors), "update_mutant_colors"))))
 	return html
 
-/datum/preferences/proc/page_flavor_text(mob/user)
-	var/flavor_label = "Flavortext"
+/datum/preferences/proc/flavor_text_label()
 	if(length(flavortext) < MINIMUM_FLAVOR_TEXT)
-		flavor_label = "<font color='#802929'>Flavortext</font>"
+		return "<font color='#802929'>Flavortext</font>"
+	return "Flavortext"
+
+/datum/preferences/proc/page_flavor_text()
 	var/ooc_label = "OOC Notes"
 	if(length(ooc_notes) < MINIMUM_OOC_NOTES)
 		ooc_label = "<font color='#802929'>OOC Notes</font>"
 	var/help = pref_link("(?)", "formathelp")
-	var/html = pref_line(list(pref_item("Character Gallery", pref_link("Change", "character_gallery"))))
-	html += character_gallery_headshot_thumbnail()
-	html += pref_line(list(pref_item(flavor_label, "[help] [pref_link("Change", "flavortext")]")))
-	html += pref_line(list(pref_item("NSFW Flavortext", "[help] [pref_link("Change", "nsfwflavortext")]")))
+	var/html = pref_line(list(pref_item("Character Gallery", pref_link("Change", "character_gallery", byond_link = TRUE))))
+	displayed_gallery_headshot = character_gallery_headshot_thumbnail()
+	html += "<div id='preferences_gallery_headshot'>[displayed_gallery_headshot]</div>"
+	html += pref_line(list(pref_item("<span id='preferences_flavortext_label'>[flavor_text_label()]</span>", "[help] [pref_link("Change", "flavortext", byond_link = TRUE)]")))
+	html += pref_line(list(pref_item("NSFW Flavortext", "[help] [pref_link("Change", "nsfwflavortext", byond_link = TRUE)]")))
 	html += pref_line(list(pref_item(ooc_label, "[help] [pref_link("Change", "ooc_notes")]")))
 	html += pref_line(list(pref_item("ERP Preferences", "[help] [pref_link("Change", "erpprefs")]")))
 	html += pref_line(list(pref_item("Rumours & Noble Gossip", help), "[pref_link("Set Rumours", "rumour")] [pref_link("Set Gossip", "gossip")] [pref_link("<i>Preview</i>", "rumour_preview")]"))
 	html += pref_line(list(pref_item("Song", ""), "[pref_link("Change URL", "ooc_extra")] [pref_link("Title", "change_title")] [pref_link("Artist", "change_artist")]"))
 	html += pref_line(list(pref_link("<b>Preview Examine</b>", "ooc_preview")))
-	return html
+	return "<div class='cbox'>[html]</div>"
 
 // this controls all the mechanical customization shit. Nasty nasty code!
 // handles background options w bg_link

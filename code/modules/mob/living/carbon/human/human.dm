@@ -1056,7 +1056,7 @@
 
 /mob/living/carbon/human/proc/clear_gallery_images()
 	headshot_link = null
-	set_gallery_frame(src, sanitize_gallery_frame(null))
+	reset_gallery_frame(src)
 	headshot_frame_chat = FALSE
 	image_backdrop = GALLERY_BACKDROP_TAVERN
 	ooc_extra_img = null
@@ -1067,6 +1067,11 @@
 	nsfw_img_gallery = list()
 	card_backgrounds = list()
 	art_view_settings = list()
+
+/mob/living/carbon/human/proc/chat_headshot_markup()
+	if(!headshot_frame_chat)
+		return chat_headshot(GALLERY_ATTRIBUTE_LINK(headshot_link))
+	return "<div class='chat_headshot'><div class='chat_headshot_frame'><img src='[GALLERY_ATTRIBUTE_LINK(headshot_link)]' style='[headshot_picture_style(headshot_zoom, headshot_x, headshot_y)]'/></div></div>"
 
 
 /mob/living/carbon/human/proc/copy_bodyparts(mob/living/carbon/human/target)

@@ -2,6 +2,9 @@ import { type CSSProperties, useId } from 'react';
 
 import { resolveAsset } from '../../assets';
 
+/** The card background of a picture with none set, which must match GALLERY_CARD_DEFAULT in code/__DEFINES/character_gallery.dm */
+export const CARD_DEFAULT = 'transparent';
+
 const CARD_BACKGROUNDS = [
   'black',
   'charcoal',
@@ -16,7 +19,7 @@ type CardMaterial = (typeof CARD_BACKGROUNDS)[number];
 export const cardMaterial = (value?: string): CardMaterial =>
   CARD_BACKGROUNDS.includes(value as CardMaterial)
     ? (value as CardMaterial)
-    : 'transparent';
+    : CARD_DEFAULT;
 
 export const CardBackground = (props: { value?: string }) => {
   const material = cardMaterial(props.value);

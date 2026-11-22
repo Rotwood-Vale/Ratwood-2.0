@@ -1,6 +1,6 @@
 import type { BooleanLike } from 'tgui-core/react';
 
-import type { ArtViewSettings } from './CharacterGallery/shared';
+import type { ArtViewSettings } from './common/artViewSettings';
 import type { GallerySettings } from './ExamineGallery/effects';
 
 export type ExaminePanelData = {

@@ -1,9 +1,9 @@
 import { resolveAsset } from '../../assets';
-import { PICTURE_TOO_LARGE_TEXT, usePictureSize } from './pictureSize';
+import { pictureSizeLimitText, usePictureSize } from './pictureSize';
 
 export const HEADSHOT_PANEL_SIZE = 350;
 
-export const PictureTooLarge = () => (
+export const PictureTooLarge = (props: { size: [number, number] | null }) => (
   <div
     style={{
       display: 'flex',
@@ -17,7 +17,7 @@ export const PictureTooLarge = () => (
       color: 'var(--color-label, #a3968a)',
     }}
   >
-    {PICTURE_TOO_LARGE_TEXT}
+    {props.size && pictureSizeLimitText(...props.size)}
   </div>
 );
 
@@ -47,7 +47,7 @@ export const HeadshotFrame = (props: HeadshotFrameProps) => {
   const picture = usePictureSize(src, onSize, onError);
   return (
     <div style={{ width: '100%', aspectRatio: '1', overflow: 'hidden' }}>
-      {picture.tooLarge && <PictureTooLarge />}
+      {picture.tooLarge && <PictureTooLarge size={picture.size} />}
       {picture.drawable && (
         <img
           src={resolveAsset(src)}

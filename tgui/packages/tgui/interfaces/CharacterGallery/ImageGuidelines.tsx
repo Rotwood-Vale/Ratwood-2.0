@@ -1,6 +1,6 @@
 import { Box } from 'tgui-core/components';
 
-import { HEADSHOT_SLOT } from './shared';
+import { HEADSHOT_SLOT } from './slots';
 
 type GuidelineScope = 'all' | 'general' | 'headshot' | 'sfw';
 

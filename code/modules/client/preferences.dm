@@ -308,6 +308,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/gallery_image_tilt = TRUE
 	var/gallery_candle_flicker = TRUE
 	var/gallery_easter_eggs = TRUE
+	var/gallery_artwork_preview_layout = "popup"
 	var/mute_anthro_noises = FALSE
 	var/autoconsume = FALSE
 	var/autoblooddrink = FALSE
@@ -366,7 +367,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/headshot_link
 	var/list/gallery_alternates = list()
-	/// Links that fail validation or overflow their gallery, never shown to anyone but their owner
 	var/list/blocked_links = list()
 	var/headshot_zoom = HEADSHOT_ZOOM_MIN
 	var/headshot_x = HEADSHOT_X_DEFAULT
@@ -376,6 +376,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/image_backdrop = GALLERY_BACKDROP_TAVERN
 	var/list/card_backgrounds = list()
 	var/list/art_view_settings = list()
+	var/list/artwork_defaults
 	var/chatheadshot = FALSE
 	var/ooc_extra
 	var/ooc_extra_img
@@ -1446,10 +1447,21 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			else
 				SetAntag(user)
 	else if(href_list["preference"] == "category")
-		if(href_list["name"] in open_categories)
-			open_categories -= href_list["name"]
+		var/category = href_list["name"]
+		if(category in open_categories)
+			open_categories -= category
 		else
-			open_categories += href_list["name"]
+			open_categories += category
+		if(category == "Flavor Text")
+			if(slot_randomized)
+				ShowChoices(user)
+				return 1
+			skip_preview = FALSE
+			if(current_tab != 0)
+				return 1
+			var/expanded = (category in open_categories)
+			send_byjax(user, "preferences_browser", "preferences_flavor_content", expanded ? page_flavor_text() : " ", "syncFlavorTextToggle")
+			return 1
 	else if(href_list["preference"] == "background")
 		process_background_link(user, href_list)
 		validate_background()
@@ -2029,17 +2041,26 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					popup.set_content(dat.Join())
 					popup.open(FALSE)
 				if("flavortext")
+					skip_preview = FALSE
 					to_chat(user, "<span class='notice'>["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts.</span>"]</span>")
 					var/new_flavortext = tgui_input_text(user, "Input your character description:", "Flavortext", flavortext, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
-					if(new_flavortext == null)
+					if(isnull(new_flavortext))
 						return
+					var/previous_flavor_label = flavor_text_label()
 					if(new_flavortext == "")
 						flavortext = null
+					else
+						flavortext = new_flavortext
+						to_chat(user, "<span class='notice'>Successfully updated flavortext</span>")
+						log_game("[user] has set their flavortext'.")
+					if(slot_randomized)
+						skip_preview = TRUE
 						ShowChoices(user)
-						return
-					flavortext = new_flavortext
-					to_chat(user, "<span class='notice'>Successfully updated flavortext</span>")
-					log_game("[user] has set their flavortext'.")
+						return 1
+					var/current_flavor_label = flavor_text_label()
+					if(current_flavor_label != previous_flavor_label && current_tab == 0 && ("Flavor Text" in open_categories))
+						send_byjax(user, "preferences_browser", "preferences_flavortext_label", current_flavor_label)
+					return 1
 				if("ooc_notes")
 					to_chat(user, "<span class='notice'>["<span class='bold'>OOC notes should be used for roleplay hooks and general information about your character.</span>"]</span>")
 					var/new_ooc_notes = tgui_input_text(user, "Input your OOC preferences:", "OOC notes", ooc_notes, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
@@ -2088,20 +2109,23 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					log_game("[user] has set their noble gossip'.")
 
 				if("nsfwflavortext")
+					skip_preview = FALSE
 					to_chat(user, "<span class='notice'>["<span class='bold'>NSFW Flavortext can be used for setting things like body descriptions and other physical details that may be conisdered explicit.</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
 					var/new_nsfwflavortext = tgui_input_text(user, "Input your character description:", "NSFW Flavortext", nsfwflavortext, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
 					if(new_nsfwflavortext == null)
 						return
 					if(new_nsfwflavortext == "")
-						new_nsfwflavortext = null
 						nsfwflavortext = null
 						to_chat(user, "<span class='notice'>Successfully deleted NSFW Flavor Text.</span>")
+					else
+						nsfwflavortext = new_nsfwflavortext
+						to_chat(user, "<span class='notice'>Successfully updated NSFW flavortext</span>")
+						log_game("[user] has set their NSFW flavortext'.")
+					if(slot_randomized)
+						skip_preview = TRUE
 						ShowChoices(user)
-						return
-					nsfwflavortext = new_nsfwflavortext
-					to_chat(user, "<span class='notice'>Successfully updated NSFW flavortext</span>")
-					log_game("[user] has set their NSFW flavortext'.")
+					return 1
 				if("erpprefs")
 					to_chat(user, "<span class='notice'>["<span class='bold'>Erotic Roleplay preferences. If you put 'anything goes' or 'no limits' here, do not be surprised if people take you up on it.</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
@@ -2123,6 +2147,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					return
 
 				if("character_gallery")
+					skip_preview = FALSE
 					open_character_gallery(user, GALLERY_FORM_CHARACTER)
 					return
 

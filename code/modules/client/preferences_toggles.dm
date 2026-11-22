@@ -103,7 +103,7 @@
 
 	var/plain_note = owner.prefs.gallery_plain ? "off while Plain Gallery is on" : null
 	var/list/gallery_entries = list(
-		list("id" = "gallery_plain", "label" = "Plain Gallery", "enabled" = !!owner.prefs.gallery_plain, "desc" = "The I Hate Whimsy toggle or the My Poor Computer toggle. Shows only the artwork and basic navigation: no cards, frames, backdrops, gallery animations, sounds or candle flicker. Your appearance choices and the settings below are kept for when you turn it off."),
+		list("id" = "gallery_plain", "label" = "Plain Gallery", "enabled" = !!owner.prefs.gallery_plain, "desc" = "The I Hate Whimsy toggle or the My Poor Computer toggle. Shows only the artwork and basic navigation: no cards, frames, backdrops, gallery animations, sounds or candle flicker. Your appearance and effects settings are kept for when you turn it off."),
 		list("id" = "gallery_backdrop", "label" = "Gallery Backdrop", "enabled" = !!owner.prefs.gallery_backdrop, "desc" = "Show the backdrop each character's owner chose behind the art card in the examine Image Gallery. Turn it off if the gallery stutters.", "override_note" = plain_note),
 		list("id" = "gallery_card_deal", "label" = "Art Card Deal", "enabled" = !!owner.prefs.gallery_card_deal, "desc" = "Deal the art cards in like a hand of cards in the examine Image Gallery. Turned off, they fade instead.", "override_note" = plain_note),
 		list("id" = "gallery_image_sounds", "label" = "Art Card Sounds", "enabled" = !!owner.prefs.gallery_image_sounds, "desc" = "Play a sound when changing art cards in the examine Image Gallery.", "override_note" = plain_note),

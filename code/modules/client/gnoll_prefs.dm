@@ -28,6 +28,8 @@
 	var/image_backdrop = GALLERY_BACKDROP_TAVERN
 	var/list/card_backgrounds = list()
 	var/list/art_view_settings = list()
+	/// Presentation inherited by new artwork for this form
+	var/list/artwork_defaults
 	var/flavortext
 	var/ooc_notes
 	var/ooc_extra
@@ -325,10 +327,10 @@
 
 	dat += "<h3>Gnoll Flavortext (Optional)</h3>"
 
-	dat += "<b>Character Gallery:</b> <a href='?_src_=gnoll_prefs;action=character_gallery'>Change</a>"
+	dat += "<b>Character Gallery:</b> <a href='byond://?_src_=gnoll_prefs;action=character_gallery'>Change</a>"
 
-	dat += "<br><b>Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=flavortext'>Change</a>"
-	dat += "<br><b>NSFW Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=nsfwflavortext'>Change</a>"
+	dat += "<br><b>Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='byond://?_src_=gnoll_prefs;action=flavortext'>Change</a>"
+	dat += "<br><b>NSFW Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='byond://?_src_=gnoll_prefs;action=nsfwflavortext'>Change</a>"
 	dat += "<br><b>OOC Notes: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=ooc_notes'>Change</a>"
 
 	dat += "<br><b>Rumours & Noble Gossip:</b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><br><a href='?_src_=gnoll_prefs;action=rumour'>Set Rumours</a><a href='?_src_=gnoll_prefs;action=gossip'>Set Gossip</a><a href='?_src_=gnoll_prefs;action=rumour_preview'><i>Preview</i></a>"
@@ -533,7 +535,6 @@
 				return
 			if(new_flavortext == "")
 				flavortext = null
-				gnoll_show_ui(user)
 				return
 			flavortext = new_flavortext
 			to_chat(user, "<span class='notice'>Successfully updated gnoll flavortext</span>")
@@ -593,7 +594,6 @@
 				new_nsfwflavortext = null
 				nsfwflavortext = null
 				to_chat(user, "<span class='notice'>Successfully deleted gnoll NSFW Flavor Text.</span>")
-				gnoll_show_ui(user)
 				return
 			nsfwflavortext = new_nsfwflavortext
 			to_chat(user, "<span class='notice'>Successfully updated gnoll NSFW flavortext</span>")

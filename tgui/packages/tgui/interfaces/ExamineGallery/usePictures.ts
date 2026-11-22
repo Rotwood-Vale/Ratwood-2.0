@@ -1,7 +1,11 @@
 import { type SyntheticEvent, useEffect, useRef, useState } from 'react';
 
 import { resolveAsset } from '../../assets';
-import { fitsPixelCap, readPictureSize } from '../common/pictureSize';
+import {
+  artworkShapeTooExtreme,
+  fitsPixelCap,
+  readPictureSize,
+} from '../common/pictureSize';
 
 const SELECTED_PICTURE_WAIT_MS = 8000;
 
@@ -13,9 +17,11 @@ export const usePictures = (images: string[], selected: number) => {
   const [slowUrl, setSlowUrl] = useState<string | null>(null);
   const probes = useRef(new Map<string, ReturnType<typeof readPictureSize>>());
 
-  const tooLarge = (url: string) => {
+  const exceedsLimits = (url: string) => {
     const size = sizes[url];
-    return !!size && !fitsPixelCap(size[0], size[1]);
+    return (
+      !!size && (!fitsPixelCap(...size) || artworkShapeTooExtreme(...size))
+    );
   };
   const mayLoad = (index: number) => othersAllowed || index === selected;
 
@@ -23,7 +29,7 @@ export const usePictures = (images: string[], selected: number) => {
   const selectedSettled =
     aspects[selectedUrl] !== undefined ||
     !!failed[selectedUrl] ||
-    tooLarge(selectedUrl);
+    exceedsLimits(selectedUrl);
   useEffect(() => {
     if (selectedSettled) {
       setOthersAllowed(true);
@@ -59,12 +65,13 @@ export const usePictures = (images: string[], selected: number) => {
   );
 
   return {
+    sizeOf: (url: string): [number, number] | undefined => sizes[url],
     aspectOf: (url: string): number | undefined => aspects[url],
     hasFailed: (url: string) => !!failed[url],
     isSlow: (url: string) => slowUrl === url,
-    tooLarge,
+    exceedsLimits,
     mayLoad,
-    drawable: (url: string) => !!sizes[url] && !tooLarge(url),
+    drawable: (url: string) => !!sizes[url] && !exceedsLimits(url),
     sourceOf: (url: string) => probes.current.get(url)?.probe,
     imageProps: (url: string) => ({
       src: resolveAsset(url),

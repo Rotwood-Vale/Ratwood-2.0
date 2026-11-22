@@ -7,34 +7,18 @@ import {
 } from 'react';
 import { Box, Button, Icon } from 'tgui-core/components';
 
+import type { ArtViewSettings } from '../common/artViewSettings';
 import {
   PICTURE_RATIO_TALL_MAX,
   PICTURE_RATIO_WIDE_MAX,
-  PICTURE_TOO_LARGE_TEXT,
   pictureShapeTooExtreme,
 } from '../common/pictureSize';
+import { useCopyUrl } from './clipboard';
+import { useGalleryBackend } from './galleryBackend';
 import { gallerySelectEvents } from './nativeSelect';
-import { copyUrl, type ImageForm, useGalleryBackend } from './shared';
 import { Thumbnail } from './Thumbnail';
+import type { ImageForm } from './types';
 import { useMediaStatus } from './useMediaStatus';
-
-export const useCopyUrl = () => {
-  const [message, setMessage] = useState('');
-  const copy = async (
-    url: string,
-    copiedMessage: string,
-    onFail: () => void,
-  ) => {
-    const copied = await copyUrl(url);
-    setMessage(
-      copied ? copiedMessage : 'Select the URL and press Ctrl+C to copy.',
-    );
-    if (!copied) {
-      onFail();
-    }
-  };
-  return { message, copy, clear: () => setMessage('') };
-};
 
 export const SourceSwitch = (props: {
   form: ImageForm;
@@ -87,10 +71,10 @@ export const MediaStatus = (props: {
           </Box>
         </div>
       )}
-      {media.tooLarge && (
+      {!!media.limitText && (
         <div role="status">
           <Box color="bad" mt={props.statusMt}>
-            {PICTURE_TOO_LARGE_TEXT}
+            {media.limitText}
           </Box>
         </div>
       )}
@@ -133,11 +117,14 @@ const SHAPE_WARNING = `This picture's shape is too extreme to show: 1:${PICTURE_
 type LinkRowProps = PropsWithChildren<
   LinkControlsProps & {
     background?: string;
-    summary?: ReactNode;
+    view?: ArtViewSettings;
+    /** Given the picture's size once the thumbnail has read it, or null before */
+    summary?: (size: [number, number] | null) => ReactNode;
     move?: MoveControls;
     tone?: 'light' | 'dark';
     flash?: boolean;
     checkShape?: boolean;
+    artworkLimits?: boolean;
   }
 >;
 
@@ -149,11 +136,13 @@ export const LinkRow = (props: LinkRowProps) => {
     tone,
     flash,
     background,
+    view,
     summary,
     checkShape,
+    artworkLimits,
     ...controls
   } = props;
-  const media = useMediaStatus(props.url);
+  const media = useMediaStatus(props.url, artworkLimits);
   const shapeTooExtreme =
     !!checkShape &&
     media.ready &&
@@ -167,12 +156,9 @@ export const LinkRow = (props: LinkRowProps) => {
           key={`${props.url}:${media.retry}`}
           label={label}
           url={props.url}
-          background={
-            background ??
-            (props.image
-              ? props.form?.card_backgrounds?.[props.image]
-              : undefined)
-          }
+          background={background}
+          view={view}
+          artworkLimits={artworkLimits}
           onSize={media.handleLoad}
           onError={media.handleError}
         />
@@ -190,7 +176,7 @@ export const LinkRow = (props: LinkRowProps) => {
             )}
             {!!summary && (
               <Box color="label" fontSize="0.8em">
-                {summary}
+                {summary(media.ready ? media.size : null)}
               </Box>
             )}
           </div>
@@ -220,7 +206,7 @@ export const LinkRow = (props: LinkRowProps) => {
             <Button
               compact
               icon="arrow-up"
-              tooltip={`Move ${label} up`}
+              tooltip={`Move ${label} Up`}
               aria-label={`Move ${label} Up`}
               disabled={move.first}
               onClick={() => move.onMove(-1)}
@@ -230,7 +216,7 @@ export const LinkRow = (props: LinkRowProps) => {
             <Button
               compact
               icon="arrow-down"
-              tooltip={`Move ${label} down`}
+              tooltip={`Move ${label} Down`}
               aria-label={`Move ${label} Down`}
               disabled={move.last}
               onClick={() => move.onMove(1)}

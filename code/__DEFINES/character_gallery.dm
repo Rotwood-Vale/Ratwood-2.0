@@ -19,13 +19,22 @@
 /// Must name the hosts valid_headshot_link() accepts
 #define IMAGE_LINK_HOSTS_TEXT "Gyazo, Lensdump, Imgbox, Catbox, ImgBB or File Garden"
 #define CHARACTER_GALLERY_PROMPT_TIMEOUT (2 MINUTES)
+/// Largest edit_seq the Character Gallery accepts from its window, which counts up by 1 per debounced edit
+#define CHARACTER_GALLERY_EDIT_SEQ_MAX 1e7
+/// The shortest time between two URL editor saves, and between two Artwork Settings Applies that change rows, each
+/// of which writes a game log line
+#define CHARACTER_GALLERY_LOGGED_COOLDOWN (1 SECONDS)
+/// Encodes a link for an HTML attribute. Intentionally redundant with valid_headshot_link() in case it loosens
+#define GALLERY_ATTRIBUTE_LINK(link) (replacetext(html_encode(link), "'", "&#39;"))
 
-/// The form ids, which FormId in tgui's CharacterGallery/shared.tsx must match
+/// The form ids, which FormId in tgui's CharacterGallery/types.ts must match
 #define GALLERY_FORM_CHARACTER "character"
 #define GALLERY_FORM_GNOLL "gnoll"
 /// What starts the name of an NSFW image's var, savefile key or slot, and nothing for a SFW one
 #define GALLERY_NSFW_PREFIX(nsfw) ((nsfw) ? "nsfw_" : "")
 #define GALLERY_ART_PREFIX(nsfw) ((nsfw) ? "nsfw_art" : "art")
+/// Both values of GALLERY_ART_PREFIX(), SFW first, as a new list each time it is used
+#define GALLERY_ART_PREFIXES list("art", "nsfw_art")
 #define GALLERY_EXTRA_SLOT(nsfw) ((nsfw) ? "nsfw_extra" : "extra")
 #define GALLERY_REMOVED_POINT(scope) "[scope]_removed"
 #define GALLERY_UNDO_CLEAR "clear_all"
@@ -38,14 +47,26 @@
 
 #define GALLERY_CARD_DEFAULT "transparent"
 
+/// An art crop's smallest side as a share of the picture, which ART_CROP_MIN in tgui's common/artViewSettings.ts must match
+#define GALLERY_ART_CROP_MIN 0.02
+
 /// Active URL in an art_rows() snapshot
 #define GALLERY_ART_ROW_URL 1
 /// Alternate source record in an art_rows() snapshot
 #define GALLERY_ART_ROW_SOURCE 2
 /// Active card backdrop in an art_rows() snapshot
 #define GALLERY_ART_ROW_BACKGROUND 3
-/// Active opening view and lock in an art_rows() snapshot
+/// Active opening view, lock and crop in an art_rows() snapshot
 #define GALLERY_ART_ROW_VIEW_SETTINGS 4
+
+/// Zoom in percent in a headshot frame, the list gallery_headshot_frame() builds and a headshot source saves as its "framing"
+#define GALLERY_FRAME_ZOOM 1
+/// Horizontal position in a headshot frame, measured as HEADSHOT_POSITION_MAX describes
+#define GALLERY_FRAME_X 2
+/// Vertical position in a headshot frame, measured as HEADSHOT_POSITION_MAX describes
+#define GALLERY_FRAME_Y 3
+/// Whether the owner framed the headshot, in a headshot frame. sanitize_gallery_frame() gives an unframed frame the defaults
+#define GALLERY_FRAME_FRAMED 4
 
 /**
  * Copies headshot framing, the examine backdrop and art presentation between owners

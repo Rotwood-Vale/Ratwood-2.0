@@ -156,9 +156,9 @@
 	var/has_headshot = !!framing_source?.vars["headshot_link"]
 	if(has_headshot)
 		var/list/frame = gallery_headshot_frame(framing_source)
-		headshot_zoom = frame[1]
-		headshot_x = frame[2]
-		headshot_y = frame[3]
+		headshot_zoom = frame[GALLERY_FRAME_ZOOM]
+		headshot_x = frame[GALLERY_FRAME_X]
+		headshot_y = frame[GALLERY_FRAME_Y]
 	if(framing_source)
 		image_backdrop = framing_source.vars["image_backdrop"]
 
@@ -174,9 +174,7 @@
 	flavor_text_nsfw = html_encode(flavor_text_nsfw)
 	flavor_text_nsfw = parsemarkdown_basic(flavor_text_nsfw, hyperlink=TRUE)
 
-	var/datum/preferences/viewer_prefs = user?.client?.prefs
-
-	var/list/data = list(
+	return list(
 		// Identity
 		"character_name" = obscured ? "Unknown" : char_name,
 		"headshot" = headshot,
@@ -201,16 +199,7 @@
 		"is_vet" = is_vet,
 		"is_naked" = is_naked,
 		"nsfw_examine_always" = nsfw_examine_always,
-		"gallery" = list(
-			"plain" = viewer_prefs ? !!viewer_prefs.gallery_plain : TRUE,
-			"backdrop" = !!viewer_prefs?.gallery_backdrop,
-			"card_deal" = !!viewer_prefs?.gallery_card_deal,
-			"image_sounds" = !!viewer_prefs?.gallery_image_sounds,
-			"image_tilt" = !!viewer_prefs?.gallery_image_tilt,
-			"candle_flicker" = !!viewer_prefs?.gallery_candle_flicker,
-			"easter_eggs" = !!viewer_prefs?.gallery_easter_eggs,
-			"sound_volume" = viewer_prefs ? viewer_prefs.at_overall(viewer_prefs.mastervol) : 100,
-		),
+		"gallery" = gallery_viewer_settings(user?.client?.prefs),
 		"image_backdrop" = image_backdrop,
 		"card_backgrounds" = gallery_card_backgrounds(framing_source),
 		"art_view_settings" = gallery_art_view_settings(framing_source),
@@ -218,7 +207,6 @@
 		"song_title" = has_song ? song_title : null,
 		"song_artist" = has_song ? song_artist : null,
 	)
-	return data
 
 /datum/examine_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

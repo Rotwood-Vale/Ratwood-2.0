@@ -7,7 +7,7 @@ import {
   SLIP_SOUND,
   SOUND_FILES,
 } from './gallerySounds';
-import type { PictureChange } from './galleryWheel';
+import type { PictureChange } from './pictureChange';
 
 /** How loud a card sounds on a click and on the thumbnails being dealt, as its file is made louder for the main picture. */
 const CARD_CLICK_VOLUME = 0.83;

@@ -1,21 +1,19 @@
 import { type SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { Button, Stack } from 'tgui-core/components';
+import { Button } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { PageButton } from '../components/PageButton';
 import { Window } from '../layouts';
 import { ImageGalleryPage } from './ExamineGallery';
-import { createGallerySession } from './ExamineGallery/readingState';
-import { ExaminePanelData } from './ExaminePanelData';
+import { createGallerySession } from './ExamineGallery/gallerySession';
+import type { ExaminePanelData } from './ExaminePanelData';
+import {
+  EXAMINE_HEIGHT,
+  EXAMINE_WIDTH,
+  ExamineContent,
+  ExaminePage as Page,
+} from './ExaminePanelLayout';
 import { FlavorTextPage } from './ExaminePanelPages';
 
-enum Page {
-  FlavorText,
-  ImageGallery,
-}
-
-const DEFAULT_WIDTH = 1000;
-const DEFAULT_HEIGHT = 700;
 const COLLAPSED_WIDTH = 450;
 
 const guardMedia = (event: SyntheticEvent) => {
@@ -48,7 +46,7 @@ export const ExaminePanel = (props) => {
   const [gallerySession] = useState(createGallerySession);
   const galleryTabRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(false);
-  const [expandedWidth, setExpandedWidth] = useState(DEFAULT_WIDTH);
+  const [expandedWidth, setExpandedWidth] = useState(EXAMINE_WIDTH);
 
   const hasGallery =
     (img_gallery?.length ?? 0) > 0 || (nsfw_img_gallery?.length ?? 0) > 0;
@@ -75,8 +73,8 @@ export const ExaminePanel = (props) => {
   return (
     <Window
       title={character_name}
-      width={DEFAULT_WIDTH}
-      height={DEFAULT_HEIGHT}
+      width={EXAMINE_WIDTH}
+      height={EXAMINE_HEIGHT}
       buttons={
         <>
           {!!is_vet}
@@ -109,50 +107,24 @@ export const ExaminePanel = (props) => {
           onContextMenu={guardMedia}
           onDragStart={guardMedia}
         >
-          <Stack vertical fill>
-            {showTabs && (
-              <Stack>
-                <Stack.Item grow>
-                  <PageButton
-                    currentPage={currentPage}
-                    page={Page.FlavorText}
-                    setPage={setCurrentPage}
-                  >
-                    Flavor Text
-                  </PageButton>
-                </Stack.Item>
-                <Stack.Item grow>
-                  <div ref={galleryTabRef}>
-                    <PageButton
-                      currentPage={currentPage}
-                      page={Page.ImageGallery}
-                      setPage={setCurrentPage}
-                    >
-                      Image Gallery
-                    </PageButton>
-                  </div>
-                </Stack.Item>
-              </Stack>
+          <ExamineContent
+            tabs={
+              showTabs
+                ? { page: currentPage, setPage: setCurrentPage, galleryTabRef }
+                : undefined
+            }
+          >
+            <div style={{ display: showGallery ? 'none' : 'contents' }}>
+              <FlavorTextPage collapsed={collapsed} />
+            </div>
+            {showGallery && (
+              <ImageGalleryPage
+                data={data}
+                session={gallerySession}
+                galleryTabRef={galleryTabRef}
+              />
             )}
-            {showTabs && <Stack.Divider />}
-            <Stack.Item
-              key="examine-content"
-              grow
-              position="relative"
-              overflowX="hidden"
-              overflowY="auto"
-            >
-              <div style={{ display: showGallery ? 'none' : 'contents' }}>
-                <FlavorTextPage collapsed={collapsed} />
-              </div>
-              {showGallery && (
-                <ImageGalleryPage
-                  session={gallerySession}
-                  galleryTabRef={galleryTabRef}
-                />
-              )}
-            </Stack.Item>
-          </Stack>
+          </ExamineContent>
         </div>
       </Window.Content>
     </Window>

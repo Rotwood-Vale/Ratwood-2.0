@@ -1,3 +1,26 @@
+// Where the paint shows on the charcoal, red and green cards
+$paint-mask:
+  radial-gradient(
+    ellipse 25% 24% at 13% 14%,
+    #000 12%,
+    #000c 38%,
+    #0005 65%,
+    transparent 100%
+  ),
+  radial-gradient(
+    ellipse 18% 33% at 94% 31%,
+    #000 5%,
+    #000b 33%,
+    #0003 68%,
+    transparent 100%
+  ),
+  radial-gradient(
+    ellipse 23% 17% at 37% 91%,
+    #000d 8%,
+    #0006 50%,
+    transparent 100%
+  );
+
 .CardBackground {
   position: absolute;
   inset: 0;
@@ -45,48 +68,8 @@
   mix-blend-mode: soft-light;
   filter: contrast(1.3);
   opacity: 0.85;
-  mask-image:
-    radial-gradient(
-      ellipse 25% 24% at 13% 14%,
-      #000 12%,
-      #000c 38%,
-      #0005 65%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 18% 33% at 94% 31%,
-      #000 5%,
-      #000b 33%,
-      #0003 68%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 23% 17% at 37% 91%,
-      #000d 8%,
-      #0006 50%,
-      transparent 100%
-    );
-  -webkit-mask-image:
-    radial-gradient(
-      ellipse 25% 24% at 13% 14%,
-      #000 12%,
-      #000c 38%,
-      #0005 65%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 18% 33% at 94% 31%,
-      #000 5%,
-      #000b 33%,
-      #0003 68%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 23% 17% at 37% 91%,
-      #000d 8%,
-      #0006 50%,
-      transparent 100%
-    );
+  mask-image: $paint-mask;
+  -webkit-mask-image: $paint-mask;
 }
 .CardBackground--glass {
   background:

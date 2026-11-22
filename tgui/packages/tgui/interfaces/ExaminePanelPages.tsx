@@ -69,7 +69,7 @@ const OriginalHeadshot = (props: { src: string }) => {
         aspectRatio: '1',
       }}
     >
-      {picture.tooLarge && <PictureTooLarge />}
+      {picture.tooLarge && <PictureTooLarge size={picture.size} />}
       {picture.drawable && (
         <img
           src={resolveAsset(src)}

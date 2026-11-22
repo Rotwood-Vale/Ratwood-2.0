@@ -7,30 +7,34 @@ import { Window } from '../../layouts';
 import { ArtSection, BlockedLinks, ExtraRow } from './ArtSection';
 import { ArtworkSettings } from './ArtworkSettings';
 import { BackdropSection } from './BackdropSection';
-import { GalleryEditorGeometry } from './GalleryEditorGeometry';
-import { HeadshotSection } from './HeadshotEditor';
-import { ImageGuidelines } from './ImageGuidelines';
-import { SourceSwitch } from './LinkRow';
+import { buttonSemantics } from './buttonSemantics';
+import type { SidePreviewState } from './EditDialog/SidePreview';
+import { UrlEditor } from './EditDialog/UrlEditor';
 import {
-  buttonRole,
-  buttonSemantics,
-  type Data,
   flushChanges,
-  formHasImages,
-  type FormId,
   GalleryActionContext,
   type GalleryActions,
-  HEADSHOT_SLOT,
-  type ImageForm,
   type PendingChanges,
-  UNDO_CLEAR,
   useGalleryBackend,
-} from './shared';
+} from './galleryBackend';
+import {
+  GalleryLedger,
+  GalleryLedgerDivider,
+  GalleryLedgerHeader,
+  GalleryLedgerPane,
+} from './GalleryLedger';
+import { HeadshotSection } from './Headshot/HeadshotEditor';
+import { ImageGuidelines } from './ImageGuidelines';
+import { SourceSwitch } from './LinkRow';
+import { formHasImages, HEADSHOT_SLOT, UNDO_CLEAR } from './slots';
 import { Thumbnail } from './Thumbnail';
-import { UrlEditor } from './UrlEditor';
+import { type Data, type FormId, type ImageForm, isArtEditor } from './types';
+import { useWindowWidening } from './useWindowWidening';
 
 type GalleryPage = 'overview' | 'headshot';
-type EditorView = 'ledger' | 'page';
+type HeadshotLayout = 'ledger' | 'page';
+/** A Side Preview request, kept only for the dialog it was made in */
+type KeyedSidePreview = SidePreviewState & { key: string };
 
 type EditorToggle = {
   editorOpen: boolean;
@@ -132,26 +136,54 @@ const matchNativeBackground = () => {
 const CharacterGalleryContent = () => {
   const { act, data, pendingChanges } = useGalleryBackend();
   const { config } = useBackend();
-  const geometry = useRef<GalleryEditorGeometry | null>(null);
-  const { forms, selected_form, generation } = data;
+  const { forms, selected_form, generation, url_editor } = data;
   const [page, setPage] = useState<GalleryPage>('overview');
-  const [editorView, setEditorView] = useState<EditorView>('ledger');
+  const [editorView, setEditorView] = useState<HeadshotLayout>('ledger');
   const expanded = page === 'headshot' && editorView === 'ledger';
   const overviewHidden = page === 'headshot' && editorView === 'page';
-  useLayoutEffect(() => {
-    geometry.current?.setExpanded(expanded);
-  }, [expanded]);
+  const dialogKey = `${generation}:${url_editor?.id}`;
+  const artDialogKey = url_editor && isArtEditor(url_editor) ? dialogKey : null;
+  const [readyArtDialogKey, setReadyArtDialogKey] = useState<string | null>(
+    null,
+  );
+  const awaitingArtDialog =
+    !!artDialogKey && artDialogKey !== readyArtDialogKey;
+  const [sidePreview, setSidePreview] = useState<KeyedSidePreview | null>(null);
+  const side = sidePreview?.key === dialogKey ? sidePreview : null;
   const scrollRef = useRef<HTMLDivElement>(null);
   const editorScrollRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    geometry.current = new GalleryEditorGeometry(
-      !!config.window.scale,
-      () =>
-        scrollRef.current?.closest<HTMLElement>('.CharacterGallery') ?? null,
-    );
-    matchNativeBackground();
-    return () => geometry.current?.dispose();
-  }, []);
+  const getContent = () =>
+    scrollRef.current?.closest<HTMLElement>('.CharacterGallery') ?? null;
+  const releaseWindow = useWindowWidening(
+    expanded,
+    artDialogKey,
+    side?.open ? side.growth : undefined,
+    !!config.window.scale,
+    getContent,
+    () => {
+      setReadyArtDialogKey(artDialogKey);
+      // A closed Side Preview is dropped once the window is back, which lets the editor fill it again
+      setSidePreview((current) => {
+        if (!current || current !== side || current.settled) return current;
+        return current.open ? { ...current, settled: true } : null;
+      });
+    },
+  );
+  useLayoutEffect(() => {
+    if (awaitingArtDialog) {
+      const content = getContent();
+      if (content) {
+        content.style.setProperty(
+          '--gallery-held-overview-width',
+          `${content.clientWidth}px`,
+        );
+        return () => {
+          content.style.removeProperty('--gallery-held-overview-width');
+        };
+      }
+    }
+  }, [awaitingArtDialog, artDialogKey]);
+  useEffect(() => matchNativeBackground(), []);
   // The server never answers an edit sent for the previous character, so lastSent starts over
   useEffect(() => {
     setPage('overview');
@@ -174,6 +206,12 @@ const CharacterGalleryContent = () => {
     }
   }, [page, formId]);
   const form = forms.find((entry) => entry.id === formId) ?? forms[0];
+  const collapseHeadshot = () => {
+    setPage('overview');
+    scrollRef.current
+      ?.querySelector<HTMLElement>('.CharacterGallery__headshotOpener')
+      ?.focus({ preventScroll: true });
+  };
   const selectForm = (id: FormId) => {
     setFormId(id);
     act('select_form', { form: id });
@@ -186,17 +224,20 @@ const CharacterGalleryContent = () => {
       height={860}
       onBeforeClose={() => {
         flushChanges(pendingChanges);
-        geometry.current?.dispose();
+        releaseWindow();
       }}
     >
-      {!!data.url_editor && (
+      {!!url_editor && (
         <UrlEditor
-          key={`${generation}:${data.url_editor.id}`}
-          editor={data.url_editor}
+          key={dialogKey}
+          editor={url_editor}
+          awaitingWindow={awaitingArtDialog}
+          side={side}
+          onSideChange={(next) => setSidePreview({ ...next, key: dialogKey })}
         />
       )}
       <Window.Content>
-        <div inert={!!data.url_editor} className="CharacterGallery__root">
+        <div inert={!!url_editor} className="CharacterGallery__root">
           <Stack
             key={generation}
             fill
@@ -208,12 +249,7 @@ const CharacterGalleryContent = () => {
           >
             <FormTabs form={form} onSelect={selectForm} />
             <Stack.Item grow basis={0} className="CharacterGallery__viewport">
-              <div
-                className={classes([
-                  'CharacterGallery__ledger',
-                  expanded && 'CharacterGallery__ledger--expanded',
-                ])}
-              >
+              <GalleryLedger expanded={expanded}>
                 <div
                   className="CharacterGallery__scroll"
                   ref={scrollRef}
@@ -229,18 +265,23 @@ const CharacterGalleryContent = () => {
                     onEdit={() => setPage(expanded ? 'overview' : 'headshot')}
                   />
                 </div>
-                <div
+                {expanded && (
+                  <GalleryLedgerDivider
+                    label="Collapse Headshot Editor"
+                    onClick={collapseHeadshot}
+                  />
+                )}
+                <GalleryLedgerPane
                   hidden={page !== 'headshot'}
                   ref={editorScrollRef}
-                  className="CharacterGallery__scroll CharacterGallery__workspace CharacterGallery__editor"
                 >
                   <HeadshotEditorPage
                     form={form}
                     sideBySide={editorView === 'ledger'}
                     onClose={() => setPage('overview')}
                   />
-                </div>
-              </div>
+                </GalleryLedgerPane>
+              </GalleryLedger>
             </Stack.Item>
             <SaveFooter />
           </Stack>
@@ -351,7 +392,11 @@ const HeadshotSummary = (props: { form: ImageForm } & EditorToggle) => {
           {!form.headshot && <Box color="label">No image added</Box>}
         </div>
         <div>
-          <Button icon={editIcon} onClick={onEdit}>
+          <Button
+            className="CharacterGallery__headshotOpener"
+            icon={editIcon}
+            onClick={onEdit}
+          >
             {sideBySide ? (
               // Both labels stay rendered, stacked by CharacterGallery__stableLabel with the aria-hidden one invisible, so the
               // button is always as wide as the longer label. Rendering only the current label changes the button's width on
@@ -435,18 +480,11 @@ const HeadshotEditorPage = (props: {
   const { form, sideBySide, onClose } = props;
   return (
     <>
-      <Stack mb={1} align="center" justify="space-between">
-        <Box bold>Headshot Editor</Box>
-        <Stack.Item>
-          <Button
-            {...buttonRole}
-            icon={sideBySide ? 'chevron-left' : 'arrow-left'}
-            onClick={onClose}
-          >
-            {sideBySide ? 'Collapse' : 'Back to Gallery'}
-          </Button>
-        </Stack.Item>
-      </Stack>
+      <GalleryLedgerHeader
+        title="Headshot Editor"
+        sideBySide={sideBySide}
+        onClose={sideBySide ? undefined : onClose}
+      />
       <HeadshotSection key={form.id} form={form} />
     </>
   );

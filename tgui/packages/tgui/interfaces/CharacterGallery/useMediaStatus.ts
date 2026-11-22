@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { fitsPixelCap } from '../common/pictureSize';
-import { isVideoLink } from './shared';
+import {
+  artworkLimitText,
+  fitsPixelCap,
+  pictureSizeLimitText,
+} from '../common/pictureSize';
 
-export const useMediaStatus = (url: string | null) => {
+/** Whether a link ends in an mp4 extension, as the server's is_video_link decides */
+export const isVideoLink = (url: string) =>
+  url.split('.').pop()?.toLowerCase() === 'mp4';
+
+export const useMediaStatus = (url: string | null, artworkLimits = false) => {
   const [loaded, setLoaded] = useState<{
     url: string | null;
     size: [number, number];
@@ -19,6 +26,8 @@ export const useMediaStatus = (url: string | null) => {
   }, [url]);
   const size = loaded?.size ?? null;
   const ready = loaded?.url === url && !!size;
+  const tooLarge =
+    ready && !!size && !!url && !isVideoLink(url) && !fitsPixelCap(...size);
   return {
     size,
     broken,
@@ -27,12 +36,13 @@ export const useMediaStatus = (url: string | null) => {
     /** Whether size belongs to the current link, as framing arithmetic needs. */
     ready,
     /** Whether the current link is a picture over the pixel cap, so nothing draws it. Videos are not capped. */
-    tooLarge:
-      ready &&
-      !!size &&
-      !!url &&
-      !isVideoLink(url) &&
-      !fitsPixelCap(size[0], size[1]),
+    tooLarge,
+    limitText:
+      ready && size && artworkLimits
+        ? artworkLimitText(...size)
+        : tooLarge && size
+          ? pictureSizeLimitText(...size)
+          : null,
     handleLoad: (width: number, height: number) => {
       setLoaded({ url, size: [width, height] });
       setBroken(false);
