@@ -747,6 +747,7 @@
 
 /obj/item/clothing/cloak/lordcloak
 	name = "lordly cloak"
+	nudist_approved = TRUE
 	desc = "Ermine trimmed, handed down."
 	icon_state = "lord_cloak"
 	item_state = "lord_cloak"

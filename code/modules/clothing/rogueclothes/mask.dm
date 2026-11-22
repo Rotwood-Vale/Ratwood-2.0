@@ -194,6 +194,7 @@
 /obj/item/clothing/mask/rogue/lordmask
 	is_gold = TRUE
 	name = "golden halfmask"
+	nudist_approved = TRUE
 	desc = "Half of your face turned gold."
 	icon_state = "lmask"
 	sellprice = 50
@@ -656,6 +657,7 @@
 
 /obj/item/clothing/mask/rogue/lordmask/naledi
 	name = "war scholar's mask"
+	nudist_approved = FALSE // Armored variant.
 	item_state = "naledimask"
 	icon_state = "naledimask"
 	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The most prominent of these etchings is in the shape of the Naledian psycross. Armored to protect the wearer's face."
@@ -702,6 +704,7 @@
 
 /obj/item/clothing/mask/rogue/lordmask/zizite
 	name = "fateful visage"
+	nudist_approved = FALSE // Armored variant.
 	item_state = "zizomask"
 	icon_state = "zizomask"
 	desc = "To advance, at any cost."
