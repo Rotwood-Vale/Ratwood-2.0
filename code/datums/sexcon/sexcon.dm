@@ -776,11 +776,14 @@
 /datum/sex_controller/proc/get_load_bursts()
 	switch(get_semen_volume())
 		if(4)
-			return 2
+			. = 2
 		if(5 to INFINITY)
-			return 3
+			. = 3
 		else
-			return 1
+			. = 1
+	var/obj/item/organ/penis/pintle = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(pintle?.massive)
+		. += MASSIVE_PENIS_EXTRA_LOAD_BURSTS
 
 /datum/sex_controller/proc/get_max_loads()
 	var/con = user.STACON
@@ -1015,6 +1018,11 @@
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
+	var/obj/item/organ/penis/pintle = involved_penis || get_penetrating_pintle(action_target)
+	if(pintle?.massive)
+		pain_amt *= MASSIVE_PENIS_PAIN_MULTIPLIER
+		if(get_driving_force(action_target) >= SEX_FORCE_HIGH)
+			pain_amt *= MASSIVE_PENIS_PAIN_MULTIPLIER
 	var/list/modular_adjustments = modular_adjust_action_for_target_chastity(action_target, arousal_amt, pain_amt)
 	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
 		arousal_amt = modular_adjustments[1]
@@ -1029,6 +1037,36 @@
 	modular_emit_received_sex_action_signal(action_target, arousal_amt, pain_amt, giving)
 	if(modular_should_play_chastitycourse_noise(action_target))
 		chastitycourse_noise(action_target)
+
+/// Our current sex action if it targets partner, otherwise null.
+/datum/sex_controller/proc/get_action_towards(mob/living/carbon/human/partner)
+	if(!current_action || target != partner)
+		return null
+	return SEX_ACTION(current_action)
+
+/// Returns our pintle if it is penetrating partner, in our action or in theirs. Otherwise null.
+/datum/sex_controller/proc/get_penetrating_pintle(mob/living/carbon/human/partner)
+	if(!partner || partner == user)
+		return null
+	var/obj/item/organ/penis/pintle = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(!pintle)
+		return null
+	var/datum/sex_action/own_act = get_action_towards(partner)
+	if(own_act?.is_cock_penetration())
+		return pintle
+	var/datum/sex_action/their_act = partner.sexcon?.get_action_towards(user)
+	if(their_act?.is_cock_penetration(cock_on_target = TRUE))
+		return pintle
+	return null
+
+/// The force setting of whoever drives the act with partner: ours if we have an action on them, else theirs if they have one on us.
+/datum/sex_controller/proc/get_driving_force(mob/living/carbon/human/partner)
+	if(get_action_towards(partner))
+		return force
+	var/datum/sex_controller/partner_sexcon = partner?.sexcon
+	if(partner_sexcon?.get_action_towards(user))
+		return partner_sexcon.force
+	return force
 
 /datum/sex_controller/proc/receive_sex_action(arousal_amt, pain_amt, giving, applied_force, applied_speed)
 	arousal_amt *= get_force_pleasure_multiplier(applied_force, giving)
@@ -1481,6 +1519,8 @@
 		return
 	if(!can_perform_action(action_type, user.incapacitated()))
 		return
+	if(try_massive_insertion_fail(SEX_ACTION(action_type)))
+		return
 	knot_check_remove(action_type)
 	// Set vars
 	desire_stop = FALSE
@@ -1550,6 +1590,7 @@
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		massive_pintle_receiver_line(action)
 		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
@@ -1811,7 +1852,8 @@
 			target.OffBalance(30 SECONDS)
 		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/groin))
-				if(prob(10))
+				var/obj/item/organ/penis/pintle = get_penetrating_pintle(target)
+				if(prob(pintle?.massive ? PELVIS_CRUSH_CHANCE_MASSIVE : PELVIS_CRUSH_CHANCE))
 					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
 					groin.add_wound(/datum/wound/fracture)
 		

@@ -2666,7 +2666,7 @@
 /datum/intent/sword/cut/sabre/slow
 	clickcd = 12
 	damfactor = 1.25	//Better than rapier (Base is 1.1 for swords)
-	penfactor = 10		//Very slight buff to pen on cut mode. Still weaker then sword-chop mode.
+	penfactor = PEN_LIGHT	//Very slight buff to pen on cut mode. Still weaker then sword-chop mode.
 
 /obj/item/rogueweapon/sword/long/rhomphaia/stalker
 	name = "drow aruval"
