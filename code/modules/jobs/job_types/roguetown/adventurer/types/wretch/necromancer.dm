@@ -18,7 +18,8 @@
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/mindlink), "ward" = TRUE)
 	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/arcyne = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
@@ -68,6 +69,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/tame_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_guard)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/raise_skeleton)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lacrima/free)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		wretch_select_bounty(H)
@@ -110,7 +112,7 @@
 	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
 
 /datum/mind/proc/has_lich_kit()
-	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation)
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation) && !has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/lesser)
 
 /datum/mind/proc/necro_crystal_count()
 	for(var/datum/weakref/W in necro_crystals)

@@ -1,0 +1,11 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Rework pionier"
+  - balance: "Now 2 slots instead of 1"
+  - balance: "His saperka now has PICK and is better at destroying buildings"
+  - balance: "He has crafting skills on par with guild engienier"
+  - balance: "Can buy his saperka, some basic building suplies and ridle of steel (expensive) from the hoard"
+  - balance: "His traps now triger on mages, can be made in town and no longer ignore wreches, liches and vlords"
+  - balance: "His bombard is no longer the most expensive thing in bandit shop to get going"
+  - balance: "Pionier and skirmisher traps no longer delete themselves when any item enters them, and lighstep bypasses them only 25% of the time"

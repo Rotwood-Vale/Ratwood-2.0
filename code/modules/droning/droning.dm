@@ -6,6 +6,10 @@ SUBSYSTEM_DEF(droning)
 /datum/controller/subsystem/droning/proc/get_channel_volume(client/listener, channel)
 	if(!listener?.prefs)
 		return 50
+	return listener.prefs.at_overall(get_channel_slider(listener, channel))
+
+/// The slider a music or ambience channel follows, before Master
+/datum/controller/subsystem/droning/proc/get_channel_slider(client/listener, channel)
 	if(channel == CHANNEL_BUZZ || channel == CHANNEL_CMUSIC1 || channel == CHANNEL_CMUSIC2 || channel == CHANNEL_CMUSIC3 || channel == CHANNEL_CMUSIC4)
 		var/combat_volume = listener.prefs.combatmusicvol
 		if(!isnum(combat_volume))
@@ -197,7 +201,7 @@ SUBSYSTEM_DEF(droning)
 	if(!amb_sound_list)
 		return
 	var/loop_file = pick(amb_sound_list)
-	var/sound/loop_sound = sound(loop_file, repeat = TRUE, wait = 0, channel = CHANNEL_AMBIENCE, volume = dreamer?.prefs.ambiencevol)
+	var/sound/loop_sound = sound(loop_file, repeat = TRUE, wait = 0, channel = CHANNEL_AMBIENCE, volume = get_channel_volume(dreamer, CHANNEL_AMBIENCE))
 	SEND_SOUND(dreamer, loop_sound)
 	dreamer.loop_sound = TRUE
 	dreamer.loop_sound_file = loop_file
@@ -227,6 +231,6 @@ SUBSYSTEM_DEF(droning)
 
 	if(!amb_sound_list)
 		return
-	var/sound/loop_sound = sound(pick(amb_sound_list), repeat = TRUE, wait = 0, channel = CHANNEL_RAIN, volume = dreamer?.prefs.ambiencevol)
+	var/sound/loop_sound = sound(pick(amb_sound_list), repeat = TRUE, wait = 0, channel = CHANNEL_RAIN, volume = get_channel_volume(dreamer, CHANNEL_RAIN))
 	SEND_SOUND(dreamer, loop_sound)
 	dreamer.rain_sound = TRUE
