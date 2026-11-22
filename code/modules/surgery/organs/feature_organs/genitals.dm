@@ -12,9 +12,37 @@
 	var/penis_size = DEFAULT_PENIS_SIZE
 	var/functional = TRUE
 	var/branded_writing = ""
+	/// Bought with triumphs at spawn (see try_buy_massive_pintle). Only valid on a MAX_PENIS_SIZE pintle.
+	var/massive = FALSE
 
 /obj/item/organ/penis/Initialize(mapload)
 	. = ..()
+
+/obj/item/organ/penis/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	// Organ rebuilds (set_species, copy_to) make a fresh pintle, so re-apply what this body paid for.
+	if(HAS_TRAIT(M, TRAIT_MASSIVE_PINTLE))
+		set_massive(TRUE)
+
+/obj/item/organ/penis/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return "[..()]-[sheath_type]-[erect_state]-[penis_size]-[massive]"
+
+/obj/item/organ/penis/proc/can_be_massive()
+	return penis_size == MAX_PENIS_SIZE
+
+/obj/item/organ/penis/proc/set_massive(new_massive)
+	massive = new_massive && can_be_massive()
+
+/// Sets the size, dropping massive if the new size can't carry it.
+/obj/item/organ/penis/proc/set_penis_size(new_size)
+	penis_size = new_size
+	set_massive(massive)
+
+/obj/item/organ/penis/proc/is_massive_and_erect()
+	if(!massive)
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	return erect_state == ERECT_STATE_HARD || human?.sexcon?.arousal > 20
 
 /obj/item/organ/penis/proc/get_size_arousal_multiplier(mob/living/carbon/human/receiver)
 	if(penis_size != MIN_PENIS_SIZE)

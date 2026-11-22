@@ -1,0 +1,5 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "Readds Xylixian Divine Fetch, Repel, and Slipsquare miracles. Fetch/Repel are the AP VERSIONS."
+  - balance: "Made repel CD to 10 instead of 15 seconds."

@@ -17,7 +17,7 @@
 	invocation_type = INVOCATION_WHISPER
 
 	charge_required = FALSE
-	cooldown_time = 15 SECONDS
+	cooldown_time = 10 SECONDS
 
 	projectile_type = /obj/projectile/magic/repel
 
