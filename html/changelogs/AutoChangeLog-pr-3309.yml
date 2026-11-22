@@ -1,0 +1,8 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - rscadd: "Added new martyr weapon: Scythe"
+  - rscadd: "Added new weapon summoning system for Martyrs"
+  - rscdel: "Removed old way to summon weapons"
+  - sound: "Added new sound for Martyr 's scythe special"
+  - image: "Added Scythe sprites"
