@@ -339,6 +339,7 @@
 	icon_state_ready = "runelock_loaded_bayonet"
 	default_icon_state = "runelock_bayonet"
 	item_state = "runelock_bayonet"
+	force_wielded = 25
 	gripped_intents = list()
 	alt_grips = list(/datum/alt_grip/abbot_shoot, /datum/alt_grip/abbot_bayonet)
 	special = /datum/special_intent/quarterstaff_sweep
