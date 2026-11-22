@@ -128,9 +128,16 @@
 
 	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
 	if(wants_penis)
+		// Gnolls always get a free massive pintle (TRAIT_MASSIVE_PINTLE is a gnoll species trait).
+		// A carried-over pintle of any other kind is swapped out.
+		if(penis && penis.type != /obj/item/organ/penis/knotted/big)
+			penis.Remove(src)
+			qdel(penis)
+			penis = null
 		if(!penis)
 			penis = new /obj/item/organ/penis/knotted/big()
 			penis.Insert(src, TRUE, FALSE)
+		penis.set_massive(TRUE)
 		var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
 		if(!testicles)
 			testicles = new()

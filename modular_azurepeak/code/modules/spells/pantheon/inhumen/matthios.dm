@@ -214,7 +214,7 @@
 			revert_cast()
 			return
 		var/mammonsonperson = get_mammons_in_atom(target)
-		var/mammonsinbank = SStreasury.bank_accounts[target]
+		var/mammonsinbank = SStreasury.get_balance(target)
 		var/totalvalue = mammonsinbank + mammonsonperson
 		if(HAS_TRAIT(target, TRAIT_NOBLE))
 			totalvalue += 101 // We're ALWAYS going to do a medium level smite minimum to nobles.
