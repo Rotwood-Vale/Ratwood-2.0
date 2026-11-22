@@ -101,6 +101,7 @@ GLOBAL_LIST_INIT(garrison_positions, list(
 	"Dungeoneer",
 	"Master Warden",
 	"Watch Captain",
+	"Bogger",
 	//desert
 	"Cataphract",
 	"Janissary",
@@ -187,10 +188,13 @@ GLOBAL_LIST_INIT(wanderer_positions, list(
 ))
 
 GLOBAL_LIST_INIT(villain_positions, list(
-	"Bandit",
-	"Wretch",
-	"Gnoll",
-	"Assassin",
+    "Bandit",
+    "Wretch",
+    "Gnoll",
+    "Assassin",
+    "Bog Highwayman",
+    "Bog Goblin",
+    "Bog Skeleton",
 ))
 
 GLOBAL_LIST_INIT(tribal_positions, list(
