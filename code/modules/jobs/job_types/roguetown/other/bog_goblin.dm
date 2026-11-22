@@ -27,6 +27,9 @@
 		H.mind.assigned_role = title
 	else if(M?.mind)
 		M.mind.assigned_role = title
+	if(!H.getorganslot(ORGAN_SLOT_PENIS))
+		var/obj/item/organ/penis/P = new()
+		P.Insert(H)
 	H.name = "Bog Goblin"
 	H.real_name = "Bog Goblin"
 	H.STASTR = 8
@@ -35,6 +38,7 @@
 	H.STAWIL = 13
 	H.STAPER = 10
 	H.STAINT = 5
+
 	H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_NOVICE, TRUE)
@@ -49,3 +53,4 @@
 	head = /obj/item/clothing/head/roguetown/helmet/leather/goblin
 	r_hand = /obj/item/rogueweapon/spear/stone
 	beltl = /obj/item/rogueweapon/huntingknife/stoneknife
+
