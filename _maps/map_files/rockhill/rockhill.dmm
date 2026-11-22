@@ -21593,7 +21593,7 @@
 /area/rogue/outdoors/beach/harbor)
 "ekJ" = (
 /obj/structure/mineral_door/wood/donjon{
-	lockid = s;
+	lockid = "CourtAgent";
 	locked = 1
 	},
 /turf/open/floor/rogue/churchbrick,
