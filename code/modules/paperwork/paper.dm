@@ -1022,7 +1022,7 @@
 	if(user.mind && !HAS_TRAIT(user.mind, TRAIT_AGENTHIDEOUT))
 		ADD_TRAIT(user.mind, TRAIT_AGENTHIDEOUT, GENERIC)
 		user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
-		to_chat(user, span_smallgreen("I now know of the court agents of the duchy along with their hideout."))
+		to_chat(user, span_smallgreen("I now know of the court agents of the duchy."))
 	if(!length(GLOB.court_agents))
 		to_chat(user, span_notice("There are no agents on the list currently in the duchy."))
 	else

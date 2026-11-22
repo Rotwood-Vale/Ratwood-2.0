@@ -82,6 +82,7 @@
 			/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 			/obj/item/rogueweapon/scabbard/sheath = 1,
 			/obj/item/lockpickring/mundane = 1,
+			/obj/item/roguekey/courtagent = 1,
 		)
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
 		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)

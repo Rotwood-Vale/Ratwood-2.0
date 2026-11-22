@@ -62,6 +62,7 @@
 					/obj/item/lockpickring/mundane = 1,
 					/obj/item/speaker/agent = 1,
 					/obj/item/listeningdevice/agent = 2,
+					/obj/item/roguekey/courtagent = 1,
 				)
 
 	if(H.mind)

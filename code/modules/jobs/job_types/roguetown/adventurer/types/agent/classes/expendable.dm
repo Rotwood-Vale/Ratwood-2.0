@@ -62,6 +62,7 @@
 					/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 					/obj/item/rogueweapon/scabbard/sheath = 1,
 					/obj/item/lockpickring/mundane = 1,
+					/obj/item/roguekey/courtagent = 1,
 				)
 
 			if("Bruiser")
@@ -94,6 +95,7 @@
 							/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 1,
 							/obj/item/lockpick = 1,
+							/obj/item/roguekey/courtagent = 1,
 						)
 				var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff")
 				var/technique_choice = input(H, "Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
@@ -135,6 +137,7 @@
 					/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 					/obj/item/rogueweapon/scabbard/sheath = 1,
 					/obj/item/lockpickring/mundane = 1,
+					/obj/item/roguekey/courtagent = 1,
 				)
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/white

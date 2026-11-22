@@ -7,7 +7,7 @@
 	spawn_positions = 2
 	round_contrib_points = 2
 	job_traits = list(TRAIT_STEELHEARTED, TRAIT_KEENEARS, TRAIT_COURTAGENT)
-	tutorial = "Whether acquired by merit, shrewd negotiation or fulfilled bounties, you have found yourself under the underhanded employ of the Hand. Fulfill desires and whims of the court that they would rather not be publicly known. Your position is anything but secure, and any mistake can leave you disowned and charged like the petty criminal are. Only the duke and hand know who you are."
+	tutorial = "Whether acquired by merit, shrewd negotiation or fulfilled bounties, you have found yourself under the underhanded employ of the Hand along with other unfortunate souls to make the same mistake as you. Together you form 'The Collective'. Fulfill desires and whims of the court that they would rather not be publicly known. Your position is anything but secure, and any mistake can leave you disowned and charged like the petty criminal are. Only the duke and hand know who you are."
 	min_pq = 5
 	job_reopens_slots_on_death = FALSE
 	always_show_on_latechoices = TRUE
@@ -19,7 +19,8 @@
 	/datum/advclass/agent/sicaire,
 	/datum/advclass/agent/sicario,
 	/datum/advclass/agent/nachtjager,
-	/datum/advclass/agent/expendable
+	/datum/advclass/agent/expendable,
+	/datum/advclass/agent/arcane
 	)
 //Hooking in here does not mess with their equipment procs
 /datum/job/roguetown/adventurer/courtagent/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

@@ -39,10 +39,10 @@
 /datum/outfit/job/roguetown/agent/sicaire/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		var/classes = list("L'Enleveur", "Le Bagarreur", "L'Éclaireur")
+		var/classes = list("L'Enleveur (Kidnapper)", "Le Bagarreur (Brawler)", "L'Éclaireur (Scout)")
 		var/classchoice = input(H, "Choose your class.", "What is your specialty?") as anything in classes
 		switch(classchoice)
-			if("L'Éclaireur")
+			if("L'Éclaireur (Scout)")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
@@ -65,9 +65,10 @@
 					/obj/item/rogueweapon/scabbard/sheath = 1,
 					/obj/item/lockpickring/mundane = 1,
 					/obj/item/grapplinghook = 1,
+					/obj/item/roguekey/courtagent = 1,
 				)
 
-			if("Le Bagarreur")
+			if("Le Bagarreur (Brawler)")
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
@@ -94,6 +95,7 @@
 							/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 1,
 							/obj/item/lockpick = 1,
+							/obj/item/roguekey/courtagent = 1,
 						)
 				var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff")
 				var/technique_choice = input(H, "Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
@@ -106,7 +108,7 @@
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
 					if("Headbutt - Vulnerable Debuff")
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
-			if("L'Enleveur")
+			if("L'Enleveur (Kidnapper)")
 				ADD_TRAIT(H, TRAIT_BLACKBAGGER, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sheath
@@ -129,6 +131,7 @@
 					/obj/item/inqarticles/garrote = 1,
 					/obj/item/clothing/head/inqarticles/blackbag = 1,
 					/obj/item/lockpickring/mundane = 1,
+					/obj/item/roguekey/courtagent = 1,
 				)
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/blue
