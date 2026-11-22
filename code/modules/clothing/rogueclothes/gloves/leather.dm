@@ -30,6 +30,7 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	nudist_approved = TRUE
+	armor = ARMOR_LEATHER
 
 /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves
 	name = "fingerless gloves"
@@ -57,6 +58,7 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	salvage_result = /obj/item/natural/hide/cured
+	armor = ARMOR_LEATHER
 
 /obj/item/clothing/gloves/roguetown/fingerless_leather/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
@@ -67,7 +69,7 @@
 	desc = "A pair of heavy Otavan leather gloves, commonly used by fencers, renowned for their quality."
 	icon_state = "fencergloves"
 	item_state = "fencergloves"
-	armor = ARMOR_MAILLE
+	armor = ARMOR_LEATHER
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
