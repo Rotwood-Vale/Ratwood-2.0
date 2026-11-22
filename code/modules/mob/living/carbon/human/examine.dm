@@ -1209,6 +1209,11 @@
 		if(name in GLOB.outlawed_players)
 			. += span_userdanger("OUTLAW!")
 
+		if(HAS_TRAIT(src, TRAIT_EVYL_DRAINER) && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if((user == src) || HAS_TRAIT(H, TRAIT_INQUISITION) || (H.job in GLOB.church_positions))
+				. += span_userdanger("IS REEKING OF BAOTHA'S DEBAUCHERY!")
+
 		if(HAS_TRAIT(user, TRAIT_JUSTICARSIGHT) && !HAS_TRAIT(src, TRAIT_GUARD_RAISED))
 			for(var/datum/bounty/b in GLOB.head_bounties) //I hate this.
 				if(b.target == real_name)

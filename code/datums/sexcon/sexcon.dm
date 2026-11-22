@@ -536,6 +536,35 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	if(!oral && (orifice & SEX_PART_TAIL_MAW) && !(source_part & SEX_PART_TAIL_MAW))
 		user.try_impregnate(effective_target, SEX_PART_TAIL_MAW)
+
+	//EVIL BAOTHAN STATDRAIN
+	if(effective_target && HAS_TRAIT(user, TRAIT_DEPRAVED) && user.cmode && user.devotion && user.devotion.level >= CLERIC_T0 && !user.has_status_effect(/datum/status_effect/debuff/false_drain))
+		var/datum/status_effect/buff/baothasbanquet/boost_buff = user.has_status_effect(/datum/status_effect/buff/baothasbanquet)
+		if(boost_buff)
+			boost_buff.tier_up(effective_target)
+		else
+			boost_buff = user.apply_status_effect(/datum/status_effect/buff/baothasbanquet)
+			boost_buff?.poor_bastards += effective_target
+		var/datum/status_effect/debuff/baothadrained/drain_debuff = effective_target.has_status_effect(/datum/status_effect/debuff/baothadrained)
+		if(drain_debuff)
+			drain_debuff.tier_up()
+		else
+			effective_target.apply_status_effect(/datum/status_effect/debuff/baothadrained)
+		effective_target.playsound_local(user, 'sound/misc/mat/lvldown.ogg', 100)
+	if(effective_target && HAS_TRAIT(effective_target, TRAIT_DEPRAVED) && effective_target.cmode && effective_target.devotion && effective_target.devotion.level >= CLERIC_T0 && !effective_target.has_status_effect(/datum/status_effect/debuff/false_drain))
+		var/datum/status_effect/buff/baothasbanquet/boost_buff = effective_target.has_status_effect(/datum/status_effect/buff/baothasbanquet)
+		if(boost_buff)
+			boost_buff.tier_up(user)
+		else
+			boost_buff = effective_target.apply_status_effect(/datum/status_effect/buff/baothasbanquet)
+			boost_buff?.poor_bastards += user
+		var/datum/status_effect/debuff/baothadrained/drain_debuff = user.has_status_effect(/datum/status_effect/debuff/baothadrained)
+		if(drain_debuff)
+			drain_debuff.tier_up()
+		else
+			user.apply_status_effect(/datum/status_effect/debuff/baothadrained)
+		user.playsound_local(user, 'sound/misc/mat/lvldown.ogg', 100)
+
 	after_ejaculation(consume_charge)
 	if(consume_charge)
 		after_intimate_climax(oral, splashed_user)
@@ -918,6 +947,8 @@
 /datum/sex_controller/proc/handle_charge(dt)
 	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
 		dt *= 2
+	if(HAS_TRAIT(user, TRAIT_DEPRAVED))
+		dt *= 2
 	adjust_charge(dt * CHARGE_RECHARGE_RATE)
 	if(is_spent())
 		if(arousal > 60)
@@ -938,6 +969,11 @@
 	if(!user.has_status_effect(/datum/status_effect/debuff/false_sensation)) // So chat isn't spammed
 		to_chat(user, span_warning("My arousal is hollow and false. It won't sate my urges."))
 	user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
+
+/datum/sex_controller/proc/try_apply_false_drain()
+	if(!HAS_TRAIT(user, TRAIT_DEPRAVED))
+		return
+	user.apply_status_effect(/datum/status_effect/debuff/false_drain)
 
 /datum/sex_controller/proc/update_erect_state()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
@@ -1077,6 +1113,9 @@
 		arousal_amt = 0
 		pain_amt = 0
 
+	if(HAS_TRAIT(user, TRAIT_DEPRAVED))
+		pain_amt *= 0.66
+	
 	if(!arousal_frozen)
 		adjust_arousal(arousal_amt)
 
@@ -1461,6 +1500,7 @@
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(!isnull(amount) && amount > arousal)
 				try_apply_false_sensation()
+				try_apply_false_drain()
 			if(aphrodisiac > 1 && amount > 0)
 				set_arousal(amount * aphrodisiac)
 			else
@@ -1470,6 +1510,7 @@
 				arousal_frozen = !arousal_frozen
 				if(arousal > 60)
 					try_apply_false_sensation()
+					try_apply_false_drain()
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
 		if("category_hands")
