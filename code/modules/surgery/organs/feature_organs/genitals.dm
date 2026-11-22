@@ -26,8 +26,10 @@
 
 /obj/item/organ/penis/get_icon_cache_key(obj/item/bodypart/bodypart)
 	. = "[..()]-[sheath_type]-[erect_state]-[penis_size]-[massive]"
-	if(istype(owner?.get_bodypart(BODY_ZONE_TAUR), /obj/item/bodypart/taur/deer) && ispath(get_render_accessory_type(), /datum/sprite_accessory/penis/taur))
-		. += "-deer"
+	var/obj/item/bodypart/taur/body = owner?.get_bodypart(BODY_ZONE_TAUR)
+	var/placement = get_taur_penis_placement(body?.type)
+	if(placement && ispath(get_render_accessory_type(), /datum/sprite_accessory/penis/taur))
+		. += "-[placement]"
 
 /obj/item/organ/penis/proc/get_sprite_size()
 	return massive ? penis_size : clamp(penis_size, SMALL_PENIS_SIZE, DEFAULT_PENIS_SIZE)

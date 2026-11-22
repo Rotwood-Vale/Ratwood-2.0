@@ -41,13 +41,18 @@
 	var/obj/item/organ/penis/member = organ
 	if(!isnum(member.penis_size) || member.penis_size != round(member.penis_size) || member.penis_size < MIN_PENIS_SIZE || member.penis_size > MAX_PENIS_SIZE)
 		return null
+	var/state
 	if(member.erect_state != ERECT_STATE_HARD)
-		if(member.sheath_type == SHEATH_TYPE_NORMAL)
-			return "m_penis_sheath_[member.erect_state == ERECT_STATE_NONE ? 0 : 1]"
-		if(member.sheath_type == SHEATH_TYPE_SLIT)
-			return "m_penis_slit_1"
-	var/sprite_size = member.get_sprite_size()
-	return "m_penis_[icon_state]_[sprite_size]_[member.erect_state == ERECT_STATE_HARD ? 1 : 0]"
+		switch(member.sheath_type)
+			if(SHEATH_TYPE_NORMAL)
+				state = "m_penis_sheath_[member.erect_state == ERECT_STATE_NONE ? 0 : 1]"
+			if(SHEATH_TYPE_SLIT)
+				state = "m_penis_slit_1"
+	if(!state)
+		state = "m_penis_[icon_state]_[member.get_sprite_size()]_[member.erect_state == ERECT_STATE_HARD ? 1 : 0]"
+	var/obj/item/bodypart/taur/body = owner?.get_bodypart(BODY_ZONE_TAUR)
+	var/placement = get_taur_penis_placement(body?.type)
+	return placement ? "[placement]:[state]" : state
 
 /datum/sprite_accessory/testicles/taur/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	var/obj/item/organ/testicles/testicles = organ
@@ -56,15 +61,18 @@
 	return "m_testicles_pair_[testicles.ball_size]"
 
 /datum/sprite_accessory/penis/taur/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-	if(!istype(owner?.get_bodypart(BODY_ZONE_TAUR), /obj/item/bodypart/taur/deer))
-		return
-	for(var/mutable_appearance/appearance as anything in appearance_list)
-		appearance.pixel_y += 2
+	// Taur frames already include body-specific offsets.
+	return
 
 /datum/sprite_accessory/testicles/taur/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return
 
 /datum/sprite_accessory/penis/taur/generate_icon_state(overlay_icon_state, color_list, passed_layer, suffix)
+	var/separator = findtext(overlay_icon_state, ":")
+	var/placement
+	if(separator)
+		placement = copytext(overlay_icon_state, 1, separator)
+		overlay_icon_state = copytext(overlay_icon_state, separator + 1)
 	var/state = "[overlay_icon_state]_[suffix]"
 	var/icon/result = icon(icon, "[state]_primary")
 	result.Blend(color_list[overlay_icon_state == "m_penis_slit_1" ? 2 : 1], ICON_MULTIPLY)
@@ -72,8 +80,32 @@
 		var/icon/sheath = icon(icon, "[state]_secondary")
 		sheath.Blend(color_list[2], ICON_MULTIPLY)
 		result.Blend(sheath, ICON_OVERLAY)
+	if(placement)
+		var/icon/positioned = new
+		var/result_state = icon_states(result)[1]
+		for(var/direction in GLOB.cardinals)
+			var/icon/frame = icon(result, result_state, direction)
+			switch(placement)
+				if("deer")
+					frame.Shift(NORTH, 2)
+				if("sloog")
+					// Move toward the tail and below the lower body in each side view.
+					if(direction == EAST || direction == WEST)
+						frame.Shift(REVERSE_DIR(direction), 6)
+						frame.Shift(SOUTH, 2)
+			positioned.Insert(frame, "", direction)
+		result = positioned
 	result.GetPixel(1, 1)
 	return result
+
+/// Identifies placements that require their own sprite frames and cache entries.
+/proc/get_taur_penis_placement(taur_type)
+	switch(taur_type)
+		if(/obj/item/bodypart/taur/deer)
+			return "deer"
+		if(/obj/item/bodypart/taur/sloog)
+			return "sloog"
+	return null
 
 /proc/uses_taur_genital_sprites(taur_type)
 	var/static/list/supported_bodies = list(

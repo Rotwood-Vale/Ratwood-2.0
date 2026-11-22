@@ -8,31 +8,40 @@
 		TEST_ASSERT_EQUAL(resolve_taur_genital_accessory(/datum/sprite_accessory/penis/taur/knotted, body_type), /datum/sprite_accessory/penis/knotted, "Saved taur forms must resolve to ordinary sprites on arthropod bodies.")
 		TEST_ASSERT_EQUAL(resolve_taur_genital_accessory(/datum/sprite_accessory/testicles/taur, body_type), /datum/sprite_accessory/testicles/pair, "Saved taur testicles must resolve to ordinary sprites on arthropod bodies.")
 
-/datum/unit_test/taur_deer_placement/Run()
-	var/mob/living/carbon/human/deer = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/carbon/human/canine = allocate(/mob/living/carbon/human/consistent)
-	deer.Taurize(/obj/item/bodypart/taur/deer)
-	canine.Taurize(/obj/item/bodypart/taur/canine)
+/datum/unit_test/taur_genital_placement/Run()
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/penis/member = allocate(/obj/item/organ/penis)
 	member.accessory_type = /datum/sprite_accessory/penis/taur/knotted
-	member.Insert(deer, TRUE, FALSE)
-	var/deer_key = member.get_icon_cache_key(null)
-	member.Remove(deer, TRUE)
-	member.Insert(canine, TRUE, FALSE)
-	TEST_ASSERT(deer_key != member.get_icon_cache_key(null), "Deer and other taur bodies must not share cached limb overlays with different placement.")
+	member.Insert(person, TRUE, FALSE)
 	member.erect_state = ERECT_STATE_HARD
+
+	person.Taurize(/obj/item/bodypart/taur/canine)
+	var/canine_key = member.get_icon_cache_key(null)
+	person.Taurize(/obj/item/bodypart/taur/deer)
+	var/deer_key = member.get_icon_cache_key(null)
+	person.Taurize(/obj/item/bodypart/taur/sloog)
+	var/sloog_key = member.get_icon_cache_key(null)
+	TEST_ASSERT(canine_key != deer_key && canine_key != sloog_key && deer_key != sloog_key, "Different placements must have distinct limb cache keys.")
+
 	for(var/accessory_type in subtypesof(/datum/sprite_accessory/penis/taur))
 		var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
-		var/state = accessory.get_icon_state(member, null, null)
-		var/list/deer_appearances = accessory.get_overlay(state, "#FFFFFF#777777")
-		accessory.adjust_appearance_list(deer_appearances, member, null, deer)
-		var/mutable_appearance/deer_appearance = deer_appearances[1]
-		TEST_ASSERT_EQUAL(deer_appearance.pixel_y, 2, "Deer placement must raise the taur member by two pixels.")
-		var/list/other_appearances = accessory.get_overlay(state, "#FFFFFF#777777")
-		accessory.adjust_appearance_list(other_appearances, member, null, canine)
-		var/mutable_appearance/other_appearance = other_appearances[1]
-		TEST_ASSERT_EQUAL(other_appearance.pixel_y, 0, "Deer placement must not leak into other owners or the shared sprite cache.")
-		TEST_ASSERT_EQUAL(accessory.pixel_y, 0, "The shared accessory must retain its original offset.")
+		person.Taurize(/obj/item/bodypart/taur/canine)
+		var/list/canine_appearances = accessory.get_overlay(accessory.get_icon_state(member, null, person), "#FFFFFF#777777")
+		var/mutable_appearance/canine_sprite = canine_appearances[1]
+		for(var/body_type in list(/obj/item/bodypart/taur/deer, /obj/item/bodypart/taur/sloog))
+			person.Taurize(body_type)
+			var/list/placed_appearances = accessory.get_overlay(accessory.get_icon_state(member, null, person), "#FFFFFF#777777")
+			var/mutable_appearance/placed_sprite = placed_appearances[1]
+			TEST_ASSERT_EQUAL(placed_sprite.pixel_y, canine_sprite.pixel_y, "Offsets belong to the frame.")
+			for(var/direction in GLOB.cardinals)
+				var/icon/expected = icon(canine_sprite.icon, canine_sprite.icon_state, direction)
+				if(body_type == /obj/item/bodypart/taur/deer)
+					expected.Shift(NORTH, 2)
+				else if(direction == EAST || direction == WEST)
+					expected.Shift(REVERSE_DIR(direction), 6)
+					expected.Shift(SOUTH, 2)
+				var/icon/actual = icon(placed_sprite.icon, placed_sprite.icon_state, direction)
+				TEST_ASSERT(!taur_sprite_images_differ(expected, actual), "Placement differs from expected for [body_type], [accessory_type], direction [direction].")
 
 /datum/unit_test/taur_genital_cache_states/Run()
 	var/obj/item/organ/penis/member = allocate(/obj/item/organ/penis)
@@ -190,15 +199,15 @@
 		var/mutable_appearance/base_appearance = base[1]
 		var/mutable_appearance/member_appearance = member_changed[1]
 		var/mutable_appearance/sheath_appearance = sheath_changed[1]
-		TEST_ASSERT(images_differ(icon(base_appearance.icon, base_appearance.icon_state), icon(member_appearance.icon, member_appearance.icon_state)), "Member color affects the tip, including one SOUTH pixel when retracted.")
+		TEST_ASSERT(taur_sprite_images_differ(icon(base_appearance.icon, base_appearance.icon_state), icon(member_appearance.icon, member_appearance.icon_state)), "Member color affects the tip, including one SOUTH pixel when retracted.")
 		if(state == ERECT_STATE_NONE)
-			TEST_ASSERT(!images_differ(icon(base_appearance.icon, base_appearance.icon_state), icon(member_appearance.icon, member_appearance.icon_state), EAST), "The retracted EAST frame is entirely sheath and must ignore Member color.")
-		TEST_ASSERT_EQUAL(images_differ(icon(base_appearance.icon, base_appearance.icon_state), icon(sheath_appearance.icon, sheath_appearance.icon_state)), state != ERECT_STATE_HARD, "Sheath color must affect the sheath, not exposed anatomy.")
+			TEST_ASSERT(!taur_sprite_images_differ(icon(base_appearance.icon, base_appearance.icon_state), icon(member_appearance.icon, member_appearance.icon_state), EAST), "The retracted EAST frame is entirely sheath and must ignore Member color.")
+		TEST_ASSERT_EQUAL(taur_sprite_images_differ(icon(base_appearance.icon, base_appearance.icon_state), icon(sheath_appearance.icon, sheath_appearance.icon_state)), state != ERECT_STATE_HARD, "Sheath color must affect the sheath, not exposed anatomy.")
 	TEST_ASSERT_EQUAL(accessory.color_key_names[2], "Sheath / slit", "The separate taur accessory labels its own colors.")
 	var/datum/sprite_accessory/ordinary = SPRITE_ACCESSORY(/datum/sprite_accessory/penis/flared)
 	TEST_ASSERT_EQUAL(ordinary.color_key_names[2], "Skin", "Ordinary accessory labels remain unchanged.")
 
-/datum/unit_test/taur_genital_colors/proc/images_differ(icon/first, icon/second, only_direction = 0)
+/proc/taur_sprite_images_differ(icon/first, icon/second, only_direction = 0)
 	for(var/direction in list(SOUTH, NORTH, EAST, WEST))
 		if(only_direction && direction != only_direction)
 			continue
