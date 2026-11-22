@@ -109,7 +109,6 @@
 					if("Headbutt - Vulnerable Debuff")
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 			if("Protector")
-				ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 				REMOVE_TRAIT(H, TRAIT_DODGEEXPERT, GENERIC)
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
