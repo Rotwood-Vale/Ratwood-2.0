@@ -144,7 +144,6 @@
 		if("Pure Unarmed")//very good but unlike other pure unarmed subclasses, they dont get rage nor master unarmed since they're miraclists
 			H.change_stat(STATKEY_INT, 1)//no malus for pure unarmed
 			H.change_stat(STATKEY_PER, 1)
-			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 			gloves = /obj/item/clothing/gloves/roguetown/plate/atgervi

@@ -1,0 +1,6 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - rscadd: "Added Heretic Spellblade"
+  - rscadd: "Added Heretic Spellfist"
+  - rscadd: "Added Adventurer Spellfist"

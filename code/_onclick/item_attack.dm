@@ -181,6 +181,9 @@
 			if(dualwield_armed)
 				user.complete_dualwield_attack(M, null)
 			return
+
+	M.on_attacked_as_pacifist(user)
+
 	// Release drain on attacks besides unarmed attacks/grabs is 1, so it'll just be whatever the penalty is + 1.
 	// Unarmed attacks are the only ones right now that have differing releasedrain, see unarmed attacks for their calc.
 	user.stamina_add(user.used_intent.releasedrain + user.get_swifstrong_stam_penalty())
@@ -272,6 +275,8 @@
 			return
 
 	if(M.attacked_by(src, user))
+		M.on_hit_as_pacifist(user)
+
 		var/tempsound = cached_intent?.hitsound
 		if(tempsound)
 			playsound(M.loc, tempsound, 100, FALSE, -1)
@@ -790,3 +795,20 @@
 		span_danger("[attack_message_local][next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 	next_attack_msg.Cut()
 	return 1
+
+/mob/living/proc/on_attacked_as_pacifist(mob/living/attacker)
+	if(!HAS_TRAIT(src, TRAIT_PACIFISM))
+		return
+	// The pacifist's Clash cooldown is reduced when attacked.
+	reduce_intent_cooldown(src, /datum/status_effect/debuff/clashcd, amount = 5 SECONDS)
+
+/mob/living/proc/on_hit_as_pacifist(mob/living/attacker)
+	if(!HAS_TRAIT(src, TRAIT_PACIFISM))
+		return
+	// The person who hit the pacifist feels remorse.
+	if(HAS_TRAIT(attacker, TRAIT_NOMOOD))
+		return
+	if(attacker.patron?.type in ALL_INHUMEN_PATRONS)
+		attacker.add_stress(/datum/stressevent/remorse_evil)
+	else
+		attacker.add_stress(/datum/stressevent/remorse)
