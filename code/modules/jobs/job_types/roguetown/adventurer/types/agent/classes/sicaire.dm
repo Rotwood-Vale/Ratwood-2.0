@@ -1,6 +1,6 @@
 /datum/advclass/agent/sicaire
 	name = "Otavan Sicaires"
-	tutorial = "The Sicaires are a feared order of thieves, assassins, and infiltrators who unlike the routiers, prefer to work among the shadows and rooftops of Otava. Known for kidnapping townfolk of the streets, whether they are a heretic, or simply someone who pissed off the wrong kind of person. Often hired by high-ranking noble figures to take care of political threats to their standing.."
+	tutorial = "The Sicaires are a feared order of thieves, assassins, and infiltrators who unlike the routiers, prefer to work among the shadows and rooftops of Otava. Known for kidnapping townfolk off the streets, whether they are a heretic, or simply someone who pissed off the wrong kind of person. Often hired by high-ranking noble figures to take care of political threats to their standing.."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = NON_DWARVEN_RACE_TYPES
 	outfit = /datum/outfit/job/roguetown/agent/sicaire

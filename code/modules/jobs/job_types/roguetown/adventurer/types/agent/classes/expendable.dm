@@ -110,22 +110,21 @@
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 			if("Protector")
 				REMOVE_TRAIT(H, TRAIT_DODGEEXPERT, GENERIC)
-				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, GENERIC)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_EXP_JOURNEYMAN, TRUE)
-				H.change_stat(STATKEY_SPD,-2)
+				H.change_stat(STATKEY_SPD,-4)
 				H.change_stat(STATKEY_WIL, 2)
 				H.change_stat(STATKEY_CON, 2)
 				H.change_stat(STATKEY_INT, -1)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/long
+				H.change_stat(STATKEY_STR, 2)
+				r_hand = /obj/item/rogueweapon/greatsword
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/faulds/white
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/half
 				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat/white
 				backr = /obj/item/storage/backpack/rogue/satchel/black
-				backl = /obj/item/rogueweapon/shield/tower/metal
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				gloves = /obj/item/clothing/gloves/roguetown/plate
 				pants = /obj/item/clothing/under/roguetown/chainlegs
 				head = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/white
