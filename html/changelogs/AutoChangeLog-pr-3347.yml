@@ -1,0 +1,7 @@
+author: "eirenxiv"
+delete-after: True
+changes:
+  - balance: "buffed Hangyaku-Kouken statweight to 9"
+  - balance: "changed samsibsa scaleplate into heavy brigandine"
+  - balance: "unified Hangyaku-Kouken sword & bow option"
+  - bugfix: "fixed Hangyaku class previews and typo"
