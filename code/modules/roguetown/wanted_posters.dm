@@ -42,11 +42,22 @@
 		. += posters[poster_name]
 
 /// HTML for a set of wanted posters, or empty_text if there are none.
-/proc/render_wanted_posters(list/posters, empty_text)
+/proc/render_wanted_posters(list/posters, empty_text, client/viewer, window_id)
 	if(!length(posters))
 		return "<div style='text-align: center; color: #999; font-style: italic;'>[empty_text]</div>"
 
+	var/list/pending = list()
 	var/list/html = list({"
+	<script>
+		function wanted_poster_ready(id, b64) {
+			var placeholder = document.getElementById(id);
+			if (!placeholder) return;
+			var img = document.createElement('img');
+			img.className = 'wanted-icon';
+			img.src = 'data:image/png;base64,' + b64;
+			placeholder.parentNode.replaceChild(img, placeholder);
+		}
+	</script>
 	<style>
 		.wanted-container {
 			display: flex;
@@ -141,10 +152,17 @@
 	"})
 
 	for(var/datum/wanted_poster/poster as anything in posters)
-		var/portrait_b64 = SScrediticons.get_poster_base64(SScrediticons.get_portrait_by_name(poster.name))
-		var/icon_html = portrait_b64 \
-			? "<img class='wanted-icon' src='data:image/png;base64,[portrait_b64]'>" \
-			: "<div class='wanted-icon' style='background:#8B4513;'></div>"
+		var/mutable_appearance/portrait = SScrediticons.get_portrait_by_name(poster.name)
+		var/portrait_b64 = SScrediticons.get_poster_base64(portrait)
+		var/icon_html
+		if(portrait_b64)
+			icon_html = "<img class='wanted-icon' src='data:image/png;base64,[portrait_b64]'>"
+		else if(portrait && viewer && window_id)
+			var/element_id = "wanted-[md5(poster.name)]"
+			pending[element_id] = portrait
+			icon_html = "<div class='wanted-icon' id='[element_id]' style='background:#8B4513;'></div>"
+		else
+			icon_html = "<div class='wanted-icon' style='background:#8B4513;'></div>"
 		var/bounty_html = ""
 		if(poster.amount > 0)
 			bounty_html += "<div class='wanted-bounty'>[poster.amount] MAMMONS</div>"
@@ -166,4 +184,6 @@
 		"}
 
 	html += "</div>"
+	if(length(pending))
+		SScrediticons.push_pending_posters(viewer, window_id, pending)
 	return html.Join()
