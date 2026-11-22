@@ -176,7 +176,7 @@
 
 /// The opening view ids, which ART_VIEW_LABELS in tgui's common/artViewSettings.ts must match
 /proc/is_art_opening_view(value)
-	var/static/list/views = list("whole", "fitted", "custom")
+	var/static/list/views = list("whole", "fitted", "scroll")
 	return istext(value) && (value in views)
 
 /proc/is_art_view_lock(value)
@@ -217,21 +217,15 @@
 /**
  * Missing or invalid settings read as the default, which must match DEFAULT_ART_VIEW in tgui's common/artViewSettings.ts
  *
- * A crop is kept only when valid, whichever view opens. The view id "scroll" reads as "custom" with no
- * crop, which opens on the same top of the picture
+ * A crop is kept only when valid, whichever view opens
  */
 /proc/sanitize_art_view_settings(list/settings)
 	. = list("opening_view" = "whole", "lock" = "zoom")
 	if(!islist(settings) || !is_art_view_lock(settings["lock"]))
 		return
-	var/opening_view = settings["opening_view"]
-	if(opening_view == "scroll")
-		.["opening_view"] = "custom"
-		.["lock"] = settings["lock"]
+	if(!is_art_opening_view(settings["opening_view"]))
 		return
-	if(!is_art_opening_view(opening_view))
-		return
-	.["opening_view"] = opening_view
+	.["opening_view"] = settings["opening_view"]
 	.["lock"] = settings["lock"]
 	var/list/crop = sanitize_art_crop(settings["crop"])
 	if(crop)

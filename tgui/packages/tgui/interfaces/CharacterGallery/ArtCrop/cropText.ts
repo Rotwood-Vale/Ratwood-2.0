@@ -29,7 +29,7 @@ export const framingStatus = (
       return framed
         ? 'The framed area fits the window.'
         : 'The whole picture fits the window.';
-    case 'custom':
+    case 'scroll':
       return framed
         ? 'Scrolling opens at the frame’s top, fitted to the window’s width.'
         : 'Scrolling opens at the top of the picture, fitted to the window’s width.';
@@ -46,11 +46,11 @@ export const pictureStatus = (picture: ReturnType<typeof usePictureSize>) => {
   return 'Loading picture…';
 };
 
-const TOO_THIN_TEXT = `This framing is too thin to show as a card. Viewers would see "${PICTURE_TOO_NARROW_TEXT}" Make the box taller or wider, or use ${ART_VIEW_LABELS.custom}.`;
+const TOO_THIN_TEXT = `This framing is too thin to show as a card. Viewers would see "${PICTURE_TOO_NARROW_TEXT}" Make the box taller or wider, or use ${ART_VIEW_LABELS.scroll}.`;
 
 const SWITCH_TOO_THIN_TEXT = `Viewers who switch to ${ART_VIEW_LABELS.whole} would see "${PICTURE_TOO_NARROW_TEXT}" Make the box taller or wider, or lock the view.`;
 
-const UNFRAMED_TOO_THIN_TEXT = `This picture is too thin to show as a card. Viewers would see "${PICTURE_TOO_NARROW_TEXT}" Draw a framing box with a usable shape, or use ${ART_VIEW_LABELS.custom}.`;
+const UNFRAMED_TOO_THIN_TEXT = `This picture is too thin to show as a card. Viewers would see "${PICTURE_TOO_NARROW_TEXT}" Draw a framing box with a usable shape, or use ${ART_VIEW_LABELS.scroll}.`;
 
 const UNFRAMED_SWITCH_TOO_THIN_TEXT = `With no framing box set, ${ART_VIEW_LABELS.whole} shows the whole picture, so viewers who switch to it would see "${PICTURE_TOO_NARROW_TEXT}" Draw a framing box with a usable shape, or lock the view.`;
 
@@ -85,7 +85,7 @@ export const tooThinText = (
  * A picture that opens only in Scrolling gets the note for the choice its Viewer Controls show
  */
 export const framingNote = (
-  view: 'whole' | 'custom',
+  view: 'whole' | 'scroll',
   lock: ArtViewSettings['lock'],
   framed: boolean,
   scrollingOnly = false,

@@ -50,7 +50,7 @@ export const EditorMagnifier = (props: {
           icon="undo"
           disabled={!crop}
           tooltip={
-            view === 'custom'
+            view === 'scroll'
               ? 'Back to the full width at the top of the picture.'
               : 'Back to the whole picture.'
           }

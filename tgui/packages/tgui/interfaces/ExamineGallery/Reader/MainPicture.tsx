@@ -130,7 +130,7 @@ export const MainPicture = (props: {
   const reading = isReading(readerState);
   const fittedCrop = readerState.view === 'fitted' ? owner.crop : undefined;
   const clipped =
-    readerState.view === 'custom' && !!owner.crop && !!readerState.framed;
+    readerState.view === 'scroll' && !!owner.crop && !!readerState.framed;
   const tiltRef = useTilt(areaRef, !plain && tiltOn && !reading, shownBox);
   const readerRef = useRef<HTMLDivElement>(null);
   const readingPictureRef = useRef<HTMLDivElement>(null);

@@ -229,7 +229,7 @@ export const CropEditor = (props: {
     return () => observer.disconnect();
   }, []);
 
-  const scrolling = view === 'custom';
+  const scrolling = view === 'scroll';
   const [sideLimit, setSideLimit] = useState<number>();
   useLayoutEffect(() => {
     if (scrolling) setSideLimit(readerSideLimit());
@@ -239,7 +239,7 @@ export const CropEditor = (props: {
       ? readingBox(
           size[0] / size[1],
           openingArea,
-          'custom',
+          'scroll',
           1,
           0,
           sideLimit,

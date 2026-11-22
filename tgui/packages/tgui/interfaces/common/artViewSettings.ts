@@ -11,7 +11,7 @@ export type ArtCrop = {
 };
 
 export type ArtViewSettings = {
-  opening_view: 'whole' | 'fitted' | 'custom';
+  opening_view: 'whole' | 'fitted' | 'scroll';
   lock: 'none' | 'view' | 'zoom' | 'both';
   crop?: ArtCrop;
 };
@@ -19,7 +19,7 @@ export type ArtViewSettings = {
 export const ART_VIEW_LABELS = {
   whole: 'Card',
   fitted: 'Fitted',
-  custom: 'Scrolling',
+  scroll: 'Scrolling',
 } satisfies Record<ArtViewSettings['opening_view'], string>;
 
 export const ART_LOCK_LABELS = {
@@ -34,7 +34,7 @@ export const ART_VIEW_HELP = {
     'Shows the artwork as a card. With a framing box set, the card shows the part inside it.',
   fitted:
     'Fits the framed picture to the window, or the whole picture if no frame is set.',
-  custom:
+  scroll:
     'Fits the width of the framed area and starts at its top. With no frame, it starts at the top of the full picture.',
 } satisfies Record<ArtViewSettings['opening_view'], string>;
 
@@ -76,7 +76,7 @@ export const shownArtView = (
   size && opensOnlyInScrolling(size[0], size[1])
     ? {
         ...saved,
-        opening_view: 'custom',
+        opening_view: 'scroll',
         lock: locksZoom(saved.lock) ? 'both' : 'view',
       }
     : saved;
@@ -125,7 +125,7 @@ export const clampCrop = (crop: ArtCrop): ArtCrop => {
  * The box is clamped as the server stores a crop, so a thin picture's box is ART_CROP_MIN tall at least and
  * keeps its size when it is moved and saved.
  */
-export const defaultCustomCrop = (
+export const defaultScrollCrop = (
   aspect: number,
   areaAspect = ART_AREA_ASPECT,
 ): ArtCrop => clampCrop({ x: 0, y: 0, w: 1, h: aspect / areaAspect });
@@ -138,7 +138,7 @@ export const viewCrop = (
 ): ArtCrop => {
   return (
     settings?.crop ??
-    (view === 'custom' ? defaultCustomCrop(aspect) : FULL_CROP)
+    (view === 'scroll' ? defaultScrollCrop(aspect) : FULL_CROP)
   );
 };
 

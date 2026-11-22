@@ -264,7 +264,7 @@ export const UrlEditor = (props: {
       Direct HTTPS links from {data.link_hosts}.{' '}
       {extensionList(editor.extensions)}
       {isArt &&
-        ` Artwork can be up to ${PICTURE_PIXELS_MAX / 1_000_000} MP, 1:${ARTWORK_RATIO_TALL_MAX} tall or ${PICTURE_RATIO_WIDE_MAX}:1 wide. Past 1:${PICTURE_RATIO_TALL_MAX} tall it opens in ${ART_VIEW_LABELS.custom} only.`}
+        ` Artwork can be up to ${PICTURE_PIXELS_MAX / 1_000_000} MP, 1:${ARTWORK_RATIO_TALL_MAX} tall or ${PICTURE_RATIO_WIDE_MAX}:1 wide. Past 1:${PICTURE_RATIO_TALL_MAX} tall it opens in ${ART_VIEW_LABELS.scroll} only.`}
     </Box>
   );
   // Sits in the alternate's row, which would otherwise take the framing column on press or focus

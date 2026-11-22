@@ -12,7 +12,7 @@ import { ROW_NAMES, type SourceDraft } from './useSourceDrafts';
 
 export const ALTERNATE_TOOLTIP = 'A backup link you can swap to.';
 
-const SCROLLING_ONLY_TEXT = `This picture is taller than 1:${PICTURE_RATIO_TALL_MAX}, so it always opens in ${ART_VIEW_LABELS.custom}.`;
+const SCROLLING_ONLY_TEXT = `This picture is taller than 1:${PICTURE_RATIO_TALL_MAX}, so it always opens in ${ART_VIEW_LABELS.scroll}.`;
 
 /** One link of the Edit dialog, row 0 being whichever of main and alternate is in use */
 export const SourceRow = (props: {

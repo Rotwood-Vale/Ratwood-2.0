@@ -18,10 +18,10 @@ const ZOOM_BUTTON_STEP = 1.25;
 const VIEW_HELP = {
   whole: 'Shows the artwork as a framed card.',
   fitted: ART_VIEW_HELP.fitted,
-  custom: `${ART_VIEW_HELP.custom} Pan or scroll to see beyond the frame.`,
+  scroll: `${ART_VIEW_HELP.scroll} Pan or scroll to see beyond the frame.`,
 } satisfies Record<ReaderState['view'], string>;
 
-const SCROLLING_ONLY_TEXT = `Tall pictures always open in ${ART_VIEW_LABELS.custom}`;
+const SCROLLING_ONLY_TEXT = `Tall pictures always open in ${ART_VIEW_LABELS.scroll}`;
 
 /** The tray's view button and the menu it opens */
 export const ViewMenu = (props: {

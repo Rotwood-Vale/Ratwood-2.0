@@ -8,7 +8,7 @@ const FRAMING_HELP = {
   whole: 'Your card shows the part of the picture inside the box.',
   fitted:
     'Fitted fits your framing to the window. Reset the box to fit the whole picture.',
-  custom:
+  scroll:
     'The box keeps the viewer’s proportions. Reset the box to open at the top of the picture.',
 } satisfies Record<ArtViewSettings['opening_view'], string>;
 
@@ -31,7 +31,7 @@ export const FramingHelp = (props: {
               Use the left mouse button to drag the box. Drag an edge or corner
               to resize it.
             </li>
-            {props.view !== 'custom' && (
+            {props.view !== 'scroll' && (
               <li>
                 <MouseControlIcon control="left" label="Left mouse button" />{' '}
                 Hold <kbd>Shift</kbd> while dragging a corner to keep the same

@@ -58,7 +58,7 @@ export const readingBox = (
   const height = Math.max(0, area.height);
   const focus = view === 'fitted' ? undefined : openingCrop;
   const framing = focus ?? FULL_CROP;
-  const scrolling = view === 'custom';
+  const scrolling = view === 'scroll';
   const fitMargin = view === 'whole' ? margin : 0;
   const focusFit = Math.max(
     0,
@@ -174,7 +174,7 @@ export const focusScroll = (
 ) => {
   const { focus } = box;
   if (!focus) return { left: 0, top: 0 };
-  const scrolling = view === 'custom';
+  const scrolling = view === 'scroll';
   return scrollToPoint(
     box,
     area,

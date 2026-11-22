@@ -75,7 +75,7 @@ const useSourceDraft = (
   const scrollingOnly = !!size && opensOnlyInScrolling(...size);
   // The chosen view is kept underneath, so a link to a picture of another shape gets it back
   const view: ArtViewSettings = {
-    opening_view: scrollingOnly ? 'custom' : openingView,
+    opening_view: scrollingOnly ? 'scroll' : openingView,
     lock,
     crop: crops.get(link),
   };
