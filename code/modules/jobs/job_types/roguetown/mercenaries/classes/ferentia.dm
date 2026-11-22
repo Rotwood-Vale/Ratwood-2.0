@@ -50,6 +50,11 @@
 				r_hand = /obj/item/rogueweapon/greatsword
 				H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+			if("Estoc")
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/rogueweapon/estoc
+				H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if("Longsword & Shield")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
