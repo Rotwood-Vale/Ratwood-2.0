@@ -13,6 +13,7 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	hit_sound = list('sound/items/hit_plateobj1.ogg', 'sound/items/hit_plateobj2.ogg', 'sound/items/hit_plateobj3.ogg')
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 4 SECONDS
