@@ -10,7 +10,7 @@
 	var/muted = FALSE
 	var/datum/weakref/linked_living
 
-/obj/item/phantom_ear/Initialize()
+/obj/item/phantom_ear/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	if(hidden)
