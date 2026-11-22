@@ -4902,7 +4902,7 @@
 /area/rogue/indoors/town/garrison)
 "aYi" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/adventurer/courtagent);
+	secret_door_access = list(/datum/job/roguetown/adventurer/courtagent,/datum/job/roguetown/hand);
 	secret_door_locale = "base north passage"
 	},
 /turf/closed/mineral/rogue,
