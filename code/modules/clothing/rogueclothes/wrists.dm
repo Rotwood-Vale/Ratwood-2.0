@@ -137,7 +137,6 @@
 	max_integrity = ARMOR_INT_SIDE_LEATHER
 	armor = ARMOR_LEATHER
 	blocksound = SOFTHIT
-	blade_dulling = DULLING_BASHCHOP
 	equip_sound = 'sound/foley/equip/rummaging-01.ogg'
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
@@ -206,7 +205,6 @@
 	desc = "This shouldn't be used in code."
 	smeltresult = null
 	armor = ARMOR_PADDED
-	blade_dulling = DULLING_BASHCHOP
 	icon_state = "nocwrappings"
 	item_state = "nocwrappings"
 	max_integrity = ARMOR_INT_SIDE_STEEL //Heavy leather-tier protection and critical resistances, steel-tier integrity. Integrity boost encourages hand-to-hand parrying. Weaker than the Psydonic Thorns. Uncraftable.
