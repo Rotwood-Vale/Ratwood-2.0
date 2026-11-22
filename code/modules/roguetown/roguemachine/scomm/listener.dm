@@ -142,7 +142,7 @@
 	else
 		desc = initial(desc)
 
-/obj/item/listeningdevice/agent/Initialize()
+/obj/item/listeningdevice/agent/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	fulldesc = "A black pearl... [span_notice("This pearl hasn't been activated. It's unlabelled.")]"
