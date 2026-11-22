@@ -5,10 +5,10 @@
 	desc = "A helmet of hardened leather with a carved animal skull to appear similar to a human; a unique design of The Northern Empty. \
 			Its visage is said in Iskarn to scare the spirits of those defeated in the battlefield \
 			and preventing those of Necra and 'The Moose' from haunting them."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnleatherhelm"
-	item_state = "gronnleatherhelm"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdleatherhelm"
+	item_state = "hammerholdleatherhelm"
 	block2add = null
 	body_parts_covered = HEAD|HAIR|EARS|EYES|NOSE
 	worn_x_dimension = 32
@@ -19,30 +19,30 @@
 	name = "hammerholdian ravager mantle"
 	desc = "A carefully created mantle of bone and hardened leather. It offers superior protection against the threats of the wild while remaining light, \
 			A popular design in Iskarn is to adorn a shoulder with a wolf pelt and skull. So that a great beast is always with you."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnleatherarmor"
-	item_state = "gronnleatherarmor"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdleatherarmor"
+	item_state = "hammerholdleatherarmor"
 	armor = ARMOR_LEATHER
 
 /obj/item/clothing/under/roguetown/trou/leather/hammerhold
 	name = "hammerholdian fur pants"
 	desc = "A pair of hardened leather pants with bone reinforcements along the legs; \
 			Those of Hammerhold adopt a design that offers superior protection against the blunted hits and slashing claws of beasts."
-	icon_state = "gronnleatherpants"
-	item_state = "gronnleatherpants"
+	icon_state = "hammerholdleatherpants"
+	item_state = "hammerholdleatherpants"
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 
 /obj/item/clothing/gloves/roguetown/angle/hammerhold
 	name = "hammerholdian fur-lined leather gloves"
 	desc = "Thick, padded gloves made for the harshest of climates and the wildest of beasts encountered in the untamed north."
-	icon_state = "gronnleathergloves"
-	item_state = "gronnleathergloves"
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
+	icon_state = "hammerholdleathergloves"
+	item_state = "hammerholdleathergloves"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	color = "#ffffff"
 
 /obj/item/clothing/gloves/roguetown/angle/hammerholdfur
@@ -50,10 +50,10 @@
 	desc = "A pair of hardened leather gloves with bone reinforcements across the wrists\
 			and the back of the hand, offering superior protection against\
 			the claws of beasts and plants alike. Commonly worn by gatherers."
-	icon_state = "gronnfurgloves"
-	item_state = "gronnfurgloves"
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
+	icon_state = "hammerholdfurgloves"
+	item_state = "hammerholdfurgloves"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	unarmed_bonus = 6
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	color = "#ffffff"
@@ -71,10 +71,10 @@
 	name = "moose hood"
 	desc = "A deceptively strong moosehide hood with a pair of large heavy antlers. It is the reward of the fourth trial of the Iskarn Shamans: To slay a Grinning Moose in the final hunt alone - and fashion a hood from its head."
 	body_parts_covered = HEAD|HAIR|EARS|NOSE
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/gronn.dmi'
-	icon_state = "gronnfurhood"
-	item_state = "gronnfurhood"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/hammerhold.dmi'
+	icon_state = "hammerholdfurhood"
+	item_state = "hammerholdfurhood"
 	bloody_icon = 'icons/effects/blood64.dmi'
 	armor = ARMOR_LEATHER
 	flags_inv = HIDEEARS|HIDEFACE
@@ -140,11 +140,11 @@
 		..()
 		return
 	if(on)
-		icon_state = "gronnfurhood_lit[lux_consumed ? "3" : "2"]"
-		item_state = "gronnfurhood_lit[lux_consumed ? "3" : "2"]"
+		icon_state = "hammerholdfurhood_lit[lux_consumed ? "3" : "2"]"
+		item_state = "hammerholdfurhood_lit[lux_consumed ? "3" : "2"]"
 	else
-		icon_state = "gronnfurhood"
-		item_state = "gronnfurhood"
+		icon_state = "hammerholdfurhood"
+		item_state = "hammerholdfurhood"
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_head()
@@ -176,8 +176,8 @@
 			if(on)
 				toggle_helmet_light(user)
 			if(toggle_icon_state)
-				icon_state = "gronnfurhood_down"
-				item_state = "gronnfurhood_down"
+				icon_state = "hammerholdfurhood_down"
+				item_state = "hammerholdfurhood_down"
 			adjustable = CADJUSTED
 			flags_inv = null
 			body_parts_covered = null
@@ -202,35 +202,35 @@
 	name = "hammerholdian ownel helmet"
 	desc = "A full helmet that adequately protect the eyes and head; \
 			The slits are decorated with a harsh gold dye - it is rumoured in Hammerhold to grant one the ability to see as keenly as an owl."
-	icon_state = "gronnhelm"
-	item_state = "gronnhelm"
+	icon_state = "hammerholdhelm"
+	item_state = "hammerholdhelm"
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
 	name = "varangian byrine hauberk"
 	desc = "A chain shirt of Hammerholdian design with a leather coat layered over, \
 			offering additional protection and superior movement. It is often used by privateers."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnchain"
-	item_state = "gronnchain"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdchain"
+	item_state = "hammerholdchain"
 	smeltresult = /obj/item/ingot/iron
 	armor = ARMOR_MAILLE
 
 /obj/item/clothing/gloves/roguetown/chain/hammerhold
 	name = "varangian byrine gloves"
 	desc = "A pair of leather gloves with chain to protects the wrists and back of the hand."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnchaingloves"
-	item_state = "gronnchaingloves"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdchaingloves"
+	item_state = "hammerholdchaingloves"
 
 /obj/item/clothing/under/roguetown/chainlegs/hammerhold
 	name = "varangian byrine chausses"
 	desc = "A pair of chain-wrapped pants with a leather subligar, ensuring both protection and comfort."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnchainpants"
-	item_state = "gronnchainpants"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdchainpants"
+	item_state = "hammerholdchainpants"
 
 
 // HEAVY ARMOR -- ditto
@@ -240,11 +240,11 @@
 	desc = "One of Hammerhold's infamous horned helms of solid iron. \
 		Styled after the appearance of invading knights of legend from the Northern Empty, \
 		brutal and bare, it is a reminder of a time before there was snow."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/gronn.dmi'
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/hammerhold.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
-	icon_state = "gronnplatehelm"
-	item_state = "gronnplatehelm"
+	icon_state = "hammerholdplatehelm"
+	item_state = "hammerholdplatehelm"
 	emote_environment = 3
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	block2add = FOV_BEHIND
@@ -258,10 +258,10 @@
 	desc = "A suit of solid iron plate, adorned with tassets and roundels. \
 			The Northmen of Hammerhold rarely used plate, but when they did, \
 			it is said that whole armies would quake and shake in fear of what would ravage them."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnplate"
-	item_state = "gronnplate"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplate"
+	item_state = "hammerholdplate"
 	boobed = FALSE
 	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
@@ -270,25 +270,25 @@
 /obj/item/clothing/gloves/roguetown/plate/iron/hammerhold
 	name = "norsii iron gauntlets"
 	desc = "Tough iron gauntlets, simple and protective in design. A single punch is said to leave a dozen bruises."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnplategloves"
-	item_state = "gronnplategloves"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplategloves"
+	item_state = "hammerholdplategloves"
 
 /obj/item/clothing/under/roguetown/platelegs/iron/hammerhold
 	name = "norsii iron chausses"
 	desc = "Iron chausses with an added layer of leather for comfort and padding. The knees are adorned with a skull-like shape, reminiscent of the moon."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnplatepants"
-	item_state = "gronnplatepants"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplatepants"
+	item_state = "hammerholdplatepants"
 
 /obj/item/clothing/shoes/roguetown/boots/armor/iron/hammerhold
 	name = "norsii iron boots"
 	desc = "Thick iron boots, tied with a leather cord; protective and sturdy. \
 			Hammerholdian legend tells of a great warrior who fought for aeons until a hero speared him through the foot. \
 			The Northmen have since followed through by protecting their feet heavily."
-	icon = 'icons/roguetown/clothing/special/gronn.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	icon_state = "gronnplateboots"
-	item_state = "gronnplateboots"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplateboots"
+	item_state = "hammerholdplateboots"
