@@ -563,33 +563,28 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, I, user)
 	return TRUE
 
+/// Pushback when attacking an object. Only applies if the object has the CLAMP_BREAK flag and is not anchored.
 /obj/proc/try_damage_pushback(mob/user)
+	if(!(obj_flags & CLAMP_BREAK) || density || anchored || !isturf(loc))
+		return
+	var/dist = 1
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+		dist++
+	if(obj_broken)
+		dist++
+	var/current_turf = get_turf(src)
+	var/throwdir = get_dir(get_turf(user), current_turf)
+	var/target_turf = get_ranged_target_turf(current_turf, throwdir, dist)
+	if(hit_sound)
+		playsound(current_turf, pick(hit_sound), 100, TRUE)
+	throw_at(target_turf, dist, 12, user, FALSE)
 
-
-	if((obj_flags & CLAMP_BREAK) && !density && !anchored && isturf(loc))
-		var/sfx = 'sound/items/hit_normalobj.ogg'
-		if(isclothing(src))	// Lazy check for fluffy sparks
-			var/obj/item/clothing/CL = src
-			var/try_sparks = FALSE
-			if(CL.material_category == ARMOR_MAT_PLATE)
-				sfx = pick('sound/items/hit_plateobj1.ogg', 'sound/items/hit_plateobj2.ogg', 'sound/items/hit_plateobj3.ogg')
-				try_sparks = TRUE
-			if(CL.material_category == ARMOR_MAT_CHAINMAIL)
-				sfx = 'sound/items/hit_chainobj.ogg'
-				try_sparks = TRUE
-			if(try_sparks && prob(50))
-				do_sparks(2, TRUE, get_turf(src))
-		var/dist = 1
-		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-			dist++
-		if(obj_broken)
-			dist++
-		var/current_turf = get_turf(src)
-		var/throwdir = get_dir(get_turf(user), current_turf)
-		var/target_turf = get_ranged_target_turf(current_turf, throwdir, dist)
-		playsound(current_turf, sfx, 100, TRUE)
-		throw_at(target_turf, dist, 12, user, FALSE)
-
+/obj/item/clothing/try_damage_pushback(mob/user)
+	. = ..()
+	if(material_category != ARMOR_MAT_PLATE && material_category != ARMOR_MAT_CHAINMAIL)
+		return
+	if(prob(50))
+		do_sparks(2, TRUE, get_turf(src))
 
 /turf/proc/attacked_by(obj/item/I, mob/living/user, multiplier)
 	var/newforce = get_complex_damage(I, user, blade_dulling)
