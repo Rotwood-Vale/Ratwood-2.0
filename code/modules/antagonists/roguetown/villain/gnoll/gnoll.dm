@@ -11,7 +11,7 @@
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
-	max_integrity = 475
+	max_integrity = 675
 	item_flags = DROPDEL
 	repair_time = 14 SECONDS
 	combat_taggable = TRUE
@@ -155,7 +155,7 @@
 	return "Tracked: [target_display]"
 
 /mob/living/carbon/human/proc/gnoll_can_feed_heal()
-	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+	if(is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder) || is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 		to_chat(src, span_notice("My power is weakened, I cannot heal!"))
 		return FALSE
 	return TRUE
@@ -203,13 +203,13 @@
 	wlength = WLENGTH_SHORT
 
 /datum/intent/simple/werewolf/gnoll
-	name = "claw"
-	icon_state = "inchop"
-	blade_class = BCLASS_CHOP
-	attack_verb = list("claws", "mauls", "eviscerates")
-	animname = "chop"
+	name = "cutting claw"
+	icon_state = "incut"
+	animname = "cut"
 	hitsound = "genslash"
-	penfactor = 20
+	penfactor = PEN_LIGHT
+	blade_class = BCLASS_CUT
+	attack_verb = list("cuts", "slashes")
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
@@ -220,22 +220,29 @@
 	desc = "A powerful smash of savage muscle that deals normal damage, but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
 	icon_state = "insmash"
 	chargetime = 1
-	penfactor = 0
+	penfactor = PEN_NONE
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
 /datum/intent/simple/gnoll_cut
-	name = "cutting claw"
+	name = "chopping claw"
 	hitsound = "genslash"
-	penfactor = 60
+	penfactor = PEN_HEAVY
+	icon_state = "inchop"
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
-	icon_state = "incut"
-	attack_verb = list("cuts", "slashes")
-	animname = "cut"
-	blade_class = BCLASS_CUT
+	icon_state = "inchop"
+	attack_verb = list("claws", "mauls", "eviscerates")
+	animname = "chop"
+	blade_class = BCLASS_CHOP
 	item_d_type = "slash"
+	swingdelay = 1 SECONDS
+	clickcd = CLICK_CD_CHARGED
+	parriable_intent = FALSE
+	swingdelay_type = SWINGDELAY_CANCEL
 
 /datum/intent/mace/strike/gnoll
 	name = "armor rending strike"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	miss_text = "strikes the air!"
 	miss_sound = "bluntwooshlarge"
 	attack_verb = list("punches", "strikes", "tears")

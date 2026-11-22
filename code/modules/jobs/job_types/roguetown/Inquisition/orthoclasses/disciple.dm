@@ -4,14 +4,16 @@
 	name = "Disciple"
 	tutorial = "Psydonite monks, practiced in both martiality and scripture. Spilling blood on sacred grounds is considered 'sinful' to the clergymen, though no qualms are spared towards knocking someone's lights out."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ALL_BUT_BLOODLESS
 	outfit = /datum/outfit/job/roguetown/disciple
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
+	pure_heart = TRUE
 	traits_applied = list(
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_CICERONE,//brewer monks and such, lets them see the booze they make.
+		TRAIT_BLOOD_RESISTANCE,
 	)
 	subclass_stats = list(//(str 3(weighted 6) + wil 3 + con 3) = 12 - (INT -1 + SPD -1 (weighted -2) = 9 weighted stats. Old statblock was weighted 6 because morons dont know the stat weight rules for spd and str.
 		STATKEY_STR = 3,
@@ -20,6 +22,7 @@
 		STATKEY_INT = -1,
 		STATKEY_SPD = -1
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
@@ -49,7 +52,7 @@
 	if(H.has_flaw(/datum/charflaw/addiction/alcoholic))//THE LEADER OF THE EIGHT ENDURING FISTS SWAYED BACK AND FORTH TO TRICK THE HERETICS, DRUNK WITH INTERNAL FIRE. THEY WERE BUT FROGS IN A WELL LOOKING UP AT THE NIGHT SKY THINKING THEY HAD REACHED THE HEAVENS.
 		ADD_TRAIT(H, TRAIT_DRUNK_HEALING, TRAIT_GENERIC)
 	if(H.mind)
-		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & No Malus", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Polearms, +I PER / +I INT")
+		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & No Malus", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Staves, +I PER / +I INT")
 		var/weapon_choice = input(H,"CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
 			if("Abboteer - Master Pugilist, Weaponless Oath & No Malus")//the enduringest psychud. Weighted 12 stats but no weapons, period.
@@ -59,7 +62,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)//dreamwalkers HATE the aquatic punch monk.
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/abboteer//lets you sunder
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
@@ -77,9 +80,9 @@
 					if("Katar")
 						r_hand = /obj/item/rogueweapon/katar/psydon
 					if("Knuckledusters")
-						r_hand = /obj/item/rogueweapon/knuckles/psydon
-			if("Quarterstaff - Expert Polearms, +I PER / +I INT")//stave user but with no int and per malus so they dont get folded.
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+						r_hand = /obj/item/clothing/gloves/roguetown/knuckles/psydon
+			if("Quarterstaff - Expert Staves, +I PER / +I INT")//stave user but with no int and per malus so they dont get folded.
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted//no pugulist gloves for you sire, you have a staff.
 				H.change_stat(STATKEY_PER, 1)
@@ -100,9 +103,10 @@
 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
-	armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
+	armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/disciple
+	shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1)

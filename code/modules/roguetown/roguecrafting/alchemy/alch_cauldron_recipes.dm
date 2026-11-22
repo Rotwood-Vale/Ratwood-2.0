@@ -33,6 +33,12 @@
 	skill_required = SKILL_LEVEL_EXPERT // Strong poison should be more difficult to make
 	output_reagents = list(/datum/reagent/strongstampoison = 100)
 
+/datum/alch_cauldron_recipe/deadite_rot
+	name = "Concentrated rot"
+	smells_like = "rotten flesh"
+	skill_required = SKILL_LEVEL_MASTER // Potential 1u kill
+	output_reagents = list(/datum/reagent/deaditerot = 30) // one vial worth
+
 //Healing potions
 /datum/alch_cauldron_recipe/health_potion
 	name = "Elixir of Health"

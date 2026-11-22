@@ -48,6 +48,7 @@
 		STATKEY_SPD = 1,
 		STATKEY_LCK = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
@@ -101,7 +102,7 @@
 	name = "Introverted Bookworm"
 	tutorial = "Despite your standing, sociability is not your strong suit, and you have kept mostly to yourself and your books. This hardly makes you a favourite among the lords and ladies of the court, and an exit from your room is often met with amusement from nobility and servants alike. At least you're always welcome in the mage's tower."
 	outfit = /datum/outfit/job/roguetown/heir/bookworm
-	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR, TRAIT_GOODWRITER, TRAIT_MAGEDEXTERITY) //As it turns out, Battlemage Princess DID become a prevalent problem.
+	traits_applied = list(TRAIT_ARCYNE, TRAIT_GOODWRITER, TRAIT_MAGEDEXTERITY) //As it turns out, Battlemage Princess DID become a prevalent problem.
 	category_tags = list(CTAG_HEIR)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_stats = list(
@@ -111,14 +112,15 @@
 		STATKEY_CON = -1,
 		STATKEY_LCK = 2,
 	)
-	subclass_spellpoints = 9
+	pure_heart = TRUE
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 2, "utilities" = 4)
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/arcane = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/heir/bookworm/pre_equip(mob/living/carbon/human/H)
@@ -136,20 +138,17 @@
 	beltr = /obj/item/storage/keyring/heir
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backl = /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff/royal
+	backl = /obj/item/rogueweapon/woodstaff/implement/greater/blacksteel
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	mask = /obj/item/clothing/mask/rogue/spectacles
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backpack_contents = list(
 		/obj/item/roguegem/amethyst = 1,
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/recipe_book/magic = 1,
 		/obj/item/chalk = 1,
 		)
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message) // so you can order a maid to bring you lunch from your library/room/the tower. Or just broadcast your fanfiction into someone's head aggressively.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt) // So bookworms don't feel pressured to grab only spells for shenanigans / to ONLY take Arcane Potential. If battlemage princess becomes a problem, axe this.
 
 	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = /obj/item/clothing/cloak/raincloak/amir
@@ -181,6 +180,7 @@
 		STATKEY_LCK = 1,
 		STATKEY_SPD = 1
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
@@ -254,6 +254,7 @@
 		STATKEY_WIL = -2,
 		STATKEY_LCK = -2
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
@@ -327,6 +328,7 @@
 	STATKEY_WIL = 1,
 	STATKEY_LCK = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/sneaking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,

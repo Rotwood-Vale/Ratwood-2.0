@@ -27,7 +27,7 @@
 /datum/customizer_choice/organ/penis/validate_entry(datum/preferences/prefs, datum/customizer_entry/entry)
 	..()
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
-	penis_entry.penis_size = sanitize_integer(penis_entry.penis_size, MIN_PENIS_SIZE, MAX_PENIS_SIZE, DEFAULT_PENIS_SIZE)
+	penis_entry.set_penis_size(penis_entry.penis_size)
 	penis_entry.sheath_type = sanitize_integer(penis_entry.sheath_type, SHEATH_TYPE_NONE, SHEATH_TYPE_SLIT, SHEATH_TYPE_NONE)
 
 /datum/customizer_choice/organ/penis/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
@@ -42,6 +42,8 @@
 	..()
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
 	dat += "<br>Penis size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=penis_size''>[find_key_by_value(GLOB.named_penis_sizes, penis_entry.penis_size)]</a>"
+	if(penis_entry.can_be_massive())
+		dat += "<br>Massive: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=massive''>[penis_entry.massive ? "YES" : "NO"]</a> ([MASSIVE_PENIS_TRIUMPH_COST] TRI per round)"
 	dat += "<br>Functional: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=functional''>[penis_entry.functional ? "YES" : "NO"]</a>"
 	dat += "<br>Sheath: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=sheath_type''>[sheath_type_preference_label(penis_entry.sheath_type)]</a>"
 
@@ -53,8 +55,9 @@
 			var/named_size = input(user, "Choose your penis size:", "Character Preference", find_key_by_value(GLOB.named_penis_sizes, penis_entry.penis_size)) as anything in GLOB.named_penis_sizes
 			if(isnull(named_size))
 				return
-			var/new_size = GLOB.named_penis_sizes[named_size]
-			penis_entry.penis_size = sanitize_integer(new_size, MIN_PENIS_SIZE, MAX_PENIS_SIZE, DEFAULT_PENIS_SIZE)
+			penis_entry.set_penis_size(GLOB.named_penis_sizes[named_size])
+		if("massive")
+			penis_entry.set_massive(!penis_entry.massive)
 		if("functional")
 			penis_entry.functional = !penis_entry.functional
 		if("sheath_type")
@@ -70,6 +73,26 @@
 	var/penis_size = DEFAULT_PENIS_SIZE
 	var/functional = TRUE
 	var/sheath_type = SHEATH_TYPE_NONE
+	/// Wants to buy a massive pintle at each spawn. Only valid with MAX_PENIS_SIZE.
+	var/massive = FALSE
+
+/datum/customizer_entry/organ/penis/proc/can_be_massive()
+	return penis_size == MAX_PENIS_SIZE
+
+/datum/customizer_entry/organ/penis/proc/set_massive(new_massive)
+	massive = new_massive && can_be_massive()
+
+/// Sets a sanitized size, dropping massive if the new size can't carry it.
+/datum/customizer_entry/organ/penis/proc/set_penis_size(new_size)
+	penis_size = sanitize_integer(new_size, MIN_PENIS_SIZE, MAX_PENIS_SIZE, DEFAULT_PENIS_SIZE)
+	set_massive(massive)
+
+/// TRUE if the active slot has an enabled Large pintle with the massive option ticked.
+/datum/preferences/proc/wants_massive_pintle()
+	for(var/datum/customizer_entry/organ/penis/penis_entry in customizer_entries)
+		if(!penis_entry.disabled && penis_entry.massive && penis_entry.can_be_massive())
+			return TRUE
+	return FALSE
 
 /datum/customizer/organ/penis/human
 	customizer_choices = list(/datum/customizer_choice/organ/penis/human)
@@ -368,19 +391,26 @@
 	..()
 	var/datum/customizer_entry/organ/breasts/breasts_entry = entry
 	breasts_entry.breast_size = sanitize_integer(breasts_entry.breast_size, MIN_BREASTS_SIZE, MAX_BREASTS_SIZE, DEFAULT_BREASTS_SIZE)
+	breasts_entry.lactating = sanitize_integer(breasts_entry.lactating, LACTATION_DISABLED, LACTATION_AFTER_IMPREGNATION, LACTATION_DISABLED)
 
 /datum/customizer_choice/organ/breasts/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
 	..()
 	var/datum/organ_dna/breasts/breasts_dna = organ_dna
 	var/datum/customizer_entry/organ/breasts/breasts_entry = entry
 	breasts_dna.breast_size = breasts_entry.breast_size
-	breasts_dna.lactating = breasts_entry.lactating
+	breasts_dna.lactation_mode = breasts_entry.lactating
 
 /datum/customizer_choice/organ/breasts/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
 	var/datum/customizer_entry/organ/breasts/breasts_entry = entry
+	var/lactation_label = "Disabled"
+	switch(breasts_entry.lactating)
+		if(LACTATION_ENABLED)
+			lactation_label = "Enabled"
+		if(LACTATION_AFTER_IMPREGNATION)
+			lactation_label = "After Impregnation"
 	dat += "<br>Breast size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=breast_size''>[find_key_by_value(GLOB.named_breast_sizes, breasts_entry.breast_size)]</a>"
-	dat += "<br>Lactation: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=lactating''>[breasts_entry.lactating ? "Enabled" : "Disabled"]</a>"
+	dat += "<br>Lactation: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=lactating''>[lactation_label]</a>"
 
 /datum/customizer_choice/organ/breasts/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
@@ -393,11 +423,18 @@
 			var/new_size = GLOB.named_breast_sizes[named_size]
 			breasts_entry.breast_size = sanitize_integer(new_size, MIN_BREASTS_SIZE, MAX_BREASTS_SIZE, DEFAULT_BREASTS_SIZE)
 		if("lactating")
-			breasts_entry.lactating = !breasts_entry.lactating
+			switch(breasts_entry.lactating)
+				if(LACTATION_DISABLED)
+					breasts_entry.lactating = LACTATION_ENABLED
+				if(LACTATION_ENABLED)
+					breasts_entry.lactating = LACTATION_AFTER_IMPREGNATION
+				else
+					breasts_entry.lactating = LACTATION_DISABLED
 
 /datum/customizer_entry/organ/breasts
 	var/breast_size = DEFAULT_BREASTS_SIZE
-	var/lactating = FALSE
+	/// LACTATION_* mode. Keeps this name because savefiles store it by name.
+	var/lactating = LACTATION_DISABLED
 
 /datum/customizer/organ/breasts/human
 	customizer_choices = list(/datum/customizer_choice/organ/breasts/human)

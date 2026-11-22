@@ -43,6 +43,8 @@
 	var/datum/toggle_options_menu/toggles_menu = null
 	/// Single-instance Volume Power TGUI menu
 	var/datum/volume_power_menu/volume_power_menu = null
+	/// Everything point ambience keeps for this player, see /datum/point_ambience_listener
+	var/datum/point_ambience_listener/point_ambience
 	///Move delay of controlled mob, related to input handling
 	var/move_delay = 0
 	///Current area of the controlled mob
@@ -87,6 +89,7 @@
 	var/account_age = -1
 
 	preload_rsc = PRELOAD_RSC
+	var/cached_sounds = FALSE
 
 	var/atom/movable/screen/click_catcher/void
 
@@ -120,7 +123,9 @@
 	var/datum/chatOutput/chatOutput
 
 	///lazy list of all credit object bound to this client
-	var/list/credits = list()
+	var/list/credits
+	///TRUE while the end-of-round credits are rolling for this client; cleared by Hide Credits
+	var/credits_rolling = FALSE
 
 	///these persist between logins/logouts during the same round.
 	var/datum/player_details/player_details
@@ -183,6 +188,8 @@
 	var/next_move_dir_add
 	/// On next move, subtract this dir from the move that would otherwise be done
 	var/next_move_dir_sub
+	/// world.time of last intercepted mouse-up, used to prevent double-clicks after signal intercept
+	var/click_intercept_time = 0
 
 /client/proc/update_weather(force)
 	if(!mob)

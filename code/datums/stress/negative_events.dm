@@ -153,6 +153,11 @@
 		return FALSE
 	return TRUE
 
+/datum/stressevent/triumph_noise
+	timer = 10 MINUTES
+	stressadd = 3
+	desc = span_red("The memory of my triumph turns to rot!")
+
 /datum/stressevent/freakout
 	timer = 15 SECONDS
 	stressadd = 2
@@ -280,6 +285,10 @@
 	timer = 2 MINUTES
 	stressadd = 2
 	desc = "<span class='red'>Where did everyone go? Did something happen?!</span>"
+
+/datum/stressevent/sundercritted
+	stressadd = 5 //Its literally killing you, sire.
+	desc = span_boldred("I CAN FEEL MY SOUL TEARING APART FROM BLESSED FLAMES, I NEED TO GET AWAY!")
 
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES
@@ -576,3 +585,37 @@
 	timer = 25 MINUTES
 	stressadd = 3
 	desc = span_red("I couldn't pay my debts in time.")
+
+/datum/stressevent/archivist_shushed
+	timer = 1 MINUTES
+	stressadd = 4
+	desc = span_red("I was shushed by the archivist!")
+
+/datum/stressevent/sunlit
+	timer = 1 MINUTES
+	stressadd = 2
+	desc = span_red("IT'S TOO BRIGHT!")
+
+/datum/stressevent/prejudice
+	timer = 2 MINUTES
+	stressadd = 2
+
+/datum/stressevent/prejudice/otava
+	desc = span_red("There's too many Otavans around here!")
+
+/datum/stressevent/prejudice/grenzelhoft
+	desc = span_red("There's too many Grenzels around here!")
+
+/datum/stressevent/prejudice/kazengun
+	desc = span_red("Who invited Kazengunites to Ferentia?")
+
+/datum/stressevent/prejudice/avar
+	desc = span_red("Aavnics are always so dour, so mirthless.")
+
+/datum/stressevent/prejudice/gronn
+	desc = span_red("I just saw a Gronnite! How uncivilized!")
+
+/datum/stressevent/prejudice/underdark
+	desc = span_red("That underdweller should be underground, where it belongs.")
+
+// this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat

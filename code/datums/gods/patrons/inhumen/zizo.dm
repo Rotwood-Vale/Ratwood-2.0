@@ -5,7 +5,8 @@
 	worshippers = "Necromancers, the undead, secretive cabals, conquerors and madmen."
 	virtues = "Ambition, Domination, Undeath"
 	sins = "Humility, Ignorance, Stagnation"
-	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
+	mob_traits = list(TRAIT_CABAL)
+	added_verbs = list(/mob/living/carbon/human/proc/draw_sigil, /mob/living/carbon/human/proc/praise, /mob/living/carbon/human/proc/zizo_lore, /mob/living/carbon/human/proc/zizo_objectives)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T0, //No idea why this was T3.
@@ -16,7 +17,7 @@
 					/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance		= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/silence/miracle/zizo			= CLERIC_T2, //A bone. 
 					/obj/effect/proc_holder/spell/invoked/raise_spirit_respite			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/rituos/miracle				= CLERIC_T3,
+					/datum/action/cooldown/spell/zizo/rituos							= CLERIC_T3,
 					/obj/effect/proc_holder/spell/targeted/touch/lacrima				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/cascade						= CLERIC_T4,
 	)

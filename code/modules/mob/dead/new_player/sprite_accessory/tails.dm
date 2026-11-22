@@ -308,6 +308,20 @@
 	color_key_names = list("Tail", "Stripes")
 	can_wag = TRUE
 
+/datum/sprite_accessory/tail/raccoon_new
+	name = "Raccoon (messy)"
+	icon_state = "racc2"
+	color_keys = 2
+	color_key_names = list("Tail", "Stripes")
+	can_wag = FALSE
+
+/datum/sprite_accessory/tail/raccoon_newer
+	name = "Raccoon (clean)"
+	icon_state = "racc3"
+	color_keys = 2
+	color_key_names = list("Tail", "Stripes")
+	can_wag = FALSE
+
 /datum/sprite_accessory/tail/sabresune
 	name = "Sabresune"
 	icon_state = "sabresune"
@@ -365,8 +379,14 @@
 /datum/sprite_accessory/tail/tiefling/heart/tailmaw
 	name = "Succubus (Tailmaw)"
 
+/datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw
+	name = "Succubus (Alt) (Tailmaw)"
+	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
+	icon_state = "spadeheart"
+
 /datum/sprite_accessory/tail/tiefling/spade/tailmaw
 	name = "Spade (Tailmaw)"
+	can_wag = FALSE
 
 /datum/sprite_accessory/tail/dullahan
 	name = "Revenant"

@@ -1,5 +1,6 @@
 /datum/sex_action/double_penetration_sex
 	name = "Fuck both their holes"
+	uses_both_cocks = TRUE
 	stamina_cost = 1.0
 	category = SEX_CATEGORY_PENETRATE
 	user_sex_part = SEX_PART_COCK
@@ -19,7 +20,7 @@
 
 /datum/sex_action/double_penetration_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] slides [user.p_their()] cocks into [target]'s holes!"))
-	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
+	playsound_erp(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, extrarange = 0, travel = SOUND_TRAVEL_LEAKING)
 
 /datum/sex_action/double_penetration_sex/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!user.sexcon.do_knot_action)

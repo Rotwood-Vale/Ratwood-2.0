@@ -8,7 +8,6 @@
 //	adjustable = CAN_CADJUST
 	sewrepair = TRUE
 	armor = ARMOR_PADDED_BAD
-	prevent_crits = list(BCLASS_CUT)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	r_sleeve_status = SLEEVE_NORMAL
@@ -20,9 +19,8 @@
 
 /obj/item/clothing/under/roguetown/trou/leather
 	name = "leather trousers"
-	armor = ARMOR_LEATHER
+	armor = ARMOR_LEATHER_NPC
 	icon_state = "leathertrou"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	max_integrity = ARMOR_INT_LEG_LEATHER
 	resistance_flags = FIRE_PROOF
 	salvage_result = /obj/item/natural/hide/cured
@@ -70,6 +68,14 @@
 	desc = "Classy leather tights, form-fitting but tasteful."
 	icon_state = "leathertights"
 	item_state = "leathertights"
+	salvage_result = /obj/item/natural/hide/cured
+
+/obj/item/clothing/under/roguetown/trou/leathertights/kneelpads
+	name = "leather poleyns"
+	desc = "A pair of rustic leather poleyns, made to provide basic protection to the kneels."
+	icon_state = "leatherkneelpad"
+	item_state = "leatherkneelpad"
+	body_parts_covered = LEGS
 	salvage_result = /obj/item/natural/hide/cured
 
 /obj/item/clothing/under/roguetown/trou/formal

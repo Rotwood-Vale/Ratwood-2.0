@@ -42,15 +42,14 @@
 
 /datum/crown_import/rotpotion
 	name = "Crate of Rot Cure Potions"
-	desc = "A sought-after crate of rare potions of rot-curing."
+	desc = "A sought-after crate of rare potion of rot-curing."
 	item_type = /obj/structure/closet/crate/chest/steward/rotpotion
-	base_cost = 400		//Expensive, 200 each roughly. Four uses total, as only 5u needed to reverse rot. Each bottle is 10u.
+	base_cost = 400
 	source_region_id = TRADE_REGION_ROCKHILL
 	import_amt = 1
 
 /obj/structure/closet/crate/chest/steward/rotpotion/Initialize(mapload)
 	. = ..()
-	new /obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure(src)
 	new /obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure(src)
 
 /datum/crown_import/knight

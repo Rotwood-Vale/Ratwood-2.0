@@ -141,6 +141,12 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 		if(!HAS_TRAIT(src, TRAIT_EORAN_CALM) && !HAS_TRAIT(src, TRAIT_EORAN_SERENE))
 			roll_streak_freakout()
 
+	if(new_stress >= 11 && has_world_trait(/datum/world_trait/zizo_noise) && !is_zizo(src))
+		if(prob(5))
+			var/halpick = pick(/datum/hallucination/message, /datum/hallucination/sounds, /datum/hallucination/weird_sounds, /datum/hallucination/voices, /datum/hallucination/fire, /datum/hallucination/chat, /datum/hallucination/townannouncement, /datum/hallucination/battle, /datum/hallucination/fake_alert)
+			new halpick(src, FALSE)
+		roll_streak_freakout()
+
 	oldstress = new_stress
 	update_stress_visual(new_stress)
 
@@ -239,6 +245,7 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 	if(HAS_TRAIT(src, TRAIT_NOMOOD))
 		return 0
 	var/total_stress = 0
+	var/noise = has_world_trait(/datum/world_trait/zizo_noise) && !is_zizo(src)
 	for(var/stressor_type in stressors)
 		var/datum/stressevent/event = stressors[stressor_type]
 		var/stress_amt = event.get_stress(src)
@@ -248,6 +255,10 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 			stress_amt = (stress_amt * -1)	//We make the bad things feel good.
 		if((stress_amt >= 0) && (wpmodifier > 0))
 			stress_amt = CLAMP((stress_amt -= wpmodifier), 0, INFINITY)
+		if(noise && stress_amt > 0)
+			stress_amt *= 2
+		else if(noise)
+			stress_amt *= 0.5
 		total_stress += stress_amt
 	return total_stress
 

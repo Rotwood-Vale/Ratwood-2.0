@@ -51,10 +51,10 @@
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!LAZYLEN(enemies) && prob(1))
 			Retaliate()
 
-		if(enemies.len && prob(10))
+		if(LAZYLEN(enemies) && prob(10))
 			clear_enemies()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
@@ -252,7 +252,7 @@
 	turns_per_move = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat = 1)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
-	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
+	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/bakersroot)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

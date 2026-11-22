@@ -161,9 +161,29 @@
 #define HAIR_COLOR_LIST list("#8f5a00", "#593800", "#362200", "#4e422e", "#8c8271", "#bfb7ab", "#31302e", "#f0dc48")
 #define EYE_COLOR_LIST list("#865900", "#06b400", "#312f27", "#008e83", "#002d8e", "#c16c00")
 
-#define MIN_PENIS_SIZE 1
+#define MIN_PENIS_SIZE 0
+#define SMALL_PENIS_SIZE 1
 #define MAX_PENIS_SIZE 3
 #define DEFAULT_PENIS_SIZE 2
+
+// Massive pintles: an optional upgrade to a MAX_PENIS_SIZE pintle, bought with triumphs at each lobby spawn.
+#define MASSIVE_PENIS_TRIUMPH_COST 10
+#define MASSIVE_PENIS_PAIN_MULTIPLIER 1.2
+#define MASSIVE_PENIS_DESCRIPTOR_COLOR "#d61a43"
+/// Percent chance that starting a penetration act with a massive pintle fails because it won't fit.
+#define MASSIVE_PENIS_INSERT_FAIL_CHANCE 20
+/// Percent chance per thrust that the receiver gets an overwhelmed line (low/mid force).
+#define MASSIVE_PENIS_LINE_CHANCE 10
+/// Percent chance per thrust that the receiver gets a panic line (high force and above).
+#define MASSIVE_PENIS_PANIC_LINE_CHANCE 20
+/// Extra cum bursts a massive pintle adds on orgasm.
+#define MASSIVE_PENIS_EXTRA_LOAD_BURSTS 1
+/// Blood drained per blood tick while erect.
+#define MASSIVE_PENIS_BLOOD_DRAIN 2
+/// The drain stops at MASSIVE_PENIS_BLOOD_FLOOR_BASE + CON * MASSIVE_PENIS_BLOOD_FLOOR_PER_CON.
+/// CON 19 or lower can reach tier one blood loss, 12 or lower tier two, 5 or lower tier three.
+#define MASSIVE_PENIS_BLOOD_FLOOR_BASE 117
+#define MASSIVE_PENIS_BLOOD_FLOOR_PER_CON 18
 
 #define PENIS_TYPE_PLAIN 1
 #define PENIS_TYPE_KNOTTED 2
@@ -200,6 +220,11 @@
 #define BREAST_JIGGLE_STAMINA_PER_SECOND 0.83
 #define BREAST_JIGGLE_ENDLESS_STAMINA_MULT 3
 #define BREAST_JIGGLE_HOP_HEIGHT 4
+
+// Values match the old saved TRUE/FALSE lactation preference
+#define LACTATION_DISABLED 0
+#define LACTATION_ENABLED 1
+#define LACTATION_AFTER_IMPREGNATION 2
 #define BREAST_JIGGLE_ENDLESS 0
 #define BREAST_JIGGLE_PROMPT_STEP (BREAST_JIGGLE_CYCLE * 2)
 

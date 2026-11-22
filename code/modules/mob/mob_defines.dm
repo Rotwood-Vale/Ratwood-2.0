@@ -117,6 +117,7 @@
 	var/list/possible_offhand_intents = list()//Living
 	var/list/possible_rmb_intents = list()
 	var/list/base_intents = list() //bare hand intents
+	var/datum/special_intent/unarmed_special //fallback special intent when no weapon is held
 	var/l_index = 1
 	var/r_index = 1
 	var/r_ua_index = 1
@@ -276,6 +277,12 @@
 
 	var/mobid = 0 //incremented on spawn
 
+	/// Lazy list of active /datum/sound_token that consider this mob a listener
+	var/list/sound_tokens
+	/// Private ambience source, such as a held torch, heard at zero distance outside the shared
+	/// index. Managed by the subsystem
+	var/atom/point_ambience_self_source
+
 	var/cmode = 0
 	var/d_intent = INTENT_DODGE
 	var/islatejoin = FALSE
@@ -311,3 +318,8 @@
 
 	/// cooldown for the next time this person can offer
 	COOLDOWN_DECLARE(offer_cooldown)
+	///Currently-channeling spell_cooldown datum, set by on_start_charge() and cleared by end_charging().
+	///Cached so checkdefense() can block parry without iterating /actions on every incoming swing.
+	var/datum/action/cooldown/spell/channeling_spell
+	var/facing_locked = FALSE
+	var/last_deflect_recoil = 0

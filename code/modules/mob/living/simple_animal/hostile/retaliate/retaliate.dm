@@ -8,7 +8,7 @@
 /mob/living/simple_animal/hostile/retaliate/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(M.used_intent.type == INTENT_HELP)
-		if(enemies.len)
+		if(LAZYLEN(enemies))
 			if(tame)
 				clear_enemies()
 				src.visible_message(span_notice("[src] calms down."))

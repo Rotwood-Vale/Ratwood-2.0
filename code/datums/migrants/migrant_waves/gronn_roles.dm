@@ -106,7 +106,7 @@
 
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)	//this guy can SNAP HIS FINGERS and LIGHT A FIRE???
+	H.mind.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)	//this guy can SNAP HIS FINGERS and LIGHT A FIRE???
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/lesser_heal)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose)
 

@@ -74,7 +74,11 @@
 	if(is_ghost)
 		return
 
-	if(!is_ghost)
+	if(!going_up && istype(user.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/roguetown/helmet/heavy/absolver))
+		playsound(src, 'sound/foley/ladder_ardeo.ogg', 100, FALSE) // it took me way to long to track down this audio. I hope you appreciate it.
+		if(!do_after(user, 50, TRUE, src))
+			return
+	else
 		playsound(src, 'sound/foley/ladder.ogg', 100, FALSE)
 		if(!do_after(user, 30, TRUE, src))
 			return
@@ -130,10 +134,10 @@
 /obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
 		user.visible_message("<span class='notice'>[user] climbs up [src].</span>", "<span class='notice'>I climb up [src].</span>")
+	else if(!going_up && istype(user.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/roguetown/helmet/heavy/absolver)) // load bearing feature, trust.
+		user.visible_message("<span class='notice'>[user] climbs down [src], their cone-helm clanging against every rung.</span>", "<span class='notice'>I climb down [src]. My conical-helm hits every rung on the way down.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] climbs down [src].</span>", "<span class='notice'>I climb down [src].</span>")
-
-
 // Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
 /obj/structure/ladder/unbreakable
 	name = "sturdy ladder"

@@ -3,11 +3,10 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	name = "haubergeon"
 	desc = "A steel maille shirt. Arrows and small daggers go right through the gaps in this."
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	icon_state = "haubergeon"
 	armor = ARMOR_MAILLE
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = CHAINHIT
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
@@ -15,6 +14,7 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	armor_class = ARMOR_CLASS_LIGHT //Experimental change; leave unlisted for now? Offers a weight-class advantage over the otherwise-superior hauberk. We'll see how it goes.
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/ComponentInitialize()
 	. = ..()
@@ -47,6 +47,8 @@
 	desc = "Polished gilbranze rings and silk, woven together to form a short maille-atekon. The death of a million brought forth the ascension of Zizo; and if a million more must perish to complete Her works, then let it be done."
 	icon_state = "ancientchain"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
 	name = "decrepit haubergeon"
@@ -61,7 +63,7 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	name = "hauberk"
 	desc = "A longer steel maille that protects the legs, still doesn't protect against arrows though."
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	icon_state = "hauberk"
 	item_state = "hauberk"
 	armor = ARMOR_MAILLE
@@ -92,20 +94,36 @@
 	desc = "<font color='A50021'>And on the pedestal these words appear: <i>\"My name is ZIZO, Queen of Queens:\"</i></font>"
 	icon_state = "zizohauberk"
 	item_state = "zizohauberk"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	armor_class = ARMOR_CLASS_MEDIUM
-	peel_threshold = 5
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
+	name = "vicious hauberk"
+	desc = "The blessing of a Martyr is nothing, when put before the Sinistar's rage."
+	icon_state = "graggarhauberk"
+	item_state = "graggarhauberk"
+	armor = ARMOR_PLATE_BSTEEL
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR")
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient
 	name = "ancient hauberk"
 	desc = "Polished gilbranze rings and silk, woven together to form a sleeved maille-atekon. To bring the lyfeless back from decrepity, to elevate them to heights once thought unsurmountable; that is the will of Zizo, made manifest."
 	icon_state = "ancienthauberk"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient/decrepit
 	name = "decrepit hauberk"
@@ -117,8 +135,7 @@
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
 	slot_flags = ITEM_SLOT_ARMOR
 	armor_class = ARMOR_CLASS_HEAVY
-	peel_threshold = 4
-	armor = ARMOR_CUIRASS
+	armor = ARMOR_PLATE
 	name = "psydonic hauberk"
 	desc = "A beautiful steel cuirass, decorated with blessed silver fluting and worn atop thick chainmaille. While it falters against arrows and bolts, these interlinked layers are superb at warding off the blows of inhumen claws and axes. </br>'..the knowledge of evil, and the burden of carrying Psydonia's hope upon thine shoulders..' </br>... </br>With some blessed silver and a blacksmith's assistance, I can turn this hauberk into a set of full-plate armor."
 	icon_state = "ornatehauberk"
@@ -134,5 +151,107 @@
 	item_state = "chainkini"
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = CLOTHED_RACES_TYPES
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = COVERAGE_TORSO
 	armor_class = ARMOR_CLASS_LIGHT //placed in the medium category to keep it with its parent obj
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/bikini/bronze
+	name = "bronze chainmail corslet"
+	desc = "A mail corslet made of bonze rings."
+	icon_state = "bchainkini"
+	item_state = "bchainkini"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy
+	name = "plate-and-maille"
+	desc = "A maille-aketon of steel, comfortably fitted beneath a matching cuirass. Best paired with a padded arming jacket \
+	and a lovely goblet of wine, sourced straight from the Duke's private reserves."
+	slot_flags = ITEM_SLOT_ARMOR
+	icon_state = "cuirasshauberk"
+	item_state = "cuirasshauberk"
+	armor_class = ARMOR_CLASS_HEAVY // Prevents slot-stoackage by those who aren't already specialzed in wearing plate armor.
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT // To note, this is about 450 INT, or +150 over regular hauberk and -50 under regular plate.
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/ancient/decrepit
+	name = "decrepit plate-and-maille"
+	desc = "Frayed bronze rings and rotting leather, woven together to form a sleeved maille-atekon; one that's been uncomfortably \
+	tucked beneath a matching cuirass. Such are the last remains of those who've dared to march against the undying legions, be it \
+	yils or centuries prior."
+	icon_state = "ancientcuirasshauberk"
+	item_state = "ancientcuirasshauberk"
+	max_integrity = ARMOR_INT_CHEST_PLATE_DECREPITLIGHT // 200 INT.
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/ancient
+	name = "ancient plate-and-maille"
+	desc = "Polished gilbranze rings and silk, woven together to form a sleeved maille-atekon; one that's been uncomfortably tucked \
+	beneath a matching cuirass. It eminates an unfamiliar sensation, rarely seen amongst rot-and-undeath - elegance. In the worlds to \
+	come, do you suppose Her death knights would bear such a mantle?"
+	icon_state = "ancientcuirasshauberk"
+	item_state = "ancientcuirasshauberk"
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/fluted
+	slot_flags = ITEM_SLOT_ARMOR
+	armor_class = ARMOR_CLASS_HEAVY
+	armor = ARMOR_PLATE
+	name = "fluted plate-and-maille"
+	desc = "A beautiful steel cuirass, decorated with fluting and worn atop thick chainmaille. While it falters against \
+	arrows and bolts, these interlinked layers are superb at warding off the blows of swords and axes."
+	icon_state = "ornatehauberk"
+	item_state = "ornatehauberk"
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/decorated
+	name = "decorated plate-and-maille"
+	desc = "A maille-aketon of steel, comfortably fitted beneath a decorated cuirass. Best paired with a gilded dress shirt \
+	and a tankard of Valmora Blue, chilled atop the rocks of a conquered fief."
+	slot_flags = ITEM_SLOT_ARMOR
+	icon_state = "gildedhauberk"
+	item_state = "gildedhauberk"
+	armor_class = ARMOR_CLASS_HEAVY
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
+	smeltresult = /obj/item/ingot/gold
+
+///////// CRAFTING DATUMS FOR MAILLED CUIRASS /////////
+
+/datum/crafting_recipe/roguetown/blacksmith/mailledhauberk
+	name = "layer a steel cuirass atop hauberk"
+	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half = 1,
+				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
+	craftdiff = 0 //Straight-forward. Note that this is a copy of Draganfrukt's helmet-and-hat combination system, which also has the slight caveat..
+	req_table = TRUE //..of resetting the durability of both items, when crafted and uncrafted. This check helps to reduce a lot of potential cheese, but should be tweaked later.
+
+/datum/crafting_recipe/roguetown/survival/ancientmailledhauberk
+	name = "layer an ancient cuirass atop hauberk"
+	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/ancient)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half/ancient = 1,
+				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient = 1)
+	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.
+	req_table = TRUE //If someone wants to add that in post, hwoever, I don't mind. You can easily do so by copy-pasting the format, here.
+
+/datum/crafting_recipe/roguetown/survival/flutedmailledhauberk
+	name = "layer a fluted cuirass atop hauberk"
+	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/fluted)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted = 1,
+				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
+	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.
+	req_table = TRUE //If someone wants to add that in post, hwoever, I don't mind. You can easily do so by copy-pasting the format, here.
+
+/datum/crafting_recipe/roguetown/survival/ornatemailledhauberk
+	name = "layer a psydonic cuirass atop hauberk"
+	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate = 1,
+				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
+	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.
+	req_table = TRUE //If someone wants to add that in post, hwoever, I don't mind. You can easily do so by copy-pasting the format, here.
+
+/datum/crafting_recipe/roguetown/survival/decoratedmailledhauberk
+	name = "layer a decorated cuirass atop hauberk"
+	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/decorated)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated = 1,
+				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
+	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.
+	req_table = TRUE //If someone wants to add that in post, hwoever, I don't mind. You can easily do so by copy-pasting the format, here.

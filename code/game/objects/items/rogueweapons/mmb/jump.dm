@@ -67,6 +67,8 @@
 	if(m_intent == MOVE_INTENT_RUN)
 		if(animal_mount)
 			animal_mount.emote("leap", forced = TRUE)
+		else if(HAS_TRAIT(src, TRAIT_BEWINGED))
+			emote("flutter", forced = TRUE)
 		else
 			emote("leap", forced = TRUE)
 		OffBalance(30)
@@ -78,10 +80,16 @@
 	else
 		if(animal_mount)
 			animal_mount.emote("jump", forced = TRUE)
-		emote("jump", forced = TRUE)
+		if(HAS_TRAIT(src, TRAIT_BEWINGED))
+			emote("flutter", forced = TRUE)
+		else
+			emote("jump", forced = TRUE)
 		OffBalance(20)
 		jadded = 20
 		jrange = 2
+
+	if(HAS_TRAIT(src, TRAIT_BEWINGED))
+		jrange += 1
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src

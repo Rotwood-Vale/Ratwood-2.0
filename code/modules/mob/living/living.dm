@@ -1,6 +1,8 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	/// Mobs this living mob is actively hostile toward.
+	var/list/enemies
 	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
 	var/no_head_bounty = FALSE
 	/// Marks a mob as belonging to a contract warband; its corpse dusts itself after death.
@@ -216,13 +218,10 @@
 			var/target_points = FLOOR((L.STACON + L.STASTR)/2, 1)
 
 			switch(sprint_distance)
-				// Point blank
-				if(0 to 1)
+				// Point blank to 2 tiles
+				if(0 to 3)
 					self_points -= 99
 					instafail = TRUE
-				// One to two tile between the people
-				if(2 to 3)
-					self_points -= 2
 				// Five or above tiles between people
 				if(6 to INFINITY)
 					self_points += 1
@@ -709,7 +708,7 @@
 		return
 	if(!reaper)
 		return
-	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE))
+	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE) || HAS_TRAIT(src, TRAIT_DEATHS_DOOR))
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 
 		if(istype(src.loc, /turf/open/water) && !HAS_TRAIT(src, TRAIT_NOBREATH) && lying && client)
@@ -723,6 +722,7 @@
 		var/word_input = stripped_input(src, "Your parting words? Leave empty if you will.", "Last Words")
 		if(word_input)
 			say(word_input)
+		SEND_SIGNAL(src, COMSIG_LIVING_SUCCUMBED)
 		death()
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = TRUE, check_immobilized = FALSE, ignore_stasis = FALSE)
@@ -873,11 +873,18 @@
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
+/mob/living/proc/is_burning_with(status_type)
+	var/datum/status_effect/fire_handler/fire_stacks/fire = has_status_effect(status_type)
+	return fire?.on_fire
+
+/mob/living/proc/looks_dead()
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH)
+
 /mob/living/proc/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
 	if(src == user)
 		return FALSE
 	if(stat < DEAD)
-		to_chat(user, span_warning("Nothing happens."))
+		to_chat(user, span_warning(looks_dead() ? "They are unresponsive to my attempts. For now." : "Nothing happens."))
 		return FALSE
 	if(!mind)
 		return FALSE
@@ -952,6 +959,7 @@
 		set_suicide(FALSE)
 		clear_alert("not_enough_oxy")
 		remove_client_colour(/datum/client_colour/monochrome)
+		set_sunder(0) //Just in case we didn't
 		. = (stat < DEAD) // The flip happened, but only report success if they actually stayed alive
 		if(.)
 			// Add message about struggling to recall death circumstances
@@ -963,8 +971,13 @@
 		if(mind)
 			if(admin_revive)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
-			for(var/obj/effect/proc_holder/spell/spell as anything in mind.spell_list)
-				spell.updateButtonIcon()
+			for(var/spell as anything in mind.spell_list)
+				var/obj/effect/proc_holder/spell/newspell = spell
+				var/datum/action/cooldown/spell/oldspell = spell
+				if(istype(newspell))
+					newspell.action?.build_all_button_icons()
+				else if (istype(oldspell))
+					oldspell.build_all_button_icons()
 		if(.) // A re-died corpse is a corpse again, it keeps its rot and its pending rise
 			qdel(GetComponent(/datum/component/rot))
 
@@ -975,6 +988,7 @@
 	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
 	setStaminaLoss(0)
+	set_sunder(0)
 	SetUnconscious(0, FALSE)
 	if(should_update_mobility)
 		update_mobility()
@@ -993,6 +1007,7 @@
 	setCloneLoss(0, 0)
 	remove_CC(FALSE)
 	set_disgust(0)
+	set_sunder(0)
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
@@ -1020,6 +1035,7 @@
 	slowdown = 0
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
+	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEALED, admin_revive)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -1128,7 +1144,7 @@
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				adjust_blood_volume(-max(1, brute_ratio * 2)) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
 					newdir = newdir | direction
@@ -1242,6 +1258,7 @@
 	drop_all_held_items()
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
+	apply_status_effect(/datum/status_effect/debuff/omegamale)
 	src.visible_message(span_notice("[src] yields!"))
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
@@ -1303,6 +1320,16 @@
 /mob/proc/resist_grab(moving_resist)
 	return TRUE //returning 0 means we successfully broke free
 
+/mob/living/proc/grapple_str()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STASTR
+
+/mob/living/proc/grapple_con()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STACON
+
 /mob/living/resist_grab(moving_resist, freeresist = FALSE)
 	. = TRUE
 
@@ -1345,9 +1372,9 @@
 
 	resist_chance += max((wrestling_diff * 10), -20)
 	if(HAS_TRAIT(src, TRAIT_GARROTED))
-		resist_chance += (STACON - L.STASPD) * 5
+		resist_chance += (grapple_con() - L.STASPD) * 5
 	else
-		resist_chance += (STACON - (agg_grab ? L.STASTR : L.STAWIL)) * 5
+		resist_chance += (grapple_con() - (agg_grab ? L.grapple_str() : L.STAWIL)) * 5
 	resist_chance *= combat_modifier
 	resist_chance = clamp(resist_chance, 5, 95)
 
@@ -1710,6 +1737,10 @@
 	if(!blessed_sunder?.on_fire)
 		blessed_sunder?.ignite(silent)
 
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(!dark_status?.on_fire)
+		dark_status?.ignite(silent)
+
 /mob/living/proc/SoakMob(locations)
 	if(locations & CHEST)
 		extinguish_mob()
@@ -1730,6 +1761,9 @@
 	var/datum/status_effect/fire_handler/fire_stacks/sunder/blessed/blessed_sunder = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 	if(blessed_sunder?.on_fire)
 		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(dark_status?.on_fire)
+		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
 
 /**
  * Handles effects happening when mob is on normal fire
@@ -1741,7 +1775,10 @@
  */
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
+	var/fire_resist_mult = 1
+	if(HAS_TRAIT(src, TRAIT_FIRE_RESIST))
+		fire_resist_mult = 0.5
+	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick * fire_resist_mult)
 
 /**
  * Adjust the amount of fire stacks on a mob
@@ -2369,8 +2406,8 @@
 			_y = min(0,_y)
 	else if(STAPER > 11)
 		var/offset = STAPER - 10
-		if(offset > 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
-			offset = 5
+		if(offset >= 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
+			offset = 4
 		if(STAPER >= 12)
 			message = span_info("[src] easily peers afar.")
 		if(_x > 0)
@@ -2539,7 +2576,10 @@
 
 /mob/living/proc/accept_offered_item(mob/living/offerer, obj/offered_item, stealthy)
 	transferItemToLoc(offered_item, src)
-	put_in_active_hand(offered_item)
+	if(!put_in_active_hand(offered_item))
+		offered_item.forceMove(drop_location())
+		offerer.stop_offering_item()
+		return
 	if(stealthy)
 		to_chat(offerer, span_notice("[src] takes the secretly offered [offered_item]."))
 		to_chat(src, span_notice("I take the secretly offered [offered_item] from [offerer]."))
@@ -2580,3 +2620,22 @@
 	if(QDELETED(src) || stat != DEAD) // skip if it was somehow revived in the meantime
 		return
 	dust()
+
+/// Cancels a spell currently being channeled, covering both the old proc_holder system
+/// (which sets client.charging during mouse-hold) and the new spell_cooldown datum system
+/// (tracked via /mob/channeling_spell set in on_start_charge).
+/// Returns TRUE if a channel was actually interrupted.
+/mob/living/proc/interrupt_spell_channel()
+	. = FALSE
+	if(channeling_spell)
+		channeling_spell.cancel_casting()
+		// before_cast drives non-click charge spells through do_after; cancel_casting alone
+		// sets currently_charging=FALSE but the do_after loop only breaks on user.doing=FALSE
+		// or movement, so we need to explicitly break it.
+		stop_all_doing()
+		. = TRUE
+	if(client?.charging && used_intent?.tranged && !used_intent.tshield)
+		stop_attack()
+		. = TRUE
+	if(.)
+		to_chat(src, span_danger("My spell is disrupted!"))

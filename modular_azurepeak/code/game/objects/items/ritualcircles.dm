@@ -21,12 +21,26 @@
 		playsound(loc, 'sound/foley/cloth_wipe (1).ogg', 100, TRUE)
 		qdel(src)
 
+/proc/deconvert_zizo(mob/living/carbon/human/target, obj/structure/ritualcircle/circle, patron_type)
+	var/datum/antagonist/zizocultist/cult = target?.mind?.has_antag_datum(/datum/antagonist/zizocultist)
+	if(!cult || target.loc != circle.loc || target.stat == DEAD)
+		return
+	if(!cult.islesser || alert(target, "Will you refuse the Dark Lady, and free your soul?", "CLEANSING", "YIELD", "RESIST") == "RESIST")
+		return
+	to_chat(target, span_userdanger("I am free from the Dark Lady's service, and any chance for greater power..."))
+	cult.on_removal()
+	target.set_patron(new patron_type)
+	target.say("Praise [target.patron.name]!", forced = "deconversion")
+	target.emote("agony", forced = TRUE)
+	target.Stun(30)
+	target.Knockdown(30)
+
 // This'll be our tutorial ritual for those who want to make more later, let's go into details in comments, mm? - Onutsio
 /obj/structure/ritualcircle/astrata
 	name = "Rune of the Sun" // defines name of the circle itself
 	icon_state = "astrata_chalky" // the icon state, so, the sprite the runes use on the floor. As of making, we have 6, each needs an active/inactive state.
 	desc = "A Holy Rune of Astrata. Warmth irradiates from the rune." // description on examine
-	var/solarrites = list("Guiding Light") // This is important - This is the var which stores every ritual option available to a ritualist - Ideally, we'd have like, 3 for each God. Right now, just 1.
+	var/solarrites = list("Guiding Light", "Cleansing") // This is important - This is the var which stores every ritual option available to a ritualist - Ideally, we'd have like, 3 for each God. Right now, just 1.
 
 /obj/structure/ritualcircle/astrata/attack_hand(mob/living/user)
 	if(!..())
@@ -61,6 +75,25 @@
 						guidinglight(src) // Actually starts the proc for applying the buff
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 						addtimer(VARSET_CALLBACK(src, icon_state, "astrata_chalky"), 120)
+		if("Cleansing")
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				valids_on_rune += peep
+			var/mob/living/carbon/human/target = input(user, "Deconvert") as null|anything in valids_on_rune
+			if(!target || target.loc != loc)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("In the Name of the Sun Queen, and of Her Light, and of Her Father's holy Corpse!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Astrata rises, and those who hate Her flee before Her!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("AS WAX MELTS BENEATH HER FLAME, SO TOO DOES THE ARCHENEMY PERISH AT THE PRESENCE OF HER LIGHT!!")
+			icon_state = "astrata_active"
+			deconvert_zizo(target, src, /datum/patron/divine/astrata)
+			addtimer(VARSET_CALLBACK(src, icon_state, "astrata_chalky"), 120)
 
 /obj/structure/ritualcircle/astrata/proc/guidinglight(src)
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
@@ -1241,7 +1274,7 @@
 	name = "Rune of Ambition"
 	desc = "A Holy Rune of ZIZO. Ambition at any cost."
 	icon_state = "zizo_chalky"
-	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal", "Conversion")
+	var/zizorites = list("Rite of Armaments", "Conversion")
 
 /obj/structure/ritualcircle/zizo/attack_hand(mob/living/user)
 	if(!..())
@@ -1280,33 +1313,6 @@
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			zizoarmaments(target)
-			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
-		if("Rite of the Dark Crystal")
-			if(!user.mind)
-				return
-			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
-				var/confirm = alert(user, "Your pact with Zizo allows no more relics while your existing ones remain bound. Sever your oldest crystal - and the dead bound to it - to forge a new one?", "Rite of the Dark Crystal", "Sever and Replace", "Cancel")
-				if(confirm != "Sever and Replace")
-					return
-			if(!do_after(user, 5 SECONDS))
-				return
-			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
-			if(!do_after(user, 5 SECONDS))
-				return
-			user.say("ZIZO! ZIZO! GRANT THE CABAL THEIR RELIC!!")
-			if(!do_after(user, 5 SECONDS))
-				return
-			user.say("ZIZO! ZIZO! THE DARK CRYSTAL TO COMMAND THE DEAD!!")
-			if(!do_after(user, 5 SECONDS))
-				return
-			// re-check cap right before committing, in case circumstances changed during the chant
-			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
-				user.mind.necro_retire_oldest_crystal()
-			icon_state = "zizo_active"
-			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			var/obj/item/necro_relics/necro_crystal/new_crystal = new /obj/item/necro_relics/necro_crystal(loc)
-			user.mind.necro_register_crystal(new_crystal)
-			loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
 			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
@@ -1353,6 +1359,7 @@
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
 	addtimer(CALLBACK(src, PROC_REF(zizoarmaments_stage2), target), 20)
+
 /datum/outfit/job/roguetown/darksteelrite/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/list/items = list()
@@ -1360,7 +1367,6 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
 	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
@@ -1398,7 +1404,7 @@
 	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
 	switch(weapons_choice)
 		if("Absolutio - (greatsword)")
-			r_hand = /obj/item/rogueweapon/greatsword/zizo
+			r_hand = /obj/item/rogueweapon/greatsword/avantyne
 			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 		if("Vindicatio - (longsword)")
 			r_hand = /obj/item/rogueweapon/sword/long/zizo
@@ -1416,7 +1422,11 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Devotio - (arming sword)")
 			r_hand = /obj/item/rogueweapon/sword/arming/zizo
-			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+
+	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
+
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")
@@ -1623,7 +1633,9 @@
 	..()
 	var/list/items = list()
 	items |= H.get_equipped_items(TRUE)
-	for(var/I in items)
+	for(var/obj/item/I in items)
+		if(istype(I, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//dont remove nat armor
+			continue
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/matthios
@@ -1633,7 +1645,13 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+	if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//prevents getting free gilded armor for your hedge knight buddy if you have natural armor
+		armor = null
+	if(istype(H.wear_shirt, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))
+		shirt = null
+
+	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -1820,14 +1838,48 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar
-	pants = /obj/item/clothing/under/roguetown/platelegs/graggar
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/graggar
-	gloves = /obj/item/clothing/gloves/roguetown/plate/graggar
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/graggar
-	neck = /obj/item/clothing/neck/roguetown/gorget/steel
+
+	var/helmets = list("VICIOUS HELMET", "VICIOUS SKULLHELM")
+	var/helmet_choice = input(H, "Choose your helmet.", "GRAGGAR'S ARMAMENTS") as anything in helmets
+	switch(helmet_choice)
+		if("VICIOUS HELMET")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/graggar
+		if("VICIOUS SKULLHELM")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/graggar/skull
+
+	var/armors = list("MEDIUM ARMOR", "HEAVY ARMOR")
+	var/armor_choice = input(H, "Choose your armor.", "GRAGGAR'S ARMAMENTS") as anything in armors
+	switch(armor_choice)
+		if("MEDIUM ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar
+			pants = /obj/item/clothing/under/roguetown/platelegs/graggar
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/graggar
+			gloves = /obj/item/clothing/gloves/roguetown/plate/graggar
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/graggar
+			neck = /obj/item/clothing/neck/roguetown/gorget/steel/graggar
+			mask = /obj/item/clothing/mask/rogue/facemask/steel/graggar
+		if("HEAVY ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/graggar
+			pants = /obj/item/clothing/under/roguetown/platelegs/graggar
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/graggar
+			gloves = /obj/item/clothing/gloves/roguetown/plate/graggar/heavy
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/graggar/heavy
+			neck = /obj/item/clothing/neck/roguetown/gorget/steel/graggar
+			mask = /obj/item/clothing/mask/rogue/facemask/steel/graggar
+
+	var/weapons = list("Sanguis - (tomahawk and targe)", "Carnifex - (two-handed greataxe)")
+	var/weapon_choice = input(H, "Choose your ARMS.", "ARMS OF VIOLENCE") as anything in weapons
+	switch(weapon_choice)
+		if("Sanguis - (tomahawk and targe)")
+			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel/graggar
+			l_hand = /obj/item/rogueweapon/shield/iron/graggar
+		if("Carnifex - (two-handed greataxe)")
+			r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead/graggar
+			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+
 	cloak = /obj/item/clothing/cloak/graggar
-	r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead/graggar
 
 /obj/structure/ritualcircle/graggar/proc/graggarconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -1930,11 +1982,30 @@
 			for(var/mob/living/carbon/human/persononrune in onrune)
 				if(HAS_TRAIT(persononrune, TRAIT_DEPRAVED))
 					folksonrune += persononrune
-			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in folksonrune
 			if(!target)
+				return
+			if(HAS_TRAIT(target, TRAIT_NUDIST))
+				to_chat(user, "The target is a nudist and cannot wear armor!")
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
+			var/list/armor_options = list(
+				"Baothan Cuirass" = image(icon = 'icons/roguetown/clothing/special/baotha.dmi', icon_state = "baothachest"),
+				"Saccharine Plate Armor" = image(icon = 'icons/roguetown/clothing/armor.dmi', icon_state = "baothaplate"),
+			)
+			var/armor_choice = show_radial_menu(user, src, armor_options, require_near = TRUE, tooltips = TRUE)
+			if(!armor_choice)
+				return
+
+			var/list/weapon_options = list(
+				"Perfect Agony" = image(icon = 'icons/roguetown/weapons/whips32.dmi', icon_state = "baotha_whip"),
+				"Saccharine Swordspear" = image(icon = 'icons/roguetown/weapons/polearms64.dmi', icon_state = "swordstaff"),
+			)
+			var/weapon_choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
+			if(!weapon_choice)
+				weapon_choice = "Perfect Agony"
+
 			user.say("Lady, my Lady...")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -1944,10 +2015,10 @@
 			user.say("Let all those who look upon me see thy beauty and despair!!")
 			if(!do_after(user, 5 SECONDS))
 				return
-			icon_state = "baotha_active"
+			icon_state = "baotha_chalky"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			baothaarmor(target)
-			addtimer(VARSET_CALLBACK(src, icon_state, "baotha_active"), 120)
+			baothaarmor(target, armor_choice, weapon_choice)
+			addtimer(VARSET_CALLBACK(src, icon_state, "pestra_chalky"), 120)
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -2002,10 +2073,30 @@
 		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
 
-/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target, armor_choice, weapon_choice)
 	if(!HAS_TRAIT(target, TRAIT_DEPRAVED))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF HER LOVE"))
 		return
+	if(!armor_choice)
+		armor_choice = "Baothan Cuirass"
+	switch(armor_choice)
+		if("Baothan Cuirass")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)	
+		if("Saccharine Plate Armor")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
+	if(!weapon_choice)
+		weapon_choice = "Perfect Agony"
+	switch(weapon_choice)
+		if("Perfect Agony")
+			target.put_in_hands(new /obj/item/rogueweapon/whip/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/polearms, SKILL_LEVEL_APPRENTICE)
+		if("Saccharine Swordspear")
+			target.put_in_hands(new /obj/item/rogueweapon/spear/partizan/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_APPRENTICE)
 	target.Stun(60)
 	target.Knockdown(60)
 	to_chat(target, span_userdanger("DELECTABLE PAIN!"))
@@ -2016,7 +2107,14 @@
 		target.Paralyze(120)
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
-	addtimer(CALLBACK(src, PROC_REF(baothaarmor_stage2), target), 20)
+	spawn(20)
+		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+		spawn(40)
+			to_chat(target, span_purple("All will love you and despair."))
+
 //TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
 
@@ -2025,7 +2123,7 @@
 	name = "Rune of Enduring"
 	desc = "A Holy Rune of Psydon. It depicts His holy symbol, yet nothing stirs within you."
 	icon_state = "psydon_chalky"
-	var/psydonrites = list("Conversion", "Admonishment", "Freedom")
+	var/psydonrites = list("Conversion", "Admonishment", "Freedom", "Cleansing")
 
 /obj/structure/ritualcircle/psydon/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/old_god)
@@ -2034,17 +2132,13 @@
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
 		to_chat(user,span_smallred("I don't know the proper rites for this..."))
 		return
-	if(!HAS_TRAIT(user, TRAIT_INQUISITION))//Just in case someone OUTSIDE of the Inquisition has this combination. A converted ritualist, for example.
-		to_chat(user,span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
-		return
-	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended_lesser))//We only use lesser cooldown for this, given it's just the Absolver.
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended_lesser))
 		to_chat(user,span_smallred("I have done enough for the moment. I should take a brief rest."))
 		return
 	var/riteselection = input(user, "Rites of the Lost", src) as null|anything in psydonrites
 	switch(riteselection)
 		if("Conversion")//Convert non-Psydonites to Psydon.
 			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to understand the One's will.")
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -2064,10 +2158,18 @@
 					if(do_after(user, 5 SECONDS))
 						user.say("I beg of you, accept this wayward soul.")//WEEP FOR THEM, LASZLO.
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						var/luxshield = FALSE
+						if(HAS_TRAIT(user, TRAIT_LUX_FREAK))
+							loc.visible_message(span_cult("[user] weeps silver tears."))
+							luxshield = TRUE
+						else
+							loc.visible_message(span_cult("[user] weeps."))
 						if(do_after(user, 5 SECONDS))
-							psydonconversion(target)
+							psydonconversion(target, luxshield)
 		if("Admonishment")//Deconvert WWs/Vampires.
+			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
+				return
 			if(!Adjacent(user))
 				return
 			var/list/valids_on_rune = list()
@@ -2088,17 +2190,18 @@
 					if(do_after(user, 5 SECONDS))
 						to_chat(user, span_warning("A blind leap, as you call upon the One to rebuke the Inhumen..."))
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
 							psydonadmonishment(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
+			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
+				return
 			if(!Adjacent(user))
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
-				if(!HAS_TRAIT(peep, TRAIT_OVERTHERETIC))
-					continue
 				valids_on_rune += peep
 			if(!valids_on_rune.len)
 				to_chat(user, "No valid targets on the rune!")
@@ -2113,12 +2216,33 @@
 					if(do_after(user, 5 SECONDS))
 						to_chat(user, span_warning("A measured strike, as you attempt to sever the cords..."))
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
 							psydonstrip(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
+		if("Cleansing")
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				valids_on_rune += peep
+			var/mob/living/carbon/human/target = input(user, "Deconvert") as null|anything in valids_on_rune
+			if(!target || target.loc != loc)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("The blood of Psydon compels you!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("The blood of Psydon compels you!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("THE POWER OF PSYDON COMPELS YOU!!")
+			user.emote("cry")
+			loc.visible_message(span_cult("[user] weeps."))
+			if(!do_after(user, 5 SECONDS))
+				return
+			deconvert_zizo(target, src, /datum/patron/old_god)
 
-/obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target, luxshield = FALSE)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's will.")
 		return
@@ -2131,6 +2255,16 @@
 		target.emote("cry")
 		loc.visible_message(span_cult("[target] weeps."))
 		target.Stun(80)//Keep them in place, for a bit. Until we're done.
+		if(luxshield)
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but something stops their wrath from hurting me.")) // absolver doing the legwork
+			loc.visible_message(span_cult("The silver tears boil and evaporate but [target] stays safe in their new conviction."))
+		else
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
+			target.Knockdown(60)
+			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+			target.emote("Agony")
+			target.apply_damage(100, BURN, BODY_ZONE_HEAD)
+			loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as their former patron punishes their defiance."))
 		addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage2), target), 20)
 	if(prompt == "NAE")
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
@@ -2145,13 +2279,15 @@
 		loc.visible_message(span_warning("[target] does not have the mind to benefit from the One's guidance."))
 		return
 
-	if(HAS_TRAIT(target, TRAIT_SILVER_BLESSED))
-		loc.visible_message(span_warning("[target] has already been saved by the One's admonishment."))
-		return
-
 	if(target.stat == DEAD)
 		loc.visible_message(span_warning("With their heart stilled, the ritual will have no purchase upon [target]. It would be a waste."))
 		return
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+		loc.visible_message(span_warning("With masterfull precision, the divine curse on [target] is unvowen."))
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 
 	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
 	var/datum/antagonist/werewolf/lesser/Wereless = target.mind.has_antag_datum(/datum/antagonist/werewolf/lesser/)
@@ -2218,9 +2354,6 @@
 
 
 /obj/structure/ritualcircle/psydon/proc/psydonstrip(mob/living/carbon/human/target)
-	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))//A fallback. You should never see this.
-		loc.visible_message(span_cult("This one is not bound by chains upon their lux. I can do nothing more with this rite."))
-		return
 	target.Stun(20)
 	target.Knockdown(20)
 	to_chat(target, span_userdanger("IT'S INSIDE MY HEAD!"))
@@ -2228,6 +2361,7 @@
 	playsound(loc, 'sound/misc/pressurepad_up.ogg', 50)
 	loc.visible_message(span_cult("[target]'s flesh briefly warps, as some unseen force tears the equipment from their frame!"))
 	addtimer(CALLBACK(src, PROC_REF(psydonstrip_stage2), target), 20)
+
 //Dropping rite armour. Or, well, basically everything.
 /datum/outfit/job/roguetown/rite_strip/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -2236,6 +2370,11 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
+	var/obj/item/chastity/device = H.chastity_device
+	if(device)
+		device.remove_chastity(H) // because ritual name is FREEDOM and I find it funny
+		if(!QDELETED(device))
+			device.forceMove(get_turf(H))
 
 /obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamarmor_stage2(mob/living/carbon/human/target)
 	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
@@ -2435,6 +2574,17 @@
 
 /obj/structure/ritualcircle/psydon/proc/psydonconversion_stage4(mob/living/carbon/human/target)
 	to_chat(target, span_mind_control("..."))
+	
+	// Remove divine punishments
+	target.remove_status_effect(/datum/status_effect/debuff/apostasy)
+	target.remove_status_effect(/datum/status_effect/debuff/excomm)
+	target.remove_stress(/datum/stressevent/apostasy)
+	target.remove_stress(/datum/stressevent/excommunicated)
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+	
 	if(target.devotion == null)
 		target.set_patron(new /datum/patron/old_god)
 		return

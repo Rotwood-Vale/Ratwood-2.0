@@ -308,6 +308,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 
+	// Before GLOB.clients, which is where point ambience first finds a client
+	point_ambience = new
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
@@ -643,6 +645,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/Destroy()
 	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	QDEL_NULL(droning_sound)
+	QDEL_NULL(point_ambience?.head_watch)
 	last_droning_sound = null
 	if(mob)
 		mob.become_uncliented()
@@ -1023,6 +1026,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	else
 		winset(src, null, "input.focus=true command=activeInput input.background-color=[COLOR_INPUT_ENABLED] input.text-color = #EEEEEE")
 
+	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
+
 	..()
 
 /client/proc/add_verbs_from_config()
@@ -1271,6 +1276,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return
 
 /client/proc/preload_music()
-	if(SSsounds.initialized == TRUE)
-		for(var/sound_path as anything in SSsounds.all_music_sounds)
-			src << load_resource(sound_path, -1)
+	if(cached_sounds || !SSsounds.initialized)
+		return
+	cached_sounds = TRUE
+	for(var/sound_path as anything in SSsounds.all_music_sounds)
+		src << load_resource(sound_path, 0)

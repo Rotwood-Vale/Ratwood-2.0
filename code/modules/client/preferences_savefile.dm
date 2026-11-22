@@ -7,9 +7,9 @@
 //	where you would want the updater procs below to run
 
 //	This also works with decimals.
-#define SAVEFILE_VERSION_MAX 38
+#define SAVEFILE_VERSION_MAX 39
 
-// Safely extract a type path from datums or type values; returns null if unset/invalid.
+/// Safely extract a type path from datums or type values. Returns null if unset or invalid
 /proc/preferences_typepath_or_null(value)
 	if(isnull(value))
 		return null
@@ -79,6 +79,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 35)
 		patreon_say_color = "ff7a05"
 		patreon_say_color_enabled = FALSE
+	if(current_version < 39 && islist(key_bindings["ShiftG"]))
+		key_bindings["ShiftG"] = list("toggle_arc_mode")
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
@@ -238,21 +240,30 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parchment_skin"]		>> parchment_skin
 	S["buttons_locked"]		>> buttons_locked
 	S["windowflash"]		>> windowflashing
-	S["be_special"] 		>> be_special
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
+	S["adminmusicvol"]		>> adminmusicvol
+	S["streamedmusicvol"]	>> streamedmusicvol
 	S["combatmusicvol"]		>> combatmusicvol
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
+	S["pointambiencevol"]	>> pointambiencevol
+	S["pointambience_independent"] >> pointambience_independent
+	S["point_ambience_toggles"] >> point_ambience_toggles
+	S["overallvol"]		>> overallvol
+	S["instrumentvol"]	>> instrumentvol
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
+	S["full_examine"]		>> full_examine
 	S["top_examine"]		>> top_examine
+	S["feint_hud"]			>> feint_hud
 	S["show_mouseover_role"] >> show_mouseover_role
 	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
-	S["mute_animal_emotes"]	>> mute_animal_emotes
+	S["mute_animal_emotes"]	>> mute_anthro_noises
 	S["autoconsume"]		>> autoconsume
+	S["autoblooddrink"]		>> autoblooddrink
 	S["autowoodcut"]		>> autowoodcut
 	S["autopicking"]		>> autopicking
 	S["no_examine_blocks"]	>> no_examine_blocks
@@ -276,6 +287,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pits"]				>> pits
 	S["descriptor_color"]	>> descriptor_color
 	S["cursed_collarable"] 	>> cursed_collarable
+	S["milkable"]			>> milkable
+	S["manticore_tail_messages"]	>> manticore_tail_messages
 	S["shake"]				>> shake
 	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
@@ -295,6 +308,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_accs"]			>> ghost_accs
 	S["ghost_others"]		>> ghost_others
 	S["admin_ghost_icon"]	>> admin_ghost_icon
+	S["admin_ghost_name"]	>> admin_ghost_name
 	S["preferred_map"]		>> preferred_map
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
@@ -359,19 +373,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	if(admin_ghost_icon && !isicon(admin_ghost_icon))
 		admin_ghost_icon = null
+	if(admin_ghost_name && !istext(admin_ghost_name))
+		admin_ghost_name = null
 	menuoptions		= SANITIZE_LIST(menuoptions)
-	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
 	musicvol = sanitize_integer(musicvol, 0, 100, initial(musicvol))
+	// Initialize the new admin slider from the saved shared music level to preserve the listener's
+	// volume
+	if(!isnum(adminmusicvol))
+		adminmusicvol = musicvol
+	adminmusicvol = sanitize_integer(adminmusicvol, 0, 100, initial(adminmusicvol))
+	streamedmusicvol = sanitize_integer(streamedmusicvol, 0, 100, initial(streamedmusicvol))
 	if(!isnum(combatmusicvol))
 		combatmusicvol = musicvol
 	combatmusicvol = sanitize_integer(combatmusicvol, 0, 100, initial(combatmusicvol))
 	lobbymusicvol = sanitize_integer(lobbymusicvol, 0, 100, initial(lobbymusicvol))
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
+	pointambiencevol = sanitize_integer(pointambiencevol, 0, 100, initial(pointambiencevol))
+	pointambience_independent = sanitize_integer(pointambience_independent, 0, 1, initial(pointambience_independent))
+	point_ambience_toggles = sanitize_integer(point_ambience_toggles, 0, SOUND_DISABLE_POINT_AMBIENCE | SOUND_DISABLE_TORCH_AMBIENCE, initial(point_ambience_toggles))
+	overallvol = sanitize_integer(overallvol, 0, 100, initial(overallvol))
+	instrumentvol = sanitize_integer(instrumentvol, 0, 100, initial(instrumentvol))
 	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
 	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
+	full_examine = sanitize_integer(full_examine, 0, 1, initial(full_examine))
 
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
@@ -427,17 +454,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["triumphs"], triumphs)
 	WRITE_FILE(S["musicvol"], musicvol)
+	WRITE_FILE(S["adminmusicvol"], adminmusicvol)
+	WRITE_FILE(S["streamedmusicvol"], streamedmusicvol)
 	WRITE_FILE(S["combatmusicvol"], combatmusicvol)
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
+	WRITE_FILE(S["pointambiencevol"], pointambiencevol)
+	WRITE_FILE(S["pointambience_independent"], pointambience_independent)
+	WRITE_FILE(S["point_ambience_toggles"], point_ambience_toggles)
+	WRITE_FILE(S["overallvol"], overallvol)
+	WRITE_FILE(S["instrumentvol"], instrumentvol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["full_examine"], full_examine)
 	WRITE_FILE(S["top_examine"], top_examine)
+	WRITE_FILE(S["feint_hud"], feint_hud)
 	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
-	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
+	WRITE_FILE(S["mute_animal_emotes"], mute_anthro_noises)
 	WRITE_FILE(S["autoconsume"], autoconsume)
+	WRITE_FILE(S["autoblooddrink"], autoblooddrink)
 	WRITE_FILE(S["autowoodcut"], autowoodcut)
 	WRITE_FILE(S["autopicking"], autopicking)
 	WRITE_FILE(S["no_examine_blocks"], no_examine_blocks)
@@ -460,6 +497,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pits"], pits)
 	WRITE_FILE(S["descriptor_color"], descriptor_color)
 	WRITE_FILE(S["cursed_collarable"], cursed_collarable)
+	WRITE_FILE(S["milkable"], milkable)
+	WRITE_FILE(S["manticore_tail_messages"], manticore_tail_messages)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)
@@ -480,7 +519,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parchment_skin"], parchment_skin)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
-	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["default_slot"], default_slot)
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
@@ -492,6 +530,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ghost_accs"], ghost_accs)
 	WRITE_FILE(S["ghost_others"], ghost_others)
 	WRITE_FILE(S["admin_ghost_icon"], admin_ghost_icon)
+	WRITE_FILE(S["admin_ghost_name"], admin_ghost_name)
 	WRITE_FILE(S["preferred_map"], preferred_map)
 	WRITE_FILE(S["ignoring"], ignoring)
 	WRITE_FILE(S["ghost_hud"], ghost_hud)
@@ -576,15 +615,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
 	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
-	S["redolent_type"] >> redolent_type
-	S["redolent_scent"] >> redolent_scent
-	if(isnull(redolent_type)) // legacy savefile key from when this was named malodorous
-		S["malodorous_type"] >> redolent_type
-		S["malodorous_scent"] >> redolent_scent
-	if(redolent_type == "Positive")
-		redolent_type = "Pleasant"
-	if(!(redolent_type in list("Gross", "Neutral", "Pleasant")))
-		redolent_type = "Neutral"
+	var/list/vice_configs
+	S["vice_configs"] >> vice_configs
+	if(islist(vice_configs))
+		for(var/i = 1 to VICE_SLOTS)
+			var/datum/charflaw/vice = vars["vice[i]"]
+			if(vice)
+				vice.load_config(vice_configs["[vice.type]"])
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -620,6 +657,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		virtuetwo = new /datum/virtue/none
 
+	var/list/virtue_configs
+	S["virtue_configs"] >> virtue_configs
+	if(islist(virtue_configs))
+		for(var/datum/virtue/V in list(virtue, virtuetwo))
+			V.load_config(virtue_configs["[V.type]"])
+
 /datum/preferences/proc/_load_quirks(S)
 	var/list/quirk_types
 	S["quirks"] >> quirk_types
@@ -630,6 +673,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/quirk_type in quirk_types)
 		if(ispath(quirk_type, /datum/quirk))
 			quirks += new quirk_type()
+	// passing S so redolent shit don't get lost
+	var/list/configs
+	S["quirk_configs"] >> configs
+	if(!islist(configs))
+		configs = list()
+	for(var/datum/quirk/Q in quirks)
+		Q.load_config(configs["[Q.type]"], S)
 
 /datum/preferences/proc/_load_loadout(S)
 	var/loadout_type
@@ -791,6 +841,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["bark_speed"] >> bark_speed
 	S["bark_pitch"] >> bark_pitch
 	S["bark_variance"] >> bark_variance
+	S["bark_volume"] >> bark_volume
 	S["hear_barks"] >> hear_barks
 
 	if(!(bark_id in GLOB.bark_list))
@@ -799,6 +850,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	bark_speed = round(clamp(bark_speed, initial(B.minspeed), initial(B.maxspeed)), 1)
 	bark_pitch = clamp(bark_pitch, initial(B.minpitch), initial(B.maxpitch))
 	bark_variance = clamp(bark_variance, initial(B.minvariance), initial(B.maxvariance))
+	if(isnull(bark_volume))
+		bark_volume = 70
+	bark_volume = round(clamp(bark_volume, 10, 70), 1)
 
 /datum/preferences/proc/_load_appearence(S)
 	S["real_name"]			>> real_name
@@ -817,8 +871,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["extra_language"]		>> extra_language
 	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
-	S["extra_language_1"]	>> extra_language_1
-	S["extra_language_2"]	>> extra_language_2
 	S["voice_color"]		>> voice_color
 	S["voice_pitch"]		>> voice_pitch
 	if (!voice_pitch)
@@ -875,6 +927,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_virtue(S)
 	_load_quirks(S)
 	_load_flaw(S)
+
+	S["be_special"] >> be_special
+	be_special = SANITIZE_LIST(be_special)
 
 	_load_culinary_preferences(S)
 
@@ -1132,8 +1187,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["extra_language"]		, extra_language)
 	WRITE_FILE(S["origin"]				, origin)
 	WRITE_FILE(S["selected_title"]		, selected_title)
-	WRITE_FILE(S["extra_language_1"]	, extra_language_1)
-	WRITE_FILE(S["extra_language_2"]	, extra_language_2)
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
@@ -1148,6 +1201,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"]			, randomise)
 	WRITE_FILE(S["species"]				, pref_species?.name)
 	WRITE_FILE(S["charflaw"]				, preferences_typepath_or_null(charflaw))
+	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["family"], family)
 	WRITE_FILE(S["gender_choice"], gender_choice)
 	WRITE_FILE(S["setspouse"], setspouse)
@@ -1160,8 +1214,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
 	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
-	WRITE_FILE(S["redolent_type"], redolent_type)
-	WRITE_FILE(S["redolent_scent"], redolent_scent)
+	WRITE_FILE(S["vice_configs"], get_vice_configs())
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
@@ -1204,6 +1257,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["bark_speed"]				, bark_speed)
 	WRITE_FILE(S["bark_pitch"]				, bark_pitch)
 	WRITE_FILE(S["bark_variance"]			, bark_variance)
+	WRITE_FILE(S["bark_volume"]				, bark_volume)
 	WRITE_FILE(S["hear_barks"]				, hear_barks)
 
 	WRITE_FILE(S["dnr"] , dnr_pref)
@@ -1233,7 +1287,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	WRITE_FILE(S["virtue_configs"], get_virtue_configs())
 	WRITE_FILE(S["quirks"], get_quirk_typepaths())
+	WRITE_FILE(S["quirk_configs"], get_quirk_configs())
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])

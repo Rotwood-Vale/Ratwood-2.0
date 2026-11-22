@@ -6,6 +6,8 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	sound_door = TRUE
+	sound_opening = TRUE
 	layer = CLOSED_DOOR_LAYER
 
 	icon = 'icons/roguetown/misc/doors.dmi'
@@ -60,7 +62,7 @@
 	var/resident_role
 	/// The requied advclass of the resident
 	var/list/resident_advclass
-	//a door name a skilled artisan can make 
+	//a door name a skilled artisan can make
 	var/doorname = null
 
 /obj/structure/mineral_door/onkick(mob/user)
@@ -74,6 +76,7 @@
 		else
 			user.visible_message(span_warning("[user] kicks [src] shut!"), \
 				span_notice("I kick [src] shut!"))
+		add_forensic_action(user, "kicked shut")
 		force_closed()
 	else
 		if(locked)
@@ -89,6 +92,7 @@
 					else
 						user.visible_message(span_warning("[user] kicks open [src]!"), \
 							span_notice("I kick open [src]!"))
+					add_forensic_action(user, "kicked open, breaking the lock")
 					locked = 0
 					force_open()
 				else
@@ -99,6 +103,7 @@
 					else
 						user.visible_message(span_warning("[user] kicks [src]!"), \
 							span_notice("I kick [src]!"))
+					add_forensic_action(user, "kicked while locked")
 			//try to kick open, destroy lock
 		else
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
@@ -108,6 +113,7 @@
 			else
 				user.visible_message(span_warning("[user] kicks open [src]!"), \
 					span_notice("I kick open [src]!"))
+			add_forensic_action(user, "kicked open")
 			force_open()
 
 /obj/structure/mineral_door/proc/force_open()
@@ -214,7 +220,7 @@
 	if(human.mind && human.mind.cosmetic_class_title)
 		owner_title = human.mind.cosmetic_class_title
 	else if(human.advjob)
-		owner_title = human.advjob		
+		owner_title = human.advjob
 	name = "[user.real_name][owner_title ? " the [owner_title]" : ""]'s house"
 	return TRUE
 
@@ -237,9 +243,11 @@
 			user.break_invisibility()
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
-				take_damage(200, "brute", "blunt", 1)
+				add_forensic_action(user, "bashed into while locked")
+				take_damage_from(user, 200, "brute", "blunt", 1)
 			else
 				playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
+				add_forensic_action(user, "smashed through")
 				force_open()
 				user.visible_message(span_warning("[user] smashes through [src]!"))
 			return
@@ -309,7 +317,11 @@
 			return FALSE
 	else if(!user.client) // simplemobs aren't allowed to pathfind through doors, currently
 		return FALSE
+	var/was_open = door_opened
 	SwitchState(user.m_intent == MOVE_INTENT_SNEAK) // silent when sneaking
+	// Close() refuses while anyone stands in the doorway, so only log what actually happened
+	if(door_opened != was_open)
+		add_forensic_action(user, door_opened ? "opened" : "closed", routine = TRUE)
 	return TRUE
 
 /obj/structure/mineral_door/proc/SwitchState(silent = FALSE)
@@ -434,9 +446,12 @@
 			return ..()
 
 /obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
-	..()
+	var/turf/hit_turf = get_turf(src)
+	// Not returned, as door hits have always ended the attack chain here
+	if(..())
+		add_forensic_action(user, "hit with [format_text(I.name)]")
 	if(obj_broken || obj_destroyed)
-		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
+		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, hit_turf)
 		new_track.handle_creation(user)
 
 /obj/structure/mineral_door/proc/repairdoor(obj/item/I, mob/user)
@@ -463,7 +478,8 @@
 						playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 						icon_state = "[base_state]"
 						density = TRUE
-						opacity = TRUE
+						// Repair must preserve the transparency of barred and windowed doors
+						set_opacity(!windowed)
 						brokenstate = FALSE
 						obj_broken = FALSE
 						obj_integrity = max_integrity
@@ -572,6 +588,11 @@
 		return
 	if(!keylock)
 		return
+	var/mob/living/L = user
+	if(L?.has_status_effect(/datum/status_effect/debuff/zizo_knock))
+		to_chat(user, span_warning("The door is stuck fast."))
+		door_rattle()
+		return
 	if(lockbroken)
 		to_chat(user, span_warning("The lock to this door is broken."))
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -612,6 +633,7 @@
 				lock_toggle(user)
 				if(autobump && !locked)
 					src.Open()
+					add_forensic_action(user, "opened", routine = TRUE)
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE, TRUE), 25)
 					src.last_bumper = user
 				return
@@ -627,6 +649,7 @@
 			lock_toggle(user)
 			if(autobump)
 				src.Open()
+				add_forensic_action(user, "opened", routine = TRUE)
 				addtimer(CALLBACK(src, PROC_REF(Close), FALSE, TRUE), 25)
 				src.last_bumper = user
 			return
@@ -667,7 +690,7 @@
 		pickchance += perbonus
 		pickchance *= P.picklvl
 		pickchance = clamp(pickchance, 1, 95)
-		
+
 		if (lockdifficulty > 1) //each time the difficulty goes up, the harder the lock
 			picktime = picktime+(10*lockdifficulty)//add a flat 10 per level
 			pickchance = pickchance/(lockdifficulty*0.75)//reduce the chance by .75 per level
@@ -702,6 +725,7 @@
 						record_round_statistic(STATS_LOCKS_PICKED)
 						var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 						new_track.handle_creation(user)
+					add_forensic_action(user, "lockpicked")
 					lock_toggle(user)
 					break
 				else
@@ -713,6 +737,7 @@
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
 		if(!picked)
+			add_forensic_action(user, "tried to lockpick")
 			user.log_message("stopped/failed lockpicking door \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 		return
 
@@ -730,6 +755,7 @@
 		log_admin("[H.real_name]([key_name(user)]) successfully used a skeleton key on [src.name].")
 	do_sparks(3, FALSE, src)
 	playsound(user, 'sound/items/skeleton_key.ogg', 100)
+	add_forensic_action(user, "used a skeleton key")
 	lock_toggle(user) //All That It Does.
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	return
@@ -737,6 +763,8 @@
 /obj/structure/mineral_door/proc/lock_toggle(mob/user)
 	if(isSwitchingStates || door_opened)
 		return
+	// Routine, so a keyholder coming and going cannot push lockpicks and breaks out. Picks log their own evidence entry
+	add_forensic_action(user, locked ? "unlocked" : "locked", routine = TRUE)
 	if(locked)
 		user?.visible_message(span_warning("[user] unlocks [src]."), \
 			span_notice("I unlock [src]."))
@@ -763,8 +791,9 @@
 	if(!brokenstate)
 		icon_state = "[base_state]br"
 		density = FALSE
-		opacity = FALSE
+		set_opacity(FALSE)
 		brokenstate = TRUE
+		on_forced_break(damage_flag)
 	..()
 
 /obj/structure/mineral_door/OnCrafted(dirin, user)
@@ -1104,12 +1133,10 @@
 	set_opacity(window_closed)
 	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
 
+/// Keeps the door transparent while its viewport is open, reporting only the final opacity to the
+/// parent
 /obj/structure/mineral_door/wood/donjon/set_opacity(setter)
-	..()
-	if(!window_closed) //Keeps it non-opaque when the door shuts.
-		opacity = FALSE
-	else
-		opacity = setter
+	return ..(window_closed && setter)
 
 /obj/structure/mineral_door/wood/donjon/stone/broken
 	desc = "A broken stone door from an era bygone. A new one must be constructed in its place."
@@ -1277,6 +1304,6 @@
 	keylock = TRUE
 	grant_resident_key = TRUE
 	resident_key_type = /obj/item/roguekey/townie// should be every wretch class - ideally we can get resident_role to accept lists but until then this'll do
-	resident_advclass = list(/datum/advclass/witch, /datum/advclass/wretch/licker, /datum/advclass/wretch/deserter, /datum/advclass/wretch/deserter/maa, /datum/advclass/wretch/berserker, /datum/advclass/wretch/hedgemage, /datum/advclass/wretch/necromancer, /datum/advclass/wretch/heretic, /datum/advclass/wretch/heretic/spy, /datum/advclass/wretch/outlaw, /datum/advclass/wretch/poacher, /datum/advclass/wretch/plaguebearer, /datum/advclass/wretch/pyromaniac, /datum/advclass/wretch/vigilante, /datum/advclass/wretch/blackoakwyrm, /datum/advclass/wretch/antipope, /datum/advclass/wretch/ancientchampion)
+	resident_advclass = list(/datum/advclass/witch, /datum/advclass/wretch/licker, /datum/advclass/wretch/deserter, /datum/advclass/wretch/deserter/maa, /datum/advclass/wretch/berserker, /datum/advclass/wretch/roguemage, /datum/advclass/wretch/necromancer, /datum/advclass/wretch/heretic, /datum/advclass/wretch/heretic/spy, /datum/advclass/wretch/outlaw, /datum/advclass/wretch/poacher, /datum/advclass/wretch/plaguebearer, /datum/advclass/wretch/pyromaniac, /datum/advclass/wretch/vigilante, /datum/advclass/wretch/blackoakwyrm, /datum/advclass/wretch/antipope, /datum/advclass/wretch/ancientchampion)
 	lockid = null //Will be randomized
 

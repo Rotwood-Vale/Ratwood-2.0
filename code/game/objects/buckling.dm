@@ -84,7 +84,7 @@
 	M.throw_alert("buckled", /atom/movable/screen/alert/restrained/buckled)
 	M.set_glide_size(glide_size)
 	post_buckle_mob(M)
-	M.update_action_buttons_icon()
+	M.update_mob_action_buttons()
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
 	return TRUE
@@ -111,7 +111,7 @@
 //		if(buckle_lying)
 //			buckled_mob.set_resting(FALSE)
 		post_unbuckle_mob(.)
-		buckled_mob.update_action_buttons_icon()
+		buckled_mob.update_mob_action_buttons()
 
 /atom/movable/proc/unbuckle_all_mobs(force=FALSE)
 	if(!has_buckled_mobs())

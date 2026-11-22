@@ -11,7 +11,6 @@
 	outfit = null
 	outfit_female = null
 	display_order = JDO_WRETCH
-	show_in_credits = FALSE
 	min_pq = 30//60>50>30. What a world. Fingers crossed that folks aren't as bad with it now.
 	max_pq = null
 	quirk_restrictions = list(/datum/quirk/assassintarget)
@@ -34,16 +33,15 @@
 	job_traits = list(TRAIT_STEELHEARTED, TRAIT_OUTLAW, TRAIT_HERESIARCH, TRAIT_SELF_SUSTENANCE, TRAIT_ZURCH)
 	job_subclasses = list(
 		/datum/advclass/wretch/licker,
-		/datum/advclass/wretch/deserter,
+		/datum/advclass/wretch/deserter_knight,
 		/datum/advclass/wretch/deserter/maa,
 		/datum/advclass/wretch/berserker,
-		/datum/advclass/wretch/hedgemage,
+		/datum/advclass/wretch/roguemage,
 		/datum/advclass/wretch/necromancer,
 		/datum/advclass/wretch/heretic,
 		/datum/advclass/wretch/heretic/spy,
 		/datum/advclass/wretch/heretic/monk,
 		/datum/advclass/wretch/outlaw,
-		/datum/advclass/wretch/outlaw/marauder,
 		/datum/advclass/wretch/lunacyembracer,
 		/datum/advclass/wretch/poacher,
 		/datum/advclass/wretch/plaguebearer,

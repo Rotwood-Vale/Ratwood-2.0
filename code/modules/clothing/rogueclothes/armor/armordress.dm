@@ -7,10 +7,9 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "padded dress"
 	desc = "This dress has been padded with leather for extra protection. Bolts and arrows punch right through it."
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	icon_state = "armordress"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	blocksound = SOFTHIT
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -32,7 +31,7 @@
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
 	desc = "A thick, padded, and comfortable dress popular amongst nobility during winter."
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	icon_state = "winterdress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
 	boobed = TRUE
@@ -55,7 +54,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch //For the duchess nobody else
 	desc = "A thick, padded, and comfortable dress to maintain both temperature and safety when leaving the keep."
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 
 /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch/lordcolor(primary,secondary)
 	detail_color = primary

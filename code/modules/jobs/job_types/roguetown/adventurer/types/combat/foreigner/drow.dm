@@ -7,6 +7,7 @@
 	given how few succeed - let alone survive - the grueling recruitment period."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
+		/datum/species/arachnid,
 		/datum/species/elf/dark,
 		/datum/species/human/halfelf, // Because half-drows are half-elves, guh.
 	)
@@ -37,7 +38,7 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 
 	)
-	extra_context = "This subclass is race-limited to: Dark Elves Only. \
+	extra_context = "This subclass is race-limited to: Dark Elves, Half-Elves, and Arachnids. \
 	This subclass can choose between dodge expert with SPD 2, WIL 2, and PER 1 \
 	or medium armor with STR 2, CON 2, and WIL 1. \
 	Female drow recieve nutcracker and bedbreaker. Male drow \

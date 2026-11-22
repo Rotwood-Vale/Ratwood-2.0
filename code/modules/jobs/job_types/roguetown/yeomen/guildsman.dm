@@ -13,7 +13,6 @@
 
 	tutorial = "You are a member of the Duchy's Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township.\
 	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
-	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
 
 	outfit = /datum/outfit/job/roguetown/guildsman
 	selection_color = JCOLOR_YEOMAN
@@ -25,8 +24,8 @@
 	advjob_examine = TRUE // So that everyone know which subjob they have picked
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	job_subclasses = list(
-		/datum/advclass/guildsman/artificer,
 		/datum/advclass/guildsman/blacksmith,
+		/datum/advclass/guildsman/engineer,
 	)
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
@@ -36,25 +35,29 @@
 	outfit = /datum/outfit/job/roguetown/guildsman/blacksmith
 
 	category_tags = list(CTAG_GUILDSMEN)
+	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_WIL = 2,
+		STATKEY_STR = 2,
 		STATKEY_CON = 2,
-		STATKEY_INT = 2,
-		STATKEY_LCK = 1 // general skillbuff to bring them in line with the architech
+		STATKEY_WIL = 1,
+		STATKEY_INT = 1,
+		STATKEY_LCK = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, // you can use your hammer as a weapon
+		/datum/skill/combat/axes = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/smelting = SKILL_LEVEL_MASTER, // Goofy to insist you're worse at smelting than smithing
-		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE, // 2 engineering as most engineering crafts were increased in skill
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE
 	)
 
 /datum/outfit/job/roguetown/guildsman/blacksmith/pre_equip(mob/living/carbon/human/H)
@@ -102,88 +105,82 @@
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 
-/datum/advclass/guildsman/artificer
+/datum/advclass/guildsman/engineer
 	name = "Guild Engineer"
-	tutorial = "You are an engineer, Once trained under architects and artificers you now have the experience to surpass them both. \
-	Your calling is the works of artificing and architecture, be it smithing, constructing or the arcane machinery you do it all, your experience demands respect."
-	outfit = /datum/outfit/job/roguetown/guildsman/artificer
+	tutorial = "You are an engineer, hailing from the artificers of old, you now combine the teachings of engineering with architecture. \
+	You now fit the role of both designer and constructor, working with wood or working with machinery, you are a respected craftsman and highly sought after for your experience is endless."
+	outfit = /datum/outfit/job/roguetown/guildsman/engineer
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = FALSE)
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_LEGENDARY_MINER)
-	subclass_stats = list( // alchemy expert upon request
-		STATKEY_INT = 3,
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
+	subclass_stats = list(
+		STATKEY_INT = 2,
 		STATKEY_WIL = 2,
-		STATKEY_LCK = 2,
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
 		STATKEY_PER = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // woodcutting, don't want a wild venard attacking you
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // Allows them to use their axe effectively
+		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE, // less than blacksmith, used in hammers
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN, // this will allow an architech to use a portable bombard
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE, // Not sure why they got journeyman wrestling, architect had it probably doesn't need it
+		/datum/skill/craft/carpentry = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/masonry = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN, // can fill in for a blacksmith but can now actually repair equipment if needed
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN, // you can fill in for a smith but poorly, locked to journeyman in all smithing skills, use an autosmither
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, // AP gave them apprentice to allow for grinding since bombs need alchemy skill to get the ingredients
-		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // ceramics is a very unforgiving craft, expert is almost always required for even glass panes
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // glass making
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
 
-/datum/outfit/job/roguetown/guildsman/artificer/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/guildsman/engineer/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/articap
-	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	pants = /obj/item/clothing/under/roguetown/trou/artipants
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/pick/steel
-	beltl = /obj/item/flashlight/flare/torch/lantern
-	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
+	belt = /obj/item/storage/belt/rogue/leather/black
+	beltr = /obj/item/roguekey/crafterguild
+	beltl = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
+	backl = /obj/item/storage/backpack/rogue/artibackpack/engineer
+	backr = /obj/item/rogueweapon/pick/woodcutter/dolabra/albranze
 	backpack_contents = list(
-								/obj/item/rogueweapon/hammer/steel = 1,
-								/obj/item/rogueweapon/chisel = 1,
-								/obj/item/rogueweapon/handsaw = 1,
+								/obj/item/rogueweapon/hammer/bronze = 1,
+								/obj/item/rogueweapon/chisel/bronze = 1,
+								/obj/item/rogueweapon/handsaw/bronze = 1,
 								/obj/item/lockpickring/mundane = 1,
-								/obj/item/recipe_book/blacksmithing = 1,
-								/obj/item/recipe_book/engineering = 1,
-								/obj/item/recipe_book/ceramics = 1,
-								/obj/item/recipe_book/builder = 1,
 								/obj/item/recipe_book/survival = 1,
 								/obj/item/contraption/linker = 1,
 								/obj/item/mini_flagpole/artificer = 1,
-								/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 								/obj/item/mini_flagpole/blacksmith = 1,
+								/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 								/obj/item/rogueweapon/blowrod = 1,
-								/obj/item/dye_brush = 1,
-								/obj/item/roguekey/crafterguild = 1,
-								/obj/item/rogueweapon/huntingknife = 1,
+								/obj/item/rogueweapon/huntingknife/bronze = 1,
+								/obj/item/rogueweapon/shovel/bronze/spade = 1,
 								/obj/item/flint = 1,
+								/obj/item/dye_brush = 1,
+								/obj/item/rogueweapon/scabbard/sheath = 1,
+								/obj/item/clothing/mask/rogue/spectacles/golden = 1, // people with bad sight had their spectacles overwritten, should prevent this from happening
 						)
 	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
-	// Not a real mage, no free spell point. Take Arcyne Potential if you want it.
+
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)

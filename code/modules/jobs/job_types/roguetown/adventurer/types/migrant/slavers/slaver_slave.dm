@@ -156,8 +156,9 @@
 	name = "Arcyne Slave"
 	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
 	outfit = /datum/outfit/job/roguetown/slaver/slave/arcyne
-	traits_applied = list(TRAIT_GOODLOVER, TRAIT_ARCYNE_T3, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_ARCYNE, TRAIT_GOODLOVER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "ward" = TRUE)
 
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
@@ -184,18 +185,16 @@
 	shoes = /obj/item/clothing/shoes/roguetown/anklets
 	mask = /obj/item/clothing/mask/rogue/exoticsilkmask
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	backr = /obj/item/rogueweapon/woodstaff/emerald
+	backr = /obj/item/rogueweapon/woodstaff/implement/greater
 	gloves = /obj/item/clothing/gloves/roguetown/nomagic
 	backpack_contents = list(
 		/obj/item/soap/bath = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/roguegem/amethyst = 1, 
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/rogueweapon/spellbook = 1,
 	)
 	H.virginity = TRUE
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
-	if(H.mind)
-		H?.mind.adjust_spellpoints(24)
 	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
 	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
 	switch(background_choice)
@@ -249,8 +248,6 @@
 	)
 	H.virginity = TRUE
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
-	if(H.mind)
-		H?.mind.adjust_spellpoints(24)
 	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
 	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
 	switch(background_choice)

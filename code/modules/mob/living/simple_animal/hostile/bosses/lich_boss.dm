@@ -190,7 +190,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = "fire"
 	light_color = "#ffffff"
 /obj/projectile/magic/lich/lightning/on_hit(target)
 	. = ..()
@@ -311,7 +311,7 @@
 	blade_class = BCLASS_CUT
 	hitsound = 'sound/combat/hits/bladed/genchop (1).ogg'
 	chargetime = 20
-	penfactor = 25
+	penfactor = PEN_MEDIUM
 	swingdelay = 3
 	item_d_type = "stab"
 
