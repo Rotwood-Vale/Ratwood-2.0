@@ -558,15 +558,14 @@
 	icon_state = "artibracers"
 	item_state = "bracers"
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
 	max_integrity = ARMOR_INT_SIDE_STEEL
 	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	anvilrepair = /datum/skill/craft/armorsmithing
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
-	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/wrists/roguetown/artificedbracers/ComponentInitialize()
 	AddComponent(/datum/component/hidden_blades, 'sound/misc/grapple_attach.ogg', 'sound/misc/grapple_reel.ogg', "The inner mechanisms are jammed!", "The sounds of artificed mechanisms echo from the [src]!")
@@ -588,16 +587,24 @@
 	desc = "Standard leather bracers that offer some meager protection for the arms."
 	body_parts_covered = ARMS
 	icon_state = "hiddenbracers"
-	item_state = "bracers"
+	item_state = "lbracers"
+	max_integrity = ARMOR_INT_SIDE_LEATHER
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
-	resistance_flags = FIRE_PROOF
-	max_integrity = ARMOR_INT_SIDE_STEEL
-	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
-	sewrepair = FALSE
-	smeltresult = /obj/item/ingot/steel
+	blocksound = SOFTHIT
+	blade_dulling = DULLING_BASHCHOP
+	equip_sound = 'sound/foley/equip/rummaging-01.ogg'
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	anvilrepair = null
+	smeltresult = null
+	sewrepair = TRUE
+	smeltresult = null
+	dropshrink = null
+	salvage_amount = 0 // sry
+	salvage_result = /obj/item/natural/hide/cured
+	color = "#684338"
+	cold_protection = ARM_LEFT | ARM_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/wrists/roguetown/sheathebracers/ComponentInitialize()
 	AddComponent(/datum/component/hidden_blades, 'sound/foley/equip/scabbard_holster.ogg', 'sound/foley/equip/swordsmall1.ogg', "The sheath is jammed!", "Sounds of unsheathing ring out from the [src]!")
