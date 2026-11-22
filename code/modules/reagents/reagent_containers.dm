@@ -51,10 +51,26 @@
 /obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
 	return ..()
 
-/obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user, silent = FALSE)
+/obj/item/reagent_containers/onbite(mob/living/biter)
+	. = ..()
+	if(!isliving(biter))
+		return
+	if(biter.stat != CONSCIOUS)
+		return
+	return try_consume(biter, biter)
+
+/// Tries to consume whatever it is
+/obj/item/reagent_containers/proc/try_consume(mob/consumer, mob/feeder)
+	if(!can_consume(consumer, feeder))
+		return FALSE
+	return TRUE
+
+/// Checks if the eater can actually eat the thing
+/obj/item/reagent_containers/proc/can_consume(mob/living/carbon/eater, mob/user, silent = FALSE)
 	if(!iscarbon(eater))
 		return FALSE
-	var/mob/living/carbon/C = eater
+	if(!is_drainable())
+		return FALSE
 	var/obj/item/bodypart/head/dullahan/eaterrelay
 	if(ishuman(src))
 		var/mob/living/carbon/human = src
@@ -66,14 +82,14 @@
 				return FALSE
 
 	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
+	if(eater.is_mouth_covered(head_only = 1))
 		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
+	else if(eater.is_mouth_covered(mask_only = 1))
 		covered = "mask"
-	if(C != user)
-		if((C.mobility_flags & MOBILITY_STAND) && eaterrelay)
+	if(eater != user)
+		if((eater.mobility_flags & MOBILITY_STAND) && eaterrelay)
 			if(get_dir(eater, user) != eater.dir)
-				to_chat(user, span_warning("I must stand in front of [C.p_them()]."))
+				to_chat(user, span_warning("I must stand in front of [eater.p_them()]."))
 				return FALSE
 		else if(eaterrelay && (get_turf(eaterrelay) != get_turf(user) && !user.is_holding(eaterrelay)))
 			return FALSE
