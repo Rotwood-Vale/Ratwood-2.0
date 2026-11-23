@@ -682,7 +682,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/quiver/twilight_bullet/runicbag/eatarrow(obj:A, loc)
+/obj/item/quiver/twilight_bullet/runicbag/eatarrow(obj/A, loc)
 	if((!has_types || !istype(A, ammo_type2)) && !istype(A, ammo_type1))
 		return FALSE
 	if(arrows.len >= max_storage)
