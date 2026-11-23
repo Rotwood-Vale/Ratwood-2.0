@@ -8,7 +8,11 @@
 	pointer = 'icons/effects/mousemice/human_jump.dmi'
 
 /datum/intent/jump/on_mmb(atom/target, mob/living/user, params)
-	user.jump_action(target)
+	var/mob/living/carbon/human/mount = user.get_mountable_mount()
+	if(mount)
+		var/datum/component/riding/human/riding = mount.GetComponent(/datum/component/riding)
+		return riding?.handle_jump(user, target)
+	return user.jump_action(target)
 
 /mob/living/proc/jump_action(atom/A)
 	if(istype(get_turf(src), /turf/open/water))
@@ -56,7 +60,8 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_ONJUMP, A)
 
-	changeNext_move(mmb_intent.clickcd)
+	var/static/datum/intent/jump/jump_intent = new
+	changeNext_move(jump_intent.clickcd)
 
 	face_atom(A)
 

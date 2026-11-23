@@ -75,6 +75,16 @@
 	new /obj/item/natural/bundle/cloth/bandage/full(src)
 	new /obj/item/natural/bundle/cloth/bandage/full(src)
 
+/datum/inqports/supplies/hound
+	name = "HOUND DEVICE"
+	item_type = /obj/item/inqhound
+	marquescost = 2
+
+/datum/inqports/supplies/scanner
+	name = "SNIFFER DEVICE"
+	item_type = /obj/item/inqscanner
+	marquescost = 2
+
 /datum/inqports/supplies/chains
 	name = "2 Lengths of Chain"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/chains
@@ -423,6 +433,17 @@
 	name = "1 Inquisitorial SCOMgnet Ring"
 	item_type = /obj/item/clothing/ring/signet/silver/inqscomm
 	marquescost = 6
+
+/datum/inqports/equipment/runelock
+	name = "Runelock Pistol"
+	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/runelock
+	marquescost = 16
+	maximum = 2
+/obj/structure/closet/crate/chest/inqcrate/equipment/runelock/Initialize(mapload)
+	. = ..()
+	new /obj/item/quiver/twilight_bullet/runicbag(src)
+	new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/lesser(src)
+	new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt(src)
 
 // ✤ WARDROBE ✤ STARTS HERE! YEP!
 

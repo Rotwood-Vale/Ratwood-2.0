@@ -46,6 +46,7 @@
 		for(var/datum/antagonist/A as anything in mind.antag_datums)
 			A.on_life(src)
 
+	handle_curses()
 	handle_vamp_dreams()
 	if(IsSleeping())
 		if(health > 0)
@@ -81,10 +82,6 @@
 	else if(charflaw && !charflaw.ephemeral && mind)
 		charflaw.flaw_on_life(src)
 
-	// Redolent quirk scent processing
-	if(mind && HAS_TRAIT(src, TRAIT_REDOLENT))
-		handle_redolent_scent()
-	
 	if(health <= 0)
 		adjustOxyLoss(0.5)
 	if(mode == NPC_AI_OFF && !client && !HAS_TRAIT(src, TRAIT_NOSLEEP))
@@ -218,7 +215,7 @@
 							'sound/items/confessormask4.ogg', 'sound/items/confessormask5.ogg', 'sound/items/confessormask6.ogg',
 							'sound/items/confessormask7.ogg', 'sound/items/confessormask8.ogg', 'sound/items/confessormask9.ogg',
 							'sound/items/confessormask10.ogg')
-			playsound(src, mask_sound, 90, FALSE, 4, 0)
+			playsound(src, mask_sound, 90, FALSE, 4)
 			return
 
 

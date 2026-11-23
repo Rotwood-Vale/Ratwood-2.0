@@ -55,6 +55,7 @@
 /datum/status_effect/buff/rage/on_apply()
 	. = ..()
 	if(.)
+		ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 		var/filter = owner.get_filter(RAGE_FILTER)
 		if(!filter)
 			owner.add_filter(RAGE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 120, "size" = 1))
@@ -64,6 +65,7 @@
 
 /datum/status_effect/buff/rage/on_remove()
 	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(RAGE_FILTER)
 	to_chat(owner, span_warning("Rage subsides."))
 

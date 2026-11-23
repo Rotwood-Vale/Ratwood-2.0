@@ -105,7 +105,7 @@
 
 		accessory_icon_cache[key] = icon_bundle
 
-	var/icon/cached_icon = icon(accessory_icon_cache[key])
+	var/icon/cached_icon = accessory_icon_cache[key]
 	/// Generate mutable appearances from the icon
 	var/appearance_list = list()
 	if(relevant_layers)
@@ -177,9 +177,9 @@
 	switch(passed_layer)
 		if(BODY_BEHIND_LAYER)
 			return "BEHIND"
-		if(BODY_ADJ_LAYER)
+		if(BODY_ADJ_LAYER, BODY_BREASTS_LAYER)
 			return "ADJ"
-		if(BODY_FRONT_LAYER)
+		if(BODY_FRONT_LAYER, BODY_GENITAL_LAYER)
 			return "FRONT"
 		if(BODY_FRONT_FRONT_LAYER)
 			return "FFRONT"

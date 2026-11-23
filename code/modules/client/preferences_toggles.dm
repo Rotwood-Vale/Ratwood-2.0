@@ -115,6 +115,7 @@
 
 	var/list/gameplay_entries = list(
 		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
+		list("id" = "autoblooddrink", "label" = "Auto Blood Drinking", "enabled" = !!owner.prefs.autoblooddrink, "desc" = "Automatically repeat blood drinking."),
 		list("id" = "autowoodcut", "label" = "AutoWoodcut", "enabled" = !!owner.prefs.autowoodcut, "desc" = "Automatically continue chopping a tree after the first swing."),
 		list("id" = "autopicking", "label" = "AutoPicking", "enabled" = !!owner.prefs.autopicking, "desc" = "Automatically continue mining after clicking or bumping a rock wall with a pickaxe in hand."),
 		list("id" = "show_rolls", "label" = "Show Rolls", "enabled" = !!owner.prefs.showrolls, "desc" = "Show combat and check roll details in chat."),
@@ -133,17 +134,17 @@
 
 	var/list/audio_entries = list(
 		list("id" = "lobby_music", "label" = "Lobby Music", "enabled" = !!(owner.prefs.toggles & SOUND_LOBBY), "desc" = "Play music while in the lobby."),
-		list("id" = "hear_instruments", "label" = "Hear Instruments", "enabled" = !!(owner.prefs.toggles & SOUND_INSTRUMENTS), "desc" = "Hear bard instruments, jukeboxes, and boomboxes."),
 	)
 
 	var/list/content_entries = list(
-		list("id" = "animal_emotes", "label" = "Animal Noise Emotes", "enabled" = !!(!owner.prefs.mute_animal_emotes), "desc" = "Play animal emote sound effects."),
+		list("id" = "anthro_noises", "label" = "Anthro Noise Emotes", "enabled" = !!(!owner.prefs.mute_anthro_noises), "desc" = "Play anthro noise emote sound effects."),
 		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
 		list("id" = "erp_visuals", "label" = "Enable ERP Visual Effects", "enabled" = !!owner.prefs.erp_visuals, "desc" = "Enable visual effects like hearts and screen overlays during ERP."),
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+		list("id" = "oviposition", "label" = "Enable Oviposition Content", "enabled" = !!owner.prefs.oviposition, "desc" = "Others can lay eggs inside you! Also allows you to see egg-bellies."),
 		list("id" = "free_use_default", "label" = "Toggle Free Use Default", "enabled" = !!owner.prefs.free_use_default, "desc" = "Start with Free Use enabled by default. You can manually disable it at any point in the ERP panel."),
 		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
 		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
@@ -211,6 +212,8 @@
 				owner.toggle_xptext()
 			if("autoconsume")
 				owner.autoconsume()
+			if("autoblooddrink")
+				owner.toggle_autoblooddrink()
 			if("autowoodcut")
 				owner.toggle_autowoodcut()
 			if("autopicking")
@@ -237,15 +240,8 @@
 				owner.toggle_roleplay_ads()
 			if("lobby_music")
 				owner.toggle_lobby_music()
-			if("hear_instruments")
-				owner.prefs.toggles ^= SOUND_INSTRUMENTS
-				owner.prefs.save_preferences()
-				for(var/datum/looping_sound/persistent_loop in GLOB.persistent_sound_loops)
-					owner.update_persistent_sound_loop(persistent_loop)
-				owner.update_sounds()
-				owner.sync_instrument_audio_toggle()
-			if("animal_emotes")
-				owner.mute_animal_emotes()
+			if("anthro_noises")
+				owner.mute_anthro_noises()
 			if("erp_panel")
 				owner.toggle_ERP()
 			if("erp_visuals")
@@ -258,6 +254,8 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+			if("oviposition")
+				owner.toggle_oviposition()
 			if("free_use_default")
 				owner.toggle_free_use_default()
 			if("facial_branding")
@@ -374,17 +372,17 @@
 		else
 			to_chat(src, "Your character NSFW information will only be visible when nude.")
 
-/client/verb/mute_animal_emotes()
+/client/verb/mute_anthro_noises()
 	set category = "Options"
-	set name = "Toggle Animal Noise Emotes"
+	set name = "Toggle Anthro Noise Emotes"
 	set hidden = 1
 	if(prefs)
-		prefs.mute_animal_emotes = !prefs.mute_animal_emotes
+		prefs.mute_anthro_noises = !prefs.mute_anthro_noises
 		prefs.save_preferences()
-		if(prefs.mute_animal_emotes)
-			to_chat(src, "You can no longer hear animal sound emotes.")
+		if(prefs.mute_anthro_noises)
+			to_chat(src, "You can no longer hear anthro noise emotes.")
 		else
-			to_chat(src, "You will now hear animal sound emotes.")
+			to_chat(src, "You will now hear anthro noise emotes.")
 
 /client/verb/autoconsume()
 	set category = "Options"
@@ -397,6 +395,18 @@
 			to_chat(src, "You will now try to repeatedly consume/feed food/drinks")
 		else
 			to_chat(src, "You will no longer try to repeatedly consume/feed food/drinks")
+
+/client/verb/toggle_autoblooddrink()
+	set category = "Options"
+	set name = "Toggle Auto Blood Drinking"
+	set hidden = 1
+	if(prefs)
+		prefs.autoblooddrink = !prefs.autoblooddrink
+		prefs.save_preferences()
+		if(prefs.autoblooddrink)
+			to_chat(src, "You will now automatically repeat blood drinking from a grabbed limb.")
+		else
+			to_chat(src, "You will no longer automatically repeat blood drinking.")
 
 /client/verb/toggle_autowoodcut()
 	set category = "Options"
@@ -620,6 +630,18 @@
 			to_chat(src, "Genital and body hair descriptor colors are now visible.")
 		else
 			to_chat(src, "Genital and body hair descriptor colors are no longer visible.")
+
+/client/verb/toggle_oviposition()
+	set category = "Options"
+	set name = "Toggle Oviposition Content"
+	set hidden = 1
+	if(prefs)
+		prefs.oviposition = !prefs.oviposition
+		prefs.save_preferences()
+		if(prefs.oviposition)
+			to_chat(src, "Oviposition content enabled.")
+		else
+			to_chat(src, "Oviposition content disabled.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"
@@ -1024,24 +1046,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglemidis)()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Hearing Midis", "[usr.client.prefs.toggles & SOUND_MIDI ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/Sound/togglemidis/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_MIDI
-
-
-TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_instruments)()
-	set name = "Hear/Silence Instruments"
-	set category = "Preferences"
-	set desc = ""
-	set hidden = 1
-	usr.client.prefs.toggles ^= SOUND_INSTRUMENTS
-	usr.client.prefs.save_preferences()
-	usr.client.update_sounds()
-	usr.client.sync_instrument_audio_toggle()
-	if(usr.client.prefs.toggles & SOUND_INSTRUMENTS)
-		to_chat(usr, "You will now hear people playing musical instruments.")
-	else
-		to_chat(usr, "You will no longer hear musical instruments.")
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Instruments", "[usr.client.prefs.toggles & SOUND_INSTRUMENTS ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/toggle_instruments/Get_checked(client/C)
-	return C.prefs.toggles & SOUND_INSTRUMENTS
 
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, Toggle_Soundscape)()

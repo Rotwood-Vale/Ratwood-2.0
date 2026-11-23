@@ -165,7 +165,7 @@
 /datum/artificer_recipe/bronze/tools/skillcore
 	name = "Golem Skill Exhibitor (+2 Cog)"
 	created_item = /obj/item/construct_skill_core
-	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze)
 	hammers_per_item = 10
 	skill_level = 3
 
@@ -717,7 +717,7 @@
 /datum/artificer_recipe/general/smokebomb
 	name = "Gas belcher shells (x3) (+Cog)"
 	required_item = /obj/item/ingot/bronze
-	additional_items = list(/obj/item/roguegear)
+	additional_items = list(/obj/item/roguegear/bronze)
 	created_item = list(/obj/item/smokeshell,
 						/obj/item/smokeshell,
 						/obj/item/smokeshell)

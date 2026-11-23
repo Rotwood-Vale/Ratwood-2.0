@@ -1,6 +1,16 @@
+/mob/living/carbon/proc/get_armor_class(def_zone, d_type)
+	return ARMOR_CLASS_NONE
+
+/mob/living/carbon/human/get_armor_class(def_zone, d_type)
+	var/obj/item/clothing/C = get_best_worn_armor(def_zone, d_type)
+
+	if(!C)
+		return ARMOR_CLASS_NONE
+
+	return C.armor_class
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration = PEN_NONE, penetrated_text, damage, blade_dulling, intdamfactor, used_weapon = null, pen_info, no_debuff = FALSE)
-	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info)
+	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info, no_debuff)
 
 	// Tier-based armor system.
 	// armor_tier and armor_penetration are both tier values (0-4).
@@ -15,15 +25,15 @@
 	// don't feed it into checkarmor (which already ran above and handles null damage fine).
 	var/block_damage = damage || 999
 	var/blocked = 0
-	if(attack_flag in ARMOR_DR_ABSORB_TYPES)
-		// Blunt: armor absorbs all HP damage. DR reduces integrity damage to armor (in checkarmor).
-		if(armor_tier > 0)
-			blocked = block_damage
-	else if(attack_flag in ARMOR_DR_PIERCE_TYPES)
-		// Fire/Acid: DR reduces damage, but reduced damage still reaches HP.
+	if(attack_flag in ARMOR_DR_PIERCE_TYPES)
+		// Acid/Bullet: DR reduces damage, but reduced damage still reaches HP.
 		if(armor_tier > 0)
 			var/dr_mult = 1 / (1 + 0.2 * armor_tier)
 			blocked = block_damage * (1 - dr_mult)
+	else if(attack_flag in ARMOR_DR_TYPES)
+		// Blunt/Fire: armor absorbs all HP damage. DR reduces integrity damage to armor (in checkarmor).
+		if(armor_tier > 0)
+			blocked = block_damage
 	else
 		// Penetration: tier comparison
 		if(attack_flag != "piercing")
@@ -50,7 +60,7 @@
 					if(penetrated_text)
 						to_chat(src, span_danger("[penetrated_text]"))
 				else if(armor_penetration > armor_tier)
-					blocked = block_damage * (1 - PEN_PASSTHROUGH_PROJ_EQUAL) // We block 80% of the damage, letting 20% through to body / into integ.
+					blocked = block_damage * (1 - PEN_PASSTHROUGH_PROJ_MORE) // We block 20% of the damage, letting 80% through to body / into integ.
 					if(penetrated_text)
 						to_chat(src, span_danger("[penetrated_text]"))
 				else
@@ -62,7 +72,7 @@
 	if(used_weapon)
 		if(isitem(used_weapon))
 			var/obj/item/I = used_weapon
-			if(I.sharpness && I.max_blade_int && !(attack_flag in ARMOR_DR_ABSORB_TYPES))
+			if(I.sharpness && I.max_blade_int && !(attack_flag in ARMOR_DR_TYPES))
 				var/dullness_ratio = I.blade_int / I.max_blade_int
 				if(dullness_ratio <= SHARPNESS_TIER2_THRESHOLD)	//Our weapon is CHUNKED. What are we PENNING WITH.
 					blocked = block_damage * 10
@@ -152,7 +162,8 @@
 /mob/living/bullet_act(obj/projectile/P, def_zone = BODY_ZONE_CHEST)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone) & COMPONENT_ATOM_BLOCK_BULLET)
 		return
-	def_zone = bullet_hit_accuracy_check(P.accuracy + P.bonus_accuracy, def_zone)
+	if(!P.true_aim || !def_zone)
+		def_zone = bullet_hit_accuracy_check(P.accuracy + P.bonus_accuracy, def_zone)
 	var/armor = run_armor_check(def_zone, P.flag, "", "",armor_penetration = P.armor_penetration, damage = P.damage, used_weapon = P)
 
 	next_attack_msg.Cut()
@@ -225,7 +236,7 @@
 		var/zone = throwingdatum?.target_zone || ran_zone(BODY_ZONE_CHEST, 65)
 		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
 		if(SEND_SIGNAL(src, COMSIG_LIVING_IMPACT_ZONE, I, zone) & COMPONENT_CANCEL_THROW)
-			return FALSE
+			return TRUE
 		if(!blocked)
 			var/armor = run_armor_check(zone, damage_flag, "", "", armor_penetration = I.armor_penetration, damage = I.throwforce, used_weapon = I)
 			next_attack_msg.Cut()

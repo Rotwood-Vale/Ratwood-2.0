@@ -35,6 +35,7 @@
 	var/handaction
 	var/bleed_suppressing = 0.75 //multiplier for how much we suppress bleeding, can accumulate so two grabs means 50% less bleeding; each grab being 25% basically.
 	var/chokehold = FALSE
+	var/sippy = FALSE
 
 /obj/item/grabbing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
 	. = ..()
@@ -237,7 +238,7 @@
 				bleed_suppressing = 0.5		//Better bleed suppression
 		if(/datum/intent/grab/choke)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM))
-				to_chat(user, span_warning("I don't want to harm [src]!"))
+				to_chat(user, span_warning("Why would I do this! Am I insane?!"))
 				return FALSE
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
@@ -254,10 +255,10 @@
 						if(prob(25))
 							C.emote("choke")
 						var/choke_damage
-						if(user.STASTR > STRENGTH_SOFTCAP)
+						if(user.grapple_str() > STRENGTH_SOFTCAP)
 							choke_damage = STRENGTH_SOFTCAP
 						else
-							choke_damage = user.STASTR * 0.75
+							choke_damage = user.grapple_str() * 0.75
 						if(chokehold)
 							choke_damage *= 1.2		//Slight bonus
 						if(C.pulling == user && C.grab_state >= GRAB_AGGRESSIVE)
@@ -332,6 +333,9 @@
 					user.stamina_add(rand(3,8))
 					twistlimb(user)
 		if(/datum/intent/grab/twistitem)
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("Why would I do this! Am I insane?!"))
+				return FALSE
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
@@ -371,7 +375,7 @@
 				if(user.loc != M.loc)
 					to_chat(user, span_warning("I must be above them."))
 					return
-				var/stun_dur = max(((65 + (skill_diff * 10) + (user.STASTR * 5) - (M.STASTR * 5)) * combat_modifier), 20)
+				var/stun_dur = max(((65 + (skill_diff * 10) + (user.grapple_str() * 5) - (M.grapple_str() * 5)) * combat_modifier), 20)
 				var/pincount = 0
 				var/list/pin_hold
 				user.stamina_add(rand(1,3))
@@ -397,7 +401,7 @@
 					user.stop_pulling()
 					return FALSE
 				user.stamina_add(rand(5,15))
-				if(M.compliance || prob(clamp((((4 + (((user.STASTR - M.STASTR)/2) + skill_diff)) * 10 + rand(-5, 5)) * combat_modifier), 5, 95)))
+				if(M.compliance || prob(clamp((((4 + (((user.grapple_str() - M.grapple_str())/2) + skill_diff)) * 10 + rand(-5, 5)) * combat_modifier), 5, 95)))
 					M.visible_message(span_danger("[user] shoves [M] to the ground!"), \
 									span_userdanger("[user] shoves me to the ground!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
 					M.Knockdown(max(10 + (skill_diff * 2), 1))
@@ -418,7 +422,7 @@
 				else
 					I = M.get_inactive_held_item()
 			user.stamina_add(rand(3,8))
-			var/probby = clamp((((3 + (((user.STASTR - M.STASTR)/4) + skill_diff)) * 10) * combat_modifier), 5, 95)
+			var/probby = clamp((((3 + (((user.grapple_str() - M.grapple_str())/4) + skill_diff)) * 10) * combat_modifier), 5, 95)
 			if(I)
 				if(M.mind)
 					if(I.associated_skill)
@@ -478,7 +482,7 @@
 					span_userdanger("[user] twists my [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_warning("I twist [C]'s [parse_zone(sublimb_grabbed)].[C.next_attack_msg.Join()]"))
 	C.next_attack_msg.Cut()
-	log_combat(user, C, "limbtwisted [sublimb_grabbed] ")
+	log_combat(user, C, "limbtwisted (prosthetic) [sublimb_grabbed] ")
 	if(limb_grabbed.status == BODYPART_ROBOTIC && armor_block == 0) //Twisting off prosthetics.
 		C.visible_message(span_danger("[C]'s prosthetic [parse_zone(sublimb_grabbed)] twists off![C.next_attack_msg.Join()]"), \
 					span_userdanger("My prosthetic [parse_zone(sublimb_grabbed)] was twisted off of me![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE, user)
@@ -546,6 +550,9 @@
 			user.put_in_active_hand(limb_grabbed)
 
 /obj/item/grabbing/proc/headbutt(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_PACIFISM))
+		to_chat(H, span_warning("Why would I do this! Am I insane?!"))
+		return FALSE
 	var/mob/living/carbon/C = grabbed
 	var/obj/item/bodypart/Chead = C.get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/bodypart/Hhead = H.get_bodypart(BODY_ZONE_HEAD)
@@ -569,6 +576,9 @@
 	log_combat(H, C, "headbutted ")
 
 /obj/item/grabbing/proc/twistitemlimb(mob/living/user) //implies limb_grabbed and sublimb are things
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("Why would I do this! Am I insane?!"))
+		return FALSE
 	var/mob/living/M = grabbed
 	var/damage = rand(5,10)
 	var/obj/item/I = sublimb_grabbed
@@ -626,6 +636,9 @@
 			if(isturf(T))
 				user.Move_Pulled(T)
 		if(/datum/intent/grab/smash)
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("Why would I do this! Am I insane?!"))
+				return FALSE
 			if(!(user.mobility_flags & MOBILITY_STAND))
 				to_chat(user, span_warning("I must stand.."))
 				return
@@ -658,6 +671,9 @@
 		return
 	user.changeNext_move(CLICK_CD_GRABBING)
 	if(user.used_intent.type == /datum/intent/grab/smash)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, span_warning("Why would I do this! Am I insane?!"))
+			return FALSE
 		if(isstructure(O) && O.blade_dulling != DULLING_CUT)
 			if(!(user.mobility_flags & MOBILITY_STAND))
 				to_chat(user, span_warning("I must stand.."))
@@ -672,6 +688,9 @@
 
 
 /obj/item/grabbing/proc/smashlimb(atom/A, mob/living/user) //implies limb_grabbed and sublimb are things
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("Why would I do this! Am I insane?!"))
+		return FALSE
 	if(user.badluck(4))
 		badluckmessage(user)
 		user.stop_pulling()

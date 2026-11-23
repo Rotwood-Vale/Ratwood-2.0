@@ -20,6 +20,7 @@
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_YEOMAN
 	job_traits = list(
+		TRAIT_ARCYNE,
 		TRAIT_INTELLECTUAL,
 		TRAIT_SEEPRICES_SHITTY,
 		TRAIT_GOODWRITER,
@@ -60,6 +61,7 @@
 		STATKEY_CON = -1,
 		STATKEY_STR = -1
 	)
+	pure_heart = TRUE
 	age_mod = /datum/class_age_mod/archivist
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 2, "ward" = TRUE)
 	subclass_skills = list(

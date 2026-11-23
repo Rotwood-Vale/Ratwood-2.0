@@ -1,8 +1,0 @@
-author: "Kaolin1234"
-delete-after: True
-changes:
-  - rscadd: "Pixel Shift now supports full-circle rotation using your hand-selection keys, normally Q/E. Hold a key to keep rotating."
-  - rscadd: "Use Pixel Shift with an empty active hand and a character grabbed in the other hand to shift and rotate them."
-  - rscadd: "Added an optional unassigned keybinding to reset cosmetic rotation without resetting pixel position."
-  - rscadd: "±30° limit to spinning while STANDING.  Can still spin freely if already laying down.  Spin..  SPIIIIIN!"
-  - rscadd: "Allow pixel rotation while riding animal and player mounts\nfix?: Keep Pixel Shift rotation independent of Q/E bindings"

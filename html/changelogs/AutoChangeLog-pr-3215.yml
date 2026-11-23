@@ -1,5 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Pots and teapots can receive liquid poured from other containers."
-  - bugfix: "Carved teapots now hold 120 units, matching ceramic teapots and stone pots."

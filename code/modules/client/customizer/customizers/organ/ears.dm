@@ -18,6 +18,8 @@
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
 		/datum/sprite_accessory/ears/fennec,
+		/datum/sprite_accessory/ears/big/fennec,
+		/datum/sprite_accessory/ears/big/fennec_bigger,
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/bigwolf,
 		/datum/sprite_accessory/ears/bigwolf_inner,
@@ -84,7 +86,8 @@
 	organ_type = /obj/item/organ/ears
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/elf,
-		/datum/sprite_accessory/ears/elfw)
+		/datum/sprite_accessory/ears/elfw,
+		/datum/sprite_accessory/ears/elfshort)
 
 /datum/customizer/organ/ears/elf
 	customizer_choices = list(/datum/customizer_choice/organ/ears/elf)
@@ -148,10 +151,11 @@
 		/datum/sprite_accessory/ears/elfw,
 		/datum/sprite_accessory/ears/elephant,
 		/datum/sprite_accessory/ears/fennec,
+		/datum/sprite_accessory/ears/big/fennec,
+		/datum/sprite_accessory/ears/big/fennec_bigger,
 		/datum/sprite_accessory/ears/fish,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
-		/datum/sprite_accessory/ears/fennec,
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/jellyfish,
 		/datum/sprite_accessory/ears/kangaroo,
@@ -215,10 +219,11 @@
 		/datum/sprite_accessory/ears/elfw,
 		/datum/sprite_accessory/ears/elephant,
 		/datum/sprite_accessory/ears/fennec,
+		/datum/sprite_accessory/ears/big/fennec,
+		/datum/sprite_accessory/ears/big/fennec_bigger,
 		/datum/sprite_accessory/ears/fish,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
-		/datum/sprite_accessory/ears/fennec,
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/jellyfish,
 		/datum/sprite_accessory/ears/kangaroo,
@@ -321,10 +326,11 @@
 		/datum/sprite_accessory/ears/elfw,
 		/datum/sprite_accessory/ears/elephant,
 		/datum/sprite_accessory/ears/fennec,
+		/datum/sprite_accessory/ears/big/fennec,
+		/datum/sprite_accessory/ears/big/fennec_bigger,
 		/datum/sprite_accessory/ears/fish,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
-		/datum/sprite_accessory/ears/fennec,
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/jellyfish,
 		/datum/sprite_accessory/ears/kangaroo,
@@ -375,6 +381,8 @@
 		/datum/sprite_accessory/ears/eevee,
 		/datum/sprite_accessory/ears/elf,
 		/datum/sprite_accessory/ears/fennec,
+		/datum/sprite_accessory/ears/big/fennec,
+		/datum/sprite_accessory/ears/big/fennec_bigger,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
 		/datum/sprite_accessory/ears/kangaroo,

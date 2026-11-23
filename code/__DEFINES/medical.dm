@@ -90,7 +90,9 @@
 #define ORGAN_SLOT_PENIS "penis"
 #define ORGAN_SLOT_TESTICLES "testicles"
 #define ORGAN_SLOT_BREASTS "breasts"
+#define ORGAN_SLOT_BELLY "belly"
 #define ORGAN_SLOT_VAGINA "vagina"
+#define ORGAN_SLOT_EGGS "eggs"
 
 #define ORGAN_SLOTS_HEAD_ORGANS list(\
 	ORGAN_SLOT_BRAIN,\
