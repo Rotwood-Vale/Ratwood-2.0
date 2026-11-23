@@ -546,7 +546,7 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed, SLOT_WEAR_MASK, TRUE) 
 					H.put_in_hands(new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_EXPERT, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock(H), SLOT_BELT_R, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/lesser(H), SLOT_BELT_R, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag, SLOT_BACK_R, TRUE)
 					ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 					//Dark vision but bad. Still better than being entirely blind in the dark.
