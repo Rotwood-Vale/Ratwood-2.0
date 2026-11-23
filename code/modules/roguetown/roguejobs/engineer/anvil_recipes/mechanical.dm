@@ -46,7 +46,7 @@
 	hides_from_books = TRUE
 	req_bar = /obj/item/ingot/bronze
 
-/datum/anvil_recipe/engineeredsmithing/dolabra/copper
+/datum/anvil_recipe/engineeredsmithing/dolabra
 	name = "Copper Dolabra (+1 Copper)(+1 Quarterstaff)(Engineered)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/ingot/copper, /obj/item/rogueweapon/woodstaff/quarterstaff)
