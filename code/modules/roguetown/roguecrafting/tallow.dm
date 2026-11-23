@@ -38,6 +38,9 @@
 	verbage_simple = "render"
 	verbage = "renders"
 
+/datum/crafting_recipe/roguetown/cooking
+	skillcraft = /datum/skill/craft/cooking
+
 /datum/crafting_recipe/roguetown/cooking/mobilestove_tallow
 	name = "render tallow over the mobile stove (x3) (1 fat)"
 	result = list(

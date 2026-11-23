@@ -591,7 +591,7 @@
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
-	. = COMPONENT_NO_MOUSEDROP
+	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
 	if(!ismob(M))
 		return
 	if(!over_object)
@@ -665,8 +665,6 @@
 /obj/item/proc/StorageBlock(obj/item/I, mob/user)
 	return FALSE
 
-/obj
-	var/component_block = FALSE
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages

@@ -57,6 +57,10 @@
 
 /obj/structure/flora/roguegrass/maneater/real/Crossed(atom/movable/AM)
 	..()
+	if(HAS_TRAIT(AM, TRAIT_LOCAL_KNOWLEDGE) && isliving(AM))
+		var/mob/living/native = AM
+		if(native.m_intent != MOVE_INTENT_RUN)
+			return
 	if(obj_broken)
 		return
 	if(world.time <= last_eat + 8 SECONDS)

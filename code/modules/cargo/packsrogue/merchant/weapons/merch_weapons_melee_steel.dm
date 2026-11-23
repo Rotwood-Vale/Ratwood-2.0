@@ -24,7 +24,7 @@
 	name = "Steel Knuckle"
 	cost = 40 // 1 Steel Ingot
 	contains = list(
-					/obj/item/rogueweapon/knuckles
+					/obj/item/clothing/gloves/roguetown/knuckles
 				)
 
 /datum/supply_pack/rogue/steel_weapons/rapier
@@ -184,7 +184,7 @@
 				)
 
 /datum/supply_pack/rogue/steel_weapons/eaglebeak
-	name = "Eagle's Beak"
+	name = "Lucerne"
 	cost = 75 // 2 Steel Ingot, 1 Small Log
 	contains = list(
 					/obj/item/rogueweapon/eaglebeak,

@@ -22,6 +22,8 @@
 
 	var/noble_income = FALSE //Passive income every day from noble estate
 
+	var/pure_heart = FALSE
+
 	/// This class is immune to species-based swapped gender locks
 	var/immune_to_genderswap = FALSE
 
@@ -47,7 +49,6 @@
 	var/list/subclass_virtues
 
 	/// Spellpoints. If More than 0, Gives Prestidigitation & the Learning Spell.
-	var/subclass_spellpoints = 0
 
 	/// Subclass social rank, used to overwrite the job social rank
 	var/subclass_social_rank
@@ -65,6 +66,19 @@
 
 	/// Set to FALSE to skip apply_character_post_equipment() which applies virtue, flaw, loadout
 	var/applies_post_equipment = TRUE
+	/// Mage aspect system config. If set, opens the Grimoire on learnspell.
+	/// Keys: "mastery" (bool), "major" (int), "minor" (int), "utilities" (int)
+	var/list/subclass_mage_aspects
+
+	var/datum/class_age_mod/age_mod = null
+
+	var/tempo_capable = TRUE
+
+/datum/advclass/New()
+	if(ispath(age_mod) && !istype(age_mod))
+		var/datum/class_age_mod/newmod = new age_mod()
+		age_mod = newmod
+	. = ..()
 
 /datum/advclass/proc/equipme(mob/living/carbon/human/H, dummy = FALSE)
 	// input sleeps....
@@ -73,7 +87,9 @@
 		return FALSE
 
 	if(outfit)
-		H.equipOutfit(outfit, dummy)
+		var/datum/outfit/O = new outfit
+		O.skip_pre_equip = dummy
+		H.equipOutfit(O, dummy)
 
 		if(dummy)	//This means we're doing a Char Sheet preview. We don't need to equip the dummy with anything else, the outfits are likely to runtime on their own.
 			return
@@ -119,17 +135,25 @@
 			return
 		for(var/stashed_item in subclass_stashed_items)
 			H.mind?.special_items[stashed_item] = subclass_stashed_items[stashed_item]
-	if(subclass_spellpoints > 0)
-		H.mind?.adjust_spellpoints(subclass_spellpoints)
+	// Set up spell systems before virtues so Arcyne Potential can detect and add to them
+	if(LAZYLEN(subclass_mage_aspects))
+		H.mind?.setup_mage_aspects(subclass_mage_aspects.Copy())
 
 	if(subclass_social_rank)
 		H.social_rank = subclass_social_rank
+
+	if(pure_heart)
+		H.purity = TRUE
 
 	// After the end of adv class equipping, apply a SPECIAL trait if able
 
 	if(length(subclass_virtues))
 		for(var/virtue in subclass_virtues)
 			apply_virtue(H, new virtue)
+
+	if(age_mod)
+		if(istype(age_mod))
+			age_mod.apply_age_mod(H)
 
 	if(applies_post_equipment)
 		if(H.dna?.species?.id == "gnoll")
@@ -139,7 +163,7 @@
 			apply_character_post_equipment(H)
 
 /datum/advclass/proc/post_equip(mob/living/carbon/human/H)
-	addtimer(CALLBACK(H,TYPE_PROC_REF(/mob/living/carbon/human, add_credit), TRUE), 20)
+	SScrediticons.queue_capture(H)
 	if(cmode_music)
 		H.cmode_music = cmode_music
 

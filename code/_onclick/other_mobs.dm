@@ -30,7 +30,7 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
 	var/rmb_stam_penalty = 1
 	if(istype(rmb_intent, /datum/rmb_intent/strong) || istype(rmb_intent, /datum/rmb_intent/swift))
-		rmb_stam_penalty = 1.5	// Uses a modifer instead of a flat addition, less than weapons no matter what rn. 50% extra stam cost basically.
+		rmb_stam_penalty = 6	//Uses a modifer instead of a flat addition. 6 swiftstam vs 10
 	if(isliving(A))
 		var/mob/living/L = A
 		if(!used_intent.noaa)
@@ -38,10 +38,15 @@
 			// src.emote("attackgrunt")
 		if(used_intent.releasedrain)
 			stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
+		var/dualwield_armed = FALSE
+		if(used_intent.type != INTENT_GRAB && HAS_TRAIT(src, TRAIT_DUALWIELDER))
+			dualwield_armed = process_dualwield()
 		if(L.has_status_effect(/datum/status_effect/buff/clash) && L.get_active_held_item() && ishuman(L))
 			var/mob/living/carbon/human/H = L
 			var/obj/item/IM = L.get_active_held_item()
 			H.process_clash(src, IM)
+			if(dualwield_armed)
+				complete_dualwield_attack(L, params)
 			return
 		if(mob_biotypes & MOB_UNDEAD)
 			if(L.has_status_effect(/datum/status_effect/buff/necras_vow))
@@ -57,9 +62,13 @@
 				apply_status_effect(/datum/status_effect/churned, L)
 		
 		if(L.checkmiss(src))
+			if(dualwield_armed)
+				complete_dualwield_attack(L, params)
 			return
 		if(!L.checkdefense(used_intent, src))
 			L.attack_hand(src, params)
+		if(dualwield_armed)
+			complete_dualwield_attack(L, params)
 		return
 	else
 		var/item_skip = FALSE
@@ -87,7 +96,20 @@
 						visible_message(span_warning("[src] pushes [AM]."))
 					changeNext_move(CLICK_CD_MELEE)
 					return
-		A.attack_hand(src, params)
+		if(cmode && used_intent.type == INTENT_HARM && isitem(A))
+			if(stamina_add(8))
+				var/dmg = get_punch_dmg()
+				var/obj/item/I = A
+				I.take_damage(dmg)
+				I.try_damage_pushback(src)
+				changeNext_move(CLICK_CD_MELEE)
+				var/verbu = pick(used_intent.attack_verb)
+				log_combat(src, I, "attacked with fists")
+				visible_message(span_danger("[src] [verbu] [I]!"))
+				var/tempsound = used_intent.hitsound
+				playsound(loc,  tempsound, 100, FALSE, -1) 
+		else
+			A.attack_hand(src, params)
 
 /mob/living/rmb_on(atom/A, params)
 	if(stat)
@@ -106,6 +128,13 @@
 		return
 
 	A.attack_right(src, params)
+	//Toggling something on a hat changes how the hat is drawn, whichever slot the item's own proc refreshed.
+	if(isclothing(A))
+		var/obj/item/clothing/stored = A
+		var/obj/item/clothing/head/hat = stored.get_storing_hat()
+		if(hat && ismob(hat.loc))
+			var/mob/wearer = hat.loc
+			wearer.update_inv_head()
 
 /mob/living/attack_right(mob/user, params)
 	. = ..()
@@ -167,6 +196,13 @@
 	if(!mmb_intent)
 		if(!A.Adjacent(src))
 			return
+		if(isclothing(A))
+			var/obj/item/clothing/stored = A
+			var/obj/item/clothing/head/hat = stored.get_storing_hat()
+			if(hat)
+				if(hat.loc == src)
+					hat.cycle_stored_layer(stored, src)
+				return
 		A.MiddleClick(src, params)
 	else
 		mmb_intent.on_mmb(A, src, params)
@@ -177,7 +213,7 @@
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
-		. = TRUE
+		return TRUE
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
 
@@ -187,7 +223,7 @@
 		add_fingerprint(user)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_RIGHT, user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
-		. = TRUE
+		return TRUE
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
 

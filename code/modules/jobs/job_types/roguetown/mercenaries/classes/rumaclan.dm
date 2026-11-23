@@ -2,7 +2,7 @@
 	name = "Ruma Clan Gun-in"
 	tutorial = "A swordfighter from a band of Kazengite foreigners. The Ruma Clan were outcasts from the Xinyi Dynasty, believed to be associated with the rebels at the time. The clan departed to avoid repercussion. It is no organized group of soldiers, but rather a loose collection of experienced fighters."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = NON_DWARVEN_RACE_TYPES //no dwarf sprites
+	allowed_races = ALL_BUT_BLOODLESS_DWARF //no dwarf sprites
 	outfit = /datum/outfit/job/roguetown/mercenary/rumaclan
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_KAZENGUN
@@ -36,9 +36,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/rogueweapon/scabbard/sword/kazengun/steel
 	beltl = /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	cloak = /obj/item/clothing/cloak/eastcloak1
-	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
 	shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
 	gloves = /obj/item/clothing/gloves/roguetown/eastgloves2
@@ -51,6 +49,29 @@
 
 		)
 	H.merctype = 9
+
+/datum/outfit/job/roguetown/mercenary/rumaclan/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	..()
+	if(H.mind)
+		var/tattoos = list("Defiant (Blacksteel, fragile)","Harmonious (Plate, balanced)","Enduring (Padded, durable)")
+		var/tattoo_choice = input(H, "Choose your tattoos", "WHAT MARKS DO YOU CARRY?") as anything in tattoos
+		switch(tattoo_choice)
+			if("Defiant (Blacksteel, fragile)")
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/ruma/blacksteel //200 blacksteel
+			if("Harmonious (Plate, balanced)")
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/ruma //250 plate
+			if("Enduring (Padded, durable)")
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/ruma/padded //300 padded
+				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE) //you're going to need it.
+		var/clothing = list("White Shirt","Dark Shirt", "Bare-Chested")
+		var/clothing_choice = input(H, "Choose your attire.", "WHAT SILK SWATHES YOU?") as anything in clothing
+		switch(clothing_choice)
+			if("White Shirt")
+				l_hand = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
+			if("Dark Shirt")
+				l_hand = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1
+			if("Bare-Chested")
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/meditation/chest/easttats/ruma //light brigadine.
 
 /datum/advclass/mercenary/rumaclan/sasu
 	name = "Ruma Clan Sasu"
@@ -84,9 +105,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/quiver/arrows
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	cloak = /obj/item/clothing/cloak/eastcloak1
-	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
 	shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
 	gloves = /obj/item/clothing/gloves/roguetown/eastgloves2
@@ -99,3 +118,26 @@
 		/obj/item/rogueweapon/scabbard/sheath/kazengun = 1,
 		)
 	H.merctype = 9
+
+/datum/outfit/job/roguetown/mercenary/rumaclan_sasu/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	..()
+	if(H.mind)
+		var/tattoos = list("Defiant (Blacksteel, fragile)","Harmonious (Plate, balanced)","Enduring (Padded, durable)")
+		var/tattoo_choice = input(H, "Choose your tattoos", "WHAT MARKS DO YOU CARRY?") as anything in tattoos
+		switch(tattoo_choice)
+			if("Defiant (Blacksteel, fragile)")
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/ruma/blacksteel //200 blacksteel
+			if("Harmonious (Plate, balanced)")
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/ruma //250 plate
+			if("Enduring (Padded, durable)")
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/ruma/padded //300 padded
+				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE) //you're going to need it.
+		var/clothing = list("White Shirt","Dark Shirt", "Bare-Chested")
+		var/clothing_choice = input(H, "Choose your attire.", "WHAT SILK SWATHES YOU?") as anything in clothing
+		switch(clothing_choice)
+			if("White Shirt")
+				l_hand = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
+			if("Dark Shirt")
+				l_hand = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1
+			if("Bare-Chested")
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/meditation/chest/easttats/ruma //light brigadine.

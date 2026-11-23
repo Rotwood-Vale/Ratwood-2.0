@@ -46,7 +46,7 @@
 			H.verbs |= /mob/living/carbon/human/proc/gnoll_view_tracked_char
 
 
-/mob/living/carbon/human/proc/apply_gnoll_preferences(initial_setup = TRUE)
+/mob/living/carbon/human/proc/apply_gnoll_preferences(initial_setup = TRUE, keep_name = FALSE)
 	if(!client?.prefs?.gnoll_prefs)
 		return FALSE
 
@@ -110,7 +110,9 @@
 		roll_stats()
 	refresh_live_vocal_preferences()
 
-	fully_replace_character_name(real_name, prefs.ensure_gnoll_name())
+	if(!keep_name)
+		fully_replace_character_name(real_name, prefs.ensure_gnoll_name())
+		pref_base_name = real_name
 
 	if(prefs.gnoll_pronouns)
 		pronouns = prefs.gnoll_pronouns
@@ -126,9 +128,16 @@
 
 	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
 	if(wants_penis)
+		// Gnolls always get a free massive pintle (TRAIT_MASSIVE_PINTLE is a gnoll species trait).
+		// A carried-over pintle of any other kind is swapped out.
+		if(penis && penis.type != /obj/item/organ/penis/knotted/big)
+			penis.Remove(src)
+			qdel(penis)
+			penis = null
 		if(!penis)
 			penis = new /obj/item/organ/penis/knotted/big()
 			penis.Insert(src, TRUE, FALSE)
+		penis.set_massive(TRUE)
 		var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
 		if(!testicles)
 			testicles = new()

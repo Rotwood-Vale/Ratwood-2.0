@@ -1,4 +1,29 @@
 
+/// Names of absent organs expected by this patient's species and customized anatomy.
+/mob/living/carbon/human/proc/get_missing_organs()
+	var/list/missing_organs = list()
+	var/datum/species/species = dna?.species
+	if(!species)
+		return missing_organs
+	var/list/expected_organs = species.organs.Copy()
+	for(var/slot in dna.organ_dna)
+		var/datum/organ_dna/organ_dna = dna.organ_dna[slot]
+		expected_organs[slot] = organ_dna.can_create_organ() ? organ_dna.organ_type : null
+	// A detached Dullahan head stores its organs directly.
+	var/list/detached_head_slots
+	var/datum/species/dullahan/dullahan = species
+	if(istype(dullahan) && dullahan.headless && !QDELETED(dullahan.my_head))
+		for(var/obj/item/organ/organ in dullahan.my_head.contents)
+			LAZYSET(detached_head_slots, organ.slot, TRUE)
+	for(var/slot in expected_organs)
+		if(getorganslot(slot) || detached_head_slots?[slot] || !species.is_organ_slot_allowed(src, slot))
+			continue
+		var/obj/item/organ/organ_type = expected_organs[slot]
+		if(!organ_type)
+			continue
+		missing_organs += initial(organ_type.name)
+	return missing_organs
+
 /mob/living/carbon/human/proc/change_name(new_name)
 	real_name = new_name
 
@@ -44,6 +69,8 @@
 		return face_name
 	if(id_name)
 		return id_name
+	if(HAS_TRAIT(src, TRAIT_ANONYMOUS))
+		return "Unknown"
 	var/list/d_list = get_mob_descriptors()
 	var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
 	var/stature_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
@@ -214,43 +241,33 @@
 
 /mob/living/carbon/human/get_punch_dmg()
 
-	var/damage
-	if(STASTR > UNARMED_DAMAGE_DEFAULT || STASTR < 10)
-		damage = STASTR
-	else
-		damage = UNARMED_DAMAGE_DEFAULT
+	var/damage = UNARMED_DAMAGE_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_CIVILIZEDBARBARIAN))
+		damage += UNARMED_DAMAGE_CIVILBARB
 
 	var/used_str = STASTR
 
-	var/obj/G = get_item_by_slot(SLOT_GLOVES)
 	if(domhand)
 		used_str = get_str_arms(used_hand)
 
 	if(used_str >= 11)
-		var/bonus = 0
-
-		if(used_str <= 14)
-			// Normal scaling: +20% per point over 10
-			bonus = (used_str - 10) * 0.2
+		var/strmod
+		if(used_str > STRENGTH_SOFTCAP && !HAS_TRAIT(src, TRAIT_STRENGTH_UNCAPPED))
+			strmod = ((STRENGTH_SOFTCAP - 10) * STRENGTH_MULT)
+			strmod += ((used_str - STRENGTH_SOFTCAP) * STRENGTH_CAPPEDMULT)
 		else
-			// Diminishing returns after 14
-			// Start with the full +0.8 from 14 STR
-			bonus = 0.8
-			var/extra = used_str - 14
-			// Each point beyond 14 gives a smaller bonus than the last:
-			// e.g., +0.1, +0.075, +0.05625, etc.
-			var/next_bonus = 0.1
-			for(var/i = 1, i <= extra, i++)
-				bonus += next_bonus
-				next_bonus *= 0.75 // reduces 25% each time
-		damage = max(damage + (damage * bonus), 1)
+			strmod = ((used_str - 10) * STRENGTH_MULT)
+		damage = damage + (damage * strmod)
+	else if(used_str <= 9)
+		damage = max(damage + (damage * ((10 - used_str) * 0.1)), 1)
 
 	if(used_str <= 9)
 		damage = max(damage - (damage * ((10 - used_str) * 0.1)), 1)
 
+	var/obj/G = get_item_by_slot(SLOT_GLOVES)
 	if(istype(G, /obj/item/clothing/gloves/roguetown))
 		var/obj/item/clothing/gloves/roguetown/GL = G
-		damage = (damage * GL.unarmed_bonus)
+		damage += GL.unarmed_bonus
 
 	if(mind)
 		if(mind.has_antag_datum(/datum/antagonist/werewolf))

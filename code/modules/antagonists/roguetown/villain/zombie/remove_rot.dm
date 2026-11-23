@@ -6,6 +6,9 @@
 	if(istype(target, /mob/living/carbon/human/species/skeleton) && method == "surgery")
 		to_chat(user, span_warning("It's going to take a miracle to put flesh back on these bones."))
 		return FALSE
+	if(istype(target, /mob/living/carbon/human/species/skeleton) && method == "alchemy")
+		return FALSE
+	
 
 	// Check if the target has rot
 	var/has_rot = FALSE
@@ -81,7 +84,7 @@
 	var/datum/component/rot/rot = target.GetComponent(/datum/component/rot)
 	if (rot)
 		rot.amount = 0
-		rot.soundloop.stop()
+		rot.set_flies(FALSE)
 
 ///Cure bodyparts
 /proc/clean_body_parts(mob/living/carbon/target)

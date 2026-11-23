@@ -1,7 +1,5 @@
 // REGENERATING ARMOUR
 
-#define COMBAT_TAG_DURATION 30 SECONDS
-
 /obj/item/clothing/suit/roguetown/armor/regenerating
 	name = "regenerating armour"
 	desc = "Abstract parent. Contact developer if you see this."
@@ -15,57 +13,153 @@
 	var/repairmsg_stop = "My armour stops mending from the onslaught!"
 	var/repairmsg_end = "My armour has become taut with newfound vigor!"
 
-	/// Combat timer that prevents you from healing while taking damage
-	var/combat_timer
-	/// Recursive timer that slowly regenerates the armor
-	var/reptimer
 	/// Time taken for regeneration
-	var/repair_time = 10 SECONDS
-	/// If the armor regen is stopped by a combat tag
-	var/combat_taggable = FALSE
+	var/repair_time
+	/// Next regeneration tick happens once this cooldown finishes.
+	COOLDOWN_DECLARE(regen_cooldown)
+	/// Regeneration is paused until this cooldown finishes.
+	COOLDOWN_DECLARE(disrupt_cooldown)
+	/// Whether the armour is currently mid-regeneration; cleared once fully repaired.
+	var/was_regenning = FALSE
+	/** To make repairs relative or not.
+	* In other words, if you use relative repairing then it will use a different repair interval.
+	* Repair_time becomes how long it will take on average for the armor to fully repair itself.
+	* In this mode, armor doesn't repair with a flat 20%, but it repairs at a rate relative to the total time set to repair armor on average.
+	*/
+	var/relative_repair_mode = FALSE
+	var/relative_repair_interval = 15 SECONDS
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/equipped(mob/user, slot)
+	/**
+	* Auto mode.
+	* Enables relative repair mode if not enabled.
+	* Sets the total repair time of the armor to be relative to the base repair amount and time.
+	* By default, aims to repair 100 armor every 15 seconds.
+	*/
+	var/auto_repair_mode = FALSE
+	var/auto_repair_mode_triggered = FALSE
+	var/auto_repair_mode_base = 100
+	var/auto_repair_mode_time = 15 SECONDS
+
+	/// Regen interrupt vars
+	var/interrupt_damount
+	var/interrupt_dtype
+	var/interrupt_dflag
+	var/interrupt_ddir
+
+	/// Regen cost vars
+	var/blue_to_integ_ratio = 0
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/Initialize(mapload)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE))
-	if(slot == SLOT_SHIRT || slot == SLOT_ARMOR)
-		RegisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by))
+	if(auto_repair_mode)
+		setup_auto_repair()
+	addtimer(CALLBACK(src, PROC_REF(check_owner)), 5 SECONDS)
 
-/// Combat tag system, makes your skin stop regenning if you are attacked by anything
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/on_attacked_by(datum/source)
-	SIGNAL_HANDLER
-	if(!combat_taggable) // This means constant in-combat regen
-		if(!reptimer && obj_integrity < max_integrity)
-			reptimer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/check_owner()
+	var/mob/living/carbon/human/wearer = loc
+	if(!istype(wearer))
+		return
+	RegisterSignal(wearer, COMSIG_MOB_ITEM_BEING_ATTACKED, PROC_REF(process_attack))
+	RegisterSignal(wearer, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_attack))
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/process_attack(mob/living/parent, mob/living/target, mob/user, obj/item/I)
+	COOLDOWN_START(src, disrupt_cooldown, 30 SECONDS)
+	COOLDOWN_START(src, regen_cooldown, get_regen_interval())
+	if(obj_integrity < max_integrity)
+		was_regenning = TRUE
+		START_PROCESSING(SSobj, src)
+
+/// If relative repair mode is on, use the interval instead of repairing 20% every repair_time seconds
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/get_regen_interval()
+	return relative_repair_mode ? relative_repair_interval : repair_time
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+	..()
+	// Any damage sends the tick back to zero.
+	COOLDOWN_START(src, regen_cooldown, get_regen_interval())
+	if(was_regenning)
+		if(!regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir))
+			return
+		to_chat(loc, span_notice(repairmsg_stop))
+
+	was_regenning = TRUE
+	START_PROCESSING(SSobj, src)
+	if(!COOLDOWN_FINISHED(src, disrupt_cooldown))
 		return
 
-	combat_timer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), COMBAT_TAG_DURATION, TIMER_UNIQUE|TIMER_OVERRIDE)
-	if(timeleft(reptimer))
-		to_chat(loc, span_notice(repairmsg_stop))
-	deltimer(reptimer)
-	reptimer = null
-	return
-
-/// Start repairing the armor
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/begin_repair()
 	to_chat(loc, span_notice(repairmsg_begin))
-	armour_regen(skip_message = TRUE)
 
-/// Recursive loop that fixes the armor
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen(repair_percent = 0.2 * max_integrity, skip_message = FALSE)
-	obj_integrity = min(obj_integrity + repair_percent, max_integrity)
-	if(obj_broken)
-		obj_fix(full_repair = FALSE)
+/obj/item/clothing/suit/roguetown/armor/regenerating/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/process(delta_time)
+	if(!COOLDOWN_FINISHED(src, disrupt_cooldown) || !COOLDOWN_FINISHED(src, regen_cooldown))
+		return
+	armour_regen()
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen()
 	if(obj_integrity >= max_integrity)
 		to_chat(loc, span_notice(repairmsg_end))
-		deltimer(reptimer)
-		reptimer = null
+		was_regenning = FALSE
+		STOP_PROCESSING(SSobj, src)
 		return
 
-	if(!skip_message)
-		to_chat(loc, span_notice(repairmsg_continue))
+	var/repair_amount
+	var/next_tick_time
+	var/skin_broken = 0
+	if(obj_integrity == 0)
+		skin_broken = 1
 
-	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
+	if(relative_repair_mode)
+		// math: (interval / total time) * max health
+		// example: (5s / 50s) * 100 HP = 10 HP per tick
+		var/repair_ratio = relative_repair_interval / repair_time
+		if(!skin_broken)
+			repair_amount = repair_ratio * max_integrity
+		else
+			repair_amount = 5
+		next_tick_time = relative_repair_interval
+	else
+		// static mode: 20% of max integrity
+		if(!skin_broken)
+			repair_amount = 0.2 * max_integrity
+		else
+			repair_amount = 5
+		next_tick_time = repair_time
+
+	obj_integrity = min(obj_integrity + repair_amount, max_integrity)
+
+	if(ishuman(loc))
+		var/mob/living/L = loc
+		var/energycost = blue_to_integ_ratio * repair_amount
+		L.energy_add(-energycost)
+
+	// Fix armor so it can still be interrupted from regenerating
+	if(obj_broken && obj_integrity > 0)
+		obj_fix(full_repair = FALSE)
+
+	to_chat(loc, span_notice(repairmsg_continue))
+
+	COOLDOWN_START(src, regen_cooldown, next_tick_time)
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir)
+	if(interrupt_damount && interrupt_damount > damage_amount)
+		return FALSE
+	if(interrupt_dtype && interrupt_dtype != damage_type)
+		return FALSE
+	if(interrupt_dflag && interrupt_dflag != damage_flag)
+		return FALSE
+	if(interrupt_ddir && interrupt_ddir != attack_dir)
+		return FALSE
+	return TRUE
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/setup_auto_repair()
+	repair_time = (max_integrity / auto_repair_mode_base) * auto_repair_mode_time
+
+	// Ensure relative mode is on to respect the new calculated repair_time
+	relative_repair_mode = TRUE
+	auto_repair_mode_triggered = TRUE
 
 // SKIN ARMOUR
 
@@ -83,9 +177,8 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	armor_class = ARMOR_CLASS_LIGHT
 	blocksound = SOFTUNDERHIT
-	blade_dulling = DULLING_BASHCHOP
 	armor = ARMOR_PADDED
-	nudist_approved = TRUE
+	blocking_behavior = BLOCKSHIRT | BLOCKARMOR
 
 	repairmsg_begin = "My skin begins to slowly mend its abuse.."
 	repairmsg_continue = "My skin mends some of its abuse.."
@@ -101,44 +194,3 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
-	name = "disciple's skin"
-	desc = "It's far more than just an oath. </br>'AEON, PSYDON, ADONAI - ENTROPY, HUMENITY, DIVINITY. A TRINITY THAT IS ONE, \
-	YET THREE; KNOWN BY ALL, YET FORGOTTEN TO TYME.' </br>'A CORPSE. \
-	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
-	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
-	HAPPINESS MUST BE FOUGHT FOR.'"
-	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
-	repair_time = 20 SECONDS
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
-	name = "tough skin"
-	desc = "My skin has always been tough enough to stop most cuts and bruises, with time it will mend."
-	armor = list("blunt" = 30, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0)
-	max_integrity = 300
-	body_parts_covered = FULL_BODY
-	body_parts_inherent = FULL_BODY
-	combat_taggable = TRUE
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator
-	name = "pit-hardened chest"//pit? hnnnnhhhffgggg
-	desc = "Are you not entertained?!"
-	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
-	blocksound = SOFTHIT
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator
-	name = "pit-hardened skin"
-	desc = "Are you not entertained?!"
-	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
-
-#undef COMBAT_TAG_DURATION
-

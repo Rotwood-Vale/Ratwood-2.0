@@ -156,7 +156,7 @@
 				update_inv_shirt()
 			if(wear_armor.breakouttime) //when equipping a straightjacket
 				stop_pulling() //can't pull if restrained
-				update_action_buttons_icon() //certain action buttons will no longer be usable.
+				update_mob_action_buttons() //certain action buttons will no longer be usable.
 			update_inv_armor()
 		if(SLOT_PANTS)
 
@@ -196,7 +196,7 @@
 		if(SLOT_MOUTH)
 			mouth = I
 			update_inv_mouth()
-			update_action_buttons_icon()
+			update_mob_action_buttons()
 		if(SLOT_IN_BACKPACK)
 			not_handled = TRUE
 			if(beltr)
@@ -248,7 +248,7 @@
 			dropItemToGround(s_store, TRUE, silent = silent) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_armor.breakouttime) //when unequipping a straightjacket
 			drop_all_held_items() //suit is restraining
-			update_action_buttons_icon() //certain action buttons may be usable again.
+			update_mob_action_buttons() //certain action buttons may be usable again.
 		wear_armor = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			if(I.flags_inv & HIDEJUMPSUIT)
@@ -348,7 +348,7 @@
 		mouth = null
 		if(!QDELETED(src))
 			update_inv_mouth()
-			update_action_buttons_icon()
+			update_mob_action_buttons()
 
 	// Armor class warning - must run after slot vars are nulled so check_armor_skill() sees the correct state
 	if(!QDELETED(src) && istype(I, /obj/item/clothing))

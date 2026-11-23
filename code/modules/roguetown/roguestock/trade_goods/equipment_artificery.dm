@@ -43,7 +43,7 @@
 /datum/trade_good/equipment/crafted/voltic_gauntlets
 	id = TRADE_GOOD_VOLTIC_GAUNTLETS
 	name = "voltic contraption gauntlets"
-	item_type = /obj/item/clothing/gloves/roguetown/contraption/voltic
+	item_type = /obj/item/clothing/gloves/roguetown/chain/contraption/voltic
 
 /datum/trade_good/equipment/crafted/artificed_halfplate
 	id = TRADE_GOOD_ARTIFICED_HALFPLATE

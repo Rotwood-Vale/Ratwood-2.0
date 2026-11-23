@@ -153,6 +153,11 @@
 		return FALSE
 	return TRUE
 
+/datum/stressevent/triumph_noise
+	timer = 10 MINUTES
+	stressadd = 3
+	desc = span_red("The memory of my triumph turns to rot!")
+
 /datum/stressevent/freakout
 	timer = 15 SECONDS
 	stressadd = 2
@@ -280,6 +285,10 @@
 	timer = 2 MINUTES
 	stressadd = 2
 	desc = "<span class='red'>Where did everyone go? Did something happen?!</span>"
+
+/datum/stressevent/sundercritted
+	stressadd = 5 //Its literally killing you, sire.
+	desc = span_boldred("I CAN FEEL MY SOUL TEARING APART FROM BLESSED FLAMES, I NEED TO GET AWAY!")
 
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES
@@ -576,3 +585,47 @@
 	timer = 25 MINUTES
 	stressadd = 3
 	desc = span_red("I couldn't pay my debts in time.")
+
+/datum/stressevent/archivist_shushed
+	timer = 1 MINUTES
+	stressadd = 4
+	desc = span_red("I was shushed by the archivist!")
+
+/datum/stressevent/sunlit
+	timer = 1 MINUTES
+	stressadd = 2
+	desc = span_red("IT'S TOO BRIGHT!")
+
+/datum/stressevent/prejudice
+	timer = 2 MINUTES
+	stressadd = 2
+
+/datum/stressevent/prejudice/otava
+	desc = span_red("There's too many Otavans around here!")
+
+/datum/stressevent/prejudice/grenzelhoft
+	desc = span_red("There's too many Grenzels around here!")
+
+/datum/stressevent/prejudice/kazengun
+	desc = span_red("Who invited Kazengunites to Ferentia?")
+
+/datum/stressevent/prejudice/avar
+	desc = span_red("Aavnics are always so dour, so mirthless.")
+
+/datum/stressevent/prejudice/gronn
+	desc = span_red("I just saw a Gronnite! How uncivilized!")
+
+/datum/stressevent/prejudice/underdark
+	desc = span_red("That underdweller should be underground, where it belongs.")
+
+// this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat
+
+/datum/stressevent/remorse
+	timer = 5 MINUTES
+	stressadd = 3
+	desc = list(span_artery("I struck someone who never meant me harm."), span_artery("I can't stop thinking about the blow I dealt to someone defenseless."), span_artery("My conscience weighs heavily after attacking one who refused violence."), span_artery("I regret raising my hand against someone who would never have raised theirs against me."), span_artery("The look of fear instead of hatred lingers in my thoughts."), span_artery("I feel ashamed for harming someone who chose peace."), span_artery("I could have walked away. Instead, I chose violence."), span_artery("The guilt of attacking a helpless soul gnaws at me."), span_artery("I keep replaying the moment I struck someone who would not fight back."), span_artery("My heart grows heavier with every thought of the defenseless person I attacked."))
+
+/datum/stressevent/remorse_evil
+	timer = 5 MINUTES
+	stressadd = 1
+	desc = list(span_artery("Even I found no satisfaction in striking someone so meek."), span_artery("They denied me the thrill of a real fight."), span_artery("Their refusal to resist leaves a bitter taste."), span_artery("There was no struggle... only acceptance. That's insane."), span_artery("I expected fear, hatred, anything... but not acceptance."), span_artery("A defenseless victim is hardly worth remembering, yet the thought lingers."), span_artery("Why won't the image of their helplessness leave my mind?"))

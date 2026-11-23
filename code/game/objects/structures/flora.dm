@@ -103,12 +103,10 @@
 /obj/structure/flora/tree/evil/Initialize(mapload)
 	. = ..()
 	icon_state = "wv[rand(1,2)]"
-	soundloop = new(src, FALSE)
-	soundloop.start()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/misc)
 
 /obj/structure/flora/tree/evil/Destroy()
-	soundloop.stop()
-	QDEL_NULL(soundloop)
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/misc)
 	if(controller)
 		controller.endvines()
 		controller.tree = null
@@ -116,7 +114,6 @@
 	. = ..()
 
 /obj/structure/flora/tree/evil
-	var/datum/looping_sound/boneloop/soundloop
 	var/datum/vine_controller/controller
 
 //grass
@@ -459,6 +456,32 @@
 /obj/structure/flora/rock/pile/largejungle/Initialize(mapload)
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
+
+// maple tree
+
+/obj/structure/flora/maple
+	name = "maple tree"
+	desc = "A maple tree, trees with brillant orange, red and yellow leaves, a common imported tree from Grenzelhoft."
+	icon = 'icons/obj/structures/maple_tree.dmi'
+	icon_state = null
+	obj_flags = CAN_BE_HIT | IGNORE_SINK
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER
+
+	bound_height = 128
+	bound_width  = 128
+
+/obj/structure/flora/maple/a
+	icon_state = "maple1"
+
+/obj/structure/flora/maple/b
+	icon_state = "maple2"
+
+/obj/structure/flora/maple/c
+	icon_state = "maple3"
+
+/obj/structure/flora/maple/d
+	icon_state = "maple4"
 
 
 

@@ -80,10 +80,9 @@
 	item_state = "priestunder"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	armor = ARMOR_PADDED_GOOD	//Equal to a padded gambeson, like before.
+	armor = ARMOR_PADDED	//Equal to a padded gambeson, like before.
 	armor_class = ARMOR_CLASS_LIGHT
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)	 //Ensures that this inherits the padded gambeson's resistances, too.
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 
 /obj/item/clothing/suit/roguetown/shirt/robe/monk/blue
@@ -167,6 +166,17 @@
 	flags_inv = HIDEBOOB|HIDETAIL
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/roguetown/shirt/robe/physician/plaguebearer
+	name = "reinforced plague coat"
+	desc = "Medicum morbo adhibere."
+	icon_state = "physcoat"
+	slot_flags = ITEM_SLOT_ARMOR
+	flags_inv = HIDEBOOB|HIDETAIL
+	resistance_flags = FIRE_PROOF
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
+
 //Eora content from Stonekeep
 
 /obj/item/clothing/suit/roguetown/shirt/robe/eora
@@ -211,8 +221,7 @@
 	name = "hierophant's kandys"
 	desc = "A thin piece of fabric worn under a robe to stop chafing and keep ones dignity if a harsh blow of wind comes through. Despite the light fabric, it offers decent protection."
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	armor_class = ARMOR_CLASS_LIGHT
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	icon_state = "desertgown"
@@ -243,8 +252,7 @@
 	name = "pointfex's qaba"
 	desc = "A slimmed down, tighter fitting robe made of fine silks and fabrics. Somehow you feel more mobile in it than in the nude. Despite the light fabric, it offers decent protection."
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	armor_class = ARMOR_CLASS_LIGHT
 	icon_state = "monkcloth"
 	item_state = "monkcloth"

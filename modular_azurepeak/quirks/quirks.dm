@@ -17,14 +17,12 @@
 /datum/quirk/deadnose
 	name = "Dead Nose"
 	desc = "My nose is numb to the smell of decay."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has a dead nose!"
 	added_traits = list(TRAIT_NOSTINK)
 	incompatible_traits = list(TRAIT_NOSTINK)
 
 /datum/quirk/disgracednoble
 	name = "Disgraced Noble"
 	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
 	added_traits = list(TRAIT_DISGRACED_NOBLE)
 	incompatible_traits = list(TRAIT_NOBLE)
 
@@ -38,7 +36,6 @@
 /datum/quirk/empath
 	name = "Empath"
 	desc = "I can notice when people are in pain."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already an empath!"
 	added_traits = list(TRAIT_EMPATH)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_traits = list(TRAIT_EMPATH)
@@ -46,7 +43,6 @@
 /datum/quirk/fabledlover
 	name = "Fabled Lover"
 	desc = "It's a lucky thing to share my bed."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a fabled lover!"
 	point_cost = 2
 	added_traits = list(TRAIT_GOODLOVER)
 	incompatible_virtues = list(/datum/virtue/utility/socialite, /datum/virtue/utility/performer)
@@ -56,7 +52,6 @@
 	name = "Gossiper"
 	desc = "Despite my lowborn blood, I've made a habit out of brushing shoulders with the nobility and learning their secrets."
 	custom_text = "Lets you view noble gossip."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
 	point_cost = 2
 	added_traits = list(TRAIT_GOSSIPER)
 	incompatible_virtues = list(/datum/virtue/utility/tracker)
@@ -70,6 +65,99 @@
 
 /datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
+
+/datum/quirk/ovipositor
+	name = "Oviposition"
+	desc = "My species reproduces via egg-laying. Getting pregnant will fill me with eggs. If I have a penis, I shall deposit eggs inside my partner during climax."
+	point_cost = 0
+	added_traits = list(TRAIT_OVIPOSITOR)
+	// there MUSTN'T be egg-laying humens. I shan't stand for it !
+	allowed_species = list(/datum/species/anthromorph, /datum/species/kobold, /datum/species/harpy, /datum/species/akula, /datum/species/anthromorphsmall, /datum/species/lamia, /datum/species/arachnid, /datum/species/dullahan, /datum/species/ooze, /datum/species/moth)
+
+/datum/quirk/linguist
+	name = "Trilingual"
+	desc = "Through education, travel, or circumstance, I have picked up a third language."
+	custom_text = "Start with one extra language of your choice."
+	configurable = TRUE
+	incompatible_quirks = list(/datum/quirk/quadrilingual)
+	var/language
+
+/datum/quirk/linguist/apply_to_human(mob/living/carbon/human/recipient)
+	if(ispath(language, /datum/language))
+		recipient.grant_language(language)
+
+/datum/quirk/linguist/config_summary()
+	if(!ispath(language, /datum/language))
+		return "<b>Language</b>: None chosen"
+	var/datum/language/L = language
+	return "<b>Language</b>: [initial(L.name)]"
+
+/datum/quirk/linguist/save_config()
+	return list("language" = language)
+
+/datum/quirk/linguist/load_config(list/data, savefile/S)
+	if(islist(data))
+		language = string_to_typepath(data["language"])
+
+/datum/quirk/linguist/configure(mob/user)
+	var/datum/preferences/prefs = user.client?.prefs
+	if(!prefs)
+		return
+	var/list/choices = prefs.get_language_choices()
+	choices -= "None"
+	var/choice = tgui_input_list(user, "Choose Language:", "Linguist", choices)
+	if(choice)
+		language = choices[choice]
+
+/datum/quirk/quadrilingual
+	name = "Quadrilingual"
+	desc = "I have an abundance of experience with different languages!"
+	custom_text = "Start with two extra languages of your choice."
+	point_cost = 2
+	configurable = TRUE
+	incompatible_quirks = list(/datum/quirk/linguist)
+	var/list/languages = list()
+
+/datum/quirk/quadrilingual/apply_to_human(mob/living/carbon/human/recipient)
+	for(var/language in languages)
+		recipient.grant_language(language)
+
+/datum/quirk/quadrilingual/config_summary()
+	var/list/names = list()
+	for(var/datum/language/L as anything in languages)
+		names += initial(L.name)
+	if(!length(names))
+		return "<b>Languages</b>: None chosen"
+	return "<b>Languages</b>: [names.Join(", ")]"
+
+/datum/quirk/quadrilingual/save_config()
+	return list("languages" = languages)
+
+/datum/quirk/quadrilingual/load_config(list/data, savefile/S)
+	languages = list()
+	if(!islist(data) || !islist(data["languages"]))
+		return
+	for(var/language in data["languages"])
+		var/language_path = string_to_typepath(language)
+		if(ispath(language_path, /datum/language) && !(language_path in languages))
+			languages += language_path
+
+/datum/quirk/quadrilingual/configure(mob/user)
+	var/datum/preferences/prefs = user.client?.prefs
+	if(!prefs)
+		return
+	var/list/chosen = list()
+	for(var/i in 1 to 2)
+		var/list/choices = prefs.get_language_choices()
+		choices -= "None"
+		for(var/language_name in choices.Copy())
+			if(choices[language_name] in chosen)
+				choices -= language_name
+		var/choice = tgui_input_list(user, "Choose language [i] of 2:", "Quadrilingual", choices)
+		if(!choice)
+			return
+		chosen += choices[choice]
+	languages = chosen
 
 /datum/quirk/largeframe
 	name = "Large Frame"
@@ -88,6 +176,9 @@
 	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
 	point_cost = 1
 	added_traits = list(TRAIT_REDOLENT)
+	configurable = TRUE
+	var/scent_type = "Neutral"
+	var/scent = ""
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
 	var/datum/status_effect/redolent/strong_smell = recipient.apply_status_effect(/datum/status_effect/redolent)
@@ -273,7 +364,6 @@
 	name = "Noble"
 	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
 	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
 	point_cost = 4
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
@@ -299,7 +389,6 @@
 /datum/quirk/pretty
 	name = "Pretty"
 	desc = "I'm no great beauty, but people seem to like looking at my face well enough."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already beautiful!"
 	point_cost = 2
 	added_traits = list(TRAIT_PRETTY)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
@@ -310,7 +399,6 @@
 	name = "Raw Diet"
 	desc = "Be it from unnatural anatomy or simply a bizarre tolerance, I can eat raw meat and uncooked food as if it were natural."
 	custom_text = "Lets you eat raw meat and uncooked food without getting poisoned. Rotten food, organs, and dirty water will still poison you."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already possesses an unnatural metabolism!"
 	point_cost = 2
 	added_traits = list(TRAIT_RAW_EATER)
 	incompatible_virtues = list(/datum/virtue/utility/feral_appetite)
@@ -319,7 +407,6 @@
 /datum/quirk/roughlover
 	name = "Rough Lover"
 	desc = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a bedbreaker!"
 	point_cost = 2
 	added_traits = list(TRAIT_DEATHBYSNUSNU)
 	incompatible_traits = list(TRAIT_DEATHBYSNUSNU)
@@ -339,6 +426,13 @@
 /datum/quirk/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.verbs += /mob/living/carbon/human/proc/changevoice
 	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
+
+/datum/quirk/tolerant
+	name = "Tolerant"
+	desc = "Whether fostered through travel or care, you just don't see an issue with certain folks."
+	custom_text = "Prevents you from experiencing negative stress events or examine text when looking at select species and origins."
+	point_cost = 0
+	added_traits = list(TRAIT_TOLERANT)
 
 /datum/quirk/ugly
 	name = "Ugly"
@@ -365,6 +459,5 @@
 /datum/quirk/selfaware
 	name = "Self Aware"
 	desc = "I've always been conscious about how hurt my body can get."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has self aware!"
 	added_traits = list(TRAIT_SELF_AWARE)
 	incompatible_traits = list(TRAIT_SELF_AWARE)

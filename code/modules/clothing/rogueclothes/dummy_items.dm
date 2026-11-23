@@ -75,7 +75,7 @@
 	animname = "cut"
 	blade_class = BCLASS_CUT
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 0
+	penfactor = PEN_NONE
 	chargetime = 0
 	swingdelay = 0
 	clickcd = 8
@@ -88,7 +88,7 @@
 	animname = "chop"
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 10
+	penfactor = PEN_LIGHT
 	damfactor = 1.5
 	swingdelay = 5
 	clickcd = 10
@@ -99,7 +99,7 @@
 	icon_state = "ingrab"
 	attack_verb = list("digs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 90
+	penfactor = PEN_BSTEEL
 	clickcd = 15
 	swingdelay = 0
 	damfactor = 1.3
@@ -110,7 +110,7 @@
 	icon_state = "inpick"
 	attack_verb = list("stabs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 75
+	penfactor = PEN_HEAVY
 	clickcd = 14
 	swingdelay = 12
 	damfactor = 1.1
@@ -197,3 +197,35 @@
 /obj/item/harpy_leg/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
 	. = ..()
 	. |= FALL_NO_MESSAGE
+
+/obj/item/hem_grip
+	name = "hem"
+	desc = "A fistful of gathered cloth."
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "grabbing"
+	item_state = "grabbing"
+	item_flags = ABSTRACT | NOBLUDGEON
+	w_class = WEIGHT_CLASS_HUGE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	no_effect = TRUE
+	experimental_inhand = FALSE
+	experimental_onhip = FALSE
+	drop_sound = 'sound/blank.ogg'
+	pickup_sound = 'sound/blank.ogg'
+	var/mob/living/wearer
+
+/obj/item/hem_grip/dropped(mob/user)
+	. = ..()
+	release_hem()
+	if(!QDELETED(src))
+		qdel(src)
+
+/obj/item/hem_grip/Destroy()
+	release_hem()
+	return ..()
+
+/obj/item/hem_grip/proc/release_hem()
+	var/mob/living/holder = wearer
+	wearer = null
+	if(!QDELETED(holder))
+		holder.drop_hiked_hem()

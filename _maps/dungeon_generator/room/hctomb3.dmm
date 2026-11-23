@@ -482,6 +482,7 @@
 /area/rogue/under/tomb/indoors)
 "sD" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	floor_turf = /turf/open/floor/rogue/blocks/stonered/tiny;
 	redstone_id = "hctomb03sdB"
 	},
@@ -558,6 +559,7 @@
 /area/rogue/under/tomb/indoors)
 "ue" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	floor_turf = /turf/open/floor/rogue/blocks/stonered/tiny;
 	redstone_id = "hctomb03sdA"
 	},
@@ -1354,6 +1356,7 @@
 /area/rogue/under/tomb/indoors)
 "TE" = (
 /obj/effect/mapping_helpers/secret_door_creator{
+	auto_close_delay = 0;
 	floor_turf = /turf/open/floor/rogue/blocks/stonered/tiny;
 	redstone_id = "hctomb03sdC"
 	},

@@ -22,6 +22,7 @@
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_NOBLE
 	quirk_restrictions = list(/datum/quirk/hunted)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	job_subclasses = list(
 		/datum/advclass/puritan/inspector,
 		/datum/advclass/puritan/ordinator,

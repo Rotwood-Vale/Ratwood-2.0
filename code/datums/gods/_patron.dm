@@ -41,11 +41,18 @@ GLOBAL_LIST_EMPTY(prayers)
 	/// List of traits associated with rank. Trait = Cleric_Tier
 	var/list/traits_tier = list()
 
+	///verbs applied by set_patron and removed when changed
+	var/list/added_verbs
+
 	var/datum/storyteller/storyteller
+	/// Common titles of the god - used for prayers
+	var/list/titles = list()
 
 /datum/patron/proc/on_gain(mob/living/pious)
 	for(var/trait in mob_traits)
 		ADD_TRAIT(pious, trait, "[type]")
+	for(var/verb in added_verbs)
+		pious.verbs |= verb
 	if(istype(src, /datum/patron/divine/xylix) || istype(src, /datum/patron/inhumen/matthios))
 		pious.grant_language(/datum/language/thievescant, source = "[type]")
 	if(istype(src, /datum/patron/divine/xylix))
@@ -56,9 +63,11 @@ GLOBAL_LIST_EMPTY(prayers)
 /datum/patron/proc/on_loss(mob/living/pious)
 	if (HAS_TRAIT(pious, TRAIT_CABAL))
 		pious.faction -= "cabal"
+	for(var/verb in added_verbs)
+		pious.verbs -= verb
 	if(istype(src, /datum/patron/divine/xylix) || istype(src, /datum/patron/inhumen/matthios))
 		pious.remove_language(/datum/language/thievescant, source = "[type]")
-	if(istype(src, /datum/patron/divine/xylix))
+	if(istype(src, /datum/patron/divine/xylix) && !HAS_TRAIT(pious, TRAIT_DECEIVING_MEEKNESS))
 		pious.verbs -= /mob/living/carbon/human/proc/emote_ffsalute
 	for(var/trait in mob_traits)
 		REMOVE_TRAIT(pious, trait, "[type]")
@@ -109,12 +118,17 @@ GLOBAL_LIST_EMPTY(prayers)
 	if(!patron_name)
 		CRASH("check_prayer called with null patron")
 
-	if(follower.mob_timers[MT_PSYPRAY])
-		if(world.time < follower.mob_timers[MT_PSYPRAY] + 1 MINUTES)
-			follower.mob_timers[MT_PSYPRAY] = world.time
-			return FALSE
-	else
-		follower.mob_timers[MT_PSYPRAY] = world.time
+	if(follower.has_flaw(/datum/charflaw/addiction/godfearing) && !can_pray(follower))
+		return FALSE
+
+	var/last_prayer = follower.mob_timers[MT_PSYPRAY]
+	if(!isnull(last_prayer) && world.time < last_prayer + 1 MINUTES)
+		to_chat(follower, span_warning("I must wait [DisplayTimeText(last_prayer + 1 MINUTES - world.time)] before another prayer can be answered."))
+		return FALSE
+
+	follower.mob_timers[MT_PSYPRAY] = world.time
+	if(HAS_TRAIT(follower, TRAIT_CONVICTION))
+		follower.apply_status_effect(/datum/status_effect/prayer_cooldown)
 
 	. = TRUE //the prayer has succeeded by this point forward
 	GLOB.prayers |= prayer

@@ -18,6 +18,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	social_rank = SOCIAL_RANK_YEOMAN
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor, /datum/virtue/utility/mining) //Mining virtue gives you smithing expert for... some reason.
 	job_traits = list(TRAIT_SEEPRICES,
 		TRAIT_CICERONE,
 		TRAIT_NUTCRACKER,

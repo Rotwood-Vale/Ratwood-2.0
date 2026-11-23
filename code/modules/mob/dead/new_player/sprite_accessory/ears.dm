@@ -114,6 +114,20 @@
 	color_keys = 2
 	color_key_names = list("Ears", "Inner")
 
+/datum/sprite_accessory/ears/big/fennec
+	icon_state = "fenbig"
+	name = "Fennec (Big)"
+	color_keys = 3
+	color_key_names = list("Ears", "Inner", "Fluff")
+	relevant_layers = list(BODY_ADJ_LAYER)
+
+/datum/sprite_accessory/ears/big/fennec_bigger
+	icon_state = "fenbig2"
+	name = "Fennec (Bigger)"
+	color_keys = 3
+	color_key_names = list("Ears", "Inner", "Fluff")
+	relevant_layers = list(BODY_ADJ_LAYER)
+
 /datum/sprite_accessory/ears/fish
 	name = "Fish"
 	icon_state = "fish"
@@ -271,6 +285,22 @@
 	color_keys = 2
 	color_key_names = list("Ears", "Inner")
 
+/datum/sprite_accessory/ears/wispy
+	name = "Wispy Headwings"
+	icon_state = "wispy"
+	color_keys = 2
+	color_key_names = list("Wings", "Tips")
+	default_colors = list("#EAEAEA", "#EAEAEA")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
+/datum/sprite_accessory/ears/small
+	name = "Small Headwings"
+	icon_state = "small"
+	color_keys = 2
+	color_key_names = list("Wings", "Tips")
+	default_colors = list("#EAEAEA", "#EAEAEA")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
 /datum/sprite_accessory/ears/lunasune
 	name = "Lunasune"
 	icon_state = "lunasune"
@@ -315,6 +345,13 @@
 	icon_state = "elfw"
 	color_key_defaults = list(KEY_SKIN_COLOR)
 	can_flick = TRUE
+
+/datum/sprite_accessory/ears/elfshort
+	name = "Elf (Short)"
+	icon = 'icons/mob/sprite_accessory/elf.dmi'
+	icon_state = "elfshort"
+	color_key_defaults = list(KEY_SKIN_COLOR)
+	can_flick = FALSE
 
 /datum/sprite_accessory/ears/halforc
 	name = "Half Orc"

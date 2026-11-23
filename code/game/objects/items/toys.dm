@@ -121,6 +121,11 @@
 /obj/item/toy/cards/deck/examine()
 	. = ..()
 	. += span_smallnotice("Use the deck in your hand to shuffle the cards. Draw a card by clicking on it with an empty hand.")
+	if(!istype(src, /obj/item/toy/cards/deck/tarot))
+		if(card_table_mode)
+			. += span_smallnotice("It is set up as a card table. Click it to play, or right-click it to pack it up once everyone has left.")
+		else
+			. += span_smallnotice("Right-click it to set it up as a card table for blackjack or poker.")
 
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
@@ -139,6 +144,9 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
+	if(card_table_mode)
+		ui_interact(user)
+		return TRUE
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
@@ -173,6 +181,9 @@
 		icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
+	if(card_table_mode)
+		ui_interact(user)
+		return
 	if(cooldown < world.time - 25)
 		cards = shuffle(cards)
 		playsound(src, 'sound/items/cardshuffle.ogg', 100, TRUE)
@@ -208,6 +219,9 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
+	if(card_table_mode)
+		to_chat(usr, "<span class='warning'>The card table is in use.</span>")
+		return
 	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || !(M.mobility_flags & MOBILITY_PICKUP))

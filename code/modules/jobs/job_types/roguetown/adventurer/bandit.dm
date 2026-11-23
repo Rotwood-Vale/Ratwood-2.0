@@ -30,7 +30,7 @@
 	advjob_examine = TRUE
 	always_show_on_latechoices = FALSE
 	job_reopens_slots_on_death = FALSE //no endless stream of bandits, unless the migration waves deem it so
-	job_traits = list(TRAIT_SELF_SUSTENANCE, TRAIT_DEATHBYSNUSNU, TRAIT_STEELHEARTED)
+	job_traits = list(TRAIT_SELF_SUSTENANCE, TRAIT_DEATHBYSNUSNU, TRAIT_STEELHEARTED, TRAIT_HERESIARCH)
 	same_job_respawn_delay = 1 MINUTES
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
 	job_subclasses = list(
@@ -38,7 +38,7 @@
 		/datum/advclass/hedgeknight,
 		/datum/advclass/iconoclast,
 		/datum/advclass/knave,
-		/datum/advclass/roguemage,
+		/datum/advclass/hedgemage,
 		/datum/advclass/sawbones,
 		/datum/advclass/sellsword,
 		/datum/advclass/pioneer
@@ -51,6 +51,7 @@
 		if(!H.mind)
 			return
 		H.ambushable = FALSE
+		SSrole_class_handler.bandits_in_round = TRUE // wanted posters report bandit activity for job-spawned bandits too, not just event ones
 
 /datum/outfit/job/roguetown/bandit/pre_equip(mob/living/carbon/human/H)
 	. = ..()
@@ -92,7 +93,7 @@
 			bounty_total = rand(200, 300)
 		if("Highwayman")
 			bounty_total = rand(300, 400)
-		if("Vale Boogeyman")
+		if("Realm Boogeyman")
 			bounty_total = rand(500, 600)
 	if(bounty_severity == "Small Game")
 		add_bounty_obscure(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, TRUE, my_crime, bounty_poster)

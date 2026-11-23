@@ -114,6 +114,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/old_comp_lookup = comp_lookup?.Copy()
 	var/list/old_signal_procs = signal_procs?.Copy()
 	var/turf/W = new path(src)
+	// Boundary blockers are marked too, so removing one can extend river reach
+	SSpoint_ambience?.river_fill?.turf_changed(W)
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
@@ -229,7 +231,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/turf/newT
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
-	
+
 	var/list/old_baseturfs = baseturfs.Copy()
 	if(!isclosedturf(src))
 		old_baseturfs += type
@@ -250,7 +252,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/turf/new_baseturfs = list()
 	new_baseturfs.Add(baseturfs)
 	if(isopenturf(src))
-		new_baseturfs.Add(type)
+		var/top_baseturf = islist(baseturfs) ? baseturfs[length(baseturfs)] : baseturfs
+		if(!(ispath(added_turf, /turf/open) && ispath(top_baseturf, /turf/open/floor)))
+			new_baseturfs.Add(type)
 	var/area/turf_area = loc
 	flags = turf_area.PlaceOnTopReact(new_baseturfs, added_turf, flags) // A hook so areas can modify the incoming args
 	return ChangeTurf(added_turf, new_baseturfs, flags)

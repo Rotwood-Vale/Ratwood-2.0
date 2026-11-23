@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(augury)
 
 /datum/action/innate/augury
 	name = "Auto Follow Debris"
-	icon_icon = 'icons/obj/meteor.dmi'
+	button_icon = 'icons/obj/meteor.dmi'
 	button_icon_state = "flaming"
 	background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 
@@ -68,17 +68,10 @@ SUBSYSTEM_DEF(augury)
 	SSaugury.watchers += owner
 	to_chat(owner, span_notice("I are now auto-following debris."))
 	active = TRUE
-	UpdateButtonIcon()
+	build_all_button_icons()
 
 /datum/action/innate/augury/Deactivate()
 	SSaugury.watchers -= owner
 	to_chat(owner, span_notice("I are no longer auto-following debris."))
 	active = FALSE
-	UpdateButtonIcon()
-
-/datum/action/innate/augury/UpdateButtonIcon(status_only = FALSE, force)
-	..()
-	if(active)
-		button.icon_state = "template_active"
-	else
-		button.icon_state = "template"
+	build_all_button_icons()

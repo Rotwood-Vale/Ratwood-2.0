@@ -12,7 +12,7 @@
 	ambushable = FALSE
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw)
 	a_intent = INTENT_HELP
-	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
+	possible_mmb_intents = list(INTENT_SPECIAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
 	possible_rmb_intents = list(/datum/rmb_intent/feint, /datum/rmb_intent/swift, /datum/rmb_intent/riposte, /datum/rmb_intent/weak)
 	flee_in_pain = TRUE
 
@@ -382,16 +382,14 @@
 	layer = BELOW_OBJ_LAYER
 	var/gobs = 0
 	var/maxgobs = 3
-	var/datum/looping_sound/boneloop/soundloop
 	var/spawning = FALSE
 	var/moon_goblins = 0
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
 /obj/structure/gob_portal/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, FALSE)
-	soundloop.start()
-	spawn_gob()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/misc)
+	INVOKE_ASYNC(src, PROC_REF(spawn_gob))
 
 /obj/structure/gob_portal/attack_ghost(mob/dead/observer/user)
 	if(QDELETED(user))
@@ -440,7 +438,7 @@
 	addtimer(CALLBACK(src, PROC_REF(creategob)), 2 SECONDS)
 
 /obj/structure/gob_portal/Destroy()
-	QDEL_NULL(soundloop)
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/misc)
 	. = ..()
 GLOBAL_LIST_INIT(large_goblin_aggro, list(
 	"ME BIGGEST GOBLIN!",

@@ -220,6 +220,17 @@
 	desc = "My muscles need some sleep to recover."
 	icon_state = "muscles"
 
+/datum/status_effect/debuff/sunder_stacks
+	id = "sundered"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sunder_stacks
+	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)	//Slightly punishing.
+	duration = 10 SECONDS	//Punishing and tied to the duration of your sundering stacks.
+
+/atom/movable/screen/alert/status_effect/debuff/sunder_stacks
+	name = "Sundered!"
+	desc = "Something has been taken from me, and it will take time to recover."
+	icon_state = "luxstrain"
+
 /datum/status_effect/debuff/devitalised
 	id = "devitalised"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/devitalised
@@ -266,19 +277,22 @@
 /datum/status_effect/debuff/breedable
 	id = "breedable"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/breedable
-	duration = 30 SECONDS
+	duration = 60 SECONDS
 
 /datum/status_effect/debuff/breedable/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/breedable/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/debuff/breedable
 	name = "Obedient"
 	desc = "They won't hurt me too much..."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/submissive
 	id = "submissive"
@@ -296,16 +310,27 @@
 /atom/movable/screen/alert/status_effect/debuff/submissive
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
+	icon_state = "yielded"
+
+/datum/status_effect/debuff/omegamale
+	id = "omegamale"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/omegamale
+	effectedstats = list(STATKEY_STR = -15, STATKEY_PER = -15, STATKEY_SPD = -15, STATKEY_LCK = -15)//everything but CON & WIL since these keep you alive
+	duration = 5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/omegamale
+	name = "Conceded"
+	desc = "I conceded and won't be fighting for some time."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/yield_prompt
 	id = "yieldprompt"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
 	duration = 20 SECONDS
 
-/datum/status_effect/debuff/yield_prompt/on_apply()
-	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
-		var/mob/living/living_owner = owner
-		living_owner.submit(TRUE)
+/datum/status_effect/debuff/yield_prompt/on_creation(mob/living/new_owner, message_mode)
+	if(new_owner.has_flaw(/datum/charflaw/compliant) && message_mode == MODE_WHISPER)
+		new_owner.submit(TRUE)
 		return FALSE
 	return ..()
 
@@ -1319,3 +1344,146 @@
 	name = "Enchantment Dormant"
 	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
 	icon_state = "dazed"
+
+/datum/status_effect/debuff/slip_recovery
+	id = "slip_recovery"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/slip_recovery
+	duration = 30 SECONDS // Lower than the CD
+
+/atom/movable/screen/alert/status_effect/debuff/slip_recovery
+	name = "Winded"
+	desc = "I am too winded to slip between spaces again!"
+	icon_state = "debuff"
+
+/// RITUOS DEBUFFS
+
+/datum/status_effect/debuff/weapon_binded
+	id = "wep_bind_debuff"
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/weapon_bind_debuff
+
+/datum/status_effect/debuff/weapon_binded/on_apply()
+	. = ..()
+	owner.stamina_add(10)
+
+
+/datum/status_effect/debuff/sun_blinded
+	id = "sun_blinded"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sun_blinded
+	effectedstats = list(STATKEY_PER = -5)
+
+/atom/movable/screen/alert/status_effect/debuff/sun_blinded
+	name = "Sun Blinded"
+	desc = "The light smites my eyes!"
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/sun_blinded/on_apply()
+	. = ..()
+	owner.overlay_fullscreen("sunlight", /atom/movable/screen/fullscreen/dustoverlay_light)
+	owner.update_fov_angles()
+
+/datum/status_effect/debuff/sun_blinded/on_remove()
+	. = ..()
+	owner.clear_fullscreen("sunlight")
+	owner.update_fov_angles()
+
+/atom/movable/screen/alert/status_effect/debuff/weapon_bind_debuff
+	name = "Weapon Binded"
+	desc = "Our weapons binded! That conniving sod knew right where I was aiming! I can't benefit from a weapon bind!"
+	icon = 'icons/mob/combat_debuffs.dmi'
+	icon_state = "weapon_bind_debuff"
+
+
+/datum/status_effect/debuff/parasitized
+	id = "parasitized"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/parasitized
+	tick_interval = 2 SECONDS
+	effectedstats = list(STATKEY_SPD = 0)
+	var/obj/item/organ/belly/egg_belly
+
+/datum/status_effect/debuff/parasitized/tick()
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS)
+	if(egg_belly && (!eggs || eggs.quantity < 10))
+		egg_belly.Remove(H)
+		qdel(egg_belly)
+		egg_belly = null
+		H.update_body()
+	if(!eggs)
+		qdel(src)
+		return
+	H.adjust_nutrition(-0.05)
+	var/new_speed = -min(round(eggs.quantity / 2), 5)
+	H.change_stat(STATKEY_SPD, new_speed - effectedstats[STATKEY_SPD])
+	effectedstats[STATKEY_SPD] = new_speed
+	if(eggs.quantity >= 10 && !H.getorganslot(ORGAN_SLOT_BELLY))
+		egg_belly = new()
+		egg_belly.Insert(H)
+		egg_belly.build_colors_for_accessory(null)
+		H.update_body()
+	if(eggs.quantity >= 10 && H.wear_shirt)
+		to_chat(H, span_userdanger("So many eggs... I feel my stomach swell. My shirt rips!")) // fun !
+		var/obj/item/clothing/shirt = H.wear_shirt
+		H.dropItemToGround(shirt, TRUE)
+		shirt.obj_break()
+
+/datum/status_effect/egg_gestation
+	id = "egg_gestation"
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	var/egg_color
+	var/egg_name
+
+/datum/status_effect/egg_gestation/on_creation(mob/living/new_owner, mob/living/carbon/human/father)
+	duration = rand(10, 20) MINUTES
+	egg_color = "#[father.voice_color]"
+	egg_name = "[father.dna.species.name] eggs"
+	return ..()
+
+/datum/status_effect/egg_gestation/on_remove()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	if(!H || H.stat == DEAD)
+		return
+	var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS)
+	if(eggs)
+		eggs.quantity++
+	else
+		eggs = new /obj/item/organ/eggs()
+		eggs.Insert(H)
+	eggs.color = egg_color
+	eggs.name = egg_name
+	H.apply_status_effect(/datum/status_effect/debuff/parasitized)
+	to_chat(H, span_love("I feel bloated. Something is inside my stomach..."))
+
+/atom/movable/screen/alert/status_effect/debuff/parasitized
+	name = "Parasitized"
+	desc = "Something is growing inside you! Click to push it out."
+	icon_state = "muscles"
+	alert_group = ALERT_DEBUFF
+
+/atom/movable/screen/alert/status_effect/debuff/parasitized/handle_click(location, control, params)
+	var/mob/living/carbon/human/H = usr
+	var/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"])
+		examine_ui(H)
+		return FALSE
+	var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS)
+	if(!eggs)
+		return
+	to_chat(H, span_warning("I clench and push the eggs out of me..."))
+	if(!do_after(H, 5 SECONDS) || eggs.owner != H)
+		return
+	var/pushed = min(max(3, round(ceil(eggs.quantity * 0.25))), eggs.quantity) // in case someone's got a LOTTA eggs
+	eggs.quantity -= pushed
+	to_chat(H, span_warning("I squeeze out [pushed] egg\s!"))
+	playsound(H, 'sound/magic/slimesquish.ogg', 50, TRUE, -1)
+	var/obj/item/organ/eggs/dropped = new(get_turf(H))
+	dropped.quantity = pushed
+	dropped.color = eggs.color
+	dropped.name = eggs.name
+	if(eggs.quantity <= 0)
+		eggs.Remove(H)
+		qdel(eggs)

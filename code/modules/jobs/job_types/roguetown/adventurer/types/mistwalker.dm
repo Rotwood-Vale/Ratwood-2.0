@@ -2,30 +2,31 @@
 	name = "Mistwalker" //works
 	tutorial = "Hailing from Kazengun you were once a sacred guardian, dedicating your lyfe to protecting your chosen shrine of the gods against brigands and fiends from beyond alike... now? Your sacred home has fallen, claimed by ruinous forces and you are banished to wander the realm. What will you find in your search for purpose?"
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_BREATHE 
+	allowed_races = ALL_BUT_BLOODLESS
 	allowed_patrons = ALL_PATRONS 
 	outfit = /datum/outfit/job/roguetown/wretch/mistwalker
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END) //no armour, literally made to bleed
-	virtue_restrictions = list(/datum/virtue/combat/rotcured, /datum/virtue/utility/deathless)
+	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_OVERTHERETIC) //no armour, literally made to bleed
 	maximum_possible_slots = 2 //you probably don't want many of these
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	subclass_stats = list(
 		STATKEY_STR = 2, 
-		STATKEY_CON = 1,
+		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1,
+		STATKEY_LCK = -2,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, 
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, //I once saw an ooze Mistwalker running rondel dagger and grapplefucking everyone
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
@@ -36,6 +37,8 @@
 	subclass_stashed_items = list(
 		"Sewing Kit" =  /obj/item/repair_kit, //I am sure you'll find a way to repair your bracers
 	)
+	extra_context = "This subclass gains additional stat points from weapon selection, and is race-limited from: Constructs and Ooze."
+	adv_stat_ceiling = list(STAT_STRENGTH = 14, STAT_INTELLIGENCE = 14) //grapplebeast/feintbeast protection. stat stacking was being obscenely abused to run builds with 15 in every stat.
 
 /datum/advclass/wretch/mistwalker/check_requirements(mob/living/carbon/human/H)
 	if(!istype(H.client?.prefs?.origin, /datum/origin/kazengun))
@@ -44,21 +47,10 @@
 
 /datum/outfit/job/roguetown/wretch/mistwalker/pre_equip(mob/living/carbon/human/H)
 	..()
-	
-	if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
-		armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
-	else
-		armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/black
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun/black
+	to_chat(H, span_warning("Failed in your duty, outcast from whence you came you wander. Only the steel in your hand can be trusted."))
 
 	head = /obj/item/clothing/head/roguetown/mentorhat
-	gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
-	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun //eh could be a regular one too
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/black
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun //let them have this
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/black
-	shoes = /obj/item/clothing/shoes/roguetown/boots
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -71,9 +63,40 @@
 		)
 
 	if(H.mind)
-		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD")
+		var/armor_options = list("Ceremonial Robes", "Enchanted Inks")
+		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armor_options
+		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD", "Nodachi +2 PER")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
+		switch(armor_choice)
+			if("Ceremonial Robes")
+				neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/black
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/black
+				if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
+					armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun/black
+					gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
+					shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+				else
+					armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/black
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+					gloves = /obj/item/clothing/gloves/roguetown/angle
+					shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced //dwarves like to blow up my patience
+			if("Enchanted Inks")
+				neck = /obj/item/clothing/neck/roguetown/leather
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/mistwalker //a full-body leather armor with 150% integ.
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/meditation/chest/easttats/mistwalker //another chest-only leather armor.
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+				cloak = /obj/item/clothing/cloak/kazengun
+				if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun/black
+					gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
+					shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+				else
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+					gloves = /obj/item/clothing/gloves/roguetown/angle
+					shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 		switch(weapon_choice)
 			if("Ssangsudo +2 CON")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
@@ -100,7 +123,11 @@
 				r_hand = /obj/item/rogueweapon/sword/short/kazengun
 				beltr = /obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
 				H.change_stat(STATKEY_SPD, 1)
-
+			if("Nodachi +2 PER")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				r_hand = /obj/item/rogueweapon/greatsword/nodachi
+				backr = /obj/item/rogueweapon/scabbard/gwstrap/nodachi
+				H.change_stat(STATKEY_PER, 2)
 		wretch_select_bounty(H)
 
 /obj/item/clothing/wrists/roguetown/bracers/black

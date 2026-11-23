@@ -7,7 +7,7 @@
 /datum/supply_pack/rogue/gronn/battleaxe
 	name = "Zayran Battleaxe"
 	cost = 130
-	contains = list(/obj/item/rogueweapon/stoneaxe/battle)
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi)
 	ship_qty_min = 1
 	ship_qty_max = 3
 

@@ -18,6 +18,8 @@
 	/// While processing, this becomes the world.time when the next tick will occur.
 	/// -1 = will prevent ticks, and if duration is also unlimited (-1), stop processing wholesale.
 	var/tick_interval = 1 SECONDS
+	/// world.time of the last [proc/tick], so it can be told how long it's really been, ticks run late under load
+	var/last_tick_time
 	/// The mob affected by the status effect.
 	var/mob/living/owner
 	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
@@ -47,7 +49,7 @@
 	var/mob_effect_offset_x
 	var/mob_effect_offset_y
 	///A direct reference to the generated mob effect post-creation. Used for manipulation (or deletion) of the effect. Normally expires.
-	var/mutable_appearance/mob_effect
+	var/atom/mob_effect
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -64,20 +66,28 @@
 		LAZYADD(owner.status_effects, src)
 		owner.status_effects_by_id[id] = src
 
-	if(!owner || !on_apply())
+	if(!owner)
 		qdel(src)
 		return
 	if(QDELETED(src) || !owner)
 		return
 
-	if(mob_effect_icon_state)
+	if(mob_effect_icon_state && (duration > 0 || mob_effect_dur))
 		if(!mob_effect_dur)
 			mob_effect_dur = (duration - 1)	//-1 tick juuust in case something goes wrong between status effect deletion and the callback of the appearance itself.
 		mob_effect = owner.play_overhead_indicator_flick(mob_effect_icon, mob_effect_icon_state, mob_effect_dur, mob_effect_layer, null, mob_effect_offset_y, mob_effect_offset_x)
 	
+		mob_effect.plane = ABOVE_LIGHTING_PLANE
+
+	if(!on_apply())
+		on_remove()
+		qdel(src)
+		return
+
 	if(duration != -1)
 		duration = world.time + duration
 	tick_interval = world.time + tick_interval
+	last_tick_time = world.time
 	if(alert_type)
 		var/atom/movable/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A?.attached_effect = src //so the alert can reference us, if it needs to
@@ -111,7 +121,8 @@
 		qdel(src)
 		return
 	if(tick_interval < world.time)
-		tick(wait)
+		tick(wait, world.time - last_tick_time)
+		last_tick_time = world.time
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
@@ -133,7 +144,9 @@
 		owner.change_stat(S, effectedstats[S])
 	return TRUE
 
-/datum/status_effect/proc/tick() //Called every tick.
+/// Called every tick. wait is the processing subsystem's own wait, delta_time is how long it has really been since
+/// the last tick, which is at least tick_interval and more when the server is under load
+/datum/status_effect/proc/tick(wait, delta_time)
 
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
 	for(var/S in effectedstats)

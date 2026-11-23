@@ -12,8 +12,10 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = "woodimpact"
 	var/state = 0
+	/// The most books the shelf can hold, matching the number of filled shelf sprites.
+	var/max_books = 15
 	///Things allowed in the bookcase
-	var/list/allowed_books = list(/obj/item/book, /obj/item/storage/book, /obj/item/recipe_book, /obj/item/skillbook) 
+	var/list/allowed_books = list(/obj/item/book, /obj/item/storage/book, /obj/item/recipe_book, /obj/item/skillbook)
 
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
@@ -29,15 +31,16 @@
 	state = 2
 	anchored = TRUE
 	for(var/obj/item/I in loc)
-		for(var/allowedtype in allowed_books)
-			if(istype(I, allowedtype))
-				I.forceMove(src)
+		if(length(contents) >= max_books)
+			break
+		if(is_type_in_list(I, allowed_books))
+			I.forceMove(src)
 	update_icon()
 
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
 	if(is_type_in_list(I, allowed_books))
-		if(!(contents.len <= 15))
+		if(length(contents) >= max_books)
 			to_chat(user, span_notice("There are too many books on this shelf!"))
 			return
 		if(!user.transferItemToLoc(I, src))
@@ -45,8 +48,13 @@
 		update_icon()
 	else if(STR)
 		for(var/obj/item/T in I.contents)
-			if(istype(T, /obj/item/book))
-				STR.remove_from_storage(T, src)
+			if(!istype(T, /obj/item/book))
+				continue
+			if(length(contents) >= max_books)
+				to_chat(user, span_notice("There are too many books on this shelf!"))
+				update_icon()
+				return
+			STR.remove_from_storage(T, src)
 		to_chat(user, span_notice("I empty \the [I] into \the [src]."))
 		update_icon()
 	else
@@ -79,7 +87,7 @@
 	qdel(src)
 
 /obj/structure/bookcase/update_icon()
-	if((contents.len >= 1) && (contents.len <= 15))
-		icon_state = "[based][contents.len]"
+	if(length(contents))
+		icon_state = "[based][min(length(contents), max_books)]"
 	else
 		icon_state = "bookcase"

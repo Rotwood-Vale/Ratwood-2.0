@@ -97,6 +97,7 @@
 		/datum/customizer/bodypart_feature/pits/feathered,
 		/datum/customizer/organ/snout/harpy,
 		/datum/customizer/organ/neck_feature/anthro,
+		/datum/customizer/organ/horns/wings,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -219,8 +220,7 @@
 	icon_state = null
 	body_parts_covered = FEET|LEGS
 	body_parts_inherent = FEET|LEGS
-	armor = list("blunt" = 90, "slash" = 90, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0)
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_PADDED
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
