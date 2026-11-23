@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/pitch/fireresist, /datum/ritual/pitch/shadowform,
 	/datum/ritual/pitch/lightcurse, /datum/ritual/blood/transfuse,
 	/datum/ritual/blood/bloodsnare, /datum/ritual/blood/bloodbond,
-	/datum/ritual/transmutation/raiseshrine, /datum/ritual/servantry/guidance,
+	/datum/ritual/transmutation/raiseshrine, /datum/ritual/servantry/guidance, /datum/ritual/servantry/offering,
 	))
 
 GLOBAL_LIST_INIT(zizo_goals, list(

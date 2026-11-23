@@ -140,6 +140,37 @@
 	for(var/datum/mind/M in SSmapping.retainer.cultists)
 		to_chat(M, span_boldnotice("[cult_mind.name] HAS JOINED THE CULT."))
 
+#define ZIZOCULTIST (1<<8)
+
+/datum/job/roguetown/zizocultist
+	title = "Cultist"
+	flag = ZIZOCULTIST
+	department_flag = WANDERERS
+	faction = "Station"
+	total_positions = 0
+	spawn_positions = 0
+	antag_job = TRUE
+	allowed_races = RACES_ALL_KINDS
+	tutorial = "ASSIST THE CULT."
+	class_categories = TRUE
+	outfit = null
+	outfit_female = null
+	obsfuscated_job = TRUE
+	display_order = 30.8
+	announce_latejoin = FALSE
+	min_pq = 0
+	max_pq = null
+	advclass_cat_rolls = list(CTAG_ADVENTURER = 20)
+	PQ_boost_divider = 10
+	wanderer_examine = TRUE
+	advjob_examine = TRUE
+	always_show_on_latechoices = FALSE
+	job_reopens_slots_on_death = FALSE
+
+/datum/job/roguetown/zizocultist/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..()
+	L.mind?.add_antag_datum(/datum/antagonist/zizocultist)
+
 /datum/antagonist/zizocultist/proc/add_objective(datum/objective/O)
 	objectives += new O
 

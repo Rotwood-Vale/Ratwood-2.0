@@ -400,6 +400,35 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	target.visible_message(span_danger("[assistant || user] tears open [target]'s chest and rips free their lux!"))
 	to_chat(user, span_notice("The sacrifice is accepted!"))
 
+/datum/ritual/servantry/offering
+	name = "Offering"
+	icon_type = /obj/item/necro_relics/necro_crystal
+	desc = "Call for the aid of new cultists! A new cult member will be drawn to the land. Requires a dark crystal, and extra if your cult has over 3 members."
+
+/datum/ritual/servantry/offering/invoke(mob/living/user, turf/center)
+	var/cost = max(length(SSmapping.retainer.cultists) - 3, 0) + 1
+	var/list/crystals = list()
+	for(var/obj/item/necro_relics/necro_crystal/C in center)
+		crystals += C
+	if(length(crystals) < cost)
+		to_chat(user, span_warning("NOT ENOUGH! [cost] DARK CRYSTALS REQUIRED!"))
+		return
+	for(var/i in 1 to cost)
+		qdel(crystals[i])
+	var/datum/job/J = SSjob.GetJob("Cultist")
+	J.total_positions++
+	to_chat(user, span_notice("ACCEPTED! A NEW CULTIST SHALL ARRIVE!"))
+	var/list/candidates = pollGhostCandidates("Inhumen cultists plead for aid! Shall you help them? (You will spawn as your currently selected character.)", ROLE_ZIZOIDCULTIST, null, null, 20 SECONDS)
+	if(!length(candidates))
+		return
+	var/mob/C = pick(candidates)
+	var/client/CL = C.client
+	if(!istype(C, /mob/dead/new_player))
+		C.returntolobby()
+	var/mob/dead/new_player/N = CL?.mob
+	if(istype(N))
+		N.AttemptLateSpawn("Cultist")
+
 /datum/ritual/servantry/heartache
 	lesser = TRUE
 	name = "Heartaches"
