@@ -70,11 +70,12 @@
 // #define NO_DUNGEON //comment this to load dungeons.
 
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 514
-#if DM_VERSION < MIN_COMPILER_VERSION
+#define MIN_COMPILER_VERSION 516
+#define MIN_COMPILER_BUILD 1661
+#if (DM_VERSION < MIN_COMPILER_VERSION || (DM_VERSION == MIN_COMPILER_VERSION && DM_BUILD < MIN_COMPILER_BUILD)) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 513 or higher
+#error You need version 516.1661 or higher
 #endif
 
 //Additional code for the above flags.
