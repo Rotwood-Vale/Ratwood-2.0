@@ -1,23 +1,23 @@
 //Jarl. Heavy armour guy with a greataxe and a sidearm mace.
 /datum/migrant_role/hammerhold/jarl
 	name = "Hammerholdian Jarl"
-	greet_text = "You are a warrior-lord from Hammerhold and the leader of your warband. Guide them to glory and wealth or try to survive."
+	greet_text = "You are a warrior-lord from Hammerhold and the leader of your warband - in a tragic incident, your galley fell victim to Ferentia's harsh seas, and you have shipwrecked here. Guide them to glory and wealth as you rebuild your party, or simply try to survive."
 	outfit = /datum/outfit/job/roguetown/hammerhold/jarl
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula) //Same racelocks as Gronn Chieftain, subject to change
+	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula) //Same racelocks as hammerhold Chieftain, subject to change
 	show_wanderer_examine = FALSE
 
 /datum/outfit/job/roguetown/hammerhold/jarl/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
 		H.set_patron(/datum/patron/divine/abyssor)
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/hammerhold
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	cloak = /obj/item/clothing/cloak/darkcloak/bear
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/iron/gronn
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/iron/hammerhold
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	pants = /obj/item/clothing/under/roguetown/platelegs/iron/gronn
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn
+	pants = /obj/item/clothing/under/roguetown/platelegs/iron/hammerhold
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron/hammerhold
 	gloves = /obj/item/clothing/gloves/roguetown/angle/atgervi
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -65,7 +65,7 @@
 //Tideweaver. T3 miraclist and some minor magics.
 /datum/migrant_role/hammerhold/tideweaver
 	name = "Hammerholdian Tideweaver"
-	greet_text = "You are a cleric of the Lord of Abyss, devoted to him in prayer and arcyne. You have minor magical spells and medical knowledge in addition to your miracles, and can convert those shunned by the Holy See."
+	greet_text = "You are a cleric of the Lord of Abyss, often brought along by wealthy Jarls to guarantee a safe passage through the seas. You have minor magical spells and medical knowledge in addition to your miracles, and can convert those shunned by the Holy See."
 	outfit = /datum/outfit/job/roguetown/hammerhold/tideweaver
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula)
@@ -75,10 +75,10 @@
 	..()
 	if(H.mind)
 		H.set_patron(/datum/patron/divine/abyssor)
-	head = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/blue
+	head = /obj/item/clothing/head/roguetown/roguehood/abyssor
 	neck = /obj/item/clothing/neck/roguetown/leather
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk/blue
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
+	armor = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
+	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/blue
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	gloves = /obj/item/clothing/gloves/roguetown/angle
@@ -87,7 +87,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	beltl = /obj/item/rogueweapon/scabbard/sheath
-	beltr = /obj/item/storage/belt/rogue/surgery_bag/full/improv
+	beltr = /obj/item/storage/belt/rogue/surgery_bag/full
 	id = /obj/item/clothing/neck/roguetown/psicross/abyssor
 	r_hand = /obj/item/rogueweapon/spear/trident
 	l_hand = /obj/item/rogueweapon/huntingknife/bronze
@@ -113,8 +113,8 @@
 	H.adjust_skillrank(/datum/skill/magic/holy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 	H.change_stat(STATKEY_CON, 2)
-	H.change_stat(STATKEY_WIL, 2)
-	H.change_stat(STATKEY_INT, 2)
+	H.change_stat(STATKEY_WIL, 3)
+	H.change_stat(STATKEY_INT, 3)
 	H.change_stat(STATKEY_SPD, 1)
 
 	H.cmode_music = 'sound/music/combat_shaman2.ogg'
@@ -128,7 +128,7 @@
 
 	H.mind.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)	//T3. We are NOT giving you Abyssal Infusion.
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_4)	//T3. We are NOT giving you Abyssal Infusion.
 
 	if(!H.has_language(/datum/language/hammerholdian))
 		H.grant_language(/datum/language/hammerholdian)
@@ -148,13 +148,13 @@
 	if(H.mind)
 		if(!istype(H.patron, /datum/patron/inhumen/graggar)) //Uniquely, can be Graggarite unlike the rest of the party. Forced to be Abyssorite if not Graggarite. You get TRAIT_ORGAN_EATER either way.
 			H.set_patron(/datum/patron/divine/abyssor)
-	head = /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/gronn
+	head = /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/hammerhold
 	neck = /obj/item/clothing/neck/roguetown/leather
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/hammerhold
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	pants = /obj/item/clothing/under/roguetown/trou/leather/gronn
+	pants = /obj/item/clothing/under/roguetown/trou/leather/hammerhold
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	gloves = /obj/item/clothing/gloves/roguetown/angle/gronn
+	gloves = /obj/item/clothing/gloves/roguetown/angle/hammerhold
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
@@ -210,13 +210,13 @@
 	..()
 	if(H.mind)
 		H.set_patron(/datum/patron/divine/abyssor)
-	head = /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/gronn/ownel
+	head = /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/hammerhold/ownel
 	neck = /obj/item/clothing/neck/roguetown/gorget
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	pants = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
+	pants = /obj/item/clothing/under/roguetown/splintlegs/iron/hammerhold
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	gloves = /obj/item/clothing/gloves/roguetown/chain/gronn
+	gloves = /obj/item/clothing/gloves/roguetown/chain/hammerhold
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/atgervi
