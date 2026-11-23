@@ -102,6 +102,7 @@
 			"Knight's Greatplumed Armet" = /obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume,
 			"Snouted Armet"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/snouted,
 			"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+			"Hounskull Bascinet, Aventailed" = /obj/item/clothing/head/roguetown/helmet/heavy/aventail,
 			"Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface,
 			"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
 			"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,

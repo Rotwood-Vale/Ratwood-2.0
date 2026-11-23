@@ -55,8 +55,8 @@
 	..()
 	has_loadout = TRUE
 	head = /obj/item/clothing/head/roguetown/headband/bloodied
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
+	shirt = /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest/confessor
 	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves

@@ -471,14 +471,22 @@
 					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
 			else
 				external.refresh_cum()
-		if(HAS_TRAIT(user, TRAIT_REDOLENT) && !HAS_TRAIT(splashed_user, TRAIT_REDOLENT))
-			user.redolent_apply_contact_stink(splashed_user)
+		var/datum/status_effect/redolent/strong_smell = user.has_status_effect(/datum/status_effect/redolent)
+		strong_smell?.apply_on_contact(splashed_user)
 		modular_record_collar_receive_event(splashed_user, user)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	drop_egg(get_turf(effective_target || user))
 	after_ejaculation()
+
+/datum/sex_controller/proc/drop_egg(turf/dropspot)
+	if(!HAS_TRAIT(user, TRAIT_OVIPOSITOR) || !user.getorganslot(ORGAN_SLOT_PENIS))
+		return
+	var/obj/item/organ/eggs/egg = new(dropspot)
+	egg.color = "#[user.voice_color]"
+	egg.name = "[user.dna.species.name] eggs"
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, source_part = SEX_PART_NULL)
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
@@ -519,12 +527,13 @@
 			apply_cum_consumed_buff(splashed_user)
 		if(!oral && user?.dna?.species?.id == "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
-		var/user_redolent = HAS_TRAIT(user, TRAIT_REDOLENT)
-		var/target_redolent = HAS_TRAIT(splashed_user, TRAIT_REDOLENT)
-		if(user_redolent && !target_redolent)
-			user.redolent_apply_contact_stink(splashed_user)
-		else if(target_redolent && !user_redolent)
-			splashed_user.redolent_apply_contact_stink(user)
+
+		// Transfer scents
+		var/datum/status_effect/redolent/top_redolent = user.has_status_effect(/datum/status_effect/redolent)
+		var/datum/status_effect/redolent/bottom_redolent = splashed_user.has_status_effect(/datum/status_effect/redolent)
+		top_redolent?.apply_on_contact(splashed_user)
+		bottom_redolent?.apply_on_contact(user)
+
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -536,6 +545,17 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	if(!oral && (orifice & SEX_PART_TAIL_MAW) && !(source_part & SEX_PART_TAIL_MAW))
 		user.try_impregnate(effective_target, SEX_PART_TAIL_MAW)
+	if(effective_target?.client?.prefs?.oviposition && HAS_TRAIT(user, TRAIT_OVIPOSITOR) && user.getorganslot(ORGAN_SLOT_PENIS))
+		var/obj/item/organ/eggs/eggs = effective_target.getorganslot(ORGAN_SLOT_EGGS)
+		if(eggs)
+			eggs.quantity++
+		else
+			eggs = new /obj/item/organ/eggs()
+			eggs.Insert(effective_target)
+		eggs.color = "#[user.voice_color]"
+		eggs.name = "[user.dna.species.name] eggs"
+		effective_target.apply_status_effect(/datum/status_effect/debuff/parasitized)
+		to_chat(effective_target, span_love("I feel bloated. Something is inside my stomach..."))
 	after_ejaculation(consume_charge)
 	if(consume_charge)
 		after_intimate_climax(oral, splashed_user)
@@ -722,6 +742,7 @@
 	var/semen_vol = get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+	drop_egg(get_turf(user))
 	after_ejaculation()
 
 	var/cur_loc = get_turf(user)
@@ -776,11 +797,14 @@
 /datum/sex_controller/proc/get_load_bursts()
 	switch(get_semen_volume())
 		if(4)
-			return 2
+			. = 2
 		if(5 to INFINITY)
-			return 3
+			. = 3
 		else
-			return 1
+			. = 1
+	var/obj/item/organ/penis/pintle = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(pintle?.massive)
+		. += MASSIVE_PENIS_EXTRA_LOAD_BURSTS
 
 /datum/sex_controller/proc/get_max_loads()
 	var/con = user.STACON
@@ -1015,6 +1039,11 @@
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
+	var/obj/item/organ/penis/pintle = involved_penis || get_penetrating_pintle(action_target)
+	if(pintle?.massive)
+		pain_amt *= MASSIVE_PENIS_PAIN_MULTIPLIER
+		if(get_driving_force(action_target) >= SEX_FORCE_HIGH)
+			pain_amt *= MASSIVE_PENIS_PAIN_MULTIPLIER
 	var/list/modular_adjustments = modular_adjust_action_for_target_chastity(action_target, arousal_amt, pain_amt)
 	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
 		arousal_amt = modular_adjustments[1]
@@ -1029,6 +1058,36 @@
 	modular_emit_received_sex_action_signal(action_target, arousal_amt, pain_amt, giving)
 	if(modular_should_play_chastitycourse_noise(action_target))
 		chastitycourse_noise(action_target)
+
+/// Our current sex action if it targets partner, otherwise null.
+/datum/sex_controller/proc/get_action_towards(mob/living/carbon/human/partner)
+	if(!current_action || target != partner)
+		return null
+	return SEX_ACTION(current_action)
+
+/// Returns our pintle if it is penetrating partner, in our action or in theirs. Otherwise null.
+/datum/sex_controller/proc/get_penetrating_pintle(mob/living/carbon/human/partner)
+	if(!partner || partner == user)
+		return null
+	var/obj/item/organ/penis/pintle = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(!pintle)
+		return null
+	var/datum/sex_action/own_act = get_action_towards(partner)
+	if(own_act?.is_cock_penetration())
+		return pintle
+	var/datum/sex_action/their_act = partner.sexcon?.get_action_towards(user)
+	if(their_act?.is_cock_penetration(cock_on_target = TRUE))
+		return pintle
+	return null
+
+/// The force setting of whoever drives the act with partner: ours if we have an action on them, else theirs if they have one on us.
+/datum/sex_controller/proc/get_driving_force(mob/living/carbon/human/partner)
+	if(get_action_towards(partner))
+		return force
+	var/datum/sex_controller/partner_sexcon = partner?.sexcon
+	if(partner_sexcon?.get_action_towards(user))
+		return partner_sexcon.force
+	return force
 
 /datum/sex_controller/proc/receive_sex_action(arousal_amt, pain_amt, giving, applied_force, applied_speed)
 	arousal_amt *= get_force_pleasure_multiplier(applied_force, giving)
@@ -1481,6 +1540,8 @@
 		return
 	if(!can_perform_action(action_type, user.incapacitated()))
 		return
+	if(try_massive_insertion_fail(SEX_ACTION(action_type)))
+		return
 	knot_check_remove(action_type)
 	// Set vars
 	desire_stop = FALSE
@@ -1550,6 +1611,7 @@
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		massive_pintle_receiver_line(action)
 		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
@@ -1811,7 +1873,8 @@
 			target.OffBalance(30 SECONDS)
 		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/groin))
-				if(prob(10))
+				var/obj/item/organ/penis/pintle = get_penetrating_pintle(target)
+				if(prob(pintle?.massive ? PELVIS_CRUSH_CHANCE_MASSIVE : PELVIS_CRUSH_CHANCE))
 					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
 					groin.add_wound(/datum/wound/fracture)
 		

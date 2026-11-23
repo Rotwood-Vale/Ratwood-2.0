@@ -85,8 +85,6 @@
 	owner.zizo_points += start_points
 	new /datum/antag_setup(owner.current, start_budget)
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
-	if(/datum/ritual/fleshcrafting/ascend in GLOB.zizo_researchable)
-		add_halo()
 	greet()
 
 /datum/antagonist/zizocultist/proc/add_halo()
