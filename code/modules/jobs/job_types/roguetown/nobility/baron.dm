@@ -43,7 +43,7 @@
 	head = /obj/item/clothing/head/roguetown/circlet
 	id = /obj/item/scomstone/garrison //Giving them a crownstone given their new position over lowtown garrison
 	belt = /obj/item/storage/belt/rogue/leather/black
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+	beltr = /obj/item/storage/belt/rogue/pouch/coins/ultrarich
 
 /datum/advclass/baron/shrewd_nobleman
 	parent_type = /datum/advclass
@@ -51,6 +51,7 @@
 	tutorial = "A noble in the most traditional sense, you use your wit and status to achieve your goals."
 	outfit = /datum/outfit/job/roguetown/baron/shrewd_nobleman
 	category_tags = list(CTAG_BARON)
+	noble_income = 100
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -71,7 +72,6 @@
 
 /datum/outfit/job/roguetown/baron/shrewd_nobleman/pre_equip(mob/living/carbon/human/H)
 	..()
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/veryrich
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 	backr = /obj/item/storage/backpack/rogue/satchel

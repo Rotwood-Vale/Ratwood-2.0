@@ -16,6 +16,22 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
+"aad" = (
+/obj/structure/table/vtable/v2,
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/natural/feather{
+	pixel_y = 5
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aae" = (
 /obj/structure/mineral_door/wood{
 	name = "Retainer's Quarters";
@@ -50,6 +66,18 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
+"aaj" = (
+/obj/structure/closet/crate/drawer/drawer2,
+/obj/item/lockpick/goldpin,
+/obj/item/clothing/ring/emerald,
+/obj/item/needle{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/clothing/neck/roguetown/skullamulet,
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/carpet/inn,
+/area/rogue/indoors)
 "aal" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -2226,22 +2254,6 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town)
-"avd" = (
-/obj/structure/closet/crate/drawer/drawer2,
-/obj/item/lockpick/goldpin,
-/obj/item/clothing/ring/emerald,
-/obj/item/needle{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/neck/roguetown/skullamulet,
-/obj/item/storage/belt/rogue/pouch/coins/veryrich{
-	pixel_x = 9;
-	pixel_y = 2
-	},
-/obj/machinery/light/rogue/candle/r,
-/turf/open/floor/carpet/inn,
-/area/rogue/indoors)
 "avg" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
 	icon_state = "cobweb2"
@@ -112130,23 +112142,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town)
-"tUi" = (
-/obj/structure/table/vtable/v2,
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/natural/feather{
-	pixel_y = 5
-	},
-/obj/item/storage/belt/rogue/pouch/coins/poor,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "tUj" = (
 /obj/structure/mineral_door/bars{
 	locked = 1
@@ -433035,7 +433030,7 @@ snJ
 tVb
 qIu
 obr
-tUi
+aad
 jbP
 aBB
 aBB
@@ -433483,7 +433478,7 @@ wCg
 tVb
 oMB
 mWa
-avd
+aaj
 tVb
 bqU
 dnk

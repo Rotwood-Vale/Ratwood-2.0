@@ -162,6 +162,22 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
+"aaF" = (
+/obj/structure/table/vtable/v2,
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/natural/feather{
+	pixel_y = 5
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aaG" = (
 /obj/structure/bed/rogue/inn,
 /obj/item/bedsheet/rogue/pelt,
@@ -170,6 +186,19 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/town/basement)
+"aaH" = (
+/obj/structure/closet/crate/drawer/drawer2,
+/obj/machinery/light/rogue/candle/l,
+/obj/item/lockpick/goldpin,
+/obj/item/clothing/ring/emerald,
+/obj/item/needle{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/clothing/neck/roguetown/skullamulet,
+/obj/structure/fluff/railing/border/north,
+/turf/open/floor/carpet/inn,
+/area/rogue/indoors)
 "aaK" = (
 /obj/structure/flora/newleaf,
 /obj/structure/fluff/railing/wood{
@@ -68603,23 +68632,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/harbor)
-"nGw" = (
-/obj/structure/closet/crate/drawer/drawer2,
-/obj/machinery/light/rogue/candle/l,
-/obj/item/lockpick/goldpin,
-/obj/item/clothing/ring/emerald,
-/obj/item/needle{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/neck/roguetown/skullamulet,
-/obj/structure/fluff/railing/border/north,
-/obj/item/storage/belt/rogue/pouch/coins/veryrich{
-	pixel_x = 9;
-	pixel_y = 2
-	},
-/turf/open/floor/carpet/inn,
-/area/rogue/indoors)
 "nGx" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/water/cleanshallow,
@@ -73769,23 +73781,6 @@
 	},
 /obj/item/needle,
 /turf/open/floor/rogue/twig,
-/area/rogue/indoors)
-"oLA" = (
-/obj/structure/table/vtable/v2,
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/natural/feather{
-	pixel_y = 5
-	},
-/obj/item/storage/belt/rogue/pouch/coins/poor,
-/turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "oLI" = (
 /obj/structure/fluff/railing/wood{
@@ -499120,7 +499115,7 @@ vmw
 jHm
 gpq
 sZB
-nGw
+aaH
 nqU
 nqU
 xlA
@@ -499985,7 +499980,7 @@ pOX
 fqi
 ona
 gll
-oLA
+aaF
 aaw
 xlA
 xlA
