@@ -25,6 +25,26 @@
 	ship_qty_min = 1
 	ship_qty_max = 3
 
+/datum/supply_pack/rogue/hammerhold/hammerholdarmor
+	name = "Hammerholdian Hardened Leather Armor"
+	cost = 60
+	contains = list (/obj/item/clothing/suit/roguetown/armor/leather/heavy/hammerhold)
+
+/datum/supply_pack/rogue/hammerhold/hammerholdpants
+	name = "Nomad Hardened Leather Pants"
+	cost = 50
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants)
+
+/datum/supply_pack/rogue/hammerhold/hammerholdpantsalt
+	name = "Hammerholdian Leather Pants"
+	cost = 40
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/hammerhold)
+
+/datum/supply_pack/rogue/hammerhold/hammerholdglovesleather
+	name = "Hammerholdian Fur-lined Heavy Leather Gloves"
+	cost = 40
+	contains = list (/obj/item/clothing/gloves/roguetown/angle/hammerhold)
+
 /datum/supply_pack/rogue/hammerhold/owl_helmet
 	name = "Owl Helmet"
 	cost = 150
