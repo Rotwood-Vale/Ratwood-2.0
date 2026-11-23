@@ -8,7 +8,7 @@
 	category_tags = list(CTAG_PILGRIM)
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/artifice), "ward" = FALSE) // No battlewardry
-	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_ARCYNE)
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_ENGINEER, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_WIL = 1,
