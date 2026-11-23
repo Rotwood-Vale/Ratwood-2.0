@@ -543,7 +543,12 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan, SLOT_PANTS, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed, SLOT_WEAR_MASK, TRUE) //Dark vision but bad. Still better than being entirely blind in the dark.
+					H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed, SLOT_WEAR_MASK, TRUE) 
+					H.put_in_hands(new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt, TRUE)
+					H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_EXPERT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock(H), SLOT_BELT_R, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag, SLOT_BACK_R, TRUE)
+					//Dark vision but bad. Still better than being entirely blind in the dark.
 					//Perceptive players will see past your disguise: you lack the beltpack and the silver signet ring, and your gas mask is lensed from get-go.
 				if("Reformist") //You look like a Reformist Freifechter.
 					to_chat(H, span_warning("God is dead, but this world HE left is beautiful and worth of loving. Don't let the butchers from Otava tell you otherwise."))
