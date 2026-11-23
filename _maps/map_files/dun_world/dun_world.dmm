@@ -16,22 +16,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
-"aad" = (
-/obj/structure/table/vtable/v2,
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/natural/feather{
-	pixel_y = 5
-	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "aae" = (
 /obj/structure/mineral_door/wood{
 	name = "Retainer's Quarters";
@@ -168,23 +152,6 @@
 /obj/item/clothing/cloak/lordcloak/baronycloak,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
-"aat" = (
-/obj/structure/table/vtable,
-/obj/item/candle/gold/lit{
-	pixel_y = 13;
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/glass/cup/golden/small{
-	pixel_y = 5;
-	pixel_x = 11
-	},
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
-	},
-/obj/item/inqarticles/tallowpot,
-/obj/item/reagent_containers/food/snacks/tallow/soft,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "aav" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -201,6 +168,53 @@
 "aay" = (
 /turf/open/water/swamp,
 /area/rogue/outdoors/bog/south)
+"aaA" = (
+/obj/item/candle/gold/lit{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/glass/cup/golden/small{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
+	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
+/obj/structure/table/wood/long_table{
+	pixel_x = 3
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
+"aaB" = (
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/natural/feather{
+	pixel_y = 5
+	},
+/obj/structure/table/wood/long_table/mid/alt,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
+"aaC" = (
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/structure/table/wood/long_table/right{
+	pixel_x = -3
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aaE" = (
 /obj/structure/gate/bars/preopen{
 	gid = "tertiarygate";
@@ -100418,16 +100432,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/under/cave/goblinfort)
-"rTf" = (
-/obj/structure/table/vtable/v2,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "rTh" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8;
@@ -432578,7 +432582,7 @@ dJJ
 tVb
 uoz
 uoz
-aat
+aaA
 bwv
 rep
 dtI
@@ -433030,7 +433034,7 @@ snJ
 tVb
 qIu
 obr
-aad
+aaB
 jbP
 aBB
 aBB
@@ -433482,7 +433486,7 @@ aaj
 tVb
 bqU
 dnk
-rTf
+aaC
 jbP
 rzT
 rzT

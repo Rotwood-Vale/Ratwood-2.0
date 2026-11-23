@@ -162,22 +162,6 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
-"aaF" = (
-/obj/structure/table/vtable/v2,
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/paper/scroll{
-	pixel_y = 7
-	},
-/obj/item/natural/feather{
-	pixel_y = 5
-	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "aaG" = (
 /obj/structure/bed/rogue/inn,
 /obj/item/bedsheet/rogue/pelt,
@@ -225,8 +209,7 @@
 	},
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
-"aaL" = (
-/obj/structure/table/vtable,
+"aaM" = (
 /obj/item/candle/gold/lit{
 	pixel_y = 13;
 	pixel_x = 7
@@ -240,6 +223,37 @@
 	},
 /obj/item/inqarticles/tallowpot,
 /obj/item/reagent_containers/food/snacks/tallow/soft,
+/obj/structure/table/wood/long_table{
+	pixel_x = 3
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
+"aaN" = (
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/paper/scroll{
+	pixel_y = 7
+	},
+/obj/item/natural/feather{
+	pixel_y = 5
+	},
+/obj/structure/table/wood/long_table/mid/alt,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
+"aaO" = (
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/structure/table/wood/long_table/right{
+	pixel_x = -3
+	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "aaU" = (
@@ -120485,16 +120499,6 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
-"yhs" = (
-/obj/structure/table/vtable/v2,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "yht" = (
 /turf/open/floor/rogue/concrete,
 /area/rogue/outdoors/town/rockhill)
@@ -391107,8 +391111,8 @@ xlA
 xlA
 xlA
 xlA
-aau
-aau
+xlA
+xlA
 pAV
 qAN
 xUD
@@ -391539,8 +391543,8 @@ bpD
 bpD
 vRu
 vRu
-aau
-aau
+xlA
+xlA
 pAV
 pAV
 kxS
@@ -391971,9 +391975,9 @@ bpD
 vRu
 bpD
 vRu
-aau
-aau
-aau
+xlA
+xlA
+xlA
 pOX
 ayq
 deE
@@ -392403,9 +392407,9 @@ bpD
 bpD
 bpD
 vRu
-aau
-aau
-aau
+xlA
+xlA
+xlA
 pOX
 dWP
 gFG
@@ -392835,9 +392839,9 @@ bpD
 bpD
 bpD
 vRu
-aau
-aau
-aau
+xlA
+xlA
+xlA
 pOX
 ryI
 iZp
@@ -496943,10 +496947,10 @@ xlA
 xlA
 aau
 aau
+xlA
 aau
-aau
-aau
-aau
+xlA
+xlA
 aau
 xlA
 xlA
@@ -497373,12 +497377,12 @@ czk
 czk
 xlA
 xlA
+xlA
+xlA
+xlA
 aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
 aau
 xlA
 xlA
@@ -497805,13 +497809,13 @@ czk
 czk
 xlA
 xlA
-aau
-aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
 xlA
 xlA
 xlA
@@ -498237,13 +498241,13 @@ vRu
 czk
 xlA
 xlA
-aau
-aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
 cvU
 jVw
 auq
@@ -498669,13 +498673,13 @@ vRu
 czk
 xlA
 xlA
-aau
-aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
 sNG
 hFY
 ryI
@@ -499101,13 +499105,13 @@ vRu
 vRu
 vRu
 xlA
-aau
-aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
 sNG
 vfU
 aal
@@ -499533,13 +499537,13 @@ czk
 vRu
 vRu
 xlA
-aau
-aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
 sNG
 cSF
 rqD
@@ -499550,7 +499554,7 @@ ryI
 cDa
 cDc
 nog
-aaL
+aaM
 aaw
 xlA
 xlA
@@ -499965,13 +499969,13 @@ czk
 czk
 sSS
 xlA
-aau
-aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
 sNG
 cSF
 ryI
@@ -499982,7 +499986,7 @@ pOX
 fqi
 ona
 gll
-aaF
+aaN
 aaw
 xlA
 xlA
@@ -500397,13 +500401,13 @@ czk
 czk
 czk
 xlA
-aau
-aau
-aau
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
+xlA
 gXy
 ekj
 hNC
@@ -500414,7 +500418,7 @@ pOX
 eOC
 nZV
 lRW
-yhs
+aaO
 aaw
 xlA
 xlA
@@ -501267,9 +501271,9 @@ xlA
 xlA
 xlA
 xlA
-aau
-aau
-aau
+xlA
+xlA
+xlA
 pAV
 jCh
 tFv
@@ -501699,9 +501703,9 @@ vRu
 vRu
 vRu
 czk
-aau
-aau
-aau
+xlA
+xlA
+xlA
 pAV
 pAV
 pAV
@@ -502131,10 +502135,10 @@ vRu
 vRu
 vRu
 vRu
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
 pOX
 hia
 sCf
@@ -502563,10 +502567,10 @@ czk
 czk
 vRu
 vRu
-aau
-aau
-aau
-aau
+xlA
+xlA
+xlA
+xlA
 pOX
 qGC
 giC
@@ -502995,9 +502999,9 @@ vRu
 czk
 czk
 vRu
-aau
-aau
-aau
+xlA
+xlA
+xlA
 xlA
 pOX
 iUm
