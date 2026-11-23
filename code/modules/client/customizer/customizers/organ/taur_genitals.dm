@@ -82,4 +82,10 @@
 	return created
 
 /datum/customizer_choice/organ/testicles/taur
-	sprite_accessories = list(/datum/sprite_accessory/testicles/taur)
+	sprite_accessories = list(/datum/sprite_accessory/testicles/taur, /datum/sprite_accessory/testicles/taur/hidden)
+
+/datum/customizer_choice/organ/testicles/taur/set_accessory_type(datum/preferences/prefs, new_accessory_type, datum/customizer_entry/entry)
+	var/previous_colors = entry.accessory_colors
+	. = ..()
+	if(previous_colors)
+		entry.accessory_colors = previous_colors

@@ -984,7 +984,8 @@
 		var/datum/customizer/catalogue = slot == ORGAN_SLOT_PENIS ? CUSTOMIZER(/datum/customizer/organ/penis/taur) : CUSTOMIZER(/datum/customizer/organ/testicles/taur)
 		for(var/choice_type in catalogue.customizer_choices)
 			var/datum/customizer_choice/organ/choice = CUSTOMIZER_CHOICE(choice_type)
-			options[choice.default_accessory] = choice.organ_type
+			for(var/accessory_type in choice.sprite_accessories)
+				options[accessory_type] = choice.organ_type
 		return options
 
 	var/base = slot == ORGAN_SLOT_PENIS ? /datum/sprite_accessory/penis : /datum/sprite_accessory/testicles

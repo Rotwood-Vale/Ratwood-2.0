@@ -159,7 +159,8 @@
 	TEST_ASSERT(/datum/sprite_accessory/testicles/pair in ordinary_testicles, "Ordinary Pair must remain selectable.")
 	TEST_ASSERT(!(/datum/sprite_accessory/testicles/taur in ordinary_testicles), "Ordinary Mirror must exclude taur Pair.")
 	var/list/taur_testicles = get_mirror_genital_options(ORGAN_SLOT_TESTICLES, /obj/item/bodypart/taur/canine)
-	TEST_ASSERT_EQUAL(length(taur_testicles), 1, "Taur bodies have one testicle form.")
+	TEST_ASSERT_EQUAL(length(taur_testicles), 2, "Taur bodies offer Pair and Hidden.")
+	TEST_ASSERT(!(/datum/sprite_accessory/testicles/taur/hidden in ordinary_testicles), "Ordinary Mirror must exclude taur Hidden.")
 	TEST_ASSERT_EQUAL(taur_testicles[/datum/sprite_accessory/testicles/taur], /obj/item/organ/testicles, "Taur Pair creates testicles.")
 
 /datum/unit_test/taur_mirror_preserves_organ/Run()
@@ -184,10 +185,47 @@
 	TEST_ASSERT(member.massive && member.damage == 7 && member.branded_writing == "test", "Styling must preserve Massive, damage and branding.")
 	TEST_ASSERT_EQUAL(member.accessory_colors, "#654321#FEDCBA", "Styling must preserve the palette.")
 
+/datum/unit_test/taur_hidden_testicles/Run()
+	var/datum/preferences/prefs = allocate(/datum/preferences/taur_genital_test)
+	var/datum/species/species = allocate(/datum/species/anthromorph)
+	prefs.pref_species = species
+	prefs.gender = MALE
+	prefs.taur_type = /obj/item/bodypart/taur/canine
+	prefs.validate_customizer_entries()
+	allocated += prefs.customizer_entries
+	var/datum/customizer_entry/organ/testicles/entry = prefs.get_customizer_entry_for_customizer_type(/datum/customizer/organ/testicles/taur)
+	var/datum/customizer_choice/organ/testicles/choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
+	entry.ball_size = MAX_TESTICLES_SIZE
+	entry.virility = FALSE
+	entry.accessory_colors = "#ABCDEF"
+	choice.set_accessory_type(prefs, /datum/sprite_accessory/testicles/taur/hidden, entry)
+	var/list/organ_dna = prefs.get_organ_dna_list()
+	for(var/slot in organ_dna)
+		allocated += organ_dna[slot]
+	var/datum/organ_dna/testicles/dna = organ_dna[ORGAN_SLOT_TESTICLES]
+	TEST_ASSERT(dna && dna.can_create_organ(), "Hidden must still create an organ.")
+	TEST_ASSERT_EQUAL(dna.accessory_type, /datum/sprite_accessory/testicles/taur/hidden, "Hidden must be applied through the saved accessory.")
+	TEST_ASSERT_EQUAL(dna.accessory_colors, "#ABCDEF", "Hiding the sprite must preserve its color.")
+
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
+	person.Taurize(prefs.taur_type)
+	person.sexcon.bottom_exposed = TRUE
+	var/obj/item/organ/testicles/pair = dna.create_organ()
+	allocated += pair
+	pair.Insert(person, TRUE, FALSE)
+	var/obj/item/bodypart/chest = person.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NULL(pair.get_bodypart_overlay(chest), "Hidden does not produce a sprite while exposed.")
+
+	var/list/options = get_mirror_genital_options(ORGAN_SLOT_TESTICLES, prefs.taur_type)
+	TEST_ASSERT(apply_mirror_genital_appearance(person, ORGAN_SLOT_TESTICLES, /datum/sprite_accessory/testicles/taur, options), "Mirror must allow restoring Pair.")
+	TEST_ASSERT_EQUAL(person.getorganslot(ORGAN_SLOT_TESTICLES), pair, "Mirror must retain the existing organ.")
+	TEST_ASSERT(length(pair.get_bodypart_overlay(chest)), "Restoring Pair must show the sprite.")
+	TEST_ASSERT(pair.ball_size == MAX_TESTICLES_SIZE && !pair.virility, "Changing visibility must retain size and fertility.")
+
 /datum/unit_test/taur_render_body_changes/Run()
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/recipient = allocate(/mob/living/carbon/human/consistent)
-	person.Taurize(/obj/item/bodypart/taur/canine)
+	person.Taurize(/obj/item/bodypart/taur/tiger)
 	var/obj/item/organ/penis/member = allocate(/obj/item/organ/penis/knotted)
 	member.Insert(person, TRUE, FALSE)
 	member.accessory_type = /datum/sprite_accessory/penis/taur/knotted
@@ -201,7 +239,7 @@
 	TEST_ASSERT_EQUAL(member.get_render_accessory_type(), /datum/sprite_accessory/penis/knotted, "Losing the taur body must select ordinary art.")
 	TEST_ASSERT(member.get_icon_cache_key(null) != original_key, "Body changes must invalidate chest overlay caches.")
 	person.Taurize(/obj/item/bodypart/taur/horse)
-	TEST_ASSERT_EQUAL(member.get_icon_cache_key(null), original_key, "Bodies using the same sprite set should reuse the ordinary cache key.")
+	TEST_ASSERT_EQUAL(member.get_icon_cache_key(null), original_key, "Bodies using the same sprite set should reuse the same cache key.")
 	member.Remove(person, TRUE)
 	member.Insert(recipient, TRUE, FALSE)
 	TEST_ASSERT_EQUAL(member.get_render_accessory_type(), /datum/sprite_accessory/penis/knotted, "A new ordinary owner must get ordinary art.")

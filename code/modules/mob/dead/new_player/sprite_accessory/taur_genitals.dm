@@ -37,6 +37,15 @@
 	relevant_layers = list(BODY_FRONT_LAYER)
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
+/datum/sprite_accessory/testicles/taur/hidden
+	name = "Hidden"
+	icon = null
+	color_keys = 0
+	color_disabled = TRUE
+
+/datum/sprite_accessory/testicles/taur/hidden/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	return FALSE
+
 /datum/sprite_accessory/penis/taur/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	var/obj/item/organ/penis/member = organ
 	if(!isnum(member.penis_size) || member.penis_size != round(member.penis_size) || member.penis_size < MIN_PENIS_SIZE || member.penis_size > MAX_PENIS_SIZE)
@@ -86,6 +95,8 @@
 		for(var/direction in GLOB.cardinals)
 			var/icon/frame = icon(result, result_state, direction)
 			switch(placement)
+				if("canine")
+					frame.Shift(SOUTH, 2)
 				if("deer")
 					frame.Shift(NORTH, 2)
 				if("sloog")
@@ -101,6 +112,8 @@
 /// Identifies placements that require their own sprite frames and cache entries.
 /proc/get_taur_penis_placement(taur_type)
 	switch(taur_type)
+		if(/obj/item/bodypart/taur/canine)
+			return "canine"
 		if(/obj/item/bodypart/taur/deer)
 			return "deer"
 		if(/obj/item/bodypart/taur/sloog)
