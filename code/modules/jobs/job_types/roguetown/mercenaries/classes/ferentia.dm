@@ -16,7 +16,6 @@
 	class_select_category = CLASS_CAT_FERENTIA
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_fullplate.ogg'
-	//traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list( //Roughly equivalent to the Doppelsoldner, but without their unique sword or blacksteel armor, in exchange they're basically a regular guy in plate armor
 		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
@@ -30,7 +29,7 @@
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE, //Sword and board kinda guy
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
@@ -48,18 +47,18 @@
 			if("Greatsword")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/greatsword
-				H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if("Estoc")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/estoc
-				H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if("Longsword & Shield")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
 				backl = /obj/item/rogueweapon/shield/tower/metal
-				H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if("Rapier & Buckler - +SPD/PER, -STR/CON")
 				beltl = /obj/item/rogueweapon/scabbard/sword
@@ -69,25 +68,22 @@
 				H.change_stat(STATKEY_PER, 1)
 				H.change_stat(STATKEY_CON, -1)
 				H.change_stat(STATKEY_SPD, 1)
-				H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			if("Axe & Shield")
 				r_hand = /obj/item/rogueweapon/stoneaxe/battle
 				backl = /obj/item/rogueweapon/shield/tower/metal
-				H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-				H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if("Warhammer & Shield")
 				r_hand = /obj/item/rogueweapon/mace/warhammer/steel
 				backl = /obj/item/rogueweapon/shield/tower/metal
-				H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-				H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if("Flail & Shield")
 				r_hand = /obj/item/rogueweapon/flail/sflail
 				backl = /obj/item/rogueweapon/shield/tower/metal
-				H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-				H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 		var/helmets = list(
 			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
@@ -162,7 +158,7 @@
 	..()
 	to_chat(H, span_warning("Faceless and numerous, the mercenary guild is occupied by many of your ilk. Maille and polearms are as easily used by the unskilled as they are effective."))
 	if(H.mind)
-		var/weapons = list("Halberd", "Partizan", "Lucerne", "Billhook", "Greatflail - +STR, -PER")
+		var/weapons = list("Halberd", "Partizan", "Lucerne", "Billhook", "Greatflail - +STR, -SPD")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Halberd")
@@ -173,10 +169,10 @@
 				r_hand = /obj/item/rogueweapon/eaglebeak
 			if("Billhook")
 				r_hand =/obj/item/rogueweapon/spear/billhook
-			if("Greatflail - +STR, -PER")
+			if("Greatflail - +STR, -SPD")
 				r_hand = /obj/item/rogueweapon/flail/peasantwarflail/steel
 				H.change_stat(STATKEY_STR, 1)
-				H.change_stat(STATKEY_PER, -1)
+				H.change_stat(STATKEY_SPD, -1)
 		var/helmets = list(
 			"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
 			"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
