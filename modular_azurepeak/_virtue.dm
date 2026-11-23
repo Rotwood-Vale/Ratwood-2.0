@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(virtues, init_subtypes_assoc(/datum/virtue))
 	return
 
 /proc/apply_virtue(mob/living/carbon/human/recipient, datum/virtue/virtue_type)
-	if(!virtue_type.prosthetics_fit_or_warn(recipient))
+	if(!virtue_type.fits_or_warn(recipient))
 		return
 	if (!virtue_type.check_triumphs(recipient))
 		return

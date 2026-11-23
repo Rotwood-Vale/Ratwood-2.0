@@ -54,7 +54,11 @@
 			return FALSE
 	return TRUE
 
-/// Whether the recipient's body can take our fitted prosthetics, telling them if it can't. Check this before charging for them.
+/// Whether this can be applied to the recipient's body, telling them if it can't. Check this before charging for it.
+/datum/customization_trait/proc/fits_or_warn(mob/living/carbon/human/recipient)
+	return prosthetics_fit_or_warn(recipient)
+
+/// Whether the recipient's body can take our fitted prosthetics, telling them if it can't.
 /datum/customization_trait/proc/prosthetics_fit_or_warn(mob/living/carbon/human/recipient)
 	if(!LAZYLEN(fitted_prosthetics))
 		return TRUE

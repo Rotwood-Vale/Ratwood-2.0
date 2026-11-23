@@ -13,6 +13,12 @@ GLOBAL_LIST_INIT(quirks, init_subtypes_assoc(/datum/quirk))
 		return FALSE
 	return ..()
 
+/datum/quirk/fits_or_warn(mob/living/carbon/human/recipient)
+	if(length(allowed_species) && !(recipient.dna.species.type in allowed_species))
+		to_chat(recipient, span_warning("[name] does not suit my body. It will not be applied."))
+		return FALSE
+	return ..()
+
 /datum/quirk/proc/configure(mob/user)
 	return
 
