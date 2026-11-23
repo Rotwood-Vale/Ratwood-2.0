@@ -125,7 +125,6 @@
 	ship_qty_min = 1
 	ship_qty_max = 1
 
-
 /datum/supply_pack/rogue/hammerhold/smoked_sausage
 	name = "Smoked Highland Sausage"
 	cost = 40
@@ -174,6 +173,7 @@
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
+
 /datum/supply_pack/rogue/hammerhold/hammerholdian_norsii_plate
 	name = "Norsii Iron Plate"
 	cost = 360
