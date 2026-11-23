@@ -199,6 +199,24 @@
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
+"aaI" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	secret_door_access = list(/datum/job/roguetown/baron,/datum/job/roguetown/baron_retainer);
+	secret_door_locale = "retainer room escape tunnel"
+	},
+/turf/closed/wall/mineral/rogue/stone{
+	max_integrity = 6000
+	},
+/area/rogue/under/cave)
+"aaJ" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	secret_door_access = list(/datum/job/roguetown/baron,/datum/job/roguetown/baron_retainer);
+	secret_door_locale = "baron's stash"
+	},
+/turf/closed/wall/mineral/rogue/stone{
+	max_integrity = 6000
+	},
+/area/rogue/under/town/basement)
 "aaK" = (
 /obj/structure/flora/newleaf,
 /obj/structure/fluff/railing/wood{
@@ -36567,15 +36585,6 @@
 	dir = 1
 	},
 /area/rogue/outdoors/rtfield/rockhill/above)
-"hmp" = (
-/obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/baron,/datum/job/roguetown/baron_retainer);
-	secret_door_locale = "retainer room escape tunnel"
-	},
-/turf/closed/wall/mineral/rogue/stone{
-	max_integrity = 6000
-	},
-/area/rogue/under/town/basement)
 "hmt" = (
 /obj/structure/noose,
 /turf/open/floor/rogue/tile/bath{
@@ -39673,15 +39682,6 @@
 "hRE" = (
 /turf/closed/mineral/random/rogue,
 /area/rogue/outdoors/beach/harbor)
-"hRH" = (
-/obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/baron,/datum/job/roguetown/baron_retainer);
-	secret_door_locale = "baron's stash"
-	},
-/turf/closed/wall/mineral/rogue/stone{
-	max_integrity = 6000
-	},
-/area/rogue/under/cave)
 "hRM" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -279657,7 +279657,7 @@ sYw
 jyI
 ygg
 fQy
-hRH
+aaI
 jyI
 fQy
 sYw
@@ -282246,7 +282246,7 @@ liG
 aaA
 cTA
 fQy
-hmp
+aaJ
 len
 ljc
 iTw
