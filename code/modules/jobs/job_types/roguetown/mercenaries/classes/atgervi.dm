@@ -59,19 +59,19 @@
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan
 		if(/datum/patron/inhumen/graggar)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/pagan
 		if(/datum/patron/inhumen/matthios)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/pagan
 		if(/datum/patron/divine/abyssor)
-			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 		if(/datum/patron/divine/dendor)
-			id = /obj/item/clothing/neck/roguetown/psicross/dendor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/dendor/pagan
 		else
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)
@@ -162,19 +162,19 @@
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan
 		if(/datum/patron/inhumen/graggar)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/pagan
 		if(/datum/patron/inhumen/matthios)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/pagan
 		if(/datum/patron/divine/abyssor)
-			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 		if(/datum/patron/divine/dendor)
-			id = /obj/item/clothing/neck/roguetown/psicross/dendor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/dendor/pagan
 		else
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
@@ -302,45 +302,45 @@
 
 
 ///////////////////////////////
-// HAMMERHOLD-SPECIFIC PSICROSSES //
+// PAGAN-SPECIFIC PSICROSSES //
 ///////////////////////////////
-
-/obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold
+/// THIS IS BECAUSE GRONN AND HAMMERHOLD SHARE THE SAME TALISMANS - WE WILL KEEP THIS LABELED AS 'PAGAN' TO AVIOD REGIONAL CONFUSION.
+/obj/item/clothing/neck/roguetown/psicross/inhumen/pagan
 	name = "carved talisman" //plotting talisman
 	desc = "'The hunt, the studying of your prey, the learning of its routes, the knowledge our ancestors passed down, the empowerment of your people and yourself. Learn of the world, or fade away.'	</br>	</br>The Plotting Wolf embodies the virtues of progress and knowledge, so that no obstacle nor threat to the homeland remains insurmountable. To understand the truths of beast-and-bronze is to lighten the future's hardships. Do not humor magicka, however, for playing with fire shall always end in someone being burned."
-	icon_state = "hammerholdzizo"
+	icon_state = "paganzizo"
 
-/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/hammerhold
+/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/pagan
 	name = "carved talisman" //relishing talisma
 	desc = "'“The excess of desire, the want of more, the glory of victory, the lover's embrace. Embrace the Leopard, or forget your strength.'	</br>	</br>The Relishing Leopard embodies the virtues of love and glory, both in battle and at home. Enjoy the flesh, the drink, and the spice; but be wary to avoid overindulgence, for it shall leave you despondent and lethargic. To become too comfortable is to become weak, and such weakness would turn you into a delicious snack for the Leopard."
-	icon_state = "hammerholdbaotha"
+	icon_state = "paganbaotha"
 
-/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold
+/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 	name = "carved talisman" //starving talisman
 	desc = "'“The hunger, the destruction, the impending frost, the enemy of my enemy. Feed the Bear, or be consumed.'	</br>	</br>The Starving Bear embodies not a virtue, but the necessity to thrive above all else. Avarice is not a sin, but a virtue; to ensure that the homeland never suffers from poverty nor starvation again. Pillage, plunder, and perforate the wealth that others would keep from you, but do not forget that every choice begets consequences."
-	icon_state = "hammerholdmatthios"
+	icon_state = "paganmatthios"
 
-/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/hammerhold
+/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/pagan
 	name = "carved talisman" //grinning talisman
 	desc = "'The battle, the combat, the violence, the rush of victory, the honored glories. Defeat the foe, or die with them.'	</br>	</br>The Grinning Moose embodies the virtues of strength and domination; to survive both the homeland's frigid blizzards and those who'd seek to maraud its countrymen. Be untamed and unstoppable, but do not lose yourself in the haze; for even the Moose was chained once. Kill your own without reason, and the chain shall be tugged; and your soul, too, shall be impaled on their horns."
-	icon_state = "hammerholdgraggar"
+	icon_state = "pagangraggar"
 
-/obj/item/clothing/neck/roguetown/psicross/dendor/hammerhold
+/obj/item/clothing/neck/roguetown/psicross/dendor/pagan
 	name = "carved talisman" //volfskinned talisman
 	desc = "'The world above, of knifetoothed plants and rotting carrion. From jungle to desert, even the stones are nature. Heed its call with the respect it commands, or succumb to madness.'	</br>	</br>The Volfskinned Man embodies the virtue of nature and temperance; to live in harmony with the world and its spirits. Pluck a jackberry, plant a seed - Slay a beast, see no part wasted. Yet, temperance must be shown; to take from the world without respect-nor-exchange is to curse the homeland with misfortune. Yet, to completely embrace the world's primality is to lose your humanity - and worse, to become the very beast you hunt."
-	icon_state = "hammerholddendor"
+	icon_state = "pagandendor"
 
-/obj/item/clothing/neck/roguetown/psicross/abyssor/hammerhold
+/obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 	name = "carved talisman" //hadal talisman
 	desc = "'The chaos below, of coldblack pressure and crushing weight. Be the current. Control the waves. Reign your sails and hold fast against the storm, or be washed away onto an odyssey with no end.'	</br>	</br>The Spiraling Kraken is no virtue, but a presence; the homeland's nautical warden, whose tentacled presence is as unpredictable as the oceans it lords over. To embrace the uncertainty of lyfe is to be rewarded with fortune and mercy when it is most needed. Do not embrace such futility, however, lest you be swept away with all the others into the abyss."
-	icon_state = "hammerholdabyssor"
+	icon_state = "paganabyssor"
 
-/obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold/special
+/obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special
 	name = "carved talisman" //familial talisman
 	desc = "'The memories of the past, and the dreams of the future. A fetish of a beaste, and the carvings of a force that no one beyond your homeland could understand. Sail gracefully, countryman.'"
 
-/// Generic version of the matthios hammerhold necklace that has no examine highlights. Purely for loadout drip
-/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold/generic
+/// Generic version of the matthios pagan necklace that has no examine highlights. Purely for loadout drip
+/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan/generic
 	name = "tooth necklace" //starving talisman
 	desc = "A necklace with a large fanged tooth. Or is that a particularly large claw?"
 
