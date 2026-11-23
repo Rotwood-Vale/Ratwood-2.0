@@ -803,25 +803,25 @@
 /obj/item/roguekey/baronguest
 	name = "baron's manor guest key"
 	desc = "A key to the guest rooms in the Lowtown manor."
-	icon_state = "brownkey"
+	icon_state = "cheesekey"
 	lockid = "BaronManorGuest"
 
 /obj/item/roguekey/baronservant
 	name = "baron's manor servant key"
 	desc = "A key to the servant's quarters in the Lowtown manor."
-	icon_state = "brownkey"
+	icon_state = "rustkey"
 	lockid = "BaronManorServant"
 
 /obj/item/roguekey/baronretainer
 	name = "baron's manor retainer key"
 	desc = "A key to the retainer's quarters in the Lowtown manor."
-	icon_state = "brownkey"
+	icon_state = "greenkey"
 	lockid = "BaronManorRetainer"
 
 /obj/item/roguekey/barondungeon
 	name = "baron's manor \"guest\" key"
 	desc = "A key to the extra-special guest room of the Lowtown manor."
-	icon_state = "brownkey"
+	icon_state = "spikekey"
 	lockid = "BaronManorDungeon"
 
 // Lowtown slaver and related keys
