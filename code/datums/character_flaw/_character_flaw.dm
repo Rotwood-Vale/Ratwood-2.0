@@ -733,12 +733,16 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/leprosy/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
 	to_chat(user, "I am afflicted. I am outcast and weak. I am a pox on this world.")
-	ADD_TRAIT(user, TRAIT_LEPROSY, TRAIT_NOPAIN, TRAIT_NORUN, TRAIT_COLD_RESISTANCE, TRAIT_HEAT_RESISTANCE, TRAIT_UNSEEMLY, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_LEPROSY, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_NOPAIN, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_NORUN, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_UNSEEMLY, TRAIT_GENERIC)
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_INT, -1)
 	H.change_stat(STATKEY_PER, -2)
-	H.change_stat(STATKEY_CON, +2)
-	H.change_stat(STATKEY_WIL, +2)
+	H.change_stat(STATKEY_CON, 2)
+	H.change_stat(STATKEY_WIL, 2)
 	H.change_stat(STATKEY_SPD, -3)
 
 /datum/charflaw/mind_broken
