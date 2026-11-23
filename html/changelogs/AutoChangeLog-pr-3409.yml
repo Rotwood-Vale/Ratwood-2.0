@@ -1,0 +1,6 @@
+author: "Randumb-Phantomb"
+delete-after: True
+changes:
+  - balance: "keep knights have the option of choosing the hounskull with aventail."
+  - bugfix: "hounskull with aventail now hides the snout of the player character."
+  - bugfix: "cat, normal ears and curly (f) hair changed to be consistent based on faced direction."
