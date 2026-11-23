@@ -389,12 +389,13 @@
 				creampie.refresh_cum()
 			if(top?.dna?.species?.id == "gnoll")
 				btm.has_gnoll_scent_this_round = TRUE
-			var/top_redolent = HAS_TRAIT(top, TRAIT_REDOLENT)
-			var/bottom_redolent = HAS_TRAIT(btm, TRAIT_REDOLENT)
-			if(top_redolent && !bottom_redolent)
-				top.redolent_apply_contact_stink(btm)
-			else if(bottom_redolent && !top_redolent)
-				btm.redolent_apply_contact_stink(top)
+
+			// Transfer scents
+			var/datum/status_effect/redolent/top_redolent = top.has_status_effect(/datum/status_effect/redolent)
+			var/datum/status_effect/redolent/bottom_redolent = btm.has_status_effect(/datum/status_effect/redolent)
+			top_redolent?.apply_on_contact(btm)
+			bottom_redolent?.apply_on_contact(top)
+
 			modular_record_collar_receive_event(btm, top)
 			var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)
 			var/knot_orifice = top.sexcon.knotted_part_partner & (SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)

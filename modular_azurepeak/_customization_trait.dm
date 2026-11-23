@@ -43,7 +43,11 @@
 			return trait
 	return FALSE
 
-/// Whether the body set in these preferences can take our fitted prosthetics. Ones that can't are hidden from the pickers.
+/// Whether this can be picked with the body set in these preferences. Ones that can't are hidden from the pickers and dropped from saved picks.
+/datum/customization_trait/proc/fits_preferences(datum/preferences/prefs)
+	return prosthetics_fit_preferences(prefs)
+
+/// Whether the body set in these preferences can take our fitted prosthetics.
 /datum/customization_trait/proc/prosthetics_fit_preferences(datum/preferences/prefs)
 	for(var/limb_type in fitted_prosthetics)
 		if(!prefs.can_fit_prosthetics(is_leg_bodypart(limb_type)))

@@ -198,13 +198,13 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		for(var/datum/quirk/Q in quirks.Copy())
 			if(Q.type in pref_species.restricted_quirks)
 				quirks -= Q
-	// Prosthetic picks that no longer fit the body, e.g. after a species change.
-	if(virtue && !virtue.prosthetics_fit_preferences(src))
+	// Picks that no longer suit the body, e.g. prosthetics or species-locked quirks after a species change.
+	if(virtue && !virtue.fits_preferences(src))
 		virtue = GLOB.virtues[/datum/virtue/none]
-	if(virtuetwo && !virtuetwo.prosthetics_fit_preferences(src))
+	if(virtuetwo && !virtuetwo.fits_preferences(src))
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
 	for(var/datum/quirk/Q in quirks.Copy())
-		if(!Q.prosthetics_fit_preferences(src))
+		if(!Q.fits_preferences(src))
 			quirks -= Q
 	if(!second_virtue_allowed() || virtuetwo.type == virtue.type)
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
@@ -495,7 +495,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 					continue
 				if(V.type in pref_species.restricted_virtues)
 					continue
-				if(!V.prosthetics_fit_preferences(src))
+				if(!V.fits_preferences(src))
 					continue
 				if(other && V.type == other.type)
 					continue
@@ -535,7 +535,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 					continue
 				if(Q.type in pref_species.restricted_quirks)
 					continue
-				if(!Q.prosthetics_fit_preferences(src))
+				if(!Q.fits_preferences(src))
 					continue
 				if(check_quirk_virtue_conflict(Q.type, TRUE, user) || check_pick_vice_conflict(Q.type, TRUE, user) || check_pick_quirk_conflict(Q.type, TRUE, user))
 					continue
