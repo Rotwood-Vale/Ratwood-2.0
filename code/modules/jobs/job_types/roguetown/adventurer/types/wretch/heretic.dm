@@ -360,8 +360,8 @@
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/storage/roguebag = 1,
 		/obj/item/ritechalk = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		)
@@ -370,17 +370,16 @@
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/weapons = list("Daggers", "Rapier", "Sabre","Whip", "Bow", "Crossbow", "Slurbow", "Urumi")
+		var/weapons = list("Dagger", "Rapier", "Sabre","Whip", "Bow", "Crossbow", "Slurbow", "Urumi")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Daggers")
+			if("Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
 					l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 				else
-					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
+					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 				beltl = /obj/item/rogueweapon/scabbard/sheath
 			if("Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
