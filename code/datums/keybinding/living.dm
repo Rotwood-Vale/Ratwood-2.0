@@ -104,10 +104,10 @@
 	var/mob/M = user.mob
 	if(!isliving(M))
 		return
-	if(M.m_intent == MOVE_INTENT_RUN)
-		M.toggle_rogmove_intent(MOVE_INTENT_WALK)
+	if(M.get_controlled_movement_intent() == MOVE_INTENT_RUN)
+		M.request_movement_intent(MOVE_INTENT_WALK)
 	else
-		M.toggle_rogmove_intent(MOVE_INTENT_RUN)
+		M.request_movement_intent(MOVE_INTENT_RUN)
 	return TRUE
 
 /datum/keybinding/living/sneak
@@ -120,10 +120,10 @@
 	var/mob/M = user.mob
 	if(!isliving(M))
 		return
-	if(M.m_intent == MOVE_INTENT_SNEAK)
-		M.toggle_rogmove_intent(MOVE_INTENT_WALK)
+	if(M.get_controlled_movement_intent() == MOVE_INTENT_SNEAK)
+		M.request_movement_intent(MOVE_INTENT_WALK)
 	else
-		M.toggle_rogmove_intent(MOVE_INTENT_SNEAK)
+		M.request_movement_intent(MOVE_INTENT_SNEAK)
 	return TRUE
 
 
