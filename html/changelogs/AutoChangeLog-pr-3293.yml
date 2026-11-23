@@ -1,0 +1,4 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - rscadd: "Sealed brewer’s bottles of alcohol now have their own Navigator export category, with separate demand and saturation."
