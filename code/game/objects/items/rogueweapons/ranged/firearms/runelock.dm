@@ -140,7 +140,7 @@
 	if(!cocked)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(HAS_TRAIT(H, TRAIT_INQUISITION) || (H.STAINT >= 15) || (H.merctype == 10))
+			if(HAS_TRAIT(H, TRAIT_INQUISITION) || (H.STAINT >= 15) || (H.merctype == 10 || HAS_TRAIT(H, TRAIT_FUSILIER) && HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT)))
 				to_chat(H, span_info("I begin channeling runic energy into the runelock..."))
 				var/adj_load_time = reload_time * 10
 				if(H.mind)
