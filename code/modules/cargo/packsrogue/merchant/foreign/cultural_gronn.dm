@@ -4,129 +4,63 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 	not_in_public = TRUE
 
-/datum/supply_pack/rogue/gronn/battleaxe
-	name = "Zayran Battleaxe"
-	cost = 130
-	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi)
-	ship_qty_min = 1
-	ship_qty_max = 3
-
 /datum/supply_pack/rogue/gronn/gronnarmor
 	name = "Gronnic Hardened Leather Armor"
 	cost = 60
-	contains = list (/obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn)
+	contains = list (/obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq)
 
 /datum/supply_pack/rogue/gronn/gronnpants
 	name = "Nomad Hardened Leather Pants"
 	cost = 50
 	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants)
 
-/datum/supply_pack/rogue/gronn/gronnpantsalt
-	name = "Gronnic Leather Pants"
-	cost = 40
-	contains = list (/obj/item/clothing/under/roguetown/trou/leather/gronn)
-
-/datum/supply_pack/rogue/gronn/gronnglovesleather
-	name = "Gronnic Fur-lined Heavy Leather Gloves"
-	cost = 40
-	contains = list (/obj/item/clothing/gloves/roguetown/angle/gronn)
-
-/datum/supply_pack/rogue/gronn/owl_helmet
-	name = "Owl Helmet"
+/datum/supply_pack/rogue/gronn/farhat
+	name = "Authentic Bearfurred Hat"
 	cost = 150
-	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi)
+	contains = list(/obj/item/clothing/head/roguetown/hatfur)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/gronn/moose_hood
-	name = "Moose Hood"
+/datum/supply_pack/rogue/gronn/nomadhelmet
+	name = "Nöküd Helmet"
 	cost = 90
-	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood)
+	contains = list(/obj/item/clothing/head/roguetown/helmet/nomadhelmet)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/gronn/varangian_hauberk
-	name = "Nöküd Hauberk"
+/datum/supply_pack/rogue/gronn/nomadscalemail
+	name = "Nöküd Scalemail"
 	cost = 180
-	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi)
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/scale/steppe)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/gronn/shamanic_coat
-	name = "Shamanic Coat"
-	cost = 110
-	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi)
+/datum/supply_pack/rogue/gronn/kurche
+	name = "Nöküd Kurche"
+	cost = 180
+	contains = list(/obj/item/clothing/suit/roguetown/armor/kurche)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
 /datum/supply_pack/rogue/gronn/kite_shield
-	name = "Gronnic Kite Shield"
+	name = "Nöküd Roundshield"
 	cost = 90
-	contains = list(/obj/item/rogueweapon/shield/atgervi)
+	contains = list(/obj/item/rogueweapon/shield/iron/nomad)
 	ship_qty_min = 1
 	ship_qty_max = 3
 
-/datum/supply_pack/rogue/gronn/fur_gloves
-	name = "Fur-Lined Leather Gloves"
-	cost = 40
-	contains = list(/obj/item/clothing/gloves/roguetown/angle/atgervi)
-	ship_qty_min = 2
-	ship_qty_max = 4
-
-/datum/supply_pack/rogue/gronn/bone_gloves
-	name = "Fur-Lined Bone Gloves"
-	cost = 50
-	contains = list(/obj/item/clothing/gloves/roguetown/angle/gronnfur)
-	ship_qty_min = 2
-	ship_qty_max = 4
-
-/datum/supply_pack/rogue/gronn/beast_claws
-	name = "Beast Claws Gauntlets"
-	cost = 140
-	contains = list(/obj/item/clothing/gloves/roguetown/plate/atgervi)
-	ship_qty_min = 1
-	ship_qty_max = 2
-
-/datum/supply_pack/rogue/gronn/fur_pants
-	name = "Gronnic Fur Pants"
-	cost = 50
-	contains = list(/obj/item/clothing/under/roguetown/trou/leather/atgervi)
-	ship_qty_min = 2
-	ship_qty_max = 4
-
-/datum/supply_pack/rogue/gronn/leather_boots
-	name = "Ba'atur Leather Boots"
-	cost = 45
-	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/atgervi)
-	ship_qty_min = 2
-	ship_qty_max = 4
-
-/datum/supply_pack/rogue/gronn/atgervi_kit
+/datum/supply_pack/rogue/gronn/warrior_kit
 	name = "Ba'atur Nöküd Harness"
 	no_name_quantity = TRUE
 	cost = 540
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi,
-		/obj/item/clothing/suit/roguetown/armor/brigandine/gronn,
-		/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi,
-		/obj/item/clothing/gloves/roguetown/angle/atgervi,
-		/obj/item/clothing/under/roguetown/trou/leather/atgervi,
-		/obj/item/clothing/shoes/roguetown/boots/leather/atgervi,
-		/obj/item/rogueweapon/shield/atgervi,
-	)
-	ship_qty_min = 1
-	ship_qty_max = 1
-
-/datum/supply_pack/rogue/gronn/iskarn_kit
-	name = "Zayran Shaman Kit"
-	no_name_quantity = TRUE
-	cost = 380
-	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi,
-		/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood,
-		/obj/item/clothing/gloves/roguetown/angle/gronnfur,
-		/obj/item/clothing/under/roguetown/trou/leather/atgervi,
-		/obj/item/clothing/shoes/roguetown/boots/leather/atgervi,
+		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah,
+		/obj/item/clothing/suit/roguetown/armor/kurche,
+		/obj/item/clothing/head/roguetown/helmet/nomadhelmet,
+		/obj/item/clothing/gloves/roguetown/angle,
+		/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants,
+		/obj/item/clothing/shoes/roguetown/boots/armor/iron,
+		/obj/item/rogueweapon/stoneaxe/woodcut/pick,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
@@ -153,37 +87,33 @@
 	ship_qty_min = 2
 	ship_qty_max = 5
 
-/datum/supply_pack/rogue/gronn/gronnic_norsii_plate
+/datum/supply_pack/rogue/gronn/gronnic_heavy_plate
 	name = "Gronn Kheshig Iron Plate"
 	cost = 360
-	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/iron/gronn)
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/iron)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
-/datum/supply_pack/rogue/gronn/gronnic_norsii_helm
-	name = "Gronn Kheshig Horned Helm"
+/datum/supply_pack/rogue/gronn/gronnic_heavy_helm
+	name = "Gronn Kheshig Bucket Helm"
 	cost = 90
-	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn)
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/gronn/gronnic_brigandine
-	name = "Gronnic Brigandine"
-	cost = 200
-	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/gronn)
-	ship_qty_min = 1
-	ship_qty_max = 2
-
-/datum/supply_pack/rogue/gronn/norsii_kit
+/datum/supply_pack/rogue/gronn/heavy_kit
 	name = "Kheshig Heavy Harness"
 	no_name_quantity = TRUE
 	cost = 620
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/plate/iron/gronn,
-		/obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn,
-		/obj/item/clothing/gloves/roguetown/plate/iron/gronn,
-		/obj/item/clothing/under/roguetown/platelegs/iron/gronn,
-		/obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn,
+		/obj/item/clothing/suit/roguetown/armor/gambeson,
+		/obj/item/clothing/suit/roguetown/armor/plate/full/iron,
+		/obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron,
+		/obj/item/clothing/neck/roguetown/chaincoif/iron,
+		/obj/item/clothing/gloves/roguetown/plate/iron,
+		/obj/item/clothing/wrists/roguetown/bracers/splint,
+		/obj/item/clothing/under/roguetown/platelegs/iron,
+		/obj/item/clothing/shoes/roguetown/boots/armor/iron,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
