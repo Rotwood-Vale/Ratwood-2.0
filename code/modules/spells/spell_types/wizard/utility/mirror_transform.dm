@@ -404,7 +404,7 @@
 				var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
 				labels[avoid_assoc_duplicate_keys(accessory.name, label_counts)] = accessory_type
 
-			var/selection = input(H, "Choose your [lowertext(chosen)] type", "[chosen] Customization") as null|anything in labels
+			var/selection = input(H, "Choose your [LOWER_TEXT(chosen)] type", "[chosen] Customization") as null|anything in labels
 			if(!selection || QDELETED(H))
 				return
 			body = H.get_bodypart(BODY_ZONE_TAUR)
