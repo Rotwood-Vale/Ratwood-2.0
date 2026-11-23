@@ -78,6 +78,15 @@
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
+"aak" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	secret_door_access = list(/datum/job/roguetown/baron,/datum/job/roguetown/baron_retainer);
+	secret_door_locale = "baron's stash"
+	},
+/turf/closed/wall/mineral/rogue/stone{
+	max_integrity = 6000
+	},
+/area/rogue/under/town/basement)
 "aal" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -94,6 +103,13 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church/chapel)
+"aao" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	secret_door_access = list(/datum/job/roguetown/baron,/datum/job/roguetown/baron_retainer);
+	secret_door_locale = "retainer room escape tunnel"
+	},
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/under/town/basement)
 "aaq" = (
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/item/kitchen/fork/iron,
@@ -66846,10 +66862,6 @@
 /obj/structure/trap/rock_fall,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/his_vault/puzzle)
-"lWw" = (
-/obj/structure/fluff/walldeco/fakewall,
-/turf/open/floor/rogue/blocks,
-/area/rogue/under/town/basement)
 "lWz" = (
 /obj/structure/mineral_door/bars{
 	locked = 1;
@@ -107124,12 +107136,6 @@
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/outdoors/town/roofs)
-"tcM" = (
-/obj/structure/mineral_door/bars/tough{
-	lockid = "BaronManor"
-	},
-/turf/open/floor/rogue/blocks,
-/area/rogue/under/town/basement)
 "tcO" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -205664,10 +205670,10 @@ eXr
 vId
 dwp
 hSR
-lWw
-tcM
+aak
 qGn
 fAm
+tKt
 tKt
 tKt
 tKt
@@ -206119,7 +206125,7 @@ aae
 fAm
 fAm
 fAm
-fAm
+tKt
 tKt
 tKt
 tKt
@@ -207021,7 +207027,7 @@ dSn
 nNV
 hSR
 kfk
-fAm
+aao
 rFU
 jXI
 jXI
