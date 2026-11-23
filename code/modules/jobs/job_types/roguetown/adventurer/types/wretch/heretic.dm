@@ -548,6 +548,7 @@
 					H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_EXPERT, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock(H), SLOT_BELT_R, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag, SLOT_BACK_R, TRUE)
+					ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 					//Dark vision but bad. Still better than being entirely blind in the dark.
 					//Perceptive players will see past your disguise: you lack the beltpack and the silver signet ring, and your gas mask is lensed from get-go.
 				if("Reformist") //You look like a Reformist Freifechter.
