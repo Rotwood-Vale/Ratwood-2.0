@@ -913,3 +913,26 @@
 // for mobs that are floating, flying, intangible, etc.
 /mob/proc/is_floor_hazard_immune()
 	return throwing || (movement_type & (FLYING|FLOATING))
+
+/// Input-only forwarding: exhaustion and other internal intent changes stay local.
+/mob/proc/request_movement_intent(intent)
+	return toggle_rogmove_intent(intent)
+
+/mob/living/request_movement_intent(intent)
+	var/mob/living/carbon/human/mount = get_mountable_mount()
+	if(!mount)
+		return ..()
+	var/datum/component/riding/human/riding = mount.GetComponent(/datum/component/riding)
+	return riding?.handle_movement_intent(src, intent)
+
+/mob/proc/get_controlled_movement_intent()
+	return m_intent
+
+/mob/living/get_controlled_movement_intent()
+	var/mob/living/carbon/human/mount = get_mountable_mount()
+	return mount ? mount.m_intent : m_intent
+
+/mob/proc/refresh_movement_buttons()
+	if(hud_used?.static_inventory)
+		for(var/atom/movable/screen/rogmove/selector in hud_used.static_inventory)
+			selector.update_icon()

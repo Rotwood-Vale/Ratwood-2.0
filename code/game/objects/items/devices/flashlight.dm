@@ -433,7 +433,8 @@
 	on = FALSE
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_HIP
-	obj_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT | CLAMP_BREAK
+	integrity_failure = 0.2
 	force = 1
 	on_damage = 5
 	fuel = 120 MINUTES
@@ -515,7 +516,7 @@
 	obj_integrity = null
 	integrity_failure = 0.2
 	obj_broken = null
-	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME | CLAMP_BREAK
 	anvilrepair = /datum/skill/craft/engineering
 	required_repair_skill = 6 // Only the most skilled engineers can repair it
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')

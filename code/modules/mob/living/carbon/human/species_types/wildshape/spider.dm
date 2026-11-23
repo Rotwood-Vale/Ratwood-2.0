@@ -115,7 +115,7 @@
 	attack_verb = list("bites", "pierces", "impales")
 	animname = "stab"
 	hitsound = "genslash"
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	miss_text = "bites the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "stab"
