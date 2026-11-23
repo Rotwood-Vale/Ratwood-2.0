@@ -16,7 +16,6 @@
 	class_select_category = CLASS_CAT_FERENTIA
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_fullplate.ogg'
-	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list( //Roughly equivalent to the Doppelsoldner, but without their unique sword or blacksteel armor, in exchange they're basically a regular guy in plate armor
 		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
@@ -30,31 +29,62 @@
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //Sword and board kinda guy
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
+	extra_context = "Chooses between Plate Armor & Medium Armor (if rapier & Buckler was chosen)."
 
 /datum/outfit/job/roguetown/mercenary/ferentia_sellknight/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("Combat experience and skill doesn't pay for lodging, mammons do. A knight only in appearance, you took to the mercenary guild to sell your services as sword-toting muscle to the highest bidder."))
 	if(H.mind)
-		var/weapons = list("Greatsword", "Longsword & Shield", "Rapier & Buckler")
+		var/weapons = list("Greatsword", "Longsword & Shield", "Rapier & Buckler - +SPD/PER, -STR/CON", "Axe & Shield", "Warhammer & Shield", "Flail & Shield")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Greatsword")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/greatsword
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+			if("Estoc")
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/rogueweapon/estoc
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if("Longsword & Shield")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
 				backl = /obj/item/rogueweapon/shield/tower/metal
-			if("Rapier & Buckler")
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+			if("Rapier & Buckler - +SPD/PER, -STR/CON")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/rapier
 				backl = /obj/item/rogueweapon/shield/buckler
+				H.change_stat(STATKEY_STR, -1)
+				H.change_stat(STATKEY_PER, 1)
+				H.change_stat(STATKEY_CON, -1)
+				H.change_stat(STATKEY_SPD, 1)
+				H.adjust_skillrank(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+			if("Axe & Shield")
+				r_hand = /obj/item/rogueweapon/stoneaxe/battle
+				backl = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+			if("Warhammer & Shield")
+				r_hand = /obj/item/rogueweapon/mace/warhammer/steel
+				backl = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+			if("Flail & Shield")
+				r_hand = /obj/item/rogueweapon/flail/sflail
+				backl = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 		var/helmets = list(
 			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
 			"Savoyard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
@@ -128,7 +158,7 @@
 	..()
 	to_chat(H, span_warning("Faceless and numerous, the mercenary guild is occupied by many of your ilk. Maille and polearms are as easily used by the unskilled as they are effective."))
 	if(H.mind)
-		var/weapons = list("Halberd", "Partizan", "Lucerne", "Billhook")
+		var/weapons = list("Halberd", "Partizan", "Lucerne", "Billhook", "Greatflail - +STR, -SPD")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Halberd")
@@ -139,6 +169,10 @@
 				r_hand = /obj/item/rogueweapon/eaglebeak
 			if("Billhook")
 				r_hand =/obj/item/rogueweapon/spear/billhook
+			if("Greatflail - +STR, -SPD")
+				r_hand = /obj/item/rogueweapon/flail/peasantwarflail/steel
+				H.change_stat(STATKEY_STR, 1)
+				H.change_stat(STATKEY_SPD, -1)
 		var/helmets = list(
 			"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
 			"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
@@ -188,12 +222,13 @@
 	)
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE, //No lockpicking or pickpocketing, you're a shady as fuck shanker, not a thief role
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE, //Yes lockpicking (a little bit)
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE, //Your bane is being grabbed, you're an assassin, not a grappler
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN, //a little buff
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
@@ -203,17 +238,29 @@
 	..()
 	to_chat(H, span_warning("An expert with a blade and nimble on your feet, those of your ability are something of a rare sight in the mercenary guild. Nevertheless effective at accomplishing the dirty work of others as you merge with the shadows, striking fast and deadly."))
 	if(H.mind)
-		var/weapons = list("Rapier", "Dagger")
+		var/weapons = list("Rapier", "Dagger", "Kriegmesser", "Longsword")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Rapier")
 				r_hand = /obj/item/rogueweapon/sword/rapier
 				beltl = /obj/item/rogueweapon/scabbard/sword
+				belt = /obj/item/storage/belt/rogue/leather
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			if("Dagger")
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
 				beltl = /obj/item/rogueweapon/scabbard/sheath
+				belt = /obj/item/storage/belt/rogue/leather/knifebelt
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+			if("Kriegmesser")
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				belt = /obj/item/storage/belt/rogue/leather
+				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			if("Longsword")
+				r_hand = /obj/item/rogueweapon/sword/long
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				belt = /obj/item/storage/belt/rogue/leather
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	belt = /obj/item/storage/belt/rogue/leather
 	head = /obj/item/clothing/head/roguetown/roguehood/reinforced
