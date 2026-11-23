@@ -177,13 +177,67 @@
 	point_cost = 1
 	added_traits = list(TRAIT_REDOLENT)
 	configurable = TRUE
-	var/scent_type = "Neutral"
+	var/scent_type = REDOLENT_SMELL_NEUTRAL
 	var/scent = ""
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
 	var/datum/status_effect/redolent/strong_smell = recipient.apply_status_effect(/datum/status_effect/redolent)
-	strong_smell.redolent_scent_type = recipient.client?.prefs?.redolent_type || "Neutral"
+	strong_smell.redolent_scent_type = recipient.client?.prefs?.redolent_type || REDOLENT_SMELL_NEUTRAL
 	strong_smell.redolent_scent = recipient.client?.prefs?.redolent_scent || ""
+
+/datum/quirk/redolent/config_summary()
+	return "<b>[scent_type]</b>: [scent || get_default_redolent_scent(scent_type)]"
+
+/datum/quirk/redolent/save_config()
+	return list("scent_type" = scent_type, "scent" = scent)
+
+/datum/quirk/redolent/load_config(list/data, savefile/S)
+	if(islist(data))
+		scent_type = data["scent_type"]
+		scent = data["scent"]
+	// ppl will get pissed if they have 2 rewrite their stink text
+	else if(S)
+		S["redolent_type"] >> scent_type
+		S["redolent_scent"] >> scent
+		if(isnull(scent_type))
+			S["malodorous_type"] >> scent_type
+			S["malodorous_scent"] >> scent
+	if(scent_type == "Positive")
+		scent_type = REDOLENT_SMELL_GOOD
+	if(!(scent_type in REDOLENT_SMELLS))
+		scent_type = REDOLENT_SMELL_NEUTRAL
+	if(isnull(scent))
+		scent = ""
+
+/datum/quirk/redolent/configure(mob/user)
+	var/new_scent_type = tgui_input_list(user, "Choose how others perceive your scent:", "Redolent", REDOLENT_SMELLS)
+	if(!new_scent_type)
+		return
+	var/scent_action = tgui_input_list(user, "Describe the scent:", "Redolent", list("Describe scent", "Use default"))
+	if(!scent_action)
+		return
+	var/new_scent = get_default_redolent_scent(new_scent_type)
+	if(scent_action == "Describe scent")
+		var/leadin = "They smell of"
+		if(new_scent_type == REDOLENT_SMELL_BAD)
+			leadin = "They reek of"
+		new_scent = tgui_input_text(user, "Describe the scent:", "Redolent", scent, max_length = 100, multiline = TRUE, preview_leadin = leadin)
+		if(isnull(new_scent))
+			return
+		if(!length(trim(new_scent)))
+			new_scent = get_default_redolent_scent(new_scent_type)
+	scent_type = new_scent_type
+	scent = new_scent
+	to_chat(user, span_notice("Set my Redolent scent to [scent_type]."))
+
+/datum/quirk/redolent/proc/get_default_redolent_scent(scent_type)
+	switch(scent_type)
+		if(REDOLENT_SMELL_GOOD)
+			return "wildflowers and clean rain"
+		if(REDOLENT_SMELL_NEUTRAL)
+			return "earth and sweat"
+		if(REDOLENT_SMELL_BAD)
+			return "rotting meat and sour sweat"
 
 /datum/status_effect/redolent
 	id = "redolent"
