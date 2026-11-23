@@ -8,7 +8,6 @@
 	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	armor = ARMOR_PADDED
 	blocksound = SOFTUNDERHIT
-	blade_dulling = DULLING_BASHCHOP
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
@@ -188,13 +187,14 @@
 	altdetail_color = "#c08955"
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
+	resistance_flags = FIRE_PROOF
 	var/shiftable = FALSE
 	var/picked = FALSE
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
 	sellprice = 25
 	blocksound = SOFTUNDERHIT
-	blade_dulling = DULLING_BASHCHOP
+	boobed = FALSE
 	pickup_sound = 'sound/foley/equip/equip_armor.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor.ogg'
 	break_sound = 'sound/foley/cloth_rip.ogg'

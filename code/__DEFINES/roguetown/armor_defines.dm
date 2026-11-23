@@ -6,7 +6,7 @@
 // If penfactor > armor tier: 100% of damage penetrates armor.
 // If penfactor == armor tier: 20% of damage penetrates armor.
 // If penfactor < armor tier: fully blocked (0 through).
-// Blunt uses DR Absorb — damage multiplied by 1 / (1 + 0.2 * DR tier), all absorbed by armor (none to HP).
+// Blunt uses DR Absorb — all damage is absorbed by armor; its integrity damage is reduced by BLUNT_DR_COEFFICIENT.
 // Fire/Acid use DR Pierce — same DR formula, but reduced damage still hits HP.
 
 // Penetration tiers (0-4). Weapon attacks.
@@ -24,8 +24,8 @@
 #define DBLOCK_BSTEEL		4	// Blacksteel, antagonist.
 
 // Damage reduction tiers (0-5). Used by blunt (absorb), fire, acid (pierce).
-// Note that blunt by default have 1.6x Integrity Multiplier.
-// Damage multiplier = 1 / (1 + 0.2 * tier)
+// Blunt intents have a 2x integrity factor; blunt DR still reduces the final damage to armor.
+// Fire/Acid damage multiplier = 1 / (1 + 0.2 * tier); blunt integrity uses BLUNT_DR_COEFFICIENT.
 // Blunt: all damage absorbed by armor. Fire/Acid: reduced damage still hits HP.
 #define DR_NONE				0	// Nothing. 100% damage. EDPS: 160%
 #define DR_LIGHT			1	// Plate / Metal. 20% EHP increase. EDPS: 133%
@@ -35,13 +35,17 @@
 #define DR_ULTRA			5	// Best quality light armor. 100% EHP increase. EDPS: 80%
 
 // Armor damage type categories
-// DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt.
-// DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Fire, acid, bullet
+// DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt, fire.
+// DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Acid, bullet
 // DBLOCK: tier pass/fail penetration system. Slash, stab, piercing.
 #define BLUNT_DR_COEFFICIENT 0.3 // Blunt only: 1 / (1 + 0.3 * tier) = 60% reduction at tier 5
 #define ARMOR_DR_ABSORB_TYPES list("blunt")
-#define ARMOR_DR_PIERCE_TYPES list("fire", "acid", "bullet")
+#define ARMOR_DR_PIERCE_TYPES list("acid", "bullet")
 #define ARMOR_DR_TYPES list("blunt", "fire", "acid", "bullet")
+// Resist DR types: worn real armor absorbs these even at a 0 rating (metal shows no fire pips but still
+#define ARMOR_DR_RESIST_TYPES list("fire")
+// DR types that land on a single armor layer instead of distributing across every worn layer. Blunt still distributes.
+#define ARMOR_DR_SINGLE_LAYER_TYPES list("fire")
 #define ARMOR_DBLOCK_TYPES list("slash", "stab", "piercing")
 
 // Penetration passthrough fractions
@@ -170,7 +174,7 @@
 // PADDED: Best Blunt protection, Bodkin immune. But Axe CHOP (MEDIUM) and sword thrust (MEDIUM) get through. 
 // LEATHER: Decent Blunt DR. Axe CHOP blocked, but sword thrust (MEDIUM) and bodkin (HEAVY) get through. Better vs slash than padded, worse vs piercing.
 #define ARMOR_PADDED list("blunt" = DR_ULTRA, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_BSTEEL, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE)
-#define ARMOR_LEATHER list("blunt" = DR_HEAVY, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_HEAVY, "fire" = DR_SUPER, "acid" = DR_NONE, "bullet" = DR_NONE)
+#define ARMOR_LEATHER list("blunt" = DR_ULTRA, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_HEAVY, "fire" = DR_MEDIUM, "acid" = DR_NONE, "bullet" = DR_NONE)
 
 // LIGHT ARMOR - SNOWFLAKE. Not comfortable with them, but not touching it atm.
 #define ARMOR_DRAGONSKIN list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE) // Iconoclast dragon skin. Fire resistant.
@@ -181,10 +185,10 @@
 
 // BRIGANDINE — Side pieces (bracers, splint arms, jack chain). Better blunt padding than plate, but arrows punch through.
 // Chest/leg brigandine uses ARMOR_PLATE with lower integrity instead.
-#define ARMOR_BRIGANDINE list("blunt" = DR_MEDIUM, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE)
+#define ARMOR_BRIGANDINE list("blunt" = DR_MEDIUM, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE)
 
 // MAILLE — Chainmail. Medium: Plate level protection but weak vs Bodkin (100% through)
-#define ARMOR_MAILLE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_LIGHT, "acid" = DR_NONE, "bullet" = DR_NONE)
+#define ARMOR_MAILLE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_LIGHT, "fire" = DR_LIGHT, "acid" = DR_NONE, "bullet" = DR_NONE)
 
 // PLATE — Brigandine, cuirass, plate. All plate-tier items; differentiated by integrity, not rating. Spear (PEN_HEAVY) gets 20% through stab. Bodkin goes through 20% - HEAVY rating. Weak vs Blunt. 
 #define ARMOR_PLATE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_LIGHT, "acid" = DR_NONE, "bullet" = DR_NONE)
@@ -198,7 +202,6 @@
 // Please do not add it and use an existing one, so to prevent armor bloat and keep armor
 // reasonable and intuitive.
 #define ARMOR_REGENERATING_BROKEN list("blunt" = DR_LIGHT, "slash" = DBLOCK_LIGHT, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_LIGHT, "fire" = DR_NONE, "acid" = DR_NONE, "bullet" = DR_NONE)
-#define ARMOR_REGENERATING_WEAK list("blunt" = DR_MEDIUM, "slash" = DR_MEDIUM, "stab" = DR_MEDIUM, "piercing" = DBLOCK_LIGHT, "fire" = DR_NONE, "acid" = DR_NONE, "bullet" = DR_NONE)
 #define ARMOR_VAMP list("blunt" = DR_ULTRA, "slash" = DBLOCK_BSTEEL, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_HEAVY, "fire" = DR_NONE, "acid" = DR_NONE, "bullet" = DR_LIGHT)
 #define ARMOR_WWOLF list("blunt" = DR_SUPER, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_MEDIUM, "acid" = DR_NONE, "bullet" = DR_NONE)
 #define ARMOR_GNOLL_WEAK list("blunt" = DR_ULTRA, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_MEDIUM, "acid" = DR_NONE, "bullet" = DR_LIGHT)

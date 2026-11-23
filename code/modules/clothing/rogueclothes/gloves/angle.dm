@@ -7,7 +7,6 @@
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	sellprice = 12
-	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	anvilrepair = null
@@ -45,13 +44,8 @@
 	icon_state = "freigloves"
 	item_state = "freigloves"
 
-/obj/item/clothing/gloves/roguetown/angle/pontifex
+/obj/item/clothing/gloves/roguetown/bandages/pontifex
 	name = "rune-scrybed wrappings"
 	desc = "Paper and cloth bandages enscrybed with powerful naledian runes. They do an ample job of protecting their user's hands in combat."
-	icon_state = "clothwraps"
-	item_state = "clothwraps"
 	color = "#ffffff"
-
-/obj/item/clothing/gloves/roguetown/angle/pontifex/ComponentInitialize()
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+	unarmed_bonus = 5
