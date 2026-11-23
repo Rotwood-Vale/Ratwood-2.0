@@ -2223,10 +2223,6 @@
 	pixel_x = 9;
 	pixel_y = 2
 	},
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
-/obj/item/roguekey/baronguest,
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
@@ -9299,6 +9295,17 @@
 "bIk" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/exposed/town/keep)
+"bIl" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/cooking/pan,
+/obj/item/rogueweapon/huntingknife/chefknife,
+/obj/item/reagent_containers/glass/mortar,
+/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/pestle,
+/obj/item/flint,
+/obj/item/kitchen/rollingpin,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors)
 "bIm" = (
 /obj/structure/table/wood,
 /obj/item/paper,
@@ -18088,7 +18095,6 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/mazedungeon)
 "dnk" = (
-/obj/structure/chair/wood/rogue/fancy,
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
@@ -30532,12 +30538,6 @@
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_y = 32
 	},
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
-/obj/item/roguekey/baronguest,
-/obj/item/roguekey/baron,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "fwv" = (
@@ -33255,12 +33255,6 @@
 "fWW" = (
 /obj/structure/closet/crate/drawer/random,
 /obj/item/clothing/neck/roguetown/psicross/pearl,
-/obj/item/roguekey/baronguest,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
 /obj/effect/decal/carpet/kover_purple{
 	dir = 8;
 	pixel_y = -15;
@@ -35719,6 +35713,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/cave/his_vault)
 "gto" = (
+/obj/effect/landmark/start/baronlate,
 /obj/effect/landmark/start/baron,
 /turf/open/floor/rogue/ruinedwood{
 	dir = 1;
@@ -42788,6 +42783,21 @@
 "hFr" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/dukecourt)
+"hFu" = (
+/obj/structure/table/vtable,
+/obj/item/candle/gold/lit{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/glass/cup/golden/small{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "hFy" = (
 /obj/structure/fluff/psycross,
 /turf/open/floor/rogue/grass,
@@ -50695,6 +50705,16 @@
 /obj/machinery/light/rogue/candle/weak/r,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
+"jcF" = (
+/obj/structure/table/vtable/v2,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "jcK" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/dirt,
@@ -60830,16 +60850,6 @@
 /obj/item/reagent_containers/glass/bowl/tin,
 /obj/item/reagent_containers/glass/bowl/tin,
 /obj/item/reagent_containers/glass/bowl/tin,
-/obj/item/rogueweapon/huntingknife/chefknife,
-/obj/item/flint,
-/obj/item/reagent_containers/glass/mortar,
-/obj/item/pestle,
-/obj/item/tablecloth/silk,
-/obj/item/cooking/platter/silver,
-/obj/item/reagent_containers/glass/bowl/silver,
-/obj/item/reagent_containers/glass/cup/silver,
-/obj/item/kitchen/fork/silver,
-/obj/item/kitchen/spoon/silver,
 /obj/item/storage/bag/tray,
 /obj/item/storage/bag/tray,
 /turf/open/floor/rogue/tile,
@@ -78956,7 +78966,7 @@
 /turf/closed/wall/mineral/rogue/roofwall/middle/dir4,
 /area/rogue/indoors/town/warden)
 "obr" = (
-/obj/effect/landmark/start/baronlate,
+/obj/structure/chair/wood/rogue/fancy,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "obH" = (
@@ -99418,9 +99428,6 @@
 /obj/item/rope/chain,
 /obj/item/clothing/mask/rogue/sack,
 /obj/item/natural/bundle/cloth/bandage/full,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/rogueweapon/mace/cudgel,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -100386,23 +100393,18 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/under/cave/goblinfort)
 "rTf" = (
-/obj/structure/table/vtable,
-/obj/effect/decal/carpet/kover_black{
-	pixel_y = 9;
-	pixel_x = 16
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	lockid = "BaronManor";
+	opacity = 1
 	},
-/obj/item/candle/gold/lit{
-	pixel_y = 13;
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/glass/cup/golden/small{
-	pixel_y = 5;
-	pixel_x = 11
-	},
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
-	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
+/obj/item/tablecloth/silk,
+/obj/item/cooking/platter/silver,
+/obj/item/reagent_containers/glass/bowl/silver,
+/obj/item/reagent_containers/glass/cup/silver,
+/obj/item/kitchen/fork/silver,
+/obj/item/kitchen/spoon/silver,
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors)
 "rTh" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -133412,10 +133414,6 @@
 "xMf" = (
 /obj/structure/fluff/clock{
 	pixel_x = -4
-	},
-/obj/machinery/light/rogue/candle{
-	pixel_x = -32;
-	pixel_y = 0
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
@@ -315972,7 +315970,7 @@ aOK
 bwv
 quW
 asY
-pFa
+vOH
 pFa
 nas
 pFa
@@ -316421,9 +316419,9 @@ rFH
 aOK
 aOK
 xgK
-aOK
+bwv
+bwv
 sNZ
-iRP
 pFa
 epz
 asY
@@ -316873,9 +316871,9 @@ aKS
 aOK
 fsi
 qPu
+ldJ
 bwv
 bwv
-quW
 asY
 pFa
 asY
@@ -317325,8 +317323,8 @@ mcR
 aOK
 rZz
 ikN
-ldJ
-bwv
+dpK
+rTf
 aOK
 vyz
 sPF
@@ -318230,7 +318228,7 @@ akw
 oJX
 eDW
 dpK
-mpH
+bIl
 sNH
 nwn
 pwx
@@ -431230,7 +431228,7 @@ bwv
 lQc
 bwv
 bwv
-aBB
+bwv
 aBB
 aBB
 aBB
@@ -431681,9 +431679,9 @@ ehj
 sWg
 oNk
 tVb
+xMf
 bwv
-rln
-aBB
+bwv
 aBB
 aBB
 aBB
@@ -432133,10 +432131,10 @@ kKy
 gto
 oNk
 sQM
+uoz
 hnx
 bwv
 bwv
-aBB
 aBB
 aBB
 aBB
@@ -432586,9 +432584,9 @@ qeZ
 dJJ
 tVb
 uoz
-xMf
-bwv
-bwv
+uoz
+hFu
+jbP
 rep
 dtI
 aBB
@@ -433039,7 +433037,7 @@ snJ
 tVb
 qIu
 obr
-rTf
+tUi
 jbP
 aBB
 aBB
@@ -433491,7 +433489,7 @@ avd
 tVb
 bqU
 dnk
-tUi
+jcF
 jbP
 rzT
 rzT

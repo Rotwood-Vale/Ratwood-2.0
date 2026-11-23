@@ -403,10 +403,25 @@
 /obj/item/storage/keyring/wardenmaster
 	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/warden, /obj/item/seal/master_warden)
 
-/obj/item/storage/keyring/baronretainer
-	name = "baron-retainer keyring"
-	desc = "A keyring issued to the baronial household with warden and slaver access."
-	keys = list(/obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
+/obj/item/storage/keyring/baron_manor
+	name = "baronial servant keyring"
+	desc = "A keyring engraved with humble designs borrowed from the baron's coat of arms. Issued to the baron's household staff."
+	keys = list(/obj/item/roguekey/baron, /obj/item/roguekey/baronguest)
+
+/obj/item/storage/keyring/baron_manor/retainer
+	name = "baron retainer's keyring"
+	desc = "A keyring engraved with martial designs borrowed from the baron's coat of arms. Issued to the close protection and armsmen of the baron."
+	keys += list(/obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
+
+/obj/item/storage/keyring/baron_manor/baron
+	name = "baron's keyring"
+	desc = "A keyring engraved with lordly designs borrowed from the baron's coat of arms. Belongs to the baron."
+	keys += list(/obj/item/roguekey/manor, /obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
+
+/obj/item/storage/keyring/baron_manor_spares
+	name = "baron's spare keyring"
+	desc = "A keyring engraved with repetitive designs borrowed from the baron's coat of arms. The entrusted holder of the baron's spare house keys."
+	keys = list(/obj/item/roguekey/baron, /obj/item/roguekey/baron, /obj/item/roguekey/baron, /obj/item/roguekey/baron, /obj/item/roguekey/baronguest, /obj/item/roguekey/baronguest, /obj/item/roguekey/baronguest, /obj/item/roguekey/baronguest)
 
 /obj/item/storage/keyring/tribalchief
 	keys = list(/obj/item/roguekey/tribal, /obj/item/roguekey/tribalchief)

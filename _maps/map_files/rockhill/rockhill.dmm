@@ -18945,10 +18945,6 @@
 /area/rogue/indoors/town/church/chapel)
 "dKt" = (
 /obj/structure/table/vtable,
-/obj/effect/decal/carpet/kover_black{
-	pixel_y = 9;
-	pixel_x = 16
-	},
 /obj/item/candle/gold/lit{
 	pixel_y = 13;
 	pixel_x = 7
@@ -18960,7 +18956,7 @@
 /obj/structure/roguemachine/mail/l{
 	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
 	},
-/turf/open/floor/rogue/ruinedwood,
+/turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "dKx" = (
 /turf/open/floor/rogue/greenstone/runed,
@@ -24374,7 +24370,6 @@
 /obj/structure/rack/rogue/shelf{
 	pixel_y = 26
 	},
-/obj/structure/bookcase/random,
 /obj/structure/fluff/walldeco/painting/skull{
 	pixel_x = 32
 	},
@@ -24382,6 +24377,9 @@
 	pixel_y = 35;
 	pixel_x = 1
 	},
+/obj/structure/closet/crate/roguecloset/inn,
+/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
+/obj/item/clothing/head/roguetown/chaperon/noble,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "eOD" = (
@@ -36710,12 +36708,6 @@
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_y = 32
 	},
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
-/obj/item/roguekey/baronguest,
-/obj/item/roguekey/baron,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "hob" = (
@@ -58687,12 +58679,6 @@
 "lLe" = (
 /obj/structure/closet/crate/drawer/random,
 /obj/item/clothing/neck/roguetown/psicross/pearl,
-/obj/item/roguekey/baronguest,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
 /turf/open/floor/rogue/ruinedwood/herringbone_clear,
 /area/rogue/indoors)
 "lLh" = (
@@ -68600,10 +68586,6 @@
 	pixel_x = 9;
 	pixel_y = 2
 	},
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
-/obj/item/roguekey/baronguest,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "nGx" = (
@@ -73771,7 +73753,7 @@
 	pixel_y = 5
 	},
 /obj/item/storage/belt/rogue/pouch/coins/poor,
-/turf/open/floor/rogue/ruinedwood,
+/turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "oLI" = (
 /obj/structure/fluff/railing/wood{
@@ -88032,9 +88014,6 @@
 /obj/item/rope/chain,
 /obj/item/clothing/mask/rogue/sack,
 /obj/item/natural/bundle/cloth/bandage/full,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/rogueweapon/mace/cudgel,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -117463,12 +117442,15 @@
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/under/town/basement/keep)
 "xDh" = (
-/obj/structure/mineral_door/bars{
-	lockid = "BaronManor";
-	name = "Baron Manor"
-	},
-/turf/open/transparent/openspace,
-/area/rogue/outdoors/rtfield/rockhill/above)
+/obj/structure/table/vtable/v2,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "xDn" = (
 /turf/closed/wall/mineral/rogue/decostone/center,
 /area/rogue/indoors/town/manor/rockhill)
@@ -120501,15 +120483,6 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
-"yhs" = (
-/obj/structure/closet/crate/roguecloset/inn,
-/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
-/obj/item/clothing/head/roguetown/chaperon/noble,
-/obj/machinery/light/rogue/candle/r,
-/obj/item/storage/keyring/baronretainer,
-/obj/item/storage/keyring/baronretainer,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "yht" = (
 /turf/open/floor/rogue/concrete,
 /area/rogue/outdoors/town/rockhill)
@@ -500428,9 +500401,9 @@ xbD
 pOX
 eOC
 nZV
-yhs
-ycP
-nqU
+lRW
+xDh
+hFb
 xlA
 xlA
 xlA
@@ -500862,7 +500835,7 @@ wOD
 jxe
 wOD
 ryI
-eSZ
+nqU
 xlA
 xXH
 xlA
@@ -503024,7 +502997,7 @@ poB
 rBZ
 sUa
 xlA
-xDh
+xlA
 xlA
 xlA
 xlA
@@ -503456,7 +503429,7 @@ cld
 xzy
 xxb
 xlA
-xDh
+xlA
 xlA
 xlA
 xlA
