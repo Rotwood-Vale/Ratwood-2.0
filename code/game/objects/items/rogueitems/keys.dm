@@ -793,18 +793,30 @@
 	icon_state = "bosskey"
 	lockid = "tribalchief"
 
-//Rockhill Slaver/Baron and Related Keys
+// Baron of Lowtown and related keys
 /obj/item/roguekey/baron
 	name = "baron's manor key"
-	desc = "A key to the Lowtown manor, home of the Baron."
+	desc = "A key to the Lowtown manor, home of the baron."
 	icon_state = "brownkey"
 	lockid = "BaronManor"
 
 /obj/item/roguekey/baronguest
 	name = "baron's manor guest key"
-	desc = "A key to the guest rooms of the Lowtown manor."
+	desc = "A key to the guest rooms in the Lowtown manor."
 	icon_state = "brownkey"
 	lockid = "BaronManorGuest"
+
+/obj/item/roguekey/baronservant
+	name = "baron's manor servant key"
+	desc = "A key to the servant's quarters in the Lowtown manor."
+	icon_state = "brownkey"
+	lockid = "BaronManorServant"
+
+/obj/item/roguekey/baronretainer
+	name = "baron's manor retainer key"
+	desc = "A key to the retainer's quarters in the Lowtown manor."
+	icon_state = "brownkey"
+	lockid = "BaronManorRetainer"
 
 /obj/item/roguekey/barondungeon
 	name = "baron's manor \"guest\" key"
@@ -812,6 +824,7 @@
 	icon_state = "brownkey"
 	lockid = "BaronManorDungeon"
 
+// Lowtown slaver and related keys
 /obj/item/roguekey/slaverhouse
 	name = "slaver's office key"
 	desc = "A key to the slaver office in Lowtown."

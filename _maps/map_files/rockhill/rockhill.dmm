@@ -146,6 +146,22 @@
 /obj/item/natural/rock/random,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/rtfield/rockhill/above)
+"aaD" = (
+/obj/structure/mineral_door/wood{
+	name = "Servant's Quarters";
+	lockid = "BaronManorServant";
+	locked = 1
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/town/basement)
+"aaE" = (
+/obj/structure/mineral_door/wood{
+	name = "Retainer's Quarters";
+	lockid = "BaronManorRetainer";
+	locked = 1
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/town/basement)
 "aaG" = (
 /obj/structure/bed/rogue/inn,
 /obj/item/bedsheet/rogue/pelt,
@@ -41885,13 +41901,6 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woodsrat/south)
-"ioO" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	dir = 8;
-	name = "Retainer's Quarters"
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/under/town/basement)
 "ioP" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/fluff/walldeco/vinez,
@@ -100244,12 +100253,6 @@
 	icon_state = "rockwd"
 	},
 /area/rogue/indoors/town/bath)
-"ueH" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	name = "Servant Quarters"
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/under/town/basement)
 "ueK" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -281387,7 +281390,7 @@ fQy
 fQy
 fQy
 jyI
-ioO
+aaE
 cTA
 cTA
 sYw
@@ -283116,7 +283119,7 @@ iTw
 ldU
 iTw
 gUu
-ueH
+aaD
 dDB
 lLx
 aEQ

@@ -16,6 +16,14 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
+"aae" = (
+/obj/structure/mineral_door/wood{
+	name = "Retainer's Quarters";
+	lockid = "BaronManorRetainer";
+	locked = 1
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/town/basement)
 "aaf" = (
 /obj/item/roguemachine/zadcote/steward,
 /turf/open/floor/rogue/woodturned,
@@ -34,6 +42,14 @@
 	dir = 1
 	},
 /area/rogue/indoors/town/manor)
+"aai" = (
+/obj/structure/mineral_door/wood{
+	name = "Servant's Quarters";
+	lockid = "BaronManorServant";
+	locked = 1
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/town/basement)
 "aal" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -88845,13 +88861,6 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/roofs/keep)
-"pNB" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	dir = 4;
-	name = "Retainer's Quarters"
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/town/basement)
 "pND" = (
 /obj/machinery/light/rogue/candle,
 /obj/machinery/gear_painter{
@@ -94847,12 +94856,6 @@
 /obj/structure/mineral_door/wood/deadbolt,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/town)
-"qQB" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	name = "Servant's Quarters"
-	},
-/turf/open/floor/rogue/blocks,
-/area/rogue/under/town/basement)
 "qQC" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light/rogue/candle/l,
@@ -203858,7 +203861,7 @@ fAm
 rhg
 kfk
 dbD
-qQB
+aai
 nwZ
 tvx
 wyI
@@ -206117,7 +206120,7 @@ lSD
 lSD
 fAm
 eXr
-pNB
+aae
 fAm
 fAm
 fAm
