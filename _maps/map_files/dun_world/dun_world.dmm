@@ -9295,17 +9295,6 @@
 "bIk" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/exposed/town/keep)
-"bIl" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/cooking/pan,
-/obj/item/rogueweapon/huntingknife/chefknife,
-/obj/item/reagent_containers/glass/mortar,
-/obj/item/rogueweapon/huntingknife/cleaver,
-/obj/item/pestle,
-/obj/item/flint,
-/obj/item/kitchen/rollingpin,
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors)
 "bIm" = (
 /obj/structure/table/wood,
 /obj/item/paper,
@@ -9938,6 +9927,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/bog/north)
+"bND" = (
+/obj/structure/fluff/clock{
+	pixel_x = -4
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "bNG" = (
 /obj/structure/table/wood/poor,
 /obj/item/clothing/mask/cigarette/pipe,
@@ -42783,21 +42778,6 @@
 "hFr" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/dukecourt)
-"hFu" = (
-/obj/structure/table/vtable,
-/obj/item/candle/gold/lit{
-	pixel_y = 13;
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/glass/cup/golden/small{
-	pixel_y = 5;
-	pixel_x = 11
-	},
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
-	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "hFy" = (
 /obj/structure/fluff/psycross,
 /turf/open/floor/rogue/grass,
@@ -49417,11 +49397,6 @@
 	pixel_y = 5;
 	pixel_x = -4
 	},
-/obj/item/roguekey{
-	icon_state = "spikekey";
-	lockid = "BaronAttic";
-	name = "old key"
-	},
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
@@ -50705,16 +50680,6 @@
 /obj/machinery/light/rogue/candle/weak/r,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
-"jcF" = (
-/obj/structure/table/vtable/v2,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "jcK" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/dirt,
@@ -66729,6 +66694,21 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/dwarfin)
+"lVy" = (
+/obj/structure/table/vtable,
+/obj/item/candle/gold/lit{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/glass/cup/golden/small{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "lVz" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods/northeast)
@@ -67323,7 +67303,7 @@
 /area/rogue/indoors/cave/east)
 "mbh" = (
 /obj/structure/mineral_door/bars{
-	lockid = "BaronAttic";
+	lockid = "BaronManorDungeon";
 	name = "Cell Door"
 	},
 /turf/open/floor/rogue/concrete,
@@ -88783,6 +88763,20 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/goblinfort)
+"pMR" = (
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	lockid = "BaronManor";
+	opacity = 1
+	},
+/obj/item/tablecloth/silk,
+/obj/item/cooking/platter/silver,
+/obj/item/reagent_containers/glass/bowl/silver,
+/obj/item/reagent_containers/glass/cup/silver,
+/obj/item/kitchen/fork/silver,
+/obj/item/kitchen/spoon/silver,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors)
 "pMS" = (
 /obj/structure/mineral_door/swing_door,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -100393,18 +100387,14 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/under/cave/goblinfort)
 "rTf" = (
-/obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	lockid = "BaronManor";
-	opacity = 1
-	},
-/obj/item/tablecloth/silk,
-/obj/item/cooking/platter/silver,
-/obj/item/reagent_containers/glass/bowl/silver,
-/obj/item/reagent_containers/glass/cup/silver,
-/obj/item/kitchen/fork/silver,
-/obj/item/kitchen/spoon/silver,
-/turf/open/floor/rogue/tile,
+/obj/structure/table/vtable/v2,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "rTh" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -133412,10 +133402,15 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/his_vault/three)
 "xMf" = (
-/obj/structure/fluff/clock{
-	pixel_x = -4
-	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/cooking/pan,
+/obj/item/rogueweapon/huntingknife/chefknife,
+/obj/item/reagent_containers/glass/mortar,
+/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/pestle,
+/obj/item/flint,
+/obj/item/kitchen/rollingpin,
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors)
 "xMj" = (
 /obj/structure/fluff/railing/border/east,
@@ -317324,7 +317319,7 @@ aOK
 rZz
 ikN
 dpK
-rTf
+pMR
 aOK
 vyz
 sPF
@@ -318228,7 +318223,7 @@ akw
 oJX
 eDW
 dpK
-bIl
+xMf
 sNH
 nwn
 pwx
@@ -431679,7 +431674,7 @@ ehj
 sWg
 oNk
 tVb
-xMf
+bND
 bwv
 bwv
 aBB
@@ -432585,7 +432580,7 @@ dJJ
 tVb
 uoz
 uoz
-hFu
+lVy
 jbP
 rep
 dtI
@@ -433489,7 +433484,7 @@ avd
 tVb
 bqU
 dnk
-jcF
+rTf
 jbP
 rzT
 rzT

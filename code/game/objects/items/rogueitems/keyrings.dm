@@ -411,12 +411,12 @@
 /obj/item/storage/keyring/baron_manor/retainer
 	name = "baron retainer's keyring"
 	desc = "A keyring engraved with martial designs borrowed from the baron's coat of arms. Issued to the close protection and armsmen of the baron."
-	keys += list(/obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
+	keys += list(/obj/item/roguekey/barondungeon, /obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
 
 /obj/item/storage/keyring/baron_manor/baron
 	name = "baron's keyring"
 	desc = "A keyring engraved with lordly designs borrowed from the baron's coat of arms. Belongs to the baron."
-	keys += list(/obj/item/roguekey/manor, /obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
+	keys += list(/obj/item/roguekey/manor, /obj/item/roguekey/barondungeon, /obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
 
 /obj/item/storage/keyring/baron_manor_spares
 	name = "baron's spare keyring"

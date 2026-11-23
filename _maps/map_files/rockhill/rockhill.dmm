@@ -13356,11 +13356,6 @@
 /obj/item/storage/belt/rogue/surgery_bag/full{
 	pixel_y = 34
 	},
-/obj/item/roguekey{
-	icon_state = "spikekey";
-	lockid = "BaronAttic";
-	name = "old key"
-	},
 /obj/structure/roguemachine/scomm/receive_only/l{
 	scom_tag = "Lowtown Baron's Manor - Detention"
 	},
@@ -100565,7 +100560,7 @@
 /area/rogue/outdoors/bogsafe)
 "uiL" = (
 /obj/structure/mineral_door/bars{
-	lockid = "BaronAttic";
+	lockid = "BaronManorDungeon";
 	name = "Cell Door"
 	},
 /turf/open/floor/rogue/concrete,
@@ -117442,16 +117437,6 @@
 "xDf" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/under/town/basement/keep)
-"xDh" = (
-/obj/structure/table/vtable/v2,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "xDn" = (
 /turf/closed/wall/mineral/rogue/decostone/center,
 /area/rogue/indoors/town/manor/rockhill)
@@ -120484,6 +120469,16 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
+"yhs" = (
+/obj/structure/table/vtable/v2,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/obj/item/storage/keyring,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "yht" = (
 /turf/open/floor/rogue/concrete,
 /area/rogue/outdoors/town/rockhill)
@@ -500403,7 +500398,7 @@ pOX
 eOC
 nZV
 lRW
-xDh
+yhs
 hFb
 xlA
 xlA
