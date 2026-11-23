@@ -4,59 +4,70 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/artificer
-	subclass_social_rank = SOCIAL_RANK_PEASANT // a migrant is but a peasant in foreign lands, so no yeoman like the normal one
+	subclass_social_rank = SOCIAL_RANK_YEOMAN // differing from the original decision, I think that a highly experienced artisan should be slightly more respected even in foreign lands
 	category_tags = list(CTAG_PILGRIM)
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
-	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT) // same as the guildsman variant
-	maximum_possible_slots = 5 // We don't need a bunch of nerds running around, five will do, perhaps less, not everyone should be an artificer after all
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/artifice), "ward" = FALSE) // No battlewardry
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_ARCYNE)
 	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
-	) // removed both the str and per bonus, so it is not the same as the guildsman artificer, being a bit 'nerfed'
-	
+		STATKEY_INT = 2,
+		STATKEY_WIL = 1,
+		STATKEY_STR = 1,
+		STATKEY_PER = 1
+	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, // Different from the guildsman, this one has been travelling.. They need to know how to defend themselves, a bit if only.
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // Traveling Engineer
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, // They know how to swing a hammer a little bit better
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN, // They won't be the best from the start. Got practice for that, buddies.
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE, // Can repair stuff, but it is not a blacksmith. Same as the guildsman variant.
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE, // Allows you to field repair items for people but not that well
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // ceramics is a very unforgiving craft, expert is almost always required for even glass panes
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/mining = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN, // Keeping this as it is, they got climb stuff to build. And fall eventually as they get a moment of 'fog'. Hah.
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN, // Once more, if they wish to be as good as the ones we have, got practice.
-		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN, // Same as above. Do I need to repeat it? Eh.
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,	// I.. really won't even touch this, change it at all. Rarely anyone does pottery. Even normal artificers.
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE, // No expert lockpicking
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/adventurer/artificer/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/articap
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
+	cloak = /obj/item/clothing/cloak/apron/waist/brown
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
-	pants = /obj/item/clothing/under/roguetown/trou/leather
+	pants = /obj/item/clothing/under/roguetown/trou/artipants
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	backl = /obj/item/storage/backpack/rogue/backpack
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
+	belt = /obj/item/storage/belt/rogue/leather/black
+	beltl = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
+	backl = /obj/item/storage/backpack/rogue/artibackpack/engineer // They can have a better backpack as a treat
+	backr = /obj/item/rogueweapon/pick/woodcutter/dolabra/iron // You do not get a good one
 	backpack_contents = list(
-		/obj/item/rogueweapon/hammer/steel = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/lockpickring/mundane = 1,
-		/obj/item/recipe_book/blacksmithing = 1,
-		/obj/item/recipe_book/engineering = 1,
-		/obj/item/recipe_book/ceramics = 1,
-		/obj/item/recipe_book/builder = 1,
-		/obj/item/recipe_book/survival = 1,
-		/obj/item/clothing/mask/rogue/spectacles/golden = 1,
-		/obj/item/contraption/linker = 1,
-		/obj/item/rogueweapon/chisel = 1,
-		/obj/item/rogueweapon/handsaw = 1,
-	)
-	// Always hated the fact that they began using magic for their stuff. Yet it is needed, same as the normal one. Perhaps one day we will change it, and move towards a more steampunk vibe. I pray.
-	H.mind?.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
+								/obj/item/rogueweapon/hammer/bronze = 1,
+								/obj/item/rogueweapon/chisel/bronze = 1,
+								/obj/item/rogueweapon/handsaw/bronze = 1,
+								/obj/item/recipe_book/survival = 1,
+								/obj/item/contraption/linker = 1,
+								/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+								/obj/item/rogueweapon/huntingknife/bronze = 1,
+								/obj/item/rogueweapon/shovel/bronze/spade = 1,
+								/obj/item/flint = 1,
+								/obj/item/dye_brush = 1,
+								/obj/item/rogueweapon/scabbard/sheath = 1,
+								/obj/item/clothing/mask/rogue/spectacles/golden = 1, // people with bad sight had their spectacles overwritten, should prevent this from happening
+						)
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)
+		H.mind?.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
