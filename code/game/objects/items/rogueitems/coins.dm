@@ -278,6 +278,10 @@
 	. = ..()
 	set_quantity(rand(4,19))
 
+/obj/item/roguecoin/gold/pile/max/Initialize(mapload)
+	. = ..()
+	set_quantity(20)
+
 /obj/item/roguecoin/gold/virtuepile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(8,12))
