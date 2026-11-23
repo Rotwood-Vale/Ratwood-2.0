@@ -26,6 +26,8 @@
 	var/damage_deflection = 0
 	var/obj_broken = FALSE
 	var/obj_destroyed = FALSE
+	///Sound this object makes when it's hit/knocked back by an attack
+	var/list/hit_sound = list('sound/items/hit_normalobj.ogg')
 
 	var/extinguishable = TRUE // flag for torches, lanterns, clothing, and the like.
 
@@ -47,7 +49,7 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
-	var/blade_dulling = DULLING_BASHCHOP
+	var/blade_dulling = FALSE
 
 	var/debris = null
 	var/static_debris = null
@@ -60,10 +62,22 @@
 
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_state_preview
-
-	vis_flags = VIS_INHERIT_PLANE
+	/// Sound to play when the object is attacked
+	var/attacked_sound = 'sound/blank.ogg'
+	/// Whether this object blocks components from being placed on it.
+	var/component_block = FALSE
+	/// Slowdown applied to entities interacting with this object.
+	var/object_slowdown = 0
 	/// Extra AI pathfinding cost for this object. Higher values make NPCs avoid this tile.
 	var/ai_path_weight = 0
+	/// Whether this object is weatherproof. If TRUE, it will resist weather effects.
+	var/weatherproof = FALSE
+	/// Whether this object is currently affected by weather. Set to TRUE during weather_act_on() calls.
+	var/weather = FALSE
+	/// Timestamp when the object was set on fire. Used to auto-extinguish after 30 seconds.
+	var/fire_burn_start
+
+	vis_flags = VIS_INHERIT_PLANE
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
