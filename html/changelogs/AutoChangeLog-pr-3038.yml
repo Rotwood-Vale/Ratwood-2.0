@@ -1,5 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fix redolent making your erp partners permanently stinky"
-  - code_imp: "Redolent is not purely a status effect and no longer has so much jank in it"
