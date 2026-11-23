@@ -1229,14 +1229,7 @@
 				src:resist_leash()
 				return
 		if(last_special <= world.time)
-			resist_restraints() //trying to remove cuffs.
-			if(restrained() && !prob(5))
-				return
-			var/datum/component/riding/human/riding_datum = GetComponent(/datum/component/riding/human)
-			if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && riding_datum)
-				for(var/mob/M in buckled_mobs)
-					riding_datum.force_dismount(M)
-			return
+			resist_restraints()
 
 /mob/living/proc/submit(instant = FALSE)
 	set name = "Yield"

@@ -111,7 +111,7 @@
 
 /obj/item/rogueweapon/surgery/cautery
 	name = "cautery iron"
-	desc = "A tool used to cauterize wounds. Heat it up before use."
+	desc = "A tool used to cauterize wounds. Heat it up before use. A small alchemical heater lets the cautery heat itself up, as long as its supplied with coal dust, sticks, fibers or thorns."
 	icon_state = "cauteryiron"
 	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike, /datum/intent/mace/smash)
 	slot_flags = ITEM_SLOT_HIP
@@ -131,10 +131,17 @@
 	var/heated = FALSE
 	// If we mark them as a slave (applies trait, needs pref toggle)
 	var/enslave = FALSE
+	var/firedust = FALSE
+	var/fuel = 10
+	var/maxfuel = 10
 	smeltresult = null
 
 /obj/item/rogueweapon/surgery/cautery/examine(mob/user)
 	. = ..()
+	if(maxfuel)
+		. += span_notice("[name] has [fuel] out of [maxfuel] fuel avaliable.")
+	if(!firedust)
+		. += span_notice("[name] can be made to keep the heat longer with help of some fire dust.")
 	if(heated)
 		. += span_warning("The tip is hot to the touch.")
 
@@ -143,6 +150,35 @@
 	icon_state = initial(icon_state)
 	if(heated)
 		icon_state = "[initial(icon_state)]_hot"
+
+/obj/item/rogueweapon/surgery/cautery/proc/addfuel(ammount)
+	if(ammount + fuel > maxfuel)
+		fuel = maxfuel
+	else
+		fuel = fuel + ammount
+
+/obj/item/rogueweapon/surgery/cautery/attackby(obj/item/W, mob/living/user, params)
+	if(fuel != maxfuel)
+		if(istype(W, /obj/item/natural/fibers) || istype(W, /obj/item/natural/thorn))
+			addfuel(2)
+			qdel(W)
+		if(istype(W, /obj/item/grown/log/tree/stick))
+			addfuel(4)
+			qdel(W)
+		if(istype(W, /obj/item/alch/coaldust))
+			addfuel(10)
+			qdel(W)
+	if(!firedust && istype(W, /obj/item/alch/firedust))
+		firedust = TRUE
+		qdel(W)
+	return ..()
+	
+/obj/item/rogueweapon/surgery/cautery/attack_self(mob/living/user)
+	. = ..()
+	if(fuel >= 1 && !heated)
+		fuel = fuel - 1
+		fire_act(1)
+		to_chat(user, span_notice("I use some of the fuel to heat up the caughtery. Caughtery has [fuel] fuel left."))
 
 /obj/item/rogueweapon/surgery/cautery/pre_attack(atom/A, mob/living/user, params)
 	if(!istype(user.a_intent, /datum/intent/use))
@@ -163,8 +199,10 @@
 	if(!heated)
 		playsound(src, 'sound/items/firelight.ogg', 100, vary = TRUE)
 	update_heated(TRUE)
-	if(added < 20)
-		added = 20
+	if(added < 60)
+		added = 60
+	if(firedust)
+		added = added * 2
 	if(cool_timer)
 		deltimer(cool_timer)
 	cool_timer = addtimer(CALLBACK(src, PROC_REF(update_heated), FALSE), added SECONDS, TIMER_STOPPABLE)
@@ -194,6 +232,8 @@
 	var/branding_damage = 20
 	var/branding_low_quality = FALSE
 	var/branding_count = 0
+	fuel = 0
+	maxfuel = 0
 
 /obj/item/rogueweapon/surgery/cautery/branding/slave
 	name = "slaver branding iron"

@@ -128,7 +128,7 @@
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/attack_hand(mob/user)
+/turf/closed/wall/attack_hand(mob/user, params, datum/callback/pilot_check = null)
 	. = ..()
 	if(.)
 		return
