@@ -1,0 +1,11 @@
+author: "Kaolin1234"
+delete-after: True
+changes:
+  - rscadd: "Mountable players get a toggle for allowing their rider to steer, run, sneak, jump, and climb with them using the full extent of the climbing features. (no more falling on the ground while attempting a strafe climb along a wall)"
+  - rscadd: "Passengers ignore environmental obstacles based on the player mount's traits.  Webs if the mounted player has webwalker. Knee-stingers if the mounted player is a Dendorite."
+  - bugfix: "Passengers stay with player mounts through jumps and climbs.  (No more lagging behind during z-level changes and requiring the mounted player to move another tile to update the rider's position)"
+  - bugfix: "Passengers on player mounts no longer trigger ground contact from grass even without sneak activated."
+  - bugfix: "no more using resting player-mounts as skateboards."
+  - balance: "Riding player mounts no longer depends on or grants Riding skill."
+  - balance: "Can now separate rider from player mount mid-combat by knocking the mounted player over."
+  - rscadd: "Player Dismount verb in place of dismounting rider with resist."
