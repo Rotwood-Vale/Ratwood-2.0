@@ -901,8 +901,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	resistance_flags = INDESTRUCTIBLE
 	associated_skill = /datum/skill/combat/arcyne
 	max_blade_int = 9999
-	force = 25
-	force_wielded = 35
+	force = 32
+	force_wielded = 37
 	smeltresult = null
 	sheathe_icon = "hagsword"
 	special = /datum/special_intent/madman_delusion
@@ -1304,7 +1304,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	noaa = TRUE
 	no_attack = TRUE
 	warnie = "aimwarn"
-	chargetime = 3 SECONDS
+	chargetime = 2 SECONDS
 	chargedrain = 2
 	charging_slowdown = 3
 	no_early_release = TRUE
@@ -1317,7 +1317,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	tranged = TRUE
 	noaa = TRUE
 	no_attack = TRUE
-	chargetime = 1 SECONDS
+	chargetime = 0.5 SECONDS
 	chargedrain = 1
 	charging_slowdown = 2
 	no_early_release = TRUE
@@ -1337,7 +1337,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	movement_type = UNSTOPPABLE
 	guard_deflectable = TRUE
 	expose_caster_on_deflect = TRUE
-	damage = 100
+	damage = 120
 	damage_type = BRUTE
 	woundclass = BCLASS_STAB
 	nodamage = FALSE
@@ -1421,7 +1421,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	resistance_flags = INDESTRUCTIBLE
 	smeltresult = null
 	special = /datum/special_intent/dream_shroom
-	var/fling_damage = 40
+	var/fling_damage = 150
 	var/datum/weakref/flung
 
 /obj/item/rogueweapon/zizowand/Initialize(mapload)
@@ -1443,7 +1443,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	. = ..()
 	if(!isliving(user) || get_dist(user, target) > 7)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(CLICK_CD_FAST)
 	if(istype(user.used_intent, /datum/intent/dream_beam))
 		if(user.client?.chargedprog < 100)
 			return
@@ -1484,8 +1484,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	damfactor = 1
 
 /obj/item/rogueweapon/spear/bite
-	force = 20
-	force_wielded = 30
+	force = 32
+	force_wielded = 37
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE)
 	name = "snow scythe"
@@ -2096,7 +2096,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	icon_state = "creation1"
 	anchored = TRUE
 	density = TRUE
-	max_integrity = 300
+	max_integrity = 400
 	var/radius = 3
 	var/list/turf_data = list()
 
@@ -2131,7 +2131,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/structure/blight_pillar/lesser
 	name = "lesser rotting pillar"
 	icon_state = "creation3"
-	max_integrity = 150
+	max_integrity = 200
 	radius = 1
 
 // weaker version of blight as spell, meant 2 emulate Rust heretic off TG. IDK if players will spam the terrain.
