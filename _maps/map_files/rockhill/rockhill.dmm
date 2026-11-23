@@ -29263,7 +29263,8 @@
 "fNo" = (
 /obj/structure/mineral_door/wood/fancywood{
 	name = "Balcony";
-	lockid = "BaronManor"
+	lockid = "BaronManor";
+	locked = 1
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
