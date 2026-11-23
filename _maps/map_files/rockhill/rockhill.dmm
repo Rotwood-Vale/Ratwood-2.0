@@ -4666,6 +4666,10 @@
 "aVH" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/town/warden)
+"aVK" = (
+/obj/structure/plasticflaps,
+/turf/open/water/cleanshallow,
+/area/rogue/under/town/sewer)
 "aVM" = (
 /obj/structure/table/wood,
 /obj/item/grown/log/tree/stick,
@@ -84105,10 +84109,6 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/rtfield/rockhill/above)
 "qNj" = (
-/obj/structure/fluff/statue/small{
-	pass_flags = 1;
-	pixel_x = 32
-	},
 /obj/machinery/light/rogue/candle/blue{
 	pixel_x = 32;
 	pixel_y = 13
@@ -190580,7 +190580,7 @@ nQK
 yjj
 yjj
 yjj
-soz
+hKR
 scK
 scK
 dlu
@@ -336179,8 +336179,8 @@ euP
 dAf
 kdN
 mDB
-ppB
-mDB
+aVK
+gMO
 gMO
 gMO
 iVq
@@ -336612,7 +336612,7 @@ ppB
 mDB
 mDB
 rRb
-cmH
+gMO
 gMO
 cQp
 jQS
