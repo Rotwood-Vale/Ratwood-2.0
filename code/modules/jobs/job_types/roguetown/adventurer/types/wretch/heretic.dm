@@ -657,19 +657,19 @@
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
 				switch(H.patron?.type)
 					if(/datum/patron/inhumen/zizo)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold
 					if(/datum/patron/inhumen/graggar)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/hammerhold
 					if(/datum/patron/inhumen/matthios)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold
 					if(/datum/patron/inhumen/baotha)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/hammerhold
 					if(/datum/patron/divine/abyssor)
-						id = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
+						id = /obj/item/clothing/neck/roguetown/psicross/abyssor/hammerhold
 					if(/datum/patron/divine/dendor)
-						id = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
+						id = /obj/item/clothing/neck/roguetown/psicross/dendor/hammerhold
 					else
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn/special
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold/special
 			if("Disgraced Disciple (Natural Armor)") //Orthodoxist Disciple. You get Disciple's Natural Armor.
 				to_chat(H, span_warning("Once you served mortal men and their books. Today and from now on, you serve HIM and HIM alone."))
 				head = /obj/item/clothing/head/roguetown/roguehood/psydon
@@ -689,7 +689,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
 				switch(style_choice)
 					if("Atgervi Shaman")
-						beltr = /obj/item/rogueweapon/handclaw/gronn
+						beltr = /obj/item/rogueweapon/handclaw/hammerhold
 					if("Disgraced Disciple (Natural Armor)")
 						beltr = /obj/item/clothing/gloves/roguetown/knuckles/psydon/old //Worse than steel or bronze knuckledusters, that's the price you pay for the drip and the natural armor.
 					else
