@@ -98,20 +98,14 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "aau" = (
-/turf/closed/void,
-/area/rogue/outdoors/rtfield/rockhill/above)
-"aav" = (
-/obj/structure/roguewindow/harem3,
-/obj/structure/bars/steel,
-/obj/structure/curtain/directional/black{
+/obj/structure/roguewindow/openclose/reinforced{
 	dir = 1
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
-"aaw" = (
-/obj/structure/roguewindow/openclose/reinforced{
-	dir = 1
-	},
+"aav" = (
+/obj/structure/roguewindow/harem3,
+/obj/structure/bars/steel,
 /obj/structure/curtain/directional/black{
 	dir = 1
 	},
@@ -96017,16 +96011,6 @@
 /turf/open/floor/rogue/twig{
 	dir = 4
 	},
-/area/rogue/indoors)
-"tkS" = (
-/obj/structure/roguewindow/openclose/reinforced{
-	dir = 4;
-	opacity = 0
-	},
-/obj/structure/curtain/directional/black{
-	dir = 4
-	},
-/turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors)
 "tkX" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue/cand,
@@ -496945,13 +496929,13 @@ czk
 fyP
 xlA
 xlA
-aau
-aau
-xlA
-aau
 xlA
 xlA
-aau
+xlA
+xlA
+xlA
+xlA
+xlA
 xlA
 xlA
 xlA
@@ -497380,10 +497364,10 @@ xlA
 xlA
 xlA
 xlA
-aau
 xlA
 xlA
-aau
+xlA
+xlA
 xlA
 xlA
 xlA
@@ -498684,7 +498668,7 @@ sNG
 hFY
 ryI
 nqU
-tkS
+pSU
 nqU
 ryI
 nqU
@@ -499555,7 +499539,7 @@ cDa
 cDc
 nog
 aaM
-aaw
+aau
 xlA
 xlA
 xlA
@@ -499987,7 +499971,7 @@ fqi
 ona
 gll
 aaN
-aaw
+aau
 xlA
 xlA
 xlA
@@ -500419,7 +500403,7 @@ eOC
 nZV
 lRW
 aaO
-aaw
+aau
 xlA
 xlA
 xlA
@@ -500853,7 +500837,7 @@ wOD
 xhC
 nqU
 xlA
-aau
+xlA
 xlA
 xlA
 xlA
@@ -502581,7 +502565,7 @@ uBt
 ryI
 pcW
 xlA
-aau
+xlA
 xlA
 xlA
 xlA
@@ -503877,7 +503861,7 @@ ekj
 aRH
 jho
 xlA
-aau
+xlA
 xlA
 xlA
 xlA
