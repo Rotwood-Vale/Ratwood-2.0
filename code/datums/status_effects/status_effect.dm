@@ -131,6 +131,11 @@
 		linked_alert.update_countdown(max(duration - world.time, 0))
 
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
+	apply_stats()
+	return TRUE
+
+/// Manages applied stats from effected stats
+/datum/status_effect/proc/apply_stats()
 	for(var/S in effectedstats)
 		if(effectedstats[S] < 0)	//We only care about negative bonuses here
 			if((owner.get_stat(S) + effectedstats[S]) < 1)	//The status effect would reduce our stats beyond the limit of !1! Not 0.
@@ -142,21 +147,23 @@
 			if((owner.get_stat(S) + effectedstats[S]) > 20)	//We check for overflow as well.
 				effectedstats[S] = 20 - owner.get_stat(S)
 		owner.change_stat(S, effectedstats[S])
-	return TRUE
+
+/// Removes applied stats
+/datum/status_effect/proc/remove_stats()
+	for(var/S in effectedstats)
+		owner.change_stat(S, -(effectedstats[S]))
 
 /// Called every tick. wait is the processing subsystem's own wait, delta_time is how long it has really been since
 /// the last tick, which is at least tick_interval and more when the server is under load
 /datum/status_effect/proc/tick(wait, delta_time)
 
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
-	for(var/S in effectedstats)
-		owner.change_stat(S, -(effectedstats[S]))
+	remove_stats()
 	if(mob_effect)
 		owner.clear_overhead_indicator(mob_effect, mob_effect_layer)
 
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
-	for(var/S in effectedstats)
-		owner.change_stat(S, -(effectedstats[S]))
+	remove_stats()
 	owner.clear_alert(id)
 
 	if(owner)

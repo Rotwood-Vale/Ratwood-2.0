@@ -40,6 +40,12 @@
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_traits = list(TRAIT_EMPATH)
 
+/datum/quirk/erotic_drainer
+	name = "Erotic Drainer"
+	desc = "When making love, I am able to deplete my partner of their strength"
+	point_cost = 5 // You get this if you are Baothan, otherwise it should be rare as fuck
+	added_traits = list(TRAIT_EVIL_DRAINER)
+
 /datum/quirk/fabledlover
 	name = "Fabled Lover"
 	desc = "It's a lucky thing to share my bed."

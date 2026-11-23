@@ -540,6 +540,12 @@
 	if(consume_charge)
 		after_intimate_climax(oral, splashed_user)
 
+	//EVIL BAOTHAN STATDRAIN
+	if(effective_target && HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode)
+		effective_target.apply_status_effect(/datum/status_effect/debuff/baothadrained, 1 MINUTES)
+	if(effective_target && HAS_TRAIT(effective_target, TRAIT_EVIL_DRAINER) && effective_target.cmode)
+		user.apply_status_effect(/datum/status_effect/debuff/baothadrained, 1 MINUTES)
+
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
 	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
@@ -1552,6 +1558,13 @@
 		action.on_perform(user, target)
 		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
+
+		//EVIL BAOTHAN STATDRAIN
+		if(HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode && istype(user.rmb_intent, /datum/rmb_intent/strong) && user != target)
+			target?.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
+		if(target && HAS_TRAIT(target, TRAIT_EVIL_DRAINER) && target.cmode && istype(target.rmb_intent, /datum/rmb_intent/strong) && user != target)
+			user.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
+
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
 			break

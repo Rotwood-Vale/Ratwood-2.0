@@ -1472,3 +1472,53 @@
 	desc = "Our weapons binded! That conniving sod knew right where I was aiming! I can't benefit from a weapon bind!"
 	icon = 'icons/mob/combat_debuffs.dmi'
 	icon_state = "weapon_bind_debuff"
+
+/// BAOTHA STAT DRAIN
+
+/atom/movable/screen/alert/status_effect/debuff/baothadrained
+	name = "Vitality Drained (1)"
+	desc = "That was exhausting..."
+	icon_state = "baothadrained"
+
+/datum/status_effect/debuff/baothadrained
+	id = "baothadrained"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/baothadrained
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	effectedstats = list(
+		STATKEY_STR = -1,
+		STATKEY_PER = -1,
+		STATKEY_INT = -1,
+		STATKEY_CON = -1,
+		STATKEY_WIL = -1,
+		STATKEY_SPD = -1,
+		STATKEY_LCK = -1,
+	)
+	/// Simple tracker so that we know when we reached a new threshold
+	var/stats_lost = 0
+
+/datum/status_effect/debuff/baothadrained/on_creation(mob/living/new_owner, amount_added)
+	. = ..()
+	owner.playsound_local(owner, 'sound/misc/mat/lvldown.ogg', 100)
+
+/datum/status_effect/debuff/baothadrained/refresh(amount_added)
+	. = ..()
+	if(isnum(amount_added))
+		duration += amount_added
+	var/new_loss = -1 - floor(duration / 3 MINUTES)
+	if(stats_lost < abs(new_loss))
+		return
+	stats_lost++
+	owner.playsound_local(owner, 'sound/misc/mat/lvldown.ogg', 100)
+	remove_stats()
+	effectedstats = list(
+		STATKEY_STR = new_loss,
+		STATKEY_PER = new_loss,
+		STATKEY_INT = new_loss,
+		STATKEY_CON = new_loss,
+		STATKEY_WIL = new_loss,
+		STATKEY_SPD = new_loss,
+		STATKEY_LCK = new_loss,
+	)
+	apply_stats()
+	linked_alert.name = "Vitality Drained ([abs(new_loss)])"

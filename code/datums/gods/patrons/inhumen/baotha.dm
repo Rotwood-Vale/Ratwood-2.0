@@ -5,7 +5,7 @@
 	worshippers = "Widows, Gamblers, Addicts, Scorned Lovers, Far-Gone Prostitutes"
 	virtues = "Lust, Gluttony, Thrill-Seeking"
 	sins = "Chastity, Temperance, Gloom"
-	mob_traits = list(TRAIT_DEPRAVED, TRAIT_CRACKHEAD)
+	mob_traits = list(TRAIT_DEPRAVED, TRAIT_CRACKHEAD, TRAIT_EVIL_DRAINER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/baothavice					= CLERIC_T0,
 					/obj/effect/proc_holder/spell/targeted/touch/loversruin				= CLERIC_T0,
