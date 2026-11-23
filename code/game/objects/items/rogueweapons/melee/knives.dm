@@ -873,6 +873,12 @@
 	src.obj_break()
 	visible_message(span_warning("The [src] has exploded into holy fire, breaking in the process."))
 
+#define BLOODRUNE_FIRE "<span style=color:#FF8C00;>Fire Rune</span>"
+#define BLOODRUNE_WIND "<span style=color:#87CEFA;>Wind Rune</span>"
+#define BLOODRUNE_EARTH "<span style=color:#8B4513;>Earth Rune</span>"
+#define BLOODRUNE_WATER "<span style=color:#0000CD;>Water Rune</span>"
+#define BLOODRUNE_NATURE "<span style=color:#32CD32;>Nature Rune</span>"
+#define BLOODRUNE_FORCE "<span style=color:#FFFF00;>Force Rune</span>"
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood
 	name = "bloody stake"
