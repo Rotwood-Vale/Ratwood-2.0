@@ -1281,10 +1281,10 @@ SPECIALS START HERE
 	var/vine_begin_delay = 1.5 SECONDS
 	var/vine_mid_duration = 7 SECONDS
 	var/vine_end_duration = 0.3 SECONDS
-	var/entangle_dur = 7.3 SECONDS
+	var/entangle_dur = 3 SECONDS
 
-	var/exposed_dur = 4 SECONDS
-	var/vulnerable_dur = 5 SECONDS
+	var/exposed_dur = 3 SECONDS
+	var/vulnerable_dur = 3 SECONDS
 
 	var/list/dendor_cries = list(
 		"Dendor, entwine them with root and vine!",
