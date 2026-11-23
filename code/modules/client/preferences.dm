@@ -165,18 +165,28 @@ GLOBAL_LIST_EMPTY(chosen_names)
 /datum/preferences/proc/get_base_points()
 	return 10
 
-/datum/preferences/proc/get_default_redolent_scent(scent_type)
-	switch(scent_type)
-		if(REDOLENT_SMELL_GOOD)
-			return "wildflowers and clean rain"
-		if(REDOLENT_SMELL_NEUTRAL)
-			return "earth and sweat"
-		if(REDOLENT_SMELL_BAD)
-			return "rotting meat and sour sweat"
+// quirks save config modularly per quirk
+/datum/preferences/proc/get_quirk_configs()
+	var/list/configs = list()
+	for(var/datum/quirk/Q in quirks)
+		if(Q.configurable)
+			configs["[Q.type]"] = Q.save_config()
+	return configs
 
-/// The leading text shown on examine before the custom scent, matching /datum/status_effect/redolent/proc/get_examine_text().
-/datum/preferences/proc/redolent_scent_leadin(scent_type)
-	return scent_type == REDOLENT_SMELL_BAD ? "They reek of" : "They smell of"
+/datum/preferences/proc/get_vice_configs()
+	var/list/configs = list()
+	for(var/i = 1 to VICE_SLOTS)
+		var/datum/charflaw/vice = vars["vice[i]"]
+		if(vice?.configurable)
+			configs["[vice.type]"] = vice.save_config()
+	return configs
+
+/datum/preferences/proc/get_virtue_configs()
+	var/list/configs = list()
+	for(var/datum/virtue/V in list(virtue, virtuetwo))
+		if(V.configurable)
+			configs["[V.type]"] = V.save_config()
+	return configs
 
 // Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
