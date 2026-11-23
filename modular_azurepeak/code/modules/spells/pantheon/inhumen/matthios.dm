@@ -640,6 +640,22 @@
 
 	return TRUE
 
+//ARMOR
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/twilight_dragon_skin
+	slot_flags = null
+	name = "draconic scales"
+	desc = "All but impenetrable."
+	icon_state = null
+	body_parts_covered = FULL_BODY
+	body_parts_inherent = FULL_BODY
+	armor = ARMOR_PLATE
+	blocksound = SOFTHIT
+	blade_dulling = DULLING_BASHCHOP
+	sewrepair = FALSE
+	max_integrity = 600
+	item_flags = DROPDEL
+	repair_time = 20 SECONDS
+
 // Mob itself
 /mob/living/carbon/human/species/wildshape/dragon_matthios
 	name = "Gilded Dragon"
@@ -647,7 +663,7 @@
 	race = /datum/species/dragon_matthios
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	ambushable = FALSE
-	skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/twilight_dragon_skin
+	skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/twilight_dragon_skin
 	wildshape_icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
 	wildshape_icon_state = "dragon_cool"
 	pixel_x = -32

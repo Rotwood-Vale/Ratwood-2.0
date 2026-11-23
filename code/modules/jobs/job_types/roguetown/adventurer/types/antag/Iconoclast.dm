@@ -73,7 +73,7 @@
 				mask = /obj/item/clothing/mask/rogue/eyepatch
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
-				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/goldenserpent
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/body/goldenserpent
 				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
 				shoes = /obj/item/clothing/shoes/roguetown/shortboots
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/raze)
