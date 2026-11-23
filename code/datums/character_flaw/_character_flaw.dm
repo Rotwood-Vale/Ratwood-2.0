@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
-	"Leper (+2 Q-Points)"=/datum/charflaw/leprosy,
+	"Leper (+1 Q-Points)"=/datum/charflaw/leprosy,
 	"Loose Straps"=/datum/charflaw/loose_armor,
 	"Masochist"=/datum/charflaw/addiction/masochist,
 	"Missing Nose"=/datum/charflaw/missing_nose,
@@ -727,20 +727,19 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/leprosy
 	name = "Leper"
-	desc = "I am cursed with leprosy! Too poor to afford treatment, my skin now lays violated by lesions, my extremities are numb, and my presence disturbs even the most stalwart men."
-	point_value = 2
+	desc = "I am cursed with leprosy! Too poor to afford treatment, my skin now lays violated by lesions, I can no longer run but my body and extremities are numb to pain and temperature. My presence disturbs even the most stalwart men."
+	point_value = 1
 
 /datum/charflaw/leprosy/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
 	to_chat(user, "I am afflicted. I am outcast and weak. I am a pox on this world.")
-	ADD_TRAIT(user, TRAIT_LEPROSY, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_LEPROSY, TRAIT_NOPAIN, TRAIT_NORUN, TRAIT_COLD_RESISTANCE, TRAIT_HEAT_RESISTANCE, TRAIT_UNSEEMLY,  TRAIT_GENERIC, )
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_INT, -1)
-	H.change_stat(STATKEY_PER, -1)
-	H.change_stat(STATKEY_CON, -1)
-	H.change_stat(STATKEY_WIL, -1)
-	H.change_stat(STATKEY_SPD, -1)
-	H.change_stat(STATKEY_LCK, -1)
+	H.change_stat(STATKEY_PER, -2)
+	H.change_stat(STATKEY_CON, +2)
+	H.change_stat(STATKEY_WIL, +2)
+	H.change_stat(STATKEY_SPD, -2)
 
 /datum/charflaw/mind_broken
 	name = "Asundered Mind"
