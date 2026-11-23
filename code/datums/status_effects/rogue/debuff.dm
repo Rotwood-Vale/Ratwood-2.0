@@ -1424,22 +1424,18 @@
 		egg_belly.build_colors_for_accessory(null)
 		H.update_body()
 	if(eggs.quantity >= 10 && H.wear_shirt)
-		to_chat(H, span_userdanger("So many eggs... I feel my stomach swell. My shirt rips!")) // fun !
 		var/obj/item/clothing/shirt = H.wear_shirt
-		H.dropItemToGround(shirt, TRUE)
-		shirt.obj_break()
+		if(H.dropItemToGround(shirt))
+			to_chat(H, span_userdanger("So many eggs... I feel my stomach swell. My shirt rips!")) // fun !
+			shirt.obj_break()
 
 /datum/status_effect/egg_gestation
 	id = "egg_gestation"
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
-	var/egg_color
-	var/egg_name
 
-/datum/status_effect/egg_gestation/on_creation(mob/living/new_owner, mob/living/carbon/human/father)
+/datum/status_effect/egg_gestation/on_creation(mob/living/new_owner)
 	duration = rand(10, 20) MINUTES
-	egg_color = "#[father.voice_color]"
-	egg_name = "[father.dna.species.name] eggs"
 	return ..()
 
 /datum/status_effect/egg_gestation/on_remove()
@@ -1453,8 +1449,8 @@
 	else
 		eggs = new /obj/item/organ/eggs()
 		eggs.Insert(H)
-	eggs.color = egg_color
-	eggs.name = egg_name
+	eggs.color = "#[H.voice_color]"
+	eggs.name = "[H.dna.species.name] eggs"
 	H.apply_status_effect(/datum/status_effect/debuff/parasitized)
 	to_chat(H, span_love("I feel bloated. Something is inside my stomach..."))
 
