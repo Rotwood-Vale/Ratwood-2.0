@@ -1095,6 +1095,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	bigboy = TRUE
 	gripsprite = TRUE
 	walking_stick = TRUE
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble, /datum/intent/pick)
 	var/list/obj/structure/toilturret/turrets = list()
 	var/max_turrets = 3
 
