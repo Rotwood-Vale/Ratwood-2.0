@@ -603,8 +603,8 @@
 	human_req = FALSE
 	chargedrain = 0
 	chargetime = 0
-	recharge_time = 30 MINUTES
-	cooldown_min = 30 MINUTES
+	recharge_time = 60 MINUTES
+	cooldown_min = 60 MINUTES
 	invocations = list("I WILL BURN THE WORLD OF TYRANNY TO THE GROUND!!")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
@@ -870,6 +870,7 @@
 		TRAIT_HARDDISMEMBER,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NOFALLDAMAGE1,
+		TRAIT_MASSIVE_PINTLE,
 		TRAIT_KNEESTINGER_IMMUNITY
 	)
 	inherent_biotypes = MOB_HUMANOID
@@ -1036,7 +1037,7 @@
 /datum/status_effect/buff/twilight_dragon_form
 	id = "twilight_dragon_form"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/twilight_dragon_form
-	duration = 5 MINUTES
+	duration = 10 MINUTES
 
 /datum/status_effect/buff/twilight_dragon_form/short
 	id = "twilight_dragon_form_short"
@@ -1109,7 +1110,9 @@
 	W.update_a_intents()
 
 	if(getorganslot(ORGAN_SLOT_PENIS))
-		W.internal_organs_slot[ORGAN_SLOT_PENIS] = /obj/item/organ/penis/knotted/big
+		var/obj/item/organ/penis/knotted/big/dragon_penis = new()
+		dragon_penis.Insert(W, TRUE, FALSE)
+		dragon_penis.set_massive(TRUE)
 	if(getorganslot(ORGAN_SLOT_TESTICLES))
 		W.internal_organs_slot[ORGAN_SLOT_TESTICLES] = /obj/item/organ/testicles
 	if(getorganslot(ORGAN_SLOT_BREASTS))
@@ -1220,7 +1223,7 @@
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "liberate"
-	recharge_time = 4 MINUTES
+	recharge_time = 8 MINUTES
 	sound = 'sound/magic/haste.ogg'
 	releasedrain = 10
 	miracle = TRUE
