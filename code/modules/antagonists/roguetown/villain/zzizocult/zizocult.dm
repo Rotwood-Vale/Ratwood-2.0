@@ -137,6 +137,8 @@
 
 /datum/antagonist/zizocultist/proc/add_cultist(datum/mind/cult_mind)
 	cult_mind.add_antag_datum(/datum/antagonist/zizocultist)
+	for(var/datum/mind/M in SSmapping.retainer.cultists)
+		to_chat(M, span_boldnotice("[cult_mind.name] HAS JOINED THE CULT."))
 
 /datum/antagonist/zizocultist/proc/add_objective(datum/objective/O)
 	objectives += new O
@@ -197,6 +199,9 @@
 		for(var/atype in GLOB.zizo_bestow_areas)
 			var/area/A = atype
 			lines += "GATE RITE LOCATION: [initial(A.name)]"
+	lines += "<B>CULT MEMBERS:</B>"
+	for(var/datum/mind/M in SSmapping.retainer.cultists)
+		lines += "- [M.name] ([M.assigned_role])"
 	lines += "<B>GUIDE:</B> Place the sacrifice in the center of a servantry sigil. Sacrifice requires a fellow cultist holding a knife & standing upon the sigil. Conversion requires a fellow cultist on the sigil, if there is more than 3 members in the cult. Gate targets have a dark eye above them. Use heartaches to seek them."
 	to_chat(src, jointext(lines, "<BR>"))
 
