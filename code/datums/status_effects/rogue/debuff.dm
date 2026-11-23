@@ -1476,7 +1476,7 @@
 /// BAOTHA STAT DRAIN
 
 /atom/movable/screen/alert/status_effect/debuff/baothadrained
-	name = "Vitality Drained (1)"
+	name = "Vitality Drained (I)"
 	desc = "That was exhausting..."
 	icon_state = "baothadrained"
 
@@ -1501,12 +1501,11 @@
 	. = ..()
 	owner.playsound_local(owner, 'sound/misc/mat/lvldown.ogg', 100)
 
-/datum/status_effect/debuff/baothadrained/refresh(amount_added)
-	. = ..()
+/datum/status_effect/debuff/baothadrained/refresh(victim, amount_added)
 	if(isnum(amount_added))
 		duration += amount_added
-	var/new_loss = -1 - floor(duration / 3 MINUTES)
-	if(stats_lost < abs(new_loss))
+	var/new_loss = 0 - floor((duration - world.time) / (3 MINUTES))
+	if(stats_lost > abs(new_loss))
 		return
 	stats_lost++
 	owner.playsound_local(owner, 'sound/misc/mat/lvldown.ogg', 100)
@@ -1521,4 +1520,4 @@
 		STATKEY_LCK = new_loss,
 	)
 	apply_stats()
-	linked_alert.name = "Vitality Drained ([abs(new_loss)])"
+	linked_alert.name = "Vitality Drained (\Roman[abs(new_loss)])"

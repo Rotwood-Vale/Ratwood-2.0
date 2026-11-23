@@ -45,6 +45,7 @@
 	desc = "When making love, I am able to deplete my partner of their strength"
 	point_cost = 5 // You get this if you are Baothan, otherwise it should be rare as fuck
 	added_traits = list(TRAIT_EVIL_DRAINER)
+	incompatible_traits = list(TRAIT_EVIL_DRAINER)
 
 /datum/quirk/fabledlover
 	name = "Fabled Lover"

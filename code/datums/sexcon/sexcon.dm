@@ -1560,9 +1560,9 @@
 		suppress_action_messages = FALSE
 
 		//EVIL BAOTHAN STATDRAIN
-		if(HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode && istype(user.rmb_intent, /datum/rmb_intent/strong) && user != target)
+		if(HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode && user != target)
 			target?.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
-		if(target && HAS_TRAIT(target, TRAIT_EVIL_DRAINER) && target.cmode && istype(target.rmb_intent, /datum/rmb_intent/strong) && user != target)
+		if(target && HAS_TRAIT(target, TRAIT_EVIL_DRAINER) && target.cmode && user != target)
 			user.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
 
 		// It could want to finish afterwards the performed action
