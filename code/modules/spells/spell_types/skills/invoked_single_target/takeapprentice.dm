@@ -53,6 +53,11 @@
 			/datum/skill/misc/reading, // I dunno what skills to give them as this is not a true
 			/datum/skill/misc/lockpicking, // Yes I hate thieves but this should come with something
 			/datum/skill/misc/stealing // Gating trait so I just give them some that make sense
+		),
+		TRAIT_ENGINEER = list(
+			/datum/skill/craft/ceramics,
+			/datum/skill/craft/engineering,
+			/datum/skill/labor/mining
 		)
 	)
 

@@ -24,19 +24,19 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 
-	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SEEPRICES, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER)
+	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SEEPRICES, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_LEGENDARY_MINER)
 	// Guildmaster get way less gate due to their role
 
 	advclass_cat_rolls = list(CTAG_GUILDSMASTER = 2)
 	job_subclasses = list(
 		/datum/advclass/guildmaster
 	)
-	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
+	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice, /obj/effect/proc_holder/spell/self/convertrole/guildsman)
 
 /datum/advclass/guildmaster
 	name = "Guildmaster"
 	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
-	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
+	the Blacksmiths, the Engineers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
 	outfit = /datum/outfit/job/roguetown/guildmaster/basic
 	category_tags = list(CTAG_GUILDSMASTER)
 	subclass_stats = list(
@@ -132,3 +132,13 @@
 		else
 			to_chat(src, span_warning("Your announcement was interrupted!"))
 			return FALSE
+
+/obj/effect/proc_holder/spell/self/convertrole/guildsman
+	name = "Recruit Guildsman"
+	new_role = "Guildsman"
+	overlay_state = "recruit_servant"
+	recruitment_faction = "Guildsman"
+	recruitment_message = "Serve the Guild, %RECRUIT!"
+	accept_message = "I SERVE THE GUILD OF CRAFTS!"
+	refuse_message = "I refuse."
+	recharge_time = 100
