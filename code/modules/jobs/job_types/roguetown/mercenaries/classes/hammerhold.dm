@@ -40,19 +40,19 @@
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan
 		if(/datum/patron/inhumen/graggar)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/pagan
 		if(/datum/patron/inhumen/matthios)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothahammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothapagan
 		if(/datum/patron/divine/abyssor)
-			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 		if(/datum/patron/divine/dendor)
-			id = /obj/item/clothing/neck/roguetown/psicross/dendor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/dendor/pagan
 		else
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
 
 	// CLASS ARCHETYPES
 	H.adjust_blindness(-3)
@@ -185,19 +185,19 @@
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan
 		if(/datum/patron/inhumen/graggar)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/pagan
 		if(/datum/patron/inhumen/matthios)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothahammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothapagan
 		if(/datum/patron/divine/abyssor)
-			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 		if(/datum/patron/divine/dendor)
-			id = /obj/item/clothing/neck/roguetown/psicross/dendor/hammerhold
+			id = /obj/item/clothing/neck/roguetown/psicross/dendor/pagan
 		else
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
