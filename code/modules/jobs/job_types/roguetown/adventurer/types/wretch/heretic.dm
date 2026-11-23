@@ -362,7 +362,8 @@
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/roguebag = 1,
 		/obj/item/ritechalk = 1,
-		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
 		)
 	to_chat(H, span_warning("Nimble of dagger and foot both, you are the shadowy herald of the cabal. They will not see you coming."))
 	H.cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
@@ -381,7 +382,6 @@
 					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 				beltl = /obj/item/rogueweapon/scabbard/sheath
-				beltr = /obj/item/rogueweapon/scabbard/sheath
 			if("Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
@@ -547,7 +547,7 @@
 					H.put_in_hands(new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_EXPERT, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/lesser(H), SLOT_BELT_R, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag, SLOT_BACK_R, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/lesser, SLOT_BACK_R, TRUE)
 					ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 					//Dark vision but bad. Still better than being entirely blind in the dark.
 					//Perceptive players will see past your disguise: you lack the beltpack and the silver signet ring, and your gas mask is lensed from get-go.
