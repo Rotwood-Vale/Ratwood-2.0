@@ -1095,7 +1095,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	bigboy = TRUE
 	gripsprite = TRUE
 	walking_stick = TRUE
-	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/pick)
 	var/list/obj/structure/toilturret/turrets = list()
 	var/max_turrets = 3
 
@@ -1551,6 +1551,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 // STRAND
 
 /obj/effect/proc_holder/spell/invoked/dream_jaunt
+	invocation_type = "none"
 	name = "Dream Jaunt"
 	desc = "Bring yourself and whoever you hold into the dream."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -1676,6 +1677,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 // TOIL
 
 /obj/effect/proc_holder/spell/invoked/projectile/toil_mend
+	invocation_type = "none"
 	name = "Mend"
 	desc = "Shoot mending lightning that heals the target and fixes their equipment."
 	clothes_req = FALSE
@@ -2457,6 +2459,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	icon_state = "buff"
 
 /obj/effect/proc_holder/spell/invoked/shadow_snuff
+	invocation_type = "none"
 	name = "Snuff"
 	desc = "Snuff out a fire or light."
 	range = 7
@@ -2517,7 +2520,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Scadu Grip"
 	desc = "Requires an aggressive grab. Engulf your target in dark flame!"
 	recharge_time = 60 SECONDS
-	invocation_type = "emote"
+	invocation_type = "none"
 	overlay_icon = 'icons/mob/actions/vampspells.dmi'
 	action_icon = 'icons/mob/actions/vampspells.dmi'
 	overlay_state = "potence"
