@@ -111,6 +111,19 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
+"aaw" = (
+/obj/structure/fluff/walldeco/painting/skull{
+	pixel_x = 32
+	},
+/obj/item/perfume/random{
+	pixel_y = 0;
+	pixel_x = 0
+	},
+/obj/structure/closet/crate/roguecloset/inn,
+/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
+/obj/item/clothing/head/roguetown/chaperon/noble,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aax" = (
 /obj/structure/bars/steel,
 /obj/structure/roguewindow,
@@ -24488,22 +24501,6 @@
 /obj/structure/roguemachine/drugmachine,
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue/cand,
 /area/rogue/indoors/town/bath)
-"eOC" = (
-/obj/structure/rack/rogue/shelf{
-	pixel_y = 26
-	},
-/obj/structure/fluff/walldeco/painting/skull{
-	pixel_x = 32
-	},
-/obj/item/perfume/random{
-	pixel_y = 35;
-	pixel_x = 1
-	},
-/obj/structure/closet/crate/roguecloset/inn,
-/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
-/obj/item/clothing/head/roguetown/chaperon/noble,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "eOD" = (
 /obj/structure/stairs{
 	dir = 4
@@ -500399,7 +500396,7 @@ enV
 fSc
 xbD
 pOX
-eOC
+aaw
 nZV
 lRW
 aaO
