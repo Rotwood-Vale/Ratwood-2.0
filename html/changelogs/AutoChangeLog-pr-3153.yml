@@ -1,0 +1,6 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - balance: "Tug of War no longer has a random chance to fail its pull."
+  - bugfix: "Tug of War no longer accumulates pull and slow bonuses across casts, grants its stat bonus at three superior stats, and can pull non-human living targets."
+  - bugfix: "Tug of War uses the caster for throw attribution, rejects self-targets, and reports rejected throws correctly."

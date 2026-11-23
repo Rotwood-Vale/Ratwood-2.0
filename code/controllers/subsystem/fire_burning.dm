@@ -10,8 +10,6 @@ SUBSYSTEM_DEF(fire_burning)
 /datum/controller/subsystem/fire_burning/stat_entry()
 	..("P:[processing.len]")
 
-/obj
-	var/fire_burn_start //make us not burn that long
 
 /datum/controller/subsystem/fire_burning/fire(resumed = 0)
 	if (!resumed)

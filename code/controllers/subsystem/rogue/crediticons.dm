@@ -1,17 +1,23 @@
 /// How long after a job or class outfit is applied before the credits portrait is captured.
 /// Gives deferred icon updates (SSiconupdates) time to land, and coalesces back-to-back triggers.
 #define CREDIT_CAPTURE_DELAY (2 SECONDS)
+#define POSTER_PAGE_LOAD_DELAY (1 SECONDS)
 
 /**
  * Holds the end-of-round credits roster.
  *
  * Portraits are snapshots of the live mob's worn/body overlays, stored as a mutable_appearance.
  * No icon math happens at capture time; the client does the drawing when the credits roll.
- * The only flattening is lazy and cached, for wanted posters (town wanted boards, round end Outlaws tab).
+ * The only flattening is for wanted posters (town wanted boards, round end Outlaws tab). It is cached,
  */
 SUBSYSTEM_DEF(crediticons)
 	name = "crediticons"
-	flags = SS_NO_INIT | SS_NO_FIRE
+	flags = SS_NO_INIT | SS_BACKGROUND
+	wait = 1
+	var/mutable_appearance/building_portrait
+	var/list/building_overlays
+	var/icon/building_canvas
+	var/list/poster_pushes = list()
 	/// Assoc list of /datum/mind => /datum/credit_entry, in join order.
 	var/list/entries = list()
 	/// Wanted name => portrait source, captured from the actual mob when they were declared or bountied.
@@ -20,6 +26,8 @@ SUBSYSTEM_DEF(crediticons)
 	var/list/wanted_portraits = list()
 	/// portrait => base64 PNG for wanted posters. Each portrait is flattened at most once.
 	var/list/poster_cache = list()
+	/// portrait => TRUE if it's being flattened currenly, can be cleared by drop_poster()
+	var/list/poster_building = list()
 	/// overlays_standing indexes that are transient state rather than how the character looks.
 	/// Anything not listed here is kept, so new clothing/body layers show up without touching this file.
 	var/static/list/excluded_layers = list(
@@ -65,8 +73,10 @@ SUBSYSTEM_DEF(crediticons)
 	return name
 
 /datum/credit_entry/proc/set_portrait(mutable_appearance/new_portrait)
-	SScrediticons.poster_cache -= portrait
+	var/had_poster = SScrediticons.drop_poster(portrait)
 	portrait = new_portrait
+	if(had_poster)
+		SScrediticons.queue_poster(portrait)
 	if(!portrait_holder)
 		return
 	for(var/atom/movable/screen/credit/credit as anything in live_credits)
@@ -130,9 +140,13 @@ SUBSYSTEM_DEF(crediticons)
 /datum/controller/subsystem/crediticons/proc/capture_wanted(mob/living/carbon/human/H)
 	if(QDELETED(H))
 		return
-	poster_cache -= wanted_portraits[H.real_name]
+	var/old = wanted_portraits[H.real_name]
+	if(!istype(old, /datum/credit_entry))
+		drop_poster(old)
 	var/datum/credit_entry/entry = H.mind && entries[H.mind]
-	wanted_portraits[H.real_name] = entry || build_portrait(H)
+	var/mutable_appearance/portrait = entry ? entry.portrait : build_portrait(H)
+	wanted_portraits[H.real_name] = entry || portrait
+	queue_poster(portrait)
 
 /// Best portrait for a wanted name: the one captured when they were declared, else a credits entry
 /// with that name, else null.
@@ -186,37 +200,102 @@ SUBSYSTEM_DEF(crediticons)
 	clean.overlays += kept
 	portrait.overlays += clean
 
-/// Upper-body PNG (base64) of a portrait, for wanted posters. Flattened once, on first request.
+/// Upper-body PNG (base64) of a portrait, for wanted posters. Never sleeps.
+/// If the poster isn't built yet, starts the background build and returns null.
 /datum/controller/subsystem/crediticons/proc/get_poster_base64(mutable_appearance/portrait)
 	if(!portrait)
 		return null
 	. = poster_cache[portrait]
 	if(.)
 		return
-	. = icon2base64(build_poster_icon(portrait))
-	poster_cache[portrait] = .
+	queue_poster(portrait)
+	return null
+
+/datum/controller/subsystem/crediticons/proc/push_pending_posters(client/viewer, window_id, list/pending)
+	set waitfor = FALSE
+	// lets make sure nobody can just spam queue it up
+	var/push_key = "[viewer.ckey]|[window_id]"
+	poster_pushes[push_key] = pending
+	sleep(POSTER_PAGE_LOAD_DELAY)
+	while(length(pending) && viewer && poster_pushes[push_key] == pending)
+		for(var/element_id in pending)
+			var/mutable_appearance/portrait = pending[element_id]
+			var/poster_base64 = poster_cache[portrait]
+			if(poster_base64)
+				viewer << output(list2params(list(element_id, poster_base64)), "[window_id].browser:wanted_poster_ready")
+			else if(poster_building[portrait])
+				continue
+			pending -= element_id
+		sleep(0.5 SECONDS)
+	if(poster_pushes[push_key] == pending)
+		poster_pushes -= push_key
+
+/datum/controller/subsystem/crediticons/proc/queue_poster(mutable_appearance/portrait)
+	if(!portrait || poster_cache[portrait] || poster_building[portrait])
+		return
+	poster_building[portrait] = TRUE
+
+/datum/controller/subsystem/crediticons/proc/drop_poster(mutable_appearance/portrait)
+	if(!portrait)
+		return FALSE
+	. = !!(poster_cache[portrait] || poster_building[portrait])
+	poster_cache -= portrait
+	poster_building -= portrait
+	if(portrait == building_portrait)
+		building_portrait = null
 
 /// Flattens a portrait to the upper-body icon used on wanted posters.
 /// Each overlay is flattened on its own and blended onto a fixed 32x32 frame, so oversized layers
 /// (64x64 weapons with negative pixel offsets) are clipped like the client clips them. Running
 /// getFlatIcon() on the whole portrait doesn't work: its canvas-resize path mixes up its bounds and
 /// draws every later layer off-canvas, giving a blank poster.
-/// Sleeps between overlays if the tick runs long; callers are UI handlers, which may sleep.
 /datum/controller/subsystem/crediticons/proc/build_poster_icon(mutable_appearance/portrait)
-	var/list/sorted = list()
-	for(var/image/overlay as anything in portrait.overlays)
-		if(overlay.alpha)
-			sorted += overlay
-	sortTim(sorted, GLOBAL_PROC_REF(cmp_atom_layer_asc))
-
 	var/icon/canvas = icon('icons/blanks/32x32.dmi', "nothing")
-	for(var/image/overlay as anything in sorted)
-		var/icon/part = getFlatIcon(image(overlay), SOUTH)
-		if(part)
-			canvas.Blend(part, ICON_OVERLAY, overlay.pixel_x + 1, overlay.pixel_y + 1)
-		CHECK_TICK
-	canvas.Crop(1, 17, 32, 32)
-	canvas.Scale(96, 48)
+	for(var/image/overlay as anything in sorted_poster_overlays(portrait))
+		blend_poster_overlay(canvas, overlay)
+	finish_poster_icon(canvas)
 	return canvas
 
+/datum/controller/subsystem/crediticons/proc/sorted_poster_overlays(mutable_appearance/portrait)
+	. = list()
+	for(var/image/overlay as anything in portrait.overlays)
+		if(overlay.alpha)
+			. += overlay
+	sortTim(., GLOBAL_PROC_REF(cmp_atom_layer_asc))
+
+/datum/controller/subsystem/crediticons/proc/blend_poster_overlay(icon/canvas, image/overlay)
+	var/icon/part = getFlatIcon(image(overlay), SOUTH)
+	if(part)
+		canvas.Blend(part, ICON_OVERLAY, overlay.pixel_x + 1, overlay.pixel_y + 1)
+
+/datum/controller/subsystem/crediticons/proc/finish_poster_icon(icon/canvas)
+	canvas.Crop(1, 17, 32, 32)
+	canvas.Scale(96, 48)
+
+/datum/controller/subsystem/crediticons/fire(resumed = FALSE)
+	while(length(poster_building))
+		var/mutable_appearance/portrait = poster_building[1]
+		if(portrait != building_portrait)
+			building_portrait = portrait
+			building_overlays = sorted_poster_overlays(portrait)
+			building_canvas = icon('icons/blanks/32x32.dmi', "nothing")
+
+		while(length(building_overlays))
+			var/image/overlay = building_overlays[1]
+			building_overlays.Cut(1, 2)
+			blend_poster_overlay(building_canvas, overlay)
+			if(MC_TICK_CHECK)
+				return
+
+		var/icon/canvas = building_canvas
+		poster_building -= portrait
+		building_portrait = null
+		building_overlays = null
+		building_canvas = null
+		finish_poster_icon(canvas)
+		poster_cache[portrait] = icon2base64(canvas)
+		if(MC_TICK_CHECK)
+			return
+
 #undef CREDIT_CAPTURE_DELAY
+#undef POSTER_PAGE_LOAD_DELAY

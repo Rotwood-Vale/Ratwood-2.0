@@ -122,6 +122,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/oviposition = FALSE
 	var/free_use_default = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
@@ -3212,6 +3213,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	else if(character_setup)
 		// This should only ever ~do~ anything for previews
 		character.ensure_not_taur()
+
+	if(character_setup && istype(character, /mob/living/carbon/human/dummy))
+		// Preview mannequin only. Living mobs (e.g. Pestra fleshcraft) also pass character_setup, and must not get it free.
+		var/obj/item/organ/penis/preview_penis = character.getorganslot(ORGAN_SLOT_PENIS)
+		preview_penis?.set_massive(wants_massive_pintle())
 
 	if(icon_updates)
 		character.update_body()

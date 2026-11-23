@@ -1,0 +1,4 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - balance: "Removed -2 speed stat and added speed ceiling of 11 for hedge knight"

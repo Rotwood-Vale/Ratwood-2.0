@@ -702,9 +702,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		GLOB.zizo_researchable |= /datum/ritual/fleshcrafting/ascend
 		for(var/obj/item/clothing/cloak/cultrobe/robe as anything in GLOB.cult_robes)
 			robe.empower()
-		for(var/datum/mind/M in SSmapping.retainer.cultists)
-			var/datum/antagonist/zizocultist/Z = M.has_antag_datum(/datum/antagonist/zizocultist)
-			Z?.add_halo()
 
 	if(gate_count > 0)
 		reroll_gate_targets(gate_count)
@@ -1098,6 +1095,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	bigboy = TRUE
 	gripsprite = TRUE
 	walking_stick = TRUE
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble, /datum/intent/pick)
 	var/list/obj/structure/toilturret/turrets = list()
 	var/max_turrets = 3
 

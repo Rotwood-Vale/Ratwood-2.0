@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "wanted posters shouldn't lag anymore when initially generated"

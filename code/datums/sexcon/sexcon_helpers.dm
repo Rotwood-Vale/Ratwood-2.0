@@ -153,7 +153,7 @@
 	
 /mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife, orifice = SEX_PART_CUNT)
 	var/obj/item/organ/testicles/testes = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(!testes || !wife || !is_virile())
+	if(!testes || !wife || !is_virile() || HAS_TRAIT(src, TRAIT_OVIPOSITOR))
 		return
 	if(orifice & SEX_PART_TAIL_MAW)
 		var/obj/item/organ/tail/manticore/tail = get_manticore_tail(wife)
@@ -205,6 +205,21 @@
 	breasts.lactates_on_impregnation = FALSE
 	breasts.lactating = TRUE
 	to_chat(src, span_love("My breasts feel tender and heavy..."))
+
+/// Charges triumphs for a massive pintle if the buyer's prefs ask for one. Only called on lobby spawns.
+/// The body keeps TRAIT_MASSIVE_PINTLE, so organ rebuilds later this life stay massive.
+/mob/living/carbon/human/proc/try_buy_massive_pintle(client/buyer)
+	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
+	if(!penis?.can_be_massive() || !buyer?.prefs?.wants_massive_pintle())
+		return
+	if(SStriumphs.get_triumphs(buyer.ckey) < MASSIVE_PENIS_TRIUMPH_COST)
+		to_chat(buyer, span_warning("I don't have enough TRIUMPH ([MASSIVE_PENIS_TRIUMPH_COST] TRI) to support my great endowment. I'll have to settle for being merely large."))
+		return
+	buyer.adjust_triumphs(-MASSIVE_PENIS_TRIUMPH_COST, FALSE)
+	SStriumphs.record_triumph_sink(TRIUMPH_SINK_MASSIVE_PINTLE, MASSIVE_PENIS_TRIUMPH_COST)
+	ADD_TRAIT(src, TRAIT_MASSIVE_PINTLE, TRAIT_GENERIC)
+	penis.set_massive(TRUE)
+	update_body_parts(TRUE)
 
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)
 	var/grabstate = null
