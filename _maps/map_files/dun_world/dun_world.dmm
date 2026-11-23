@@ -168,6 +168,23 @@
 /obj/item/clothing/cloak/lordcloak/baronycloak,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
+"aat" = (
+/obj/structure/table/vtable,
+/obj/item/candle/gold/lit{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/glass/cup/golden/small{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
+	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aav" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -66775,21 +66792,6 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/dwarfin)
-"lVy" = (
-/obj/structure/table/vtable,
-/obj/item/candle/gold/lit{
-	pixel_y = 13;
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/glass/cup/golden/small{
-	pixel_y = 5;
-	pixel_x = 11
-	},
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
-	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "lVz" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods/northeast)
@@ -432576,7 +432578,7 @@ dJJ
 tVb
 uoz
 uoz
-lVy
+aat
 bwv
 rep
 dtI

@@ -225,6 +225,23 @@
 	},
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
+"aaL" = (
+/obj/structure/table/vtable,
+/obj/item/candle/gold/lit{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/glass/cup/golden/small{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
+	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aaU" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
@@ -19063,21 +19080,6 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church/chapel)
-"dKt" = (
-/obj/structure/table/vtable,
-/obj/item/candle/gold/lit{
-	pixel_y = 13;
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/glass/cup/golden/small{
-	pixel_y = 5;
-	pixel_x = 11
-	},
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
-	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "dKx" = (
 /turf/open/floor/rogue/greenstone/runed,
 /area/rogue/indoors/town/magician/rockhill)
@@ -499548,7 +499550,7 @@ ryI
 cDa
 cDc
 nog
-dKt
+aaL
 aaw
 xlA
 xlA
