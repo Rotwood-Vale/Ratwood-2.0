@@ -82,7 +82,7 @@
 	name = "copper dolabra"
 	force = 15
 	force_wielded = 18
-	desc = "A long handled dolabra axe-pick with a carved long handle of hardened oak. This one has an axe-blade of pure copper that looks rather flimsey behind it a lock pick-head."
+	desc = "A long handled dolabra axe-pick with a carved long handle of hardened oak. This one has an axe-blade of pure copper that looks rather flimsey behind it a long pick-head."
 	max_integrity = 250
 	max_blade_int = 250
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
