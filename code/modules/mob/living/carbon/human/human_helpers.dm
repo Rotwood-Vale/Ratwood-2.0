@@ -334,10 +334,14 @@
 				primary_family.MarryMembers(primary_member, secondary_member)
 			if("sibling")
 				family_member_datum.AddSibling(spouse.family_member_datum)
+				if(!length(dna.species.race_groups & spouse.dna.species.race_groups))
+					secondary_member.adoption_status = TRUE
 				to_chat(src, span_love("[spouse.real_name] is now my sibling."))
 				to_chat(spouse, span_love("[real_name] is now my sibling."))
 			if("parent")
 				family_member_datum.AddChild(spouse.family_member_datum)
+				if(!length(dna.species.race_groups & spouse.dna.species.race_groups))
+					spouse.family_member_datum.adoption_status = TRUE
 				to_chat(src, span_love("[spouse.real_name] is now my offspring."))
 				to_chat(spouse, span_love("[real_name] is now my parent."))
 			if("lover", "friend", "cousin")

@@ -638,7 +638,7 @@
 	var/p_He = lookee.p_they(TRUE)
 	var/relationship_text = "[p_He] is my [relationship]"
 
-	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child")))
+	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child", "brother", "sister")))
 		relationship_text += " (adopted)"
 
 	return span_love(span_bold("[relationship_text]."))
