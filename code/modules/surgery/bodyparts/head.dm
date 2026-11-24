@@ -20,7 +20,6 @@
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
 	var/obj/item/organ/eyes/eyes
-	var/obj/item/organ/eyes/eyesl
 	var/obj/item/organ/ears/ears
 	var/obj/item/organ/tongue/tongue
 
@@ -57,6 +56,13 @@
 	/// Set on the heads of contract-spawned mobs. The contract reward is payment in full.
 	var/no_head_bounty = FALSE
 	two_stage_death = TRUE // players won't be decapitated instantly (they'll still die immediately, though)
+
+
+/obj/item/bodypart/head/filled
+	eyes = new /obj/item/organ/eyes
+	ears = new /obj/item/organ/ears
+	tongue = new /obj/item/organ/tongue
+
 
 /obj/item/bodypart/head/get_real_price()
 	return 0
