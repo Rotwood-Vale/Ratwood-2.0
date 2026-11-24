@@ -1020,9 +1020,9 @@
 			else if(J.lowlife_examine)
 				display_as_lowlife = TRUE
 		var/rank_color = social_rank_color()
-		var/social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛭</font></A>"
+		var/social_strata = "<a href='?src=[REF(src)];social_strata=1' style='color:[rank_color]'>⛭</a>"
 		if(family_datum)
-			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
+			social_strata = "<a href='?src=[REF(src)];social_strata=1' style='color:[rank_color]'>⛯</a>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
 		if(migrant_type)

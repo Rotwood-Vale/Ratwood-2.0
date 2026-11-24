@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				glyph = "⛯"
 			ficon = " <font color='[frank]'>[glyph]</font>"
 			if(target)
-				ficon = " <a href='?src=[REF(target)];social_strata=1'><font color='[frank]'>[glyph]</font></A>"
+				ficon = " <a href='?src=[REF(target)];social_strata=1' style='color:[frank]'>[glyph]</a>"
 		if(fcolor && fjob)
 			if (fheresy)
 				contents +="<B><font color=#f1d669>[fheresy]</font></B> "
