@@ -2055,9 +2055,11 @@
 
 		if(!owner.cmode)
 			remove_self()
+			return // owner is nulled once removed
 		//We lost the shield we used this with from our hands.
 		if((owner.get_inactive_held_item() != shield_origin) && (owner.get_active_held_item() != shield_origin))
 			remove_self()
+			return
 		if(!owner.stamina_add(0.2))	//It essentially halts green regen. Token price so it can't be maintained forever.
 			remove_self()
 
