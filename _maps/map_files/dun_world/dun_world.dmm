@@ -152,6 +152,23 @@
 /obj/item/clothing/cloak/lordcloak/baronycloak,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
+"aat" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/suit/roguetown/armor/plate/full/iron,
+/obj/item/clothing/neck/roguetown/gorget,
+/obj/item/clothing/shoes/roguetown/boots/armor/iron,
+/obj/item/clothing/gloves/roguetown/plate/iron,
+/obj/item/clothing/under/roguetown/platelegs/iron,
+/obj/item/storage/belt/rogue/leather/black,
+/obj/item/clothing/wrists/roguetown/bracers/iron,
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron,
+/obj/structure/fluff/walldeco/wallshield{
+	pixel_y = 32
+	},
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
+/obj/item/rogueweapon/scabbard/sword/noble,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors)
 "aav" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -71968,22 +71985,6 @@
 /obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/underdarker/dunsouth)
-"mPT" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/suit/roguetown/armor/plate/full/iron,
-/obj/item/clothing/neck/roguetown/gorget,
-/obj/item/clothing/shoes/roguetown/boots/armor/iron,
-/obj/item/clothing/gloves/roguetown/plate/iron,
-/obj/item/clothing/under/roguetown/platelegs/iron,
-/obj/item/storage/belt/rogue/leather/black,
-/obj/item/clothing/wrists/roguetown/bracers/iron,
-/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron,
-/obj/structure/fluff/walldeco/wallshield{
-	pixel_y = 32
-	},
-/obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors)
 "mPW" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -319127,7 +319128,7 @@ khs
 wwF
 khs
 jLU
-mPT
+aat
 mmr
 vMZ
 bwv

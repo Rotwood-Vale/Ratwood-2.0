@@ -216,6 +216,26 @@
 	},
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
+"aaL" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/suit/roguetown/armor/plate/full/iron,
+/obj/item/clothing/neck/roguetown/gorget,
+/obj/item/clothing/shoes/roguetown/boots/armor/iron,
+/obj/item/clothing/gloves/roguetown/plate/iron,
+/obj/item/clothing/under/roguetown/platelegs/iron,
+/obj/item/storage/belt/rogue/leather/black,
+/obj/item/clothing/wrists/roguetown/bracers/iron,
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron,
+/obj/effect/decal/carpet/square{
+	pixel_y = -7
+	},
+/obj/structure/fluff/walldeco/wallshield{
+	pixel_y = 32
+	},
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
+/obj/item/rogueweapon/scabbard/sword/noble,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aaM" = (
 /obj/item/candle/gold/lit{
 	pixel_y = 13;
@@ -52778,25 +52798,6 @@
 /obj/machinery/light/rogue/candle/blue/r,
 /turf/open/water/bath,
 /area/rogue/indoors/town/church/chapel)
-"kyo" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/suit/roguetown/armor/plate/full/iron,
-/obj/item/clothing/neck/roguetown/gorget,
-/obj/item/clothing/shoes/roguetown/boots/armor/iron,
-/obj/item/clothing/gloves/roguetown/plate/iron,
-/obj/item/clothing/under/roguetown/platelegs/iron,
-/obj/item/storage/belt/rogue/leather/black,
-/obj/item/clothing/wrists/roguetown/bracers/iron,
-/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron,
-/obj/effect/decal/carpet/square{
-	pixel_y = -7
-	},
-/obj/structure/fluff/walldeco/wallshield{
-	pixel_y = 32
-	},
-/obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "kys" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/cobblerock,
@@ -391531,7 +391532,7 @@ pAV
 kxS
 wOD
 ryI
-kyo
+aaL
 nZV
 ilI
 siE
