@@ -80,11 +80,10 @@
 	if(!ad_count)
 		board_html = "No matching ads right now."
 
-	var/matching_html = pref_line_html("Preferred Gender", "<a href='[base]gender'>[prefs.gender_choice]</a>")
 	var/mode = "Whitelist"
 	if(prefs.species_blacklist)
 		mode = "Blacklist"
-	matching_html += pref_line_html("Preferred Species", "<a href='[base]blacklist'>[mode]</a> <a href='[base]species'>Edit List ([length(prefs.species_filter)])</a>")
+	var/matching_html = pref_line_html("Preferred Species", "<a href='[base]blacklist'>[mode]</a> <a href='[base]species'>Edit List ([length(prefs.species_filter)])</a>")
 	var/random_state = "No"
 	if(prefs.random_match_on)
 		random_state = "Yes"
@@ -95,6 +94,8 @@
 			if(relation in prefs.random_match)
 				state = "Yes"
 			matching_html += pref_line_html(relation, "<a href='[base]random;relation=[relation]'>[state]</a>")
+		if(("Spouse" in prefs.random_match) || ("Lover" in prefs.random_match))
+			matching_html += pref_line_html("Preferred Gender", "<a href='[base]gender'>[prefs.gender_choice]</a>")
 
 	var/links_html = ""
 	for(var/list/link in SSfamilytree.links)

@@ -280,7 +280,7 @@ SUBSYSTEM_DEF(familytree)
 				continue
 			if(relation == "Spouse" && ((H.mind?.assigned_role in nomarry_jobs) || (other.mind?.assigned_role in nomarry_jobs)))
 				continue
-			if(Blocked(H.ckey, other.ckey) || !Compatible(my_info, MobInfo(other)))
+			if(Blocked(H.ckey, other.ckey) || !Compatible(my_info, MobInfo(other), (relation == "Spouse" || relation == "Lover")))
 				continue
 			candidates += other
 		if(!candidates.len)
@@ -335,14 +335,14 @@ SUBSYSTEM_DEF(familytree)
 /datum/controller/subsystem/familytree/proc/MobInfo(mob/living/carbon/human/H)
 	return list("id" = H.family_id, "ckey" = H.ckey, "name" = H.real_name, "species" = H.dna.species.name, "pronouns" = splittext(H.pronouns, " ")[1], "gender" = H.gender_choice_pref, "species_filter" = H.species_filter, "blacklist" = H.species_blacklist, "age" = H.age)
 
-/datum/controller/subsystem/familytree/proc/Compatible(list/a, list/b)
+/datum/controller/subsystem/familytree/proc/Compatible(list/a, list/b, check_gender = FALSE)
 	for(var/list/pair in list(list(a, b), list(b, a)))
 		var/list/x = pair[1]
 		var/list/y = pair[2]
 		var/same = (x["pronouns"] == y["pronouns"])
-		if(x["gender"] == SAME_GENDER && !same)
+		if(check_gender && x["gender"] == SAME_GENDER && !same)
 			return FALSE
-		if(x["gender"] == DIFFERENT_GENDER && same)
+		if(check_gender && x["gender"] == DIFFERENT_GENDER && same)
 			return FALSE
 		if(length(x["species_filter"]) && x["blacklist"] && (y["species"] in x["species_filter"]))
 			return FALSE
