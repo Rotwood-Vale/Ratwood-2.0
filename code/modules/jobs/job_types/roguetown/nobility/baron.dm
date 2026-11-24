@@ -105,7 +105,7 @@
 
 /datum/outfit/job/roguetown/baron/landed_knight/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal // royal gambesons spawn in the duke's colors; should make a subtype of this that spawns in the baron's. 
 	beltl = /obj/item/rogueweapon/scabbard/sword/royal
 	backl = /obj/item/rogueweapon/shield/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
