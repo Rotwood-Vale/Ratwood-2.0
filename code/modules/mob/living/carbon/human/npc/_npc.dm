@@ -450,6 +450,7 @@
 		back_to_idle()
 		return FALSE
 	pathfinding_target = new_target
+	watch_target(new_target)
 	var/turf/turf_of_target = get_turf(new_target)
 	if(!turf_of_target)
 		back_to_idle()
@@ -731,6 +732,7 @@
 					// don't flee from a cow or chicken just because you hate them
 					if(should_flee_from(bystander))
 						target = bystander // We're trying to run from this person now
+						watch_target(target)
 			if(!target || get_dist(src, target) >= NPC_FLEE_DISTANCE)
 				NPC_THINK("Done fleeing!")
 				back_to_idle()
@@ -745,6 +747,16 @@
 
 	return IsStandingStill()
 
+
+/mob/living/carbon/human/on_enemy_destroyed(datum/source)
+	. = ..()
+	if(source == target)
+		target = null
+	if(source == pathfinding_target)
+		clear_path()
+
+/mob/living/carbon/human/is_watched_target(datum/thing)
+	return thing == target || thing == pathfinding_target
 
 /mob/living/carbon/human/proc/back_to_idle()
 	last_aggro_loss = world.time

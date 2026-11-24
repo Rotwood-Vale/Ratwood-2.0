@@ -441,6 +441,7 @@ GLOBAL_LIST_EMPTY(mass_direct_intercepts)
 				else
 					// For objects, set as direct target and enable attack mode
 					H.target = target
+					H.watch_target(target)
 					H.mode = NPC_AI_HUNT // Use HUNT mode for attacking
 					// Track and start custom object attack routine for old NPC AI
 					active_attack_routines[H] = TRUE
