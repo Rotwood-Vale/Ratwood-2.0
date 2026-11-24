@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return spans
 
 /mob/handle_language_spans(list/spans)
-	if(client?.prefs?.no_language_fonts)
+	if(spans && client?.prefs?.no_language_fonts)
 		var/list/accent_font_spans = list()
 		if(GLOB.accent_spans)
 			for(var/accent_name in GLOB.accent_spans)
