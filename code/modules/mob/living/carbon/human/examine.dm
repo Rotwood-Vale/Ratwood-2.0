@@ -1180,8 +1180,10 @@
 					. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
 				if(HAS_TRAIT(src, TRAIT_LUX_RIPPED))
 					. += span_danger("<b>[capitalize(m2)] lux is torn!</b>")
-				if(src.virginity == TRUE)
+				if(src.virginity == TRUE && H.patron.type == /datum/patron/inhumen/baotha)
 					. += span_aiprivradio("VIRGIN!")
+				if(H.patron.type == /datum/patron/inhumen/zizo && !is_zizo(src) && (istype(patron, /datum/patron/inhumen/zizo) || (client && (ROLE_ZIZOIDCULTIST in client.prefs.be_special))))
+					. += span_aiprivradio("They shall yield to conversion...")
 
 		var/gang_message = get_gang_text(user)
 		if (gang_message)
