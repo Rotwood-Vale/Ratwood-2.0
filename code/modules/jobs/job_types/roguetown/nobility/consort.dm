@@ -74,7 +74,7 @@
 	else if(should_wear_masc_clothes(H))
 		cloak = /obj/item/clothing/cloak/darkcloak/bear
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
-		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal
 //		SSticker.rulermob = H
 
 /datum/advclass/lady/trophy
@@ -122,7 +122,7 @@
 	else if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
-		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal
 		cloak = /obj/item/clothing/cloak/darkcloak/bear
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/medicine,
@@ -175,7 +175,7 @@
 	else if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
-		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal
 		cloak = /obj/item/clothing/cloak/darkcloak/bear
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/scissors/steel,

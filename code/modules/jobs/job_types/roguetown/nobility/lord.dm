@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	else if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights/black
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
-		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal
 		shoes = /obj/item/clothing/shoes/roguetown/boots
 		if(SSmapping.current_map.map_name == "Rockhill")
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/duke
