@@ -1,4 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - balance: "Gnoll chop swingdelay tweak: SWINGDELAY_CANCEL ---> SWINGDELAY_PENALTY"

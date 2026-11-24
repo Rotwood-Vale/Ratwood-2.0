@@ -1,7 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Psydonian conversion no longer removes curses (still does remove apostasy and excumunication)"
-  - rscadd: "Admonition when performed by anyone but absolver will transfer the curse to performing... stigamata since only they can actually use the rite outside of absolvers"
-  - rscadd: "Lux freaks now automatically cleanse divine curses applied on them in 30 minutes (only relevant to the interaction above since they are uncursable otherwise)"
-  - code_imp: "Quicksilver now properly check for absolver for its extra use instead of a grabbag of traits other orthodoxists could possibly get"

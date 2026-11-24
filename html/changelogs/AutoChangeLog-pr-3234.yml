@@ -1,5 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Silver melee hits can trigger sunder on silver-weak NPCs again, including bosses, when the hit passes their armor and damage checks."
-  - bugfix: "Quietus coatings are preserved when striking a target without a reagent holder."

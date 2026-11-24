@@ -1,7 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Lux freaks (absolvers and stigmatas) cannot have their lux extracted by any means"
-  - rscadd: "They instead gain a miracle with lets them self extract/purify/split lux"
-  - rscadd: "They also gain uncapped medicine and medical bags (+ bedroll for absolver)"
-  - bugfix: "Absolution now gives proper person the feedback when used on inqusition member"
