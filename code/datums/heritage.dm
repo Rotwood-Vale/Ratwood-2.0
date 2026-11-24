@@ -174,6 +174,7 @@
 	var/datum/heritage/family
 	var/list/parents = list() // Direct parents (max 2)
 	var/list/children = list() // Direct children
+	var/list/siblings = list()
 	var/list/spouses = list() // Current spouses
 	var/list/former_spouses = list() // Divorced spouses
 	var/adoption_status = FALSE // TRUE if adopted into family
@@ -253,6 +254,13 @@
 		child.RemoveParent(src, TRUE) // TRUE = skip reciprocal call
 
 	child.RecalculateGeneration()
+	return TRUE
+
+/datum/family_member/proc/AddSibling(datum/family_member/sibling)
+	if(!sibling || sibling == src || (sibling in siblings))
+		return FALSE
+	siblings += sibling
+	sibling.siblings += src
 	return TRUE
 
 /datum/family_member/proc/AddSpouse(datum/family_member/spouse, skip_reciprocal = FALSE)
@@ -440,6 +448,9 @@
 /datum/family_member/proc/AreSiblings(datum/family_member/other)
 	if(!other || other == src)
 		return FALSE
+	// this kinda fucks up parents but it's Needed
+	if(other in siblings)
+		return TRUE
 	if(!parents.len || !other.parents.len)
 		return FALSE
 

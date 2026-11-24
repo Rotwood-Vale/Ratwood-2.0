@@ -111,13 +111,13 @@
 	var/family_UI = FALSE
 	var/mob/living/carbon/spouse_mob
 	var/image/spouse_indicator
-	var/setspouse
+	var/family_id
+	var/list/random_match = list()
 	var/gender_choice_pref = ANY_GENDER
-	var/familytree_pref = FAMILY_NONE
 	var/datum/heritage/family_datum
 	var/list/temp_ui_list = list()
-	var/xenophobe = FALSE
-	var/restricted_species = null
+	var/list/species_filter = list()
+	var/species_blacklist = TRUE
 
 	var/marriedto
 

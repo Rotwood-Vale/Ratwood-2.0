@@ -282,13 +282,23 @@
 		return TRUE
 
 
-/mob/living/carbon/human/proc/MarryTo(mob/living/carbon/human/spouse)
+// this does more than marriage Technically
+/mob/living/carbon/human/proc/MarryTo(mob/living/carbon/human/spouse, relation = "spouse")
 	if(!ishuman(spouse))
 		return null
 
+	// does not create house / heritage
+	if(relation == "lover" || relation == "friend" || relation == "cousin")
+		mind?.i_know_person(spouse)
+		spouse.mind?.i_know_person(src)
+		to_chat(src, span_love("[spouse.real_name] is now my [relation]."))
+		to_chat(spouse, span_love("[real_name] is now my [relation]."))
+		return
+
 	// Set basic spouse relationship
-	spouse_mob = spouse
-	spouse.spouse_mob = src
+	if(relation == "spouse")
+		spouse_mob = spouse
+		spouse.spouse_mob = src
 
 	// Handle family integration
 	var/datum/heritage/primary_family = null
@@ -318,12 +328,23 @@
 	else
 		// Neither has family - create new one
 		primary_family = new /datum/heritage(src)
+		SSfamilytree.families += primary_family
 		primary_member = primary_family.founder
 		secondary_member = primary_family.CreateFamilyMember(spouse)
 
 	// Add spouse relationship in family system
 	if(primary_member && secondary_member && primary_family)
-		primary_family.MarryMembers(primary_member, secondary_member)
+		switch(relation)
+			if("spouse")
+				primary_family.MarryMembers(primary_member, secondary_member)
+			if("sibling")
+				family_member_datum.AddSibling(spouse.family_member_datum)
+				to_chat(src, span_love("[spouse.real_name] is now my sibling."))
+				to_chat(spouse, span_love("[real_name] is now my sibling."))
+			if("parent")
+				family_member_datum.AddChild(spouse.family_member_datum)
+				to_chat(src, span_love("[spouse.real_name] is now my offspring."))
+				to_chat(spouse, span_love("[real_name] is now my parent."))
 
 	return primary_family
 
