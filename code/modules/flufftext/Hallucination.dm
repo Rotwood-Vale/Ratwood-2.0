@@ -1236,7 +1236,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(target.client && hallucinated_image)
 		target.client.images -= hallucinated_image
 	
-	QDEL_NULL(hallucinated_image)
+	hallucinated_image = null
 
 	return ..()
 
