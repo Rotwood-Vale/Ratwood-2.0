@@ -181,6 +181,9 @@
 			if(dualwield_armed)
 				user.complete_dualwield_attack(M, null)
 			return
+
+	M.on_attacked_as_pacifist(user)
+
 	// Release drain on attacks besides unarmed attacks/grabs is 1, so it'll just be whatever the penalty is + 1.
 	// Unarmed attacks are the only ones right now that have differing releasedrain, see unarmed attacks for their calc.
 	user.stamina_add(user.used_intent.releasedrain + user.get_swifstrong_stam_penalty())
@@ -272,6 +275,8 @@
 			return
 
 	if(M.attacked_by(src, user))
+		M.on_hit_as_pacifist(user)
+
 		var/tempsound = cached_intent?.hitsound
 		if(tempsound)
 			playsound(M.loc, tempsound, 100, FALSE, -1)
@@ -512,9 +517,30 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/newforce = get_complex_damage(I, user, blade_dulling) * user.used_intent.demolition_mod
-	if(isclothing(src) || istype(src, /obj/item/rogueweapon))
-		newforce = min(newforce, 5)
+	if(I.damtype == BURN && (obj_flags & CLAMP_BREAK))
+		var/do_melt = FALSE
+		var/need_scrap = FALSE
+		if(obj_broken)
+			do_melt = TRUE
+		if(isitem(src))
+			var/obj/item/IS = src
+			if(IS.anvilrepair && IS.smeltresult == /obj/item/ingot/iron)
+				do_melt = TRUE
+				need_scrap = TRUE
+		if(do_melt)
+			user.visible_message(span_warningbig("[user] begins melting and deforming \the [src] with [I]!"))
+			if(do_after(user, 8 SECONDS, TRUE, target = src, same_direction = TRUE, no_interrupt = TRUE))
+				var/target_name = "\the [src]"
+				obj_destruction(need_scrap ? BRUTE : BURN)
+				if(QDELETED(src))
+					user.visible_message(span_warning("[user] destroys [target_name] with [I]!"))
+				else
+					to_chat(user, span_warning("I can't destroy [target_name]."))
+			return TRUE
+
+	var/newforce = get_complex_damage(I, user, blade_dulling)
+	if(!(obj_flags & CLAMP_BREAK))
+		newforce *= user.used_intent.demolition_mod
 	if(!newforce)
 		testing("dam33")
 		return 0
@@ -537,8 +563,33 @@
 	take_damage(newforce, I.damtype, I.d_type, 1)
 	if(newforce > 1)
 		I.take_damage(1, BRUTE, I.d_type)
+	try_damage_pushback(user)
+
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, I, user)
 	return TRUE
+
+/// Pushback when attacking an object. Only applies if the object has the CLAMP_BREAK flag and is not anchored.
+/obj/proc/try_damage_pushback(mob/user)
+	if(!(obj_flags & CLAMP_BREAK) || density || anchored || !isturf(loc))
+		return
+	var/dist = 1
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+		dist++
+	if(obj_broken)
+		dist++
+	var/current_turf = get_turf(src)
+	var/throwdir = get_dir(get_turf(user), current_turf)
+	var/target_turf = get_ranged_target_turf(current_turf, throwdir, dist)
+	if(hit_sound)
+		playsound(current_turf, pick(hit_sound), 100, TRUE)
+	throw_at(target_turf, dist, 12, user, FALSE)
+
+/obj/item/clothing/try_damage_pushback(mob/user)
+	. = ..()
+	if(material_category != ARMOR_MAT_PLATE && material_category != ARMOR_MAT_CHAINMAIL)
+		return
+	if(prob(50))
+		do_sparks(2, TRUE, get_turf(src))
 
 /turf/proc/attacked_by(obj/item/I, mob/living/user, multiplier)
 	var/newforce = get_complex_damage(I, user, blade_dulling)
@@ -744,3 +795,20 @@
 		span_danger("[attack_message_local][next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 	next_attack_msg.Cut()
 	return 1
+
+/mob/living/proc/on_attacked_as_pacifist(mob/living/attacker)
+	if(!HAS_TRAIT(src, TRAIT_PACIFISM))
+		return
+	// The pacifist's Clash cooldown is reduced when attacked.
+	reduce_intent_cooldown(src, /datum/status_effect/debuff/clashcd, amount = 5 SECONDS)
+
+/mob/living/proc/on_hit_as_pacifist(mob/living/attacker)
+	if(!HAS_TRAIT(src, TRAIT_PACIFISM))
+		return
+	// The person who hit the pacifist feels remorse.
+	if(HAS_TRAIT(attacker, TRAIT_NOMOOD))
+		return
+	if(attacker.patron?.type in ALL_INHUMEN_PATRONS)
+		attacker.add_stress(/datum/stressevent/remorse_evil)
+	else
+		attacker.add_stress(/datum/stressevent/remorse)

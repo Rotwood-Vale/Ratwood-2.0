@@ -858,15 +858,15 @@
 /atom/movable/screen/rogmove/proc/toggle(mob/user)
 	if(isobserver(user))
 		return
-	if(user.m_intent == MOVE_INTENT_SNEAK)
-		user.toggle_rogmove_intent(MOVE_INTENT_WALK)
+	if(user.get_controlled_movement_intent() == MOVE_INTENT_SNEAK)
+		user.request_movement_intent(MOVE_INTENT_WALK)
 	else
-		user.toggle_rogmove_intent(MOVE_INTENT_SNEAK)
+		user.request_movement_intent(MOVE_INTENT_SNEAK)
 	update_icon_state()
 	user.update_sneak_invis()
 
 /atom/movable/screen/rogmove/update_icon_state()
-	if(hud?.mymob?.m_intent == MOVE_INTENT_SNEAK)
+	if(hud?.mymob?.get_controlled_movement_intent() == MOVE_INTENT_SNEAK)
 		icon_state = "sneak1"
 	else
 		icon_state = "sneak0"
@@ -880,14 +880,14 @@
 /atom/movable/screen/rogmove/sprint/toggle(mob/user)
 	if(isobserver(user))
 		return
-	if(user.m_intent == MOVE_INTENT_RUN)
-		user.toggle_rogmove_intent(MOVE_INTENT_WALK)
+	if(user.get_controlled_movement_intent() == MOVE_INTENT_RUN)
+		user.request_movement_intent(MOVE_INTENT_WALK)
 	else
-		user.toggle_rogmove_intent(MOVE_INTENT_RUN)
+		user.request_movement_intent(MOVE_INTENT_RUN)
 	update_icon_state()
 
 /atom/movable/screen/rogmove/sprint/update_icon_state()
-	if(hud?.mymob?.m_intent == MOVE_INTENT_RUN)
+	if(hud?.mymob?.get_controlled_movement_intent() == MOVE_INTENT_RUN)
 		icon_state = "sprint1"
 	else
 		icon_state = "sprint0"
@@ -948,7 +948,7 @@
 	hud.mymob.playsound_local(hud.mymob, 'sound/misc/click.ogg', 100)
 	if(isliving(hud?.mymob))
 		var/mob/living/L = hud.mymob
-		if(L.eyesclosed)
+		if(L.eyesclosed && !(SEND_SIGNAL(L, COMSIG_LIVING_TRY_OPEN_EYES) & COMPONENT_BLOCK_OPEN_EYES))
 			L.eyesclosed = 0
 			L.cure_blind("eyelids")
 
@@ -958,6 +958,7 @@
 				var/mob/living/L = hud.mymob
 				L.eyesclosed = 1
 				L.become_blind("eyelids")
+				SEND_SIGNAL(L, COMSIG_LIVING_CLOSED_EYES)
 		else
 			toggle(usr)
 
@@ -2014,7 +2015,10 @@
 				to_chat(M, span_warning("I haven't TRIUMPHED."))
 				return
 			if(alert("Do you want to remember a TRIUMPH?", "", "Yes", "No") == "Yes")
-				M.add_stress(/datum/stressevent/triumph)
+				if(has_world_trait(/datum/world_trait/zizo_noise) && !is_zizo(M))
+					M.add_stress(/datum/stressevent/triumph_noise)
+				else
+					M.add_stress(/datum/stressevent/triumph)
 				M.adjust_triumphs(-1)
 				M.playsound_local(M, 'sound/misc/notice (2).ogg', 100, FALSE)
 				if(M.sexcon)

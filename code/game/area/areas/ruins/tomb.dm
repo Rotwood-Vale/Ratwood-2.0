@@ -10,6 +10,8 @@
 	soundenv = 5
 	ambientsounds = AMB_BASEMENT
 	ambientnight = AMB_BASEMENT
+	// Keep generated dungeon water on its existing area ambience
+	river_ambience = FALSE
 	spookysounds = SPOOKY_DUNGEON
 	spookynight = SPOOKY_DUNGEON
 	droning_sound = 'sound/music/area/catacombs.ogg'

@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/fleshcraft
 	name = "Fleshcraft"
-	desc = "Reshape flesh through divine craft."
+	desc = "Temporarily sculpt the cosmetic features of your chosen target via manipulation of existing flesh - any manifested flesh is sloughed off by the end of the week.\n\
+	Originally a means for fledgeling Pestrans to create homunculi organs for anatomical study, some enterprising Pestrans found applications via temporary prosthesis and cosmetics." //The code here is so messy that I cannot fathomably arrange an actual in-game timer for the fleshcrafting to wear off. 
 	overlay_state = "fleshcraft"
 	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
 	action_icon = 'icons/mob/actions/pestramiracles.dmi'
@@ -82,7 +83,7 @@
 		caster.visible_message(span_notice("[caster]'s flesh begins to soften and shift."), span_notice("You begin reshaping your flesh..."))
 	else
 		caster.visible_message(span_notice("[caster] begins reshaping [target]'s flesh."), span_notice("You begin reshaping [target]'s flesh..."))
-		to_chat(target, span_notice("Your flesh begins to crawl beneath your skin..."))
+		to_chat(target, span_notice("Your flesh begins to crawl beneath your skin - you know this won't be a permanent arrangement."))
 
 	if(!do_after(caster, 10 SECONDS, target = target))
 		to_chat(caster, span_warning("Your fleshcraft is interrupted."))

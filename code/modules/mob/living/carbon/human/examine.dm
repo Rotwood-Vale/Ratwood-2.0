@@ -106,20 +106,15 @@
 		if(item)
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
-	if(user != src && get_dist(user, src) <= 3)
-		var/reeking_naturally = is_redolent_reeking()
-		if(reeking_naturally || has_status_effect(/datum/status_effect/debuff/stinky_contact))
-			var/can_see_stink = !isliving(user) // adminghost always sees it
-			if(isliving(user))
-				var/mob/living/living_user = user
-				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
-			if(can_see_stink)
-				if(reeking_naturally)
-					. += redolent_examine_text(redolent_scent_type, redolent_scent)
-				else
-					var/datum/status_effect/debuff/stinky_contact/contact_stink = has_status_effect(/datum/status_effect/debuff/stinky_contact)
-					if(contact_stink)
-						. += contact_stink.get_examine_text()
+	// Try to see if they smell
+	if(get_dist(user, src) <= 3 && !HAS_TRAIT(user, TRAIT_MISSING_NOSE) && !HAS_TRAIT(user, TRAIT_NOSTINK)) // Need to be close enough + able to smell
+		if(user != src) // You can't smell your own scent
+			var/datum/status_effect/redolent/strong_smell = has_status_effect(/datum/status_effect/redolent)
+			if(strong_smell)
+				. += strong_smell.get_examine_text()
+		// But you sure as hell can smell when someone else has tainted you
+		for(var/datum/status_effect/redolent/stinky_contact/strong_smell as anything in has_status_effect_list(/datum/status_effect/redolent/stinky_contact))
+			. += strong_smell.get_examine_text()
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -425,8 +420,8 @@
 			str = "[m3] something on [m2] wrists!"
 		. += str
 
-	if(istype(skin_armor, /obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward))
-		var/obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward/ward = skin_armor
+	var/obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward/ward = skin_armor
+	if(istype(ward) && !ward.hidden)
 		var/str = "[m3] <font color='[ward.ward_color]'>[ward.generate_tooltip(ward.get_examine_string(user))] shimmering around [user == src ? "me" : p_them()].</font>"
 		str += ward.integrity_check(is_smart)
 		if (is_stupid)
@@ -909,11 +904,11 @@
 		. += trait_exam
 
 	if(temporary_flavortext) //should be kept at the bottom always if possible, since someone could change the spans to trick people if it's on other places
-		var/max_temp_ft_length = 100 //Proably a good idea to fine-tune this later
-		if(length_char(temporary_flavortext) > max_temp_ft_length)
-			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [copytext_char(temporary_flavortext, 1, max_temp_ft_length + 1)]</span>" + "<a href='?src=[REF(src)];task=show_temp_ft;'>...</a>"
+		update_temporary_flavortext_cache()
+		if(!isnull(temporary_flavortext_preview))
+			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext_preview]</span>" + "<a href='?src=[REF(src)];task=show_temp_ft;'>...</a>"
 		else
-			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext]</span>"
+			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext_formatted]</span>"
 
 	if(!user.client?.prefs?.top_examine)
 		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)
@@ -968,12 +963,16 @@
 	if(!user.client?.prefs?.top_examine)
 		. += "ø ------------ ø"
 		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
-			. += "[chat_headshot(headshot_link)]"
+			. += "[chat_headshot_markup()]"
 	else
 		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
-			. += "[chat_headshot(headshot_link)]\nø ------------ ø"
+			. += "[chat_headshot_markup()]\nø ------------ ø"
 		else
 			. += "ø ------------ ø"
+
+	if(HAS_TRAIT(src, TRAIT_MONSTROUS))
+		. += span_userdanger("A MONSTER! INHUMEN!")
+		to_chat(user, span_danger("[uppertext(m1)] IS INHUMEN! THE GODS DESPISE THIS HERESY!"))
 
 	if(name in unknown_names)
 		. += span_info("This is <EM>[name]</EM>.")
@@ -1131,6 +1130,9 @@
 							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from both [m2] holes" : "dripping cum from both [m2] holes"]!")
 						else
 							. += span_aiprivradio("[m1] [is_long ? "leaking a heavy load" : "dripping cum from [m2] nethers"]!")
+		var/obj/item/organ/eggs/belly_eggs = getorganslot(ORGAN_SLOT_EGGS)
+		if(user.client?.prefs?.oviposition && belly_eggs?.quantity >= 10 && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
+			. += span_aiprivradio("[capitalize(m2)] belly is bloated and bumpy!")
 		var/list/modular_lines = human_modular_examine_lines(user, observer_privilege, m1, m2, m3)
 		if(length(modular_lines))
 			. += modular_lines
@@ -1142,7 +1144,7 @@
 			var/mob/living/carbon/human/H = user
 			for(var/type in GLOB.origins)
 				var/datum/origin/O = GLOB.origins[type]
-				if(O.name == origin && O.prejudice_stress && H.origin != origin && (!O.hated_by || (H.origin in O.hated_by)))
+				if(O.name == origin && O.prejudice_stress && H.origin != origin && !HAS_TRAIT(H, TRAIT_TOLERANT) && (!O.hated_by || (H.origin in O.hated_by)))
 					. += O.prejudice_examine
 					user.add_stress(O.prejudice_stress)
 
@@ -1174,6 +1176,13 @@
 			var/mob/living/carbon/human/H = user
 			if(H.marriedto == name)
 				. += span_love("It's my spouse.")
+			if((H.patron.type == /datum/patron/inhumen/zizo) || (H.patron.type == /datum/patron/inhumen/baotha))
+				if(src.purity == TRUE)
+					. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
+				if(HAS_TRAIT(src, TRAIT_LUX_RIPPED))
+					. += span_danger("<b>[capitalize(m2)] lux is torn!</b>")
+				if(src.virginity == TRUE)
+					. += span_aiprivradio("VIRGIN!")
 
 		var/gang_message = get_gang_text(user)
 		if (gang_message)
@@ -1184,6 +1193,9 @@
 
 		if(HAS_TRAIT(src, TRAIT_EXCOMMUNICATED))
 			. += span_userdanger("EXCOMMUNICATED! SHAME!")//Temporary, probably going to get rid of the trait since it doesn't fit for us.
+		
+		if(length(curses) >= 1)
+			. += span_userdanger("CURSED BY THE DIVINE!")
 /*
 		if(name in GLOB.excommunicated_players)
 			var/mob/living/carbon/human/H = src
@@ -1329,13 +1341,13 @@
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
-				. += span_danger("They extrude a pale aura. Their soul [stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
-			else if(stat == DEAD)
+				. += span_danger("They extrude a pale aura. Their soul [looks_dead() ? "was not" : "is not"] clean. This is it for them.")
+			else if(looks_dead())
 				. += span_danger("This was their only chance at lyfe.")
 
 	// Real medical role can tell at a glance it is a waste of time, but only if the Necra message don't come first.
 
-	if(user.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT && src.stat == DEAD)
+	if(user.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT && looks_dead())
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user && !HAS_TRAIT(user, TRAIT_DEATHSIGHT)) // A lot of conditional to avoid a redundant message, but we also want unknown DNRs to be covered.
 			. += span_danger("Their body holds not even a glimmer of life. No medicine can bring them back.")
 

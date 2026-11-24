@@ -57,6 +57,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 /world/proc/AVerbsAdmin()
 	return list(
 	/client/proc/adjusttriumph,
+	/client/proc/triumphs_panel,
 	/client/proc/end_party,
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/toggle_lobby_ooc,
@@ -204,6 +205,10 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	return list(
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/check_timer_sources,
+	/client/proc/check_sound_tokens,
+	/client/proc/check_sound_area,
+	/client/proc/point_ambience_mode,
+	/client/proc/point_ambience_server,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,

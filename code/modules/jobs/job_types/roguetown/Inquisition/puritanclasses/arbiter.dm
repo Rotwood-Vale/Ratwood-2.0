@@ -11,6 +11,7 @@
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
+	pure_heart = TRUE
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
@@ -42,7 +43,9 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		"HOUND" = /obj/item/inqhound,
+		"SNIFFER" = /obj/item/inqscanner
 	)
 
 /datum/outfit/job/roguetown/puritan/arbiter/pre_equip(mob/living/carbon/human/H)

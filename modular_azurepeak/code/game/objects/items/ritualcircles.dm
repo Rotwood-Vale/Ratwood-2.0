@@ -21,12 +21,26 @@
 		playsound(loc, 'sound/foley/cloth_wipe (1).ogg', 100, TRUE)
 		qdel(src)
 
+/proc/deconvert_zizo(mob/living/carbon/human/target, obj/structure/ritualcircle/circle, patron_type)
+	var/datum/antagonist/zizocultist/cult = target?.mind?.has_antag_datum(/datum/antagonist/zizocultist)
+	if(!cult || target.loc != circle.loc || target.stat == DEAD)
+		return
+	if(!cult.islesser || alert(target, "Will you refuse the Dark Lady, and free your soul?", "CLEANSING", "YIELD", "RESIST") == "RESIST")
+		return
+	to_chat(target, span_userdanger("I am free from the Dark Lady's service, and any chance for greater power..."))
+	cult.on_removal()
+	target.set_patron(new patron_type)
+	target.say("Praise [target.patron.name]!", forced = "deconversion")
+	target.emote("agony", forced = TRUE)
+	target.Stun(30)
+	target.Knockdown(30)
+
 // This'll be our tutorial ritual for those who want to make more later, let's go into details in comments, mm? - Onutsio
 /obj/structure/ritualcircle/astrata
 	name = "Rune of the Sun" // defines name of the circle itself
 	icon_state = "astrata_chalky" // the icon state, so, the sprite the runes use on the floor. As of making, we have 6, each needs an active/inactive state.
 	desc = "A Holy Rune of Astrata. Warmth irradiates from the rune." // description on examine
-	var/solarrites = list("Guiding Light") // This is important - This is the var which stores every ritual option available to a ritualist - Ideally, we'd have like, 3 for each God. Right now, just 1.
+	var/solarrites = list("Guiding Light", "Cleansing") // This is important - This is the var which stores every ritual option available to a ritualist - Ideally, we'd have like, 3 for each God. Right now, just 1.
 
 /obj/structure/ritualcircle/astrata/attack_hand(mob/living/user)
 	if(!..())
@@ -61,6 +75,25 @@
 						guidinglight(src) // Actually starts the proc for applying the buff
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 						addtimer(VARSET_CALLBACK(src, icon_state, "astrata_chalky"), 120)
+		if("Cleansing")
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				valids_on_rune += peep
+			var/mob/living/carbon/human/target = input(user, "Deconvert") as null|anything in valids_on_rune
+			if(!target || target.loc != loc)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("In the Name of the Sun Queen, and of Her Light, and of Her Father's holy Corpse!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Astrata rises, and those who hate Her flee before Her!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("AS WAX MELTS BENEATH HER FLAME, SO TOO DOES THE ARCHENEMY PERISH AT THE PRESENCE OF HER LIGHT!!")
+			icon_state = "astrata_active"
+			deconvert_zizo(target, src, /datum/patron/divine/astrata)
+			addtimer(VARSET_CALLBACK(src, icon_state, "astrata_chalky"), 120)
 
 /obj/structure/ritualcircle/astrata/proc/guidinglight(src)
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
@@ -187,6 +220,42 @@
 	name = "Rune of Justice"
 	icon_state = "ravox_chalky"
 	desc = "A Holy Rune of Ravox. A blade to protect the weak with."
+	var/ravoxrites = list("Vow to Ravox")
+
+/obj/structure/ritualcircle/ravox/attack_hand(mob/living/user)
+	if(!..())
+		return
+	if((user.patron?.type) != /datum/patron/divine/ravox)
+		to_chat(user,span_warning("I feel a scornful gaze. This rune isn't for me."))
+		return
+	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
+		to_chat(user,span_warning("I don't know the proper rites for this..."))
+		return
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
+		to_chat(user,span_warning("I have performed enough rituals for the day... I must rest before communing more."))
+		return
+	var/riteselection = input(user, "Rituals of Justice", src) as null|anything in ravoxrites
+	switch(riteselection)
+		if("Vow to Ravox") // Ideally stick to this style for rites. Early returns + negatives. Minimises the "pyramid" shape you can see in Astrata, which I've left untouched for now -- CODEATHON
+			var/target = user
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("My steel is sharp, my heart is true!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("For the weak, my blade I drew!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Let foes of justice face my might!")
+			if(!do_after(user, 3 SECONDS))
+				return
+			user.say("Ravox, guide my hand in righteous fight!")
+			playsound(loc, 'sound/magic/holyshield.ogg', 80, FALSE, -1)
+			ravoxvow(target)
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+
+/obj/structure/ritualcircle/ravox/proc/ravoxvow(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/buff/ravox_vow)
 
 /obj/structure/ritualcircle/pestra
 	name = "Rune of Plague"
@@ -1241,7 +1310,7 @@
 	name = "Rune of Ambition"
 	desc = "A Holy Rune of ZIZO. Ambition at any cost."
 	icon_state = "zizo_chalky"
-	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal", "Conversion")
+	var/zizorites = list("Rite of Armaments", "Conversion")
 
 /obj/structure/ritualcircle/zizo/attack_hand(mob/living/user)
 	if(!..())
@@ -1280,33 +1349,6 @@
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			zizoarmaments(target)
-			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
-		if("Rite of the Dark Crystal")
-			if(!user.mind)
-				return
-			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
-				var/confirm = alert(user, "Your pact with Zizo allows no more relics while your existing ones remain bound. Sever your oldest crystal - and the dead bound to it - to forge a new one?", "Rite of the Dark Crystal", "Sever and Replace", "Cancel")
-				if(confirm != "Sever and Replace")
-					return
-			if(!do_after(user, 5 SECONDS))
-				return
-			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
-			if(!do_after(user, 5 SECONDS))
-				return
-			user.say("ZIZO! ZIZO! GRANT THE CABAL THEIR RELIC!!")
-			if(!do_after(user, 5 SECONDS))
-				return
-			user.say("ZIZO! ZIZO! THE DARK CRYSTAL TO COMMAND THE DEAD!!")
-			if(!do_after(user, 5 SECONDS))
-				return
-			// re-check cap right before committing, in case circumstances changed during the chant
-			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
-				user.mind.necro_retire_oldest_crystal()
-			icon_state = "zizo_active"
-			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			var/obj/item/necro_relics/necro_crystal/new_crystal = new /obj/item/necro_relics/necro_crystal(loc)
-			user.mind.necro_register_crystal(new_crystal)
-			loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
 			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
@@ -2117,7 +2159,7 @@
 	name = "Rune of Enduring"
 	desc = "A Holy Rune of Psydon. It depicts His holy symbol, yet nothing stirs within you."
 	icon_state = "psydon_chalky"
-	var/psydonrites = list("Conversion", "Admonishment", "Freedom")
+	var/psydonrites = list("Conversion", "Admonishment", "Freedom", "Cleansing")
 
 /obj/structure/ritualcircle/psydon/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/old_god)
@@ -2186,7 +2228,7 @@
 						user.emote("cry")
 						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
-							psydonadmonishment(target)
+							psydonadmonishment(target, user)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
 			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
@@ -2214,6 +2256,27 @@
 						if(do_after(user, 5 SECONDS))
 							psydonstrip(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
+		if("Cleansing")
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				valids_on_rune += peep
+			var/mob/living/carbon/human/target = input(user, "Deconvert") as null|anything in valids_on_rune
+			if(!target || target.loc != loc)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("The blood of Psydon compels you!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("The blood of Psydon compels you!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("THE POWER OF PSYDON COMPELS YOU!!")
+			user.emote("cry")
+			loc.visible_message(span_cult("[user] weeps."))
+			if(!do_after(user, 5 SECONDS))
+				return
+			deconvert_zizo(target, src, /datum/patron/old_god)
 
 /obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target, luxshield = FALSE)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -2243,7 +2306,7 @@
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
 		loc.visible_message(span_cult("[target] stands untouched. They reject His will."))
 
-/obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's admonishment.")
 		return
@@ -2252,13 +2315,19 @@
 		loc.visible_message(span_warning("[target] does not have the mind to benefit from the One's guidance."))
 		return
 
-	if(HAS_TRAIT(target, TRAIT_SILVER_BLESSED))
-		loc.visible_message(span_warning("[target] has already been saved by the One's admonishment."))
-		return
-
 	if(target.stat == DEAD)
 		loc.visible_message(span_warning("With their heart stilled, the ritual will have no purchase upon [target]. It would be a waste."))
 		return
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		if(target.remove_curse(C))
+			target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+			if(HAS_TRAIT(user, TRAIT_INQUISITION)) // aka absolver
+				loc.visible_message(span_warning("With masterful precision, the divine curse on [target] is unwoven."))
+			else
+				loc.visible_message(span_warning("The divine curse on [target] is transferred to [user]"))
+				user.add_curse(C.type)
 
 	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
 	var/datum/antagonist/werewolf/lesser/Wereless = target.mind.has_antag_datum(/datum/antagonist/werewolf/lesser/)
@@ -2545,6 +2614,13 @@
 
 /obj/structure/ritualcircle/psydon/proc/psydonconversion_stage4(mob/living/carbon/human/target)
 	to_chat(target, span_mind_control("..."))
+	
+	// Remove divine punishments
+	target.remove_status_effect(/datum/status_effect/debuff/apostasy)
+	target.remove_status_effect(/datum/status_effect/debuff/excomm)
+	target.remove_stress(/datum/stressevent/apostasy)
+	target.remove_stress(/datum/stressevent/excommunicated)
+	
 	if(target.devotion == null)
 		target.set_patron(new /datum/patron/old_god)
 		return
