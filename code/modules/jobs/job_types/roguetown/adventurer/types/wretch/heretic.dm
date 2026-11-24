@@ -650,26 +650,26 @@
 			if("Atgervi Shaman") //Pick this and Unarmed. Now you are a true Atgervi Shaman.
 				to_chat(H, span_warning("Unlike your more opportunistic fellows who bend their knees and betray their beast-gods for a coin, you haven't strayed from your path. Why grovel, when you can take what you want with unrestrained brutality?"))
 				head = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
-				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/atgervi
 				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 				pants = /obj/item/clothing/under/roguetown/trou/leather/atgervi
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
-				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
+				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/atgervi
 				switch(H.patron?.type)
 					if(/datum/patron/inhumen/zizo)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan
 					if(/datum/patron/inhumen/graggar)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/hammerhold
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/pagan
 					if(/datum/patron/inhumen/matthios)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/hammerhold
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 					if(/datum/patron/inhumen/baotha)
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/hammerhold
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/pagan
 					if(/datum/patron/divine/abyssor)
-						id = /obj/item/clothing/neck/roguetown/psicross/abyssor/hammerhold
+						id = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 					if(/datum/patron/divine/dendor)
-						id = /obj/item/clothing/neck/roguetown/psicross/dendor/hammerhold
+						id = /obj/item/clothing/neck/roguetown/psicross/dendor/pagan
 					else
-						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/hammerhold/special
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special
 			if("Disgraced Disciple (Natural Armor)") //Orthodoxist Disciple. You get Disciple's Natural Armor.
 				to_chat(H, span_warning("Once you served mortal men and their books. Today and from now on, you serve HIM and HIM alone."))
 				head = /obj/item/clothing/head/roguetown/roguehood/psydon
@@ -703,7 +703,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
 				switch(style_choice)
 					if("Atgervi Shaman")
-						gloves = /obj/item/clothing/gloves/roguetown/plate/atgervi/heretic
+						gloves = /obj/item/clothing/gloves/roguetown/plate/atgervi
 					if("Disgraced Disciple (Natural Armor)")
 						H.change_stat(STATKEY_WIL, 2)//puts it 1:1 with abboteer
 						H.change_stat(STATKEY_CON, 1)

@@ -1133,7 +1133,7 @@
 /datum/anvil_recipe/weapons/silver/poleaxe
 	name = "Poleaxe, Silver (+2 Silver, +2 Small Logs)"
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/silver
+	created_item = /obj/item/rogueweapon/greataxe/poleaxe/silver
 	display_category = ITEM_CAT_WEAPONS_AXES
 
 /datum/anvil_recipe/weapons/silver/mace
@@ -1727,7 +1727,7 @@
 /datum/anvil_recipe/weapons/psy/poleaxe
 	name = "Psydonic Poleaxe (+2 Blessed Silver, +1 Small Log)"
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/psy
+	created_item = /obj/item/rogueweapon/greataxe/poleaxe/psy
 	display_category = ITEM_CAT_WEAPONS_AXES
 
 /datum/anvil_recipe/weapons/psy/mace

@@ -45,6 +45,8 @@
 		/datum/advclass/mercenary/grenzelhoft/halberdier,
 		/datum/advclass/mercenary/grenzelhoft/crossbowman,
 		/datum/advclass/mercenary/grenzelhoft/mage,
+		/datum/advclass/mercenary/gronn/warrior,
+		/datum/advclass/mercenary/gronn/heavy,
 		/datum/advclass/mercenary/hammerhold,
 		/datum/advclass/mercenary/hammerhold_heavy,
 		/datum/advclass/mercenary/routier,

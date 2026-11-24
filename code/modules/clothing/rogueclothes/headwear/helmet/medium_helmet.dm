@@ -958,3 +958,25 @@
 	desc = "A heavy helmet in simple greys. Justice is impartial and so are you...in theory."
 	ducal_color = FALSE
 	detail_color = "#36454F"
+
+/obj/item/clothing/head/roguetown/helmet/sallet/iron/banded
+	name = "banded iron helmet"
+	desc = "A menacing horned half-face iron helmet worn primarily by mercenaries hailing from an unaligned conflict-ridden enclave within the Gronn-Hammerhold border. \
+	A helmet of this kind was notoriously worn by an unknown person said to kill the last Great Drakyn inhabiting the mountains of Hammerhold."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
+	armor_class = ARMOR_CLASS_MEDIUM
+	flags_inv = HIDEEARS|HIDEFACE
+	flags_cover = HEADCOVERSEYES
+	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES
+	block2add = FOV_BEHIND
+	smelt_bar_num = 1
+	icon_state = "ibandedhelm"
+	item_state = "ibandedhelm"
+	drop_sound = 'sound/foley/dropsound/scrap_drop.ogg'
+	pickup_sound = 'sound/foley/equip/scrap_equip.ogg'
+	equip_sound = 'sound/foley/equip/scrap_equip.ogg'
+
+/obj/item/clothing/head/roguetown/helmet/sallet/iron/banded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)

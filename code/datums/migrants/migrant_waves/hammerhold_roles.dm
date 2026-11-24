@@ -11,13 +11,13 @@
 	..()
 	if(H.mind)
 		H.set_patron(/datum/patron/divine/abyssor)
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/hammerhold
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/iron/banded
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	cloak = /obj/item/clothing/cloak/darkcloak/bear
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/iron/hammerhold
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/iron/banded
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	pants = /obj/item/clothing/under/roguetown/platelegs/iron/hammerhold
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron/hammerhold
+	pants = /obj/item/clothing/under/roguetown/platelegs/iron
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	gloves = /obj/item/clothing/gloves/roguetown/angle/atgervi
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -214,7 +214,7 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	pants = /obj/item/clothing/under/roguetown/splintlegs/iron/hammerhold
+	pants = /obj/item/clothing/under/roguetown/splintlegs/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	gloves = /obj/item/clothing/gloves/roguetown/chain/hammerhold
 	belt = /obj/item/storage/belt/rogue/leather

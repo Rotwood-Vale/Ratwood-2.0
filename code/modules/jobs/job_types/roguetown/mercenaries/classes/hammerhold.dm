@@ -46,7 +46,7 @@
 		if(/datum/patron/inhumen/matthios)
 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothapagan
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/pagan
 		if(/datum/patron/divine/abyssor)
 			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 		if(/datum/patron/divine/dendor)
@@ -69,7 +69,8 @@
 				gloves = /obj/item/clothing/gloves/roguetown/chain/hammerhold
 				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
 				pants = /obj/item/clothing/under/roguetown/chainlegs/hammerhold
-				wrists = /obj/item/clothing/wrists/roguetown/bracers/splint
+				wrists = /obj/item/clothing/wrists/roguetown/splintarms/iron
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 				backr = /obj/item/rogueweapon/shield/iron
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/short/hammerhold //New heavy shortsword.
@@ -87,7 +88,7 @@
 				H.change_stat(STATKEY_CON, 2)
 				H.change_stat(STATKEY_INT, -1) //Unga swordsman.
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-				H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/warrior]
+				H.dna.species.soundpack_m = new /datum/voicepack/male/warrior
 			if("Skemmdarvargur - Ravager")	//Light armor, beast claws or dual handaxes.
 				H.set_blindness(0)
 				to_chat(H, span_warning("The Skemmdarvargur are famously known to hail from the northern city of Skugge, the first line of defense for the Northern Empty. Although highly superstitious with their various carved armaments, they lack the mystical miracles of the Iskarn Shamans."))
@@ -95,6 +96,7 @@
 				head = /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/hammerhold
 				gloves = /obj/item/clothing/gloves/roguetown/angle/hammerholdfur
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/hammerhold
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				pants = /obj/item/clothing/under/roguetown/trou/leather/hammerhold
 				neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
@@ -105,13 +107,13 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 2, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/craft/traps, 3, TRUE)			//Ditto
+				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)//Ditto
 				H.change_stat(STATKEY_CON, 1)
 				H.change_stat(STATKEY_WIL, 2)
 				H.change_stat(STATKEY_SPD, 2)
 				H.change_stat(STATKEY_PER, 2)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/evil] //Dodge builds are evil
+				H.dna.species.soundpack_m = new /datum/voicepack/male/evil //Dodge builds are evil
 				var/weapons = list("Handclaws","Dual Handaxes")
 				var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 				if(H.mind)
@@ -167,7 +169,7 @@
 
 /datum/outfit/job/roguetown/mercenary/hammerhold_heavy/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/evil] //It's fucking cool okay
+	H.dna.species.soundpack_m = new /datum/voicepack/male/evil //It's fucking cool okay
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron/hammerhold
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/hammerhold
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron/hammerhold
@@ -191,7 +193,7 @@
 		if(/datum/patron/inhumen/matthios)
 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothapagan
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/pagan
 		if(/datum/patron/divine/abyssor)
 			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 		if(/datum/patron/divine/dendor)

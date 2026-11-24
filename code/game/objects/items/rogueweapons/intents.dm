@@ -63,6 +63,10 @@
 	/// Whether the intent itself has integrity damage modifier. Used for rend.
 	var/intent_intdamage_factor = 1
 	/// Intent's demolition mod. Applied to structures / objects and shields.
+	/// Minimum damage from the intent.
+	var/min_intent_damage = 0
+	/// Maximum damage from the intent.
+	var/max_intent_damage = 99999 ///We're just gonna set it to this.
 	var/demolition_mod = 1
 	/// Changes the item's attack type ("blunt" - area-pressure attack, "slash" - line-pressure attack, "stab" - point-pressure attack)
 	var/item_d_type = "blunt"

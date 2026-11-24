@@ -1,3 +1,6 @@
+#define POLEAXE_STOCK_INTENTS list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
+#define POLEAXE_STOCK_GRIPPED_INTENTS list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/mace/strike/poleaxe, /datum/intent/spear/thrust/militia)
+
 //axe objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/stoneaxe
@@ -82,7 +85,6 @@
 	name = "oath"
 	desc = "A hefty, steel-forged axe marred by the touch of countless Wardens. Despite it's weathered etchings and worn grip, the blade has been honed to a razor's edge and you can see your reflection in the finely polished metal."
 	icon_state = "oath"
-	icon = 'icons/roguetown/weapons/64.dmi'
 	max_blade_int = 500
 	dropshrink = 0.75
 	wlength = WLENGTH_LONG
@@ -309,7 +311,7 @@
 
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
 	name = "woodcutter's axe"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/axes64.dmi'
 	icon_state = "woodcutter"
 	desc = "A long-handled axe with a carved grip, made of high quality wood. Perfect for those in the lumber trade."
 	max_integrity = 300		//100 higher than normal; basically it's main difference.
@@ -499,7 +501,7 @@
 	name = "greataxe"
 	desc = "A iron great axe, a long-handled axe with a single blade made for ruining someone's day beyond any measure.."
 	icon_state = "igreataxe"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/axes64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -538,7 +540,6 @@
 	name = "steel greataxe"
 	desc = "A steel great axe, a long-handled axe with a single blade made for ruining someone's day beyond any measure.."
 	icon_state = "sgreataxe"
-	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 11
 	max_blade_int = 250
 	smeltresult = /obj/item/ingot/steel
@@ -564,7 +565,6 @@
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/chop/heavy, /datum/intent/axe/sweep)
 	name = "bronze greataxe"
 	desc = "A massive staff with a bronze axhead mantled onto the wood. It splits and carves from afar with lethal force; be it lumber or limbs."
-	icon = 'icons/roguetown/weapons/axes64.dmi'
 	icon_state = "bronzegreataxe"
 	minstr = 11
 	wdefense = 7
@@ -600,15 +600,78 @@
 /datum/intent/mace/strike/poleaxe
 	damfactor = 1.2
 
-/obj/item/rogueweapon/greataxe/silver
+
+/obj/item/rogueweapon/greataxe/poleaxe
+	possible_item_intents = POLEAXE_STOCK_INTENTS
+	gripped_intents = POLEAXE_STOCK_GRIPPED_INTENTS
+	name = "poleaxe"
+	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axhead of steel. It is the ultimate weapon for a well-seasoned knight, capable of \
+	humbling any foe that may assail their presence. </br>'Away with you, vile beggar!'"
+	icon_state = "steelpoleaxe"
+	special = /datum/special_intent/side_sweep
+	max_blade_int = 300
+	/// One-handed intents a TRAIT_BARBARICFIGHTER fights with.
+	var/list/barbaric_item_intents = list(/datum/intent/axe/cut, /datum/intent/sword/disarm, /datum/intent/axe/sweep, /datum/intent/mace/strike)
+	/// Two-handed intents a TRAIT_BARBARICFIGHTER fights with.
+	var/list/barbaric_gripped_intents = list(/datum/intent/axe/cut/saigasplitter, /datum/intent/axe/chop/saigasplitter, /datum/intent/axe/split, /datum/intent/effect/daze/saigasplitter)
+	/// Whether this poleaxe is valid for TRAIT_BARBARICFIGHTER
+	var/barbaric_trainable = FALSE
+	/// Flag for if the master intents are active, e.g., this is being held by someone with TRAIT_BARBARICFIGHTER.
+	var/barbaric_training_active = FALSE
+
+
+/obj/item/rogueweapon/greataxe/poleaxe/Initialize(mapload)
+	. = ..(mapload)
+	barbaric_trainable = uses_stock_poleaxe_kit()
+	// The master's skill and the master's intents go together. No master skill unless using master intents.
+	if(barbaric_trainable)
+		AddComponent(/datum/component/skill_blessed, TRAIT_BARBARICFIGHTER, /datum/skill/combat/polearms, SKILL_LEVEL_EXPERT)
+
+/// Whether this poleaxe is still a plain poleaxe. 
+/obj/item/rogueweapon/greataxe/poleaxe/proc/uses_stock_poleaxe_kit()
+	if(!length(barbaric_item_intents) || !length(barbaric_gripped_intents))
+		return FALSE
+	if(!compare_list(possible_item_intents, POLEAXE_STOCK_INTENTS))
+		return FALSE
+	if(!compare_list(gripped_intents, POLEAXE_STOCK_GRIPPED_INTENTS))
+		return FALSE
+	return TRUE
+
+/obj/item/rogueweapon/greataxe/poleaxe/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	update_barbaric_training(user, slot == ITEM_SLOT_HANDS)
+
+/obj/item/rogueweapon/greataxe/poleaxe/dropped(mob/user, silent = FALSE)
+	. = ..()
+	if(QDELETED(src))
+		return
+	update_barbaric_training(user, FALSE)
+
+/// Swaps the master kit in while a TRAIT_BARBARICFIGHTER has the poleaxe in hand, and back out the moment
+/// it leaves their hands - the poleaxe is not special in any way, the fighter is.
+/obj/item/rogueweapon/greataxe/poleaxe/proc/update_barbaric_training(mob/user, held)
+	if(!barbaric_trainable)
+		return
+	var/should_train = (held && user && HAS_TRAIT(user, TRAIT_BARBARICFIGHTER)) ? TRUE : FALSE
+	if(should_train == barbaric_training_active)
+		return
+	if(altgripped || wielded)
+		ungrip(iscarbon(user) ? user : null, FALSE)
+	if(should_train)
+		possible_item_intents = barbaric_item_intents.Copy()
+		gripped_intents = barbaric_gripped_intents.Copy()
+	else
+		// barbaric_trainable is only ever set on a sword still carrying the stock kit so we give it the stock back.
+		possible_item_intents = POLEAXE_STOCK_INTENTS
+		gripped_intents = POLEAXE_STOCK_GRIPPED_INTENTS
+	barbaric_training_active = should_train
+
+/obj/item/rogueweapon/greataxe/poleaxe/silver
 	force = 15
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/mace/strike/poleaxe, /datum/intent/spear/thrust/militia)
 	name = "silver poleaxe"
 	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axhead of pure silver. It may not stop the darkness; but it will halt its march, long enough, to shepherd away the defenseless. </br>'O'er the Horizon, the stars and spirals I see; and below it, the horrors that've been felled by me. Through the darkness, I see my home and its beautiful light; and it will continue to shimmer, as long as I fight. Forever I stand, forever I'll hold - 'til the Horizon grows still, and my spirit trails home..'"
 	icon_state = "silverpolearm"
-	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12
 	max_blade_int = 350
 	max_integrity = 150 // compensates for the potential of using it to parry without actually using blunt parry integrity loss
@@ -616,7 +679,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/greataxe/silver/ComponentInitialize()
+/obj/item/rogueweapon/greataxe/poleaxe/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -627,13 +690,10 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greataxe/psy
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/mace/strike/poleaxe, /datum/intent/spear/thrust/militia)
+/obj/item/rogueweapon/greataxe/poleaxe/psy
 	name = "psydonic poleaxe"
 	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axhead of alloyed silver. As the fragility of swords've become more apparent, the Psydonic Orders - following the disastrous Massacre of Blastenghyll - have shifted their focus towards arming their paladins with longer-lasting greatweapons."
 	icon_state = "silverpolearm"
-	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12
 	max_blade_int = 350
 	max_integrity = 150 // compensates for the potential of using it to parry without actually using blunt parry integrity loss
@@ -642,7 +702,7 @@
 	smeltresult = /obj/item/ingot/silverblessed
 	special = /datum/special_intent/polearm_backstep
 
-/obj/item/rogueweapon/greataxe/psy/ComponentInitialize()
+/obj/item/rogueweapon/greataxe/poleaxe/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -653,7 +713,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greataxe/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/greataxe/poleaxe/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -672,7 +732,6 @@
 	name = "double-headed steel greataxe"
 	desc = "A steel great axe with a wicked double-bladed head. Perfect for cutting either men or trees into stumps.."
 	icon_state = "doublegreataxe"
-	icon = 'icons/roguetown/weapons/64.dmi'
 	max_blade_int = 230
 	minstr = 12
 
@@ -684,7 +743,6 @@
 	force = 20
 	force_wielded = 40
 	max_blade_int = 400
-	icon = 'icons/roguetown/weapons/64.dmi'
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/chop/heavy, /datum/intent/axe/sweep)
 	special = /datum/special_intent/graggar_break_the_ranks
 
@@ -708,6 +766,97 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "AXE", "RENDERED ASUNDER")
 
+/obj/item/rogueweapon/greataxe/poleaxe/saigasplitter
+	name = "\"Saigasplitter\""
+	desc = "A crude fusion of different arms - \
+	the length of the weapon resembles a Naledian staff, stripped of gold, \
+	the forcibly-embedded blade of the implement is reminiscent of an aavnic sabre,\
+	and the jagged protrusions resemble bloodletting teeth, akin to those of dwarven mauls.\
+	This was naught the work of a blacksmith, but a madman's creation."
+	icon_state = "saigasplitter"
+	max_blade_int = 300
+	minstr = 12
+	force = 25
+	force_wielded = 35
+	wdefense = 8
+	wbalance = WBALANCE_HEAVY
+/obj/item/rogueweapon/greataxe/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.7,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.7,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+			if("altgrip") // for poleaxe alt grip
+				return list("shrink" = 0.7,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 187,"sturn" = -7,"wturn" = 196,"eturn" = -22,"nflip" = 0,"sflip" = 2,"wflip" = 0,"eflip" = 2)
+
+
+/datum/intent/axe/cut/saigasplitter
+	name = "wicked overhead"
+	icon_state = "incut"
+	desc = "Heft your ungodly implement of Malum above your head, and bring it crashing down upon your foe. Keeping the attack ready costs stamina."
+	attack_verb = list("brutishly swings", "piledrives the axe into")
+	chargetime = 7
+	swingdelay = 9
+	min_intent_damage = 30
+	max_intent_damage = 40
+	penfactor = PEN_MEDIUM
+	chargedrain = 0.5
+	misscost = 10
+
+/datum/intent/axe/chop/saigasplitter
+	name = "dentmaker"
+	icon_state = "inchop"
+	desc = "Drive the the blunted edge of your implement into your foe in a chopping arc, denting whatever plate remains in your way. The follow-through leaves you momentarily vulnerable."
+	attack_verb = list("hammers", "bashes")
+	min_intent_damage = 25
+	max_intent_damage = 35
+	penfactor = PEN_NONE
+	misscost = 10
+	blade_class = BCLASS_BLUNT
+	icon_state = "instrike"
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	hitsound = list('sound/foley/binds/bind_heavy12.ogg', 'sound/foley/binds/bind_heavy9.ogg', 'sound/foley/binds/bind_heavy1.ogg')
+	swingdelay_type = SWINGDELAY_PENALTY
+	clickcd = CLICK_CD_CHARGED
+
+/datum/intent/axe/split
+	name = "iron swan"
+	icon_state = "intear"
+	desc = "Grip your implement firmly with both hands, placing all of your strength in a horizontal arc and sinking every perforating spike into your target - there's no going back on this maneuver, and will leave you exposed."
+	damfactor = 2
+	penfactor = PEN_BSTEEL
+	animname = "strike"
+	item_d_type = "piercing"
+	blade_class = BCLASS_PICK
+	chargetime = 0
+	clickcd = 14 // Just like knife pick!
+	swingdelay = 12
+	attack_verb = list("heaves and swings", "haphazardly hacks")
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
+	swingdelay_type = SWINGDELAY_CANCEL
+	misscost = 20
+
+/datum/intent/effect/daze/saigasplitter
+	name = "raucous rampart"
+	icon_state = "indaze"
+	desc = "Flip your weapon to the blunt end of its length and drive it forward against your target's throat or mouth, leaving them reeling."
+	damfactor = 0.8
+	penfactor = PEN_NONE
+	blade_class = BCLASS_BLUNT
+	hitsound = list('sound/foley/binds/bind_heavy4.ogg', 'sound/foley/binds/bind_heavy2.ogg', 'sound/foley/binds/bind_heavy5.ogg')
+	attack_verb = list("furiously slams", "fearsomely lunges at")
+	intent_effect = /datum/status_effect/debuff/dazed/saigasplitter
+	target_parts = list(BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_NECK)
+	swingdelay = 10
+	misscost = 5
+
 ////////////////////////////////////////
 // Unique loot axes; mostly from mobs //
 ////////////////////////////////////////
@@ -730,3 +879,6 @@
 	minstr = 13							//Heavy, but still good.
 	wdefense = 3						//Slightly better than norm, has 6 defense 2 handing it.
 	is_tool = FALSE
+
+#undef POLEAXE_STOCK_INTENTS
+#undef POLEAXE_STOCK_GRIPPED_INTENTS

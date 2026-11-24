@@ -72,17 +72,17 @@
 	)
 	cultural_stock_pool = list(
 		/datum/supply_pack/rogue/food/honey,
-		/datum/supply_pack/rogue/gronn/gronnarmor
-		/datum/supply_pack/rogue/gronn/gronnpants
-		/datum/supply_pack/rogue/gronn/farhat
-		/datum/supply_pack/rogue/gronn/nomadhelmet
-		/datum/supply_pack/rogue/gronn/nomadscalemail
-		/datum/supply_pack/rogue/gronn/kurche
-		/datum/supply_pack/rogue/gronn/kite_shield
-		/datum/supply_pack/rogue/gronn/warrior_kit
-		/datum/supply_pack/rogue/gronn/gronnic_heavy_plate
-		/datum/supply_pack/rogue/gronn/gronnic_heavy_helm
-		/datum/supply_pack/rogue/gronn/heavy_kit
+		/datum/supply_pack/rogue/gronn/gronnarmor,
+		/datum/supply_pack/rogue/gronn/gronnpants,
+		/datum/supply_pack/rogue/gronn/farhat,
+		/datum/supply_pack/rogue/gronn/nomadhelmet,
+		/datum/supply_pack/rogue/gronn/nomadscalemail,
+		/datum/supply_pack/rogue/gronn/kurche,
+		/datum/supply_pack/rogue/gronn/kite_shield,
+		/datum/supply_pack/rogue/gronn/warrior_kit,
+		/datum/supply_pack/rogue/gronn/gronnic_heavy_plate,
+		/datum/supply_pack/rogue/gronn/gronnic_heavy_helm,
+		/datum/supply_pack/rogue/gronn/heavy_kit,
 		/datum/supply_pack/rogue/gronn/spider_honey,
 		/datum/supply_pack/rogue/gronn/cured_megafauna,
 		/datum/supply_pack/rogue/gronn/ring_courage,

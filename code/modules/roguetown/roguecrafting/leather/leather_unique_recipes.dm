@@ -125,7 +125,7 @@
 
 /datum/crafting_recipe/roguetown/leather/unique/openrobes
 	name = "shamanic coat"
-	result = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi)
+	result = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/atgervi)
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 1,
 				/obj/item/natural/cloth = 1)

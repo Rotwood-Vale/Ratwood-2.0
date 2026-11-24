@@ -84,7 +84,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/huntingknife
 	beltr = /obj/item/storage/belt/rogue/surgery_bag/full/improv
-	backpack_contents = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle, /obj/item/rogueweapon/handclaw/gronn, /obj/item/rogueweapon/scabbard/sheath)
+	backpack_contents = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle, /obj/item/rogueweapon/handclaw/hammerhold, /obj/item/rogueweapon/scabbard/sheath)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

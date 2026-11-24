@@ -109,7 +109,6 @@
 		/datum/supply_pack/rogue/hammerhold/leather_boots,
 		/datum/supply_pack/rogue/hammerhold/atgervi_kit,
 		/datum/supply_pack/rogue/hammerhold/iskarn_kit,
-		/datum/supply_pack/rogue/hammerhold/dwarven_warpick,
 		/datum/supply_pack/rogue/hammerhold/grudgebearer_smith_kit,
 		/datum/supply_pack/rogue/hammerhold/grudgebearer_soldier_kit,
 		/datum/supply_pack/rogue/alcohol/voddena,

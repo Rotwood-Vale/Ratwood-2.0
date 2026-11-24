@@ -55,6 +55,7 @@
 #define TRAIT_SKILLBLESSED "Skill Blessed"
 #define TRAIT_LONGSWORDSMAN "Master Longswordman"
 #define TRAIT_SABRIST "Renowned Sabrist"
+#define TRAIT_BARBARICFIGHTER "Barbaric Fighter"
 #define TRAIT_HONORBOUND "Honorbound Tattoos"
 #define TRAIT_INFINITE_STAMINA "Indefatigable" //for ai
 #define TRAIT_NUDIST "Nudist" //you can't wear most clothes
@@ -504,7 +505,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_FENCERDEXTERITY = span_info("I've trained my entire lyfe around the art of unarmoured fencing, affording myself unmatched speed when wearing very light armour. I'm very choosy otherwise."),
 	TRAIT_MAGEDEXTERITY = span_info("The stiff, miserly sensation of metal and hard leather impedes the fluidity of my spell gestures -  I shan't wear them if I can avoid it. Fie! Who needs armor when you've the infinite wisdom of the Arcyne?"),
 	TRAIT_SKILLBLESSED = span_greentext("I've reunited with an old friend of mine. All is well."),
-	TRAIT_LONGSWORDSMAN = span_info("\"I will crush anyone who opposes me. I am of royal blood. I dispense justice, advance the cause of good and destroy evil. To those who learn my crossings I will grant great fame and renown in the art of armed fighting.\" - I fight like a Master when I wield a traditional longsword and I know how to perform master strikes with them."),	TRAIT_SABRIST = span_info("I've learned all there is to know about the Southern curve. When using a szöréndnížine sabre, I fight like a Master. My swings are innately more accurate when targetting hands and arms."),
+	TRAIT_LONGSWORDSMAN = span_info("\"I will crush anyone who opposes me. I am of royal blood. I dispense justice, advance the cause of good and destroy evil. To those who learn my crossings I will grant great fame and renown in the art of armed fighting.\" - I fight like a Master when I wield a traditional longsword and I know how to perform master strikes with them."),
+	TRAIT_SABRIST = span_info("I've learned all there is to know about the Southern curve. When using a szöréndnížine sabre, I fight like a Master. My swings are innately more accurate when targetting hands and arms."),
+	TRAIT_BARBARICFIGHTER = span_info("\"I AM NO COWARD - COME AND MAKE YOUR END, NOBLE WHORESONS! TO BLEED IS TO AWAKEN, AND MORE MUST FALL BEFORE I AM SATISFIED. \" - I am able to fight with the unrelenting fury and offensive savagery of a true barbarian when I wield my favored weapon, SAIGASPLITTER - although any poleaxe will do in a pinch."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
 	TRAIT_DODGEEXPERT = span_info("I am much better at dodging incoming strikes, when dressed in either light armor or nothing at all. Heavier armor, such as maille or plate, is too burdensome for me to quickly maneuver in."),

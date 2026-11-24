@@ -316,7 +316,7 @@
 /datum/supply_pack/rogue/Knight/silverpoleaxe
 	name = "Silver Poleaxe"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/greataxe/silver)
+	contains = list(/obj/item/rogueweapon/greataxe/poleaxe/silver)
 
 /////////////
 // SHIELDS //

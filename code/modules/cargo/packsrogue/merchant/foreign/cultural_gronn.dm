@@ -111,7 +111,7 @@
 		/obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron,
 		/obj/item/clothing/neck/roguetown/chaincoif/iron,
 		/obj/item/clothing/gloves/roguetown/plate/iron,
-		/obj/item/clothing/wrists/roguetown/bracers/splint,
+		/obj/item/clothing/wrists/roguetown/splintarms/iron,
 		/obj/item/clothing/under/roguetown/platelegs/iron,
 		/obj/item/clothing/shoes/roguetown/boots/armor/iron,
 	)

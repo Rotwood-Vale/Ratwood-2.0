@@ -25,7 +25,7 @@
 		/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/hammerhold/ownel,
 		/obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold,
 		/obj/item/clothing/gloves/roguetown/chain/hammerhold,
-		/obj/item/clothing/under/roguetown/splintlegs/iron/hammerhold
+		/obj/item/clothing/under/roguetown/chainlegs/hammerhold
 		)
 
 /datum/supply_pack/rogue/armor_exotic/hammerhold_pack_heavy

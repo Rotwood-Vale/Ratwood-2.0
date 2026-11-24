@@ -1575,3 +1575,16 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/jar/dropped(mob/living/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_THROWINGARM, REF(src))
+
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail/gronn
+	name = "barbaric stechhelm"
+	desc = "An iron-wrought stechhelm, looted from a long-deceased knight and crudely decorated with the horns of a Moose. \
+	The gnarled ivory branches seem to have lodged themselves into the visor mechanism, making it impossible to open."
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	block2add = FOV_BEHIND
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	icon_state = "gronnstag"
+	adjustable = CANT_CADJUST
