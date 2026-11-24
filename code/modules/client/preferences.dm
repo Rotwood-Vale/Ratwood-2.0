@@ -133,6 +133,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/cursed_collarable = FALSE
 	/// If we are lactating, can others milk us via reagent containers (not for sex actions, but the stuff in milking.dm)
 	var/milkable = FALSE
+	/// If we are participating in stat draining, requires both parties to have it enabled for it to work
+	var/stat_drainable = FALSE
 	/// If manticore tail flavor messages are on by default
 	var/manticore_tail_messages = FALSE
 	var/voting_popup = TRUE

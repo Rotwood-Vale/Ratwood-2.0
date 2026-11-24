@@ -153,6 +153,7 @@
 		list("id" = "descriptor_color", "label" = "Enable Colored Descriptors", "enabled" = !!owner.prefs.descriptor_color, "desc" = "Color genital descriptors based on arousal and body hair descriptors based on hair color."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
 		list("id" = "milkable", "label" = "Enable Breast Milking", "enabled" = !!owner.prefs.milkable, "desc" = "Allow other players to milk your breasts if lactating. You can still milk yourself when disabled. Only applies to clicking chest with a reagent container, NOT lactation during sex actions."),
+		list("id" = "stat_drainable", "label" = "Enable Erotic Draining", "enabled" = !!owner.prefs.stat_drainable, "desc" = "Allow others to be able to drain your stats during erotic actions."),
 		list("id" = "manticore_tail_messages", "label" = "Tailmaws", "enabled" = !!owner.prefs.manticore_tail_messages, "desc" = "Show flavor messages from your manticore tail when moving or during intimate actions, and see tail maw descriptions when examining others."),
 	)
 
@@ -272,6 +273,8 @@
 				owner.toggle_cursed_collars()
 			if("milkable")
 				owner.toggle_milkable()
+			if("stat_drainable")
+				owner.toggle_stat_drainable()
 			if("manticore_tail_messages")
 				owner.toggle_manticore_tail_messages_pref()
 			if("voting_popup")
@@ -714,6 +717,19 @@
 		to_chat(src, "You can now be milked by other players.")
 		return
 	to_chat(src, "Other players can no longer milk you.")
+
+/client/verb/toggle_stat_drainable() // toggles being milked by players clicking the chest with a container to milk player breasts
+	set category = "Options"
+	set name = "Toggle Stat Draining"
+	set hidden = 1
+	if(!prefs)
+		return
+	prefs.stat_drainable = !prefs.stat_drainable
+	prefs.save_preferences()
+	if(prefs.stat_drainable)
+		to_chat(src, "You will now participate in stat draining.")
+		return
+	to_chat(src, "You are no longer participating in stat draining.")
 
 /client/verb/toggle_manticore_tail_messages_pref()
 	set category = "Options"

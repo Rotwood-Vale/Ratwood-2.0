@@ -561,9 +561,11 @@
 		after_intimate_climax(oral, splashed_user)
 
 	//EVIL BAOTHAN STATDRAIN
-	if(effective_target && HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode)
+	if(!user?.client?.prefs?.stat_drainable || !effective_target?.client?.prefs?.stat_drainable)
+		return
+	if(HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode)
 		effective_target.apply_status_effect(/datum/status_effect/debuff/baothadrained, 1 MINUTES)
-	if(effective_target && HAS_TRAIT(effective_target, TRAIT_EVIL_DRAINER) && effective_target.cmode)
+	if(HAS_TRAIT(effective_target, TRAIT_EVIL_DRAINER) && effective_target.cmode)
 		user.apply_status_effect(/datum/status_effect/debuff/baothadrained, 1 MINUTES)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
@@ -1622,10 +1624,11 @@
 		suppress_action_messages = FALSE
 
 		//EVIL BAOTHAN STATDRAIN
-		if(HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode && user != target)
-			target?.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
-		if(target && HAS_TRAIT(target, TRAIT_EVIL_DRAINER) && target.cmode && user != target)
-			user.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
+		if(user?.client?.prefs?.stat_drainable && target?.client?.prefs?.stat_drainable)
+			if(HAS_TRAIT(user, TRAIT_EVIL_DRAINER) && user.cmode && user != target)
+				target?.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
+			if(HAS_TRAIT(target, TRAIT_EVIL_DRAINER) && target.cmode && user != target)
+				user.apply_status_effect(/datum/status_effect/debuff/baothadrained, 10 SECONDS)
 
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))

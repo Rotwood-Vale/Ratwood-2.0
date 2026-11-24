@@ -289,6 +289,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["descriptor_color"]	>> descriptor_color
 	S["cursed_collarable"] 	>> cursed_collarable
 	S["milkable"]			>> milkable
+	S["stat_drainable"] >> stat_drainable
 	S["manticore_tail_messages"]	>> manticore_tail_messages
 	S["shake"]				>> shake
 	S["no_redflash"] 		>> no_redflash
@@ -500,6 +501,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["descriptor_color"], descriptor_color)
 	WRITE_FILE(S["cursed_collarable"], cursed_collarable)
 	WRITE_FILE(S["milkable"], milkable)
+	WRITE_FILE(S["stat_drainable"], stat_drainable)
 	WRITE_FILE(S["manticore_tail_messages"], manticore_tail_messages)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["no_redflash"], no_redflash)
