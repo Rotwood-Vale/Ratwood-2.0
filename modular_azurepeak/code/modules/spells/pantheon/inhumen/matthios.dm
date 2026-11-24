@@ -972,9 +972,10 @@
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	max_blade_int = 600
 	max_integrity = 600
-	force = 28
-	block_chance = 0
+	force = 30
+	block_chance = 25
 	wdefense = 8
+	special = /datum/special_intent/greatflail_swing
 	blade_dulling = DULLING_SHAFT_WOOD
 	associated_skill = /datum/skill/combat/unarmed
 	wlength = WLENGTH_NORMAL
