@@ -198,11 +198,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/badsight/on_mob_creation(mob/user)
 	..()
 	// we don't seem to have a mind when on_mob_creation fires, so set up a timer to check when we probably will
-	addtimer(CALLBACK(src, PROC_REF(apply_effects), user), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_effects), user), 10 SECONDS)
 
 /datum/charflaw/badsight/proc/apply_effects(mob/living/carbon/human/user)
 	user.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	user.mind.special_items["Spectacles"] = /obj/item/clothing/mask/rogue/spectacles
+	user.mind?.special_items["Spectacles"] = /obj/item/clothing/mask/rogue/spectacles
 
 /datum/charflaw/paranoid
 	name = "Paranoid"
