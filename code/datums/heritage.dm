@@ -185,6 +185,8 @@
 	person = new_person
 	family = new_family
 	person?.family_member_datum = src
+	if(person)
+		RegisterSignal(person, COMSIG_QDELETING, PROC_REF(on_person_deleted))
 	var/old_dir = person?.dir
 	var/old_inivisiity = person?.invisibility
 	person?.invisibility = 0
@@ -192,6 +194,15 @@
 	cloned_look = new_person?.appearance
 	person?.dir = old_dir
 	person?.invisibility = old_inivisiity
+
+/datum/family_member/proc/on_person_deleted(datum/source)
+	SIGNAL_HANDLER
+	var/image/family_icon = family?.family_icons[person]
+	if(family_icon)
+		for(var/datum/family_member/member in family.members)
+			member.person?.client?.images -= family_icon
+		family.family_icons -= person
+	person = null
 
 /datum/family_member/proc/AddParent(datum/family_member/parent, skip_reciprocal = FALSE)
 	if(!parent || (parent in parents))

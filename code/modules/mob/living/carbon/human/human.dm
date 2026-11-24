@@ -197,16 +197,6 @@
 	QDEL_NULL(sunder_light_obj)
 	QDEL_NULL(devotion)
 	GLOB.human_list -= src
-	if(family_member_datum)
-		family_member_datum.person = null
-		family_member_datum = null
-	if(family_datum)
-		var/image/family_icon = family_datum.family_icons[src]
-		if(family_icon)
-			for(var/datum/family_member/member in family_datum.members)
-				member.person?.client?.images -= family_icon
-			family_datum.family_icons -= src
-		family_datum = null
 	var/mob/living/carbon/human/spouse = spouse_mob
 	spouse_mob = null
 	if(istype(spouse) && spouse.spouse_mob == src)
