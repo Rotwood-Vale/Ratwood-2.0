@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(familytree)
 	var/list/relation_options = list("Spouse", "Sibling", "Parent", "Offspring", "Lover", "Cousin")
 	// easiest way to tell whose older than who
 	var/list/age_order = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+	var/list/royal_jobs = list("Grand Duke", "Grand Duchess", "Consort", "Prince", "Princess")
 	//These jobs are excluded from AddLocal()
 	var/list/excluded_jobs = list(
 		"Grand Duke",
@@ -96,6 +97,19 @@ SUBSYSTEM_DEF(familytree)
 		return
 	if(H.stat == DEAD || !H.client)
 		return
+	var/royal_status
+	switch(H.job)
+		if("Grand Duke", "Grand Duchess")
+			royal_status = FAMILY_FATHER
+		if("Consort")
+			royal_status = FAMILY_MOTHER
+		if("Prince", "Princess")
+			royal_status = FAMILY_PROGENY
+	if(royal_status)
+		if(royal_status != FAMILY_FATHER && !GetCurrentMonarch())
+			return
+		AddRoyal(H, royal_status)
+		return
 	LinkSpawn(H)
 	if(!H.random_match.len)
 		return
@@ -115,6 +129,9 @@ SUBSYSTEM_DEF(familytree)
 	if(!ruling_family.founder)
 		GenerateRoyalLineage(member, status)
 		H.ShowFamilyUI(TRUE)
+		for(var/mob/living/carbon/human/waiting in GLOB.human_list)
+			if(waiting != H && !waiting.family_datum && (waiting.job in royal_jobs))
+				AddLocal(waiting)
 		return
 
 	// Handle adding new royals to existing family
@@ -125,6 +142,9 @@ SUBSYSTEM_DEF(familytree)
 			member.generation = 12
 			if(existing_monarch)
 				ruling_family.MarryMembers(existing_monarch, member)
+				for(var/datum/family_member/kid in existing_monarch.children)
+					kid.AddParent(member)
+					kid.UpdateAdoption()
 
 		if(FAMILY_PROGENY)  // Prince/Princess
 			// Children of the current monarch
@@ -135,6 +155,7 @@ SUBSYSTEM_DEF(familytree)
 				// Add other parent if monarch has spouse
 				if(monarch.spouses.len)
 					member.AddParent(monarch.spouses[1])
+				member.UpdateAdoption()
 
 		if(FAMILY_OMMER)  // Hand - sibling or cousin of monarch
 			CreateBranchFamily(member)
@@ -144,7 +165,7 @@ SUBSYSTEM_DEF(familytree)
 /datum/controller/subsystem/familytree/proc/GetCurrentMonarch()
 	// Find the monarch at generation 12 (current ruling generation)
 	for(var/datum/family_member/member in ruling_family.members)
-		if(member.generation == 12 && (member.person.job == "Grand Duke" || member.person.job == "Grand Duchess"))
+		if(member.generation == 12 && (member.person?.job == "Grand Duke" || member.person?.job == "Grand Duchess"))
 			return member
 	return null
 
@@ -357,7 +378,7 @@ SUBSYSTEM_DEF(familytree)
 	return (ckey_b in blocks[ckey_a]) || (ckey_a in blocks[ckey_b])
 
 /datum/controller/subsystem/familytree/proc/LinkSpawn(mob/living/carbon/human/H)
-	if(!H.family_id)
+	if(!H.family_id || (H.job in royal_jobs))
 		return
 	for(var/list/link in links)
 		if(link in connected)
@@ -370,7 +391,7 @@ SUBSYSTEM_DEF(familytree)
 		else if(link[2] != H.family_id)
 			continue
 		for(var/mob/living/carbon/human/other in GLOB.human_list)
-			if(other == H || other.family_id != other_id || other.stat == DEAD || !other.client)
+			if(other == H || other.family_id != other_id || other.stat == DEAD || !other.client || (other.job in royal_jobs))
 				continue
 			if(link[3] == "spouse" && (H.spouse_mob || other.spouse_mob))
 				continue

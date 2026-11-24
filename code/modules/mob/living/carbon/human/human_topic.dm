@@ -155,15 +155,15 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 				to_chat(usr, span_notice("This person social standing is equivalent to <EM>[rank_name]</EM>, they are my lesser."))
 			if(family_datum)
 				var/datum/family_member/FM = family_datum.GetMemberForPerson(src)
-				var/spousetext = ""
-				if(FM && FM.spouses.len)
-					var/list/spouse_list = list()
-					for(var/datum/family_member/S in FM.spouses)
-						if(S.person)
-							spouse_list += S.person.real_name
-					if(spouse_list.len)
-						spousetext = jointext(spouse_list, ", ")
-				to_chat(usr, span_notice("They are a member of house[family_datum.housename].[spousetext ? " Married to [spousetext]." : ""]"))
+				to_chat(usr, span_notice("They are a member of house [trim(family_datum.housename)]."))
+				if(FM)
+					var/list/relation_list = list()
+					for(var/datum/family_member/R in family_datum.members)
+						var/relation = FM.GetRelationshipTo(R)
+						if(R.person && relation && relation != "distant relative")
+							relation_list += "[R.person.real_name] ([relation])"
+					if(relation_list.len)
+						to_chat(usr, span_notice("Relations: [jointext(relation_list, ", ")]."))
 
 
 

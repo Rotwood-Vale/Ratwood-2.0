@@ -258,6 +258,12 @@
 	child.RecalculateGeneration()
 	return TRUE
 
+/datum/family_member/proc/UpdateAdoption()
+	adoption_status = TRUE
+	for(var/datum/family_member/parent in parents)
+		if(length(parent.person.dna.species.race_groups & person.dna.species.race_groups))
+			adoption_status = FALSE
+
 /datum/family_member/proc/AddSibling(datum/family_member/sibling)
 	if(!sibling || sibling == src || (sibling in siblings))
 		return FALSE
