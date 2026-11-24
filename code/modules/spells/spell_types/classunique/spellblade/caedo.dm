@@ -96,8 +96,7 @@
 
 	var/empowered = FALSE
 	var/datum/status_effect/buff/arcyne_momentum/momentum = H.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
-	if(momentum && momentum.stacks >= empower_cost)
-		momentum.consume_stacks(empower_cost)
+	if(momentum?.try_spend(empower_cost))
 		empowered = TRUE
 		to_chat(H, span_notice("Momentum surges - twin strikes!"))
 

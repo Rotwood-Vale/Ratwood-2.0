@@ -4,7 +4,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/arcyne_momentum
 	name = "Arcyne Momentum (0)"
-	desc = "Offensive strikes fuel arcyne power. Build momentum to unleash your power. Melee strikes grant 1 stack every 2 seconds; arrows from a bound bow grant 1 stack every second. Certain abilities capable of striking multiple targets grant bonus momentum. At 7+ the power overcharges - spend it! If it decays unspent, ALL momentum discharges at once, leaving you strained - briefly slowed and Vulnerable. Take care not to lose control."
+	desc = "Offensive strikes fuel arcyne power. Build momentum to unleash your power. Melee strikes grant 1 stack every 2 seconds; arrows from a bound bow grant 2 stacks every second. Certain abilities capable of striking multiple targets grant bonus momentum. At 7+ the power overcharges - spend it! If it decays unspent, ALL momentum discharges at once, leaving you strained - briefly slowed and Vulnerable. Take care not to lose control. Press the Toggle Spell Alt Mode key (Shift+G) to bank momentum: abilities stop spending 3 on empowered effects, saving it for your greatest techniques."
 	icon_state = "buff"
 
 /datum/status_effect/buff/arcyne_momentum
@@ -26,6 +26,7 @@
 	var/chant
 	var/last_melee_gain = 0
 	var/melee_gain_cooldown = 2 SECONDS
+	var/hold_momentum = FALSE
 
 /datum/status_effect/buff/arcyne_momentum/on_apply()
 	. = ..()
@@ -135,6 +136,20 @@
 	update_spell_buttons()
 	return consumed
 
+/datum/status_effect/buff/arcyne_momentum/proc/try_spend(amount)
+	if(hold_momentum || stacks < amount)
+		return FALSE
+	consume_stacks(amount)
+	return TRUE
+
+/datum/status_effect/buff/arcyne_momentum/proc/toggle_hold()
+	hold_momentum = !hold_momentum
+	if(hold_momentum)
+		owner.balloon_alert(owner, "banking momentum")
+	else
+		owner.balloon_alert(owner, "spending momentum")
+	update_alert()
+
 /datum/status_effect/buff/arcyne_momentum/proc/consume_all_stacks()
 	var/consumed = stacks
 	stacks = 0
@@ -165,7 +180,8 @@
 /datum/status_effect/buff/arcyne_momentum/proc/update_alert()
 	if(!linked_alert)
 		return
-	linked_alert.name = "Arcyne Momentum ([stacks]/[max_stacks])"
+	linked_alert.name = "Arcyne Momentum ([stacks]/[max_stacks])[hold_momentum ? " - BANKING" : ""]"
+	linked_alert.maptext = hold_momentum ? MAPTEXT("BANK") : null
 
 /datum/status_effect/buff/arcyne_momentum/proc/update_spell_buttons()
 	if(!owner?.mind)
