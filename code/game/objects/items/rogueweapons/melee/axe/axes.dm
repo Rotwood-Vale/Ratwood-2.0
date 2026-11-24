@@ -780,6 +780,8 @@
 	force_wielded = 35
 	wdefense = 8
 	wbalance = WBALANCE_HEAVY
+	special = /datum/special_intent/greatsword_swing
+
 /obj/item/rogueweapon/greataxe/getonmobprop(tag)
 	. = ..()
 	if(tag)

@@ -230,7 +230,7 @@
 	icon_state = "hammerholdchain"
 	item_state = "hammerholdchain"
 	smeltresult = /obj/item/ingot/iron
-	armor = ARMOR_MAILLE
+	armor = ARMOR_BRIGANDINE
 	min_cold_protection_temperature = 100
 	max_heat_protection_temperature = 800
 

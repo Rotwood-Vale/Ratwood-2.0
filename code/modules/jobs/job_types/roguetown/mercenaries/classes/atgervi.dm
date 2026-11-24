@@ -47,8 +47,9 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle/atgervi
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
+	cloak = /obj/item/clothing/cloak/volfmantle/shoulderpad/leather
 	pants = /obj/item/clothing/under/roguetown/trou/leather/atgervi
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/chain
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/atgervi
 	backr = /obj/item/rogueweapon/shield/atgervi
 	backl = /obj/item/storage/backpack/rogue/satchel/black
@@ -74,7 +75,7 @@
 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2, start_maxed = TRUE)
 
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
@@ -177,7 +178,7 @@
 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1, start_maxed = TRUE)	//Capped to T2 miracles.
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
@@ -192,18 +193,24 @@
 	icon_state = "atgervi_raider_mail"
 	item_state = "atgervi_raider_mail"
 	max_integrity = 400
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/atgervi
 	name = "shamanic coat"
 	desc = "A furred, protective coat. Often made by hand, it embodies the second trial of the Iskarn Shamans: To honor the leopard is to desire for more."
 	icon_state = "atgervi_shaman_coat"
 	item_state = "atgervi_shaman_coat"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/under/roguetown/trou/leather/atgervi
 	name = "fur pants"
 	desc = "Thick fur pants made to endure the coldest winds, offering a share of protection from the fangs and claws of beasts and men alike."
 	icon_state = "atgervi_pants"
 	item_state = "atgervi_pants"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/gloves/roguetown/angle/atgervi
 	name = "fur-lined leather gloves"
@@ -211,12 +218,16 @@
 	icon_state = "atgervi_raider_gloves"
 	item_state = "atgervi_raider_gloves"
 	color = "#ffffff"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/gloves/roguetown/plate/atgervi
 	name = "beast claws"
 	desc = "A menacing pair of plated claws, whose forging methods are a closely protected tradition of the Shamans. The four claws embodying the Four Great Beasts, decorated with symbols of the Gods they praise and the Gods they reject."
 	icon_state = "atgervi_shaman_gloves"
 	item_state = "atergvi_shaman_gloves"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi
 	name = "owl helmet"
@@ -230,6 +241,8 @@
 	block2add = null
 	worn_x_dimension = 32
 	worn_y_dimension = 48
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/head/roguetown/helmet/leather/saiga/atgervi
 	name = "moose hood"
@@ -244,12 +257,16 @@
 	worn_y_dimension = 48
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/atgervi
 	name = "atgervi leather boots"
 	desc = "A pair of strong leather boots, designed to endure both the heat of battle and the frigid cold of the Northern Empty."
 	icon_state = "atgervi_boots"
 	item_state = "atgervi_boots"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/rogueweapon/shield/atgervi
 	name = "kite shield"

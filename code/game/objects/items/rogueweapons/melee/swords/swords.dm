@@ -2902,6 +2902,7 @@
 	swingsound = BLADEWOOSH_HUGE
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 330
+	special = /datum/special_intent/greatsword_swing
 
 /obj/item/rogueweapon/sword/long/exe/getonmobprop(tag)
 	. = ..()
