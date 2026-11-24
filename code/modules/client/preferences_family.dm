@@ -288,7 +288,7 @@
 					if(req["relation"] == "Sibling")
 						link[3] = "sibling"
 					if(req["relation"] == "Lover" || req["relation"] == "Friend" || req["relation"] == "Cousin")
-						link[3] = lowertext(req["relation"])
+						link[3] = LOWER_TEXT(req["relation"])
 					if(req["relation"] == "Offspring")
 						link[3] = "parent"
 					if(req["relation"] == "Parent")
