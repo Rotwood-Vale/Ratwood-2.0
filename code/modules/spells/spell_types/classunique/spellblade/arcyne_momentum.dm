@@ -8,7 +8,7 @@
 	icon_state = "buff"
 
 /datum/status_effect/buff/arcyne_momentum
-	id = "arcyne_momentum"
+	id = "arcyne_momentum" 
 	alert_type = /atom/movable/screen/alert/status_effect/buff/arcyne_momentum
 	duration = -1
 	tick_interval = 20
