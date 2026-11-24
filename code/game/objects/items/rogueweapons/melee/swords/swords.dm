@@ -609,6 +609,8 @@
 	unenchantable = TRUE
 	force = 30
 	force_wielded = 35
+	wdefense  = 8 // for banner larp
+	wdefense_wbonus = 0
 	max_blade_int = 400
 	max_integrity = 500
 	sellprice = 250

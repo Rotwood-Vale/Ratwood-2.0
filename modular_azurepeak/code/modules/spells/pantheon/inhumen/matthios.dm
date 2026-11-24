@@ -972,7 +972,7 @@
 	max_integrity = 600
 	force = 28
 	block_chance = 0
-	wdefense = 6
+	wdefense = 8
 	blade_dulling = DULLING_SHAFT_WOOD
 	associated_skill = /datum/skill/combat/unarmed
 	wlength = WLENGTH_NORMAL
@@ -1135,15 +1135,15 @@
 	W.gain_inherent_skills()
 	addtimer(CALLBACK(W, PROC_REF(energy_add), 1000), 3 SECONDS)
 
-/mob/living/carbon/human/proc/wildshape_untransform_twilight_dragon(dead)
+/mob/living/carbon/human/proc/wildshape_untransform_twilight_dragon(dead, gibbed)
 	if(!stored_mob)
 		return
-	if(!mind)
+	if(!mind && !dead)
 		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
 			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
 		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
 		return
-	if(istype(get_area(src), /area/rogue/indoors/ravoxarena))
+	if(!dead && istype(get_area(src), /area/rogue/indoors/ravoxarena))
 		to_chat(src, span_userdanger("I reach for my normal form, but something rebukes me! Ravox is too strong in this dimension!"))
 		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
 			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
@@ -1179,9 +1179,7 @@
 		if(S)
 			W.mind.AddSpell(new S, W)
 	if(dead)
-		W.Unconscious(30 SECONDS, TRUE, TRUE)
-		W.visible_message(span_boldwarning("[W] twists and shifts back into humen guise in a sickening lurch of flesh and bone, and promptly passes out!"), span_userdanger("I quickly flee the waning vitality of my former shape, but the strain is too much--"))
-		to_chat(W, span_crit("...DARKNESS..."))
+		W.visible_message(span_boldwarning("[W] twists and shifts back into humen guise in a sickening lurch of flesh and bone, lifeless!"), span_userdanger("I quickly flee the waning vitality of my former shape, but the strain is too much--"))
 	W.copy_known_languages_from(WA.stored_language)
 	skills?.known_skills = WA.stored_skills.Copy()
 	skills?.skill_experience = WA.stored_experience.Copy()
@@ -1196,6 +1194,8 @@
 	W.regenerate_icons()
 	if(!dead)
 		to_chat(W, span_userdanger("I return to my old form."))
+	else
+		W.death(gibbed)
 
 	qdel(src)
 
