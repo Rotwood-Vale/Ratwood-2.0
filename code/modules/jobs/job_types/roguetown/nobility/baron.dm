@@ -107,7 +107,18 @@
 	..()
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 	beltl = /obj/item/rogueweapon/scabbard/sword/royal
-	r_hand = /obj/item/rogueweapon/sword/sabre/dec
 	backl = /obj/item/rogueweapon/shield/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(/obj/item/storage/keyring/baron_manor/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath/royal = 1, /obj/item/storage/keyring/baron_manor/spares = 1)
+
+	if(H.mind)
+		var/weapons = list("Decorated Saber - Elegance and Splendor", "Longsword - Balance and Pragmatism", "Broadsword - Strength and Decisiveness")
+		var/weapon_choice = input(H, "What approach do you prefer nowadaes?", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Decorated Saber - Elegance and Splendor")
+				r_hand = /obj/item/rogueweapon/sword/sabre/dec
+			if("Longsword - Balance and Pragmatism")
+				r_hand = /obj/item/rogueweapon/sword/long
+			if("Broadsword - Strength and Decisiveness")
+				r_hand = /obj/item/rogueweapon/sword/long/broadsword
+
