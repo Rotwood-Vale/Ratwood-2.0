@@ -329,7 +329,7 @@ SUBSYSTEM_DEF(familytree)
 
 /datum/controller/subsystem/familytree/proc/SaveBoard()
 	fdel(board_path)
-	WRITE_FILE(board_path, json_encode(list("links" = links, "blocks" = blocks)))
+	WRITE_FILE(file(board_path), json_encode(list("links" = links, "blocks" = blocks)))
 
 /datum/controller/subsystem/familytree/proc/PrefInfo(datum/preferences/P)
 	return list("id" = "[P.parent.ckey]/[P.default_slot]", "ckey" = P.parent.ckey, "name" = P.real_name, "species" = P.pref_species.name, "pronouns" = splittext(P.pronouns, " ")[1], "gender" = P.gender_choice, "species_filter" = P.species_filter.Copy(), "blacklist" = P.species_blacklist, "headshot" = P.headshot_link, "age" = P.age, "flavortext" = P.flavortext, "nsfwflavortext" = P.nsfwflavortext, "ooc_notes" = P.ooc_notes, "erpprefs" = P.erpprefs, "ooc_extra" = P.ooc_extra, "ooc_extra_img" = P.ooc_extra_img, "nsfw_ooc_extra_img" = P.nsfw_ooc_extra_img, "song_artist" = P.song_artist, "song_title" = P.song_title, "img_gallery" = P.img_gallery.Copy(), "nsfw_img_gallery" = P.nsfw_img_gallery.Copy(), "headshot_zoom" = P.headshot_zoom, "headshot_x" = P.headshot_x, "headshot_y" = P.headshot_y, "headshot_framed" = P.headshot_framed, "image_backdrop" = P.image_backdrop, "card_backgrounds" = P.card_backgrounds.Copy(), "art_view_settings" = P.art_view_settings.Copy()) // fuuuck
