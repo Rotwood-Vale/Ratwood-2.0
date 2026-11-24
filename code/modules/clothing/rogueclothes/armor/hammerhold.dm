@@ -13,6 +13,8 @@
 	body_parts_covered = HEAD|HAIR|EARS|EYES|NOSE
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/hammerhold
@@ -24,6 +26,8 @@
 	icon_state = "hammerholdleatherarmor"
 	item_state = "hammerholdleatherarmor"
 	armor = ARMOR_LEATHER
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/under/roguetown/trou/leather/hammerhold
 	name = "hammerholdian fur pants"
@@ -35,6 +39,8 @@
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/gloves/roguetown/angle/hammerhold
 	name = "hammerholdian fur-lined leather gloves"
@@ -44,6 +50,8 @@
 	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	color = "#ffffff"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/gloves/roguetown/angle/hammerholdfur
 	name = "hammerholdian fur-lined bone gloves"
@@ -57,6 +65,8 @@
 	unarmed_bonus = 6
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	color = "#ffffff"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/gloves/roguetown/angle/hammerholdfur/cleric
 	name = "thin fur-lined bone gloves"
@@ -65,6 +75,8 @@
 			the claws of beasts and plants alike. Commonly worn by preachers."
 	max_integrity = ARMOR_INT_SIDE_LEATHER
 	armor = ARMOR_LEATHER
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
@@ -96,6 +108,8 @@
 	light_outer_range = 3
 	light_power = 1
 	toggle_icon_state = TRUE
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/equipped(mob/user, slot)
 	. = ..()
@@ -204,6 +218,8 @@
 			The slits are decorated with a harsh gold dye - it is rumoured in Hammerhold to grant one the ability to see as keenly as an owl."
 	icon_state = "hammerholdhelm"
 	item_state = "hammerholdhelm"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
 	name = "varangian byrine hauberk"
@@ -215,6 +231,8 @@
 	item_state = "hammerholdchain"
 	smeltresult = /obj/item/ingot/iron
 	armor = ARMOR_MAILLE
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/gloves/roguetown/chain/hammerhold
 	name = "varangian byrine gloves"
@@ -223,6 +241,8 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	icon_state = "hammerholdchaingloves"
 	item_state = "hammerholdchaingloves"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/under/roguetown/chainlegs/hammerhold
 	name = "varangian byrine chausses"
@@ -231,6 +251,8 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	icon_state = "hammerholdchainpants"
 	item_state = "hammerholdchainpants"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 
 // HEAVY ARMOR -- ditto
@@ -252,6 +274,8 @@
 	smelt_bar_num = 1
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/suit/roguetown/armor/plate/iron/hammerhold
 	name = "norsii iron plate"
@@ -266,6 +290,8 @@
 	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
 	smeltresult = /obj/item/ingot/iron
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/gloves/roguetown/plate/iron/hammerhold
 	name = "norsii iron gauntlets"
@@ -274,6 +300,8 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	icon_state = "hammerholdplategloves"
 	item_state = "hammerholdplategloves"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/under/roguetown/platelegs/iron/hammerhold
 	name = "norsii iron chausses"
@@ -282,6 +310,8 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	icon_state = "hammerholdplatepants"
 	item_state = "hammerholdplatepants"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
 
 /obj/item/clothing/shoes/roguetown/boots/armor/iron/hammerhold
 	name = "norsii iron boots"
@@ -292,3 +322,5 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
 	icon_state = "hammerholdplateboots"
 	item_state = "hammerholdplateboots"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800

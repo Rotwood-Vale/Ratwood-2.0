@@ -866,6 +866,7 @@
 	drop_sound = 'sound/foley/dropsound/scrap_drop.ogg'
 	pickup_sound = 'sound/foley/equip/scrap_equip.ogg'
 	equip_sound = 'sound/foley/equip/scrap_equip.ogg'
+	min_cold_protection_temperature = 100
 
 /obj/item/clothing/suit/roguetown/armor/plate/iron/stolen
 	name = "foreign half-plate"
