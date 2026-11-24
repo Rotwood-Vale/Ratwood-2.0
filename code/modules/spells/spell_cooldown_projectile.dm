@@ -68,6 +68,11 @@
 		var/obj/projectile/active_type = (arc_mode && projectile_type_arc) ? projectile_type_arc : projectile_type
 		target = caster.get_ranged_lead_turf(target, aim_locked_turf, initial(active_type.speed), caster.STAINT) || target
 
+	// get_ranged_target_turf can return null at the map edge, and a clicked target can vanish before the cast
+	if(QDELETED(target))
+		aim_locked_turf = null
+		return FALSE
+
 	fire_projectile(target)
 	aim_locked_turf = null
 	return TRUE

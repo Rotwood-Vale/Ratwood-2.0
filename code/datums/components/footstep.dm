@@ -143,7 +143,7 @@
 	used_sound = used_footsteps[index]
 	last_sound = used_sound
 
-	if(humshoes)
+	if(istype(humshoes)) // the shoe slot can hold non-shoe items
 		var/datum/component/item_equipped_movement_rustle/RSTL = humshoes.GetComponent(/datum/component/item_equipped_movement_rustle)
 		var/override_sound = FALSE
 		if(humshoes.stepnoise_flag & STEPNOISE_HEELS)	// Bit shoddy workaround, but this will still reveal all the footsteps to keen ears.

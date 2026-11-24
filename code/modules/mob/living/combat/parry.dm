@@ -392,8 +392,8 @@
 
 			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
 				intdam *= intenty.intent_intdamage_factor
-			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
-			used_weapon.remove_bintegrity(sharp_loss, attacker)
+			used_weapon?.take_damage(intdam, BRUTE, used_weapon.d_type)
+			used_weapon?.remove_bintegrity(sharp_loss, attacker)
 		flash_fullscreen("blackflash2")
 		if(mind)
 			dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
