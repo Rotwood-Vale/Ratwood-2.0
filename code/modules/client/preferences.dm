@@ -3014,7 +3014,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(origin && origin.origin_language)
 		origin_lang = TRUE
 	if(!origin_lang && extra_language && extra_language != "None")
-		character.grant_language(extra_language)
+		character.grant_language(istext(extra_language) ? text2path(extra_language) : extra_language)
 	character.voice_color = voice_color
 	character.voice_pitch = voice_pitch
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
