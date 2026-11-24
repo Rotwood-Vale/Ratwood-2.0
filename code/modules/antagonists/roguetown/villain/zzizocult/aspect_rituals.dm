@@ -101,6 +101,9 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 		return FALSE
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_LUX_FREAK))
+		target.visible_message(span_danger("[target]'s lux resists taking, moving and coiling to avoid being grasped!"))
+		return FALSE
 	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped)
 	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	new /obj/effect/temp_visual/cult/sac(get_turf(target))
@@ -702,9 +705,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		GLOB.zizo_researchable |= /datum/ritual/fleshcrafting/ascend
 		for(var/obj/item/clothing/cloak/cultrobe/robe as anything in GLOB.cult_robes)
 			robe.empower()
-		for(var/datum/mind/M in SSmapping.retainer.cultists)
-			var/datum/antagonist/zizocultist/Z = M.has_antag_datum(/datum/antagonist/zizocultist)
-			Z?.add_halo()
 
 	if(gate_count > 0)
 		reroll_gate_targets(gate_count)
@@ -1098,6 +1098,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	bigboy = TRUE
 	gripsprite = TRUE
 	walking_stick = TRUE
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble, /datum/intent/pick)
 	var/list/obj/structure/toilturret/turrets = list()
 	var/max_turrets = 3
 

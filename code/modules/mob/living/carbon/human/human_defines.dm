@@ -14,6 +14,8 @@
 	/// When TRUE, gear equipped via outfits gets marked as looted (sells at LOOTED_SELL_MULT).
 	/// Set automatically for clientless/mindless mobs, or explicitly on jobs whose gear shouldn't be farmed.
 	var/taints_loot = FALSE
+	/// Mount-owned permission, retained when passengers dismount.
+	var/allow_rider_steering = TRUE
 
 	ambushable = 1
 

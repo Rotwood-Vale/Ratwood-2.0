@@ -220,6 +220,42 @@
 	name = "Rune of Justice"
 	icon_state = "ravox_chalky"
 	desc = "A Holy Rune of Ravox. A blade to protect the weak with."
+	var/ravoxrites = list("Vow to Ravox")
+
+/obj/structure/ritualcircle/ravox/attack_hand(mob/living/user)
+	if(!..())
+		return
+	if((user.patron?.type) != /datum/patron/divine/ravox)
+		to_chat(user,span_warning("I feel a scornful gaze. This rune isn't for me."))
+		return
+	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
+		to_chat(user,span_warning("I don't know the proper rites for this..."))
+		return
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
+		to_chat(user,span_warning("I have performed enough rituals for the day... I must rest before communing more."))
+		return
+	var/riteselection = input(user, "Rituals of Justice", src) as null|anything in ravoxrites
+	switch(riteselection)
+		if("Vow to Ravox") // Ideally stick to this style for rites. Early returns + negatives. Minimises the "pyramid" shape you can see in Astrata, which I've left untouched for now -- CODEATHON
+			var/target = user
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("My steel is sharp, my heart is true!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("For the weak, my blade I drew!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Let foes of justice face my might!")
+			if(!do_after(user, 3 SECONDS))
+				return
+			user.say("Ravox, guide my hand in righteous fight!")
+			playsound(loc, 'sound/magic/holyshield.ogg', 80, FALSE, -1)
+			ravoxvow(target)
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+
+/obj/structure/ritualcircle/ravox/proc/ravoxvow(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/buff/ravox_vow)
 
 /obj/structure/ritualcircle/pestra
 	name = "Rune of Plague"
@@ -2192,7 +2228,7 @@
 						user.emote("cry")
 						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
-							psydonadmonishment(target)
+							psydonadmonishment(target, user)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
 			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
@@ -2270,7 +2306,7 @@
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
 		loc.visible_message(span_cult("[target] stands untouched. They reject His will."))
 
-/obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's admonishment.")
 		return
@@ -2285,9 +2321,13 @@
 
 	// Remove divine curses
 	for(var/datum/curse/C in target.curses)
-		target.remove_curse(C)
-		loc.visible_message(span_warning("With masterfull precision, the divine curse on [target] is unvowen."))
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(target.remove_curse(C))
+			target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+			if(HAS_TRAIT(user, TRAIT_INQUISITION)) // aka absolver
+				loc.visible_message(span_warning("With masterful precision, the divine curse on [target] is unwoven."))
+			else
+				loc.visible_message(span_warning("The divine curse on [target] is transferred to [user]"))
+				user.add_curse(C.type)
 
 	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
 	var/datum/antagonist/werewolf/lesser/Wereless = target.mind.has_antag_datum(/datum/antagonist/werewolf/lesser/)
@@ -2580,10 +2620,6 @@
 	target.remove_status_effect(/datum/status_effect/debuff/excomm)
 	target.remove_stress(/datum/stressevent/apostasy)
 	target.remove_stress(/datum/stressevent/excommunicated)
-
-	// Remove divine curses
-	for(var/datum/curse/C in target.curses)
-		target.remove_curse(C)
 	
 	if(target.devotion == null)
 		target.set_patron(new /datum/patron/old_god)

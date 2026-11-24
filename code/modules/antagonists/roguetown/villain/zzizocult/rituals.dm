@@ -315,7 +315,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(lackeys > 3 && !assistant)
 		to_chat(user, span_warning("FOR THE CULT TO GROW LARGER, YOU MUST PERFORM THIS RITE WITH AN ASSISTANT CULTIST ON THE SIGIL."))
 		return
-	var/alert = tgui_alert(target, "YOU WILL BE SHOWN THE TRUTH. DO YOU RESIST?", "???", list("Yield", "Resist"))
+	var/alert = "Yield"
+	if(!istype(target.patron, /datum/patron/inhumen/zizo) && !(target.client && (ROLE_ZIZOIDCULTIST in target.client.prefs.be_special)))
+		alert = tgui_alert(target, "YOU WILL BE SHOWN THE TRUTH. DO YOU RESIST?", "???", list("Yield", "Resist"))
 	target.Immobilize(3 SECONDS)
 	if(alert == "Yield")
 		to_chat(target, span_notice("I see the truth now! It all makes so much sense! They aren't HERETICS! They want the BEST FOR US!"))
@@ -1239,6 +1241,8 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	if(duration != -1 && world.time >= duration && !QDELETED(owner) && owner.stat != DEAD)
 		if(owner.has_status_effect(/datum/status_effect/debuff/devitalised) || owner.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 			return FALSE
+		if(HAS_TRAIT(owner, TRAIT_LUX_FREAK))
+			return
 		owner.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		owner.Jitter(4)
 		owner.emote("scream")
@@ -2239,6 +2243,9 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	cleric.death()
 	RULER.Unconscious(6 MINUTES)
 	priority_announce("Incomprehensible evil arises from within the keep! To arms, the end is near!", title = "ZIZO", sound = 'sound/villain/seen_wonder.ogg')
+	for(var/datum/mind/M in SSmapping.retainer.cultists)
+		var/datum/antagonist/zizocultist/Z = M.has_antag_datum(/datum/antagonist/zizocultist)
+		Z?.add_halo()
 	var/datum/particle_weather/storm = new /datum/particle_weather/blood_rain_storm
 	SSParticleWeather.runningWeather = storm
 	storm.start()

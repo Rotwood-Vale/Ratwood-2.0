@@ -35,7 +35,7 @@
 #define DREAM_ITEM				(1<<13) //Otherworldly items from Abyssor's dream. Tend to have special effects!
 #define FRESH_FOOD_ITEM			(1<<14) // Currently only used for fresh meat from butchering to differentiate it from stockpile magic meat.
 #define NOT_SHOW_IN_STORAGE	(1<<15)	// Whether we'll show up if we're held in aesthetic storage.
-#define PREVENTS_DESTRUCTION (1<<13) // Item cannot be destroyed, allows for all other interactions
+#define PREVENTS_DESTRUCTION (1<<16) // Item cannot be destroyed, allows for all other interactions
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

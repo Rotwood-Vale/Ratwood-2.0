@@ -286,7 +286,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	return result
 
 /proc/_tier_from_patrons(spell_path)
-	if(!ispath(spell_path, /obj/effect/proc_holder/spell))
+	if(!ispath(spell_path, /obj/effect/proc_holder/spell) && !ispath(spell_path, /datum/action/cooldown/spell))
 		return 0
 
 	var/max_tier = 0
@@ -590,7 +590,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 	var/list/already_types = list()
 	if(H.mind)
-		for(var/obj/effect/proc_holder/spell/K in H.mind.spell_list)
+		for(var/datum/K in H.mind.spell_list)
 			already_types[K.type] = TRUE
 
 	var/list/all_spell_types = list()
@@ -606,7 +606,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		if(!S)
 			continue
 
-		var/tier = get_spell_tier(S)
+		var/tier = get_spell_tier(st)
 		var/list/owners = get_spell_patron_names(st)
 		if(!islist(owners) || !owners.len)
 			qdel(S)
@@ -1351,7 +1351,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	if(href_list["learnspell"])
 		var/txt = href_list["learnspell"]
 		var/typepath = text2path(txt)
-		if(!ispath(typepath, /obj/effect/proc_holder/spell))
+		if(!ispath(typepath, /obj/effect/proc_holder/spell) && !ispath(typepath, /datum/action/cooldown/spell))
 			open_learn_ui(H)
 			return
 
@@ -1361,7 +1361,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			return
 
 		if(H.mind)
-			for(var/obj/effect/proc_holder/spell/K in H.mind.spell_list)
+			for(var/datum/K in H.mind.spell_list)
 				if(K.type == typepath)
 					qdel(Snew)
 					to_chat(H, span_warning("You already know this one."))
@@ -1369,7 +1369,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 					return
 
 		var/my_patron = _get_human_patron_name(H)
-		var/tier = get_spell_tier(Snew)
+		var/tier = get_spell_tier(typepath)
 		var/list/owners = get_spell_patron_names(typepath)
 		var/real_owner = ""
 

@@ -567,6 +567,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(href_list["explainshieldcoverage"])
 		var/output = span_info("Chance to passively block incoming projectiles. Only works from the front.\nShields take quarter damage from blocked projectiles and fixed durability damage from melee parries.\nHeavy weapons deal more durability damage to shields — the higher of the attacker's Anti-Object Mod or Integrity Damage is used as a multiplier.")
+		output += span_info("\nParrying chop attacks will suffer increased integrity damage against shields.")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
@@ -1748,6 +1749,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/on_embed(obj/item/bodypart/bp)
 	return
 
+/obj/item/proc/has_armor_value()
+	if(istype(src, /obj/item/clothing))
+		var/obj/item/clothing/C = src
+		if(C.armor)
+			var/datum/armor/def_armor = C.armor
+			return def_armor.blunt || def_armor.slash || def_armor.stab || def_armor.piercing
+
+	return FALSE
+
 /obj/item/proc/defense_examine()
 	var/list/str = list()
 	if(istype(src, /obj/item/clothing))
@@ -1862,11 +1872,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		obj_destroyed = TRUE
 		acid_melt()
 		return TRUE
-	if (damage_flag == "fire")
+	if (damage_flag == "fire" && (resistance_flags & FLAMMABLE))
 		obj_destroyed = TRUE
 		burn()
 		return TRUE
-	if (!always_destroy && (ismob(loc) || isclothing(src) || istype(src, /obj/item/rogueweapon)))
+	if (ismob(loc) && !always_destroy)
 		return FALSE
 
 	obj_destroyed = TRUE
