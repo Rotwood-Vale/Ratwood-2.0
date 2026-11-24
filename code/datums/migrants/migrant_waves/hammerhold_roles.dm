@@ -19,7 +19,7 @@
 	pants = /obj/item/clothing/under/roguetown/platelegs/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	gloves = /obj/item/clothing/gloves/roguetown/angle/atgervi
-	belt = /obj/item/storage/belt/rogue/leather/steel
+	belt = /obj/item/storage/belt/rogue/leather/hammerhold_sash
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	beltl = /obj/item/rogueweapon/mace/steel
@@ -83,7 +83,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/hammerhold_sash
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	beltl = /obj/item/rogueweapon/scabbard/sheath
@@ -155,7 +155,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather/hammerhold
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	gloves = /obj/item/clothing/gloves/roguetown/angle/hammerhold
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/hammerhold_sash
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
@@ -217,7 +217,7 @@
 	pants = /obj/item/clothing/under/roguetown/splintlegs/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	gloves = /obj/item/clothing/gloves/roguetown/chain/hammerhold
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/hammerhold_sash
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/atgervi
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
