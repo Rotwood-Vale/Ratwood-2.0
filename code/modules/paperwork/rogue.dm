@@ -324,16 +324,13 @@
 	desc = "A writ of arrival, printed on Otavan parchment: one signed not in ink, but blood. Intended for one person and one person only. Press the slip against one's own weeping wounds in order to obtain a fitting signature. Once done, it is ready to be mailed back to Otava."
 
 /obj/item/paper/inqslip/arrival/ortho
-	marquevalue = 4
-
-/obj/item/paper/inqslip/arrival/adju
-	marquevalue = 5
+	marquevalue = 8 //At least two Orthodoxists can afford one relic, should they be understaffed and outgunned.
 
 /obj/item/paper/inqslip/arrival/inq
-	marquevalue = 10
+	marquevalue = 16 //Allows for the purchasing of one relic, or a couple lesser items from the Marquette.
 
 /obj/item/paper/inqslip/arrival/abso
-	marquevalue = 6
+	marquevalue = 16 //Ditto.
 
 /obj/item/paper/inqslip/read(mob/user)
 	if(!user.client || !user.hud_used)

@@ -511,8 +511,9 @@
 	var/obj/item/rogueweapon/scabbard/scab = use_thing ? use_thing : equipped
 	if(!istype(scab))
 		return FALSE
+	var/datum/component/holster/HC = scab.GetComponent(/datum/component/holster)
 	if(!thing)
-		if(!scab.sheathed)
+		if(!HC?.sheathed)
 			return FALSE
 		return scab.attack_hand(src)
 	if(!istype(thing, scab.valid_blade))
