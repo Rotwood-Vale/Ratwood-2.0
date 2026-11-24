@@ -112,7 +112,7 @@
 
 /// If this is uncommented, we set up the ref tracker to be used in a live environment
 /// And to log events to [log_dir]/harddels.log
-//#define REFERENCE_DOING_IT_LIVE
+#define REFERENCE_DOING_IT_LIVE
 #ifdef REFERENCE_DOING_IT_LIVE
 // compile the backend
 #define REFERENCE_TRACKING
@@ -121,7 +121,7 @@
 // Log references in their own file
 #define REFERENCE_TRACKING_LOG_APART
 // use fast reftracking
-#define FAST_REFERENCE_TRACKING
+//#define FAST_REFERENCE_TRACKING
 #endif // REFERENCE_DOING_IT_LIVE
 
 /// Sets up the reftracker to be used locally, to hunt for hard deletions
