@@ -31,7 +31,7 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_PURITAN))
 		inquisitor = TRUE
-	if(HAS_TRAIT(user, TRAIT_PACIFISM) && HAS_TRAIT(user, TRAIT_INQUISITION) && HAS_TRAIT(user, TRAIT_SILVER_BLESSED))
+	if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && HAS_TRAIT(user, TRAIT_INQUISITION))
 		inquisitor = TRUE
 
 	if(!M.mind) //Stopping null lookup runtimes

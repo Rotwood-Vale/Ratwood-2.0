@@ -593,3 +593,54 @@
       going
   - balance: Pionier and skirmisher traps no longer delete themselves when any item
       enters them, and lighstep bypasses them only 25% of the time
+2026-11-24:
+  AlucardHellsingChapel:
+  - bugfix: fixed the duration
+  - balance: made the duration of dendor's entwine shorter
+  - bugfix: made the duration of martyr special shorter
+  - rscdel: Removed item requirements from shadowstep
+  CentralSmith:
+  - bugfix: Silver melee hits can trigger sunder on silver-weak NPCs again, including
+      bosses, when the hit passes their armor and damage checks.
+  - bugfix: Quietus coatings are preserved when striking a target without a reagent
+      holder.
+  Nid4259:
+  - balance: Increased cooking skill for soilsons from novice to apprentice so they
+      can produce their own brews like they used to.
+  Randumb-Phantomb:
+  - balance: keep knights have the option of choosing the hounskull with aventail.
+  - bugfix: hounskull with aventail now hides the snout of the player character.
+  - bugfix: cat, normal ears and curly (f) hair changed to be consistent based on
+      faced direction.
+  SirSwagmeyer:
+  - balance: 'Gnoll chop swingdelay tweak: SWINGDELAY_CANCEL ---> SWINGDELAY_PENALTY'
+  Slav-ie:
+  - rscadd: Added a new hairstyle called Reckless Alt
+  ariaworld:
+  - balance: Just like old Roguetown, zombies now have immense strength again.
+  envoyin:
+  - balance: removed hedge mage slotcap
+  - balance: rogue mage now has mastery magic
+  spacemanfromspacestation-prog:
+  - rscadd: New choices for ferentian melee mercenaries
+  - balance: A little buff to sellblade mercenary
+  trueroguan:
+  - bugfix: fix sound stream
+  wikimody:
+  - rscadd: Psydonian conversion no longer removes curses (still does remove apostasy
+      and excumunication)
+  - rscadd: Admonition when performed by anyone but absolver will transfer the curse
+      to performing... stigamata since only they can actually use the rite outside
+      of absolvers
+  - rscadd: Lux freaks now automatically cleanse divine curses applied on them in
+      30 minutes (only relevant to the interaction above since they are uncursable
+      otherwise)
+  - code_imp: Quicksilver now properly check for absolver for its extra use instead
+      of a grabbag of traits other orthodoxists could possibly get
+  - rscadd: Lux freaks (absolvers and stigmatas) cannot have their lux extracted by
+      any means
+  - rscadd: They instead gain a miracle with lets them self extract/purify/split lux
+  - rscadd: They also gain uncapped medicine and medical bags (+ bedroll for absolver)
+  - bugfix: Absolution now gives proper person the feedback when used on inqusition
+      member
+  - rscadd: Adds ability for keepers to make new organs and limbs with their heartbeast

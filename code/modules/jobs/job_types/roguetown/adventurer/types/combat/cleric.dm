@@ -755,6 +755,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_SELF_AWARE,
 		TRAIT_LUX_FREAK,
+		TRAIT_MEDICINE_EXPERT,
 		TRAIT_RITUALIST
 	)
 	subclass_stats = list(
@@ -795,6 +796,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+	beltr = /obj/item/storage/belt/rogue/surgery_bag/full
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
@@ -806,6 +808,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper) // absolver's bleed transfer
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonamend) // nerfed no-rez version of absolver's absolve
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonluxextract)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
