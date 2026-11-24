@@ -332,6 +332,9 @@
 		primary_member = primary_family.founder
 		secondary_member = primary_family.CreateFamilyMember(spouse)
 
+	if(primary_family.housename && secondary_member?.person && secondary_member.person.take_house_name && secondary_member.family == primary_family && secondary_member != primary_family.founder)
+		secondary_member.person.TakeHouseName(primary_family.housename)
+
 	// Add spouse relationship in family system
 	if(primary_member && secondary_member && primary_family)
 		switch(relation)
@@ -411,3 +414,34 @@
 
 /mob/living/carbon/human/proc/ReturnRelation(mob/living/carbon/human/stranger)
 	return family_datum.ReturnRelation(src, stranger)
+
+
+/mob/living/carbon/human/proc/social_rank_color()
+	if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4)
+		social_rank = SOCIAL_RANK_MINOR_NOBLE
+	switch(social_rank)
+		if(SOCIAL_RANK_PEASANT)
+			return "#91733B"
+		if(SOCIAL_RANK_YEOMAN)
+			return "#B1892A"
+		if(SOCIAL_RANK_MINOR_NOBLE)
+			return "#D09F19"
+		if(SOCIAL_RANK_NOBLE)
+			return "#ECB20A"
+		if(SOCIAL_RANK_ROYAL)
+			return "#FFBF00"
+	return "#725D4C"
+
+/mob/living/carbon/human/proc/TakeHouseName(housename)
+	var/old_name = real_name
+	var/first_name = real_name
+	var/space = findlasttext(real_name, " ")
+	if(space && !(copytext(real_name, 1, space) in list("Ser", "Dame", "Sister", "Brother", "Prelate", "Devotee", "Votary", "Lord", "Lady")))
+		first_name = copytext(real_name, 1, space)
+	real_name = "[first_name] [trim(housename)]"
+	name = real_name
+	to_chat(src, span_notice("I am now known as [real_name]."))
+	for(var/mob/living/carbon/human/M in GLOB.human_list)
+		if(M.mind?.known_people?[old_name])
+			M.mind.known_people -= old_name
+			mind?.person_knows_me(M.mind)

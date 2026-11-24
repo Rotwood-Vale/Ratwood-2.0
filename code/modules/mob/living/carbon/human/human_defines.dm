@@ -118,6 +118,7 @@
 	var/list/temp_ui_list = list()
 	var/list/species_filter = list()
 	var/species_blacklist = TRUE
+	var/take_house_name = FALSE
 
 	var/marriedto
 

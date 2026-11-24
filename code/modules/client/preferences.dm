@@ -346,6 +346,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/gender_choice = ANY_GENDER
 	var/list/random_match = list()
 	var/random_match_on = FALSE
+	var/take_house_name = FALSE
 	var/datum/family_board_menu/family_menu
 
 	var/static/default_cmusic_type = /datum/combat_music/default
@@ -3094,6 +3095,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.random_match = random_match.Copy()
 	character.species_filter = species_filter.Copy()
 	character.species_blacklist = species_blacklist
+	character.take_house_name = take_house_name
 
 	character.jumpsuit_style = jumpsuit_style
 

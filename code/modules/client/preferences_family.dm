@@ -97,7 +97,10 @@
 		if(("Spouse" in prefs.random_match) || ("Lover" in prefs.random_match))
 			matching_html += pref_line_html("Preferred Gender", "<a href='[base]gender'>[prefs.gender_choice]</a>")
 
-	var/links_html = ""
+	var/house_state = "No"
+	if(prefs.take_house_name)
+		house_state = "Yes"
+	var/links_html = pref_line_html("Take House Name?", "<a href='[base]house_name'>[house_state]</a>")
 	for(var/list/link in SSfamilytree.links)
 		if(link[1] != my_id && link[2] != my_id)
 			continue
@@ -323,6 +326,10 @@
 								first.family_member_datum.RemoveChild(second.family_member_datum)
 		if("unblock_all")
 			SSfamilytree.blocks -= my_ckey
+		if("house_name")
+			prefs.take_house_name = !prefs.take_house_name
+			save_matching()
+			return
 		if("random_toggle")
 			prefs.random_match_on = !prefs.random_match_on
 			save_matching()
@@ -370,6 +377,7 @@
 	S.cd = "/character[prefs.default_slot]"
 	WRITE_FILE(S["random_match"], prefs.random_match)
 	WRITE_FILE(S["random_match_on"], prefs.random_match_on)
+	WRITE_FILE(S["take_house_name"], prefs.take_house_name)
 	WRITE_FILE(S["gender_choice"], prefs.gender_choice)
 	WRITE_FILE(S["species_filter"], prefs.species_filter)
 	WRITE_FILE(S["species_blacklist"], prefs.species_blacklist)

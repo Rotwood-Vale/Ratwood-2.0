@@ -219,6 +219,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		if(H.dna && H.dna.species)
 			known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 		known_people[H.real_name]["FAGE"] = H.age
+		known_people[H.real_name]["FRANK"] = H.social_rank_color()
 		if(H.family_datum)
 			known_people[H.real_name]["FHOUSE"] = H.family_datum.housename
 		if(ishuman(current))
@@ -258,6 +259,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				M.known_people[H.real_name]["FGENDER"] = referred_gender
 				M.known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 				M.known_people[H.real_name]["FAGE"] = H.age
+				M.known_people[H.real_name]["FRANK"] = H.social_rank_color()
 				if(H.family_datum)
 					M.known_people[H.real_name]["FHOUSE"] = H.family_datum.housename
 
@@ -308,10 +310,16 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/fage = known_people[P]["FAGE"]
 		var/fhouse = known_people[P]["FHOUSE"]
 		var/fheresy = known_people[P]["FHERESY"]
+		var/frank = known_people[P]["FRANK"]
+		var/ficon = ""
+		if(frank && !HAS_TRAIT(user, TRAIT_OUTLANDER))
+			ficon = " <font color='[frank]'>⛭</font>"
+			if(fhouse)
+				ficon = " <font color='[frank]'>⛯</font>"
 		if(fcolor && fjob)
 			if (fheresy)
 				contents +="<B><font color=#f1d669>[fheresy]</font></B> "
-			contents += "<B><font color=#[fcolor];text-shadow:0 0 10px #8d5958, 0 0 20px #8d5958, 0 0 30px #8d5958, 0 0 40px #8d5958, 0 0 50px #e60073, 0 0 60px #8d5958, 0 0 70px #8d5958;>[P]</font></B><BR>[fjob], [fspecies], [capitalize(fgender)], [fage][fhouse ? "<br><b>House [fhouse]</b>" : ""]"
+			contents += "<B><font color=#[fcolor];text-shadow:0 0 10px #8d5958, 0 0 20px #8d5958, 0 0 30px #8d5958, 0 0 40px #8d5958, 0 0 50px #e60073, 0 0 60px #8d5958, 0 0 70px #8d5958;>[P]</font></B>[ficon]<BR>[fjob],[fspecies], [capitalize(fgender)], [fage][fhouse ? "<br><b>House [fhouse]</b>" : ""]"
 			contents += "<BR>"
 	var/datum/browser/popup = new(user, "PEOPLEIKNOW", "", 260, 400)
 	popup.set_content(contents)

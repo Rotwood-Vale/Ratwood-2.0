@@ -868,6 +868,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["gender_choice"] 		>> gender_choice
 	S["random_match"]		>> random_match
 	S["random_match_on"]	>> random_match_on
+	S["take_house_name"]	>> take_house_name
 	S["species_filter"]		>> species_filter
 	S["species_blacklist"]	>> species_blacklist
 	S["extra_language"]		>> extra_language
@@ -1207,6 +1208,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["gender_choice"], gender_choice)
 	WRITE_FILE(S["random_match"], random_match)
 	WRITE_FILE(S["random_match_on"], random_match_on)
+	WRITE_FILE(S["take_house_name"], take_house_name)
 	WRITE_FILE(S["species_filter"], species_filter)
 	WRITE_FILE(S["species_blacklist"], species_blacklist)
 	// Save new vice system
