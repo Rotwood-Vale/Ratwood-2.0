@@ -175,7 +175,7 @@
 		armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0)
 	if((owner.mind || HAS_TRAIT(owner, TRAIT_CRIT_THRESHOLD)) && (get_damage() <= (max_damage * CRIT_DISMEMBER_DAMAGE_THRESHOLD))) //No crits unless the limb is at 90%+ damage.
 		do_crit = FALSE
-	if(do_crit && ishuman(owner) && bclass != BCLASS_PICK) // Armor with integrity prevents crits
+	if(do_crit && acheck_dflag && ishuman(owner) && bclass != BCLASS_PICK) // Armor with integrity prevents crits; burn/pierce/etc. have no armor flag mapped - possibly needs a more thorough fix, TODO on a balance pass
 		var/mob/living/carbon/human/H = owner
 		var/obj/item/clothing/worn_armor = H.get_best_worn_armor(zone_precise, acheck_dflag)
 		if(worn_armor)
