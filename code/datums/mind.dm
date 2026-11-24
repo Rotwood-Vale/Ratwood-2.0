@@ -220,6 +220,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 			known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 		known_people[H.real_name]["FAGE"] = H.age
 		known_people[H.real_name]["FRANK"] = H.social_rank_color()
+		known_people[H.real_name]["FMOB"] = WEAKREF(H)
 		if(H.family_datum)
 			known_people[H.real_name]["FHOUSE"] = H.family_datum.housename
 		if(ishuman(current))
@@ -260,6 +261,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				M.known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 				M.known_people[H.real_name]["FAGE"] = H.age
 				M.known_people[H.real_name]["FRANK"] = H.social_rank_color()
+				M.known_people[H.real_name]["FMOB"] = WEAKREF(H)
 				if(H.family_datum)
 					M.known_people[H.real_name]["FHOUSE"] = H.family_datum.housename
 
@@ -300,7 +302,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		return
 	known_people = sortList(known_people)
 	var/contents = "<center>People that [name] knows:</center><BR>"
-	for(var/P in known_people)
+	for(var/P in known_people.Copy())
+		var/datum/weakref/fmob = known_people[P]["FMOB"]
+		if(fmob && !fmob.resolve())
+			known_people -= P
+			continue
 		var/fcolor = known_people[P]["VCOLOR"]
 		if(!fcolor)
 			continue
@@ -313,9 +319,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/frank = known_people[P]["FRANK"]
 		var/ficon = ""
 		if(frank && !HAS_TRAIT(user, TRAIT_OUTLANDER))
-			ficon = " <font color='[frank]'>⛭</font>"
+			var/mob/living/carbon/human/target = fmob?.resolve()
+			var/glyph = "⛭"
 			if(fhouse)
-				ficon = " <font color='[frank]'>⛯</font>"
+				glyph = "⛯"
+			ficon = " <font color='[frank]'>[glyph]</font>"
+			if(target)
+				ficon = " <a href='?src=[REF(target)];social_strata=1'><font color='[frank]'>[glyph]</font></A>"
 		if(fcolor && fjob)
 			if (fheresy)
 				contents +="<B><font color=#f1d669>[fheresy]</font></B> "

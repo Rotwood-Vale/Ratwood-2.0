@@ -177,6 +177,7 @@
 	var/list/siblings = list()
 	var/list/spouses = list() // Current spouses
 	var/list/former_spouses = list() // Divorced spouses
+	var/list/other_relations = list()
 	var/adoption_status = FALSE // TRUE if adopted into family
 	var/generation = 0 // 0 = founder, 1 = their children, etc.
 	var/tmp/recalculating_generation = FALSE
@@ -370,6 +371,9 @@
 /datum/family_member/proc/GetRelationshipTo(datum/family_member/other)
 	if(!other || other == src)
 		return null
+
+	if(other_relations[other])
+		return other_relations[other]
 
 	// Direct relationships
 	if(other in parents)
@@ -674,6 +678,12 @@
 						name_color = "FFD700"
 					if("husband", "wife")
 						name_color = "FF69B4"
+					if("lover")
+						name_color = "DC143C"
+					if("cousin")
+						name_color = "FFA500"
+					if("friend")
+						name_color = "40E0D0"
 			if(member.adoption_status)
 				status_text = " (Adopted)"
 			if(member.spouses.len)

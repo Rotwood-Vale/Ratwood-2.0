@@ -287,14 +287,6 @@
 	if(!ishuman(spouse))
 		return null
 
-	// does not create house / heritage
-	if(relation == "lover" || relation == "friend" || relation == "cousin")
-		mind?.i_know_person(spouse)
-		spouse.mind?.i_know_person(src)
-		to_chat(src, span_love("[spouse.real_name] is now my [relation]."))
-		to_chat(spouse, span_love("[real_name] is now my [relation]."))
-		return
-
 	// Set basic spouse relationship
 	if(relation == "spouse")
 		spouse_mob = spouse
@@ -332,7 +324,7 @@
 		primary_member = primary_family.founder
 		secondary_member = primary_family.CreateFamilyMember(spouse)
 
-	if(primary_family.housename && secondary_member?.person && secondary_member.person.take_house_name && secondary_member.family == primary_family && secondary_member != primary_family.founder)
+	if(primary_family.housename && secondary_member?.person && secondary_member.person.take_house_name && (relation == "spouse" || relation == "sibling" || relation == "parent") && secondary_member.family == primary_family && secondary_member != primary_family.founder)
 		secondary_member.person.TakeHouseName(primary_family.housename)
 
 	// Add spouse relationship in family system
@@ -348,6 +340,13 @@
 				family_member_datum.AddChild(spouse.family_member_datum)
 				to_chat(src, span_love("[spouse.real_name] is now my offspring."))
 				to_chat(spouse, span_love("[real_name] is now my parent."))
+			if("lover", "friend", "cousin")
+				family_member_datum.other_relations[spouse.family_member_datum] = relation
+				spouse.family_member_datum.other_relations[family_member_datum] = relation
+				mind?.i_know_person(spouse)
+				spouse.mind?.i_know_person(src)
+				to_chat(src, span_love("[spouse.real_name] is now my [relation]."))
+				to_chat(spouse, span_love("[real_name] is now my [relation]."))
 
 	return primary_family
 

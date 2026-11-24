@@ -173,7 +173,7 @@
 				if(SSfamilytree.Token(ad_id) == href_list["id"])
 					profile = SSfamilytree.board[ad_id]
 			for(var/list/req in SSfamilytree.requests)
-				if(req["to"] == my_id && SSfamilytree.Token(req["from"]) == href_list["id"])
+				if(req["to"] == my_id && SSfamilytree.Token("[req["from"]]>[req["to"]]") == href_list["id"])
 					profile = req["info"]
 			if(!profile)
 				return
@@ -331,6 +331,9 @@
 								second.family_member_datum.siblings.Remove(first.family_member_datum)
 							if("parent")
 								first.family_member_datum.RemoveChild(second.family_member_datum)
+							if("lover", "friend", "cousin")
+								first.family_member_datum.other_relations -= second.family_member_datum
+								second.family_member_datum.other_relations -= first.family_member_datum
 		if("unblock_all")
 			SSfamilytree.blocks -= my_ckey
 		if("house_name")
