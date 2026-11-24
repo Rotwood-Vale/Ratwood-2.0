@@ -521,6 +521,8 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 					continue
 				if(Q.type in pref_species.restricted_quirks)
 					continue
+				if(length(Q.allowed_species) && !(pref_species.type in Q.allowed_species))
+					continue
 				if(check_quirk_virtue_conflict(Q.type, TRUE, user) || check_pick_vice_conflict(Q.type, TRUE, user) || check_pick_quirk_conflict(Q.type, TRUE, user))
 					continue
 				available["[Q.name] ([Q.point_cost] point\s)"] = Q

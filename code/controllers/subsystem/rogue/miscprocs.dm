@@ -166,7 +166,7 @@
 						continue
 
 					var/obj/effect/proc_holder/spell/newspell = new spell_type
-					if(istype(patron, /datum/patron/divine/xylix) && newspell.miracle)
+					if(istype(patron, /datum/patron/divine/xylix) && istype(newspell, /obj/effect/proc_holder/spell) && newspell.miracle)
 						newspell.mute_allowed = TRUE
 					if(!silent)
 						to_chat(holder, span_boldnotice("I have unlocked a new spell: [newspell]"))
@@ -274,8 +274,8 @@
 	var/datum/devotion/D = devotion
 	if(D)
 		if(length(D.granted_spells))
-			for(var/obj/effect/proc_holder/spell/S in D.granted_spells)
-				mind.RemoveSpell(S)
+			for(var/datum/granted_spell in D.granted_spells)
+				mind.RemoveSpell(granted_spell)
 		STOP_PROCESSING(SSobj, D)
 		D.patron = patron
 		D.devotion = 0

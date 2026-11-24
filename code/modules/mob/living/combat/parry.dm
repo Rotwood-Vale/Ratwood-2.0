@@ -325,12 +325,15 @@
 			flash_fullscreen("blackflash2")
 
 		if(AB)
-			var/dam2take = round((get_complex_damage(AB,attacker,used_weapon.blade_dulling)/2),1)
+			var/is_chop = intenty.blade_class == BCLASS_CHOP
+			var/dam2take = round(get_complex_damage(AB, attacker, used_weapon.blade_dulling) / 3, 1)
 			if(dam2take)
 				var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
 				var/sharp_loss = SHARPNESS_ONHIT_DECAY
 				if(used_weapon == offhand)
 					intdam = INTEG_PARRY_DECAY_NOSHARP
+				if(is_chop)
+					intdam = dam2take
 
 				if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
 					sharp_loss += STRONG_SHP_BONUS
