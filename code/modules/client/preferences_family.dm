@@ -100,7 +100,7 @@
 	var/house_state = "No"
 	if(prefs.take_house_name)
 		house_state = "Yes"
-	var/links_html = pref_line_html("Take House Name?", "<a href='[base]house_name'>[house_state]</a>")
+	var/relations_html = ""
 	for(var/list/link in SSfamilytree.links)
 		if(link[1] != my_id && link[2] != my_id)
 			continue
@@ -112,9 +112,17 @@
 			role = "Offspring"
 		if(link[3] == "parent" && link[2] == my_id)
 			role = "Parent"
-		links_html += "<b>[other_name]</b> - [role] <a href='[base]unlink;rid=[SSfamilytree.Token("[link[1]]>[link[2]]")]'>Remove</a><br>"
-	if(!links_html)
-		links_html = "No relationships yet."
+		var/status = ""
+		var/toggle = "Disable"
+		if(length(link) >= 6 && length(link[6]))
+			status = " (Off)"
+			if(my_id in link[6])
+				toggle = "Enable"
+		var/rid = SSfamilytree.Token("[link[1]]>[link[2]]")
+		relations_html += "<b>[other_name]</b> - [role][status] <a href='[base]toggle_link;rid=[rid]'>[toggle]</a> <a href='[base]unlink;rid=[rid]'>Remove</a><br>"
+	if(!relations_html)
+		relations_html = "No relationships yet."
+	var/links_html = pref_line_html("Take House Name?", "<a href='[base]house_name'>[house_state]</a>") + relations_html
 	if(length(SSfamilytree.blocks[my_ckey]))
 		links_html += "<br><a href='[base]unblock_all'>Clear Blocked Players</a>"
 
@@ -334,6 +342,18 @@
 							if("lover", "friend", "cousin")
 								first.family_member_datum.other_relations -= second.family_member_datum
 								second.family_member_datum.other_relations -= first.family_member_datum
+								if(first.family_member_datum.lover == second.family_member_datum)
+									first.family_member_datum.lover = null
+									second.family_member_datum.lover = null
+		if("toggle_link")
+			for(var/list/link in SSfamilytree.links)
+				if((link[1] == my_id || link[2] == my_id) && SSfamilytree.Token("[link[1]]>[link[2]]") == rid)
+					if(length(link) < 6)
+						link += list(list())
+					if(my_id in link[6])
+						link[6] -= list(my_id)
+					else
+						link[6] += my_id
 		if("unblock_all")
 			SSfamilytree.blocks -= my_ckey
 		if("house_name")

@@ -178,6 +178,7 @@
 	var/list/spouses = list() // Current spouses
 	var/list/former_spouses = list() // Divorced spouses
 	var/list/other_relations = list()
+	var/datum/family_member/lover
 	var/adoption_status = FALSE // TRUE if adopted into family
 	var/generation = 0 // 0 = founder, 1 = their children, etc.
 	var/tmp/recalculating_generation = FALSE

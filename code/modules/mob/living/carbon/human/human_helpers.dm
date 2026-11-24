@@ -343,6 +343,9 @@
 			if("lover", "friend", "cousin")
 				family_member_datum.other_relations[spouse.family_member_datum] = relation
 				spouse.family_member_datum.other_relations[family_member_datum] = relation
+				if(relation == "lover")
+					family_member_datum.lover = spouse.family_member_datum
+					spouse.family_member_datum.lover = family_member_datum
 				mind?.i_know_person(spouse)
 				spouse.mind?.i_know_person(src)
 				to_chat(src, span_love("[spouse.real_name] is now my [relation]."))

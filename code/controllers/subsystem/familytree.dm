@@ -278,6 +278,8 @@ SUBSYSTEM_DEF(familytree)
 			// NO polyamory. 
 			if(relation == "Spouse" && (H.spouse_mob || other.spouse_mob))
 				continue
+			if(relation == "Lover" && (H.family_member_datum?.lover?.person || other.family_member_datum?.lover?.person))
+				continue
 			if(relation == "Spouse" && ((H.mind?.assigned_role in nomarry_jobs) || (other.mind?.assigned_role in nomarry_jobs)))
 				continue
 			if(Blocked(H.ckey, other.ckey) || !Compatible(my_info, MobInfo(other), (relation == "Spouse" || relation == "Lover")))
@@ -360,6 +362,8 @@ SUBSYSTEM_DEF(familytree)
 	for(var/list/link in links)
 		if(link in connected)
 			continue
+		if(length(link) >= 6 && length(link[6]))
+			continue
 		var/other_id = link[1]
 		if(link[1] == H.family_id)
 			other_id = link[2]
@@ -369,6 +373,8 @@ SUBSYSTEM_DEF(familytree)
 			if(other == H || other.family_id != other_id || other.stat == DEAD || !other.client)
 				continue
 			if(link[3] == "spouse" && (H.spouse_mob || other.spouse_mob))
+				continue
+			if(link[3] == "lover" && (H.family_member_datum?.lover?.person || other.family_member_datum?.lover?.person))
 				continue
 			if(link[3] == "parent")
 				var/mob/living/carbon/human/older = H
