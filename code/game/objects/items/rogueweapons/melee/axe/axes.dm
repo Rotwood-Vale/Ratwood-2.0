@@ -770,9 +770,9 @@
 	name = "\"Saigasplitter\""
 	desc = "A crude fusion of different arms - \
 	the length of the weapon resembles a Naledian staff, stripped of gold, \
-	the forcibly-embedded blade of the implement is reminiscent of an aavnic sabre,\
+	the forcibly-embedded blade of the implement is reminiscent of an aavnic sabre, \
 	and the jagged protrusions resemble bloodletting teeth, akin to those of dwarven mauls.\
-	This was naught the work of a blacksmith, but a madman's creation."
+	This was naught the work of a blacksmith, but a madman's abomination."
 	icon_state = "saigasplitter"
 	max_blade_int = 300
 	minstr = 12
