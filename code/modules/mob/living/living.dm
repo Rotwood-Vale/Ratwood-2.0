@@ -53,6 +53,9 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	if(simple_wounds)
+		for(var/datum/wound/wound as anything in simple_wounds.Copy())
+			qdel(wound)
 	clear_enemies()
 	enemies = null
 	return ..()

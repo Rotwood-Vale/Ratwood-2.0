@@ -10,6 +10,7 @@
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
+	var/datum/weakref/dropped_from
 	var/status = BODYPART_ORGANIC
 	var/needs_processing = FALSE
 
@@ -204,7 +205,7 @@
 
 /obj/item/bodypart/onbite(mob/living/carbon/human/user)
 	if((user.mind && user.mind.has_antag_datum(/datum/antagonist/zombie)) || istype(user.dna.species, /datum/species/werewolf))
-		if(owner.is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder) || owner.is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+		if(user.is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder) || user.is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 			to_chat(user, span_notice("My power is weakened, I cannot heal!"))
 			return
 		if(do_after(user, 50, target = src))
@@ -286,7 +287,8 @@
 		playsound(get_turf(src), 'sound/blank.ogg', 50, TRUE, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
-	if(!skeletonized && owner && !(NOBLOOD in owner.dna?.species?.species_traits))
+	var/mob/living/carbon/was_owner = owner || dropped_from?.resolve()
+	if(!skeletonized && was_owner && !(NOBLOOD in was_owner.dna?.species?.species_traits))
 		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
 
 //empties the bodypart from its organs and other things inside it
