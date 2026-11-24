@@ -1,0 +1,10 @@
+// A key cap in the keyboard and mouse help of the Character Gallery and the examine Image Gallery
+@mixin key-cap {
+  min-width: 1em;
+  padding-inline: 0.2em;
+  color: var(--color-text);
+  border: 1px solid var(--color-label);
+  border-radius: 2px;
+  font: inherit;
+  text-align: center;
+}
