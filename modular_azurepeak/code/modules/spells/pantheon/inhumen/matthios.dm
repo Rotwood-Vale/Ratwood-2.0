@@ -432,11 +432,13 @@
 /datum/status_effect/buff/twilight_peoplesbanner/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, id)
 	owner.add_stress(/datum/stressevent/twilight_peoplesbanner_good)
 
 /datum/status_effect/buff/twilight_peoplesbanner/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, id)
 	owner.remove_stress(/datum/stressevent/twilight_peoplesbanner_good)
 
 /atom/movable/screen/alert/status_effect/debuff/twilight_peoplesbanner
