@@ -192,6 +192,13 @@
 			snap.song_title = profile["song_title"]
 			snap.img_gallery = profile["img_gallery"]
 			snap.nsfw_img_gallery = profile["nsfw_img_gallery"]
+			snap.headshot_zoom = profile["headshot_zoom"]
+			snap.headshot_x = profile["headshot_x"]
+			snap.headshot_y = profile["headshot_y"]
+			snap.headshot_framed = profile["headshot_framed"]
+			snap.image_backdrop = profile["image_backdrop"]
+			snap.card_backgrounds = profile["card_backgrounds"]
+			snap.art_view_settings = profile["art_view_settings"]
 			var/datum/examine_panel/panel = new(user)
 			panel.pref = snap
 			panel.holder = user
