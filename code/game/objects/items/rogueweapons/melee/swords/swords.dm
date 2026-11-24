@@ -2871,7 +2871,7 @@
 //Banded iron sword that I don't want to chuck in the middle of the file again
 /obj/item/rogueweapon/sword/short/iron/banded
 	name = "banded iron sword"
-	desc = "A rather heavy slab of iron for separating brigands from their ill-gotten gold. It's extremely heavy and only really allows for cutting,\
+	desc = "A rather heavy slab of iron for separating brigands from their ill-gotten gold. It's extremely heavy and only really allows for cutting, \
 	yet it swings surprisingly fast - at the cost of force output."
 	icon_state = "bandedsword"
 	possible_item_intents = list(
