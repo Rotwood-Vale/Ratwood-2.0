@@ -1241,6 +1241,8 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	if(duration != -1 && world.time >= duration && !QDELETED(owner) && owner.stat != DEAD)
 		if(owner.has_status_effect(/datum/status_effect/debuff/devitalised) || owner.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 			return FALSE
+		if(HAS_TRAIT(owner, TRAIT_LUX_FREAK))
+			return
 		owner.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		owner.Jitter(4)
 		owner.emote("scream")
