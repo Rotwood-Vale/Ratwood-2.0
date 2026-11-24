@@ -178,7 +178,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Bishop Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, {"Choose thy path.
+
+Loyalist -- Devote thyself to a single patron and keep their rites.
+
+Radical -- Seek wisdom beyond the teachings of thy patron. Thou mayst change thy patron as thy studies lead thee. Long years of study have sharpened thy mind and left thy body weary.
+
+Radical effects: -1 Constitution, +2 Will, +1 Speed, and Critical Weakness.
+Wrestling and Fistfighting start at level 2."}, "Bishop Doctrine", "Loyalist", "Radical")
 
 	if(choice == "Radical")
 		src.grant_radical_path(H)
