@@ -2235,7 +2235,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/fleshcrafting/ascend
 	name = "ASCEND!"
 	icon_type = /obj/item/clothing/head/roguetown/crown/zizo
-	desc = "Sacrifice the ruler on the north side and a person with pure lux on the south side. Must be performed inside the keep. The ruler must be kept on the profane altar for 5 minutes to Ascend. Alerts everyone."
+	desc = "Sacrifice the ruler on the north side and a person with pure lux on the south side."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "the one to ascend"
 	n_req = /mob/living/carbon/human
@@ -2251,75 +2251,31 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	gesture_required = TRUE
 
 /datum/ritual/fleshcrafting/ascend/invoke(mob/living/user, turf/center)
-	var/area/rogue/ritual_area = get_area(center)
-	if(!istype(ritual_area) || !ritual_area.keep_area)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side."))
-		return
 	var/mob/living/carbon/human/cultist = locate() in center.contents
 	if(!cultist || cultist != user || !is_zizo(cultist))
 		return
 	var/mob/living/carbon/human/RULER = SSticker.rulermob
-	if(!RULER || RULER.loc != get_step(center, NORTH))
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side."))
-		return
 	var/mob/living/carbon/human/cleric = locate() in get_step(center, SOUTH)
-	if(!cleric || cleric.purity == FALSE || cleric.stat == DEAD)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side."))
+	if(!RULER || RULER.loc != get_step(center, NORTH) || !cleric || cleric.purity == FALSE || cleric.stat == DEAD)
+		to_chat(user, span_warning("The ruler must lie on the north side. A person with pure lux must lie on the south side."))
+		return
+	var/poo = new /obj/effect/temp_visual/opengate(center, 12.5 SECONDS)
+	playsound(user, 'sound/villain/littlescary.ogg', 100, TRUE)
+	if(!do_after(user, 12.5 SECONDS))
+		qdel(poo)
+		return
+	if(QDELETED(RULER) || RULER.loc != get_step(center, NORTH) || QDELETED(cleric) || cleric.stat == DEAD || cleric.loc != get_step(center, SOUTH))
 		return
 	cleric.visible_message(span_danger("[cleric] withers and dies!"))
 	cleric.death()
-	RULER.Unconscious(6 MINUTES)
-	priority_announce("Incomprehensible evil arises from within the keep! To arms, the end is near!", title = "ZIZO", sound = 'sound/villain/seen_wonder.ogg')
+	RULER.gib()
 	for(var/datum/mind/M in SSmapping.retainer.cultists)
 		var/datum/antagonist/zizocultist/Z = M.has_antag_datum(/datum/antagonist/zizocultist)
 		Z?.add_halo()
 	var/datum/particle_weather/storm = new /datum/particle_weather/blood_rain_storm
 	SSParticleWeather.runningWeather = storm
 	storm.start()
-	var/obj/structure/raver/altar/altar = new(RULER.loc)
-	altar.buckle_mob(RULER, TRUE, FALSE)
-	RULER.apply_status_effect(/datum/status_effect/zizo_ascension, cultist, altar)
-	to_chat(user, span_boldnotice("THE RULER MUST REMAIN UPON THE ALTAR AT ALL COSTS!"))
-
-/obj/structure/raver/altar
-	name = "profane altar"
-	desc = "HELL'S GORGE HATH BROKEN!"
-	max_integrity = 600
-
-/obj/structure/raver/altar/post_buckle_mob(mob/living/M)
-	return
-
-/obj/structure/raver/altar/examine(mob/user)
-	return list("[name]. [desc]")
-
-/datum/status_effect/zizo_ascension
-	id = "zizo_ascension"
-	duration = -1
-	tick_interval = 5 SECONDS
-	var/mob/living/carbon/human/cultist
-	var/obj/structure/raver/altar/altar
-	var/elapsed = 0
-
-/datum/status_effect/zizo_ascension/on_creation(mob/living/new_owner, mob/living/carbon/human/leader, obj/structure/raver/altar/device)
-	cultist = leader
-	altar = device
-	. = ..()
-
-/datum/status_effect/zizo_ascension/tick()
-	if(QDELETED(cultist) || cultist.stat == DEAD || QDELETED(altar) || owner.loc != altar.loc)
-		ascension_fail()
-		return
-	elapsed += 5
-	if(elapsed >= 300)
-		zizo_ascend(cultist)
-		owner.gib()
-		qdel(altar)
-		qdel(src)
-
-/datum/status_effect/zizo_ascension/proc/ascension_fail()
-	priority_announce("The sky brightens! The ritual is foiled!", title = "PEACE", sound = 'sound/misc/triumph.ogg')
-	qdel(altar)
-	qdel(src)
+	zizo_ascend(cultist)
 
 /proc/zizo_ascend(mob/living/carbon/human/cultist)
 	if(QDELETED(cultist) || !cultist.mind)
