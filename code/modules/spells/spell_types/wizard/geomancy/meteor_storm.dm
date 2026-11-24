@@ -160,6 +160,8 @@
 		chosen_dirs += dir
 	for(var/dir in chosen_dirs)
 		var/turf/target = get_ranged_target_turf(T, dir, 3)
+		if(!target)
+			continue
 		var/obj/projectile/magic/gravel_blast/frag = new(T)
 		frag.damage = fragment_damage
 		frag.firer = owner

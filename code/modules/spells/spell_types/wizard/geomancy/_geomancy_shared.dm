@@ -108,6 +108,8 @@
 	for(var/i in 1 to fragment_count)
 		var/dir = pick_n_take(dirs)
 		var/turf/target = get_ranged_target_turf(T, dir, 3)
+		if(!target)
+			continue
 		var/obj/projectile/magic/gravel_blast/frag = new(T)
 		frag.damage = fragment_damage
 		frag.ricochets_max = 0

@@ -347,6 +347,8 @@
 	for(var/i in 1 to charge_frag_count)
 		var/fdir = pick(burst_dirs)
 		var/turf/ftarget = get_ranged_target_turf(from, fdir, 4)
+		if(!ftarget)
+			continue
 		var/obj/projectile/magic/gravel_blast/frag = new(from)
 		frag.damage = charge_frag_damage
 		frag.range = 4
