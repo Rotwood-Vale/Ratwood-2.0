@@ -104,7 +104,7 @@
 				H.dna.species.soundpack_m = new /datum/voicepack/male/warrior
 			if("Aavar - 'Authentic Steppesman'")	//Light armor, beast claws or dual handaxes.
 				H.set_blindness(0)
-				to_chat(H, span_warning("Easy pickings - the raiders of Gronn are infamous for the pillaging of Aavar for a reason; following the onslaught, you took a few spoils for yourself before splitting off."))
+				to_chat(H, span_warning("Easy pickings - the raiders of Gronn are infamous for the pillaging of Aavar for a reason; following the onslaught, you took a few spoils from a saiga-rider for yourself before splitting off."))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 				gloves = /obj/item/clothing/gloves/roguetown/chain
@@ -142,7 +142,7 @@
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)	//Old whip skill.
 			if("Hammerhold - 'Drakkynborne'")	//Light armor, beast claws or dual handaxes.
 				H.set_blindness(0)
-				to_chat(H, span_warning("'Never should have come here!', was the last thing they heard before you gruesomely spilt their entrails; you'll make better use of their possessions more than they did, anyway."))
+				to_chat(H, span_warning("'Never should have come here!', was the last thing they heard before you gruesomely spilt their entrails; you'd make better use of their possessions than they did, anyway."))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/iron/banded
 				gloves = /obj/item/clothing/gloves/roguetown/plate/iron/banded
