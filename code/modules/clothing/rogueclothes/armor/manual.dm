@@ -366,6 +366,7 @@
 	Oh no, not me, I never lost control.</br> \
 	You're face to face, with the man who sold the world."
 	armor = ARMOR_DRAGONSKIN
+	repair_fraction = 0.2
 	max_integrity = 450
 
 /*
