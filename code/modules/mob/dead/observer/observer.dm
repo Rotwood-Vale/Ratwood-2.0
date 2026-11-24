@@ -274,6 +274,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 10)
 
 /mob/dead/observer/Destroy()
+	// Otherwise the observed mob keeps us in its observers list and a sight signal pointing at us
+	cleanup_observe()
 	clear_ghost_images(ghostimage_default, ghostimage_simple)
 	GLOB.ghost_images_default -= ghostimage_default
 	ghostimage_default = null
