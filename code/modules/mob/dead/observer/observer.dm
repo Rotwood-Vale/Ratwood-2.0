@@ -1138,6 +1138,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		mob_eye.observers |= src
 		mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 	RegisterSignal(mob_eye, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_observed_sight_change))
+	RegisterSignal(mob_eye, COMSIG_QDELETING, PROC_REF(on_observed_deleted))
 	sync_observed_vision()
 	to_chat(src, span_notice("I see through [mob_eye]'s eyes. Orbit or follow something else to stop."))
 	return TRUE
@@ -1148,7 +1149,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isnull(target))
 		return
 	observetarget = null
-	UnregisterSignal(target, COMSIG_MOB_UPDATE_SIGHT)
+	UnregisterSignal(target, list(COMSIG_MOB_UPDATE_SIGHT, COMSIG_QDELETING))
 	if(target.observers)
 		target.observers -= src
 		UNSETEMPTY(target.observers)
@@ -1163,6 +1164,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/on_observed_sight_change(datum/source)
 	SIGNAL_HANDLER
 	sync_observed_vision()
+
+/mob/dead/observer/proc/on_observed_deleted(datum/source)
+	SIGNAL_HANDLER
+	reset_perspective(null)
 
 /// Copy the eyesight of the observed mob: darkness, vision flags, screen overlays and alerts.
 /mob/dead/observer/proc/sync_observed_vision()
