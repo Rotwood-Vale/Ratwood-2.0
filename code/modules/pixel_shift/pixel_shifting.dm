@@ -121,7 +121,6 @@
 		pixel_x = base_pixel_x
 		is_shifted = TRUE
 	set_pixel_passthrough(5)
-<<<<<<< HEAD
 
 
 /datum/keybinding/mob/pixel_rotate_reset
@@ -224,5 +223,3 @@
 	if(QDELETED(target) || !Adjacent(target) || target.notransform || target.buckled || !isturf(target.loc))
 		return
 	return target
-=======
->>>>>>> b884d6e1f30d333daee241b69c1c0111cfa4ae8d

@@ -430,10 +430,7 @@
 
 	if(isliving(target_movable))
 		var/mob/living/target = target_movable
-<<<<<<< HEAD
 		log_combat(src, target, "grabbed", addition="passive grab")
-=======
->>>>>>> b884d6e1f30d333daee241b69c1c0111cfa4ae8d
 		if(!iscarbon(src))
 			target.LAssailant = null
 		else

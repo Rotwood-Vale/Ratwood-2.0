@@ -277,15 +277,12 @@
 
 	var/mobid = 0 //incremented on spawn
 
-<<<<<<< HEAD
 	/// Lazy list of active /datum/sound_token that consider this mob a listener
 	var/list/sound_tokens
 	/// Private ambience source, such as a held torch, heard at zero distance outside the shared
 	/// index. Managed by the subsystem
 	var/atom/point_ambience_self_source
 
-=======
->>>>>>> b884d6e1f30d333daee241b69c1c0111cfa4ae8d
 	/// Boolean for being on combat mode, off by default
 	var/cmode = FALSE
 	var/d_intent = INTENT_DODGE
