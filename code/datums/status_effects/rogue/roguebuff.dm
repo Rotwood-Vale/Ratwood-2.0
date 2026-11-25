@@ -2871,5 +2871,7 @@
 
 /datum/status_effect/buff/dagger_boost/process()
 	. = ..()
+	if(QDELETED(owner))
+		return
 	if(!istype(owner.get_active_held_item(), held_dagger))
 		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)
