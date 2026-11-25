@@ -167,6 +167,7 @@
 			to_chat(user, "<span class='info'>Nothing's brewing.</span>")
 			return
 	else
+		listclearnulls(ingredients)
 		if(ingredients.len)
 			var/obj/item/I = ingredients[ingredients.len]
 			ingredients -= I
