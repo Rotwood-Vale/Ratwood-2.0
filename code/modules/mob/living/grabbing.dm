@@ -41,7 +41,10 @@
 	var/chokehold = FALSE
 	/// Limb that this grab is in
 	var/grab_held_by
+<<<<<<< HEAD
 	var/sippy = FALSE
+=======
+>>>>>>> b884d6e1f30d333daee241b69c1c0111cfa4ae8d
 
 /obj/item/grabbing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
 	. = ..()

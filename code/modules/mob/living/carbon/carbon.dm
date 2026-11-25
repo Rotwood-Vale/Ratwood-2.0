@@ -640,6 +640,7 @@
 	var/pain_threshold = 0
 	var/bleeding_tier = 0
 	var/lightning_flashing = FALSE
+<<<<<<< HEAD
 	var/chem_pain = 0
 
 /mob/living/carbon/proc/update_chem_pain()
@@ -648,6 +649,8 @@
 		if(r.pain && r.metabolizing)
 			chem_pain += r.pain
 	mark_pain_hud_dirty()
+=======
+>>>>>>> b884d6e1f30d333daee241b69c1c0111cfa4ae8d
 
 /mob/living/carbon/proc/add_nausea(amt)
 	nausea = clamp(nausea + amt, 0, 300)
