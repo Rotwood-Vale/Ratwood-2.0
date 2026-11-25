@@ -657,7 +657,7 @@
 	sewrepair = FALSE
 	max_integrity = 800
 	item_flags = DROPDEL
-	repair_time = 40 SECONDS
+	repair_time = 60 SECONDS
 
 // Mob itself
 /mob/living/carbon/human/species/wildshape/dragon_matthios
@@ -675,8 +675,8 @@
 
 /mob/living/carbon/human/species/wildshape/dragon_matthios/gain_inherent_skills()
 	if(mind)
-		adjust_skillrank(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
-		adjust_skillrank(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+		adjust_skillrank(/datum/skill/combat/wrestling, SKILL_LEVEL_MASTER, TRUE)
+		adjust_skillrank(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 		adjust_skillrank(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
 		adjust_skillrank(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
 		adjust_skillrank(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
@@ -876,6 +876,7 @@
 		TRAIT_NOFALLDAMAGE1,
 		TRAIT_MASSIVE_PINTLE,
 		TRAIT_DUALWIELDER,
+		TRAIT_CRITICAL_RESISTANCE,
 		TRAIT_KNEESTINGER_IMMUNITY
 	)
 	inherent_biotypes = MOB_HUMANOID
@@ -945,7 +946,7 @@
 	dodgeable_intent = FALSE
 	parriable_intent = FALSE
 	swingdelay = 0.8 SECONDS
-	swingdelay_type = SWINGDELAY_CANCEL
+	swingdelay_type = SWINGDELAY_PENALTY
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
