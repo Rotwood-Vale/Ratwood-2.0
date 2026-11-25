@@ -31,14 +31,14 @@
 	. = ..()
 
 /obj/structure/arcyne_wall/caster
-	var/mob/caster
+	var/datum/weakref/caster
 
 /obj/structure/arcyne_wall/caster/Initialize(mapload, mob/summoner)
 	. = ..()
-	caster = summoner
+	caster = WEAKREF(summoner)
 
 /obj/structure/arcyne_wall/caster/CanPass(atom/movable/mover, turf/target)	//only the caster can move through this freely
-	if(mover == caster)
+	if(mover == caster?.resolve())
 		return TRUE
 	if(ismob(mover))
 		var/mob/M = mover
@@ -58,14 +58,14 @@
 	climb_time = 0
 
 /obj/structure/arcyne_wall/greater/caster
-	var/mob/caster
+	var/datum/weakref/caster
 
 /obj/structure/arcyne_wall/greater/caster/Initialize(mapload, mob/summoner)
 	. = ..()
-	caster = summoner
+	caster = WEAKREF(summoner)
 
 /obj/structure/arcyne_wall/greater/caster/CanPass(atom/movable/mover, turf/target)	//only the caster can move through this freely
-	if(mover == caster)
+	if(mover == caster?.resolve())
 		return TRUE
 	if(ismob(mover))
 		var/mob/M = mover
@@ -98,18 +98,18 @@
 	over_state = "arcyneopen"
 
 /obj/structure/mineral_door/wood/deadbolt/arcyne/caster
-	var/mob/caster
+	var/datum/weakref/caster
 
 /obj/structure/mineral_door/wood/deadbolt/arcyne/caster/Initialize(mapload, mob/summoner)
 //	icon_state = base_state
 	. = ..()
-	caster = summoner
+	caster = WEAKREF(summoner)
 
 /obj/structure/mineral_door/wood/deadbolt/arcyne/caster/attack_right(mob/user)
 	..()
 	if(door_opened || isSwitchingStates)
 		return
-	if(user == caster)
+	if(user == caster?.resolve())
 		lock_toggle(user)
 		to_chat(user, span_warning("The lock to this door is broken."))
 		return
