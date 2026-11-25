@@ -31,6 +31,9 @@
 	if(target.stat == DEAD)
 		to_chat(user, "They're dead!")
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_LUX_FREAK))
+		to_chat(user, "Their lux moves and resists being cut!")
+		return FALSE
 
 /datum/surgery_step/extract_lux/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target, span_notice("I begin to scrape lux from [target]'s heart..."),

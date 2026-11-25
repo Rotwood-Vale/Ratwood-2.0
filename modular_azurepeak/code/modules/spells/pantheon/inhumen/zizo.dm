@@ -198,6 +198,9 @@
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || (target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) || target.mob_biotypes & MOB_UNDEAD)) //can't farm your skeletons
 		to_chat(user, span_notice("This one's lux is already disturbed!"))
 		return
+	if(HAS_TRAIT(target, TRAIT_LUX_FREAK))
+		to_chat(user, span_notice("Their shifting lux slips my grip!"))
+		return
 	else
 		to_chat(user, span_alert("I begin reaching my hand towards [target], preparing to tear their lux from their body..."))
 		user.visible_message(span_alert("[user] reaches towards [target]'s chest, inhumen flames wreathing [user.p_their()] hand..."))

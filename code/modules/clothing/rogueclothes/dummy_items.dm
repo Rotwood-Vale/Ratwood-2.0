@@ -75,7 +75,7 @@
 	animname = "cut"
 	blade_class = BCLASS_CUT
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 0
+	penfactor = PEN_NONE
 	chargetime = 0
 	swingdelay = 0
 	clickcd = 8
@@ -88,7 +88,7 @@
 	animname = "chop"
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 10
+	penfactor = PEN_LIGHT
 	damfactor = 1.5
 	swingdelay = 5
 	clickcd = 10
@@ -99,7 +99,7 @@
 	icon_state = "ingrab"
 	attack_verb = list("digs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 90
+	penfactor = PEN_BSTEEL
 	clickcd = 15
 	swingdelay = 0
 	damfactor = 1.3
@@ -110,7 +110,7 @@
 	icon_state = "inpick"
 	attack_verb = list("stabs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 75
+	penfactor = PEN_HEAVY
 	clickcd = 14
 	swingdelay = 12
 	damfactor = 1.1
