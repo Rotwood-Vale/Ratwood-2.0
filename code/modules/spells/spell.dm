@@ -130,11 +130,15 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	update_icon()
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
-	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
+	if(!ranged_ability_user)
+		return
+	if(ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src) //To avoid removing the wrong ability
+		ranged_ability_user = null
 		return
 	// Clean up stale client signals from cooldown spells that may still be registered
-	for(var/datum/action/cooldown/spell/S in ranged_ability_user.actions)
-		S.UnregisterSignal(ranged_ability_user.client, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP))
+	if(ranged_ability_user.client)
+		for(var/datum/action/cooldown/spell/S in ranged_ability_user.actions)
+			S.UnregisterSignal(ranged_ability_user.client, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP))
 	ranged_ability_user.ranged_ability = null
 
 	ranged_ability_user.click_intercept = null
