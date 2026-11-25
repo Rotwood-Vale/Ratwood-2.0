@@ -295,6 +295,16 @@
 			return
 	. = ..()
 
+/datum/intent/reap
+	name = "reap"
+	desc = "Harvest every ripe plant in a 3x2 area in front of you. Useless in combat."
+	icon_state = "inreap"
+	chargetime = 0
+	noaa = TRUE
+	no_attack = TRUE
+	dodgeable_intent = FALSE
+	misscost = 0
+
 /datum/intent/till
 	name = "hoe"
 	icon_state = "inhoe"
