@@ -146,6 +146,8 @@
 		candidate.mind.restricted_roles = restricted_roles
 		picked_mobs += WEAKREF(candidate.client)
 
+	if(length(setup_minds) < antag_count)
+		SSgamemode.latejoin_antags[cast_control] = antag_count - length(setup_minds)
 	setup = TRUE
 	if(LAZYLEN(extra_spawned_events))
 		var/event_type = pickweight(extra_spawned_events)

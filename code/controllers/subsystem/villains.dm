@@ -1,6 +1,7 @@
 /datum/controller/subsystem/gamemode
 	var/list/rolled_villain_events = list()
 	var/list/queued_villains = list()
+	var/list/latejoin_antags = list()
 
 /datum/controller/subsystem/gamemode/proc/count_queued_villains(job_title)
 	. = 0
@@ -35,8 +36,10 @@
 		dat += "Wait."
 	else
 		dat += "<b>Greater Villains:</b><br>"
-		if(!length(SSgamemode.rolled_villain_events))
+		if(!length(SSgamemode.rolled_villain_events) && !length(SSgamemode.latejoin_antags))
 			dat += "None.<br>"
+		for(var/datum/round_event_control/antagonist/solo/event as anything in SSgamemode.latejoin_antags)
+			dat += "<b>[event.name]</b> ([SSgamemode.latejoin_antags[event]] slots)<br>"
 		for(var/datum/round_event_control/antagonist/event in SSgamemode.rolled_villain_events)
 			var/slots = 1
 			if(istype(event, /datum/round_event_control/antagonist/solo))

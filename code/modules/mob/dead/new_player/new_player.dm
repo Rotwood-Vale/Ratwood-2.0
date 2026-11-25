@@ -586,6 +586,15 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
 		humanc = character	//Let's retypecast the var to be human,
+		for(var/datum/round_event_control/antagonist/solo/event as anything in SSgamemode.latejoin_antags)
+			if(!humanc.client || humanc.mind.special_role || !(event.antag_flag in humanc.client.prefs.be_special) || (humanc.mind.assigned_role in event.restricted_roles) || is_banned_from(humanc.ckey, event.antag_flag))
+				continue
+			humanc.mind.special_role = event.antag_flag
+			humanc.mind.add_antag_datum(event.antag_datum)
+			SSgamemode.latejoin_antags[event]--
+			if(SSgamemode.latejoin_antags[event] <= 0)
+				SSgamemode.latejoin_antags -= event
+			break
 /*
 	if(humanc)	//These procs all expect humans
 		GLOB.data_core.manifest_inject(humanc)
