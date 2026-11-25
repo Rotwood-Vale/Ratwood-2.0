@@ -197,6 +197,15 @@
 	QDEL_NULL(sunder_light_obj)
 	QDEL_NULL(devotion)
 	GLOB.human_list -= src
+	if(current_fellowship)
+		current_fellowship.remove_member(src, reason = FELLOWSHIP_REASON_DESTROYED)
+		current_fellowship = null
+	if(length(incoming_fellowship_invites))
+		for(var/datum/weakref/W as anything in incoming_fellowship_invites)
+			var/datum/fellowship/F = W.resolve()
+			if(F)
+				F.remove_pending_invite(real_name)
+		incoming_fellowship_invites.Cut()
 	var/mob/living/carbon/human/spouse = spouse_mob
 	spouse_mob = null
 	if(istype(spouse) && spouse.spouse_mob == src)
@@ -207,15 +216,6 @@
 	if(spouse_indicator)
 		client?.images -= spouse_indicator
 		spouse_indicator = null
-	if(current_fellowship)
-		current_fellowship.remove_member(src, reason = FELLOWSHIP_REASON_DESTROYED)
-		current_fellowship = null
-	if(length(incoming_fellowship_invites))
-		for(var/datum/weakref/W as anything in incoming_fellowship_invites)
-			var/datum/fellowship/F = W.resolve()
-			if(F)
-				F.remove_pending_invite(real_name)
-		incoming_fellowship_invites.Cut()
 	. = ..()
 	// after the parent chain, or damage overlay updates during it put us straight back in
 	STOP_PROCESSING(SSdamoverlays, src)
