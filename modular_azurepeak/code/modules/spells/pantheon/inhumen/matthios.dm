@@ -505,6 +505,7 @@
 /obj/effect/proc_holder/spell/invoked/raze/gilded_dragon
 	devotion_cost = 0
 	miracle = FALSE
+	recharge_time = 90
 
 /obj/effect/proc_holder/spell/invoked/raze/cast(list/targets, mob/living/user = usr)
 	. = ..()
@@ -650,13 +651,13 @@
 	icon_state = null
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
-	armor = ARMOR_PLATE
+	armor = ARMOR_DRAGONSKIN
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
-	max_integrity = 600
+	max_integrity = 800
 	item_flags = DROPDEL
-	repair_time = 20 SECONDS
+	repair_time = 40 SECONDS
 
 // Mob itself
 /mob/living/carbon/human/species/wildshape/dragon_matthios
@@ -874,6 +875,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NOFALLDAMAGE1,
 		TRAIT_MASSIVE_PINTLE,
+		TRAIT_DUALWIELDER,
 		TRAIT_KNEESTINGER_IMMUNITY
 	)
 	inherent_biotypes = MOB_HUMANOID
