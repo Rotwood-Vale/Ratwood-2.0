@@ -134,8 +134,10 @@
 	var/guard_deflectable = FALSE
 	/// Multiplier for integrity damage dealt to armor. 1 is default. Higher = harder on armor.
 	var/intdamfactor = 1
-	/// If TRUE, penetrating piercing armor still deals full damage to its integrity instead of the passthrough fraction.
-	var/full_integrity_on_pen = FALSE
+	/// Share of damage dealt to piercing armor's integrity when this gets through it (ties or beats the tier). Null uses the passthrough share.
+	var/pen_integrity_factor
+	/// Share of damage dealt to piercing armor's integrity when the armor stops this outright. Null deals full damage.
+	var/blocked_integrity_factor
 	/// If TRUE, this projectile only embeds when its pen beats the struck zone's piercing armor tier (or the zone is unarmored).
 	var/embed_needs_full_pen = FALSE
 	/// Armor tier the last armor check against this projectile used, recorded before the hit damaged that armor.

@@ -43,17 +43,16 @@
 					consume_debuff = FALSE
 					intdamage = damage * (1 - (pen_info * PEN_PASSTHROUGH_RATIO))
 			else
-				// Some projectiles (arrows) wear armor down fully even when they get through it.
-				var/obj/projectile/proj = used_weapon
-				var/full_integ = istype(proj) && proj.full_integrity_on_pen
-				if(armor_penetration == protection)
+				// Projectiles can set their own share of damage that goes into the armor (arrows do).
+				var/obj/projectile/proj = istype(used_weapon, /obj/projectile) ? used_weapon : null
+				if(armor_penetration >= protection)
 					consume_debuff = FALSE
-					if(!full_integ)
-						intdamage = damage * PEN_PASSTHROUGH_PROJ_EQUAL
-				if(armor_penetration > protection)
-					consume_debuff = FALSE
-					if(!full_integ)
-						intdamage = damage * PEN_PASSTHROUGH_PROJ_MORE
+					if(proj && !isnull(proj.pen_integrity_factor))
+						intdamage = damage * proj.pen_integrity_factor
+					else
+						intdamage = damage * (armor_penetration > protection ? PEN_PASSTHROUGH_PROJ_MORE : PEN_PASSTHROUGH_PROJ_EQUAL)
+				else if(proj && !isnull(proj.blocked_integrity_factor))
+					intdamage = damage * proj.blocked_integrity_factor
 
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
