@@ -145,6 +145,15 @@
 	set category = "IC"
 	toggle_keen_ears()
 
+/mob/living/carbon/human/verb/relationship_board()
+	set name = "Relationship Board"
+	set category = "IC"
+	if(!client)
+		return
+	if(!client.prefs.family_menu)
+		client.prefs.family_menu = new(client.prefs)
+	client.prefs.family_menu.show(src)
+
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/obj/item/bodypart/affecting
 	var/dam = levels * rand(10,50)
