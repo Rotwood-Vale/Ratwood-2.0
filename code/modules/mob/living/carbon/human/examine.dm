@@ -106,20 +106,15 @@
 		if(item)
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
-	if(user != src && get_dist(user, src) <= 3)
-		var/reeking_naturally = is_redolent_reeking()
-		if(reeking_naturally || has_status_effect(/datum/status_effect/debuff/stinky_contact))
-			var/can_see_stink = !isliving(user) // adminghost always sees it
-			if(isliving(user))
-				var/mob/living/living_user = user
-				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
-			if(can_see_stink)
-				if(reeking_naturally)
-					. += redolent_examine_text(redolent_scent_type, redolent_scent)
-				else
-					var/datum/status_effect/debuff/stinky_contact/contact_stink = has_status_effect(/datum/status_effect/debuff/stinky_contact)
-					if(contact_stink)
-						. += contact_stink.get_examine_text()
+	// Try to see if they smell
+	if(get_dist(user, src) <= 3 && !HAS_TRAIT(user, TRAIT_MISSING_NOSE) && !HAS_TRAIT(user, TRAIT_NOSTINK)) // Need to be close enough + able to smell
+		if(user != src) // You can't smell your own scent
+			var/datum/status_effect/redolent/strong_smell = has_status_effect(/datum/status_effect/redolent)
+			if(strong_smell)
+				. += strong_smell.get_examine_text()
+		// But you sure as hell can smell when someone else has tainted you
+		for(var/datum/status_effect/redolent/stinky_contact/strong_smell as anything in has_status_effect_list(/datum/status_effect/redolent/stinky_contact))
+			. += strong_smell.get_examine_text()
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -1135,6 +1130,9 @@
 							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from both [m2] holes" : "dripping cum from both [m2] holes"]!")
 						else
 							. += span_aiprivradio("[m1] [is_long ? "leaking a heavy load" : "dripping cum from [m2] nethers"]!")
+		var/obj/item/organ/eggs/belly_eggs = getorganslot(ORGAN_SLOT_EGGS)
+		if(user.client?.prefs?.oviposition && belly_eggs?.quantity >= 10 && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
+			. += span_aiprivradio("[capitalize(m2)] belly is bloated and bumpy!")
 		var/list/modular_lines = human_modular_examine_lines(user, observer_privilege, m1, m2, m3)
 		if(length(modular_lines))
 			. += modular_lines

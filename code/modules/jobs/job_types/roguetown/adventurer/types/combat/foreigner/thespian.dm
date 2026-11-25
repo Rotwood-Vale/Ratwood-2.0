@@ -185,14 +185,12 @@
 				belt = /obj/item/storage/belt/rogue/leather
 			if("Gladiator - Skin-Armored & Immunity To Pain")
 				ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC) //Lite!Barbarian.
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)//effectively gives them old crit resistance with the 0.5x bleed rate
 				head = /obj/item/clothing/head/roguetown/helmet/bronzegladiator
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/gladiator
-				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator //a leather armor
-				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator //a gambeson
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/gladiator //a leather armor
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/body/gladiator //a gambeson
 				pants = /obj/item/clothing/under/roguetown/loincloth/brown
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/red
-				//shirt = /obj/item/clothing/suit/roguetown/shirt/tribalrag/gladiator //no empty hands to put this in, and cannot seem to 'pre-load' the cosmetic slot of a skin armor. Can hang in limbo untill someone figures out how to grant it.
 				if(bronzeweapon_choice == "Caestus - Pure Unarmed, No Weapons, +I STR/WIL")
 					ADD_TRAIT(H, TRAIT_RAGE, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

@@ -241,7 +241,7 @@
 		qdel(shirt)
 
 	// Equip the skin armor
-	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/hide = new(recipient)
+	var/obj/item/clothing/suit/roguetown/armor/manual/resting/body/weak/hide = new(recipient)
 	if(hide_name)
 		hide.name = hide_name
 	if(hide_desc)

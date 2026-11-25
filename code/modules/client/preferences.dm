@@ -122,6 +122,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/oviposition = FALSE
 	var/free_use_default = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
@@ -339,6 +340,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
 	var/datum/charflaw/vice6
+	var/redolent_type = REDOLENT_SMELL_NEUTRAL
+	var/redolent_scent = ""
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER

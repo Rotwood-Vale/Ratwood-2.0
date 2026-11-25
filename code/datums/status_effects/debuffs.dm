@@ -11,6 +11,9 @@
 		duration = set_duration
 	. = ..()
 	if(.)
+		if(ishuman(owner) && (istype(src, /datum/status_effect/incapacitating/knockdown) || istype(src, /datum/status_effect/incapacitating/paralyzed)))
+			var/mob/living/carbon/human/mount = owner
+			mount.dismount_on_forced_fall()
 		if(updating_canmove)
 			owner.update_mobility()
 			if(needs_update_stat)

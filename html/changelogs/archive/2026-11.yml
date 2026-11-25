@@ -479,3 +479,117 @@
   - bugfix: drow greatsabre pen
   ronfino:
   - rscadd: Pouch switches to an empty pouch sprite when no items are inside
+2026-11-23:
+  AlucardHellsingChapel:
+  - rscadd: 'Added new martyr weapon: Scythe'
+  - rscadd: Added new weapon summoning system for Martyrs
+  - rscdel: Removed old way to summon weapons
+  - sound: Added new sound for Martyr 's scythe special
+  - image: Added Scythe sprites
+  - image: added baothan light armor sprites back
+  - rscadd: Added Heretic Spellblade
+  - rscadd: Added Heretic Spellfist
+  - rscadd: Added Adventurer Spellfist
+  Arturlang:
+  - rscadd: prevent compilation below 516 because it breaks
+  - bugfix: wanted posters shouldn't lag anymore when initially generated
+  CentralSmith:
+  - balance: Tug of War no longer has a random chance to fail its pull.
+  - bugfix: Tug of War no longer accumulates pull and slow bonuses across casts, grants
+      its stat bonus at three superior stats, and can pull non-human living targets.
+  - bugfix: Tug of War uses the caster for throw attribution, rejects self-targets,
+      and reports rejected throws correctly.
+  - rscadd: "Sealed brewer\u2019s bottles of alcohol now have their own Navigator\
+      \ export category, with separate demand and saturation."
+  IronDragoon:
+  - rscadd: Ports 'Massive' pintle size option from Surrealis. Costs ten triumphs,
+      does increased pain on others but slowly drains your blood (up to a point).
+      Also looks bigger (of course)
+  Kaolin1234:
+  - rscadd: Mountable players get a toggle for allowing their rider to steer, run,
+      sneak, jump, and climb with them using the full extent of the climbing features.
+      (no more falling on the ground while attempting a strafe climb along a wall)
+  - rscadd: Passengers ignore environmental obstacles based on the player mount's
+      traits.  Webs if the mounted player has webwalker. Knee-stingers if the mounted
+      player is a Dendorite.
+  - bugfix: Passengers stay with player mounts through jumps and climbs.  (No more
+      lagging behind during z-level changes and requiring the mounted player to move
+      another tile to update the rider's position)
+  - bugfix: Passengers on player mounts no longer trigger ground contact from grass
+      even without sneak activated.
+  - bugfix: no more using resting player-mounts as skateboards.
+  - balance: Riding player mounts no longer depends on or grants Riding skill.
+  - balance: Can now separate rider from player mount mid-combat by knocking the mounted
+      player over.
+  - rscadd: Player Dismount verb in place of dismounting rider with resist.
+  Kroto-Ker:
+  - rscadd: New sojourner spell list
+  - rscadd: Oviposition
+  SirSwagmeyer:
+  - refactor: Gear now bounces off from the attack when struck on the ground.
+  - refactor: Using a torch (or another source of fire damage) on a broken item will
+      melt it down. This can be used on Iron-scrappable equipment without needing
+      to first break it.
+  - refactor: Gear & Weapons, once broken, will take minimal damage from direct weapon
+      damage on the ground.
+  - bugfix: Fixed a bug that did not remove armor coverage once it was broken.
+  - qol: Punching items on the floor in combat mode will now appropriately hit them
+      rather than have the user try to pick them up.
+  - bugfix: Fixed a bug that prevented CHOP weapons and demolition modifiers from
+      dealing their intended integrity damage against shield - they now calculate
+      1/3rd of their assigned force into the demolition modifier.
+  - rscadd: Included additional lore blurbs for Pestran Fleshcrafting to clarify their
+      temporary and cosmetic nature.
+  - bugfix: TRAIT_PACIFISM now properly gates a few missing offensive/battle-contributing
+      actions, mainly from grappling.
+  - balance: TRAIT_PACIFISM blocks Feint and Bait actions, but reduces Riposte CD
+      by 50%.
+  - bugfix: Taunting now actually draws aggro from carbons - unless you're a pacifist.
+  - balance: Removed -2 speed stat and added speed ceiling of 11 for hedge knight
+  - bugfix: fingerless leather gloves and otavan leather gloves now have leather-tier
+      protection as intended.
+  - bugfix: fixed a handful of simplemob/wildshape penetration bugs where armor penetration
+      wasn't being properly assigned.
+  Xander3359:
+  - bugfix: Fix redolent making your erp partners permanently stinky
+  - code_imp: Redolent is not purely a status effect and no longer has so much jank
+      in it
+  eirenxiv:
+  - balance: buffed Hangyaku-Kouken statweight to 9
+  - balance: changed samsibsa scaleplate into heavy brigandine
+  - balance: unified Hangyaku-Kouken sword & bow option
+  - bugfix: fixed Hangyaku class previews and typo
+  ophaq:
+  - rscadd: Readds Xylixian Divine Fetch, Repel, and Slipsquare miracles. Fetch/Repel
+      are the AP VERSIONS.
+  - balance: Made repel CD to 10 instead of 15 seconds.
+  vii-the-chariot:
+  - rscadd: ritual of Ravox's Vow, ported from AP
+  vitoras228322-ai:
+  - rscadd: Adds the ability for mistwalkers to drain their blood with a spell.
+  wikimody:
+  - rscadd: "Caughteries now store some fuel with them, meaning you can heat them\
+      \ up in hand. They need to be refiled if used however\n<!-- Both :cl:'s are\
+      \ required for the changelog to work! You can put your name to the right of\
+      \ the first :cl: if you want to overwrite your GitHub username as author ingame.\
+      \ -->\n<!-- You can use multiple of the same prefix (they're only used for the\
+      \ icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs\
+      \ should generally represent how a player might be affected by the changes rather\
+      \ than a summary of the PR's contents. -->\n<!-- By contributing to this codebase,\
+      \ you confirm that any code and sprites you provide are legal to share and will\
+      \ be licensed under the terms specified in README.md \u2014 AGPLv3 for code\
+      \ and CC-BY-SA 3.0 for assets, unless otherwise stated. You acknowledge that\
+      \ the project maintainers are under no obligation to remove any materials that\
+      \ do not violate these licenses. -->"
+  - rscadd: Rework pionier
+  - balance: Now 2 slots instead of 1
+  - balance: His saperka now has PICK and is better at destroying buildings
+  - balance: He has crafting skills on par with guild engienier
+  - balance: Can buy his saperka, some basic building suplies and ridle of steel (expensive)
+      from the hoard
+  - balance: His traps now triger on mages, can be made in town and no longer ignore
+      wreches, liches and vlords
+  - balance: His bombard is no longer the most expensive thing in bandit shop to get
+      going
+  - balance: Pionier and skirmisher traps no longer delete themselves when any item
+      enters them, and lighstep bypasses them only 25% of the time
