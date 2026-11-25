@@ -206,6 +206,7 @@
 	QDEL_NULL(sunder_light_obj)
 	QDEL_NULL(devotion)
 	GLOB.human_list -= src
+	SSfamilytree.viable_spouses -= src
 	if(current_fellowship)
 		current_fellowship.remove_member(src, reason = FELLOWSHIP_REASON_DESTROYED)
 		current_fellowship = null
