@@ -58,6 +58,9 @@ SUBSYSTEM_DEF(garbage)
 	var/list/live_search_types = list(
 		/mob/living/carbon/human,
 		/mob/living/carbon/human/species/goblin/npc/ambush,
+		/mob/dead/observer/rogue/nodraw,
+		/obj/item/magic/infernal/ash,
+		/obj/effect/particle_effect/sparks,
 	)
 	#endif
 	#endif
