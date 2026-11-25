@@ -567,6 +567,11 @@
 		if(existing.person == person)
 			return existing
 
+	if(!person.pronouns)
+		if(person.gender == MALE)
+			person.pronouns = HE_HIM
+		else
+			person.pronouns = SHE_HER
 	var/datum/family_member/new_member = new(person, src)
 	members += new_member
 	person?.family_datum = src
