@@ -244,7 +244,10 @@
 	woundclass = BCLASS_PIERCE
 	flag = "piercing"
 	speed = 0.4
-	full_integrity_on_pen = TRUE
+	// Bow damage scales hard with PER, so arrows wear armor at a fraction of it: roughly a sword cut when they glance off,
+	// between a sword and a mace when they get through.
+	pen_integrity_factor = 0.5
+	blocked_integrity_factor = 0.25
 	embed_needs_full_pen = TRUE
 
 /obj/projectile/bullet/reusable/arrow/on_hit(atom/target)
