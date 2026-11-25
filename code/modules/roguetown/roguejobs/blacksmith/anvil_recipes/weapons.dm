@@ -879,7 +879,7 @@
 	category = "Steel"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small, /obj/item/natural/cloth)
-	created_item = /obj/item/rogueweapon/greataxe/poleaxe/steel
+	created_item = /obj/item/rogueweapon/greataxe/poleaxe
 	display_category = ITEM_CAT_WEAPONS_AXES
 
 /datum/anvil_recipe/weapons/steel/greataxe
