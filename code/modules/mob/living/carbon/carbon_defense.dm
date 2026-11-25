@@ -84,8 +84,11 @@
 	var/newdam = max(0, P.damage - blocked)
 	if(newdam <= 8)
 		return FALSE
+	// Some projectiles (arrows) only lodge if they fully beat the armor the hit was checked against.
+	if(P.embed_needs_full_pen && P.struck_armor_tier > 0 && P.armor_penetration <= P.struck_armor_tier)
+		return FALSE
 	if(prob(P.embedchance) && P.dropped)
-		return BP.add_embedded_object(P.dropped, silent = FALSE, crit_message = TRUE)
+		return BP.add_embedded_object(P.dropped, silent = FALSE, crit_message = TRUE, entry_side = get_embed_entry_side(P.starting || P.firer))
 	return FALSE
 
 /mob/living/carbon/send_pull_message(mob/living/target)

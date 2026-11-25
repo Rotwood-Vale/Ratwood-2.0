@@ -310,6 +310,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_TIME			0	//A Time in ticks, total removal time = (this*item.w_class)
 
+// Which side of a body an embedded object went in, relative to the way the mob was facing when hit.
+#define EMBED_ENTRY_FRONT	1
+#define EMBED_ENTRY_BACK	2
+#define EMBED_ENTRY_LEFT	3
+#define EMBED_ENTRY_RIGHT	4
+
 //Gun weapon weight
 #define WEAPON_LIGHT 1
 #define WEAPON_MEDIUM 2

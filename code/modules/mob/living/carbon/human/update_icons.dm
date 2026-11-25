@@ -103,6 +103,130 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_damage_overlays()
 	START_PROCESSING(SSdamoverlays,src)
 
+#define EMBEDDED_ARROWS_ICON 'icons/roguetown/mob/embedded_arrows.dmi'
+#define EMBEDDED_ARROWS_PER_LIMB 3
+#define ARROW_VIEW_DIAG "diag"			// Seen from the side it went in: leaning toward the viewer.
+#define ARROW_VIEW_STUB_RIGHT "right"	// Side-on, sticking out to the right of the sprite.
+#define ARROW_VIEW_STUB_LEFT "left"		// Side-on, sticking out to the left of the sprite.
+
+/// How an arrow that went in on `entry_side` looks while its host faces `facing`, or null when it's out of sight behind them.
+/proc/embedded_arrow_view(entry_side, facing)
+	var/seen_side	// The side of the body facing the viewer.
+	var/right_side	// The side of the body on the right of the sprite.
+	var/left_side	// The side of the body on the left of the sprite.
+	switch(facing)
+		if(NORTH)
+			seen_side = EMBED_ENTRY_BACK
+			right_side = EMBED_ENTRY_RIGHT
+			left_side = EMBED_ENTRY_LEFT
+		if(EAST)
+			seen_side = EMBED_ENTRY_RIGHT
+			right_side = EMBED_ENTRY_FRONT
+			left_side = EMBED_ENTRY_BACK
+		if(WEST)
+			seen_side = EMBED_ENTRY_LEFT
+			right_side = EMBED_ENTRY_BACK
+			left_side = EMBED_ENTRY_FRONT
+		else
+			seen_side = EMBED_ENTRY_FRONT
+			right_side = EMBED_ENTRY_LEFT
+			left_side = EMBED_ENTRY_RIGHT
+	var/side = entry_side || EMBED_ENTRY_FRONT
+	if(side == seen_side)
+		return ARROW_VIEW_DIAG
+	if(side == right_side)
+		return ARROW_VIEW_STUB_RIGHT
+	if(side == left_side)
+		return ARROW_VIEW_STUB_LEFT
+	return null
+
+/// Draws the arrows lodged in us, at most EMBEDDED_ARROWS_PER_LIMB per limb, on the side each one went in.
+/// Limbs whose body sprite has no measured anchors (wildshapes, werewolves, taur bodies) draw nothing.
+/// from_turn: called from our own turn signal, so leave that registration alone and skip the vision refresh.
+/mob/living/carbon/human/update_embedded_arrow_overlays(facing = dir, from_turn = FALSE)
+	remove_overlay(EMBEDDED_ARROWS_CACHE_INDEX, update_vision = FALSE)
+	var/list/arrow_overlays = list()
+	var/static/list/available_states
+	if(!available_states)
+		available_states = icon_states(EMBEDDED_ARROWS_ICON)
+	var/static/list/diag_nudges = list(list(0, 0), list(2, -3), list(-2, 3))
+	var/static/list/stub_nudges = list(list(0, 0), list(0, -3), list(0, 3))
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		if(!length(BP.embedded_objects))
+			continue
+		var/list/limb = embedded_arrow_limb_bounds(BP.species_icon, BP.body_zone, facing)
+		if(!limb)
+			continue
+		var/shown = 0
+		for(var/obj/item/embedded as anything in BP.embedded_objects)
+			var/state = embedded.get_embedded_overlay_state()
+			if(!state)
+				continue
+			var/view = embedded_arrow_view(embedded.embedded_entry_side, facing)
+			if(!view)
+				continue
+			if(++shown > EMBEDDED_ARROWS_PER_LIMB)
+				break
+			var/prefix = (view == ARROW_VIEW_DIAG) ? "diag" : "side"
+			var/icon_state = "[prefix]_[state]"
+			if(!(icon_state in available_states))
+				icon_state = "[prefix]_arrow_proj"
+			// Each sprite puts the shaft's entry point at pixel (16, 16). Pick where that lands on the limb.
+			var/anchor_x
+			var/flip = FALSE
+			var/list/nudge
+			switch(view)
+				if(ARROW_VIEW_DIAG)
+					anchor_x = round((limb[1] + limb[2] - 1) / 2)
+					flip = !(shown % 2)
+					nudge = diag_nudges[shown]
+				if(ARROW_VIEW_STUB_RIGHT)
+					anchor_x = limb[2]
+					nudge = stub_nudges[shown]
+				if(ARROW_VIEW_STUB_LEFT)
+					anchor_x = limb[1] - 1
+					flip = TRUE
+					nudge = stub_nudges[shown]
+			var/mutable_appearance/arrow_overlay = mutable_appearance(EMBEDDED_ARROWS_ICON, icon_state, -EMBEDDED_ARROWS_LAYER)
+			arrow_overlay.pixel_x = anchor_x + nudge[1] - 16 + (flip ? 1 : 0)
+			arrow_overlay.pixel_y = 16 - (limb[3] + nudge[2])
+			if(flip)
+				arrow_overlay.transform = matrix(-1, 0, 0, 0, 1, 0)
+			arrow_overlays += arrow_overlay
+	if(length(arrow_overlays))
+		overlays_standing[EMBEDDED_ARROWS_CACHE_INDEX] = arrow_overlays
+		apply_overlay(EMBEDDED_ARROWS_CACHE_INDEX, update_vision = !from_turn)
+	else if(!from_turn)
+		request_overlay_vision_update()
+	// Turning changes which side faces the viewer, so keep listening while anything lodged could be drawn.
+	if(from_turn)
+		return
+	if(has_drawable_embeds())
+		RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change_redraw_arrows), override = TRUE)
+	else
+		UnregisterSignal(src, COMSIG_ATOM_DIR_CHANGE)
+
+/// Whether anything lodged in us could be drawn in some facing.
+/mob/living/carbon/human/proc/has_drawable_embeds()
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		if(!length(BP.embedded_objects) || !embedded_arrow_limb_bounds(BP.species_icon, BP.body_zone, SOUTH))
+			continue
+		for(var/obj/item/embedded as anything in BP.embedded_objects)
+			if(embedded.get_embedded_overlay_state())
+				return TRUE
+	return FALSE
+
+/mob/living/carbon/human/proc/on_dir_change_redraw_arrows(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	if(old_dir != new_dir)
+		update_embedded_arrow_overlays(new_dir, from_turn = TRUE)
+
+#undef EMBEDDED_ARROWS_ICON
+#undef EMBEDDED_ARROWS_PER_LIMB
+#undef ARROW_VIEW_DIAG
+#undef ARROW_VIEW_STUB_RIGHT
+#undef ARROW_VIEW_STUB_LEFT
+
 /// Generates a cache key for current damage overlay state
 /mob/living/carbon/human/proc/generate_damage_overlay_key()
 	var/key = "[gender]|[dna?.species?.type]|"
@@ -297,6 +421,7 @@ There are several things that need to be remembered:
 		update_transform()
 		//damage overlays
 		update_damage_overlays()
+		update_embedded_arrow_overlays()
 
 /mob/proc/regenerate_clothes()
 	return
