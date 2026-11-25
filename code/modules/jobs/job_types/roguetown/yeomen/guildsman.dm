@@ -37,10 +37,11 @@
 	category_tags = list(CTAG_GUILDSMEN)
 	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list(
-		STATKEY_STR = 3,
+		STATKEY_STR = 2,
 		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
-		STATKEY_INT = 1
+		STATKEY_INT = 1,
+		STATKEY_LCK = 1
 	)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, // you can use your hammer as a weapon
