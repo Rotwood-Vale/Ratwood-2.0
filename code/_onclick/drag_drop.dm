@@ -110,6 +110,7 @@
 	mob.atkswinging = null
 	charging = 0
 	chargedprog = 0
+	full_charge_time = 0
 
 	if(was_charging)
 		STOP_PROCESSING(SSmousecharge, src)
@@ -247,6 +248,7 @@
 
 	if(mob.stat != CONSCIOUS)
 		chargedprog = 0
+		full_charge_time = 0
 		mob.atkswinging = null
 		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 		return
@@ -291,6 +293,7 @@
 		lastplayed = 0
 		doneset = 0
 		chargedprog = 0
+		full_charge_time = 0
 		START_PROCESSING(SSmousecharge, src)
 
 /client/Destroy()
