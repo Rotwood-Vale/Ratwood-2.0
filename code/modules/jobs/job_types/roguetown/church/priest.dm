@@ -85,9 +85,9 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		STATKEY_SPD = -1
 	)
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_MASTER,//Warrior Monk sorry
 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/polearms = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
@@ -97,6 +97,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 	)
+	pure_heart = TRUE
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
 	)
@@ -177,7 +178,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Bishop Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, {"Choose thy path.
+
+Loyalist -- Devote thyself to a single patron and keep their rites.
+
+Radical -- Seek wisdom beyond the teachings of thy patron. Thou mayst change thy patron as thy studies lead thee. Long years of study have sharpened thy mind and left thy body weary.
+
+Radical effects: -1 Constitution, +2 Will, +1 Speed, and Critical Weakness.
+Wrestling and Fistfighting start at level 2."}, "Bishop Doctrine", "Loyalist", "Radical")
 
 	if(choice == "Radical")
 		src.grant_radical_path(H)
@@ -197,6 +205,12 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	if(!H || !H.mind || !H.patron)
 		return
 	ADD_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	ADD_TRAIT(H, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+	H.adjust_skillrank_down_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_down_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.change_stat(STATKEY_CON, -1)
+	H.change_stat(STATKEY_WIL, 2)
+	H.change_stat(STATKEY_SPD, 1)
 	H.church_favor += 2400
 	H.miracle_points += 8
 	H.verbs |= /mob/living/carbon/human/proc/change_patron
@@ -366,6 +380,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
 		return FALSE
 
+	if(HAS_TRAIT(H, TRAIT_LUX_FREAK))
+		to_chat(src, span_warning("The curse is undone before it could take root in [H] lux!"))
+		return
+
+	if(HAS_TRAIT(H, TRAIT_INQUISITION))
+		to_chat(src, span_warning("Dammed octavian's runic arrays dampen divine punishment directed against their agents!"))
+		return FALSE
+		
 	//Let's not curse heretical antags.
 	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
 		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
@@ -555,10 +577,8 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 	var/curse_type = curse_choices[curse_pick]
 
 	if (H.real_name == target_name)
-		var/datum/curse/temp = new curse_type()
-
-		if (H.is_cursed(temp))
-			H.remove_curse(temp)
+		if (H.is_cursed(curse_type))
+			H.remove_curse(curse_type)
 			priority_announce("[real_name] has lifted [curse_pick] from [H.real_name]! They are once again part of the flock!", title = "REDEMPTION", sound = 'sound/misc/bell.ogg')
 			message_admins("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name]) ") //[ADMIN_LOOKUPFLW(user)] Maybe add this here if desirable but dunno.
 			log_game("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name])")

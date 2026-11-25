@@ -23,7 +23,8 @@
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
 	quirk_restrictions = list(/datum/quirk/noble)
 	job_subclasses = list(
-		/datum/advclass/templar/crusader
+		/datum/advclass/templar/crusader,
+		/datum/advclass/templar/noc_spellblade
 	)
 
 /datum/outfit/job/roguetown/templar
@@ -69,6 +70,7 @@
 		STATKEY_STR = 2,
 		STATKEY_CON = 2,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -395,3 +397,4 @@
 		H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
 	// -- End of section for god specific bonuses --
+

@@ -9,7 +9,7 @@
 //	This also works with decimals.
 #define SAVEFILE_VERSION_MAX 39
 
-// Safely extract a type path from datums or type values; returns null if unset/invalid.
+/// Safely extract a type path from datums or type values. Returns null if unset or invalid
 /proc/preferences_typepath_or_null(value)
 	if(isnull(value))
 		return null
@@ -240,12 +240,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parchment_skin"]		>> parchment_skin
 	S["buttons_locked"]		>> buttons_locked
 	S["windowflash"]		>> windowflashing
-	S["be_special"] 		>> be_special
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
+	S["adminmusicvol"]		>> adminmusicvol
+	S["streamedmusicvol"]	>> streamedmusicvol
 	S["combatmusicvol"]		>> combatmusicvol
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
+	S["pointambiencevol"]	>> pointambiencevol
+	S["pointambience_independent"] >> pointambience_independent
+	S["point_ambience_toggles"] >> point_ambience_toggles
+	S["overallvol"]		>> overallvol
+	S["instrumentvol"]	>> instrumentvol
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
@@ -254,8 +260,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feint_hud"]			>> feint_hud
 	S["show_mouseover_role"] >> show_mouseover_role
 	S["nsfw_examine_always"]>> nsfw_examine_always
+	load_gallery_toggles(S)
 	S["wildshape_name"]		>> wildshape_name
-	S["mute_animal_emotes"]	>> mute_animal_emotes
+	S["mute_animal_emotes"]	>> mute_anthro_noises
 	S["autoconsume"]		>> autoconsume
 	S["autoblooddrink"]		>> autoblooddrink
 	S["autowoodcut"]		>> autowoodcut
@@ -274,6 +281,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chastity_hardmode"]	>> chastity_hardmode
 	S["extreme_erp"]		>> extreme_erp
 	S["edging"]				>> edging
+	S["oviposition"]		>> oviposition
 	S["free_use_default"]	>> free_use_default
 	S["sensitive_brands"] 	>> sensitive_brands
 	S["facial_brands"] 		>> facial_brands
@@ -370,16 +378,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(admin_ghost_name && !istext(admin_ghost_name))
 		admin_ghost_name = null
 	menuoptions		= SANITIZE_LIST(menuoptions)
-	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
 	musicvol = sanitize_integer(musicvol, 0, 100, initial(musicvol))
+	// Initialize the new admin slider from the saved shared music level to preserve the listener's
+	// volume
+	if(!isnum(adminmusicvol))
+		adminmusicvol = musicvol
+	adminmusicvol = sanitize_integer(adminmusicvol, 0, 100, initial(adminmusicvol))
+	streamedmusicvol = sanitize_integer(streamedmusicvol, 0, 100, initial(streamedmusicvol))
 	if(!isnum(combatmusicvol))
 		combatmusicvol = musicvol
 	combatmusicvol = sanitize_integer(combatmusicvol, 0, 100, initial(combatmusicvol))
 	lobbymusicvol = sanitize_integer(lobbymusicvol, 0, 100, initial(lobbymusicvol))
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
+	pointambiencevol = sanitize_integer(pointambiencevol, 0, 100, initial(pointambiencevol))
+	pointambience_independent = sanitize_integer(pointambience_independent, 0, 1, initial(pointambience_independent))
+	point_ambience_toggles = sanitize_integer(point_ambience_toggles, 0, SOUND_DISABLE_POINT_AMBIENCE | SOUND_DISABLE_TORCH_AMBIENCE, initial(point_ambience_toggles))
+	overallvol = sanitize_integer(overallvol, 0, 100, initial(overallvol))
+	instrumentvol = sanitize_integer(instrumentvol, 0, 100, initial(instrumentvol))
 	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
 	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
 	full_examine = sanitize_integer(full_examine, 0, 1, initial(full_examine))
@@ -438,9 +456,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["triumphs"], triumphs)
 	WRITE_FILE(S["musicvol"], musicvol)
+	WRITE_FILE(S["adminmusicvol"], adminmusicvol)
+	WRITE_FILE(S["streamedmusicvol"], streamedmusicvol)
 	WRITE_FILE(S["combatmusicvol"], combatmusicvol)
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
+	WRITE_FILE(S["pointambiencevol"], pointambiencevol)
+	WRITE_FILE(S["pointambience_independent"], pointambience_independent)
+	WRITE_FILE(S["point_ambience_toggles"], point_ambience_toggles)
+	WRITE_FILE(S["overallvol"], overallvol)
+	WRITE_FILE(S["instrumentvol"], instrumentvol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
 	WRITE_FILE(S["full_examine"], full_examine)
@@ -448,8 +473,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feint_hud"], feint_hud)
 	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
+	save_gallery_toggles(S)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
-	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
+	WRITE_FILE(S["mute_animal_emotes"], mute_anthro_noises)
 	WRITE_FILE(S["autoconsume"], autoconsume)
 	WRITE_FILE(S["autoblooddrink"], autoblooddrink)
 	WRITE_FILE(S["autowoodcut"], autowoodcut)
@@ -467,6 +493,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
 	WRITE_FILE(S["edging"], edging)
+	WRITE_FILE(S["oviposition"], oviposition)
 	WRITE_FILE(S["free_use_default"], free_use_default)
 	WRITE_FILE(S["sensitive_brands"], sensitive_brands)
 	WRITE_FILE(S["facial_brands"], facial_brands)
@@ -496,7 +523,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parchment_skin"], parchment_skin)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
-	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["default_slot"], default_slot)
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
@@ -593,15 +619,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
 	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
-	S["redolent_type"] >> redolent_type
-	S["redolent_scent"] >> redolent_scent
-	if(isnull(redolent_type)) // legacy savefile key from when this was named malodorous
-		S["malodorous_type"] >> redolent_type
-		S["malodorous_scent"] >> redolent_scent
-	if(redolent_type == "Positive")
-		redolent_type = "Pleasant"
-	if(!(redolent_type in list("Gross", "Neutral", "Pleasant")))
-		redolent_type = "Neutral"
+	var/list/vice_configs
+	S["vice_configs"] >> vice_configs
+	if(islist(vice_configs))
+		for(var/i = 1 to VICE_SLOTS)
+			var/datum/charflaw/vice = vars["vice[i]"]
+			if(vice)
+				vice.load_config(vice_configs["[vice.type]"])
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -637,6 +661,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		virtuetwo = new /datum/virtue/none
 
+	var/list/virtue_configs
+	S["virtue_configs"] >> virtue_configs
+	if(islist(virtue_configs))
+		for(var/datum/virtue/V in list(virtue, virtuetwo))
+			V.load_config(virtue_configs["[V.type]"])
+
 /datum/preferences/proc/_load_quirks(S)
 	var/list/quirk_types
 	S["quirks"] >> quirk_types
@@ -647,6 +677,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/quirk_type in quirk_types)
 		if(ispath(quirk_type, /datum/quirk))
 			quirks += new quirk_type()
+	// passing S so redolent shit don't get lost
+	var/list/configs
+	S["quirk_configs"] >> configs
+	if(!islist(configs))
+		configs = list()
+	for(var/datum/quirk/Q in quirks)
+		Q.load_config(configs["[Q.type]"], S)
 
 /datum/preferences/proc/_load_loadout(S)
 	var/loadout_type
@@ -808,6 +845,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["bark_speed"] >> bark_speed
 	S["bark_pitch"] >> bark_pitch
 	S["bark_variance"] >> bark_variance
+	S["bark_volume"] >> bark_volume
 	S["hear_barks"] >> hear_barks
 
 	if(!(bark_id in GLOB.bark_list))
@@ -816,6 +854,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	bark_speed = round(clamp(bark_speed, initial(B.minspeed), initial(B.maxspeed)), 1)
 	bark_pitch = clamp(bark_pitch, initial(B.minpitch), initial(B.maxpitch))
 	bark_variance = clamp(bark_variance, initial(B.minvariance), initial(B.maxvariance))
+	if(isnull(bark_volume))
+		bark_volume = 70
+	bark_volume = round(clamp(bark_volume, 10, 70), 1)
 
 /datum/preferences/proc/_load_appearence(S)
 	S["real_name"]			>> real_name
@@ -834,8 +875,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["extra_language"]		>> extra_language
 	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
-	S["extra_language_1"]	>> extra_language_1
-	S["extra_language_2"]	>> extra_language_2
 	S["voice_color"]		>> voice_color
 	S["voice_pitch"]		>> voice_pitch
 	if (!voice_pitch)
@@ -866,6 +905,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/load_character(slot)
+	begin_gallery_load()
 	if(!path)
 		return FALSE
 	if(!fexists(path))
@@ -892,6 +932,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_virtue(S)
 	_load_quirks(S)
 	_load_flaw(S)
+
+	S["be_special"] >> be_special
+	be_special = SANITIZE_LIST(be_special)
 
 	_load_culinary_preferences(S)
 
@@ -937,9 +980,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		to_chat(parent, span_warning("Couldn't load familiar prefs!"))
 
+	var/gnoll_gallery_loaded = FALSE
 	if(istype(gnoll_prefs))
 		if(!gnoll_prefs.load_gnoll_prefs(S))
 			to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
+		else
+			gnoll_gallery_loaded = TRUE
 	else
 		to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
 
@@ -976,33 +1022,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["update_mutant_colors"]			>> update_mutant_colors
 	update_mutant_colors = sanitize_integer(update_mutant_colors, FALSE, TRUE, initial(update_mutant_colors))
 
-	S["headshot_link"]			>> headshot_link
-	if(!valid_headshot_link(null, headshot_link, TRUE))
-		headshot_link = null
+	load_gallery_images(S, src, "")
+	S["headshot_frame_chat"]			>> headshot_frame_chat
+	headshot_frame_chat = sanitize_integer(headshot_frame_chat, FALSE, TRUE, FALSE)
 
 	S["flavortext"]			>> flavortext
 	S["ooc_notes"]			>> ooc_notes
 	S["ooc_extra"]			>> ooc_extra
-	S["ooc_extra_img"]		>> ooc_extra_img
-	S["ooc_extra_img_link"]	>> ooc_extra_img_link
-	if(!valid_headshot_link(null, ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		ooc_extra_img = null
-		ooc_extra_img_link = null
 	S["rumour"]				>> rumour
 	S["noble_gossip"]		>> noble_gossip
 	S["song_artist"]		>> song_artist
 	S["song_title"]			>> song_title
 	S["nsfwflavortext"]	>> nsfwflavortext
-	S["nsfw_ooc_extra_img"]		>> nsfw_ooc_extra_img
-	S["nsfw_ooc_extra_img_link"]	>> nsfw_ooc_extra_img_link
-	if(!valid_headshot_link(null, nsfw_ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		nsfw_ooc_extra_img = null
-		nsfw_ooc_extra_img_link = null
 	S["erpprefs"]			>> erpprefs
-	S["img_gallery"]	>> img_gallery
-	img_gallery = SANITIZE_LIST(img_gallery)
-	S["nsfw_img_gallery"]	>> nsfw_img_gallery
-	nsfw_img_gallery = SANITIZE_LIST(nsfw_img_gallery)
 
 	S["char_accent"]		>> char_accent
 	if (!char_accent)
@@ -1123,6 +1155,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	validate_customizer_entries()
 
+	finish_gallery_load(gnoll_gallery_loaded)
 	return TRUE
 
 /datum/preferences/proc/save_character()
@@ -1149,8 +1182,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["extra_language"]		, extra_language)
 	WRITE_FILE(S["origin"]				, origin)
 	WRITE_FILE(S["selected_title"]		, selected_title)
-	WRITE_FILE(S["extra_language_1"]	, extra_language_1)
-	WRITE_FILE(S["extra_language_2"]	, extra_language_2)
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
@@ -1165,6 +1196,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"]			, randomise)
 	WRITE_FILE(S["species"]				, pref_species?.name)
 	WRITE_FILE(S["charflaw"]				, preferences_typepath_or_null(charflaw))
+	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["family"], family)
 	WRITE_FILE(S["gender_choice"], gender_choice)
 	WRITE_FILE(S["setspouse"], setspouse)
@@ -1177,8 +1209,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
 	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
-	WRITE_FILE(S["redolent_type"], redolent_type)
-	WRITE_FILE(S["redolent_scent"], redolent_scent)
+	WRITE_FILE(S["vice_configs"], get_vice_configs())
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
@@ -1221,16 +1252,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["bark_speed"]				, bark_speed)
 	WRITE_FILE(S["bark_pitch"]				, bark_pitch)
 	WRITE_FILE(S["bark_variance"]			, bark_variance)
+	WRITE_FILE(S["bark_volume"]				, bark_volume)
 	WRITE_FILE(S["hear_barks"]				, hear_barks)
 
 	WRITE_FILE(S["dnr"] , dnr_pref)
 	WRITE_FILE(S["update_mutant_colors"] , update_mutant_colors)
-	WRITE_FILE(S["headshot_link"] , headshot_link)
+	save_gallery_images(S, src, "")
+	WRITE_FILE(S["headshot_frame_chat"] , headshot_frame_chat)
 	WRITE_FILE(S["flavortext"] , html_decode(flavortext))
 	WRITE_FILE(S["ooc_notes"] , html_decode(ooc_notes))
 	WRITE_FILE(S["ooc_extra"] ,	ooc_extra)
-	WRITE_FILE(S["ooc_extra_img"] , ooc_extra_img)
-	WRITE_FILE(S["ooc_extra_img_link"] , ooc_extra_img_link)
 	WRITE_FILE(S["rumour"] , html_decode(rumour))
 	WRITE_FILE(S["noble_gossip"] , html_decode(noble_gossip))
 	WRITE_FILE(S["song_artist"] , song_artist)
@@ -1250,16 +1281,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	WRITE_FILE(S["virtue_configs"], get_virtue_configs())
 	WRITE_FILE(S["quirks"], get_quirk_typepaths())
+	WRITE_FILE(S["quirk_configs"], get_quirk_configs())
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])
 	WRITE_FILE(S["nsfwflavortext"] , html_decode(nsfwflavortext))
-	WRITE_FILE(S["nsfw_ooc_extra_img"] , nsfw_ooc_extra_img)
-	WRITE_FILE(S["nsfw_ooc_extra_img_link"] , nsfw_ooc_extra_img_link)
 	WRITE_FILE(S["erpprefs"] , html_decode(erpprefs))
-	WRITE_FILE(S["img_gallery"] , img_gallery)
-	WRITE_FILE(S["nsfw_img_gallery"] , nsfw_img_gallery)
 	WRITE_FILE(S["loadout"] , preferences_typepath_or_null(loadout))
 	WRITE_FILE(S["loadout2"] , preferences_typepath_or_null(loadout2))
 	WRITE_FILE(S["loadout3"] , preferences_typepath_or_null(loadout3))
@@ -1309,19 +1338,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// External pref datums have their save/load moved to local procs, to avoid constant reference access
 
+	var/external_prefs_saved = TRUE
+	saved_character_gallery = character_gallery_state()
 	if(istype(familiar_prefs))
 		if(!familiar_prefs.save_familiar_prefs(S))
+			external_prefs_saved = FALSE
 			to_chat(parent, span_warning("Couldn't save familiar prefs!"))
 	else
+		external_prefs_saved = FALSE
 		to_chat(parent, span_warning("Couldn't save familiar prefs!"))
 
 	if(istype(gnoll_prefs))
 		if(!gnoll_prefs.save_gnoll_prefs(S))
+			external_prefs_saved = FALSE
 			to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
+		else
+			saved_gnoll_gallery = gnoll_gallery_state()
 	else
+		external_prefs_saved = FALSE
 		to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
 
-	return TRUE
+	// save_gallery_images() runs sync_gallery_alternates(), which can drop stale sources, so gallery_fingerprints taken
+	// before this save no longer match the values. Dropping them here stops the window showing unsaved changes right
+	// after a save, even though saved_character_gallery and saved_gnoll_gallery were just set
+	gallery_changed()
+	log_headshot_framing("saved")
+	return external_prefs_saved
 
 
 #undef SAVEFILE_VERSION_MAX

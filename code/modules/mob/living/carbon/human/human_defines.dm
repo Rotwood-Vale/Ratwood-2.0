@@ -14,6 +14,8 @@
 	/// When TRUE, gear equipped via outfits gets marked as looted (sells at LOOTED_SELL_MULT).
 	/// Set automatically for clientless/mindless mobs, or explicitly on jobs whose gear shouldn't be farmed.
 	var/taints_loot = FALSE
+	/// Mount-owned permission, retained when passengers dismount.
+	var/allow_rider_steering = TRUE
 
 	ambushable = 1
 
@@ -131,6 +133,14 @@
 	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_X_DEFAULT
+	var/headshot_y = HEADSHOT_Y_DEFAULT
+	var/headshot_framed = FALSE
+	var/headshot_frame_chat = FALSE
+	var/image_backdrop = GALLERY_BACKDROP_TAVERN
+	var/list/card_backgrounds = list()
+	var/list/art_view_settings = list()
 	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null
@@ -218,3 +228,8 @@
 
 	var/branded = FALSE // Saves time during examine if character hasn't been branded at all
 
+	var/list/deadites_controlled
+	var/purity = FALSE
+	var/zizo_goals_cd = 0
+	var/list/zizo_goals = list()
+	var/list/zizo_goals_complete = list()

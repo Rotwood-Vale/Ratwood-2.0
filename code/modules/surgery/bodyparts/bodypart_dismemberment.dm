@@ -42,7 +42,7 @@
 
 	if(C.status_flags & GODMODE)
 		return FALSE
-	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER) && !two_stage_death)
 		return FALSE
 	if(user)
 		if(zone_precise in list(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND))
@@ -55,11 +55,6 @@
 		C.visible_message(span_danger("Critical resistance! [C]'s [src.name] hangs on by a thread!</span>"))
 		return FALSE
 
-	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	if(affecting && dismember_wound && !isooze(C)) //OV EDIT - Oozes don't get wounds left behind when bits fall off
-		affecting.add_wound(dismember_wound)
-	else if(affecting && dismember_wound && isooze(C))
-		C.visible_message(span_danger("[C]'s wound closes rapidly to stem the flow of plasm."))
 	playsound(C, pick(dismemsound), 50, FALSE, -1)
 
 	var/stress2give = /datum/stressevent/viewdismember
@@ -92,9 +87,18 @@
 				return
 		else
 			// we're greviously wounded OR we don't give a shit about two-stage death (guillotines, npcs, etc)
+			if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+				return FALSE
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
+
+	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
+	if(affecting && dismember_wound && !isooze(C)) //OV EDIT - Oozes don't get wounds left behind when bits fall off
+		affecting.add_wound(dismember_wound)
+	else if(affecting && dismember_wound && isooze(C))
+		C.visible_message(span_danger("[C]'s wound closes rapidly to stem the flow of plasm."))
+
 	//past the two stage decapitation returns, so a first stage neck sever is not logged as a limb loss;
 	//the casterless branch is player-only or NPC mobs eating a body would spam it
 	if(user)
@@ -185,9 +189,6 @@
 
 	// Skip critical resistance check for admin dismember
 
-	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	if(affecting && dismember_wound)
-		affecting.add_wound(dismember_wound)
 	playsound(C, pick(dismemsound), 50, FALSE, -1)
 
 	var/stress2give = /datum/stressevent/viewdismember
@@ -223,6 +224,10 @@
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
+
+	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
+	if(affecting && dismember_wound)
+		affecting.add_wound(dismember_wound)
 	if(body_zone != BODY_ZONE_HEAD)
 		C.delimb_pain()
 	if(!(NOBLOOD in C.dna?.species?.species_traits))

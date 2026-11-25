@@ -1,8 +1,18 @@
-import { useEffect, useState } from 'react';
-import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Box, Button, Section, Stack } from 'tgui-core/components';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
+import {
+  HEADSHOT_PANEL_SIZE,
+  HeadshotFrame,
+  PictureTooLarge,
+} from './common/HeadshotFrame';
+import {
+  guardPictures,
+  holdPictures,
+  usePictureSize,
+} from './common/pictureSize';
 import { ExaminePanelData } from './ExaminePanelData';
 
 type FlavorTextPageProps = {
@@ -42,6 +52,58 @@ const EmButtons = (props: {
   );
 };
 
+/**
+ * The admin view of the whole picture the framed headshot crops, or a note when it is over the pixel cap. The
+ * wrapper is a square no taller than HEADSHOT_PANEL_SIZE, the room the framed headshot takes, and the picture is
+ * fitted inside it with objectFit contain. Without the wrapper a tall picture pushes OOC Notes down the column and
+ * a flat one leaves the box shorter than the Framed button, which then hangs over OOC Notes
+ */
+const OriginalHeadshot = (props: { src: string }) => {
+  const { src } = props;
+  const picture = usePictureSize(src);
+  return (
+    <div
+      style={{
+        width: '100%',
+        maxHeight: `${HEADSHOT_PANEL_SIZE}px`,
+        aspectRatio: '1',
+      }}
+    >
+      {picture.tooLarge && <PictureTooLarge size={picture.size} />}
+      {picture.drawable && (
+        <img
+          src={resolveAsset(src)}
+          style={{
+            display: 'block',
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+const OocExtra = (props: { html: string }) => {
+  const { html } = props;
+  const markupRef = useRef<HTMLDivElement>(null);
+  // Changes only with the markup, as a new object makes React rewrite it, restoring replaced pictures and restarting
+  // videos. Its pictures go in without their links, so none loads before its size is read
+  const markup = useMemo(() => ({ __html: holdPictures(html) }), [html]);
+  // After every render, so new elements are caught. Elements already checked are skipped
+  useLayoutEffect(() => {
+    if (markupRef.current) {
+      guardPictures(markupRef.current);
+    }
+  });
+  return (
+    <div ref={markupRef}>
+      <Box mt={1} dangerouslySetInnerHTML={markup} />
+    </div>
+  );
+};
+
 const chatHtml = (text: string, empty?: string) => ({
   __html: text ? `<span class="Chat">${text}</span>` : (empty ?? ''),
 });
@@ -55,6 +117,11 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
     ooc_notes,
     ooc_notes_nsfw,
     headshot,
+    has_headshot,
+    headshot_zoom,
+    headshot_x,
+    headshot_y,
+    is_admin,
     is_naked,
     ooc_extra_image,
     nsfw_ooc_extra_image,
@@ -63,6 +130,8 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
   const [oocNotesIndex, setOocNotesIndex] = useState<'SFW' | 'NSFW'>('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState<'SFW' | 'NSFW'>('SFW');
   const [showHeadshot, setShowHeadshot] = useState(true);
+  const [showOriginal, setShowOriginal] = useState(false);
+  const canShowOriginal = !!is_admin && !!has_headshot;
   const [hideLeft, setHideLeft] = useState(false);
   const [oocEm, setOocEm] = useState({ SFW: 1, NSFW: 1 });
   const [flavorEm, setFlavorEm] = useState({ SFW: 1, NSFW: 1 });
@@ -85,16 +154,35 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
         >
           <Stack fill vertical>
             {showHeadshot && (
-              <Stack.Item align="center">
-                <img
-                  src={resolveAsset(headshot)}
-                  style={{
-                    width: '100%',
-                    maxWidth: '350px',
-                    height: 'auto',
-                    aspectRatio: '1',
-                  }}
-                />
+              <Stack.Item>
+                <Box
+                  mx="auto"
+                  maxWidth={`${HEADSHOT_PANEL_SIZE}px`}
+                  position="relative"
+                >
+                  {canShowOriginal && showOriginal ? (
+                    <OriginalHeadshot src={headshot} />
+                  ) : (
+                    <HeadshotFrame
+                      src={headshot}
+                      zoom={headshot_zoom}
+                      x={headshot_x}
+                      y={headshot_y}
+                    />
+                  )}
+                  {canShowOriginal && (
+                    <Box position="absolute" top={0.25} right={0.25}>
+                      <Button
+                        compact
+                        icon={showOriginal ? 'crop' : 'image'}
+                        tooltip="Admins only. Switches between the framed headshot players see and the whole picture it crops."
+                        onClick={() => setShowOriginal(!showOriginal)}
+                      >
+                        {showOriginal ? 'Framed' : 'Original'}
+                      </Button>
+                    </Box>
+                  )}
+                </Box>
               </Stack.Item>
             )}
             <Stack.Item grow>
@@ -212,24 +300,14 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
                     '<i>No flavor text provided.</i>',
                   )}
                 />
-                {ooc_extra_image && (
-                  <Box
-                    mt={1}
-                    dangerouslySetInnerHTML={{ __html: ooc_extra_image }}
-                  />
-                )}
+                {ooc_extra_image && <OocExtra html={ooc_extra_image} />}
               </Box>
             )}
             {flavorTextIndex === 'NSFW' && (
               <Box style={{ zoom: flavorEm.NSFW }}>
                 <Box dangerouslySetInnerHTML={chatHtml(flavor_text_nsfw)} />
                 {nsfw_ooc_extra_image && (
-                  <Box
-                    mt={1}
-                    dangerouslySetInnerHTML={{
-                      __html: nsfw_ooc_extra_image,
-                    }}
-                  />
+                  <OocExtra html={nsfw_ooc_extra_image} />
                 )}
               </Box>
             )}
@@ -237,66 +315,5 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
         </Stack.Item>
       )}
     </Stack>
-  );
-};
-
-export const ImageGalleryPage = () => {
-  const { data } = useBackend<ExaminePanelData>();
-  const { img_gallery, nsfw_img_gallery, is_naked, nsfw_examine_always } = data;
-
-  const [galleryMode, setGalleryMode] = useState<'SFW' | 'NSFW'>('SFW');
-
-  const images =
-    galleryMode === 'NSFW' ? nsfw_img_gallery || [] : img_gallery || [];
-
-  return (
-    <Section
-      title="Image Gallery"
-      fill
-      scrollable
-      buttons={
-        <>
-          <Button
-            selected={galleryMode === 'SFW'}
-            bold={galleryMode === 'SFW'}
-            onClick={() => setGalleryMode('SFW')}
-            textAlign="center"
-            minWidth="60px"
-          >
-            SFW
-          </Button>
-          <Button
-            selected={galleryMode === 'NSFW'}
-            disabled={!nsfw_img_gallery || (!is_naked && !nsfw_examine_always)}
-            bold={galleryMode === 'NSFW'}
-            onClick={() => setGalleryMode('NSFW')}
-            textAlign="center"
-            minWidth="60px"
-          >
-            NSFW
-          </Button>
-        </>
-      }
-    >
-      {images.length === 0 ? (
-        <Box align="center" color="gray">
-          No images available.
-        </Box>
-      ) : (
-        <Stack fill justify="space-evenly">
-          {images.map((val) => (
-            <Stack.Item grow key={val}>
-              <Section align="center">
-                <Image
-                  maxHeight="100%"
-                  maxWidth="100%"
-                  src={resolveAsset(val)}
-                />
-              </Section>
-            </Stack.Item>
-          ))}
-        </Stack>
-      )}
-    </Section>
   );
 };

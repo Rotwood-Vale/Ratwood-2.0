@@ -1,0 +1,5 @@
+author: "mushy"
+delete-after: True
+changes:
+  - balance: "Elven boots and gloves now have the same integrity and protection as hardened leather."
+  - balance: "Black Oak Pariah now spawns with hardened leather pants and bracers."

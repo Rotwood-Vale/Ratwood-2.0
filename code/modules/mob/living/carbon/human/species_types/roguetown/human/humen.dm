@@ -134,3 +134,15 @@
 	"red - blood" = "822b2b"
 
 	))
+
+
+/mob/living/carbon/human/species/human/northern/torso // i need to spawn chest as mob. HACKS FOR LIFE!!!
+
+/mob/living/carbon/human/species/human/northern/torso/Initialize(mapload)
+	. = ..()
+	for(var/obj/item/bodypart/B in bodyparts)
+		if(!istype(B,  /obj/item/bodypart/chest))
+			if(B)
+				B.drop_limb()
+				qdel(B)
+	update_body()
