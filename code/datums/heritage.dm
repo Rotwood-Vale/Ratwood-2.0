@@ -539,7 +539,7 @@
 
 	return null
 
-/datum/heritage/New(mob/living/carbon/human/founder_person, new_name, majority_species)
+/datum/heritage/New(mob/living/carbon/human/founder_person, new_name, majority_species, mob/living/carbon/human/other_person)
 	if(majority_species)
 		dominant_species = majority_species
 		var/datum/species/S = new majority_species()
@@ -550,7 +550,7 @@
 		founder.generation = 0
 
 		if(!new_name)
-			housename = SurnameFormatting(founder_person)
+			housename = SurnameFormatting(founder_person, other_person)
 		else
 			housename = new_name
 
@@ -774,18 +774,15 @@
 
 	return FALSE
 
-/datum/heritage/proc/SurnameFormatting(mob/living/carbon/human/person)
-	var/surname2use
-	var/index = findtext(person?.real_name, " ")
+GLOBAL_LIST_INIT(name_titles, list("Ser", "Dame", "Sister", "Brother", "Prelate", "Devotee", "Votary", "Lord", "Lady"))
+
+/datum/heritage/proc/SurnameFormatting(mob/living/carbon/human/person, mob/living/carbon/human/other)
 	person?.original_name = person?.real_name
-	if(!index)
-		surname2use = person?.dna?.species?.random_surname()
-	else
-		if(findtext(person?.real_name, " of ") || findtext(person?.real_name, " the "))
-			surname2use = person?.dna?.species?.random_surname()
-		else
-			surname2use = copytext(person?.real_name, index)
-	return surname2use
+	for(var/mob/living/carbon/human/candidate in list(person, other))
+		var/index = findlasttext(candidate.real_name, " ")
+		if(index && !(copytext(candidate.real_name, 1, index) in GLOB.name_titles) && !findtext(candidate.real_name, " of ") && !findtext(candidate.real_name, " the "))
+			return copytext(candidate.real_name, index)
+	return person?.dna?.species?.random_surname()
 
 /datum/heritage/proc/ApplyUI(mob/living/carbon/human/iconer, toggle_true = FALSE)
 	if(!iconer.client)

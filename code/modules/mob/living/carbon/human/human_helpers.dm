@@ -319,7 +319,7 @@
 
 	else
 		// Neither has family - create new one
-		primary_family = new /datum/heritage(src)
+		primary_family = new /datum/heritage(src, null, null, spouse)
 		SSfamilytree.families += primary_family
 		primary_member = primary_family.founder
 		secondary_member = primary_family.CreateFamilyMember(spouse)
@@ -442,7 +442,7 @@
 	var/old_name = real_name
 	var/first_name = real_name
 	var/space = findlasttext(real_name, " ")
-	if(space && !(copytext(real_name, 1, space) in list("Ser", "Dame", "Sister", "Brother", "Prelate", "Devotee", "Votary", "Lord", "Lady")))
+	if(space && !(copytext(real_name, 1, space) in GLOB.name_titles))
 		first_name = copytext(real_name, 1, space)
 	real_name = "[first_name] [trim(housename)]"
 	name = real_name
