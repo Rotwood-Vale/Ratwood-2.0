@@ -215,6 +215,7 @@ GLOBAL_LIST(teleport_runes)
 			rune_in_use = FALSE
 			fail_invoke()
 	selected_atoms = null
+	atoms_in_range = null
 	ritual_result = null
 	. = ..()
 
