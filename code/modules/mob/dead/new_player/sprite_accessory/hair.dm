@@ -1726,6 +1726,10 @@
 	name = "Reckless"
 	icon_state = "indigo_zap"
 
+/datum/sprite_accessory/hair/head/indigozapalt
+	name = "Reckless Alt"
+	icon_state = "indigo_zapalt"
+
 /datum/sprite_accessory/hair/head/rainbowdash
 	name = "Loyal"
 	icon_state = "rainbow_dash"

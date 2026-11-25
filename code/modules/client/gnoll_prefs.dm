@@ -18,11 +18,24 @@
 	var/datum/statpack/gnoll_statpack = new /datum/statpack/wildcard/fated()
 
 	var/headshot_link
+	var/list/gallery_alternates = list()
+	/// Links that fail validation or overflow their gallery, never shown to anyone but their owner
+	var/list/blocked_links = list()
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_X_DEFAULT
+	var/headshot_y = HEADSHOT_Y_DEFAULT
+	var/headshot_framed = FALSE
+	var/image_backdrop = GALLERY_BACKDROP_TAVERN
+	var/list/card_backgrounds = list()
+	var/list/art_view_settings = list()
+	/// Presentation inherited by new artwork for this form
+	var/list/artwork_defaults
 	var/flavortext
 	var/ooc_notes
 	var/ooc_extra
 	var/ooc_extra_img
 	var/ooc_extra_img_link
+	var/ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 	var/song_artist
 	var/song_title
 	var/rumour
@@ -30,6 +43,7 @@
 	var/nsfwflavortext
 	var/nsfw_ooc_extra_img
 	var/nsfw_ooc_extra_img_link
+	var/nsfw_ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 	var/erpprefs
 	var/list/img_gallery = list()
 	var/list/nsfw_img_gallery = list()
@@ -205,9 +219,17 @@
 
 	return TRUE
 
+/datum/gnoll_prefs/vv_edit_var(var_name, var_value)
+	. = ..()
+	for(var/client/client as anything in GLOB.clients)
+		if(client?.prefs?.gnoll_prefs == src)
+			client.prefs.refresh_character_gallery()
+			return
+
 /datum/gnoll_prefs/proc/gnoll_show_ui(mob/user)
 	if(!user.client)
 		return
+	user.client.prefs?.refresh_character_gallery(values_changed = FALSE)
 
 	var/list/dat = list()
 	dat += "<html><head><title>Gnoll Customization</title></head><body>"
@@ -305,13 +327,10 @@
 
 	dat += "<h3>Gnoll Flavortext (Optional)</h3>"
 
-	dat += "<b>Headshot:</b> "
-	dat += "<a href='?_src_=gnoll_prefs;action=headshot'>Change</a>"
-	if(headshot_link != null)
-		dat += "<br><img src='[headshot_link]' width='100px' height='100px'>"
+	dat += "<b>Character Gallery:</b> <a href='byond://?_src_=gnoll_prefs;action=character_gallery'>Change</a>"
 
-	dat += "<br><b>Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=flavortext'>Change</a>"
-	dat += "<br><b>NSFW Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=nsfwflavortext'>Change</a>"
+	dat += "<br><b>Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='byond://?_src_=gnoll_prefs;action=flavortext'>Change</a>"
+	dat += "<br><b>NSFW Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='byond://?_src_=gnoll_prefs;action=nsfwflavortext'>Change</a>"
 	dat += "<br><b>OOC Notes: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=ooc_notes'>Change</a>"
 
 	dat += "<br><b>Rumours & Noble Gossip:</b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><br><a href='?_src_=gnoll_prefs;action=rumour'>Set Rumours</a><a href='?_src_=gnoll_prefs;action=gossip'>Set Gossip</a><a href='?_src_=gnoll_prefs;action=rumour_preview'><i>Preview</i></a>"
@@ -320,16 +339,6 @@
 	dat += "<br><b>Song:</b> <a href='?_src_=gnoll_prefs;action=ooc_extra'>Change URL</a>"
 	dat += "<a href='?_src_=gnoll_prefs;action=change_title'>Change Title</a>"
 	dat += "<a href='?_src_=gnoll_prefs;action=change_artist'>Change Artist</a>"
-	dat += "<br><b>OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=gnoll_prefs;action=ooc_extra_img'>Change</a>"
-	if(ooc_extra_img_link != null)
-		dat += "<br><img src='[ooc_extra_img_link]' width='100px' height='100px'>"
-	dat += "<br><b>NSFW OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=gnoll_prefs;action=nsfw_ooc_extra_img'>Change</a>"
-	if(nsfw_ooc_extra_img_link != null)
-		dat += "<br><img src='[nsfw_ooc_extra_img_link]' width='100px' height='100px'>"
-	dat += "<br><B>Image Gallery:</b> <a href='?_src_=gnoll_prefs;action=img_gallery'>Add</a>"
-	dat+= "<a href='?_src_=gnoll_prefs;action=clear_gallery'>Clear Gallery</a>"
-	dat += "<br><B>Nsfw Image Gallery:</b> <a href='?_src_=gnoll_prefs;action=nsfw_img_gallery'>Add</a>"
-	dat+= "<a href='?_src_=gnoll_prefs;action=clear_nsfw_gallery'>Clear Nsfw Gallery</a>"
 	dat += "<br><a href='?_src_=gnoll_prefs;action=ooc_preview'><b>Preview Examine</b></a>"
 
 	dat += "<center><a href='?_src_=gnoll_prefs;action=close'>Close</a></center>"
@@ -503,25 +512,6 @@
 					if(new_type in valid_expression)
 						descriptor_expression = new_type
 			gnoll_show_ui(user)
-		if("headshot")
-			to_chat(user, "<span class='notice'>Please use a relatively SFW image of the head and shoulder area to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-			to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-			to_chat(user, "<span class='notice'>Keep in mind that the photo will be downsized to 325x325 pixels, so the more square the photo, the better it will look.</span>")
-			var/new_headshot_link = tgui_input_text(user, "Input the headshot link (https, hosts: gyazo, lensdump, imgbox, catbox, imgbb, filegarden):", "Headshot", headshot_link,  encode = FALSE)
-			if(new_headshot_link == null)
-				return
-			if(new_headshot_link == "")
-				headshot_link = null
-				gnoll_show_ui(user)
-				return
-			if(!valid_headshot_link(user, new_headshot_link))
-				headshot_link = null
-				gnoll_show_ui(user)
-				return
-			headshot_link = new_headshot_link
-			to_chat(user, span_notice("Successfully updated gnoll headshot picture"))
-			log_game("[user] has set their gnoll headshot image to '[headshot_link]'.")
-			gnoll_show_ui(user)
 		if("formathelp")
 			var/list/dat = list()
 			dat +="You can use backslash (\\) to escape special characters.<br>"
@@ -545,7 +535,6 @@
 				return
 			if(new_flavortext == "")
 				flavortext = null
-				gnoll_show_ui(user)
 				return
 			flavortext = new_flavortext
 			to_chat(user, "<span class='notice'>Successfully updated gnoll flavortext</span>")
@@ -605,7 +594,6 @@
 				new_nsfwflavortext = null
 				nsfwflavortext = null
 				to_chat(user, "<span class='notice'>Successfully deleted gnoll NSFW Flavor Text.</span>")
-				gnoll_show_ui(user)
 				return
 			nsfwflavortext = new_nsfwflavortext
 			to_chat(user, "<span class='notice'>Successfully updated gnoll NSFW flavortext</span>")
@@ -626,93 +614,11 @@
 			to_chat(user, "<span class='notice'>Successfully updated ERP Preferences.</span>")
 			log_game("[user] has set their ERP preferences'.")
 
-		if("img_gallery")
-
-			if(img_gallery.len >= 3)
-				to_chat(user, "You already have three images in your gallery!")
-				return
-
-			to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-			to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-			to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-			to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
-
-			var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox, imgbb, filegarden):", "Gallery Image",  encode = FALSE)
-
-			if(new_galleryimg == null)
-				return
-			if(new_galleryimg == "")
-				new_galleryimg = null
-				gnoll_show_ui(user)
-				return
-			if(!valid_headshot_link(user, new_galleryimg))
-				to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox, imgbb, filegarden).</span>")
-				new_galleryimg = null
-				gnoll_show_ui(user)
-				return
-			img_gallery += new_galleryimg
-			to_chat(user, "<span class='notice'>Successfully added image to gnoll gallery.</span>")
-			log_game("[user] has added an image to their gnoll gallery: '[new_galleryimg]'.")
-
-		if("nsfw_img_gallery")
-
-			if(nsfw_img_gallery.len >= 3)
-				to_chat(user, "You already have three images in your gallery!")
-				return
-
-			to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-			to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-			to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-			to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
-
-			var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox, imgbb, filegarden):", "Gallery Image",  encode = FALSE)
-
-			if(new_galleryimg == null)
-				return
-			if(new_galleryimg == "")
-				new_galleryimg = null
-				gnoll_show_ui(user)
-				return
-			if(!valid_headshot_link(user, new_galleryimg))
-				to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox, imgbb, filegarden).</span>")
-				new_galleryimg = null
-				gnoll_show_ui(user)
-				return
-			nsfw_img_gallery += new_galleryimg
-			to_chat(user, "<span class='notice'>Successfully added gnoll image to nsfw gallery.</span>")
-			log_game("[user] has added an image to their gnoll nsfw gallery: '[new_galleryimg]'.")
-
-		if("clear_gallery")
-			if(!img_gallery.len)
-				to_chat(user, "You don't have any images in your gnoll gallery to clear!")
-				return
-			var/dachoice = tgui_alert(user, "Do you really want to clear your gnoll image gallery?", "Clear Gallery", list("Yae", "Nae"))
-			if(dachoice == "Nae")
-				gnoll_show_ui(user)
-				return
-			img_gallery = list()
-			to_chat(user, "<span class='notice'>Successfully cleared gnoll image gallery.</span>")
-			log_game("[user] has cleared their gnoll image gallery.")
-
-		if("clear_nsfw_gallery")
-			if(!nsfw_img_gallery.len)
-				to_chat(user, "You don't have any images in your gnoll nsfw gallery to clear!")
-				return
-			var/dachoice = tgui_alert(user, "Do you really want to clear your gnoll nsfw image gallery?", "Clear nsfw Gallery", list("Yae", "Nae"))
-			if(dachoice == "Nae")
-				gnoll_show_ui(user)
-				return
-			nsfw_img_gallery = list()
-			to_chat(user, "<span class='notice'>Successfully cleared gnoll nsfw image gallery.</span>")
-			log_game("[user] has cleared their gnoll nsfw image gallery.")
-
 		if("ooc_preview")
-			var/datum/examine_panel/preview_examine_panel = new(user)
-			preview_examine_panel.pref = user.client?.prefs
-			preview_examine_panel.holder = user
-			preview_examine_panel.viewing = user
-			preview_examine_panel.previewing = "gnoll"
-			preview_examine_panel.ui_interact(user)
+			user.client?.prefs?.open_examine_preview(user, GALLERY_FORM_GNOLL)
+
+		if("character_gallery")
+			user.client?.prefs?.open_character_gallery(user, GALLERY_FORM_GNOLL)
 
 		if("rumour_preview")
 			var/msg = ""
@@ -781,82 +687,6 @@
 			song_title = new_title
 			to_chat(user, "<span class='notice'>Successfully updated gnoll song title.</span>")
 			log_game("[user] has set their gnoll song title.")
-
-		if("ooc_extra_img")
-			to_chat(user, "<span class='notice'>Add a link to images/videos (jpg, png, gif, mp4) that will be displayed in your Flavor Text.</span>")
-			to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox, imgbb, filegarden.</span>")
-			to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
-			to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
-			var/link = tgui_input_text(user, "Input the image/video link (https):", "OOC Extra Image", ooc_extra_img_link, encode = FALSE)
-			if(link == null)
-				return
-			if(link == "")
-				link = null
-				var/choice = tgui_alert(user, "Do you really want to clear your gnoll OOC Extra Image/Video/Gif?", "Clear OOC Extra Image/Video/Gif", list("Yae", "Nae"))
-				if(choice == "Nae")
-					gnoll_show_ui(user)
-					return
-				ooc_extra_img = null
-				ooc_extra_img_link = null
-				to_chat(user, "<span class='notice'>Successfully deleted gnoll OOC Extra Image.</span>")
-				gnoll_show_ui(user)
-				return
-			var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
-			if(!valid_headshot_link(user, link, FALSE, valid_ext))
-				link = null
-				gnoll_show_ui(user)
-				return
-			ooc_extra_img_link = link
-			var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
-			var/info
-			switch(ext)
-				if("jpg", "jpeg", "png", "gif")
-					ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
-					info = "an image."
-				if("mp4")
-					ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
-					info = "a video."
-			to_chat(user, "<span class='notice'>Successfully updated gnoll OOC Extra Image with [info]</span>")
-			log_game("[user] has set their gnoll OOC Extra Image to '[link]'.")
-			gnoll_show_ui(user)
-
-		if("nsfw_ooc_extra_img")
-			to_chat(user, "<span class='notice'>Add a link to NSFW images/videos (jpg, png, gif, mp4) that will be displayed in your NSFW Flavor Text.</span>")
-			to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox, imgbb, filegarden.</span>")
-			to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
-			to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
-			var/link = tgui_input_text(user, "Input the image/video link (https):", "NSFW OOC Extra Image", nsfw_ooc_extra_img_link, encode = FALSE)
-			if(link == null)
-				return
-			if(link == "")
-				link = null
-				var/choice = tgui_alert(user, "Do you really want to clear your gnoll NSFW OOC Extra Image/Video/Gif?", "Clear NSFW OOC Extra Image/Video/Gif", list("Yae", "Nae"))
-				if(choice == "Nae")
-					gnoll_show_ui(user)
-					return
-				nsfw_ooc_extra_img = null
-				nsfw_ooc_extra_img_link = null
-				to_chat(user, "<span class='notice'>Successfully deleted gnoll NSFW OOC Extra Image.</span>")
-				gnoll_show_ui(user)
-				return
-			var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
-			if(!valid_headshot_link(user, link, FALSE, valid_ext))
-				link = null
-				gnoll_show_ui(user)
-				return
-			nsfw_ooc_extra_img_link = link
-			var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
-			var/info
-			switch(ext)
-				if("jpg", "jpeg", "png", "gif")
-					nsfw_ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
-					info = "an image."
-				if("mp4")
-					nsfw_ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
-					info = "a video."
-			to_chat(user, "<span class='notice'>Successfully updated gnoll NSFW OOC Extra Image with [info]</span>")
-			log_game("[user] has set their gnoll NSFW OOC Extra Image to '[link]'.")
-			gnoll_show_ui(user)
 
 		if("gnoll_statpack")
 			// Build statpack list
@@ -931,34 +761,18 @@
 	if(color_hex2num("#" + sanitize_hexcolor(gnoll_voice_color)) < 230)
 		gnoll_voice_color = "a0a0a0"
 
-	S["gnoll_headshot_link"]	>> headshot_link
-	if(!valid_headshot_link(null, headshot_link, TRUE))
-		headshot_link = null
+	load_gallery_images(S, src, "gnoll_")
 
 	S["gnoll_flavortext"]			>> flavortext
 	S["gnoll_ooc_notes"]			>> ooc_notes
 	S["gnoll_ooc_extra"]			>> ooc_extra
-	S["gnoll_ooc_extra_img"]		>> ooc_extra_img
-	S["gnoll_ooc_extra_img_link"]	>> ooc_extra_img_link
-	if(!valid_headshot_link(null, ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		ooc_extra_img = null
-		ooc_extra_img_link = null
 
 	S["gnoll_song_artist"] 			>> song_artist
 	S["gnoll_song_title"] 			>> song_title
 	S["gnoll_rumour"]				>> rumour
 	S["gnoll_noble_gossip"]			>> noble_gossip
 	S["gnoll_nsfwflavortext"]		>> nsfwflavortext
-	S["gnoll_nsfw_ooc_extra_img"]		>> nsfw_ooc_extra_img
-	S["gnoll_nsfw_ooc_extra_img_link"]	>> nsfw_ooc_extra_img_link
-	if(!valid_headshot_link(null, nsfw_ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		nsfw_ooc_extra_img = null
-		nsfw_ooc_extra_img_link = null
 	S["gnoll_erpprefs"]			>> erpprefs
-	S["gnoll_img_gallery"]	>> img_gallery
-	img_gallery = SANITIZE_LIST(img_gallery)
-	S["gnoll_nsfw_img_gallery"]	>> nsfw_img_gallery
-	nsfw_img_gallery = SANITIZE_LIST(nsfw_img_gallery)
 
 	return TRUE
 
@@ -981,21 +795,15 @@
 		WRITE_FILE(S["gnoll_voice_color"] , gnoll_voice_color) 
 		WRITE_FILE(S["gnoll_statpack"] , preferences_typepath_or_null(gnoll_statpack))
 
-		WRITE_FILE(S["gnoll_headshot_link"] , headshot_link)
+		save_gallery_images(S, src, "gnoll_")
 		WRITE_FILE(S["gnoll_flavortext"] , html_decode(flavortext))
 		WRITE_FILE(S["gnoll_ooc_notes"] , html_decode(ooc_notes))
 		WRITE_FILE(S["gnoll_ooc_extra"] ,	ooc_extra)
-		WRITE_FILE(S["gnoll_ooc_extra_img"] , ooc_extra_img)
-		WRITE_FILE(S["gnoll_ooc_extra_img_link"] , ooc_extra_img_link)
 		WRITE_FILE(S["gnoll_song_artist"] , song_artist)
 		WRITE_FILE(S["gnoll_song_title"] , song_title)		
 		WRITE_FILE(S["gnoll_rumour"] , html_decode(rumour))
 		WRITE_FILE(S["gnoll_noble_gossip"] , html_decode(noble_gossip))
 		WRITE_FILE(S["gnoll_nsfwflavortext"] , html_decode(nsfwflavortext))
-		WRITE_FILE(S["gnoll_nsfw_ooc_extra_img"] , nsfw_ooc_extra_img)
-		WRITE_FILE(S["gnoll_nsfw_ooc_extra_img_link"] , nsfw_ooc_extra_img_link)
 		WRITE_FILE(S["gnoll_erpprefs"] , html_decode(erpprefs))
-		WRITE_FILE(S["gnoll_img_gallery"] , img_gallery)
-		WRITE_FILE(S["gnoll_nsfw_img_gallery"] , nsfw_img_gallery)
-	
+
 	return TRUE
