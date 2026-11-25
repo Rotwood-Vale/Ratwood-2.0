@@ -30,7 +30,7 @@
 
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
 
-	var/obj/item/rogueweapon/conjured_knife = null
+	var/datum/weakref/conjured_knife
 
 /datum/action/cooldown/spell/aetherknife/cast(atom/cast_on)
 	. = ..()
@@ -38,8 +38,7 @@
 	if(!istype(user))
 		return FALSE
 
-	if(src.conjured_knife)
-		qdel(conjured_knife)
+	qdel(conjured_knife?.resolve())
 	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/huntingknife/throwingknife/aetherknife(user.drop_location())
 	R.AddComponent(/datum/component/conjured_item, null, FALSE, user, src)
 
@@ -49,13 +48,14 @@
 		R.throwforce = R.throwforce + int_scaling * 2
 		R.name = "aetherknife +[int_scaling]"
 	user.put_in_hands(R)
-	src.conjured_knife = R
+	conjured_knife = WEAKREF(R)
 	return TRUE
 
 /datum/action/cooldown/spell/aetherknife/Destroy()
-	if(src.conjured_knife)
-		conjured_knife.visible_message(span_warning("[conjured_knife] disintegrates into glittering motes!"))
-		qdel(conjured_knife)
+	var/obj/item/knife = conjured_knife?.resolve()
+	if(knife)
+		knife.visible_message(span_warning("[knife] disintegrates into glittering motes!"))
+		qdel(knife)
 	return ..()
 
 /obj/item/rogueweapon/huntingknife/throwingknife/aetherknife
