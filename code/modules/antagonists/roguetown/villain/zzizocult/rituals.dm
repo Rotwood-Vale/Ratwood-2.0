@@ -413,20 +413,25 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(length(crystals) < cost)
 		to_chat(user, span_warning("NOT ENOUGH! [cost] DARK CRYSTALS REQUIRED!"))
 		return
-	for(var/i in 1 to cost)
-		qdel(crystals[i])
-	var/datum/job/J = SSjob.GetJob("Cultist")
-	J.total_positions++
-	to_chat(user, span_notice("ACCEPTED! A NEW CULTIST SHALL ARRIVE!"))
+	to_chat(user, span_notice("ZIZITES OF THE LAND... HEAR OUR CALL!"))
 	var/list/candidates = pollGhostCandidates("Inhumen cultists plead for aid! Shall you help them? (You will spawn as your currently selected character.)", ROLE_ZIZOIDCULTIST, null, null, 20 SECONDS)
 	if(!length(candidates))
+		to_chat(user, span_warning("NONE ANSWER."))
 		return
+	crystals = list()
+	for(var/obj/item/necro_relics/necro_crystal/C in center)
+		crystals += C
+	if(length(crystals) < cost)
+		return
+	for(var/i in 1 to cost)
+		qdel(crystals[i])
 	var/mob/C = pick(candidates)
 	var/client/CL = C.client
 	if(!istype(C, /mob/dead/new_player))
 		C.returntolobby()
 	var/mob/dead/new_player/N = CL?.mob
 	if(istype(N))
+		SSjob.GetJob("Cultist").total_positions++
 		N.AttemptLateSpawn("Cultist")
 
 /datum/ritual/servantry/heartache

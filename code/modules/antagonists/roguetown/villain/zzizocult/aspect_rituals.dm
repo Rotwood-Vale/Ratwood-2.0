@@ -105,11 +105,11 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	new /obj/effect/temp_visual/cult/sac(get_turf(target))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(target))
-	target.Unconscious(4 MINUTES)
-	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, apply_status_effect), /datum/status_effect/buff/healing, 70, TRUE), 4 MINUTES)
+	target.Unconscious(3 MINUTES)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, apply_status_effect), /datum/status_effect/buff/healing, 70, TRUE), 30 SECONDS)
 	target.Jitter(4)
 	target.emote("scream")
-	target.visible_message(span_danger("[target]'s memory is wiped clean! They will completely forget what happened and who did it to them. In 4 minutes, they shall wake."))
+	target.visible_message(span_danger("[target]'s memory is wiped clean! They will completely forget what happened and who did it to them. In 3 minutes, they shall wake."))
 	var/obj/item/bodypart/chest/torso = target.get_bodypart(BODY_ZONE_CHEST)
 	if(torso)
 		torso.receive_damage(85)
@@ -2051,7 +2051,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/status_effect/debuff/rotground
 	id = "rotground"
 	duration = -1
-	tick_interval = 3 SECONDS
+	tick_interval = 2 SECONDS
 	alert_type = null
 	var/elapsed = 0
 	var/obj/effect/abstract/particle_holder/aura
@@ -2081,7 +2081,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		if(prob(10))
 			to_chat(H, span_notice("THE ROT'S AROMA REJUVENATES ME!"))
 		return
-	elapsed += 3
+	elapsed += 2
 	H.adjustOxyLoss(3)
 	H.adjustStaminaLoss(5)
 	if(prob(10))
