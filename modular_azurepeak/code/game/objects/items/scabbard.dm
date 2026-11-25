@@ -59,6 +59,9 @@
 
 
 /obj/item/rogueweapon/scabbard/proc/weapon_check(mob/living/user, obj/A)
+	if(sheathed && QDELETED(sheathed))
+		sheathed = null
+		update_icon(user)
 	if(sheathed)
 		to_chat(user, span_warning("The sheath is occupied!"))
 		return FALSE
@@ -109,6 +112,11 @@
 
 /obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
 	if(!sheathed)
+		return FALSE
+
+	if(QDELETED(sheathed)) // the blade deleted itself inside the scabbard (e.g. the martyr sword)
+		sheathed = null
+		update_icon(user)
 		return FALSE
 
 	if(obj_broken)
