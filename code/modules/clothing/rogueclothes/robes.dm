@@ -94,6 +94,7 @@
 	desc = "Holy vestments, worn by those who pursue faith above all else. Hundreds of heavy leather strips have been meticulously sheared-and-stitched onto the cloth, resulting in unparalleled comfort and protection. It's said that those who 'don the cloth' will never tire; a boon of unbreakable faith."
 	icon_state = "monkvestments"
 	item_state = "monkvestments"
+	resistance_flags = FIRE_PROOF
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
