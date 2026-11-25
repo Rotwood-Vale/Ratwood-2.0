@@ -128,7 +128,6 @@ SUBSYSTEM_DEF(familytree)
 	// If this is the first royal, generate a historical lineage
 	if(!ruling_family.founder)
 		GenerateRoyalLineage(member, status)
-		H.ShowFamilyUI(TRUE)
 		for(var/mob/living/carbon/human/waiting in GLOB.human_list)
 			if(waiting != H && !waiting.family_datum && (waiting.job in royal_jobs))
 				AddLocal(waiting)
@@ -159,8 +158,6 @@ SUBSYSTEM_DEF(familytree)
 
 		if(FAMILY_OMMER)  // Hand - sibling or cousin of monarch
 			CreateBranchFamily(member)
-
-	H.ShowFamilyUI(TRUE)
 
 /datum/controller/subsystem/familytree/proc/GetCurrentMonarch()
 	// Find the monarch at generation 12 (current ruling generation)

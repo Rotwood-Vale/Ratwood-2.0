@@ -1,7 +1,7 @@
 // a lot of this design is taken from char prefs rework
 /datum/family_board_menu
 	var/datum/preferences/prefs
-	var/list/open_sections = list("Requests", "Character", "Board")
+	var/list/open_sections = list("Requests", "Character", "Matchmaking", "Board")
 	var/request_cooldown = 0
 	var/base = "?_src_=prefs;preference=family_board;act="
 
@@ -129,7 +129,7 @@
 	var/requests_label = "Requests"
 	if(request_count)
 		requests_label = "Requests ([request_count])"
-	var/list/sections = list("Requests" = requests_html, "Character" = ad_html, "Board" = board_html, "Matchmaking" = matching_html, "Relationships" = links_html)
+	var/list/sections = list("Requests" = requests_html, "Character" = ad_html, "Matchmaking" = matching_html, "Board" = board_html, "Relationships" = links_html)
 	var/html = {"<style>
 		body { font-size: 14px; }
 		.r { line-height: 1.5; font-size: 14px; margin: 2px 0; }

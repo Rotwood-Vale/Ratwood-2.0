@@ -578,6 +578,7 @@
 
 	AddFamilyIcon(person)
 	LateJoinAddToUI(person)
+	person.ShowFamilyUI()
 
 	return new_member
 
@@ -803,7 +804,7 @@ GLOBAL_LIST_INIT(name_titles, list("Ser", "Dame", "Sister", "Brother", "Prelate"
 /datum/heritage/proc/LateJoinAddToUI(mob/living/carbon/human/new_fam)
 	for(var/datum/family_member/member in members)
 		var/mob/living/carbon/human/H = member.person
-		if(H && H.family_UI && H.client && H != new_fam)
+		if(H && H.client && H != new_fam)
 			if(new_fam in family_icons)
 				H.client.images.Add(family_icons[new_fam])
 
@@ -836,23 +837,11 @@ GLOBAL_LIST_INIT(name_titles, list("Ser", "Dame", "Sister", "Brother", "Prelate"
 	else
 		to_chat(src, "You're not part of any notable family.")
 
-/mob/living/carbon/human/verb/ToggleFamilyUI()
-	set name = "Family UI"
-	set category = "IC"
-	ShowFamilyUI(FALSE)
-
-/mob/living/carbon/human/proc/ShowFamilyUI(silent)
+/mob/living/carbon/human/proc/ShowFamilyUI()
 	if(spouse_mob)
-		ApplySpouseUI(family_UI)
+		ApplySpouseUI()
 	if(family_datum)
-		family_datum.ApplyUI(src, family_UI)
-	else if(!silent)
-		to_chat(src, "You're not part of any notable family.")
-
-	family_UI = !family_UI
-
-	if(!silent)
-		to_chat(src, "FamilyUI Toggled [family_UI ? "On" : "Off"]")
+		family_datum.ApplyUI(src)
 
 /mob/living/carbon/human/proc/ApplySpouseUI(toggle_true = FALSE)
 	if(!spouse_mob || !client)
