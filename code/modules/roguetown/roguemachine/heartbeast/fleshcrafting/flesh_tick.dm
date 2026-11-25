@@ -36,6 +36,9 @@
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
 
+	if(HAS_TRAIT(target, TRAIT_LUX_FREAK))
+		return FALSE
+
 	var/datum/component/leechtick_attachment/existing = target.GetComponent(/datum/component/leechtick_attachment)
 	if(existing)
 		return FALSE

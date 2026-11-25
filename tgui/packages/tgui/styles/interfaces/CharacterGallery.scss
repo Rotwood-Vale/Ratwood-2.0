@@ -1,0 +1,1236 @@
+@use 'galleryKeys' as keys;
+
+// Fits a bold Horizontal in Verdana, the widest of the theme fonts at 5.83em
+$label-column: 6.5rem;
+// Must match EDITOR_SIZE in CharacterGallery/Headshot/FramingCanvas.tsx
+$editor-size: 256px;
+// The chat headshot's side, .chat_headshot in tgui-panel's chat-dark.scss
+$chat-size: 125px;
+$empty-background: rgba(0, 0, 0, 0.3);
+$image-outline: 1px solid rgba(255, 255, 255, 0.3);
+
+@keyframes CharacterGallery__busyStatus {
+  from {
+    opacity: 0;
+  }
+}
+
+.CharacterGallery {
+  min-height: 0;
+  max-width: var(--gallery-held-overview-width, 48rem);
+
+  &--expanded {
+    max-width: none;
+
+    .CharacterGallery__navigation,
+    .CharacterGallery__footer {
+      max-width: var(--gallery-overview-width, 48rem);
+    }
+  }
+
+  &--expanding {
+    .CharacterGallery__viewport {
+      overflow-x: hidden;
+    }
+
+    .CharacterGallery__editor,
+    .CharacterGallery__ledgerDivider {
+      visibility: hidden;
+    }
+  }
+
+  &--folding {
+    max-width: var(--gallery-overview-width, 48rem);
+  }
+
+  &__root {
+    height: 100%;
+  }
+
+  &__pendingUrlDialog {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    outline: none;
+  }
+
+  &__artworkMeasure {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: clip;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &__ledger {
+    height: 100%;
+    min-height: 0;
+
+    &--expanded {
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--gallery-overview-width, 48rem) minmax(
+          var(--gallery-editor-width, 440px),
+          1fr
+        );
+      gap: 1rem;
+
+      > .CharacterGallery__editor {
+        border-left: 1px solid
+          var(--section-separator-color, rgba(255, 255, 255, 0.2));
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  &__ledgerDivider {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 0;
+    grid-area: 1 / 2;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 88px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-label);
+    cursor: pointer;
+    font-size: 0.8rem;
+    transform: translate(-50%, -50%);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--color-text);
+
+      .CharacterGallery__ledgerDividerTab {
+        border-color: currentColor;
+        background: var(--button-background-default, var(--section-background));
+      }
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      .CharacterGallery__ledgerDividerTab {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &__ledgerDividerTab {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 74px;
+    border: 1px solid var(--section-separator-color);
+    border-radius: 4px;
+    background: var(--modal-background);
+  }
+
+  &__navigation {
+    flex-wrap: wrap;
+  }
+
+  // Some themes animate every button property, which makes buttons slide as the layout settles
+  .CharacterGallery__viewport .CharacterGallery__ledger .Button {
+    transition-property: background-color, border-color, color, opacity;
+  }
+
+  &__stableLabel {
+    display: inline-grid;
+
+    > span {
+      grid-area: 1 / 1;
+    }
+
+    > [aria-hidden='true'] {
+      visibility: hidden;
+    }
+  }
+
+  // The 0.4s delay before the fade means an action the server answers within 0.4 seconds never dims the controls,
+  // so ordinary edits do not flicker to half opacity and back
+  &__busy {
+    opacity: 0.5;
+    transition: opacity 0.1s 0.4s;
+  }
+
+  &__busyStatus {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1;
+    padding: 0.15rem 0.4rem;
+    color: var(--color-label, rgba(255, 255, 255, 0.6));
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 2px;
+    animation: CharacterGallery__busyStatus 0.1s 0.4s both;
+  }
+
+  &__urlModal {
+    width: 38rem;
+    max-width: calc(100vw - 3rem);
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  &__sourceRow {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    align-items: center;
+  }
+
+  &__urlInput {
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__artSource {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    container-type: inline-size;
+    --art-thumbnail-size: clamp(5rem, 36cqw, 11rem);
+    gap: 0.65rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--section-separator-color);
+
+    > .CharacterGallery__thumbnail {
+      justify-self: center;
+    }
+
+    > .CharacterGallery__viewFields {
+      margin-top: 0;
+    }
+  }
+
+  &__artUrl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: end;
+    gap: 0.5rem;
+
+    > label {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    > .Button {
+      margin: 0;
+    }
+  }
+
+  &__framingPlaceholder {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.4rem;
+    flex: 1;
+    min-height: 10rem;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid var(--section-separator-color);
+  }
+
+  &__viewFields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+
+    > label {
+      display: grid;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+  }
+
+  &__viewFields select,
+  &__applyTarget select,
+  &__previewLayout select {
+    min-width: 0;
+    width: 100%;
+    color: var(--color-text);
+    background: var(--input-background, var(--modal-background));
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    border-radius: 2px;
+    padding: 0.25rem;
+    font: inherit;
+  }
+
+  &__previewLayout {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+
+    select {
+      width: auto;
+      padding-block: 0.1rem;
+    }
+  }
+
+  &__viewHelpText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &__cropPanel {
+    min-width: 0;
+    margin-bottom: 1rem;
+  }
+
+  &__urlLayer {
+    position: absolute;
+    inset: 0;
+  }
+
+  // The padding must match SIDE_CHROME in EditDialog/SidePreview.tsx
+  &__sidePreview {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    padding: 8px;
+    background-color: var(--color-base);
+  }
+
+  &__sourceHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-height: 1.5rem;
+    font-weight: bold;
+
+    .Button {
+      font-weight: normal;
+    }
+  }
+
+  &__artPreviewViewport {
+    position: relative;
+    isolation: isolate;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &__cropSources {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+
+    .Button {
+      margin: 0;
+    }
+  }
+
+  &__cropStage {
+    position: relative;
+    isolation: isolate;
+    height: 15rem;
+    overflow: hidden;
+    background-color: #000;
+    outline: $image-outline;
+    touch-action: none;
+
+    &--active {
+      outline: 2px solid
+        var(--section-separator-color, rgba(255, 255, 255, 0.6));
+    }
+  }
+
+  &__cropPicture {
+    position: absolute;
+    display: block;
+    max-width: none;
+    max-height: none;
+    pointer-events: none;
+  }
+
+  // Dimmed and greyed, so the box stands out on dark art too, while a clear copy shows through cropWindow
+  &__cropPicture--outside {
+    filter: brightness(0.45) saturate(0.35);
+  }
+
+  &__cropWindow {
+    position: absolute;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  &__framingHeader {
+    display: grid;
+    gap: 0.15rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+
+    strong {
+      color: #e2d7d4;
+    }
+
+    > span {
+      font-size: 0.9em;
+    }
+  }
+
+  &__cropBox {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid #fff;
+    outline: 1px solid rgba(0, 0, 0, 0.8);
+  }
+
+  &__cropEdge {
+    position: absolute;
+    z-index: 1;
+
+    &--n,
+    &--s {
+      left: 6px;
+      right: 6px;
+      height: 12px;
+    }
+
+    &--n {
+      top: -6px;
+    }
+
+    &--s {
+      bottom: -6px;
+    }
+
+    &--e,
+    &--w {
+      top: 6px;
+      bottom: 6px;
+      width: 12px;
+    }
+
+    &--e {
+      right: -6px;
+    }
+
+    &--w {
+      left: -6px;
+    }
+  }
+
+  &__cropHandle {
+    position: absolute;
+    z-index: 2;
+    box-sizing: border-box;
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
+    background: #fff;
+    border: 1px solid #000;
+
+    &--nw,
+    &--n,
+    &--ne {
+      top: 0;
+    }
+
+    &--w,
+    &--e {
+      top: 50%;
+    }
+
+    &--sw,
+    &--s,
+    &--se {
+      top: 100%;
+    }
+
+    &--nw,
+    &--w,
+    &--sw {
+      left: 0;
+    }
+
+    &--n,
+    &--s {
+      left: 50%;
+    }
+
+    &--ne,
+    &--e,
+    &--se {
+      left: 100%;
+    }
+  }
+
+  &__cropStatus {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: var(--color-label, rgba(255, 255, 255, 0.6));
+    text-align: center;
+  }
+
+  &__framingTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  &__framingHelp {
+    display: inline-grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-label);
+    cursor: help;
+    font: inherit;
+
+    &:hover,
+    &:focus-visible {
+      color: #fff;
+    }
+  }
+
+  &__framingTooltip {
+    max-width: min(23rem, calc(100vw - 1rem));
+    line-height: 1.4;
+
+    p,
+    ul {
+      margin: 0;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin-top: 0.4rem;
+    }
+
+    li + li {
+      margin-top: 0.25rem;
+    }
+
+    svg {
+      vertical-align: middle;
+    }
+
+    kbd {
+      @include keys.key-cap;
+    }
+  }
+
+  &__framingAdjustments {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.65rem;
+
+    .Button {
+      margin: 0;
+    }
+  }
+
+  &__cropSlider {
+    flex: 1 1 15rem;
+    min-width: 0;
+  }
+
+  &__cropControls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+
+  &__cropControlGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+
+    .Button {
+      margin: 0;
+    }
+  }
+
+  &__cropZoom {
+    min-width: 3.5em;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__cropSize {
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__framingNotes {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  &__framingNote {
+    margin: 0;
+    color: var(--color-label);
+    font-size: 0.85em;
+    line-height: 1.4;
+  }
+
+  &__artworkSettings {
+    margin-bottom: 0.75rem;
+  }
+
+  &__artworkPanel {
+    container: artwork-settings / inline-size;
+    max-width: 46rem;
+    margin-top: 0.25rem;
+    padding: 0.5rem;
+    background: var(--section-background);
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.4));
+
+    > .CharacterGallery__viewFields {
+      grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+      margin-top: 0;
+    }
+  }
+
+  &__artworkFooter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.45rem 0.75rem;
+    margin-top: 0.5rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--section-separator-color);
+  }
+
+  &__artworkDefaults {
+    display: grid;
+    gap: 0.1rem;
+
+    strong {
+      color: #fff;
+    }
+  }
+
+  &__defaultValues {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.7rem;
+
+    b {
+      color: #e2d7d4;
+    }
+  }
+
+  &__artworkActions,
+  &__artworkButtons,
+  &__applyTarget {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  &__applyTarget select {
+    width: auto;
+    max-width: 100%;
+  }
+
+  &__artworkButtons .Button {
+    margin: 0;
+  }
+
+  &__bulkBackdropLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  @container artwork-settings (max-width: 28rem) {
+    &__artworkPanel > &__viewFields {
+      grid-template-columns: minmax(0, 1fr);
+
+      > label {
+        grid-template-columns: 8.25rem minmax(0, 1fr);
+        align-items: center;
+      }
+    }
+  }
+
+  &__artworkResult {
+    margin-top: 0.5rem;
+  }
+
+  &__urlFooter {
+    position: sticky;
+    bottom: -1rem;
+    z-index: 1;
+    margin: 0 -1rem -1rem;
+    padding: 0.75rem 1rem 1rem;
+    background: var(--modal-background);
+  }
+
+  &__viewport {
+    min-height: 0;
+    overflow-x: auto;
+  }
+
+  &__scroll {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 2px;
+  }
+
+  &__workspace {
+    > .Section {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__headshot {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  &__headshotColumn {
+    width: $editor-size;
+  }
+
+  &__headshotEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    color: var(--color-label, rgba(255, 255, 255, 0.6));
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+  }
+
+  &__framing {
+    width: 100%;
+    max-width: 36rem;
+
+    .CharacterGallery__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      min-width: 0;
+
+      .CharacterGallery__url,
+      .CharacterGallery__url > div {
+        display: contents;
+      }
+
+      .CharacterGallery__actions {
+        flex-basis: 100%;
+        gap: 0.35rem;
+
+        &:empty {
+          display: none;
+        }
+      }
+
+      .CharacterGallery__revealedUrl,
+      [role='status'] {
+        order: 1;
+        flex-basis: 100%;
+        width: 0;
+        min-width: 100%;
+      }
+
+      [role='status']:empty {
+        position: absolute;
+      }
+    }
+
+    .CharacterGallery__details {
+      margin-top: 1rem;
+    }
+  }
+
+  &__editorToggle.Button--disabled {
+    filter: grayscale(1);
+  }
+
+  &__headshotControlRow {
+    display: grid;
+    grid-template-columns: $label-column minmax(0, 1fr);
+    align-items: start;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    .Button {
+      margin: 0;
+    }
+  }
+
+  &__framingActions {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  &__framingSlider > .Stack > .Stack__item:first-child,
+  &__cropSlider > .Stack > .Stack__item:first-child {
+    flex-basis: $label-column !important;
+  }
+
+  &__frameHint {
+    display: grid;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    border: 1px solid transparent;
+
+    &--active {
+      border-color: var(--section-separator-color, rgba(255, 255, 255, 0.4));
+      font-weight: bold;
+    }
+  }
+
+  &__frameHintText {
+    grid-area: 1 / 1;
+
+    &:first-child {
+      align-self: center;
+    }
+
+    &[aria-hidden='true'] {
+      visibility: hidden;
+    }
+  }
+
+  &__frameControls,
+  &__frameShortcut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+  }
+
+  &__frameControls {
+    gap: 0.35rem;
+    font-size: 0.85em;
+  }
+
+  &__frameCanvas {
+    position: relative;
+    width: $editor-size;
+    height: $editor-size;
+    background-color: $empty-background;
+    outline: $image-outline;
+    cursor: grab;
+    touch-action: none;
+
+    &--locked {
+      outline: 2px solid
+        var(--section-separator-color, rgba(255, 255, 255, 0.6));
+    }
+
+    &--dragging {
+      cursor: grabbing;
+    }
+  }
+
+  &__chatOptions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__chatOption.Button {
+    flex: 1 1 12rem;
+    max-width: 20rem;
+    margin: 0;
+    padding: 0.75rem;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.03);
+    color: inherit;
+    white-space: normal;
+    line-height: normal;
+
+    &.CharacterGallery__chatOption--selected {
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    &:hover,
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  &__chatPreview {
+    height: $chat-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  &__chatSquare {
+    width: $chat-size;
+  }
+
+  &__chatOriginal {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: $chat-size;
+    max-height: $chat-size;
+  }
+
+  &__chatLabel {
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--button-border-radius, 3px);
+    background-color: var(
+      --button-background-default,
+      var(--button-background)
+    );
+    color: var(--button-color);
+  }
+
+  &__summary {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  &__details > summary,
+  &__guidelines > summary {
+    cursor: pointer;
+    padding: 0.35rem 0;
+  }
+
+  &__keyboardHelp {
+    color: var(--color-label);
+    font-size: 0.8em;
+
+    dl {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      align-items: center;
+      gap: 0.1rem 0.65rem;
+      margin: 0 0 0.35rem;
+    }
+
+    dd {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin: 0;
+    }
+  }
+
+  &__frameControls kbd,
+  &__keyboardHelp kbd {
+    @include keys.key-cap;
+  }
+
+  &__guidelines {
+    margin-bottom: 1rem;
+
+    ul {
+      padding-left: 1.5rem;
+    }
+
+    li + li {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__framing,
+  &__rowBody,
+  &__url {
+    min-width: 0;
+  }
+
+  &__clear,
+  &__footer {
+    border-top: 1px solid
+      var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    padding-top: 0.75rem;
+  }
+
+  &__save,
+  &__links,
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  &__save {
+    justify-content: space-between;
+  }
+
+  &__url {
+    flex: 1 1 9rem;
+  }
+
+  &__revealedUrl {
+    margin-top: 0.5rem;
+    user-select: all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__removedRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__row--light,
+  &__row--dark,
+  &__row--flash {
+    border-radius: 3px;
+    transition: background-color 0.6s ease;
+  }
+
+  &__row--light {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  &__row--dark {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &__row--flash {
+    background-color: var(
+      --button-background-selected,
+      rgba(255, 255, 255, 0.2)
+    );
+  }
+
+  &__thumbnail {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: $empty-background;
+    outline: $image-outline;
+  }
+
+  &__thumbnailCard {
+    position: absolute;
+    inset: 0;
+    width: 0;
+    height: 0;
+    margin: auto;
+  }
+
+  &__thumbnailMedia {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__thumbnailCrop {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  &__thumbnailPicture {
+    position: absolute;
+    display: block;
+    max-width: none;
+    max-height: none;
+  }
+
+  &__rowDetails {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__error {
+    margin-top: 0.5rem;
+  }
+
+  &__extraSize {
+    margin-top: 0.25rem;
+  }
+
+  &__materialOption {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__materialSwatch {
+    display: inline-block;
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--color-label);
+  }
+
+  &__inactivePosition {
+    padding: 0.5rem;
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+  }
+}
+
+// Dropdown menus are portalled outside the editor modal
+.Dropdown__menu--wrapper:has(.CharacterGallery__materialOption) {
+  z-index: 101;
+}
+
+.Modal__dimmer:has(> .Dimmer__inner > .CharacterGallery__urlModal--art) {
+  align-items: flex-start;
+  container: gallery-art-modal / size;
+  padding-top: 0.5rem;
+
+  > .Dimmer__inner {
+    max-width: none;
+    max-height: none;
+  }
+}
+
+// The art dialog is as tall as what it holds. Past the window's height its body scrolls, Cancel and
+// Apply with it
+.CharacterGallery__urlModal--art {
+  display: flex;
+  flex-direction: column;
+  width: calc(100cqw - 1.5rem);
+  max-width: 75rem;
+  max-height: calc(100cqh - 1rem);
+  overflow: hidden;
+
+  .CharacterGallery__urlDialog,
+  .CharacterGallery__urlEditor,
+  .CharacterGallery__urlEditor > .Section,
+  .CharacterGallery__urlEditor > .Section > .Section__rest,
+  .CharacterGallery__urlEditor > .Section > .Section__rest > .Section__content,
+  .CharacterGallery__urlBody {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .CharacterGallery__urlEditor {
+    container: artwork-editor / inline-size;
+    min-width: 0;
+  }
+
+  .CharacterGallery__urlColumns {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  // In the framing column, a row like any other
+  .CharacterGallery__urlFooter {
+    position: static;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    background: none;
+  }
+
+  // Sized by the window alone, so a picture loading into it moves nothing
+  .CharacterGallery__urlFields--single .CharacterGallery__artSource {
+    --art-thumbnail-size: clamp(5rem, min(80cqw, calc(100cqh - 35rem)), 16rem);
+  }
+
+  .CharacterGallery__urlFields:not(.CharacterGallery__urlFields--single)
+    .CharacterGallery__artSource {
+    --art-thumbnail-size: clamp(
+      4rem,
+      min(36cqw, calc(100cqh / 2 - 22rem)),
+      11rem
+    );
+    gap: 0.4rem;
+    padding: 0.5rem;
+  }
+
+  // Narrower than this, the fields and the framing column stack in one column
+  @container artwork-editor (min-width: calc(660px - 5rem)) {
+    .CharacterGallery__urlColumns {
+      display: grid;
+      grid-template-columns: minmax(15rem, 2fr) minmax(0, 3fr);
+      align-items: start;
+      column-gap: 1rem;
+    }
+
+    // The right padding keeps the stage's outline inside the scrolling body, and the bottom margin
+    // matches the guidelines' under the fields
+    .CharacterGallery__cropPanel {
+      margin: 0 0 1rem;
+      padding: 0 2px 0 1rem;
+      border-left: 1px solid
+        var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    }
+
+    // With no link the placeholder runs to the bottom of the fields
+    .CharacterGallery__cropPanel:has(> .CharacterGallery__framingPlaceholder) {
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
+    }
+
+    .CharacterGallery__cropStage {
+      height: clamp(12rem, min(calc(100cqh / 2), calc(100cqh - 25rem)), 32rem);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .CharacterGallery__summary {
+    grid-template-columns: max-content minmax(0, 1fr);
+
+    > :last-child {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+}

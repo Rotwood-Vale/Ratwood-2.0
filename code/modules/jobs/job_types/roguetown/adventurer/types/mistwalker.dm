@@ -47,21 +47,10 @@
 
 /datum/outfit/job/roguetown/wretch/mistwalker/pre_equip(mob/living/carbon/human/H)
 	..()
-	
-	if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
-		armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
-	else
-		armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/black
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun/black
+	to_chat(H, span_warning("Failed in your duty, outcast from whence you came you wander. Only the steel in your hand can be trusted."))
 
 	head = /obj/item/clothing/head/roguetown/mentorhat
-	gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
-	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun //eh could be a regular one too
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/black
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun //let them have this
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/black
-	shoes = /obj/item/clothing/shoes/roguetown/boots
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -74,9 +63,40 @@
 		)
 
 	if(H.mind)
+		var/armor_options = list("Ceremonial Robes", "Enchanted Inks")
+		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armor_options
 		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD", "Nodachi +2 PER")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
+		switch(armor_choice)
+			if("Ceremonial Robes")
+				neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/black
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/black
+				if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
+					armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun/black
+					gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
+					shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+				else
+					armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/black
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+					gloves = /obj/item/clothing/gloves/roguetown/angle
+					shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced //dwarves like to blow up my patience
+			if("Enchanted Inks")
+				neck = /obj/item/clothing/neck/roguetown/leather
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/mistwalker //a full-body leather armor with 150% integ.
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/meditation/chest/easttats/mistwalker //another chest-only leather armor.
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+				cloak = /obj/item/clothing/cloak/kazengun
+				if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun/black
+					gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
+					shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+				else
+					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+					gloves = /obj/item/clothing/gloves/roguetown/angle
+					shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 		switch(weapon_choice)
 			if("Ssangsudo +2 CON")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
@@ -109,6 +129,37 @@
 				backr = /obj/item/rogueweapon/scabbard/gwstrap/nodachi
 				H.change_stat(STATKEY_PER, 2)
 		wretch_select_bounty(H)
+
+/obj/effect/proc_holder/spell/self/bloodlet
+	source_aspect = /datum/magic_aspect/pseudo/mistwalker
+	name = "Red Tides"
+	desc = "Take a brief moment to open yourself up to the flow of battle, both in body and mynd. Allow the raging tides of blood to wash through you and embrace the current driven by its dissipation. Teetering on the edge of sanity and heresy, Gaiyuke will find no joy in your suffering, only the resolve to see it through."
+	antimagic_allowed = TRUE
+	clothes_req = FALSE
+	chargetime = 3 SECONDS
+	recharge_time = 5 MINUTES
+	invocations = list("surrenders their lyfeblood to the tide of battle!")
+	invocation_type = "emote"
+
+/obj/effect/proc_holder/spell/self/bloodlet/cast(mob/living/carbon/human/user)
+	. = ..()
+	var/bloodbuff_duration = 15 SECONDS
+	if(!ishuman(user))
+		revert_cast()
+		return FALSE
+	if(user.get_blood_volume() <= BLOOD_VOLUME_OKAY) //336
+		to_chat(user, span_warning("I can't let go of more willingly!"))
+		revert_cast()
+		return FALSE
+	if(!do_after(user, 3 SECONDS, TRUE, null, TRUE, null, FALSE, FALSE, TRUE))
+		to_chat(user, span_warning("Action interrupted!"))
+		revert_cast()
+		return FALSE
+	user.set_blood_volume(max(user.get_blood_volume()-150, 0)) //226
+	user.apply_status_effect(/datum/status_effect/buff/empowered_strike, bloodbuff_duration)
+	to_chat(user, span_notice("Calm as the mountain lake. Inevitable as the raging tides."))
+	playsound(user, 'sound/combat/hits/bladed/genthrust (1).ogg', 100, TRUE)
+	return TRUE
 
 /obj/item/clothing/wrists/roguetown/bracers/black
 	color = CLOTHING_BLACK

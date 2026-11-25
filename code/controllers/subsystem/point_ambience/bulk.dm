@@ -92,7 +92,11 @@
 /// Returns the current proc call chain, innermost first, without raising a runtime
 /datum/controller/subsystem/point_ambience/proc/call_chain()
 	PRIVATE_PROC(TRUE)
+#if DM_VERSION > 516 || (DM_VERSION == 516 && DM_BUILD >= 1661)
 	var/list/chain = list()
 	for(var/callee/frame = caller, frame && length(chain) < 12, frame = frame.caller)
 		chain += "[frame.proc.type][frame.file ? " ([frame.file]:[frame.line])" : ""]"
 	return chain.Join(", ")
+#else
+	return "unknown (call chain needs BYOND 516.1661+)"
+#endif

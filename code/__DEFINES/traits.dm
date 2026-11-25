@@ -139,6 +139,7 @@
 #define TRAIT_PONYGIRL_RIDEABLE "Mount" //riding
 #define TRAIT_BLACKLEG	"Blackleg" //Rig coin flips and dice. Fluvian exclusive.
 #define TRAIT_BEWINGED "Bewinged" // gives u +1 to jump. I like to add & remove this via organ.
+#define TRAIT_OVIPOSITOR "Oviposition"
 #define TRAIT_DEATHBYSNUSNU "Bed Breaker" //What do you think? Pelvis crushing and increased pain.
 #define TRAIT_HUMEN_INGENUITY "Humen Ingenuity"//25% cheaper sleep levels.
 #define TRAIT_JACKOFALLTRADES "Jack of All Trades"	//Reduces skill up cost
@@ -276,6 +277,8 @@
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"
 #define TRAIT_LIMPDICK "Limp Dick"
+/// This body has a massive pintle: bought with triumphs at spawn (TRAIT_GENERIC) or free as a gnoll species trait. Re-applied whenever a Large pintle is inserted.
+#define TRAIT_MASSIVE_PINTLE "massive_pintle"
 #define TRAIT_SEXPASS "sexpass"
 #define TRAIT_STEELHEARTED "Steelhearted" //no bad mood from dismembering or seeing this
 #define TRAIT_IWASREVIVED "iwasrevived" //prevents PQ gain from reviving the same person twice
@@ -381,6 +384,7 @@
 #define TRAIT_OAR_PROPELLED "oar_propelled"
 #define TRAIT_ALLOWS_BUCKLED_FACING "allows_buckled_facing"
 #define CONTRACT_SPAWN_TRAIT "contract-spawn"
+#define TRAIT_FORBIDDEN_RESEARCH "Forbidden research"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
@@ -688,6 +692,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DREAMWALKER = span_warning("I walk the dream and reality at the same time. My mind frays, but my vision shall be reality."),
 	TRAIT_BLACKLEG = span_warning("My people have an inherent connection to Xylix. This grants me the ability to rig coin flips and dice rolls in my favour."),
 	TRAIT_BEWINGED = span_notice("I flutter my wings during a leap, allowing me to jump farther!"),
+	TRAIT_OVIPOSITOR = span_notice("My kind reproduces via laying eggs..."),
 	TRAIT_OVERTHERETIC = span_bloody("I've played my cards. Hallowed ground is now my bane."),
 	TRAIT_DEATHBYSNUSNU = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike.",
 	TRAIT_HUMEN_INGENUITY = span_notice("Like most of my people, I am blessed with knowledge. Learning comes easier."),
@@ -746,7 +751,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SOFT_FOOTED = span_info("In the far-off land of Kazengun, it's considered impolite to walk noisily. My steps are soft and light."),
 	TRAIT_ANCESTOR_GUARDIAN = span_info("In Avar, we venerate our ancestors, and they ward us from danger. From time to time, they shall guide my hand in battle."),
 	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!"),
-	TRAIT_BITENORECOIL = span_info("My fangs are sturdy, and I do not suffer recoil when biting.")
+	TRAIT_BITENORECOIL = span_info("My fangs are sturdy, and I do not suffer recoil when biting."),
+	TRAIT_FORBIDDEN_RESEARCH = span_info("I am studying the forbidden Knowledge of the Ascendents."),
 ))
 
 // trait accessor defines

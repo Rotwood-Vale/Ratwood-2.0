@@ -530,6 +530,7 @@
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/neck/roguetown/psicross
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	name = "psycross"
 	desc = "'With every broken bone, I swore I lived!'"
 	icon_state = "psycross"

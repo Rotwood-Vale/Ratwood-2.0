@@ -17,13 +17,21 @@ import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
-import { backendSuspendStart, globalStore, useBackend } from '../backend';
-import { useDebug } from '../debug';
+import {
+  backendSuspendStart,
+  backendWindowGeometryReady,
+  globalStore,
+  selectBackend,
+  useBackend,
+  waitsForWindowGeometry,
+} from '../backend';
+import { useDebug } from '../debug/hooks';
 import {
   dragStartHandler,
   recallWindowGeometry,
   resizeStartHandler,
   setWindowKey,
+  watchPopupWorkArea,
 } from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
@@ -35,7 +43,11 @@ const DEFAULT_SIZE: [number, number] = [400, 600];
 type Props = Partial<{
   buttons: ReactNode;
   canClose: BooleanLike;
+  fitWorkArea: boolean;
+  /** With fitWorkArea, the id of a window this one opens beside rather than over */
+  besideWindow: string;
   height: number;
+  onBeforeClose: () => void;
   theme: string;
   title: string;
   width: number;
@@ -45,15 +57,18 @@ type Props = Partial<{
 export const Window = (props: Props) => {
   const {
     canClose = true,
+    fitWorkArea,
+    besideWindow,
     theme,
     title,
     children,
     buttons,
     width,
     height,
+    onBeforeClose,
   } = props;
 
-  const { config, suspended } = useBackend();
+  const { config, suspended, windowSession } = useBackend();
   const { debugLayout = false } = useDebug();
   const [isReadyToRender, setIsReadyToRender] = useState(false);
 
@@ -67,39 +82,90 @@ export const Window = (props: Props) => {
   }, []);
 
   const { scale } = config.window;
+  const waitForGeometry = waitsForWindowGeometry(config.interface?.name);
+  const gallerySession = waitForGeometry ? windowSession : undefined;
+  const galleryKey = waitForGeometry ? config.window.key : undefined;
 
   useEffect(() => {
     if (!suspended && isReadyToRender) {
-      const updateGeometry = () => {
-        const options = {
-          ...config.window,
-          size: DEFAULT_SIZE,
-        };
-
-        if (width && height) {
-          options.size = [width, height];
-        }
-        if (config.window?.key) {
-          setWindowKey(config.window.key);
-        }
-        recallWindowGeometry(options);
-        Byond.winset(Byond.windowId, {
-          'is-visible': true,
-        });
-        logger.log('set to visible');
-      };
-
       Byond.winset(Byond.windowId, {
         'can-close': Boolean(canClose),
       });
       logger.log('mounting');
-      updateGeometry();
+      const options = {
+        ...config.window,
+        size: DEFAULT_SIZE,
+      };
+      if (width && height) {
+        options.size = [width, height];
+      }
+      if (config.window?.key) {
+        setWindowKey(config.window.key);
+      }
+      let active = true;
+      let stopWatchingWorkArea: (() => void) | undefined;
+      let revealTimer: ReturnType<typeof setTimeout> | undefined;
+      const isCurrent = () => {
+        const current = selectBackend(globalStore.getState());
+        return (
+          active &&
+          !current.suspended &&
+          !current.suspending &&
+          current.windowSession === windowSession &&
+          current.config.window?.key === config.window?.key &&
+          current.config.interface?.name === config.interface?.name
+        );
+      };
+      const geometry = recallWindowGeometry(options, {
+        fitWorkArea,
+        besideWindow,
+        isCurrent,
+        useFallback: waitForGeometry,
+      });
+      if (waitForGeometry) {
+        geometry
+          .catch((error) =>
+            logger.log('Window geometry could not be restored', error),
+          )
+          .then((opening) => {
+            if (isCurrent()) {
+              revealTimer = setTimeout(() => {
+                if (isCurrent()) {
+                  globalStore.dispatch(backendWindowGeometryReady());
+                  if (fitWorkArea) {
+                    stopWatchingWorkArea = watchPopupWorkArea(
+                      isCurrent,
+                      opening,
+                    );
+                  }
+                }
+              });
+            }
+          });
+      } else {
+        Byond.winset(Byond.windowId, {
+          'is-visible': true,
+        });
+        logger.log('set to visible');
+      }
 
       return () => {
+        active = false;
+        clearTimeout(revealTimer);
+        stopWatchingWorkArea?.();
         logger.log('unmounting');
       };
     }
-  }, [isReadyToRender, width, height, scale]);
+  }, [
+    isReadyToRender,
+    width,
+    height,
+    scale,
+    waitForGeometry,
+    gallerySession,
+    galleryKey,
+    fitWorkArea,
+  ]);
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
@@ -119,6 +185,7 @@ export const Window = (props: Props) => {
         onDragStart={dragStartHandler}
         onClose={() => {
           logger.log('pressed close');
+          onBeforeClose?.();
           dispatch(backendSuspendStart());
         }}
         canClose={canClose}
@@ -165,7 +232,6 @@ const WindowContent = (props: ContentProps) => {
     <Layout.Content
       className={classes(['Window__content', className])}
       {...rest}
-      
     >
       {(fitted && children) || (
         <div className="Window__contentPadding">{children}</div>

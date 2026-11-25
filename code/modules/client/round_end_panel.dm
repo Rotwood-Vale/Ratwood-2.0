@@ -743,7 +743,7 @@
 			data += "<div style='text-align: center; color: #ffd494; font-size: 1.2em; margin-bottom: 15px;'>WANTED OUTLAWS</div>"
 			data += "<div style='border-top: 1.5px solid #aa8a5a; margin: 0 auto 20px auto; width: 65%;'></div>"
 
-			data += render_wanted_posters(collect_wanted_posters(include_hidden = TRUE), "The Realm is peaceful, its inhabitants kind")
+			data += render_wanted_posters(collect_wanted_posters(include_hidden = TRUE), "The Realm is peaceful, its inhabitants kind", src, "azure_roundend")
 	data += "</div>"
 
 	src.mob << browse(null, "window=vanderlin_influences")

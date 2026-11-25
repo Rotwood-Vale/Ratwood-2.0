@@ -1330,85 +1330,6 @@
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
 
-/datum/status_effect/debuff/redolent_stink
-	id = "redolent_stink"
-	duration = 999 MINUTES
-	alert_type = null
-
-	mob_effect_icon = 'icons/effects/effects.dmi'
-	mob_effect_icon_state = "mob_smell"
-	mob_effect_layer = ABOVE_MOB_LAYER
-
-/datum/status_effect/debuff/stinky_contact
-	id = "stinky_contact"
-	duration = 15 MINUTES
-	tick_interval = 5 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
-	var/scent_type = "Gross"
-	var/scent = ""
-	var/last_aura_tick = 0
-
-/datum/status_effect/debuff/stinky_contact/on_creation(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
-	set_inherited_scent(inherited_scent_type, inherited_scent)
-	return ..()
-
-/datum/status_effect/debuff/stinky_contact/refresh(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
-	set_inherited_scent(inherited_scent_type, inherited_scent)
-	if(owner)
-		process_inherited_scent(TRUE)
-	return ..()
-
-/datum/status_effect/debuff/stinky_contact/proc/set_inherited_scent(inherited_scent_type, inherited_scent)
-	scent_type = inherited_scent_type
-	scent = inherited_scent
-	last_aura_tick = 0
-
-/datum/status_effect/debuff/stinky_contact/on_apply()
-	. = ..()
-	if(scent_type == "Pleasant")
-		to_chat(owner, span_notice("I share someone else's pleasant scent now!"))
-	else if(scent_type == "Neutral")
-		to_chat(owner, span_notice("I stink of someone else now..."))
-	else
-		to_chat(owner, span_warning("I reek of someone else's stench now...ew..."))
-	process_inherited_scent(TRUE)
-
-/datum/status_effect/debuff/stinky_contact/tick()
-	process_inherited_scent()
-
-/datum/status_effect/debuff/stinky_contact/proc/process_inherited_scent(force = FALSE)
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	if(!H.can_smell())
-		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
-		return
-	if(scent_type != "Pleasant")
-		if(!H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
-			H.apply_status_effect(/datum/status_effect/debuff/redolent_stink)
-	else if(H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
-		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
-	if(!force && world.time < last_aura_tick + redolent_aura_tick_delay(scent_type))
-		return
-	last_aura_tick = world.time
-	redolent_visual_effect(H, scent_type)
-	redolent_stink_aura(H, scent_type)
-
-/datum/status_effect/debuff/stinky_contact/on_remove()
-	to_chat(owner, span_notice("The lingering scent finally fades off me."))
-	if(!HAS_TRAIT(owner, TRAIT_REDOLENT))
-		owner.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
-	return ..()
-
-/datum/status_effect/debuff/stinky_contact/proc/get_examine_text()
-	return redolent_examine_text(scent_type, scent)
-
-/atom/movable/screen/alert/status_effect/debuff/stinky_contact
-	name = "Musked"
-	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
-	icon_state = "debuff"
-
 /datum/status_effect/debuff/enchantmenttriggered
 	id = "enchantmenttriggered"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
@@ -1418,7 +1339,7 @@
 	if(new_dur)
 		duration = new_dur
 	return ..()
-	
+
 /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
 	name = "Enchantment Dormant"
 	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
@@ -1472,3 +1393,93 @@
 	desc = "Our weapons binded! That conniving sod knew right where I was aiming! I can't benefit from a weapon bind!"
 	icon = 'icons/mob/combat_debuffs.dmi'
 	icon_state = "weapon_bind_debuff"
+
+
+/datum/status_effect/debuff/parasitized
+	id = "parasitized"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/parasitized
+	tick_interval = 2 SECONDS
+	effectedstats = list(STATKEY_SPD = 0)
+	var/obj/item/organ/belly/egg_belly
+
+/datum/status_effect/debuff/parasitized/tick()
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS)
+	if(egg_belly && (!eggs || eggs.quantity < 10))
+		egg_belly.Remove(H)
+		qdel(egg_belly)
+		egg_belly = null
+		H.update_body()
+	if(!eggs)
+		qdel(src)
+		return
+	H.adjust_nutrition(-0.05)
+	var/new_speed = -min(round(eggs.quantity / 2), 5)
+	H.change_stat(STATKEY_SPD, new_speed - effectedstats[STATKEY_SPD])
+	effectedstats[STATKEY_SPD] = new_speed
+	if(eggs.quantity >= 10 && !H.getorganslot(ORGAN_SLOT_BELLY))
+		egg_belly = new()
+		egg_belly.Insert(H)
+		egg_belly.build_colors_for_accessory(null)
+		H.update_body()
+	if(eggs.quantity >= 10 && H.wear_shirt)
+		var/obj/item/clothing/shirt = H.wear_shirt
+		if(H.dropItemToGround(shirt))
+			to_chat(H, span_userdanger("So many eggs... I feel my stomach swell. My shirt rips!")) // fun !
+			shirt.obj_break()
+
+/datum/status_effect/egg_gestation
+	id = "egg_gestation"
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+
+/datum/status_effect/egg_gestation/on_creation(mob/living/new_owner)
+	duration = rand(10, 20) MINUTES
+	return ..()
+
+/datum/status_effect/egg_gestation/on_remove()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	if(!H || H.stat == DEAD)
+		return
+	var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS)
+	if(eggs)
+		eggs.quantity++
+	else
+		eggs = new /obj/item/organ/eggs()
+		eggs.Insert(H)
+	eggs.color = "#[H.voice_color]"
+	eggs.name = "[H.dna.species.name] eggs"
+	H.apply_status_effect(/datum/status_effect/debuff/parasitized)
+	to_chat(H, span_love("I feel bloated. Something is inside my stomach..."))
+
+/atom/movable/screen/alert/status_effect/debuff/parasitized
+	name = "Parasitized"
+	desc = "Something is growing inside you! Click to push it out."
+	icon_state = "muscles"
+	alert_group = ALERT_DEBUFF
+
+/atom/movable/screen/alert/status_effect/debuff/parasitized/handle_click(location, control, params)
+	var/mob/living/carbon/human/H = usr
+	var/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"])
+		examine_ui(H)
+		return FALSE
+	var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS)
+	if(!eggs)
+		return
+	to_chat(H, span_warning("I clench and push the eggs out of me..."))
+	if(!do_after(H, 5 SECONDS) || eggs.owner != H)
+		return
+	var/pushed = min(max(3, round(ceil(eggs.quantity * 0.25))), eggs.quantity) // in case someone's got a LOTTA eggs
+	eggs.quantity -= pushed
+	to_chat(H, span_warning("I squeeze out [pushed] egg\s!"))
+	playsound(H, 'sound/magic/slimesquish.ogg', 50, TRUE, -1)
+	var/obj/item/organ/eggs/dropped = new(get_turf(H))
+	dropped.quantity = pushed
+	dropped.color = eggs.color
+	dropped.name = eggs.name
+	if(eggs.quantity <= 0)
+		eggs.Remove(H)
+		qdel(eggs)

@@ -184,10 +184,8 @@
 			H.put_in_hands(new /obj/item/clothing/gloves/roguetown/knuckles(H))
 
 	head = /obj/item/clothing/head/roguetown/roguehood/pontifex
-	gloves = /obj/item/clothing/gloves/roguetown/angle/pontifex
+	gloves = /obj/item/clothing/gloves/roguetown/bandages/pontifex
 	head = /obj/item/clothing/head/roguetown/roguehood/pontifex
-	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
-	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
 	wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
@@ -196,6 +194,16 @@
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
 	backr = /obj/item/storage/backpack/rogue/satchel/black
+	var/list/armor_choices = list("Light Armor", "Bare Skin (Sewing repair)", "Bare Skin (Meditation repair)")
+	var/armor_choice = input(H,"Choose your DEFENSE.", "How will you ENDURE.") as anything in armor_choices
+	switch(armor_choice)
+		if("Light Armor")
+			armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
+			shirt = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex //Yes, the item is spelled this way in the code.
+		if("Bare Skin (Sewing repair)") //does not get a chest-only skin layer, as ward layers there and is superior.
+			armor = /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/body/disciple //a heavy gambeson.
+		if("Bare Skin (Meditation repair)")
+			armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/disciple //Identical to other skin option aside from repair method.
 	var/naledi_book = pick(/obj/item/book/rogue/naledi1, /obj/item/book/rogue/naledi2, /obj/item/book/rogue/naledi3, /obj/item/book/rogue/naledi4)
 	backpack_contents = list(
 		/obj/item/chalk = 1,
@@ -221,6 +229,7 @@
 	pure_heart = TRUE
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
@@ -229,7 +238,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,

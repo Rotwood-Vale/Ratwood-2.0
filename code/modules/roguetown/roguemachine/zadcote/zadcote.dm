@@ -2,7 +2,7 @@
 // (apsrc/main, code/modules/roguetown/roguemachine/zadcote/zadcote.dm).
 // Ratwood deviations:
 //  - withdraw_voyeur(): AP calls a global budget2change(); in ES budget2change() is a member
-//    proc of /obj/structure/roguemachine (code/modules/roguetown/roguemachine/money.dm) and
+//    proc of /obj/structure/roguemachine (code/modules/roguetown/roguemachine/_roguemachine.dm) and
 //    zadcotes are /obj/item/roguemachine, so payout_coins() below spawns the coin stacks
 //    locally with the same gold(10)/silver(5)/copper(1) breakdown.
 //  - /obj/item/roguemachine/zadcote/bathhouse: AP's operator jobs are "Bathmaster" and
