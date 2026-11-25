@@ -1018,7 +1018,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	target.clear_alert("fire", clear_override = TRUE)
 	if(target.client)
 		target.client.images -= fire_overlay
-	QDEL_NULL(fire_overlay)
+	fire_overlay = null
 	while(stage > 0)
 		stage--
 		update_temp()
