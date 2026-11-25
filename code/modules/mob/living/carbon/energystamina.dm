@@ -121,6 +121,16 @@
 
 	return nutrition_amount
 
+/// Would spending `added` stamina right now exhaust us? Mirrors the cost modifiers in stamina_add().
+/mob/living/proc/would_exhaust(added)
+	if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA))
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_FORTITUDE) && added > 0)
+		added *= 0.7
+	if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX && added >= 1)
+		added = round(added * 1.5, 1)
+	return stamina + added >= max_stamina
+
 /mob/living/stamina_add(added as num, emote_override, force_emote = TRUE) //call update_stamina here and set last_fatigued, return false when not enough fatigue left
 	if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA))
 		return TRUE

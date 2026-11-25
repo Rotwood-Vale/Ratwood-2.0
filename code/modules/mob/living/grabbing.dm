@@ -591,6 +591,20 @@
 /obj/item/grabbing/proc/removeembeddeditem(mob/living/user) //implies limb_grabbed and sublimb are things
 	var/mob/living/M = grabbed
 	var/obj/item/bodypart/L = limb_grabbed
+	var/obj/item/embedded_item = sublimb_grabbed
+	if(!istype(embedded_item) || QDELETED(embedded_item))
+		return FALSE
+	// Lodged arrows take time to work free. Everything else still rips out instantly by grab.
+	var/removal_time = istype(embedded_item, /obj/item/ammo_casing/caseless/rogue/arrow) ? embedded_item.get_embed_removal_time(user, M) : 0
+	if(removal_time)
+		if(user == M)
+			user.visible_message(span_warning("[user] starts working [embedded_item] free of [user.p_them()]self..."), span_warning("I start working [embedded_item] free..."))
+		else
+			user.visible_message(span_warning("[user] starts working [embedded_item] free of [M]..."), span_warning("I start working [embedded_item] free of [M]..."))
+		if(!do_after(user, removal_time, target = M))
+			return FALSE
+		if(QDELETED(src) || !valid_check() || grabbed != M || limb_grabbed != L || sublimb_grabbed != embedded_item || user.buckled)
+			return FALSE
 	playsound(M.loc, "genblunt", 100, FALSE, -1)
 	log_combat(user, M, "itemremovedgrab [sublimb_grabbed] ")
 	if(iscarbon(M))
@@ -603,7 +617,7 @@
 		user.put_in_hands(I)
 		C.emote("paincrit", forced = TRUE)
 		playsound(C, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
-		if(usr == src)
+		if(user == C)
 			user.visible_message(span_notice("[user] rips [I] out of [user.p_their()] [L.name]!"), span_notice("I rip [I] from my [L.name]."))
 		else
 			user.visible_message(span_notice("[user] rips [I] out of [C]'s [L.name]!"), span_notice("I rip [I] from [C]'s [L.name]."))

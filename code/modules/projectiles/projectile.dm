@@ -134,6 +134,12 @@
 	var/guard_deflectable = FALSE
 	/// Multiplier for integrity damage dealt to armor. 1 is default. Higher = harder on armor.
 	var/intdamfactor = 1
+	/// If TRUE, penetrating piercing armor still deals full damage to its integrity instead of the passthrough fraction.
+	var/full_integrity_on_pen = FALSE
+	/// If TRUE, this projectile only embeds when its pen beats the struck zone's piercing armor tier (or the zone is unarmored).
+	var/embed_needs_full_pen = FALSE
+	/// Armor tier the last armor check against this projectile used, recorded before the hit damaged that armor.
+	var/struck_armor_tier = 0
 	/// On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim
 	var/ricochet_auto_aim_angle = 30
 	/// On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle

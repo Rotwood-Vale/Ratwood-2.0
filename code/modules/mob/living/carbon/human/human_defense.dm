@@ -43,12 +43,17 @@
 					consume_debuff = FALSE
 					intdamage = damage * (1 - (pen_info * PEN_PASSTHROUGH_RATIO))
 			else
+				// Some projectiles (arrows) wear armor down fully even when they get through it.
+				var/obj/projectile/proj = used_weapon
+				var/full_integ = istype(proj) && proj.full_integrity_on_pen
 				if(armor_penetration == protection)
 					consume_debuff = FALSE
-					intdamage = damage * PEN_PASSTHROUGH_PROJ_EQUAL
+					if(!full_integ)
+						intdamage = damage * PEN_PASSTHROUGH_PROJ_EQUAL
 				if(armor_penetration > protection)
 					consume_debuff = FALSE
-					intdamage = damage * PEN_PASSTHROUGH_PROJ_MORE
+					if(!full_integ)
+						intdamage = damage * PEN_PASSTHROUGH_PROJ_MORE
 
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
@@ -143,6 +148,10 @@
 
 	if(physiology)
 		protection += physiology.armor.getRating(d_type)
+
+	if(istype(used_weapon, /obj/projectile))
+		var/obj/projectile/struck_by = used_weapon
+		struck_by.struck_armor_tier = protection
 
 	if(dr_armor_present && protection < 1)
 		return protection + 1
@@ -300,7 +309,7 @@
 			if(can_embed(I) && prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 				//throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 				var/obj/item/bodypart/L = pick(bodyparts)
-				L.add_embedded_object(I, silent = FALSE, crit_message = TRUE)
+				L.add_embedded_object(I, silent = FALSE, crit_message = TRUE, entry_side = get_embed_entry_side(throwingdatum?.thrower || I.thrownby))
 				emote("embed")
 				L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
 //					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='danger'>[I] embeds itself in my [L.name]!</span>")
