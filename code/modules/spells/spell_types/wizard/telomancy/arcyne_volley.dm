@@ -103,8 +103,16 @@
 	return TRUE
 
 /datum/action/cooldown/spell/projectile/arcyne_volley/proc/fire_stream(atom/target)
+	var/turf/last_turf = get_turf(target)
 	for(var/i in 1 to flurry_shots)
 		if(QDELETED(src) || QDELETED(owner) || !isturf(owner.loc))
+			return
+		// the target can be deleted between shots, so keep firing at the tile it was last seen on
+		if(QDELETED(target))
+			target = last_turf
+		else
+			last_turf = get_turf(target)
+		if(!target)
 			return
 		var/obj/projectile/to_fire = new projectile_type(owner.loc)
 		ready_projectile(to_fire, target, owner, i)
