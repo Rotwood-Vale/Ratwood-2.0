@@ -162,7 +162,6 @@
 	max_blade_int = 75 // will retain its blade however
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
 	gripped_intents = list(/datum/intent/axe/cut/long/dolabra/gold, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash/dolabra/gold, /datum/intent/pick/ranged/dolabra/gold)
-	is_silver = TRUE // the handle is a rod of pure silver, no you will not hold this
 	smeltresult = /obj/item/ingot/gold
 
 /obj/item/rogueweapon/pick/woodcutter/dolabra/blacksteel
