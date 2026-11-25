@@ -1255,6 +1255,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			H.unlocked_research_malum_craft = TRUE
 		else if(which == "zizo")
 			H.unlocked_research_zizo_forbidden = TRUE
+			ADD_TRAIT(H, TRAIT_FORBIDDEN_RESEARCH, TRAIT_GENERIC)
 			build_inhumen_patrons_index()
 			if(!islist(H.patron_relations))
 				H.patron_relations = list()

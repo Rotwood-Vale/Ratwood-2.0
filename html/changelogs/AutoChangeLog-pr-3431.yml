@@ -1,0 +1,4 @@
+author: "Useroth"
+delete-after: True
+changes:
+  - rscadd: "Added a wielded intent to scythes that lets them harvest grown plants in an area."

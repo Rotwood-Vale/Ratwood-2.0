@@ -644,3 +644,15 @@
   - bugfix: Absolution now gives proper person the feedback when used on inqusition
       member
   - rscadd: Adds ability for keepers to make new organs and limbs with their heartbeast
+2026-11-25:
+  hugmeorelse:
+  - rscadd: Added a Character Gallery editor for character and gnoll images.
+  - rscadd: Added headshot framing controls and a choice of original or square portraits
+      in chat examine.
+  - rscadd: Added alternate image URLs with individual and form-wide swapping.
+  - qol: Added adjustable OOC Extra widths and reorderable SFW/NSFW galleries supporting
+      up to four images each.
+  - qol: Improved gallery layouts, image controls, previews, and loading and save
+      feedback.
+  - admin: Added an original-headshot view in Examine Closer and headshot framing
+      logs.
