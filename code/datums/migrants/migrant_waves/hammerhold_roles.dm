@@ -4,7 +4,7 @@
 	greet_text = "You are a warrior-lord from Hammerhold and the leader of your warband - in a tragic incident, your galley fell victim to Ferentia's harsh seas, and you have shipwrecked here. Guide them to glory and wealth as you rebuild your party, or simply try to survive."
 	outfit = /datum/outfit/job/roguetown/hammerhold/jarl
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula) //Same racelocks as hammerhold Chieftain, subject to change
+	allowed_races = RACES_HAMMERHOLD
 	show_wanderer_examine = FALSE
 
 /datum/outfit/job/roguetown/hammerhold/jarl/pre_equip(mob/living/carbon/human/H)
@@ -203,7 +203,7 @@
 	greet_text = "You are a loyal and skilled bodyguard to your jarl, specialising in pillaging, kidnapping and fighting with an axe and shield."
 	outfit = /datum/outfit/job/roguetown/hammerhold/huscarl
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula)
+	allowed_races = RACES_HAMMERHOLD
 	show_wanderer_examine = FALSE
 
 /datum/outfit/job/roguetown/hammerhold/huscarl/pre_equip(mob/living/carbon/human/H)

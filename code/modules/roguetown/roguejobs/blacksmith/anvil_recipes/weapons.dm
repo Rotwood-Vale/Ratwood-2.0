@@ -874,6 +874,14 @@
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/pick
 	display_category = ITEM_CAT_WEAPONS_AXES
 
+/datum/anvil_recipe/weapons/steel/greataxe/poleaxe
+	name = "Poleaxe, Steel (+1 Steel, +1 Small Log, +1 Cloth)"
+	category = "Steel"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small, /obj/item/natural/cloth)
+	created_item = /obj/item/rogueweapon/greataxe/poleaxe/steel
+	display_category = ITEM_CAT_WEAPONS_AXES
+
 /datum/anvil_recipe/weapons/steel/greataxe
 	name = "Greataxe, Steel (+1 Steel, +1 Small Log)"
 	req_blade = /obj/item/blade/steel_axe

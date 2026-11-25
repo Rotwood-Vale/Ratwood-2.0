@@ -4,7 +4,7 @@
 	To your employers, you merely call yourself Nöküd - a warrior - nothing more, nothing less. \
 	You only hope that your looted equipment and crudely-assembled armor will be enough to keep you alive in the battles to come."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dracon, /datum/species/tabaxi)
+	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/demihuman) //It is imperative you do not change this.
 	outfit = /datum/outfit/job/roguetown/mercenary/gronn/warrior
 	class_select_category = CLASS_CAT_GRONN
 	category_tags = list(CTAG_MERCENARY)
@@ -73,7 +73,7 @@
 		var/classchoice = input(H, "Choose your disguise", "WHO DID YOU LOOT FROM LAST?") as anything in classes
 
 		switch(classchoice)
-			if("Gronn Kheshig - 'Elite Cavalry'")	//Medium armor, pick between swords or axes. Boots-on-the-ground for hire.
+			if("Gronn Kheshig - 'Elite Cavalry'")	//Medium armor, fire poison arrows on horseback or fight them hand-to-hand with your battleaxe.
 				H.set_blindness(0)
 				to_chat(H, span_warning("You and your warband took the soldiers by surprise, striking them from behind with a flurry of poison-laced arrows - they never saw it coming. You ride their steed and you wear their lamellar scalemail."))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -102,7 +102,7 @@
 				H.change_stat(STATKEY_INT, -1) //Raiders aren't known for their intellect.
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/warrior
-			if("Aavar - 'Authentic Steppesman'")	//Light armor, beast claws or dual handaxes.
+			if("Aavar - 'Authentic Steppesman'")	//Light armor, Nagaika whip or a sabre.
 				H.set_blindness(0)
 				to_chat(H, span_warning("Easy pickings - the raiders of Gronn are infamous for the pillaging of Aavar for a reason; following the onslaught, you took a few spoils from a saiga-rider for yourself before splitting off."))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman
@@ -140,7 +140,7 @@
 						beltl= /obj/item/rogueweapon/scabbard/sword
 						beltr = /obj/item/rogueweapon/shield/iron/steppesman
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)	//Old whip skill.
-			if("Hammerhold - 'Drakkynborne'")	//Light armor, beast claws or dual handaxes.
+			if("Hammerhold - 'Drakkynborne'")	//Plate armor and a banded iron sword. NEVER SHOULD'VE COME HERE!!
 				H.set_blindness(0)
 				to_chat(H, span_warning("'Never should have come here!', was the last thing they heard before you gruesomely spilt their entrails; you'd make better use of their possessions than they did, anyway."))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
@@ -174,7 +174,7 @@
 	in truth, you were merely a Gronnic raider, now taking the guise of a sellsword to avoid your past misdeeds. \
 	The cobbled-together and stolen armaments you bear may arouse suspicion from educated observers, but your employers seem conveniently oblivious - perhaps they prefer not to know the truth."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dracon, /datum/species/tabaxi)
+	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/demihuman)
 	maximum_possible_slots = 1 //The weapons and armor given to this subclass warrant it being limited to one slot.
 	outfit = /datum/outfit/job/roguetown/mercenary/gronn/heavy
 	class_select_category = CLASS_CAT_GRONN

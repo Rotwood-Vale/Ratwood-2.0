@@ -2,7 +2,7 @@
 	name = "Atgervi Varangian"
 	tutorial = "You are a Varangian of the Hammerholdian Highlands, mostly known as Warrior-Traders. Hardy and robust, the Varangians found historical popularity in service to Zybantine Sultans who wished for foreign soldiery unaffected by inner politics."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = RACES_HAMMERHOLD
 	outfit = /datum/outfit/job/roguetown/mercenary/atgervi
 	subclass_languages = list(/datum/language/hammerholdian)
 	cmode_music = 'sound/music/combat_vagarian.ogg'
