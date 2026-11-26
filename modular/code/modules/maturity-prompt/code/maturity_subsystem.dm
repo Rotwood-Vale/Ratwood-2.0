@@ -9,6 +9,9 @@
 
 SUBSYSTEM_DEF(maturity_guard)
 	name = "Maturity guard"
+	dependencies = list(
+		/datum/controller/subsystem/dbcore,
+	)
 	ss_flags = SS_NO_FIRE
 	/// A list of currently active prompts.
 	var/list/prompt_cache = list()
