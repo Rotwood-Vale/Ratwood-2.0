@@ -260,6 +260,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feint_hud"]			>> feint_hud
 	S["show_mouseover_role"] >> show_mouseover_role
 	S["nsfw_examine_always"]>> nsfw_examine_always
+	load_gallery_toggles(S)
 	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_anthro_noises
 	S["autoconsume"]		>> autoconsume
@@ -472,6 +473,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feint_hud"], feint_hud)
 	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
+	save_gallery_toggles(S)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_anthro_noises)
 	WRITE_FILE(S["autoconsume"], autoconsume)
@@ -903,6 +905,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/load_character(slot)
+	begin_gallery_load()
 	if(!path)
 		return FALSE
 	if(!fexists(path))
@@ -977,9 +980,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		to_chat(parent, span_warning("Couldn't load familiar prefs!"))
 
+	var/gnoll_gallery_loaded = FALSE
 	if(istype(gnoll_prefs))
 		if(!gnoll_prefs.load_gnoll_prefs(S))
 			to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
+		else
+			gnoll_gallery_loaded = TRUE
 	else
 		to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
 
@@ -1016,33 +1022,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["update_mutant_colors"]			>> update_mutant_colors
 	update_mutant_colors = sanitize_integer(update_mutant_colors, FALSE, TRUE, initial(update_mutant_colors))
 
-	S["headshot_link"]			>> headshot_link
-	if(!valid_headshot_link(null, headshot_link, TRUE))
-		headshot_link = null
+	load_gallery_images(S, src, "")
+	S["headshot_frame_chat"]			>> headshot_frame_chat
+	headshot_frame_chat = sanitize_integer(headshot_frame_chat, FALSE, TRUE, FALSE)
 
 	S["flavortext"]			>> flavortext
 	S["ooc_notes"]			>> ooc_notes
 	S["ooc_extra"]			>> ooc_extra
-	S["ooc_extra_img"]		>> ooc_extra_img
-	S["ooc_extra_img_link"]	>> ooc_extra_img_link
-	if(!valid_headshot_link(null, ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		ooc_extra_img = null
-		ooc_extra_img_link = null
 	S["rumour"]				>> rumour
 	S["noble_gossip"]		>> noble_gossip
 	S["song_artist"]		>> song_artist
 	S["song_title"]			>> song_title
 	S["nsfwflavortext"]	>> nsfwflavortext
-	S["nsfw_ooc_extra_img"]		>> nsfw_ooc_extra_img
-	S["nsfw_ooc_extra_img_link"]	>> nsfw_ooc_extra_img_link
-	if(!valid_headshot_link(null, nsfw_ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		nsfw_ooc_extra_img = null
-		nsfw_ooc_extra_img_link = null
 	S["erpprefs"]			>> erpprefs
-	S["img_gallery"]	>> img_gallery
-	img_gallery = SANITIZE_LIST(img_gallery)
-	S["nsfw_img_gallery"]	>> nsfw_img_gallery
-	nsfw_img_gallery = SANITIZE_LIST(nsfw_img_gallery)
 
 	S["char_accent"]		>> char_accent
 	if (!char_accent)
@@ -1163,6 +1155,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	validate_customizer_entries()
 
+	finish_gallery_load(gnoll_gallery_loaded)
 	return TRUE
 
 /datum/preferences/proc/save_character()
@@ -1264,12 +1257,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["dnr"] , dnr_pref)
 	WRITE_FILE(S["update_mutant_colors"] , update_mutant_colors)
-	WRITE_FILE(S["headshot_link"] , headshot_link)
+	save_gallery_images(S, src, "")
+	WRITE_FILE(S["headshot_frame_chat"] , headshot_frame_chat)
 	WRITE_FILE(S["flavortext"] , html_decode(flavortext))
 	WRITE_FILE(S["ooc_notes"] , html_decode(ooc_notes))
 	WRITE_FILE(S["ooc_extra"] ,	ooc_extra)
-	WRITE_FILE(S["ooc_extra_img"] , ooc_extra_img)
-	WRITE_FILE(S["ooc_extra_img_link"] , ooc_extra_img_link)
 	WRITE_FILE(S["rumour"] , html_decode(rumour))
 	WRITE_FILE(S["noble_gossip"] , html_decode(noble_gossip))
 	WRITE_FILE(S["song_artist"] , song_artist)
@@ -1296,11 +1288,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])
 	WRITE_FILE(S["nsfwflavortext"] , html_decode(nsfwflavortext))
-	WRITE_FILE(S["nsfw_ooc_extra_img"] , nsfw_ooc_extra_img)
-	WRITE_FILE(S["nsfw_ooc_extra_img_link"] , nsfw_ooc_extra_img_link)
 	WRITE_FILE(S["erpprefs"] , html_decode(erpprefs))
-	WRITE_FILE(S["img_gallery"] , img_gallery)
-	WRITE_FILE(S["nsfw_img_gallery"] , nsfw_img_gallery)
 	WRITE_FILE(S["loadout"] , preferences_typepath_or_null(loadout))
 	WRITE_FILE(S["loadout2"] , preferences_typepath_or_null(loadout2))
 	WRITE_FILE(S["loadout3"] , preferences_typepath_or_null(loadout3))
@@ -1350,19 +1338,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// External pref datums have their save/load moved to local procs, to avoid constant reference access
 
+	var/external_prefs_saved = TRUE
+	saved_character_gallery = character_gallery_state()
 	if(istype(familiar_prefs))
 		if(!familiar_prefs.save_familiar_prefs(S))
+			external_prefs_saved = FALSE
 			to_chat(parent, span_warning("Couldn't save familiar prefs!"))
 	else
+		external_prefs_saved = FALSE
 		to_chat(parent, span_warning("Couldn't save familiar prefs!"))
 
 	if(istype(gnoll_prefs))
 		if(!gnoll_prefs.save_gnoll_prefs(S))
+			external_prefs_saved = FALSE
 			to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
+		else
+			saved_gnoll_gallery = gnoll_gallery_state()
 	else
+		external_prefs_saved = FALSE
 		to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
 
-	return TRUE
+	// save_gallery_images() runs sync_gallery_alternates(), which can drop stale sources, so gallery_fingerprints taken
+	// before this save no longer match the values. Dropping them here stops the window showing unsaved changes right
+	// after a save, even though saved_character_gallery and saved_gnoll_gallery were just set
+	gallery_changed()
+	log_headshot_framing("saved")
+	return external_prefs_saved
 
 
 #undef SAVEFILE_VERSION_MAX
