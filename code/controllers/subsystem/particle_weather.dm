@@ -106,6 +106,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 
 /datum/controller/subsystem/ParticleWeather/proc/SetparticleEffect(particles/P, blend_type, filter_type, color, secondary_filter_type)
 	particleEffect = P
+	getweatherEffect()
 	weatherEffect.particles = particleEffect
 	if(color)
 		weatherEffect.color = color
@@ -125,7 +126,8 @@ SUBSYSTEM_DEF(ParticleWeather)
 		if(!act_on)	//guard against nulls from deletions
 			continue
 		act_on.weather = FALSE
-	weatherEffect.particles = null
+	if(weatherEffect)
+		weatherEffect.particles = null
 	QDEL_NULL(runningWeather)
 	QDEL_NULL(particleEffect)
 
