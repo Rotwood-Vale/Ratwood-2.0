@@ -34,7 +34,7 @@
 /datum/antag_briefing/ui_data(mob/user)
 	return list(
 		"goals" = antag.get_briefing_goals(),
-		"progress" = antag.get_briefing_progress(user),
+		"progress" = antag.get_briefing_progress(),
 	)
 
 /datum/antag_briefing/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -76,18 +76,16 @@
  * Optional progress bar for the briefing window, or null for none.
  * Shape: list("label", "value", "max", "unit", "marks" = list(list("at", "label")), "lines" = list(text))
  */
-/datum/antagonist/proc/get_briefing_progress(mob/user)
+/datum/antagonist/proc/get_briefing_progress()
 	return
 
-/// Gives or takes the briefing verb on M, depending on whether its mind still holds any antag with a briefing
-/datum/antagonist/proc/update_briefing_verb(mob/M)
-	if(!M)
-		return
-	for(var/datum/antagonist/antag as anything in M.mind?.antag_datums)
+/// Gives or takes the briefing verb, depending on whether this mob's mind holds any antag with a briefing
+/mob/proc/update_antagonist_briefing_verb()
+	for(var/datum/antagonist/antag as anything in mind?.antag_datums)
 		if(antag.has_briefing())
-			M.verbs |= /mob/proc/antagonist_briefing
+			verbs |= /mob/proc/antagonist_briefing
 			return
-	M.verbs -= /mob/proc/antagonist_briefing
+	verbs -= /mob/proc/antagonist_briefing
 
 /mob/proc/antagonist_briefing()
 	set name = "Antagonist Briefing"

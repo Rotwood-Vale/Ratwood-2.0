@@ -58,7 +58,10 @@
 
 /datum/antagonist/bandit/proc/forge_objectives()
 	for(var/tier in GLOB.bandit_hoard_tiers)
-		objectives += new tier(null, owner)
+		// Owner is set after creation: passing it to New() would list every bandit among the Gods' Champions
+		var/datum/objective/bandit_hoard/objective = new tier
+		objective.owner = owner
+		objectives += objective
 
 /datum/antagonist/bandit/proc/move_to_spawnpoint()
 	owner.current.forceMove(pick(GLOB.bandit_starts))
@@ -90,7 +93,7 @@
 
 /// The top offerer is listed last
 /datum/antagonist/bandit/roundend_sort_order()
-	return is_top_offerer() ? 1 : 0
+	return paid_as_top_offerer() ? 1 : 0
 
 /datum/antagonist/bandit/roundend_panel_category_line()
 	return SSmapping.retainer.bandit_hoard_summary()
@@ -104,12 +107,16 @@
 	if(!hoard_triumphs_awarded)
 		return "[.]."
 	var/tier_triumphs = SSmapping.retainer.bandit_hoard_tier_triumphs()
-	if(is_top_offerer())
+	if(paid_as_top_offerer())
 		return "[.], earned [tier_triumphs] triumphs, and earned the favour of Matthios! (+[BANDIT_TOP_OFFERER_TRIUMPHS] triumphs)"
 	return "[.], and they have earned [tier_triumphs] triumphs."
 
 /datum/antagonist/bandit/proc/gold_if_top_offerer(text)
-	return is_top_offerer() ? "<font color='#e6b422'>[text]</font>" : text
+	return paid_as_top_offerer() ? "<font color='#e6b422'>[text]</font>" : text
+
+/// Top offerer and actually paid for it: FALSE on the lesser datum of a player who respawned as a new bandit
+/datum/antagonist/bandit/proc/paid_as_top_offerer()
+	return hoard_triumphs_awarded && is_top_offerer()
 
 /// TRUE if the gang reached a tier, this bandit offered something, and no bandit offered more. Ties all count.
 /datum/antagonist/bandit/proc/is_top_offerer()
@@ -126,7 +133,7 @@
 	if(is_top_offerer())
 		. += BANDIT_TOP_OFFERER_TRIUMPHS
 
-/datum/antagonist/bandit/get_briefing_progress(mob/user)
+/datum/antagonist/bandit/get_briefing_progress()
 	var/list/marks = list()
 	for(var/datum/objective/bandit_hoard/tier as anything in GLOB.bandit_hoard_tiers)
 		marks += list(list("at" = initial(tier.target_amount), "label" = initial(tier.tier_name)))

@@ -1382,6 +1382,7 @@
 #include "code\game\objects\minecart_system\minecart_rail.dm"
 #include "code\game\objects\structures\apiary.dm"
 #include "code\game\objects\structures\artstuff.dm"
+#include "code\game\objects\structures\bandit_camp.dm"
 #include "code\game\objects\structures\barricades.dm"
 #include "code\game\objects\structures\bearpelt.dm"
 #include "code\game\objects\structures\curtain.dm"

@@ -1311,15 +1311,44 @@
 					proceed_with_offer = TRUE
 					break
 			if(proceed_with_offer)
+				if(SSticker.current_state >= GAME_STATE_FINISHED) // The hoard is paid out and reported; keep it as it was
+					to_chat(user, span_warning("The idol is still. Matthios has already counted his due."))
+					return
 				playsound(loc,'sound/items/carvty.ogg', 50, TRUE)
-				qdel(W)
+				send_to_hoard(W, user)
 				record_round_statistic(STATS_SHRINE_VALUE, donatedamnt)
 				SSmapping.retainer.add_bandit_offering(user, donatedamnt)
+				return TRUE // The item lives on in the hoard; don't also hit the idol with it
 
 			else
 				to_chat(user, span_warning("This item isn't a good offering."))
 				return
 	..()
+
+/**
+ * Takes an accepted offering from user's hand. Coins vanish. Other treasure lands on a random floor
+ * of the Bandit Hoard, anchored so it can be seen but never lifted. With no hoard to reach, it vanishes too.
+ */
+/obj/structure/fluff/statue/evil/proc/send_to_hoard(obj/item/offering, mob/user)
+	to_chat(user, span_notice("The idol swallows [offering]."))
+	var/turf/destination = istype(offering, /obj/item/roguecoin) ? null : pick_hoard_turf()
+	if(!destination || !user.transferItemToLoc(offering, destination))
+		qdel(offering)
+		return
+	offering.anchored = TRUE
+	for(var/mob/hearer in hearers(7, destination))
+		to_chat(hearer, span_notice("[offering] tumbles out of a glint of gold onto the hoard."))
+
+/// A random open floor of the Bandit Hoard, or null if this map has none
+/obj/structure/fluff/statue/evil/proc/pick_hoard_turf()
+	var/area/hoard = GLOB.areas_by_type[/area/rogue/indoors/banditcamp/hoard]
+	if(!hoard)
+		return
+	var/list/floors = list()
+	for(var/turf/open/floor/floor in hoard)
+		floors += floor
+	if(length(floors))
+		return pick(floors)
 
 /obj/structure/fluff/psycross
 	name = "pantheon cross"
