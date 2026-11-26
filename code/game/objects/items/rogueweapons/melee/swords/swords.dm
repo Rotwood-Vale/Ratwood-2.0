@@ -1625,7 +1625,6 @@
 	desc = "A strange, cheap ring devoid of purpose, yet carrying an uncanny sense of nostalgia of grand upsets, felled short.\n<i>'You shall know his name. You shall know his purpose. You shall die.'</i>"
 	icon_state = "decrapier"
 	sheathe_icon = "decrapier"
-	no_loot_taint = TRUE
 
 /obj/item/rogueweapon/sword/rapier/blacksteel
 	name = "blacksteel rapier"
