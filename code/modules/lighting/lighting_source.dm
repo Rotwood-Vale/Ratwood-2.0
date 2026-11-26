@@ -72,6 +72,7 @@
 
 	if (needs_update)
 		SSlighting.sources_queue -= src
+		SSlighting.current_sources -= src
 
 	. = ..()
 

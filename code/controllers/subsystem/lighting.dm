@@ -47,6 +47,7 @@ SUBSYSTEM_DEF(lighting)
 	ss_flags = SS_TICKER
 	priority = FIRE_PRIORITY_DEFAULT
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
+	var/static/list/current_sources = list()
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.
 	processing_flag = PROCESSING_LIGHTING
@@ -74,7 +75,11 @@ SUBSYSTEM_DEF(lighting)
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
-	var/list/queue = sources_queue
+	if(!resumed)
+		current_sources = sources_queue
+		sources_queue = list()
+
+	var/list/queue = current_sources
 	// anything added while processing gets deferred to the next tick
 	var/current_index = 0
 	while(current_index < length(queue))
