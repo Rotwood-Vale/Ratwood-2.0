@@ -8,6 +8,14 @@
 	custom_text = "This quirk adds a bag containing various sexual instruments including a small vial of emberwine to your stash."
 	added_stashed_items = list("Bag of Fetish Gear" = /obj/item/storage/roguebag/fetish)
 
+/datum/quirk/amphibian
+	name = "Amphibian"
+	desc = "By some quirk of biology I am able to breathe in water as easily as air."
+	point_cost = 2
+	added_traits = list(TRAIT_WATERBREATHING, TRAIT_WATERLOVING)
+	incompatible_traits = list(TRAIT_WATERBREATHING, TRAIT_WATERLOVING)
+	allowed_species = list(/datum/species/anthromorph, /datum/species/kobold, /datum/species/anthromorphsmall, /datum/species/lamia, /datum/species/arachnid, /datum/species/ooze, /datum/species/lizardfolk, /datum/species/dracon)
+
 /datum/quirk/annoyingface
 	name = "Annoying Face"
 	desc = "I am cursed with an odd voice and appearance."
