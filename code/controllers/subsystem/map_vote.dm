@@ -1,5 +1,4 @@
 #define MAP_VOTE_CACHE_LOCATION "data/map_vote_cache.json"
-#define SS_INIT_SUCCESS 2
 
 // How much bonus a loss adds to a player's banked pity vote for that map.
 #define MAP_VOTE_BONUS_INCREMENT 1
