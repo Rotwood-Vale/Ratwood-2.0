@@ -1,11 +1,11 @@
-SUBSYSTEM_DEF(runechat)
+TIMER_SUBSYSTEM_DEF(runechat)
 	name = "Runechat"
-	ss_flags = SS_NO_INIT
-	priority = FIRE_PRIORITY_DEFAULT
+	priority = FIRE_PRIORITY_RUNECHAT
 
 	var/list/datum/callback/message_queue = list()
 
-/datum/controller/subsystem/runechat/fire(resumed)
+/datum/controller/subsystem/timer/runechat/fire(resumed)
+	. = ..() //poggers
 	while(message_queue.len)
 		var/datum/callback/queued_message = message_queue[message_queue.len]
 		queued_message.Invoke()
