@@ -101,7 +101,8 @@
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
-	if(target.CanPass(src, get_turf(src)) && get_thrownby() && HAS_TRAIT(get_thrownby(), TRAIT_BOOZE_SLIDER))
+	var/mob/thrower = get_thrownby()
+	if(target.CanPass(src, get_turf(src)) && thrower && HAS_TRAIT(thrower, TRAIT_BOOZE_SLIDER))
 		. = TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
