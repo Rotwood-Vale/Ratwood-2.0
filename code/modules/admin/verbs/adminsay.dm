@@ -1,7 +1,10 @@
-/client/proc/cmd_admin_say(msg as text, loud = FALSE)
+/client/proc/cmd_admin_say(msg as text)
 	set category = "-Admin-"
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 0
+	admin_say(msg)
+
+/client/proc/admin_say(msg, loud = FALSE)
 	if(!check_rights(0))
 		return
 
@@ -45,4 +48,4 @@
 	set category = "-Admin-"
 	set name = "LoudAsay"
 	set hidden = 0
-	cmd_admin_say(msg, loud = TRUE)
+	admin_say(msg, loud = TRUE)
