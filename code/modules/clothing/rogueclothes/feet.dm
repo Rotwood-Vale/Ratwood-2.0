@@ -310,15 +310,16 @@
 /obj/item/clothing/shoes/roguetown/boots/elven_boots
 	name = "woad elven boots"
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
-	armor = ARMOR_BLACKOAK //Resistant to blunt and stab, but very weak to slash.
-	max_integrity = ARMOR_INT_SIDE_IRON
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfshoes"
 	item_state = "welfshoes"
-	anvilrepair = /datum/skill/craft/carpentry
+	anvilrepair = null
+	sewrepair = TRUE
 	smeltresult = /obj/item/rogueore/coal
 
 /obj/item/clothing/shoes/roguetown/boots/elven_boots/Initialize(mapload)

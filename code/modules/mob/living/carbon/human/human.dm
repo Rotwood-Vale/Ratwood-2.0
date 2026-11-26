@@ -785,10 +785,12 @@
 							nsfw_img_gallery = list()
 							client.prefs?.img_gallery = list()
 							client.prefs?.nsfw_img_gallery = list()
+							client.prefs?.blocked_links = list()
 						else
 							return
 					client.prefs?.save_preferences()
 					client.prefs?.save_character()
+					client.prefs?.refresh_character_gallery()
 
 	if(href_list[VV_HK_PURGE_SLOT])
 		if(!check_rights(R_SPAWN))
@@ -826,8 +828,10 @@
 					client.prefs?.song_title = null
 					client.prefs?.img_gallery = list()
 					client.prefs?.nsfw_img_gallery = list()
+					client.prefs?.blocked_links = list()
 					client.prefs?.save_preferences()
 					client.prefs?.save_character()
+					client.prefs?.refresh_character_gallery()
 					to_chat(usr, span_warn("Slot purged successfully."))
 				else
 					to_chat(usr, span_warn("Slot purged partially. (Client inaccessible -- likely disconnected)"))
@@ -1038,8 +1042,8 @@
 	shavelevel = target.shavelevel
 	socks = target.socks
 	has_stubble = target.has_stubble
-	headshot_link = target.headshot_link
 	flavortext = target.flavortext
+	clear_gallery_images()
 
 	var/obj/item/bodypart/head/target_head = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!isnull(target_head))
@@ -1047,6 +1051,25 @@
 		user_head.bodypart_features = target_head.bodypart_features
 
 	regenerate_icons()
+
+/mob/living/carbon/human/proc/clear_gallery_images()
+	headshot_link = null
+	reset_gallery_frame(src)
+	headshot_frame_chat = FALSE
+	image_backdrop = GALLERY_BACKDROP_TAVERN
+	ooc_extra_img = null
+	ooc_extra_img_link = null
+	nsfw_ooc_extra_img = null
+	nsfw_ooc_extra_img_link = null
+	img_gallery = list()
+	nsfw_img_gallery = list()
+	card_backgrounds = list()
+	art_view_settings = list()
+
+/mob/living/carbon/human/proc/chat_headshot_markup()
+	if(!headshot_frame_chat)
+		return chat_headshot(GALLERY_ATTRIBUTE_LINK(headshot_link))
+	return "<div class='chat_headshot'><div class='chat_headshot_frame'><img src='[GALLERY_ATTRIBUTE_LINK(headshot_link)]' style='[headshot_picture_style(headshot_zoom, headshot_x, headshot_y)]'/></div></div>"
 
 
 /mob/living/carbon/human/proc/copy_bodyparts(mob/living/carbon/human/target)

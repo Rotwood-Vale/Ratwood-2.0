@@ -1,0 +1,1095 @@
+@use 'galleryKeys' as keys;
+
+$ember: rgb(224, 129, 58);
+$tray-width: 21rem;
+
+// How far .ExamineGallery__backdrop reaches past the panel on every side. Its blur(26px) filter fades the
+// picture's own edges toward transparent, and this margin keeps that faded rim outside the panel where it is
+// clipped. Shrinking it toward 0 brings the rim into view along the panel's edges
+$backdrop-bleed: 40px;
+
+$table-shade: linear-gradient(
+  rgba(255, 176, 96, 0.1),
+  transparent 50px,
+  rgba(6, 3, 1, 0.3) 170px,
+  rgba(3, 1, 0, 0.72) 330px
+);
+
+// The frame's art is 7 by 48 and 13 by 13 pixels, shown at a whole number scale so its pixels stay square
+$frame-scale: 2;
+$frame-corner: 13;
+// FRAME_MARGIN and TILT_MARGIN in common/cardLayout.ts are sized with it
+$rail-thickness: 7px * $frame-scale;
+
+$thumb-border-color: rgba(255, 255, 255, 0.28);
+
+// The candle light comes up over $candle-rise when the mouse moves over the gallery and dies down over
+// $candle-die-down once it stops, CANDLE_QUIET_MS in ExamineGallery/Backdrop/useCandleFlicker.ts after the last move
+$candle-rise: 0.4s;
+$candle-die-down: 1.3s;
+
+@mixin cover-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// Thumbnails are scaled by the wheel, so distances are divided by that scale to move the same amount at every size
+@function thumb-distance($pixels) {
+  @return calc(#{$pixels} / var(--thumb-scale, 1));
+}
+
+@keyframes ExamineGallery__leap {
+  0% {
+    transform: none;
+  }
+  40% {
+    transform: translateY(thumb-distance(-30px)) scale(1.24) rotate(-6deg);
+  }
+  58% {
+    transform: translateY(thumb-distance(-25px)) scale(1.2) rotate(5deg);
+  }
+  76% {
+    transform: translateY(thumb-distance(-23px)) scale(1.2) rotate(-3deg);
+  }
+  90% {
+    transform: translateY(thumb-distance(-22px)) scale(1.2) rotate(1.5deg);
+  }
+  100% {
+    transform: translateY(thumb-distance(-22px)) scale(1.2);
+  }
+}
+
+// A distinct name starts the drop when hover ends instead of continuing the leap
+@keyframes ExamineGallery__drop {
+  0% {
+    transform: translateY(thumb-distance(-22px)) scale(1.2);
+  }
+  55% {
+    transform: translateY(thumb-distance(-4px)) scale(1.04) rotate(2.5deg);
+  }
+  80% {
+    transform: translateY(thumb-distance(-1px)) scale(1.01) rotate(-1.5deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes ExamineGallery__picked {
+  0% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(thumb-distance(-14px)) scale(1.1) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(thumb-distance(-12px)) scale(1.1) rotate(5deg);
+  }
+  70% {
+    transform: translateY(thumb-distance(-6px)) scale(1.05) rotate(-3deg);
+  }
+  85% {
+    transform: translateY(thumb-distance(-2px)) rotate(1.5deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes ExamineGallery__dealThumb {
+  0% {
+    opacity: 0;
+    transform: translate(thumb-distance(190px), thumb-distance(90px))
+      rotate(32deg) scale(0.7);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+// The rail takes 14 of the 18 px frame margin and the panel clips anything past the remaining 4 px,
+// a wide picture's corners first when it turns
+@keyframes ExamineGallery__dealPicture {
+  0% {
+    opacity: 0;
+    transform: translate(calc(var(--deal-direction, 1) * 92px), 340px)
+      rotate(calc(var(--deal-direction, 1) * 18deg)) scale(0.2);
+  }
+  6% {
+    opacity: 1;
+  }
+  58% {
+    transform: translate(calc(var(--deal-direction, 1) * -4px), 2px)
+      rotate(calc(var(--deal-direction, 1) * -0.75deg)) scale(0.985);
+  }
+  78% {
+    transform: translateY(-1px) scale(1.005);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ExamineGallery__throwPicture {
+  // Explicit, as an implied start takes the picture's resting opacity of 0 and the throw is never seen
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--deal-direction, 1) * -230px), 40px)
+      rotate(calc(var(--deal-direction, 1) * -12deg)) scale(0.86);
+  }
+}
+
+.ExamineGallery {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+
+  img {
+    -webkit-user-drag: none;
+  }
+
+  &__previewSlot {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__previewFrame {
+    // Padding follows layout zoom; a border snaps to device pixels and can overflow the slot.
+    padding: 1px;
+    box-shadow: inset 0 0 0 1px var(--section-separator-color);
+    background: #000;
+  }
+
+  &__previewPicture {
+    position: relative;
+    overflow: hidden;
+    margin-inline: auto;
+  }
+
+  &__previewCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+  }
+
+  &__main {
+    position: relative;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+    perspective: 1400px;
+    // Its own layer for good. Otherwise the browser lifts this area out of the window's layer
+    // when the tilt leaves a flat transform and folds it back when the tilt returns to flat,
+    // repainting the whole 1500 by 1050 window both times. A resting 3D transform on the
+    // tilt does not prevent it
+    will-change: transform;
+  }
+
+  &__main--clickable {
+    cursor: pointer;
+  }
+
+  &__main--dealing {
+    z-index: 3;
+    overflow: visible;
+  }
+
+  &__status {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-label, #a3968a);
+    pointer-events: none;
+  }
+
+  &__backdrops {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  // Hidden once faded, along with the pictures, so the browser stops keeping every layer ready to draw
+  &__backdrop,
+  &__picture {
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.3s,
+      visibility 0.3s;
+  }
+
+  &__backdrop--shown,
+  &__picture--shown {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: -$backdrop-bleed;
+    width: calc(100% + #{$backdrop-bleed * 2});
+    height: calc(100% + #{$backdrop-bleed * 2});
+    object-fit: cover;
+    filter: blur(26px) brightness(0.42) saturate(1.15);
+  }
+
+  // It clips itself, as the main area stops clipping while a card is dealt
+  &__scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: #0a0605;
+  }
+
+  &__sceneRoom,
+  &__sceneFigure,
+  &__sceneFace {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--far-edge, 100%);
+    background: 50% 100% / cover no-repeat;
+  }
+
+  &__sceneFigure,
+  &__sceneFace {
+    image-rendering: pixelated;
+  }
+
+  &__figureLabel {
+    position: absolute;
+    pointer-events: auto;
+  }
+
+  &__sceneFace {
+    display: none;
+
+    &::before,
+    &::after {
+      position: absolute;
+      inset: 0;
+      display: none;
+      content: '';
+      background: 50% 100% / cover no-repeat;
+    }
+  }
+
+  &__sceneFace--nsfw,
+  &__sceneFace--half,
+  &__sceneFace--shut,
+  &__sceneFace--level {
+    display: block;
+  }
+
+  &__sceneFace--nsfw {
+    background-image: var(--nsfw-face);
+  }
+
+  &__sceneFace--level::before {
+    display: block;
+    background-image: var(--level-mouth);
+  }
+
+  &__sceneFace--half::after {
+    display: block;
+    background-image: var(--blink-half);
+  }
+
+  &__sceneFace--shut::after {
+    display: block;
+    background-image: var(--blink-shut);
+  }
+
+  &__sceneFace--nsfw#{&}__sceneFace--half::after {
+    background-image: var(--nsfw-half);
+  }
+
+  &__sceneFace--nsfw#{&}__sceneFace--shut::after {
+    background-image: var(--nsfw-shut);
+  }
+
+  // At 440 px deep its near edge lands about 610 px below the far edge, past the bottom of a main area
+  // up to 1800 px tall, and still short of the eye 500 px away where it would fold behind the viewer
+  &__sceneTable {
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    top: var(--far-edge);
+    height: 440px;
+    transform-origin: 50% 0;
+    image-rendering: pixelated;
+    background-repeat: repeat;
+    background-position: 50% 0;
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      content: '';
+      background: $table-shade;
+    }
+  }
+
+  &__sceneRim {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--far-edge) - 1px);
+    height: 3px;
+    background:
+      linear-gradient(rgba(255, 196, 130, 0.5), rgba(255, 196, 130, 0.5)) 0 0 /
+        100% 1px no-repeat,
+      linear-gradient(rgba(255, 180, 100, 0.16), transparent) 0 1px / 100% 2px
+        no-repeat;
+  }
+
+  &__scene--tavern #{&}__sceneTable::after {
+    background:
+      radial-gradient(
+        ellipse 150px 110px at 8% 0,
+        rgba(255, 130, 60, 0.28),
+        transparent
+      ),
+      radial-gradient(
+        ellipse 120px 90px at 66% 0,
+        rgba(255, 200, 130, 0.14),
+        transparent
+      ),
+      radial-gradient(
+        ellipse 110px 80px at 93% 0,
+        rgba(255, 160, 90, 0.12),
+        transparent
+      ),
+      $table-shade;
+  }
+
+  &__scene--tavern #{&}__sceneRim {
+    background:
+      linear-gradient(
+          90deg,
+          rgba(255, 170, 90, 0.25),
+          rgba(255, 186, 110, 0.75) 10%,
+          rgba(255, 196, 130, 0.4) 26%,
+          rgba(255, 210, 150, 0.6) 50%,
+          rgba(255, 186, 110, 0.7) 74%,
+          rgba(255, 160, 90, 0.3)
+        )
+        0 0 / 100% 1px no-repeat,
+      linear-gradient(rgba(255, 180, 100, 0.16), transparent) 0 1px / 100% 2px
+        no-repeat;
+  }
+
+  // Still at rest, so it costs nothing after it is first drawn. A flicker that never rests keeps the whole panel redrawing
+  &__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse at center,
+        rgba(255, 150, 70, 0.3) 0%,
+        rgba(255, 130, 50, 0.14) 42%,
+        transparent 66%
+      ),
+      radial-gradient(
+        ellipse at center,
+        transparent 48%,
+        rgba(24, 9, 2, 0.6) 78%,
+        rgba(8, 3, 0, 0.95) 100%
+      );
+  }
+
+  // The warmer light the candle comes up to, laid over the resting glow so the rest stays as it is. Only its
+  // opacity changes, so the compositor plays the rise and the die-down with no script per frame, and a change
+  // part way starts from the level already reached
+  &__glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 160, 80, 0.16) 0%,
+      rgba(255, 140, 60, 0.08) 42%,
+      transparent 66%
+    );
+  }
+
+  &__glow--up::after {
+    opacity: 1;
+    transition: opacity $candle-rise ease-out;
+  }
+
+  // Left on after the die-down, as a finished transition runs nothing. With neither class the light drops at once
+  &__glow--dying::after {
+    transition: opacity $candle-die-down ease-in-out;
+  }
+
+  // The ease runs on the compositor thread with no script per frame. Measured with the GPU on, a script
+  // glide draws 81 frames a second at 177 to 236 ms of CPU a second, this draws 162 at 172 to 213 ms
+  &__tilt {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    will-change: transform;
+    transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.3, 1);
+  }
+
+  &__picture {
+    position: absolute;
+    // Takes the pointer back from .ExamineGallery__tilt, which has pointer-events none, so where the portrait covers
+    // a backdrop figure the pointer stops here and that figure's .ExamineGallery__figureLabel tooltip does not open
+    // over the portrait
+    pointer-events: auto;
+
+    img {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // A cropped card's picture, sized and placed inline so the crop fills the card
+  &__picture #{&}__crop {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+
+    > img {
+      position: absolute;
+      max-width: none;
+      max-height: none;
+    }
+  }
+
+  &__picture--dealt {
+    animation: ExamineGallery__dealPicture 0.52s ease-out var(--deal-delay, 0ms)
+      both;
+  }
+
+  &__picture--thrown {
+    animation: ExamineGallery__throwPicture 0.22s ease-in both;
+  }
+
+  &__frame {
+    position: absolute;
+    z-index: 2;
+    inset: -$rail-thickness;
+    pointer-events: auto;
+    border-style: solid;
+    border-width: $frame-corner * 1px * $frame-scale;
+    border-image-slice: $frame-corner;
+    border-image-repeat: repeat;
+    image-rendering: pixelated;
+  }
+
+  &__strip {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    height: 126px;
+  }
+
+  &__thumb {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    transition: transform 0.28s cubic-bezier(0.3, 1.3, 0.5, 1);
+    will-change: transform;
+  }
+
+  &__lift {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: transparent;
+    border: 1px solid $thumb-border-color;
+    opacity: 0.72;
+    transition: opacity 0.18s;
+
+    canvas {
+      @include cover-image;
+      position: relative;
+      z-index: 1;
+    }
+
+    // The shadow and the glow are drawn once and faded, as animating a shadow itself repaints every frame
+    &::before,
+    &::after {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      content: '';
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    &::before {
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.8);
+    }
+
+    // The ring lives with the glow so the highlight moves between thumbnails by fading alone, as a changing border repaints
+    &::after {
+      inset: -1px;
+      box-shadow:
+        inset 0 0 0 2px $ember,
+        0 0 22px 5px rgba($ember, 0.6);
+    }
+  }
+
+  &__lift--deal {
+    animation: ExamineGallery__dealThumb 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.15)
+      var(--deal-delay, 0ms) both;
+  }
+
+  &__lift--up {
+    opacity: 1;
+    animation: ExamineGallery__leap 0.46s ease-out both;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &__lift--down {
+    animation: ExamineGallery__drop 0.12s ease-out both;
+  }
+
+  &__lift--picked {
+    animation: ExamineGallery__picked 0.5s ease-out both;
+  }
+
+  &__lift--selected {
+    opacity: 1;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &__strip:has(#{&}__lift--up) #{&}__lift--selected:not(#{&}__lift--up) {
+    opacity: 0.72;
+
+    &::after {
+      opacity: 0.4;
+    }
+  }
+
+  &__lift--up::after {
+    opacity: 1;
+  }
+
+  &__seals {
+    display: flex;
+    gap: 6px;
+  }
+
+  // 17 px pixel art at exactly 2x, never turned or scaled by a fraction so the pixels stay square
+  &__seal {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    border: 0;
+    transition: transform 0.2s;
+
+    &:hover {
+      filter: brightness(1.15);
+    }
+  }
+
+  &__seal--current {
+    transform: translateY(-2px);
+  }
+
+  &__sealNumber {
+    display: none;
+  }
+
+  &__page {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background: transparent;
+    color: var(--color-label);
+    border: 1px solid var(--color-label);
+    font: inherit;
+  }
+
+  &__page--current {
+    color: var(--color-text);
+    border-color: currentColor;
+    font-weight: bold;
+  }
+
+  &__plainThumbs {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    gap: 6px;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: auto;
+  }
+
+  // As big as the wheel's selected thumbnail, WHEEL_SPOTS[0] in ExamineGallery/Thumbs/galleryWheel.ts
+  &__plainThumb {
+    position: relative;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    width: 96px;
+    height: 96px;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 2px solid $thumb-border-color;
+
+    canvas {
+      @include cover-image;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &__thumbPlaceholder {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    color: var(--color-label, #a3968a);
+  }
+
+  // Margins that take the spare room centre the row, and leave the first thumbnail reachable once it overflows
+  &__plainThumb:first-child {
+    margin-left: auto;
+  }
+
+  &__plainThumb:last-child {
+    margin-right: auto;
+  }
+
+  &__plainThumb--selected {
+    border-color: $ember;
+  }
+
+  &__lower {
+    position: relative;
+    flex: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto minmax(26px, auto);
+  }
+
+  &__lower > &__strip {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  &__footer {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+  }
+
+  &__footerStart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+  }
+
+  &__trayToggle {
+    grid-column: 2;
+    min-width: 2.6rem;
+  }
+
+  &__modes {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: center;
+    justify-self: end;
+    display: flex;
+    gap: 2px;
+
+    > .Button {
+      width: min(60px, 17vw);
+      padding-inline: 0;
+      margin: 0;
+    }
+  }
+
+  &__tray {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    grid-template-rows: 0fr;
+    box-sizing: border-box;
+    width: min(100%, $tray-width);
+    margin-inline: auto;
+    opacity: 0;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition:
+        grid-template-rows 140ms ease-out,
+        opacity 140ms ease-out;
+    }
+  }
+
+  &__tray--visible {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  &__trayClip {
+    min-height: 0;
+    overflow: clip;
+  }
+
+  &__tray--panelOpen > &__trayClip {
+    overflow: visible;
+  }
+
+  &__trayContent {
+    position: relative;
+    padding: 0.4rem;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+  }
+
+  &__trayActions {
+    display: grid;
+    grid-template-columns: minmax(0, 8.5rem) minmax(5rem, 7rem) repeat(
+        2,
+        1.85rem
+      );
+    gap: 0.35rem;
+  }
+
+  &__tray .Button,
+  &__footer > .Button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--button-border-radius);
+    font: inherit;
+    line-height: var(--button-height);
+
+    &:focus-visible {
+      outline: 1px solid var(--color-text);
+      outline-offset: -2px;
+    }
+
+    &:disabled {
+      cursor: var(--cursor-disabled);
+      opacity: var(--button-disabled-opacity);
+      background-color: var(
+        --button-background-disabled,
+        var(--button-background)
+      );
+    }
+  }
+
+  &__viewControl {
+    position: relative;
+  }
+
+  &__tray .ExamineGallery__pin[aria-pressed='true'] {
+    color: $ember;
+    box-shadow: inset 0 0 0 1px $ember;
+  }
+
+  &__tray .ExamineGallery__viewToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem;
+    width: 100%;
+    padding-inline: 0.45rem;
+  }
+
+  &__viewMenu,
+  &__helpPanel {
+    position: absolute;
+    z-index: 1;
+    bottom: calc(100% + 4px);
+    display: grid;
+    gap: 0.4rem;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    background: var(--modal-background);
+    border: 1px solid var(--section-separator-color, rgba(255, 255, 255, 0.2));
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  &__viewMenu {
+    inset-inline-start: 0;
+    width: min(13rem, calc(100vw - 2rem));
+  }
+
+  &__helpPanel {
+    inset-inline: 0;
+    gap: 0.25rem;
+    font-size: 0.8em;
+  }
+
+  &__helpContext {
+    color: var(--color-label);
+    font-weight: bold;
+  }
+
+  &__helpActions {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    gap: 0.1rem 0.65rem;
+    margin: 0;
+
+    dd {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin: 0;
+    }
+  }
+
+  &__viewHelp {
+    color: var(--color-label);
+    font-size: 0.9em;
+  }
+
+  &__mouseHints {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--color-label);
+    font-size: 0.8em;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  &__mouseNavigation {
+    margin-inline: auto 0.25rem;
+  }
+
+  &__mouseZoom {
+    grid-column: 3;
+    justify-self: start;
+    margin-inline-start: 0.25rem;
+  }
+
+  &__mouseAction {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__helpActions kbd,
+  &__mouseAction kbd {
+    @include keys.key-cap;
+  }
+
+  &__mouseIcon {
+    flex: none;
+    color: var(--color-text, #fff);
+  }
+
+  @media (max-width: 700px) {
+    &__mouseHints {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+    }
+
+    &__mouseNavigation {
+      margin-inline-end: 1px;
+    }
+
+    &__mouseZoom {
+      margin-inline-start: 2px;
+    }
+
+    &__mouseHints &__mouseAction {
+      gap: 1px;
+    }
+
+    &__mouseHints kbd {
+      padding-inline: 0.05em;
+      font-size: 0.9em;
+    }
+
+    &__mouseHints &__keyJoin,
+    &__hintLabel,
+    &__hintSeparator {
+      display: none;
+    }
+  }
+
+  @media (max-width: 420px) {
+    &__seals {
+      gap: 2px;
+    }
+  }
+
+  &__mousePreference {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+
+    > input {
+      margin: 0;
+    }
+  }
+
+  &__zoomControls {
+    display: grid;
+    grid-template-columns: 1.7rem minmax(0, 1fr) 1.7rem;
+    align-items: center;
+
+    .Button,
+    output {
+      text-align: center;
+    }
+
+    output {
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__reader {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    background: #000;
+    touch-action: none;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__readingSurface {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+
+    &--fitted {
+      overflow: clip;
+    }
+  }
+
+  &__readingPicture {
+    position: absolute;
+
+    &--settling {
+      @media (prefers-reduced-motion: no-preference) {
+        transition: transform 120ms ease-out;
+      }
+    }
+
+    > img {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+    }
+  }
+
+  &__framing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+    background: #000;
+    pointer-events: none;
+  }
+
+  &__main--reading {
+    > .ExamineGallery__tilt {
+      display: none;
+    }
+  }
+
+  &__main--cut {
+    .ExamineGallery__picture,
+    .ExamineGallery__backdrop {
+      transition: none;
+    }
+  }
+
+  &__main--reading .ExamineGallery__status {
+    z-index: 2;
+  }
+}
+
+// !important so it wins over every part's own animation, the modifiers' included. Nothing here
+// transforms, so no part keeps a layer of its own
+.ExamineGallery--plain {
+  &,
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  .ExamineGallery__main {
+    perspective: none;
+  }
+
+  .ExamineGallery__tilt {
+    transform: none !important;
+  }
+
+  .ExamineGallery__strip {
+    display: flex;
+    align-items: center;
+  }
+}
