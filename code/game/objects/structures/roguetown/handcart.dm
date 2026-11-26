@@ -1,12 +1,13 @@
 /obj/structure/handcart
-	name = "cart"
-	desc = "A wooden cart that will help you carry many things."
+	name = "wooden handcart"
+	desc = "A simple, reliable cart crafted from robust timber, offering modest storage space and serving as a practical means of transporting goods."
 	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "cart-empty"
 	density = TRUE
 	max_integrity = 600
 	anchored = FALSE
 	climbable = TRUE
+	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg', 'sound/combat/hits/onwood/woodimpact (2).ogg')
+	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 
 	var/list/stuff_shit = list()
 
@@ -16,7 +17,50 @@
 	var/arbitrary_living_creature_weight = 10 // The arbitrary weight for any thing of a mob and living variety
 	var/upgrade_level = 0 // This is the carts upgrade level, capacity increases with upgrade level
 	var/obj/item/roguegear/wood/upgrade = null
+	var/can_upgrade = TRUE // If false, the cart cannot be upgraded. If true, it can be upgraded.
+	var/cart_empty_state = "cart-empty" // Icon state for empty cart
+	var/cart_full_state = "cart-full" // Icon state for full cart
 	facepull = FALSE
+	throw_range = 1
+
+/obj/structure/handcart/bronze
+	name = "bronze handcart"
+	desc = "A spacious handcart crafted from bronze, offering ample storage but leaving no room for further upgrades."
+	icon = 'icons/roguetown/misc/reinforcedhandcart.dmi'
+	cart_empty_state = "cart_bronze"
+	cart_full_state = "cart_bronze_full"
+	max_integrity = 800
+	maximum_capacity = 240
+	climbable = TRUE
+	can_upgrade = FALSE
+	attacked_sound = list('sound/combat/hits/onmetal/metalimpact (2).ogg', 'sound/combat/hits/onmetal/metalimpact (1).ogg')
+	break_sound = 'sound/combat/hits/onmetal/sheet (1).ogg'
+	throw_range = 1
+
+/obj/structure/handcart/iron
+	name = "iron handcart"
+	desc = "A sturdy handcart forged from durable iron, providing slightly more storage space than its wooden counterpart."
+	icon = 'icons/roguetown/misc/reinforcedhandcart.dmi'
+	cart_empty_state = "cart_iron"
+	cart_full_state = "cart_iron_full"
+	max_integrity = 1200
+	maximum_capacity = 65
+	climbable = TRUE
+	attacked_sound = list('sound/combat/hits/onmetal/metalimpact (2).ogg', 'sound/combat/hits/onmetal/metalimpact (1).ogg')
+	break_sound = 'sound/combat/hits/onmetal/sheet (1).ogg'
+	throw_range = 1
+
+/obj/structure/handcart/steel
+	name = "steel handcart"
+	desc = "An exceptionally durable handcart crafted from steel, boasting greater storage capacity than the iron model."
+	icon = 'icons/roguetown/misc/reinforcedhandcart.dmi'
+	cart_empty_state = "cart_steel"
+	cart_full_state = "cart_steel_full"
+	max_integrity = 2000
+	maximum_capacity = 75
+	climbable = TRUE
+	attacked_sound = list('sound/combat/hits/onmetal/metalimpact (2).ogg', 'sound/combat/hits/onmetal/metalimpact (1).ogg')
+	break_sound = 'sound/combat/hits/onmetal/sheet (1).ogg'
 	throw_range = 1
 
 /obj/structure/handcart/examine(mob/user)
@@ -85,6 +129,9 @@
 
 /obj/structure/handcart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/roguegear/wood))
+		if(!can_upgrade)
+			to_chat(user, span_warning("[src] cannot be upgraded."))
+			return
 		var/obj/item/roguegear/wood/cog = I
 		if(cog.ulevel < upgrade_level)
 			to_chat(user, span_warning("[I] is obsolete."))
@@ -105,11 +152,13 @@
 	..()
 
 /obj/structure/handcart/proc/install_upgrade(obj/item/roguegear/wood/cog)
+	if(!can_upgrade)
+		return FALSE
 	if(upgrade && upgrade != cog)
 		QDEL_NULL(upgrade)
 	upgrade = cog
 	upgrade_level = cog.ulevel + 1
-	maximum_capacity = cog.cart_capacity
+	maximum_capacity = initial(maximum_capacity) + cog.cart_capacity
 	update_icon()
 
 /obj/structure/handcart/attack_hand(mob/living/user)
@@ -161,13 +210,13 @@
 	cut_overlays()
 	if(upgrade_level)
 		if(upgrade_level == 2)
-			add_overlay("ov_upgrade")
+			add_overlay(image(icon = 'icons/roguetown/misc/structure.dmi', icon_state = "ov_upgrade", dir = dir))
 		if(upgrade_level == 3)
-			add_overlay("ov_upgrade2")
+			add_overlay(image(icon = 'icons/roguetown/misc/structure.dmi', icon_state = "ov_upgrade2", dir = dir))
 	if(stuff_shit.len)
-		icon_state = "cart-full"
+		icon_state = cart_full_state
 	else
-		icon_state = "cart-empty"
+		icon_state = cart_empty_state
 
 /obj/structure/handcart/attack_right(mob/user)
 	. = ..()
@@ -209,3 +258,4 @@
 	. = ..()
 	if (. && pulledby && dir != pulledby.dir)
 		setDir(pulledby.dir)
+		update_icon()
