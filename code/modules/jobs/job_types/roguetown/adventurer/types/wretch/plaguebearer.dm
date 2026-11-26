@@ -59,7 +59,7 @@
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.mind)
-		var/primary_weapons = list("A Poison Dagger", "A Rapier and Agility")
+		var/primary_weapons = list("A Poison Dagger", "A Cane-sword and Agility")
 		var/primary_weapon_choice = input(H, "Choose your signature weapon.", "TOOLS OF YOUR TRADE") as anything in primary_weapons
 		H.set_blindness(0)
 		switch(primary_weapon_choice)
@@ -78,7 +78,7 @@
 						ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
 						H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 2))
 						backr = /obj/item/rogueweapon/woodstaff/implement
-			if("A cane sword and Agility")
+			if("A Cane-sword and Agility")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				beltl = /obj/item/rogueweapon/scabbard/sword/royal/courtphysician
