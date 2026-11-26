@@ -22,6 +22,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/processing = TRUE
 	// How many times have we ran
 	var/iteration = 0
+	/// Stack end detector to detect stack overflows that kill the mc's main loop
+	var/datum/stack_end_detector/stack_end_detector
 
 	// world.time of last fire, for tracking lag outside of the mc
 	var/last_run
@@ -91,15 +93,29 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/list/_subsystems = list()
 	subsystems = _subsystems
 	if (Master != src)
-		if (istype(Master))
+		if (istype(Master)) //If there is an existing MC take over his stuff and delete it
 			Recover()
 			qdel(Master)
+			Master = src
 		else
-			var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-			sortTim(subsytem_types, GLOBAL_PROC_REF(cmp_subsystem_init))
-			for(var/I in subsytem_types)
-				_subsystems += new I
-		Master = src
+			//Code used for first master on game boot or if existing master got deleted
+			Master = src
+			var/list/subsystem_types = subtypesof(/datum/controller/subsystem)
+			sortTim(subsystem_types, GLOBAL_PROC_REF(cmp_subsystem_init))
+
+			//Find any abandoned subsystem from the previous master (if there was any)
+			var/list/existing_subsystems = list()
+			for(var/global_var in global.vars)
+				if (istype(global.vars[global_var], /datum/controller/subsystem))
+					existing_subsystems += global.vars[global_var]
+
+			//Either init a new SS or if an existing one was found use that
+			for(var/I in subsystem_types)
+				var/datum/controller/subsystem/existing = locate(I) in existing_subsystems
+				if (existing && existing.type == I)
+					_subsystems += existing
+				else
+					_subsystems += new I
 
 	if(!GLOB)
 		new /datum/controller/global_vars
@@ -329,7 +345,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/track_init_memory = !CONFIG_GET(flag/disable_memory_stats)
 	var/init_rss_baseline = track_init_memory ? get_process_rss_bytes() : null
 	for (var/datum/controller/subsystem/SS in subsystems)
-		if (SS.flags & SS_NO_INIT)
+		if ((SS.flags & SS_NO_INIT) || SS.initialized)
 			continue
 		var/ss_init_start = REALTIMEOFDAY
 		SS.Initialize(REALTIMEOFDAY)
@@ -450,6 +466,11 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/error_level = 0
 	var/sleep_delta = 1
 	var/list/subsystems_to_check
+
+	//setup the stack overflow detector
+	stack_end_detector = new()
+	var/datum/stack_canary/canary = stack_end_detector.prime_canary()
+	canary.use_variable()
 	//the actual loop.
 
 	while (1)
