@@ -18,11 +18,11 @@ SUBSYSTEM_DEF(elastic)
 	///abstract information - basically want to keep track of spell casts over the round? do it like this
 	var/list/abstract_information = list()
 
-/datum/controller/subsystem/elastic/Initialize(start_timeofday)
+/datum/controller/subsystem/elastic/Initialize()
 	if(!CONFIG_GET(flag/elastic_middleware_enabled))
 		flags |= SS_NO_FIRE // Disable firing to save CPU
 	set_abstract_data_zeros()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/elastic/fire(resumed)
 	send_data()

@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/Initialize()
 	mobs = new(10)
 	circuits = new(3)
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/flowcache
 	var/lcount

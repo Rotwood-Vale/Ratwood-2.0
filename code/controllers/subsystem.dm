@@ -270,16 +270,11 @@
 			state = SS_PAUSING
 
 
-//used to initialize the subsystem AFTER the map has loaded
-/datum/controller/subsystem/Initialize(start_timeofday)
-	initialized = TRUE
-	var/time = (REALTIMEOFDAY - start_timeofday) / 10
-	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
-	#ifdef TESTING
-	to_chat(world, span_boldannounce("[msg]"))
-	#endif
-	log_world(msg)
-	return time
+/**
+ * Used to initialize the subsystem. This is expected to be overridden by subtypes.
+ */
+/datum/controller/subsystem/Initialize()
+	return SS_INIT_NONE
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/controller/subsystem/stat_entry(msg)

@@ -42,6 +42,6 @@ SUBSYSTEM_DEF(traumas)
 	phobia_species = list(
 	)
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 #undef PHOBIA_FILE

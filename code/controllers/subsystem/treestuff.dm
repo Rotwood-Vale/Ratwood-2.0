@@ -5,9 +5,9 @@ SUBSYSTEM_DEF(treesetup)
 
 	var/list/initialize_me = list()
 
-/datum/controller/subsystem/treesetup/Initialize(timeofday)
+/datum/controller/subsystem/treesetup/Initialize()
 	InitializeTrees()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/treesetup/proc/InitializeTrees()
 	// some of these are actually newtreealt, which has the same procs

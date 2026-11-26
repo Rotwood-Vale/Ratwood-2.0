@@ -73,10 +73,10 @@ SUBSYSTEM_DEF(mapping)
 		break
 	return ..()
 
-/datum/controller/subsystem/mapping/Initialize(timeofday)
+/datum/controller/subsystem/mapping/Initialize()
 	retainer = new
 	if(initialized)
-		return
+		return SS_INIT_SUCCESS
 	if(current_map.defaulted)
 		var/datum/map_config/old_config = current_map
 		current_map = global.config.defaultmap
@@ -96,7 +96,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	initialize_reserved_level(transit.z_value)
 	generate_z_level_linkages()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/mapping/proc/generate_z_level_linkages()
 	for(var/z_level in 1 to length(z_list))

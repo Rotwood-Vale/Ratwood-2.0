@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(city_assembly)
 	// Don't schedule timers here - Initialize predates round-start. fire() arms the first-
 	// session timer the moment it observes GAME_STATE_PLAYING, anchoring to the real start.
 	// Subsequent sessions resolve on the day-tick (on_day_tick proc from time.dm).
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/city_assembly/fire(resumed = FALSE)
 	if(first_session_armed)

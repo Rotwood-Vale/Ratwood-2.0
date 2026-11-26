@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(economy)
 			SStreasury.stockpile_by_trade_good[S.trade_good_id] = S
 	roundstart_events()
 	roundstart_blockades()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/economy/proc/populate_standing_order_templates()
 	var/list/mapping = list(

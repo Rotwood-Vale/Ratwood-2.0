@@ -30,8 +30,8 @@ SUBSYSTEM_DEF(sounds)
 	GLOB.sound_storey_tiles = CONFIG_GET(number/sound_storey_tiles)
 	setup_available_channels()
 	all_music_sounds = pathwalk("sound/ambience/", ".ogg")
-	. = ..()
 	preload_music_for_clients()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/sounds/proc/preload_music_for_clients()
 	for(var/client/player as anything in GLOB.clients)

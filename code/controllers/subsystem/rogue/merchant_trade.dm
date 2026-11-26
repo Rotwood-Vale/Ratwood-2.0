@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(merchant_trade)
 	last_processed_day = GLOB.dayspassed
 	last_merchant_activity = world.time
 	schedule_auto_hail_tick()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/merchant_trade/proc/init_market_pools()
 	pool_pop_snapshot = compute_pop_count_for_pools()

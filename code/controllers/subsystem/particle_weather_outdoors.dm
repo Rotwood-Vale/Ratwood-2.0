@@ -68,14 +68,14 @@ SUBSYSTEM_DEF(outdoor_effects)
 			continue
 		GLOB.SUNLIGHT_QUEUE_WORK += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 
-/datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
+/datum/controller/subsystem/outdoor_effects/Initialize()
 	if(!initialized)
 		init_weather_overlay()
 		get_time_of_day()
 		InitializeTurfs()
 		initialized = TRUE
 	fire(FALSE, TRUE)
-	..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/outdoor_effects/stat_entry(msg)
 	msg = "W:[GLOB.SUNLIGHT_QUEUE_WORK.len]|U:[GLOB.SUNLIGHT_QUEUE_UPDATE.len]|C:[GLOB.SUNLIGHT_QUEUE_CORNER.len]"

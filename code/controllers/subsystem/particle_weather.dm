@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 
 
 //This has been mangled - currently only supports 1 weather effect serverwide so I can finish this
-/datum/controller/subsystem/ParticleWeather/Initialize(start_timeofday)
+/datum/controller/subsystem/ParticleWeather/Initialize()
 	for(var/V in subtypesof(/datum/particle_weather))
 		var/datum/particle_weather/W = V
 		var/probability = initial(W.probability)
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 			selected_forecast = new /datum/forecast/byos()
 		else
 			selected_forecast = new /datum/forecast/rockhill()	//Default to rockhill if no configs match so we have some weather
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ParticleWeather/proc/run_weather(datum/particle_weather/weather_datum_type, force = 0, color)
 

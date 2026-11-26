@@ -8,9 +8,9 @@ SUBSYSTEM_DEF(paintings)
 	/// Mapped random paintings waiting to be hung once every one in their map load has initialized.
 	var/list/pending_random_paintings = list()
 
-/datum/controller/subsystem/paintings/Initialize(start_timeofday)
+/datum/controller/subsystem/paintings/Initialize()
 	archive = new
-	return ..()
+	return SS_INIT_SUCCESS
 
 /// Adds a signed canvas to the archive, using an image of it rendered for the upload. Returns TRUE on success.
 /datum/controller/subsystem/paintings/proc/playerpainting2file(obj/item/canvas/canvas, icon/painting, mob/user)

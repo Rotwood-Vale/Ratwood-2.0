@@ -63,6 +63,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	var/static/random_seed
 
+	/// During initialization, will be the instanced subsystem that is currently initializing.
+	/// Outside of initialization, returns null.
+	var/current_initializing_subsystem = null
+
+	var/track_init_memory = FALSE
+	var/init_rss_baseline
+
 	//current tick limit, assigned before running a subsystem.
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
@@ -342,16 +349,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 //#endif
 
 	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
-	var/track_init_memory = !CONFIG_GET(flag/disable_memory_stats)
-	var/init_rss_baseline = track_init_memory ? get_process_rss_bytes() : null
+	track_init_memory = !CONFIG_GET(flag/disable_memory_stats)
+	init_rss_baseline = track_init_memory ? get_process_rss_bytes() : null
 	for (var/datum/controller/subsystem/SS in subsystems)
-		if ((SS.flags & SS_NO_INIT) || SS.initialized)
-			continue
-		var/ss_init_start = REALTIMEOFDAY
-		SS.Initialize(REALTIMEOFDAY)
-		if(track_init_memory)
-			init_rss_baseline = log_subsystem_init_memory(SS, init_rss_baseline, (REALTIMEOFDAY - ss_init_start) / 10)
+		init_subsystem(SS)
 		CHECK_TICK
+	current_initializing_subsystem = null
 	current_ticklimit = TICK_LIMIT_RUNNING
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
@@ -382,6 +385,88 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	// Loop.
 	Master.StartProcessing(0)
 	SSgamemode.handle_picking_storyteller()
+
+/**
+ * Initialize a given subsystem and handle the results.
+ *
+ * Arguments:
+ * * subsystem - the subsystem to initialize.
+ */
+/datum/controller/master/proc/init_subsystem(datum/controller/subsystem/subsystem)
+	var/static/list/valid_results = list(
+		SS_INIT_FAILURE,
+		SS_INIT_NONE,
+		SS_INIT_SUCCESS,
+		SS_INIT_NO_NEED,
+		SS_INIT_NO_MESSAGE,
+	)
+
+	if ((subsystem.flags & SS_NO_INIT) || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
+		subsystem.initialized = TRUE // set initialized to TRUE, because the value of initialized may still be checked on SS_NO_INIT subsystems as an "is this ready" check
+		return
+
+	current_initializing_subsystem = subsystem
+	rustg_time_reset(SS_INIT_TIMER_KEY)
+
+	var/result = subsystem.Initialize()
+
+	// Capture end time
+	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)
+	var/seconds = round(time / 1000, 0.01)
+
+	if(track_init_memory)
+		init_rss_baseline = log_subsystem_init_memory(subsystem, init_rss_baseline, seconds)
+
+	// Always update the blackbox tally regardless.
+	SSblackbox.record_feedback("tally", "subsystem_initialize", time, subsystem.name)
+
+	// Gave invalid return value.
+	if(result && !(result in valid_results))
+		warning("[subsystem.name] subsystem initialized, returning invalid result [result]. This is a bug.")
+
+	// just returned ..() or didn't implement Initialize() at all
+	if(result == SS_INIT_NONE)
+		warning("[subsystem.name] subsystem does not implement Initialize() or it returns ..(). If the former is true, the SS_NO_INIT flag should be set for this subsystem.")
+
+	if(result != SS_INIT_FAILURE)
+		// Some form of success, implicit failure, or the SS in unused.
+		subsystem.initialized = TRUE
+		SEND_SIGNAL(subsystem, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	else
+		// The subsystem officially reports that it failed to init and wishes to be treated as such.
+		subsystem.initialized = FALSE
+		subsystem.can_fire = FALSE
+
+	// The rest of this proc is printing the world log and chat message.
+	var/message_prefix
+
+	// If true, print the chat message with boldwarning text.
+	var/chat_warning = FALSE
+
+	switch(result)
+		if(SS_INIT_FAILURE)
+			message_prefix = "Failed to initialize [subsystem.name] subsystem after"
+			chat_warning = TRUE
+		if(SS_INIT_SUCCESS, SS_INIT_NO_MESSAGE)
+			message_prefix = "Initialized [subsystem.name] subsystem within"
+		if(SS_INIT_NO_NEED)
+			// This SS is disabled or is otherwise shy.
+			return
+		else
+			// SS_INIT_NONE or an invalid value.
+			message_prefix = "Initialized [subsystem.name] subsystem with errors within"
+			chat_warning = TRUE
+
+	var/message = "[message_prefix] [seconds] second[seconds == 1 ? "" : "s"]!"
+#ifdef TESTING
+	var/chat_message = chat_warning ? span_boldwarning(message) : span_boldannounce(message)
+
+	if(result != SS_INIT_NO_MESSAGE)
+		to_chat(world, chat_message, MESSAGE_TYPE_DEBUG)
+#else
+	pass(chat_warning)
+#endif
+	log_world(message)
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel

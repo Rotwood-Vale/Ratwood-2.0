@@ -21,8 +21,7 @@ SUBSYSTEM_DEF(vote)
 	/// World.time we started our last vote
 	var/last_vote_time = -INFINITY
 
-/datum/controller/subsystem/vote/Initialize(start_timeofday)
-	. = ..()
+/datum/controller/subsystem/vote/Initialize()
 
 	for(var/vote_type in subtypesof(/datum/vote))
 		var/datum/vote/vote = new vote_type()
@@ -31,6 +30,7 @@ SUBSYSTEM_DEF(vote)
 			continue
 
 		possible_votes[vote.name] = vote
+	return SS_INIT_SUCCESS
 
 
 // Called by master_controller

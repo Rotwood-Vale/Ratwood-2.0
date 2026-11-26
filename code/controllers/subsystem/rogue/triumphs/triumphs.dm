@@ -90,7 +90,6 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/post_equip_calls = list()
 
 /datum/controller/subsystem/triumphs/Initialize()
-	. = ..()
 
 	prep_the_triumphs_leaderboard()
 	load_triumph_sinks()
@@ -119,6 +118,7 @@ SUBSYSTEM_DEF(triumphs)
 					copy_list -= current_triumph_buy_datum
 				if(central_state_data[catty_key]["[page_numba]"].len == page_display_limit)
 					break
+	return SS_INIT_SUCCESS
 
 /*
 	This occurs when you try to buy a triumph condition and sets it up

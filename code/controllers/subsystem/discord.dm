@@ -37,13 +37,13 @@ SUBSYSTEM_DEF(discord)
 	var/notify_file = file("data/notify.json")
 	var/enabled = 0 // Is TGS enabled (If not we wont fire because otherwise this is useless)
 
-/datum/controller/subsystem/discord/Initialize(start_timeofday)
+/datum/controller/subsystem/discord/Initialize()
 	// Check for if we are using TGS, otherwise return and disabless firing
 	if(world.TgsAvailable())
 		enabled = 1 // Allows other procs to use this (Account linking, etc)
 	else
 		can_fire = 0 // We dont want excess firing
-		return ..() // Cancel 
+		return SS_INIT_SUCCESS // Cancel 
 
 	try
 		people_to_notify = json_decode(file2text(notify_file))
@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(discord)
 	if(notifymsg)
 		send2chat(new /datum/tgs_message_content("[notifymsg]"), CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
-	return ..()
+	return SS_INIT_SUCCESS
 	
 /datum/controller/subsystem/discord/fire()
 	if(!enabled)

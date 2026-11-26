@@ -5,10 +5,10 @@ SUBSYSTEM_DEF(whitelist)
 	var/list/whitelist = list()
 
 /datum/controller/subsystem/whitelist/Initialize()
-	. = ..()
 	if(!SSdbcore.Connect())
-		return
+		return SS_INIT_SUCCESS
 	load_entry_whitelist()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/whitelist/proc/add_entry_whitelist(target_ckey, admin_ckey = "SYSTEM")
 	if(!target_ckey)

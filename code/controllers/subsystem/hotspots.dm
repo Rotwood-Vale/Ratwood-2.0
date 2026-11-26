@@ -1,5 +1,6 @@
 SUBSYSTEM_DEF(hotspots)
 	name = "Fire Hotspots"
+	flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_HOTSPOTS
 	wait = 5
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME

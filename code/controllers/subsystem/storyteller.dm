@@ -187,10 +187,10 @@ SUBSYSTEM_DEF(gamemode)
 	var/roundvoteend = FALSE
 	var/reb_end_time = 0
 
-/datum/controller/subsystem/gamemode/Initialize(time, zlevel)
+/datum/controller/subsystem/gamemode/Initialize()
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
 	flags |= SS_NO_FIRE
-	return ..()
+	return SS_INIT_SUCCESS
 #endif
 
 	// Populate event pools
@@ -225,7 +225,7 @@ SUBSYSTEM_DEF(gamemode)
 	load_roundstart_data()
 
 	check_roundstart_gods_rankings()
-	. = ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
 	if(last_devotion_check < world.time)

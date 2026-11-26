@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(maturity_guard)
 	current_day = text2num(time2text(current_time, "DD"))
 	current_month = text2num(time2text(current_time, "MM"))
 	current_year = text2num(time2text(current_time, "YYYY"))
-	. = ..()
+	return SS_INIT_SUCCESS
 
 /**
  * Checks if the player is declared of age. Prompts the player for DoB if necessary.

@@ -8,9 +8,9 @@ PROCESSING_SUBSYSTEM_DEF(ai_movement)
 	wait = 1
 	///an assoc list of all ai_movement types. Assoc type to instance
 	var/list/movement_types
-/datum/controller/subsystem/processing/ai_movement/Initialize(timeofday)
+/datum/controller/subsystem/processing/ai_movement/Initialize()
 	SetupAIMovementInstances()
-	return ..()
+	return SS_INIT_SUCCESS
 /datum/controller/subsystem/processing/ai_movement/proc/SetupAIMovementInstances()
 	movement_types = list()
 	for(var/key as anything in subtypesof(/datum/ai_movement))

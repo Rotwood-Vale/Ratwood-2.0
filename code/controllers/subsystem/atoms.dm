@@ -29,11 +29,11 @@ SUBSYSTEM_DEF(atoms)
 	/// type -> count initialized in the current sampling window
 	var/list/init_mem_window = list()
 
-/datum/controller/subsystem/atoms/Initialize(timeofday)
+/datum/controller/subsystem/atoms/Initialize()
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)

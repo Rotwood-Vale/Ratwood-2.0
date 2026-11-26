@@ -13,9 +13,9 @@ SUBSYSTEM_DEF(ai_controllers)
 
 #define AI_STATUS_OFF_MAX_TIME 5 SECONDS
 
-/datum/controller/subsystem/ai_controllers/Initialize(timeofday)
+/datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
 	if(length(GLOB.ai_subtrees))

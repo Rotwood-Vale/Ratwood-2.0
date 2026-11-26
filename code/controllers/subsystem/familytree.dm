@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(familytree)
 		for(var/I = 1 to 2)
 			families += new /datum/heritage(null, null, pioneer_household)
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/familytree/proc/GetAgeValue(age_string)
 	// Convert age string to numeric value for comparison

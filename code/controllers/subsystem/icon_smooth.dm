@@ -36,4 +36,4 @@ SUBSYSTEM_DEF(icon_smooth)
 			continue
 		smooth_icon(smoothing_atom)
 		CHECK_TICK
-	return ..()
+	return SS_INIT_SUCCESS

@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(role_class_handler)
 
 	initialized = TRUE
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 // This covers both class datums and drifter waves

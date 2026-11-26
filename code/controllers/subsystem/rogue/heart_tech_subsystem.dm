@@ -15,10 +15,9 @@ SUBSYSTEM_DEF(chimeric_tech)
 	cached_choices_paths = list()
 
 /datum/controller/subsystem/chimeric_tech/Initialize()
-	. = ..()
 	load_all_tech_nodes()
 	init_unlockable_recipes()
-	return
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/chimeric_tech/proc/load_all_tech_nodes()
 	for(var/T in typesof(/datum/chimeric_tech_node) - /datum/chimeric_tech_node)

@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(map_procgen)
 		CRASH("Admin attempted to spawn mapgen landmark post-init.")
 	generators_to_run.Add(to_queue)
 
-/datum/controller/subsystem/map_procgen/Initialize(start_timeofday)
+/datum/controller/subsystem/map_procgen/Initialize()
 	var/count = length(generators_to_run)
 	to_chat_immediate(GLOB.admins, type = MESSAGE_TYPE_DEBUG, html = span_admin("PROCGEN: Running [count] queued generators."))
 	log_world("Running [count] queued generators.")
@@ -22,4 +22,4 @@ SUBSYSTEM_DEF(map_procgen)
 		CHECK_TICK
 		to_chat_immediate(GLOB.admins, type = MESSAGE_TYPE_DEBUG, html = span_admin("Finished generator [map_gen.type]"))
 		log_world("Finished generator [map_gen.type]")
-	. = ..()
+	return SS_INIT_SUCCESS

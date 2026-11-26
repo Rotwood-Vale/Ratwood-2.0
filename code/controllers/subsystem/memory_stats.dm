@@ -10,9 +10,9 @@ SUBSYSTEM_DEF(memory_stats)
 	/// RSS in raw bytes of the last sample (float precision, ~256 byte granularity at the 4GB scale)
 	var/last_rss_bytes = 0
 
-/datum/controller/subsystem/memory_stats/Initialize(start_timeofday)
+/datum/controller/subsystem/memory_stats/Initialize()
 	can_fire = !CONFIG_GET(flag/disable_memory_stats)
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/memory_stats/fire(resumed)
 	log_memory_stats()

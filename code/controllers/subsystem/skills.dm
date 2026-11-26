@@ -27,9 +27,9 @@ SUBSYSTEM_DEF(skills)
 		SKILL_LEVEL_LEGENDARY = "Legendary",
 	)
 
-/datum/controller/subsystem/skills/Initialize(timeofday)
+/datum/controller/subsystem/skills/Initialize()
 	InitializeSkills()
-	return ..()
+	return SS_INIT_SUCCESS
 
 ///Ran on initialize, populates the skills dictionary
 /datum/controller/subsystem/skills/proc/InitializeSkills(timeofday)

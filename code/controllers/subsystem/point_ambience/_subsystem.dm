@@ -344,7 +344,7 @@ SUBSYSTEM_DEF(point_ambience)
  * Recovery preserves an existing fill, so a replacement subsystem does not rebuild it. Initial
  * construction happens before live tick processing.
  */
-/datum/controller/subsystem/point_ambience/Initialize(start_timeofday)
+/datum/controller/subsystem/point_ambience/Initialize()
 	if(!river_fill.done)
 		river_fill.build()
-	return ..()
+	return SS_INIT_SUCCESS

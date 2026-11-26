@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(input)
 	setup_macrosets()
 	refresh_client_macro_sets()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 // This is for when macro sets are eventualy datumized
 /datum/controller/subsystem/input/proc/setup_macrosets()
