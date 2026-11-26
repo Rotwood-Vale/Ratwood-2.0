@@ -44,3 +44,68 @@
 	if(action == "close")
 		ui.close()
 		return TRUE
+
+//Antag datum side: what a briefing shows, and the verb that reopens it
+
+/datum/antagonist/proc/has_briefing()
+	return !!briefing_title
+
+/// Opens the briefing window for user (defaults to the owner's current mob)
+/datum/antagonist/proc/show_briefing(mob/user)
+	if(!has_briefing())
+		return
+	if(!user)
+		user = owner?.current
+	if(!user?.client)
+		return
+	if(!briefing)
+		briefing = new(src)
+	briefing.ui_interact(user)
+
+/// Goal rows for the briefing window: list of list("text", "completed"). completed is null when not tracked live.
+/datum/antagonist/proc/get_briefing_goals()
+	var/list/goals = list()
+	for(var/datum/objective/objective as anything in objectives)
+		goals += list(list(
+			"text" = objective.explanation_text,
+			"completed" = briefing_live_goals ? !!objective.check_completion() : null,
+		))
+	return goals
+
+/**
+ * Optional progress bar for the briefing window, or null for none.
+ * Shape: list("label", "value", "max", "unit", "marks" = list(list("at", "label")), "lines" = list(text))
+ */
+/datum/antagonist/proc/get_briefing_progress(mob/user)
+	return
+
+/// Gives or takes the briefing verb on M, depending on whether its mind still holds any antag with a briefing
+/datum/antagonist/proc/update_briefing_verb(mob/M)
+	if(!M)
+		return
+	for(var/datum/antagonist/antag as anything in M.mind?.antag_datums)
+		if(antag.has_briefing())
+			M.verbs |= /mob/proc/antagonist_briefing
+			return
+	M.verbs -= /mob/proc/antagonist_briefing
+
+/mob/proc/antagonist_briefing()
+	set name = "Antagonist Briefing"
+	set category = "IC"
+
+	var/list/options = list()
+	for(var/datum/antagonist/antag as anything in mind?.antag_datums)
+		if(antag.has_briefing())
+			options[antag.name] = antag
+	if(!length(options))
+		to_chat(src, span_warning("I have no briefing to read."))
+		return
+	var/datum/antagonist/chosen
+	if(length(options) == 1)
+		chosen = options[options[1]]
+	else
+		var/choice = tgui_input_list(src, "Which briefing?", "Antagonist Briefing", options)
+		if(!choice)
+			return
+		chosen = options[choice]
+	chosen.show_briefing(src)

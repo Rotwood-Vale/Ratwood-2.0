@@ -1314,7 +1314,7 @@
 				playsound(loc,'sound/items/carvty.ogg', 50, TRUE)
 				qdel(W)
 				record_round_statistic(STATS_SHRINE_VALUE, donatedamnt)
-				add_bandit_offering(user, donatedamnt)
+				SSmapping.retainer.add_bandit_offering(user, donatedamnt)
 
 			else
 				to_chat(user, span_warning("This item isn't a good offering."))

@@ -2,12 +2,10 @@
 /datum/objective/bandit_hoard
 	name = "bandit hoard"
 	martyr_compatible = TRUE
-	/// 1 small, 2 decent, 3 massive; see bandit_hoard_tier()
-	var/tier = 1
+	/// Shown in the objective, the briefing bar and the round-end summary
+	var/tier_name
 
 /datum/objective/bandit_hoard/New(text, datum/mind/owner)
-	target_amount = bandit_hoard_tier_amount(tier)
-	triumph_count = bandit_hoard_triumphs(tier)
 	. = ..()
 	update_explanation_text()
 
@@ -15,16 +13,29 @@
 	return SSmapping.retainer.bandit_contribute >= target_amount
 
 /datum/objective/bandit_hoard/update_explanation_text()
-	explanation_text = "[bandit_hoard_tier_name(tier)]: offer [target_amount] mammons' worth of loot to Matthios's idol."
+	explanation_text = "[tier_name]: offer [target_amount] mammons' worth of loot to Matthios's idol."
 
 /datum/objective/bandit_hoard/small
-	tier = 1
+	tier_name = "Small Haul"
+	target_amount = BANDIT_HOARD_SMALL
+	triumph_count = BANDIT_HOARD_TRIUMPHS_SMALL
 
 /datum/objective/bandit_hoard/decent
-	tier = 2
+	tier_name = "Decent Stash"
+	target_amount = BANDIT_HOARD_DECENT
+	triumph_count = BANDIT_HOARD_TRIUMPHS_DECENT
 
 /datum/objective/bandit_hoard/massive
-	tier = 3
+	tier_name = "Massive Hoard"
+	target_amount = BANDIT_HOARD_MASSIVE
+	triumph_count = BANDIT_HOARD_TRIUMPHS_MASSIVE
+
+/// Every hoard tier, lowest first. Adding a tier means adding a subtype above and listing it here.
+GLOBAL_LIST_INIT(bandit_hoard_tiers, list(
+	/datum/objective/bandit_hoard/small,
+	/datum/objective/bandit_hoard/decent,
+	/datum/objective/bandit_hoard/massive,
+))
 
 
 /datum/objective/delf
