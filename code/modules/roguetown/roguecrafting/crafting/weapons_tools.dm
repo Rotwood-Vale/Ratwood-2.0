@@ -450,4 +450,5 @@
 		/obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy = 1
 	)
 	skillcraft = /datum/skill/craft/carpentry
+	always_availible = FALSE
 	craftdiff = 0
