@@ -152,14 +152,14 @@
 
 
 /obj/item/rogueweapon/scabbard/attack_hand(mob/user)
-	if(sheathed && !locked)
+	if(sheathed && !locked_sheath)
 		return puke_sword(user)
 
 	..()
 
 
 /obj/item/rogueweapon/scabbard/attackby(obj/item/I, mob/user, params)
-	if(!sheathed)
+	if(!sheathed || locked_sheath)
 		if(!eat_sword(user, I))
 			return ..()
 
@@ -674,6 +674,7 @@
 	force = 25 // a steel reinforced cane
 	wdefense = 9
 	max_integrity = 250
+	walking_stick = TRUE
 	locked_sheath = TRUE
 	hidden_blade = TRUE
 	var/hands = FALSE
