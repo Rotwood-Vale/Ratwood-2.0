@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(minor_mapping)
 		/datum/controller/subsystem/merchant_trade,
 		/datum/controller/subsystem/outdoor_effects,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 /datum/controller/subsystem/minor_mapping/Initialize()
 	//Minor mapping comes quite late in the init list so it should be safe to add here. We want this long after everything else is done

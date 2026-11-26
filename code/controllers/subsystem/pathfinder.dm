@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/datum/flowcache/mobs
 	var/datum/flowcache/circuits
 

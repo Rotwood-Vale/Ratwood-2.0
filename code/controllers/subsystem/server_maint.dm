@@ -3,7 +3,7 @@
 SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6
-	flags = SS_POST_FIRE_TIMING
+	ss_flags = SS_POST_FIRE_TIMING
 	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT

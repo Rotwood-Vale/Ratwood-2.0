@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(merchant_trade)
 	dependencies = list(
 		/datum/controller/subsystem/merchant,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/last_processed_day = -1
 	var/list/datum/foreign_realm/realms = list()
 	var/list/datum/trade_ship/all_ships = list()

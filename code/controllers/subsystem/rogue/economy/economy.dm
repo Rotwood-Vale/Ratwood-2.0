@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(economy)
 		/datum/controller/subsystem/treasury,
 		/datum/controller/subsystem/questpool,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/last_processed_day = 0
 	var/roundstart_events_fired = FALSE
 	var/simulated_player_scalar = 0

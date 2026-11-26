@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(cooking)
 	name = "Cooking Controller"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/list/recipe_index = list() // Key: base_item path | Value: list of recipe datums
 
 /datum/controller/subsystem/cooking/Initialize()

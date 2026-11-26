@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(paintings)
 	name = "Paintings"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// The archive of player paintings, kept across rounds.
 	var/datum/player_archive/paintings/archive

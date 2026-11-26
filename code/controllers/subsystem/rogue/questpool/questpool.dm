@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(questpool)
 	name = "Quest Pool"
 	wait = QUEST_POOL_REGEN_INTERVAL
-	flags = SS_KEEP_TIMING | SS_BACKGROUND
+	ss_flags = SS_KEEP_TIMING | SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME
 
 	var/list/datum/quest/pool = list()

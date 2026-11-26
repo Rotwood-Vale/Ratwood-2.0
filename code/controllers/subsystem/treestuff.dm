@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(treesetup)
 	name = "treesetup"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/initialize_me = list()
 

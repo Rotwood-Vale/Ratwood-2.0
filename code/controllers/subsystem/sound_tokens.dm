@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(sound_tokens)
 	name = "Sound Tokens"
 	wait = 1
-	flags = SS_TICKER | SS_BACKGROUND | SS_NO_INIT
+	ss_flags = SS_TICKER | SS_BACKGROUND | SS_NO_INIT
 
 	/// Clients whose tokens need repositioning. A mark is idempotent, so several steps or source moves
 	/// in one tick refresh a client once

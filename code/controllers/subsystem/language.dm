@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(language)
 	name = "Language"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 /datum/controller/subsystem/language/Initialize()
 	for(var/L in subtypesof(/datum/language))

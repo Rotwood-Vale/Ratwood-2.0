@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(hunting)
 	name = "Hunting"
 	wait = 5 MINUTES
 	runlevels = RUNLEVEL_GAME
-	flags = 0
+	ss_flags = 0
 	/// List of landmark objects waiting to spawn a new trail
 	var/list/active_spawners = list()
 	/// List of key-value pairs that's an area, and a static list of linked areas that area belongs to.

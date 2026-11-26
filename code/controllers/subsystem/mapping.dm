@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(mapping)
 		/datum/controller/subsystem/librarian,
 		/datum/controller/subsystem/paintings,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(mapping)
 	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
 
 /datum/controller/subsystem/mapping/Recover()
-	flags |= SS_NO_INIT
+	ss_flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates

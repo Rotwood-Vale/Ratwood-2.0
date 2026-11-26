@@ -10,7 +10,7 @@
 
 SUBSYSTEM_DEF(familytree)
 	name = "familytree"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/*
 	* The family that kings, queens, and princes

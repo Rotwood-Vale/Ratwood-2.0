@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(chimeric_tech)
 	name = "Chimeric Tech Controller"
 	priority = FIRE_PRIORITY_DEFAULT
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	// The master list of all instantiated nodes, keyed by type path.
 	var/list/all_tech_nodes = list()

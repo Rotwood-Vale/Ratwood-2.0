@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(threat_region_templates, list(
 SUBSYSTEM_DEF(regionthreat)
 	name = "Regional Threat"
 	wait = 15 MINUTES
-	flags = SS_KEEP_TIMING | SS_BACKGROUND | SS_NO_INIT
+	ss_flags = SS_KEEP_TIMING | SS_BACKGROUND | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME
 	// The first four regions are meant to be "tameable" for towner purposes
 	var/list/threat_regions

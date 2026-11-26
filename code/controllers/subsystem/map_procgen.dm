@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(map_procgen)
 		/datum/controller/subsystem/ipintel,
 		/datum/controller/subsystem/stickyban,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// Queued generators created by landmarks.
 	var/list/datum/mapGenerator/generators_to_run = list()

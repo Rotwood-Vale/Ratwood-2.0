@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(elastic)
 	name = "Elastic Middleware"
 	wait = 30 SECONDS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	flags = SS_KEEP_TIMING // This needs to ingest every 30 IRL seconds, not ingame seconds.
+	ss_flags = SS_KEEP_TIMING // This needs to ingest every 30 IRL seconds, not ingame seconds.
 	/// The TIMEOFDAY when /world was created. Set in Genesis.
 	var/world_init_time = 0
 	/// Compiled round list data. Interfaced with [proc/add_list_data]
@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(elastic)
 
 /datum/controller/subsystem/elastic/Initialize()
 	if(!CONFIG_GET(flag/elastic_middleware_enabled))
-		flags |= SS_NO_FIRE // Disable firing to save CPU
+		ss_flags |= SS_NO_FIRE // Disable firing to save CPU
 	set_abstract_data_zeros()
 	return SS_INIT_SUCCESS
 

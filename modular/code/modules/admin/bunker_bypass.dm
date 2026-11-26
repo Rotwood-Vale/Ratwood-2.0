@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(whitelist)
 	name = "Whitelist"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/list/whitelist = list()
 
 /datum/controller/subsystem/whitelist/Initialize()

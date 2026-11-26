@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(SUNLIGHT_QUEUE_CORNER) /* turfs to have their color/lights/etc
 SUBSYSTEM_DEF(outdoor_effects)
 	name = "Outdoor Weather Calc"
 	wait = LIGHTING_INTERVAL
-	flags = SS_TICKER
+	ss_flags = SS_TICKER
 	var/list/atom/movable/screen/plane_master/weather_effect/weather_planes_need_vis = list()
 
 	var/list/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/sunlighting_planes = list()

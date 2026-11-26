@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 //	wait = 1
 	var/list/processing = list()
 	var/list/currentrun = list()

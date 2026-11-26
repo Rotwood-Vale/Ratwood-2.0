@@ -6,7 +6,7 @@
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
 	runlevels = RUNLEVEL_GAME
-	flags = SS_BACKGROUND | SS_KEEP_TIMING
+	ss_flags = SS_BACKGROUND | SS_KEEP_TIMING
 	priority = 20
 	wait = 2 SECONDS
 
@@ -187,7 +187,7 @@ SUBSYSTEM_DEF(gamemode)
 
 /datum/controller/subsystem/gamemode/Initialize()
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
-	flags |= SS_NO_FIRE
+	ss_flags |= SS_NO_FIRE
 	return SS_INIT_SUCCESS
 #endif
 

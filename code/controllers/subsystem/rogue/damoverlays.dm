@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(damoverlays)
 	name = "damoverlays"
 	wait = 20
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = 1
 	var/list/currentrun = list()
 	var/list/processing = list()

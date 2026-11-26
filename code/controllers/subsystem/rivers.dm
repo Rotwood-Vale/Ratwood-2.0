@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(rivers)
 	name = "Rivers"
-	flags = SS_KEEP_TIMING | SS_NO_INIT
+	ss_flags = SS_KEEP_TIMING | SS_NO_INIT
 	wait = 0.5 SECONDS
 	var/list/processing = list()
 	var/list/currentrun = list()

@@ -1,7 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(iconupdates)
 	name = "icon_updates"
 	wait = 1
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_MOBS
 	processing_flag = PROCESSING_ICON_UPDATES
 

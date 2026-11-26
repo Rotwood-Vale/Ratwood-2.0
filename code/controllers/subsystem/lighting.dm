@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(lighting)
 		/datum/controller/subsystem/persistence,
 	)
 	wait = 0
-	flags = SS_TICKER
+	ss_flags = SS_TICKER
 	priority = FIRE_PRIORITY_DEFAULT
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.

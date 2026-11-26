@@ -10,7 +10,7 @@
 
 SUBSYSTEM_DEF(map_vote)
 	name = "Map Vote"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	// admin override flag
 	var/admin_override = FALSE

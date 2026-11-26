@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(persistence)
 	dependencies = list(
 		/datum/controller/subsystem/minor_mapping,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)

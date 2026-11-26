@@ -36,7 +36,7 @@ GLOBAL_VAR_INIT(triumph_wipe_season, get_triumph_wipe_season())
 // I need some shit early v early, so uhhh enjoy having lists on the define
 SUBSYSTEM_DEF(triumphs)
 	name = "Triumphs"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	// List of top ten for display in browser page on button click
 	var/list/triumph_leaderboard = list()

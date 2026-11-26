@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(vanderlin_weather, list(PARTICLEWEATHER_RAIN, PARTICLEWEATHER_BLOODRAIN, PARTICLEWEATHER_LEAVES))
 SUBSYSTEM_DEF(ParticleWeather)
 	name = "Particle Weather"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 	var/list/elligble_weather = list()

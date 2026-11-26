@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(point_ambience)
 	)
 	/// Runs every tick in the background priority bracket, using the remaining tick budget
 	wait = 1
-	flags = SS_BACKGROUND | SS_TICKER
+	ss_flags = SS_BACKGROUND | SS_TICKER
 	/// Initialize builds the river fill, which needs every map and template in place
 
 	/// POINT_AMBIENCE_LIVE, FALLBACK or OFF. Use set_mode() to start and stop the required

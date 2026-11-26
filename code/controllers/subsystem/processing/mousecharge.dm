@@ -2,7 +2,7 @@
 PROCESSING_SUBSYSTEM_DEF(mousecharge)
 	name = "mouse charging prog"
 	wait = 1
-	flags = SS_KEEP_TIMING|SS_NO_INIT //Surely nothing bad will happen.
+	ss_flags = SS_KEEP_TIMING|SS_NO_INIT //Surely nothing bad will happen.
 	priority = FIRE_PRIORITY_MOUSECHARGE
 	stat_tag = "MOUSE"
 	var/list/mouse_icons = list(

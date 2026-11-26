@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(incone)
 	name = "incone"
 	wait = 1
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_INCONE
 	var/list/processing = list()
 	var/list/currentrun = list()
