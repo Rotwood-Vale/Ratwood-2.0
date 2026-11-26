@@ -29,7 +29,7 @@
 #define NEW_SS_GLOBAL(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
 
 #define START_PROCESSING(Processor, Datum) if (!(Datum.datum_flags & Processor.processing_flag)) {Datum.datum_flags |= Processor.processing_flag;Processor.processing += Datum}
-#define STOP_PROCESSING(Processor, Datum) Datum.datum_flags &= ~Processor.processing_flag;Processor.processing -= Datum
+#define STOP_PROCESSING(Processor, Datum) Datum.datum_flags &= ~Processor.processing_flag;Processor.processing -= Datum;Processor.currentrun -= Datum
 
 //! SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
@@ -45,30 +45,27 @@
 /// SS_BACKGROUND has its own priority bracket, this overrides SS_TICKER's priority bump
 #define SS_BACKGROUND (1 << 2)
 
-/// subsystem does not tick check, and should not run unless there is enough time (or its running behind (unless background))
-#define SS_NO_TICK_CHECK (1 << 3)
-
 /** Treat wait as a tick count, not DS, run every wait ticks. */
 /// (also forces it to run first in the tick (unless SS_BACKGROUND))
 /// (We don't want to be choked out by other subsystems queuing into us)
 /// (implies all runlevels because of how it works)
 /// This is designed for basically anything that works as a mini-mc (like SStimer)
-#define SS_TICKER (1 << 4)
+#define SS_TICKER (1 << 3)
 
 /** keep the subsystem's timing on point by firing early if it fired late last fire because of lag */
 /// ie: if a 20ds subsystem fires say 5 ds late due to lag or what not, its next fire would be in 15ds, not 20ds.
-#define SS_KEEP_TIMING (1 << 5)
+#define SS_KEEP_TIMING (1 << 4)
 
 /** Calculate its next fire after its fired. */
 /// (IE: if a 5ds wait SS takes 2ds to run, its next fire should be 5ds away, not 3ds like it normally would be)
 /// This flag overrides SS_KEEP_TIMING
-#define SS_POST_FIRE_TIMING (1 << 6)
+#define SS_POST_FIRE_TIMING (1 << 5)
 
 /// If this subsystem doesn't initialize, it should not report as a hard error in CI.
 /// This should be used for subsystems that are flaky for complicated reasons, such as
 /// the Lua subsystem, which relies on auxtools, which is unstable.
 /// It should not be used simply to silence CI.
-#define SS_OK_TO_FAIL_INIT (1 << 7)
+#define SS_OK_TO_FAIL_INIT (1 << 6)
 
 //! SUBSYSTEM STATES
 #define SS_IDLE 0		/// aint doing shit.

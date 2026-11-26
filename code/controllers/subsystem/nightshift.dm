@@ -3,7 +3,6 @@ GLOBAL_LIST_EMPTY(TodUpdate)
 SUBSYSTEM_DEF(nightshift)
 	name = "Night Shift"
 	wait = 10 SECONDS
-	flags = SS_NO_TICK_CHECK
 	priority = 1
 	var/current_tod = null
 

@@ -11,7 +11,6 @@
 SUBSYSTEM_DEF(familytree)
 	name = "familytree"
 	flags = SS_NO_FIRE
-	lazy_load = FALSE
 
 	/*
 	* The family that kings, queens, and princes

@@ -36,8 +36,6 @@
 
 	var/processing_flag = PROCESSING_DEFAULT
 
-	var/lazy_load = TRUE
-
 	/*
 	 * The following variables are managed by the MC and should not be modified directly.
 	 */
@@ -138,7 +136,8 @@
 	dequeue()
 	can_fire = 0
 	flags |= SS_NO_FIRE
-	Master.subsystems -= src
+	if (Master)
+		Master.subsystems -= src
 	return ..()
 
 //Queue it to run.
@@ -155,7 +154,7 @@
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
-		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
+		if ((queue_node_flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER)
 			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
 				continue
 			if (queue_node_priority < SS_priority)
@@ -208,9 +207,9 @@
 		queue_next.queue_prev = queue_prev
 	if (queue_prev)
 		queue_prev.queue_next = queue_next
-	if (src == Master.queue_tail)
+	if (Master && (src == Master.queue_tail))
 		Master.queue_tail = queue_prev
-	if (src == Master.queue_head)
+	if (Master && (src == Master.queue_head))
 		Master.queue_head = queue_next
 	queued_time = 0
 	if (state == SS_QUEUED)

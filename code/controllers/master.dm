@@ -70,6 +70,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/rolling_usage_length = 5 SECONDS
 
 /datum/controller/master/New()
+	// Ensure usr is null, to prevent any potential weirdness resulting from the MC having a usr if it's manually restarted.
+	usr = null
+
 	if(!config)
 		config = new
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -196,10 +199,17 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			return TRUE
 
 		if("view_variables")
+			if(!check_rights_for(ui.user.client, R_DEBUG))
+				message_admins(
+					"[key_name(ui.user)] tried to view master controller variables while having improper rights, \
+					this is potentially a malicious exploit and worth noting."
+				)
+
 			var/datum/controller/subsystem/subsystem = locate(params["ref"]) in subsystems
 			if(isnull(subsystem))
 				to_chat(ui.user, span_warning("Failed to locate subsystem."))
 				return
+
 			ui.user.client.debug_variables(subsystem)
 			return TRUE
 
@@ -230,7 +240,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/delay = 50 * ++Master.restart_count
 	Master.restart_timeout = world.time + delay
 	Master.restart_clear = world.time + (delay * 2)
-	Master.processing = FALSE //stop ticking this one
+	if (Master) //Can only do this if master hasn't been deleted
+		Master.processing = FALSE //stop ticking this one
 	try
 		new/datum/controller/master()
 	catch
@@ -240,17 +251,22 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 /datum/controller/master/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
-	for (var/varname in Master.vars)
-		switch (varname)
-			if("name", "tag", "bestF", "type", "parent_type", "vars", "statclick") // Built-in junk.
-				continue
-			else
-				var/varval = Master.vars[varname]
-				if (istype(varval, /datum)) // Check if it has a type var.
-					var/datum/D = varval
-					msg += "\t [varname] = [D]([D.type])\n"
-				else
-					msg += "\t [varname] = [varval]\n"
+	var/list/master_attributes = Master.vars
+	var/list/filtered_variables = list(
+		NAMEOF(src, name),
+		NAMEOF(src, parent_type),
+		NAMEOF(src, statclick),
+		NAMEOF(src, tag),
+		NAMEOF(src, type),
+		NAMEOF(src, vars),
+	)
+	for (var/varname in master_attributes - filtered_variables)
+		var/varval = master_attributes[varname]
+		if (isdatum(varval)) // Check if it has a type var.
+			var/datum/D = varval
+			msg += "\t [varname] = [D]([D.type])\n"
+		else
+			msg += "\t [varname] = [varval]\n"
 	log_world(msg)
 
 	var/datum/controller/subsystem/BadBoy = Master.last_type_processed
@@ -348,12 +364,11 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel
-	if(isnull(old_runlevel))
-		old_runlevel = "NULL"
 
-	testing("MC: Runlevel changed from [old_runlevel] to [new_runlevel]")
+	testing("MC: Runlevel changed from [isnull(old_runlevel) ? "NULL" : old_runlevel] to [new_runlevel]")
 	current_runlevel = log(2, new_runlevel) + 1
 	if(current_runlevel < 1)
+		current_runlevel = old_runlevel
 		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
@@ -574,7 +589,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/tick_precentage
 	var/tick_remaining
 	var/ran = TRUE //this is right
-	var/ran_non_ticker = FALSE
 	var/bg_calc //have we swtiched current_tick_budget to background mode yet?
 	var/tick_usage
 
@@ -592,20 +606,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
 
-			//super special case, subsystems where we can't make them pause mid way through
-			//if we can't run them this tick (without going over a tick)
-			//we bump up their priority and attempt to run them next tick
-			//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
-			//	in those cases, so we just let them run)
-			if (queue_node_flags & SS_NO_TICK_CHECK)
-				if (queue_node.tick_usage > TICK_LIMIT_RUNNING - TICK_USAGE && ran_non_ticker)
-					queue_node.queued_priority += queue_priority_count * 0.1
-					queue_priority_count -= queue_node_priority
-					queue_priority_count += queue_node.queued_priority
-					current_tick_budget -= queue_node_priority
-					queue_node = queue_node.queue_next
-					continue
-
 			if ((queue_node_flags & SS_BACKGROUND))
 				if (!bg_calc)
 					current_tick_budget = queue_priority_count_bg
@@ -622,7 +622,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 			if (queue_node_priority >= 0 && current_tick_budget > 0 && current_tick_budget >= queue_node_priority)
 				//Give the subsystem a precentage of the remaining tick based on the remaining priority
-				tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
+				tick_precentage = tick_remaining * (queue_node_priority / current_tick_budget)
 			else
 				//error state
 				if (. == 0)
@@ -634,8 +634,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 			current_ticklimit = round(TICK_USAGE + tick_precentage)
 
-			if (!(queue_node_flags & SS_TICKER))
-				ran_non_ticker = TRUE
 			ran = TRUE
 
 			queue_node_paused = (queue_node.state == SS_PAUSED || queue_node.state == SS_PAUSING)
@@ -678,7 +676,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			queue_node.paused_ticks = 0
 			queue_node.paused_tick_usage = 0
 
-			if (queue_node_flags & SS_BACKGROUND) //update our running total
+			if (bg_calc) //update our running total
 				queue_priority_count_bg -= queue_node_priority
 			else
 				queue_priority_count -= queue_node_priority

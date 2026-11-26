@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(dungeon_generator)
 
 	init_order = INIT_ORDER_DUNGEON
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_INIT | RUNLEVEL_LOBBY
-	lazy_load = FALSE
 
 	var/list/parent_types = list()
 	var/list/created_types = list()

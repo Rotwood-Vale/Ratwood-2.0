@@ -11,7 +11,6 @@ SUBSYSTEM_DEF(gamemode)
 	flags = SS_BACKGROUND | SS_KEEP_TIMING
 	priority = 20
 	wait = 2 SECONDS
-	lazy_load = FALSE
 
 	///world.time of our last devotion check we add 2 minutes to this to determine if we should switch storytellers
 	var/last_devotion_check = 0
