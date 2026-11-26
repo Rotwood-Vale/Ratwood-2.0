@@ -20,7 +20,14 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 9
+#define DB_MINOR_VERSION 11
+
+/// When a query has been queued up for execution/is being executed
+#define DB_QUERY_STARTED 0
+/// When a query is finished executing
+#define DB_QUERY_FINISHED 1
+/// When there was a problem with the execution of a query.
+#define DB_QUERY_BROKEN 2
 
 
 //! ## Timing subsystem
@@ -146,6 +153,7 @@
 #define FIRE_PRIORITY_AMBIENCE    10
 #define FIRE_PRIORITY_TRACKS		10
 #define FIRE_PRIORITY_GARBAGE		15
+#define FIRE_PRIORITY_DATABASE		16
 #define FIRE_PRIORITY_INCONE		19
 #define FIRE_PRIORITY_MOUSECHARGE	20
 #define FIRE_PRIORITY_HOTSPOTS		20

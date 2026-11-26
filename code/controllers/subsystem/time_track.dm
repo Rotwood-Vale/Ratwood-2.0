@@ -58,6 +58,9 @@ SUBSYSTEM_DEF(time_track)
 			"tidi_slowavg",
 			"maptick",
 			"num_timers",
+			"all_queries",
+			"queries_active",
+			"queries_standby",
 		) + sendmaps_headers
 	)
 	return SS_INIT_SUCCESS
@@ -117,5 +120,9 @@ SUBSYSTEM_DEF(time_track)
 			time_dilation_avg_slow,
 			MAPTICK_LAST_INTERNAL_TICK_USAGE,
 			length(SStimer.timer_id_dict),
+			SSdbcore.all_queries_num,
+			SSdbcore.queries_active_num,
+			SSdbcore.queries_standby_num,
 		) + send_maps_values
 	)
+	SSdbcore.reset_tracking()
