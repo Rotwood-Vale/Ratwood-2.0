@@ -505,7 +505,7 @@
 /obj/effect/proc_holder/spell/invoked/raze/gilded_dragon
 	devotion_cost = 0
 	miracle = FALSE
-	recharge_time = 90
+	recharge_time = 90 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/raze/cast(list/targets, mob/living/user = usr)
 	. = ..()
