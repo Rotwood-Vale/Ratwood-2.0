@@ -1,4 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - balance: "Changed Poison Gas to drain medicine and stamina instead of dealing direct toxin damage."
