@@ -3825,6 +3825,6 @@
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 #include "modular_twilight_axis\code\modules\bildings\blueprint_planner.dm"
 #include "modular_twilight_axis\code\modules\structures\cannon.dm"
-#include "interface\skin.dmf
+#include "interface\skin.dmf"
 #include "_maps\map_files\generic\CentCom.dmm"
 // END_INCLUDE
