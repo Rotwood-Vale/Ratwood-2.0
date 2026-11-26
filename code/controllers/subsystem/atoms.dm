@@ -7,12 +7,20 @@
 // procfs reads are cheap; windows shells out per sample so it gets a much coarser window
 #define INIT_MEM_SAMPLE_INTERVAL ((world.system_type == UNIX) ? 2048 : 131072)
 
+#define TRACKED_INIT_CHECK_TICK(source) if(TICK_CHECK) { clear_tracked_initalize(source); stoplag(); if(source) { set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, source) } }
+
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = INIT_ORDER_ATOMS
 	flags = SS_NO_FIRE
 
-	var/old_initialized
+	/// A stack of list(source, desired initialized state)
+	/// We read the source of init changes from the last entry, and assert that all changes will come with a reset
+	var/list/initialized_state = list()
+	var/base_initialized
+
+	/// How many InitializeAtoms calls are still creating atoms, including ones asleep in CreateAtoms
+	var/active_initializations = 0
 
 	var/list/late_loaders = list()
 
@@ -33,14 +41,40 @@ SUBSYSTEM_DEF(atoms)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
+	initialized = INITIALIZATION_INNEW_REGULAR
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
-	initialized = INITIALIZATION_INNEW_MAPLOAD
+	// Generate a unique mapload source for this run of InitializeAtoms
+	var/static/uid = 0
+	uid = WRAP_UID(uid + 1)
+	var/source = "subsystem init [uid]"
+	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, source)
 
+	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
+	active_initializations++
+	CreateAtoms(atoms, source)
+	active_initializations--
+	clear_tracked_initalize(source)
+	SSicon_smooth.free_deferred(source)
+
+	if(late_loaders.len)
+		for(var/I in late_loaders)
+			var/atom/A = I
+			// An atom can be deleted between queueing and this pass, by a duplicate cull or by
+			// self-qdel in another atom's LateInitialize. Skip it: running LateInitialize on the
+			// corpse schedules timers on a qdeleted object.
+			if(QDELETED(A))
+				continue
+			A.LateInitialize()
+		testing("Late initialized [late_loaders.len] atoms")
+		late_loaders.Cut()
+
+/// Actually creates the list of atoms. Exists solely so a runtime in the creation logic doesn't cause initialized to totally break
+/datum/controller/subsystem/atoms/proc/CreateAtoms(list/atoms, mapload_source = null)
 	init_profiling = !CONFIG_GET(flag/disable_memory_stats)
 	if(init_profiling)
 		init_mem_counter = 0
@@ -62,7 +96,7 @@ SUBSYSTEM_DEF(atoms)
 					if(!bucket)
 						buckets[A.type] = bucket = list()
 					bucket += A
-				CHECK_TICK
+				TRACKED_INIT_CHECK_TICK(mapload_source)
 		else
 			for(var/atom/A in world)
 				if(!(A.flags_1 & INITIALIZED_1))
@@ -70,7 +104,7 @@ SUBSYSTEM_DEF(atoms)
 					if(!bucket)
 						buckets[A.type] = bucket = list()
 					bucket += A
-				CHECK_TICK
+				TRACKED_INIT_CHECK_TICK(mapload_source)
 		count = 0
 		for(var/bucket_type in buckets)
 			var/list/bucket = buckets[bucket_type]
@@ -78,7 +112,7 @@ SUBSYSTEM_DEF(atoms)
 				if(!(A.flags_1 & INITIALIZED_1)) // something else's Initialize may have gotten to it
 					InitAtom(A, mapload_arg)
 					++count
-					CHECK_TICK
+					TRACKED_INIT_CHECK_TICK(mapload_source)
 			// procfs samples are free; windows shells out per sample, so only pay for buckets big enough to matter
 			if(world.system_type == UNIX || length(bucket) >= 10000)
 				sample_init_memory_window()
@@ -88,14 +122,14 @@ SUBSYSTEM_DEF(atoms)
 			var/atom/A = I
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(I, mapload_arg)
-				CHECK_TICK
+				TRACKED_INIT_CHECK_TICK(mapload_source)
 	else
 		count = 0
 		for(var/atom/A in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, mapload_arg)
 				++count
-				CHECK_TICK
+				TRACKED_INIT_CHECK_TICK(mapload_source)
 
 	testing("Initialized [count] atoms")
 	pass(count)
@@ -104,19 +138,6 @@ SUBSYSTEM_DEF(atoms)
 		init_profiling = FALSE
 		dump_init_profile()
 
-	initialized = INITIALIZATION_INNEW_REGULAR
-
-	if(late_loaders.len)
-		for(var/I in late_loaders)
-			var/atom/A = I
-			// An atom can be deleted between queueing and this pass, by a duplicate cull or by
-			// self-qdel in another atom's LateInitialize. Skip it: running LateInitialize on the
-			// corpse schedules timers on a qdeleted object.
-			if(QDELETED(A))
-				continue
-			A.LateInitialize()
-		testing("Late initialized [late_loaders.len] atoms")
-		late_loaders.Cut()
 
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type
@@ -221,18 +242,51 @@ SUBSYSTEM_DEF(atoms)
 		WRITE_LOG(GLOB.world_mem_log, "MEMTYPES: dump complete, [length(type_init_profile)] types total, rss_mb=[round(init_mem_last_rss / (1024 * 1024), 0.1)]")
 	type_init_profile.Cut()
 
-/datum/controller/subsystem/atoms/proc/map_loader_begin()
-	old_initialized = initialized
-	initialized = INITIALIZATION_INSSATOMS
+/datum/controller/subsystem/atoms/proc/map_loader_begin(source)
+	set_tracked_initalized(INITIALIZATION_INSSATOMS, source)
 
-/datum/controller/subsystem/atoms/proc/map_loader_stop()
-	initialized = old_initialized
+/datum/controller/subsystem/atoms/proc/map_loader_stop(source)
+	clear_tracked_initalize(source)
+
+/// Returns the source currently modifying SSatom's init behavior
+/datum/controller/subsystem/atoms/proc/get_initialized_source()
+	var/state_length = length(initialized_state)
+	if(!state_length)
+		return null
+	return initialized_state[state_length][1]
+
+/// Use this to set initialized to prevent error states where the old initialized is overridden, and we end up losing all context
+/// Accepts a state and a source, the most recent state is used, sources exist to prevent overriding old values accidentally
+/datum/controller/subsystem/atoms/proc/set_tracked_initalized(state, source)
+	if(!length(initialized_state))
+		base_initialized = initialized
+	initialized_state += list(list(source, state))
+	initialized = state
+
+/datum/controller/subsystem/atoms/proc/clear_tracked_initalize(source)
+	if(!length(initialized_state))
+		return
+	for(var/i in length(initialized_state) to 1 step -1)
+		if(initialized_state[i][1] == source)
+			initialized_state.Cut(i, i+1)
+			break
+
+	if(!length(initialized_state))
+		initialized = base_initialized
+		base_initialized = INITIALIZATION_INNEW_REGULAR
+		return
+
+	initialized = initialized_state[length(initialized_state)][2]
+
+/// Returns TRUE if anything is currently being initialized
+/datum/controller/subsystem/atoms/proc/initializing_something()
+	return active_initializations > 0
 
 /datum/controller/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized
 	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
 		InitializeAtoms()
-	old_initialized = SSatoms.old_initialized
+	initialized_state = SSatoms.initialized_state
 	BadInitializeCalls = SSatoms.BadInitializeCalls
 
 /datum/controller/subsystem/atoms/proc/InitLog()
@@ -253,3 +307,5 @@ SUBSYSTEM_DEF(atoms)
 	var/initlog = InitLog()
 	if(initlog)
 		text2file(initlog, "[GLOB.log_directory]/initialize.log")
+
+#undef TRACKED_INIT_CHECK_TICK
