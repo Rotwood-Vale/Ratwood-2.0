@@ -78,7 +78,7 @@
 	beltl = /obj/item/rogueweapon/scabbard/sword/noble
 	var/turf/TU = get_turf(H)
 	if(TU)
-		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
@@ -162,7 +162,7 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/veryrich
 	var/turf/TU = get_turf(H)
 	if(TU)
-		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
@@ -171,6 +171,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 1,
+		/obj/item/storage/keyring/heartfelthand = 1,
 		)
 	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	id = /obj/item/scomstone
@@ -222,6 +223,9 @@
 //Advisor start. Trades combat skills for more knowledge and skills - for older hands, hands that don't do combat - people who wanna play wizened old advisors.
 /datum/outfit/job/roguetown/heartfelt/hand/advisor/pre_equip(mob/living/carbon/human/H)
 	..()
+	var/turf/TU = get_turf(H)
+	if(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt(TU)
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	backpack_contents = list(

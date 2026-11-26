@@ -193,3 +193,43 @@
 	name = "watch captain's seal"
 	seal_label = "The Watch Captain of Rotwood Vale"
 	seal_color = "#1e4a7e"
+
+// Migrant Party's Seals
+
+// Heartfelt Lord's Seal
+/obj/item/seal/heartfelt_lord
+	name = "heartfelt lord's seal"
+	seal_label = "The Baron of Heartfelt"
+	seal_color = "#230303"
+
+// Heartfelt Hand's Seal
+/obj/item/seal/heartfelt_hand
+	name = "heartfelt hand's seal"
+	seal_label = "The Hand of the Baron of Heartfelt"
+	seal_color = "#721F1F"
+
+// Grenzelhoft Envoy's Seal
+/obj/item/seal/grenzelhoft_envoy
+	name = "grenzelhoft envoy's seal"
+	seal_label = "The Envoy of the Empire of Grenzelhoft"
+	seal_color = "#FFC000"
+
+// Zybantine Envoy's Seal
+/obj/item/seal/zybantine_envoy
+	name = "zybantine envoy's seal"
+	seal_label = "The Envoy of the Empire of Zybantine"
+	seal_color = "#7851A9"
+
+// Otavan Envoy's Seal
+/obj/item/seal/otavan_envoy
+	name = "otavan envoy's seal"
+	seal_label = "The Envoy of the Principality of Otava"
+	seal_color = "#BCC6CC"
+
+// Czwarteki Lord's Seal
+/obj/item/seal/czwarteki_lord
+	name = "czwarteki lord's seal"
+	seal_label = "The Lord of Czwarteki Commonwealth"
+	seal_color = "#515f00"
+
+

@@ -39,8 +39,16 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 	)
 
+	subclass_virtues = list(
+		/datum/virtue/utility/riding,
+	)
+
 	subclass_languages = list(
 		/datum/language/grenzelhoftian,
+	)
+
+	subclass_stashed_items = list(
+		"Tallow" = /obj/item/reagent_containers/food/snacks/tallow/soft,
 	)
 
 /datum/outfit/job/roguetown/grenzel/envoy/pre_equip(mob/living/carbon/human/H)
@@ -63,11 +71,12 @@
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/paper/scroll/writ_of_esteem/grenzel = 1,
 		/obj/item/natural/feather = 1,
-		/obj/item/paper/scroll = 2
+		/obj/item/paper/scroll = 2,
+		/obj/item/storage/keyring/grenzelhoftenvoy = 1,
 		)
 	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 
@@ -128,7 +137,7 @@
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 1,

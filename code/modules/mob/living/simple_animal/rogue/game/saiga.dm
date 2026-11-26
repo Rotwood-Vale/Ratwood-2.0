@@ -325,6 +325,25 @@
 	ssaddle = S
 	update_icon()
 
+//Faction Caparison Spawns
+//Did not make one for the Ducal Colors, due to unsure how it would handle duke's changing colors midround.
+
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled/heartfelt/Initialize(mapload)
+	. = ..()
+	var/obj/item/natural/saddle/S = new(src)
+	var/obj/item/caparison/heartfelt/HFTC = new(src)
+	ssaddle = S
+	ccaparison = HFTC
+	update_icon()
+
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt/Initialize(mapload)
+	. = ..()
+	var/obj/item/natural/saddle/S = new(src)
+	var/obj/item/caparison/heartfelt/HFTC = new(src)
+	ssaddle = S
+	ccaparison = HFTC
+	update_icon()
+
 // Custom headbutt intent for saiga with proper attack speed
 /datum/intent/simple/headbutt/saiga
 	clickcd = SAIGA_ATTACK_SPEED
