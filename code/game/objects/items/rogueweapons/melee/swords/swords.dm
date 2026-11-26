@@ -601,39 +601,28 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "SWORD")
 
-/obj/item/rogueweapon/sword/long/matthios
-	name = "Emancipator"
-	desc = "A magnificent longsword of unthinkable quality, the hilt twisted into the undeniable shape of Matthios' Eagle, a rontz placed against the blade. Take your destiny, Freemen, liberate us from this madness."
+/obj/item/rogueweapon/sword/long/oathbreaker_matthios
+	name = "\"Kingslayer\""
+	desc = "The blade seems to be forged of pure gold, yet it cuts and blocks just as well as any steel blade would. </br>'Rise, now, stand and fight! Take your freedom, claim your right!' </br>'Rise, now, stand and sing! Storm the castle, kill the king!'"
 	icon = 'icons/roguetown/weapons/swords64.dmi'
-	icon_state = "matthioslongsword"
+	icon_state = "oathbreakersword"
+	item_state = "oathbreakersword"
 	unenchantable = TRUE
 	force = 30
 	force_wielded = 35
 	wdefense  = 8 // for banner larp
-	wdefense_wbonus = 0
+	wdefense_wbonus = 2
 	max_blade_int = 400
 	max_integrity = 500
 	sellprice = 250
 	equip_delay_self = 0
 	unequip_delay_self = 0
+	smeltresult = null 
+	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/sword/strike, /datum/intent/rend/krieg)
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
+	alt_grips = list(/datum/alt_grip/mordhau/sword/lesser, /datum/alt_grip/halfsword/lesser)
 	
-/obj/item/rogueweapon/sword/long/matthios/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "SWORD")
-
-/obj/item/rogueweapon/sword/long/matthios
-	name = "Emancipator"
-	desc = "A magnificent longsword of unthinkable quality, the hilt twisted into the undeniable shape of Matthios' Eagle, a rontz placed against the blade. Take your destiny, Freemen, liberate us from this madness."
-	icon = 'icons/roguetown/weapons/swords64.dmi'
-	icon_state = "matthioslongsword"
-	unenchantable = TRUE
-	force = 30
-	force_wielded = 35
-	max_blade_int = 400
-	max_integrity = 500
-	sellprice = 250
-
-/obj/item/rogueweapon/sword/long/matthios/Initialize(mapload)
+/obj/item/rogueweapon/sword/long/oathbreaker_matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "SWORD")
 

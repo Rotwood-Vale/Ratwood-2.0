@@ -1682,13 +1682,13 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/matthios
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle/matthios
-	var/weapons = list("Gilded Warflail", "Emancipator (Longsword)", "Drakkyrmaw")
+	var/weapons = list("Gilded Warflail", "Kingslayer", "Drakkyrmaw")
 	var/weapon_choice = input(H, "Choose your weapon.", "ARMS OF MATTHIOS") as anything in weapons
 	switch(weapon_choice)
 		if("Gilded Warflail")
 			backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
-		if("Emancipator (Longsword)")
-			backr = /obj/item/rogueweapon/sword/long/matthios
+		if("Kingslayer")
+			backr = /obj/item/rogueweapon/sword/long/oathbreaker_matthios
 		if("Drakkyrmaw")
 			l_hand = /obj/item/rogueweapon/katar/drakkyrmaw
 	if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//prevents getting free gilded armor for your hedge knight buddy if you have natural armor
