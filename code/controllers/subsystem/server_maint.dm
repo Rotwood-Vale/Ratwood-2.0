@@ -6,7 +6,6 @@ SUBSYSTEM_DEF(server_maint)
 	flags = SS_POST_FIRE_TIMING
 	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_SERVER_MAINT
-	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 	var/cleanup_ticker = 0

@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(dbcore)
 	flags = SS_BACKGROUND
 	init_stage = INITSTAGE_FIRST
 	wait = 1 MINUTES
-	init_order = INIT_ORDER_DBCORE
 	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 	var/failed_connection_timeout = 0
 

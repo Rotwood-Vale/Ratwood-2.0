@@ -120,11 +120,14 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
  */
 SUBSYSTEM_DEF(point_ambience)
 	name = "Point Ambience"
+	/// Initializes after map and template placement so river fill sees the completed terrain
+	dependencies = list(
+		/datum/controller/subsystem/minor_mapping,
+	)
 	/// Runs every tick in the background priority bracket, using the remaining tick budget
 	wait = 1
 	flags = SS_BACKGROUND | SS_TICKER
 	/// Initialize builds the river fill, which needs every map and template in place
-	init_order = INIT_ORDER_POINT_AMBIENCE
 
 	/// POINT_AMBIENCE_LIVE, FALLBACK or OFF. Use set_mode() to start and stop the required
 	/// playback

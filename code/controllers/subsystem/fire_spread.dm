@@ -4,7 +4,6 @@ GLOBAL_LIST_INIT(active_fires, list())
 
 SUBSYSTEM_DEF(fire_spread)
 	name = "Fire Spread"
-	init_order = INIT_ORDER_AIR
 	flags = SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 1 SECONDS

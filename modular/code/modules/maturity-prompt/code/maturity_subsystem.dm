@@ -10,7 +10,6 @@
 SUBSYSTEM_DEF(maturity_guard)
 	name = "Maturity guard"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_MATURITY_GUARD
 	/// A list of currently active prompts.
 	var/list/prompt_cache = list()
 	/// A list of players that failed the age check this round. Stopgap only used if we don't have a db attached to ban people.

@@ -1,7 +1,11 @@
 SUBSYSTEM_DEF(merchant_trade)
 	name = "Merchant Trade"
+	// AP parity: must init AFTER SSmerchant — the day-1 trade ship pool
+	// rolls cultural stock / victualling lines against SSmerchant.supply_packs at Initialize().
+	dependencies = list(
+		/datum/controller/subsystem/merchant,
+	)
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_MERCHANT_TRADE
 	var/last_processed_day = -1
 	var/list/datum/foreign_realm/realms = list()
 	var/list/datum/trade_ship/all_ships = list()

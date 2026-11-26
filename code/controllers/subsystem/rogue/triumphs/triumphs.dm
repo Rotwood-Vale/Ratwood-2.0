@@ -37,7 +37,6 @@ GLOBAL_VAR_INIT(triumph_wipe_season, get_triumph_wipe_season())
 SUBSYSTEM_DEF(triumphs)
 	name = "Triumphs"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_TRIUMPHS
 
 	// List of top ten for display in browser page on button click
 	var/list/triumph_leaderboard = list()

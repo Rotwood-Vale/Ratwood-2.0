@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(questpool)
 	wait = QUEST_POOL_REGEN_INTERVAL
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME
-	init_order = INIT_ORDER_DEFAULT
 
 	var/list/datum/quest/pool = list()
 	var/list/recent_takes = list()

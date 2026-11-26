@@ -4,7 +4,9 @@
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
-	init_order = INIT_ORDER_PERSISTENCE
+	dependencies = list(
+		/datum/controller/subsystem/minor_mapping,
+	)
 	flags = SS_NO_FIRE
 
 	var/list/saved_messages = list()

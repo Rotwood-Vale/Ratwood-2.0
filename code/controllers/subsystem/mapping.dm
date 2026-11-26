@@ -1,6 +1,28 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
-	init_order = INIT_ORDER_MAPPING
+	dependencies = list(
+		/datum/controller/subsystem/whitelist,
+		/datum/controller/subsystem/blackbox,
+		/datum/controller/subsystem/maturity_guard,
+		/datum/controller/subsystem/vis_overlays,
+		/datum/controller/subsystem/achievements,
+		/datum/controller/subsystem/events,
+		/datum/controller/subsystem/gamemode,
+		/datum/controller/subsystem/triumphs,
+		/datum/controller/subsystem/role_class_handler,
+		/datum/controller/subsystem/job,
+		/datum/controller/subsystem/vote,
+		/datum/controller/subsystem/processing/ai_movement,
+		/datum/controller/subsystem/ticker,
+		/datum/controller/subsystem/processing/ai_behaviors,
+		/datum/controller/subsystem/ai_controllers,
+	)
+	dependents = list(
+		/datum/controller/subsystem/dungeon_generator,
+		/datum/controller/subsystem/spatial_grid,
+		/datum/controller/subsystem/librarian,
+		/datum/controller/subsystem/paintings,
+	)
 	flags = SS_NO_FIRE
 
 	var/list/nuke_tiles = list()

@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(paintings)
 	name = "Paintings"
-	init_order = INIT_ORDER_PLAYER_ARCHIVES
 	flags = SS_NO_FIRE
 
 	/// The archive of player paintings, kept across rounds.

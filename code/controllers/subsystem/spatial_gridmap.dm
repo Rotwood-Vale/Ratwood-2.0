@@ -77,7 +77,9 @@
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
 	name = "Spatial Grid"
-	init_order = INIT_ORDER_SPATIAL_GRID
+	dependencies = list(
+		/datum/controller/subsystem/dungeon_generator,
+	)
 	///list of the spatial_grid_cell datums per z level, arranged in the order of y index then x index
 	var/list/grids_by_z_level = list()
 	///everything that spawns before us is added to this list until we initialize

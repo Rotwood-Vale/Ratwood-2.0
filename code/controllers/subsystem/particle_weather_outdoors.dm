@@ -42,7 +42,6 @@ SUBSYSTEM_DEF(outdoor_effects)
 	name = "Outdoor Weather Calc"
 	wait = LIGHTING_INTERVAL
 	flags = SS_TICKER
-	init_order = INIT_ORDER_OUTDOOR_EFFECTS
 	var/list/atom/movable/screen/plane_master/weather_effect/weather_planes_need_vis = list()
 
 	var/list/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/sunlighting_planes = list()

@@ -5,7 +5,6 @@ GLOBAL_VAR_INIT(round_timer, INITIAL_ROUND_TIMER)
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
-	init_order = INIT_ORDER_TICKER
 
 	priority = FIRE_PRIORITY_TICKER
 	flags = SS_KEEP_TIMING

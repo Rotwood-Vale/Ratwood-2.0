@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(pregenerated_icon_cache)
 SUBSYSTEM_DEF(iconcache)
 	name = "Icon Cache"
 	flags = SS_NO_FIRE|SS_NO_INIT
-	init_order = INIT_ORDER_OVERLAY
 
 /obj/item/var/list/cached_appearances
 

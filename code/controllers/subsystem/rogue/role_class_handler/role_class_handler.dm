@@ -8,7 +8,6 @@
 SUBSYSTEM_DEF(role_class_handler)
 	name = "Role Class Handler"
 	wait = 10
-	init_order = INIT_ORDER_ROLE_CLASS_HANDLER
 	priority = FIRE_PRIORITY_ROLE_CLASS_HANDLER
 	runlevels = RUNLEVEL_LOBBY|RUNLEVEL_GAME|RUNLEVEL_SETUP
 	flags = SS_NO_FIRE

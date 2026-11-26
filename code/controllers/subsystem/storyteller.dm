@@ -1,4 +1,3 @@
-#define INIT_ORDER_GAMEMODE 70
 ///the duration into the round for which roundstart events are still valid to run
 #define ROUNDSTART_VALID_TIMEFRAME 3 MINUTES
 /// A town combatant role counts as 1 + this value towards effective population
@@ -6,7 +5,6 @@
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
-	init_order = INIT_ORDER_GAMEMODE
 	runlevels = RUNLEVEL_GAME
 	flags = SS_BACKGROUND | SS_KEEP_TIMING
 	priority = 20

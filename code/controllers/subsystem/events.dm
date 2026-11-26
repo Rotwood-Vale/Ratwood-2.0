@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
-	init_order = INIT_ORDER_EVENTS
 	runlevels = RUNLEVEL_GAME
 
 

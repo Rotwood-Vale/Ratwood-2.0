@@ -11,7 +11,45 @@
 
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
-	init_order = INIT_ORDER_ATOMS
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/dungeon_generator,
+		/datum/controller/subsystem/spatial_grid,
+		// Before SSatoms, so mapped bookshelves and paintings can draw from the archives.
+		/datum/controller/subsystem/librarian,
+		/datum/controller/subsystem/paintings,
+	)
+	dependents = list(
+		/datum/controller/subsystem/treesetup,
+		/datum/controller/subsystem/map_procgen,
+		/datum/controller/subsystem/language,
+		/datum/controller/subsystem/machines,
+		/datum/controller/subsystem/skills,
+		/datum/controller/subsystem/adjacent_air,
+		/datum/controller/subsystem/processing/tracks,
+		/datum/controller/subsystem/elastic,
+		/datum/controller/subsystem/familytree,
+		/datum/controller/subsystem/map_vote,
+		/datum/controller/subsystem/memory_stats,
+		/datum/controller/subsystem/migrants,
+		/datum/controller/subsystem/nightshift,
+		/datum/controller/subsystem/parallax,
+		/datum/controller/subsystem/ParticleWeather,
+		/datum/controller/subsystem/traumas,
+		/datum/controller/subsystem/weather,
+		/datum/controller/subsystem/cooking,
+		/datum/controller/subsystem/chimeric_tech,
+		/datum/controller/subsystem/hunting,
+		/datum/controller/subsystem/treasury,
+		/datum/controller/subsystem/city_assembly,
+		/datum/controller/subsystem/questpool,
+		/datum/controller/subsystem/pollution,
+		/datum/controller/subsystem/economy,
+		/datum/controller/subsystem/assets,
+		/datum/controller/subsystem/icon_smooth,
+		/datum/controller/subsystem/ipintel,
+		/datum/controller/subsystem/stickyban,
+	)
 	flags = SS_NO_FIRE
 
 	/// A stack of list(source, desired initialized state)

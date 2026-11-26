@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(librarian)
 	name = "Librarian"
-	init_order = INIT_ORDER_PLAYER_ARCHIVES
 	flags = SS_NO_FIRE
 	var/list/books = list()
 	/// The archive of player books, kept across rounds.

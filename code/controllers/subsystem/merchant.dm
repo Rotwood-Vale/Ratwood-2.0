@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(merchant)
 	name = "Merchant Packs"
 	wait = 60 SECONDS
-	init_order = INIT_ORDER_SHUTTLE
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/supply_packs = list()

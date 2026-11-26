@@ -1,7 +1,49 @@
 SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/treesetup,
+		//Can we possibly move this to BEFORE atom init in some way? I sure fuckin hope so.
+		/datum/controller/subsystem/map_procgen,
+		/datum/controller/subsystem/language,
+		/datum/controller/subsystem/machines,
+		/datum/controller/subsystem/skills,
+		/datum/controller/subsystem/adjacent_air,
+		/datum/controller/subsystem/processing/tracks,
+		/datum/controller/subsystem/elastic,
+		/datum/controller/subsystem/familytree,
+		/datum/controller/subsystem/map_vote,
+		/datum/controller/subsystem/memory_stats,
+		/datum/controller/subsystem/migrants,
+		/datum/controller/subsystem/nightshift,
+		/datum/controller/subsystem/parallax,
+		/datum/controller/subsystem/ParticleWeather,
+		/datum/controller/subsystem/traumas,
+		/datum/controller/subsystem/weather,
+		/datum/controller/subsystem/cooking,
+		/datum/controller/subsystem/chimeric_tech,
+		/datum/controller/subsystem/hunting,
+		/datum/controller/subsystem/treasury,
+		/datum/controller/subsystem/city_assembly,
+		/datum/controller/subsystem/questpool,
+		/datum/controller/subsystem/pollution,
+		/datum/controller/subsystem/economy,
+		/datum/controller/subsystem/assets,
+		/datum/controller/subsystem/icon_smooth,
+		/datum/controller/subsystem/ipintel,
+		/datum/controller/subsystem/stickyban,
+	)
+	dependents = list(
+		/datum/controller/subsystem/outdoor_effects,
+		/datum/controller/subsystem/merchant,
+		/datum/controller/subsystem/merchant_trade,
+		/datum/controller/subsystem/minor_mapping,
+		/datum/controller/subsystem/point_ambience,
+		/datum/controller/subsystem/pathfinder,
+		/datum/controller/subsystem/persistence,
+	)
 	wait = 0
-	init_order = INIT_ORDER_LIGHTING
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_DEFAULT
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
