@@ -39,3 +39,13 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 */
 ///Do we not use the priority system?
 #define MOVEMENT_LOOP_IGNORE_PRIORITY (1<<1)
+
+// Movement loop status flags
+/// Is the loop queued in a subsystem?
+#define MOVELOOP_STATUS_QUEUED (1<<2)
+
+//Index defines for movement bucket data packets
+#define MOVEMENT_BUCKET_TIME 1
+#define MOVEMENT_BUCKET_LIST 2
+/// Key for a movement bucket's time. "[time]" only keeps 6 significant digits, which merges different times once world.time reaches 100000
+#define MOVEMENT_BUCKET_KEY(time) num2text(time, 12)

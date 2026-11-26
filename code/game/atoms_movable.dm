@@ -481,6 +481,11 @@
 		orbiting.end_orbit(src)
 		orbiting = null
 
+	if(move_packet)
+		if(!QDELETED(move_packet))
+			qdel(move_packet)
+		move_packet = null
+
 	LAZYNULL(client_mobs_in_contents)
 
 	if(length(vis_locs)) // according to tg checking this pre-cut is actually faster
