@@ -431,6 +431,14 @@
 	created_item = /obj/item/rogueweapon/sword/short/iron
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
+/datum/anvil_recipe/weapons/iron/swordbanded
+	name = "Sword, Banded Iron (+1 Scrap Metal Kit)"
+	category = "Iron"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/repair_kit/metal/bad)
+	created_item = /obj/item/rogueweapon/sword/short/iron/banded
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
 /datum/anvil_recipe/weapons/iron/messer
 	name = "Messer, Iron"
 	req_blade = /obj/item/blade/iron_sword
@@ -992,6 +1000,14 @@
 	created_item = /obj/item/rogueweapon/mace/maul/grand
 	craftdiff = 5
 	display_category = ITEM_CAT_WEAPONS_MACES
+
+/datum/anvil_recipe/weapons/steel/sawtooth
+	name = "Sawtoothed Slab-sword (+1 Aavnic Shishka, +1 Kriegsmesser, +2 Steel Tossblades, +2 Steel)"
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/rogueweapon/sword/sabre/steppesman, /obj/item/rogueweapon/sword/long/kriegmesser, /obj/item/rogueweapon/huntingknife/throwingknife/steel, /obj/item/rogueweapon/huntingknife/throwingknife/steel, /obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/sword/long/exe/sawtooth
+	craftdiff = 5
+	display_category = ITEM_CAT_WEAPONS_SWORDS
 
 /// UPGRADED WEAPONS
 

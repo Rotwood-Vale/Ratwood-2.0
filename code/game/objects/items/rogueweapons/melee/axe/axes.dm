@@ -813,7 +813,7 @@
 	name = "dentmaker"
 	icon_state = "inchop"
 	desc = "Drive the the blunted edge of your implement into your foe in a chopping arc, denting whatever plate remains in your way. The follow-through leaves you momentarily vulnerable."
-	attack_verb = list("hammers", "bashes")
+	attack_verb = list("recklessly hammers", "vivaciously bashes")
 	min_intent_damage = 25
 	max_intent_damage = 35
 	penfactor = PEN_NONE
@@ -821,7 +821,7 @@
 	blade_class = BCLASS_BLUNT
 	icon_state = "instrike"
 	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR_HEAVY
 	hitsound = list('sound/foley/binds/bind_heavy12.ogg', 'sound/foley/binds/bind_heavy9.ogg', 'sound/foley/binds/bind_heavy1.ogg')
 	swingdelay_type = SWINGDELAY_PENALTY
 	clickcd = CLICK_CD_CHARGED
