@@ -431,7 +431,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		C.returntolobby()
 	var/mob/dead/new_player/N = CL?.mob
 	if(istype(N))
-		SSjob.GetJob("Cultist").total_positions++
+		var/datum/job/J = SSjob.GetJob("Cultist")
+		J.total_positions++
 		N.AttemptLateSpawn("Cultist")
 
 /datum/ritual/servantry/heartache
