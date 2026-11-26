@@ -32,7 +32,7 @@
 		else
 			values["role"] = roles
 			sql_roles = ":role"
-		var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery({"
+		var/datum/db_query/query_check_ban = SSdbcore.NewQuery({"
 			SELECT 1
 			FROM [format_table_name("ban")]
 			WHERE
@@ -55,7 +55,7 @@
 /proc/is_banned_from_with_details(player_ckey, player_ip, player_cid, role)
 	if(!player_ckey && !player_ip && !player_cid)
 		return
-	var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery({"
+	var/datum/db_query/query_check_ban = SSdbcore.NewQuery({"
 		SELECT
 			id,
 			bantime,
@@ -91,7 +91,7 @@
 		var/is_admin = FALSE
 		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
 			is_admin = TRUE
-		var/datum/DBQuery/query_build_ban_cache = SSdbcore.NewQuery(
+		var/datum/db_query/query_build_ban_cache = SSdbcore.NewQuery(
 			"SELECT role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey = :ckey AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
 			list("ckey" = C.ckey)
 		)
@@ -216,7 +216,7 @@
 		//there's not always a client to use the bancache of so to avoid many individual queries from using is_banned_form we'll build a cache to use here
 		var/banned_from = list()
 		if(player_key)
-			var/datum/DBQuery/query_get_banned_roles = SSdbcore.NewQuery({"
+			var/datum/db_query/query_get_banned_roles = SSdbcore.NewQuery({"
 				SELECT role
 				FROM [format_table_name("ban")]
 				WHERE
@@ -405,7 +405,7 @@
 		return
 	var/player_ckey = ckey(player_key)
 	if(player_ckey)
-		var/datum/DBQuery/query_create_ban_get_player = SSdbcore.NewQuery({"
+		var/datum/db_query/query_create_ban_get_player = SSdbcore.NewQuery({"
 			SELECT byond_key, INET_NTOA(ip), computerid FROM [format_table_name("player")] WHERE ckey = :player_ckey
 		"}, list("player_ckey" = player_ckey))
 		if(!query_create_ban_get_player.warn_execute())
@@ -430,7 +430,7 @@
 		qdel(query_create_ban_get_player)
 	var/admin_ckey = usr.client.ckey
 	if(applies_to_admins)
-		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery({"
+		var/datum/db_query/query_check_adminban_count = SSdbcore.NewQuery({"
 			SELECT COUNT(DISTINCT bantime)
 			FROM [format_table_name("ban")]
 			WHERE
@@ -554,7 +554,7 @@
 		var/bancount = 0
 		var/bansperpage = 10
 		page = text2num(page)
-		var/datum/DBQuery/query_unban_count_bans = SSdbcore.NewQuery({"
+		var/datum/db_query/query_unban_count_bans = SSdbcore.NewQuery({"
 			SELECT COUNT(id)
 			FROM [format_table_name("ban")]
 			WHERE
@@ -583,7 +583,7 @@
 				bancount -= bansperpage
 				pagecount++
 			output += pagelist.Join(" | ")
-		var/datum/DBQuery/query_unban_search_bans = SSdbcore.NewQuery({"
+		var/datum/db_query/query_unban_search_bans = SSdbcore.NewQuery({"
 			SELECT
 				id,
 				bantime,
@@ -684,7 +684,7 @@
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/datum/DBQuery/query_unban = SSdbcore.NewQuery({"
+	var/datum/db_query/query_unban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")] SET
 			unbanned_datetime = NOW(),
 			unbanned_ckey = :admin_ckey,
@@ -718,7 +718,7 @@
 	var/player_ckey = ckey(player_key)
 	var/bantime
 	if(player_ckey)
-		var/datum/DBQuery/query_edit_ban_get_player = SSdbcore.NewQuery({"
+		var/datum/db_query/query_edit_ban_get_player = SSdbcore.NewQuery({"
 			SELECT
 				byond_key,
 				(SELECT bantime FROM [format_table_name("ban")] WHERE id = :ban_id),
@@ -749,7 +749,7 @@
 					return
 		qdel(query_edit_ban_get_player)
 	if(applies_to_admins && (applies_to_admins != old_applies))
-		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery({"
+		var/datum/db_query/query_check_adminban_count = SSdbcore.NewQuery({"
 			SELECT COUNT(DISTINCT bantime)
 			FROM [format_table_name("ban")]
 			WHERE a_ckey = :admin_ckey
@@ -807,7 +807,7 @@
 		where = "id = :ban_id"
 		arguments["ban_id"] = ban_id
 
-	var/datum/DBQuery/query_edit_ban = SSdbcore.NewQuery({"
+	var/datum/db_query/query_edit_ban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")]
 		SET
 			expiration_time = IF(:duration IS NULL, NULL, bantime + INTERVAL :duration [interval]),
@@ -847,7 +847,7 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, span_danger("Failed to establish database connection."))
 		return
-	var/datum/DBQuery/query_get_ban_edits = SSdbcore.NewQuery({"
+	var/datum/db_query/query_get_ban_edits = SSdbcore.NewQuery({"
 		SELECT edits FROM [format_table_name("ban")] WHERE id = :ban_id
 	"}, list("ban_id" = ban_id))
 	if(!query_get_ban_edits.warn_execute())

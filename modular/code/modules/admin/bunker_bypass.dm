@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(whitelist)
 	message_admins("WHITELIST: Added [target_ckey] to the whitelist[admin_ckey? " by [admin_ckey]":""]")
 	log_admin("WHITELIST: Added [target_ckey] to the whitelist[admin_ckey? " by [admin_ckey]":""]")
 
-	var/datum/DBQuery/query_add_entry_whitelist = SSdbcore.NewQuery({"
+	var/datum/db_query/query_add_entry_whitelist = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("whitelists")] (ckey, type, added_by, timestamp, round_id)
 		VALUES (:ckey, :type, :added_by, :timestamp, :round_id)
 	"}, list(
@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(whitelist)
 	qdel(query_add_entry_whitelist)
 
 /datum/controller/subsystem/whitelist/proc/load_entry_whitelist()
-	var/datum/DBQuery/query_load_entry_whitelist = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("whitelists")] WHERE type = 'entry'")
+	var/datum/db_query/query_load_entry_whitelist = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("whitelists")] WHERE type = 'entry'")
 	if(!query_load_entry_whitelist.Execute())
 		qdel(query_load_entry_whitelist)
 		return
