@@ -51,7 +51,7 @@
 
 /// Squashing logic. Returns TRUE if food is squashed and qdeleted, FALSE - otherwise.
 /obj/item/reagent_containers/food/snacks/grown/proc/squash(atom/movable/hit_atom, datum/thrownthing/throwingdatum)
-	var/mob/living/thrower = throwingdatum?.thrower
+	var/mob/living/thrower = throwingdatum?.get_thrower()
 	if(istype(thrower) && (thrower.STASTR < 9 && prob(40 + (20 - thrower.STASTR))))
 		visible_message(span_warning("[src] bounces off [hit_atom]!"))
 		return FALSE // If thrower is weaker than average, it bounces off with no effect just for the pun of it.

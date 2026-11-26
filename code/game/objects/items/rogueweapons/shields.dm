@@ -56,8 +56,8 @@
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
 		if(istype(hitby, /obj/item)) // can't trust mob -> item assignments
 			I = hitby
-		if(I?.thrownby)
-			attacker = I.thrownby
+		if(I?.get_thrownby())
+			attacker = I.get_thrownby()
 	if(attack_type == PROJECTILE_ATTACK)
 		var/obj/projectile/P = hitby
 		if(P?.firer)

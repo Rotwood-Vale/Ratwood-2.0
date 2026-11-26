@@ -210,7 +210,7 @@
 /datum/component/hoarded_item/proc/on_post_throw(datum/source, datum/thrownthing/TT, spin)
 	SIGNAL_HANDLER
 	var/obj/item/I = parent
-	var/mob/living/thief = TT.thrower 
+	var/mob/living/thief = TT.get_thrower() 
 
 	if(isliving(thief))
 		hoarder_quirk.handle_thief(I, thief, heart_component)

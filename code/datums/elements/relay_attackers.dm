@@ -88,7 +88,7 @@
 	var/obj/item/hit_item = hit_atom
 	if(!hit_item.throwforce)
 		return
-	var/mob/thrown_by = hit_item.thrownby
+	var/mob/thrown_by = hit_item.get_thrownby()
 	if(!ismob(thrown_by))
 		return
 	relay_attacker(target, thrown_by, hit_item.throwforce)

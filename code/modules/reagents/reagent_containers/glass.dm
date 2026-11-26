@@ -53,9 +53,9 @@
 			for(var/datum/reagent/A in reagents.reagent_list)
 				R += "[A] ([num2text(A.volume)]),"
 
-		if(isturf(target) && reagents.reagent_list.len && thrownby)
-			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
-			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
+		if(isturf(target) && reagents.reagent_list.len && get_thrownby())
+			log_combat(get_thrownby(), target, "splashed (thrown) [english_list(reagents.reagent_list)]")
+			message_admins("[ADMIN_LOOKUPFLW(get_thrownby())] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 		reagents.reaction(M, TOUCH)
 		log_combat(user, M, "splashed", R)
 		reagents.clear_reagents()

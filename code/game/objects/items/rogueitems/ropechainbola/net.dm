@@ -36,7 +36,7 @@
 /obj/item/net/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	ensnare(hit_atom, throwingdatum?.thrower)
+	ensnare(hit_atom, throwingdatum?.get_thrower())
 	// Nets always fall off after 10 seconds resist or not, so that the advantage it brings you is limited
 	// Being hit by a net and instalossing isn't fun for anyone because removing can be interrupted
 	addtimer(CALLBACK(src, PROC_REF(auto_release)), 10 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)

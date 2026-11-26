@@ -376,7 +376,7 @@
 		if(mover.throwing)
 			if(!climbable)
 				var/mob/living/thrown = mover
-				var/mob/thrower = thrown.throwing.thrower
+				var/mob/thrower = thrown.throwing.get_thrower()
 				if(thrower && thrower != thrown)
 					add_forensic_action(thrower, "threw [thrown.real_name] ([thrown.ckey || "no player"]) into it")
 					add_forensic_action(thrown, "thrown into it by [thrower.real_name]")
@@ -406,7 +406,7 @@
 	else if(isitem(mover))
 		var/obj/item/I = mover
 		if(I.throwforce >= 10)
-			take_damage_from(I.throwing?.thrower, I.throwforce, cause = "with thrown [format_text(I.name)]")
+			take_damage_from(I.throwing?.get_thrower(), I.throwforce, cause = "with thrown [format_text(I.name)]")
 			if(brokenstate)
 				return 1
 		else

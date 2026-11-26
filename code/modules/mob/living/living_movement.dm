@@ -35,7 +35,7 @@
 	if(buckled == mover || (mover in buckled_mobs))
 		return TRUE
 	if(mover?.throwing)
-		return (!density || !(mobility_flags & MOBILITY_STAND) || wallpressed || (mover.throwing.thrower == src && !ismob(mover)))
+		return (!density || !(mobility_flags & MOBILITY_STAND) || wallpressed || (mover.throwing.get_thrower() == src && !ismob(mover)))
 	if(ismob(mover))
 		if(isliving(mover))
 			var/mob/living/M = mover

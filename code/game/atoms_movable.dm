@@ -664,12 +664,13 @@
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src
-	TT.target = target
+	TT.initial_target = WEAKREF(target)
 	TT.target_turf = get_turf(target)
 	TT.init_dir = get_dir(src, target)
 	TT.maxrange = range
 	TT.speed = speed
-	TT.thrower = thrower
+	if(thrower)
+		TT.thrower = WEAKREF(thrower)
 	TT.diagonals_first = diagonals_first
 	TT.force = force
 	TT.bonus_throwforce = bonus_throwforce
