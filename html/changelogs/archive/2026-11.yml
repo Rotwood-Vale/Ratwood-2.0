@@ -656,3 +656,22 @@
       feedback.
   - admin: Added an original-headshot view in Examine Closer and headshot framing
       logs.
+2026-11-26:
+  CentralSmith:
+  - bugfix: Dipped daggers no longer poison human targets through fully blocked hits,
+      misses or successful defenses.
+  - bugfix: Punching with a dipped dagger no longer delivers its poison, including
+      against unarmored targets.
+  SirSwagmeyer:
+  - balance: Changed Poison Gas to drain medicine and stamina instead of dealing direct
+      toxin damage.
+  Useroth:
+  - rscadd: Added a wielded intent to scythes that lets them harvest grown plants
+      in an area.
+  Xander3359:
+  - bugfix: Bad eyesight stashes spectacles instead of deleting items on your face
+  - rscadd: Adds a non-silver ring to loadout options
+  mushy:
+  - balance: Elven boots and gloves now have the same integrity and protection as
+      hardened leather.
+  - balance: Black Oak Pariah now spawns with hardened leather pants and bracers.

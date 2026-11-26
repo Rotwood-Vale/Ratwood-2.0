@@ -1,5 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Dipped daggers no longer poison human targets through fully blocked hits, misses or successful defenses."
-  - bugfix: "Punching with a dipped dagger no longer delivers its poison, including against unarmored targets."
