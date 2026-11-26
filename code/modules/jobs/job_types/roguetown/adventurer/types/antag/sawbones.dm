@@ -41,7 +41,7 @@
 	l_hand = /obj/item/rogueweapon/sword/rapier/courtphysician
 	beltr = /obj/item/rogueweapon/scabbard/sword/royal/courtphysician
 	pants = /obj/item/clothing/under/roguetown/trou
-	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/mattcoin
 	backpack_contents = list(

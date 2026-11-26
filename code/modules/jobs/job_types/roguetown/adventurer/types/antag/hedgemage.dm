@@ -37,7 +37,7 @@
 
 /datum/outfit/job/roguetown/bandit/hedgemage/pre_equip(mob/living/carbon/human/H)
 	..()
-	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/black
