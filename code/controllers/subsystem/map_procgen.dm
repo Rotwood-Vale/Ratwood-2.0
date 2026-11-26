@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(map_procgen)
 	var/list/datum/mapGenerator/generators_to_run = list()
 
 /datum/controller/subsystem/map_procgen/proc/queue_map_generator(datum/mapGenerator/to_queue)
-	if(Master.current_runlevel)
+	if(initialized)
 		message_admins("HEY CLOWNASS, DO NOT FUCKING SPAWN THESE.")
 		CRASH("Admin attempted to spawn mapgen landmark post-init.")
 	generators_to_run.Add(to_queue)

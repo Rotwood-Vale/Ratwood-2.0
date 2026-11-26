@@ -31,6 +31,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	// List of subsystems to process().
 	var/list/subsystems
 
+	///Most recent init stage to complete init.
+	var/static/init_stage_completed
+
 	// Vars for keeping track of tick drift.
 	var/init_timeofday
 	var/init_time
@@ -339,23 +342,42 @@ GLOBAL_REAL(Master, /datum/controller/master)
 #ifdef TESTING
 	to_chat(world, "<span class='boldannounce'>Initializing subsystems...</span>")
 #endif
+	init_stage_completed = 0
+	var/mc_started = FALSE
+
 	// Sort subsystems by init_order, so they initialize in the correct order.
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_init))
 
-	var/start_timeofday = REALTIMEOFDAY
-	// Initialize subsystems.
-//#ifndef TESTSERVER
-//	var/thing_done = FALSE
-//#endif
+	var/list/stage_sorted_subsystems = new(INITSTAGE_MAX)
+	for (var/i in 1 to INITSTAGE_MAX)
+		stage_sorted_subsystems[i] = list()
 
-	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
+	for (var/datum/controller/subsystem/subsystem as anything in subsystems)
+		var/subsystem_init_stage = subsystem.init_stage
+		if (!isnum(subsystem_init_stage) || subsystem_init_stage < 1 || subsystem_init_stage > INITSTAGE_MAX || round(subsystem_init_stage) != subsystem_init_stage)
+			stack_trace("ERROR: MC: subsystem `[subsystem.type]` has invalid init_stage: `[subsystem_init_stage]`. Setting to `[INITSTAGE_MAX]`")
+			subsystem_init_stage = subsystem.init_stage = INITSTAGE_MAX
+		stage_sorted_subsystems[subsystem_init_stage] += subsystem
+
+	var/start_timeofday = REALTIMEOFDAY
 	track_init_memory = !CONFIG_GET(flag/disable_memory_stats)
 	init_rss_baseline = track_init_memory ? get_process_rss_bytes() : null
-	for (var/datum/controller/subsystem/SS in subsystems)
-		init_subsystem(SS)
-		CHECK_TICK
-	current_initializing_subsystem = null
-	current_ticklimit = TICK_LIMIT_RUNNING
+	for (var/current_init_stage in 1 to INITSTAGE_MAX)
+
+		// Initialize subsystems.
+		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
+			init_subsystem(subsystem)
+
+			CHECK_TICK
+		current_initializing_subsystem = null
+		init_stage_completed = current_init_stage
+		if (!mc_started)
+			mc_started = TRUE
+			if (!current_runlevel)
+				SetRunLevel(1) // Intentionally not using the defines here because the MC doesn't care about them
+			// Loop.
+			Master.StartProcessing(0)
+
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
@@ -364,9 +386,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")
 #endif
 	log_world(msg)
-
-	if (!current_runlevel)
-		SetRunLevel(1)
 
 	setup_cargo_boat()
 	// Sort subsystems by display setting for easy access.
@@ -382,8 +401,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
-	// Loop.
-	Master.StartProcessing(0)
 	SSgamemode.handle_picking_storyteller()
 
 /**
@@ -483,8 +500,14 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	if(delay)
 		sleep(delay)
 	testing("Master starting processing")
-	var/rtn = Loop()
-	if (rtn > 0 || processing < 0)
+	var/started_stage
+	var/rtn = -2
+	do
+		started_stage = init_stage_completed
+		rtn = Loop(started_stage)
+	while (rtn == MC_LOOP_RTN_NEWSTAGES && processing > 0 && started_stage < init_stage_completed)
+
+	if (rtn >= MC_LOOP_RTN_GRACEFUL_EXIT || processing < 0)
 		return //this was suppose to happen.
 	//loop ended, restart the mc
 	log_game("MC crashed or runtimed, restarting")
@@ -496,7 +519,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		Failsafe.defcon = 2
 
 // Main loop.
-/datum/controller/master/proc/Loop()
+/datum/controller/master/proc/Loop(init_stage)
 	. = -1
 	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
 	//	local vars rock
@@ -509,6 +532,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		var/datum/controller/subsystem/SS = thing
 		if (SS.flags & SS_NO_FIRE)
 			continue
+		if (SS.init_stage > init_stage)
+			continue
 		SS.queued_time = 0
 		SS.queue_next = null
 		SS.queue_prev = null
@@ -520,6 +545,15 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			timer += TICKS2DS(rand(0, 1))
 			SS.next_fire = timer
 			continue
+
+		// Now, we have to set starting next_fires for all our new non ticker kids
+		if(SS.init_stage == init_stage - 1 && (SS.runlevels & current_runlevel))
+			// Give em a random offset so things don't clump up too bad
+			var/delay = SS.wait
+			if(SS.flags & SS_TICKER)
+				delay = TICKS2DS(delay)
+			// Gotta convert to ticks cause rand needs integers
+			SS.next_fire = world.time + TICKS2DS(rand(0, DS2TICKS(min(delay, 2 SECONDS))))
 
 		var/ss_runlevels = SS.runlevels
 		var/added_to_any = FALSE
@@ -561,28 +595,34 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		var/starting_tick_usage = TICK_USAGE
+
+		if (init_stage != init_stage_completed)
+			return MC_LOOP_RTN_NEWSTAGES
 		if (processing <= 0)
 			current_ticklimit = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
 		//Anti-tick-contention heuristics:
-		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later.
-		//	(because sleeps are processed in the order received, longer sleeps are more likely to run first)
-		if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
-			sleep_delta *= 2
-			current_ticklimit = TICK_LIMIT_RUNNING * 0.5
-			sleep(world.tick_lag * (processing * sleep_delta))
-			continue
+		if (init_stage == INITSTAGE_MAX)
+			//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later.
+			//	(because sleeps are processed in the order received, longer sleeps are more likely to run first)
+			if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
+				sleep_delta *= 2
+				current_ticklimit = TICK_LIMIT_RUNNING * 0.5
+				sleep(world.tick_lag * (processing * sleep_delta))
+				continue
 
-		//Byond resumed us late. assume it might have to do the same next tick
-		if (last_run + CEILING(world.tick_lag * (processing * sleep_delta), world.tick_lag) < world.time)
-			sleep_delta += 1
+			//Byond resumed us late. assume it might have to do the same next tick
+			if (last_run + CEILING(world.tick_lag * (processing * sleep_delta), world.tick_lag) < world.time)
+				sleep_delta += 1
 
-		sleep_delta = MC_AVERAGE_FAST(sleep_delta, 1) //decay sleep_delta
+			sleep_delta = MC_AVERAGE_FAST(sleep_delta, 1) //decay sleep_delta
 
-		if (starting_tick_usage > (TICK_LIMIT_MC*0.75)) //we ran 3/4 of the way into the tick
-			sleep_delta += 1
+			if (starting_tick_usage > (TICK_LIMIT_MC*0.75)) //we ran 3/4 of the way into the tick
+				sleep_delta += 1
+		else
+			sleep_delta = 1
 
 		//debug
 		if (make_runtime)
@@ -657,9 +697,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if (skip_ticks)
 			skip_ticks--
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
-		current_ticklimit = TICK_LIMIT_RUNNING
-		if (processing * sleep_delta <= world.tick_lag)
-			current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
+		if (init_stage != INITSTAGE_MAX)
+			current_ticklimit = TICK_LIMIT_RUNNING * 2
+		else
+			current_ticklimit = TICK_LIMIT_RUNNING
+			if (processing * sleep_delta <= world.tick_lag)
+				current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
 
 		check_and_perform_fast_update()
 		sleep(world.tick_lag * (processing * sleep_delta))
