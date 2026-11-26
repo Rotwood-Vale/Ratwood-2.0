@@ -34,7 +34,7 @@
 		"Sewing Kit" =	/obj/item/repair_kit,
 	)
 /datum/outfit/job/roguetown/wretch/plaguebearer/pre_equip(mob/living/carbon/human/H)
-	head = /obj/item/clothing/head/roguetown/physician
+	head = /obj/item/clothing/head/roguetown/physician/plaguebearer
 	mask = /obj/item/clothing/mask/rogue/physician/plaguebearer
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -89,7 +89,8 @@
 	desc = "What better laboratory than the blood-soaked battlefield? This one seems to be uniquely armored."
 	armor = ARMOR_PLATE
 	// Less than an actual steel mask.
-	max_integrity = 160
+	max_integrity = ARMOR_INT_MASK_STEEL
+	resistance_flags = FIRE_PROOF
 	// Consistency with other masks.
 	body_parts_covered = FACE
 	blocksound = PLATEHIT
