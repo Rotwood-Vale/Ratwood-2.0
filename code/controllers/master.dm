@@ -36,6 +36,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	var/sleep_delta = 1
 
+	/// Only run ticker subsystems for the next n ticks.
+	var/skip_ticks = 0
+
 	var/make_runtime = 0
 
 	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
@@ -112,6 +115,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	reverseRange(subsystems)
 	for(var/datum/controller/subsystem/ss in subsystems)
 		log_world("Shutting down [ss.name] subsystem...")
+		if (ss.slept_count > 0)
+			log_world("Warning: Subsystem `[ss.name]` slept [ss.slept_count] times.")
 		ss.Shutdown()
 	log_world("Shutdown complete")
 
@@ -411,7 +416,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if ((SS.flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER)
 			tickersubsystems += SS
 			// Timer subsystems aren't allowed to bunch up, so we offset them a bit
-			timer += world.tick_lag * rand(0, 1)
+			timer += TICKS2DS(rand(0, 1))
 			SS.next_fire = timer
 			continue
 
@@ -482,7 +487,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			new/datum/controller/failsafe() // (re)Start the failsafe.
 
 		//now do the actual stuff
-		if (!queue_head || !(iteration % 3))
+		if (!skip_ticks)
 			var/checking_runlevel = current_runlevel
 			if(cached_runlevel != checking_runlevel)
 				//resechedule subsystems
@@ -494,7 +499,11 @@ GLOBAL_REAL(Master, /datum/controller/master)
 					//we only want to offset it if it's new and also behind
 					if(SS.next_fire > world.time || (SS in old_subsystems))
 						continue
-					SS.next_fire = world.time + world.tick_lag * rand(0, DS2TICKS(min(SS.wait, 2 SECONDS)))
+					// If they're new, give em a random offset so things don't clump up too bad
+					var/delay = SS.wait
+					if(SS.flags & SS_TICKER)
+						delay = TICKS2DS(delay)
+					SS.next_fire = world.time + TICKS2DS(rand(0, DS2TICKS(min(delay, 2 SECONDS))))
 
 			subsystems_to_check = current_runlevel_subsystems
 		else
@@ -539,10 +548,14 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 		iteration++
 		last_run = world.time
+		if (skip_ticks)
+			skip_ticks--
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		current_ticklimit = TICK_LIMIT_RUNNING
 		if (processing * sleep_delta <= world.tick_lag)
 			current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
+
+		check_and_perform_fast_update()
 		sleep(world.tick_lag * (processing * sleep_delta))
 
 
@@ -570,7 +583,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if (SS_flags & SS_NO_FIRE)
 			subsystemstocheck -= SS
 			continue
+		// If we're keeping timing and running behind,
+		// fire at most 25% faster then normal to try and make up the gap without spamming
 		if ((SS_flags & (SS_TICKER|SS_KEEP_TIMING)) == SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
+			continue
+		if (SS.postponed_fires >= 1)
+			SS.postponed_fires--
+			SS.update_nextfire()
 			continue
 		SS.enqueue()
 	. = 1
@@ -605,6 +624,10 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
+
+			if (!(queue_node_flags & SS_TICKER) && skip_ticks)
+				queue_node = queue_node.queue_next
+				continue
 
 			if ((queue_node_flags & SS_BACKGROUND))
 				if (!bg_calc)
@@ -641,6 +664,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 			queue_node.state = SS_RUNNING
 
+			if(queue_node.profiler_focused)
+				world.Profile(PROFILE_START)
+
 			tick_usage = TICK_USAGE
 			var/state = queue_node.ignite(queue_node_paused)
 			tick_usage = TICK_USAGE - tick_usage
@@ -650,6 +676,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 				// Rolling usage is an unrolled list that we know the order off
 				// OPTIMIZATION POSTING
 				queue_node.rolling_usage += list(DS2TICKS(world.time), tick_usage)
+
+			if(queue_node.profiler_focused)
+				world.Profile(PROFILE_STOP)
 
 			if (state == SS_RUNNING)
 				state = SS_IDLE
@@ -684,14 +713,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			queue_node.last_fire = world.time
 			queue_node.times_fired++
 
-			if (queue_node_flags & SS_TICKER)
-				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
-			else if (queue_node_flags & SS_POST_FIRE_TIMING)
-				queue_node.next_fire = world.time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
-			else if (queue_node_flags & SS_KEEP_TIMING)
-				queue_node.next_fire += queue_node.wait
-			else
-				queue_node.next_fire = queue_node.queued_time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
+			queue_node.update_nextfire()
 
 			queue_node.queued_time = 0
 
@@ -753,7 +775,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
 	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))")
-	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration])"))
+	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"))
+
+/// Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.
+/datum/controller/master/proc/laggy_byond_map_update_incoming()
+	if (!skip_ticks)
+		skip_ticks = 1
 
 /datum/controller/master/StartLoadingMap()
 	//disallow more than one map to load at once, multithreading it will just cause race conditions

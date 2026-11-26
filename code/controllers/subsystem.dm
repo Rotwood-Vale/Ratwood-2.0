@@ -36,6 +36,12 @@
 
 	var/processing_flag = PROCESSING_DEFAULT
 
+	/**
+	 * boolean set by admins. if TRUE then this subsystem will stop the world profiler after ignite() returns and start it again when called.
+	 * used so that you can audit a specific subsystem or group of subsystems' synchronous call chain.
+	 */
+	var/profiler_focused = FALSE
+
 	/*
 	 * The following variables are managed by the MC and should not be modified directly.
 	 */
@@ -57,6 +63,12 @@
 
 	/// Flat list of usage and time, every odd index is a log time, every even index is a usage
 	var/list/rolling_usage = list()
+
+	/// How much of a tick (in percents of a tick) were we allocated last fire.
+	var/tick_allocation_last = 0
+
+	/// How much of a tick (in percents of a tick) do we get allocated by the mc on avg.
+	var/tick_allocation_avg = 0
 
 	/// Tracks the current execution state of the subsystem. Used to handle subsystems that sleep in fire so the mc doesn't run them again while they are sleeping
 	var/state = SS_IDLE
@@ -111,15 +123,23 @@
 /// Called after the config has been loaded or reloaded.
 /datum/controller/subsystem/proc/OnConfigLoad()
 
-//This is used so the mc knows when the subsystem sleeps. do not override.
-/datum/controller/subsystem/proc/ignite(resumed = 0)
-	set waitfor = 0
+///This is used so the mc knows when the subsystem sleeps. do not override.
+/datum/controller/subsystem/proc/ignite(resumed = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	set waitfor = FALSE
+	. = SS_IDLE
+
+	tick_allocation_last = Master.current_ticklimit-(TICK_USAGE)
+	tick_allocation_avg = MC_AVERAGE(tick_allocation_avg, tick_allocation_last)
+
 	. = SS_SLEEPING
 	fire(resumed)
 	. = state
 	if (state == SS_SLEEPING)
+		slept_count++
 		state = SS_IDLE
 	if (state == SS_PAUSING)
+		slept_count++
 		var/QT = queued_time
 		enqueue()
 		state = SS_PAUSED
@@ -139,6 +159,31 @@
 	if (Master)
 		Master.subsystems -= src
 	return ..()
+
+
+/** Update next_fire for the next run.
+ *  reset_time (bool) - Ignore things that would normally alter the next fire, like tick_overrun, and last_fire. (also resets postpone)
+ */
+/datum/controller/subsystem/proc/update_nextfire(reset_time = FALSE)
+	var/queue_node_flags = flags
+
+	if (reset_time)
+		postponed_fires = 0
+		if (queue_node_flags & SS_TICKER)
+			next_fire = world.time + (world.tick_lag * wait)
+		else
+			next_fire = world.time + wait
+		return
+
+	if (queue_node_flags & SS_TICKER)
+		next_fire = world.time + (world.tick_lag * wait)
+	else if (queue_node_flags & SS_POST_FIRE_TIMING)
+		next_fire = world.time + wait + (world.tick_lag * (tick_overrun/100))
+	else if (queue_node_flags & SS_KEEP_TIMING)
+		next_fire += wait
+	else
+		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
+
 
 //Queue it to run.
 //	(we loop thru a linked list until we get to the end or find the right point)
@@ -267,11 +312,10 @@
 		if (SS_IDLE)
 			. = "  "
 
-//could be used to postpone a costly subsystem for (default one) var/cycles, cycles
-//for instance, during cpu intensive operations like explosions
+/// Causes the next "cycle" fires to be missed. Effect is accumulative but can reset by calling update_nextfire(reset_time = TRUE)
 /datum/controller/subsystem/proc/postpone(cycles = 1)
-	if(next_fire - world.time < wait)
-		next_fire += (wait*cycles)
+	if (can_fire && cycles >= 1)
+		postponed_fires += cycles
 
 /// Prunes out of date entries in our rolling usage list
 /datum/controller/subsystem/proc/prune_rolling_usage()
@@ -288,10 +332,10 @@
 
 /datum/controller/subsystem/vv_edit_var(var_name, var_value)
 	switch (var_name)
-		if ("can_fire")
+		if (NAMEOF(src, can_fire))
 			//this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
 			if (var_value)
-				next_fire = world.time + wait
-		if ("queued_priority") //editing this breaks things.
-			return 0
+				update_nextfire(reset_time = TRUE)
+		if (NAMEOF(src, queued_priority)) //editing this breaks things.
+			return FALSE
 	. = ..()
