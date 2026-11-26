@@ -53,16 +53,6 @@ SUBSYSTEM_DEF(garbage)
 	//Should we save found refs. Used for unit testing
 	var/should_save_refs = FALSE
 	#endif
-	#ifdef REFERENCE_DOING_IT_LIVE
-	/// Exact types searched on live, only on their first failure each round
-	var/list/live_search_types = list(
-		/mob/living/carbon/human,
-		/mob/living/carbon/human/species/goblin/npc/ambush,
-		/mob/dead/observer/rogue/nodraw,
-		/obj/item/magic/infernal/ash,
-		/obj/effect/particle_effect/sparks,
-	)
-	#endif
 	#endif
 
 
@@ -203,11 +193,7 @@ SUBSYSTEM_DEF(garbage)
 					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
 					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
-				#ifdef REFERENCE_DOING_IT_LIVE
-				else if((D.type in live_search_types) && !items[D.type].failures)
-				#else
 				else
-				#endif
 					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
 					ref_searching = TRUE
 				#endif
