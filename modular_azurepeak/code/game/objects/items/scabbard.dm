@@ -44,6 +44,9 @@
 	var/sheathe_time = 0.1 SECONDS
 	var/sheathe_sound = 'sound/foley/equip/scabbard_holster.ogg'
 
+	var/locked_sheath = FALSE // stops drawing of blade while true
+	var/hidden_blade = FALSE // no examine giving away blade sheathed
+
 
 /obj/item/rogueweapon/scabbard/attack_obj(obj/O, mob/living/user)
 	return FALSE
@@ -110,6 +113,8 @@
 /obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
 	if(!sheathed)
 		return FALSE
+	if(locked_sheath)
+		return FALSE
 
 	if(obj_broken)
 		user.visible_message(
@@ -147,7 +152,7 @@
 
 
 /obj/item/rogueweapon/scabbard/attack_hand(mob/user)
-	if(sheathed)
+	if(sheathed && !locked)
 		return puke_sword(user)
 
 	..()
@@ -171,7 +176,7 @@
 /obj/item/rogueweapon/scabbard/examine(mob/user)
 	. = ..()
 
-	if(sheathed)
+	if(sheathed && !hidden_blade)
 		. += span_notice("The sheath is occupied by [sheathed]. Left-click to pull it out.")
 
 
@@ -660,14 +665,45 @@
 	max_integrity = 150
 	resistance_flags = null
 
-/obj/item/rogueweapon/scabbard/sheath/courtphysician
+/obj/item/rogueweapon/scabbard/sword/royal/courtphysician
 	name = "fancy cane"
 	desc = "A decorated cane bearing the visage of a vulture."
 	icon_state = "doccanesheath"
 	item_state = "doccanesheath"
 	valid_blade = /obj/item/rogueweapon/sword/rapier/courtphysician
+	force = 25 // a steel reinforced cane
+	wdefense = 9
+	max_integrity = 250
+	locked_sheath = TRUE
+	hidden_blade = TRUE
+	var/hands = FALSE
 
-/obj/item/rogueweapon/scabbard/sheath/courtphysician/getonmobprop(tag)
+/obj/item/rogueweapon/scabbard/sword/royal/courtphysician/examine(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/medskill = H.get_skill_level(/datum/skill/misc/medicine)
+		if((medskill >= SKILL_LEVEL_LEGENDARY && !hands) || (H.job == "Hand" && hands)) // everyone who can have it has legendary med
+			if(locked_sheath)
+				. += span_notice("The cane has a lock on it stopping the blade from being pulled. Midle click to disable it.")
+			else
+				. += span_notice("The cane has a lock on it with coudl be set to stop the blade from being pulled. Midle click to enable it.")
+
+/obj/item/rogueweapon/scabbard/sword/royal/courtphysician/MiddleClick(mob/user, params)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/medskill = H.get_skill_level(/datum/skill/misc/medicine)
+		if((medskill >= SKILL_LEVEL_LEGENDARY && !hands) || (H.job == "Hand" && hands)) // everyone who can have it has legendary med
+			if(locked_sheath)
+				to_chat(H, span_notice("I undo the lock on my cane."))
+				locked_sheath = FALSE
+			else
+				to_chat(H, span_notice("I set the lock on my cane."))
+				locked_sheath = TRUE
+
+
+/obj/item/rogueweapon/scabbard/sword/royal/courtphysician/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -744,7 +780,7 @@
 					"westabove" = 0
 				)
 
-/obj/item/rogueweapon/scabbard/sheath/courtphysician/hand
+/obj/item/rogueweapon/scabbard/sword/royal/courtphysician/hand
 	name = "velvet sister"
 	desc = "Sleek, fashionable and deadly. Traits shared by both staff and the one holding it. Never let yourself be outdone, never rely on merely one trick.\
 	The rontz embedded in the handle serves as focus for arcyne arts."
@@ -752,7 +788,10 @@
 	icon_state = "staffsheath"
 	item_state = "staffsheath"
 	valid_blade = /obj/item/rogueweapon/sword/rapier/hand
-	// Is meant to be a wand for mage 2.0, but we don't have that on RW.
+	locked_sheath = FALSE
+	implement_tier = IMPLEMENT_TIER_GREATER
+	implement_refund = IMPLEMENT_REFUND_GREATER
+	hands = TRUE
 
 ///////////////////////
 //	KNIFE SCABBARDS  //

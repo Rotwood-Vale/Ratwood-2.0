@@ -254,7 +254,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	r_hand = /obj/item/rogueweapon/sword/rapier/hand
-	beltr = /obj/item/rogueweapon/scabbard/sheath/courtphysician/hand
+	beltr = /obj/item/rogueweapon/scabbard/sword/royal/courtphysician/hand
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/dtace
 	head = /obj/item/clothing/head/roguetown/chaperon/noble/hand
 	pants = /obj/item/clothing/under/roguetown/tights/black
