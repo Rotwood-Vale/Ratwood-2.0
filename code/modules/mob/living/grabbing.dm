@@ -594,7 +594,7 @@
 	var/obj/item/embedded_item = sublimb_grabbed
 	if(!istype(embedded_item) || QDELETED(embedded_item))
 		return FALSE
-	// Lodged arrows take time to work free. Everything else still rips out instantly by grab.
+	// Lodged arrows take time to work out of yourself. Everything else still rips out instantly by grab.
 	var/removal_time = istype(embedded_item, /obj/item/ammo_casing/caseless/rogue/arrow) ? embedded_item.get_embed_removal_time(user, M) : 0
 	if(removal_time)
 		if(user == M)

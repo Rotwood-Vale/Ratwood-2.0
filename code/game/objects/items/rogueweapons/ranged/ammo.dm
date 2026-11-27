@@ -161,13 +161,13 @@
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
 	max_integrity = 10
 	// A lodged arrow stays until pulled out, which takes time and hurts.
-	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 20, "embedded_bloodloss" = 1, "embedded_unsafe_removal_pain_multiplier" = 10)
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 1, "embedded_unsafe_removal_pain_multiplier" = 10)
 
-/// Working an arrow out of yourself is slower than having someone else do it.
+/// Working an arrow out of yourself takes a moment. Someone else can pull it straight out.
 /obj/item/ammo_casing/caseless/rogue/arrow/get_embed_removal_time(mob/user, mob/living/target)
-	. = ..()
-	if(user == target)
-		. *= 2
+	if(user != target)
+		return 0
+	return ..()
 
 /// Lodged arrows are drawn from their projectile's sprite.
 /obj/item/ammo_casing/caseless/rogue/arrow/get_embedded_overlay_state()
@@ -205,7 +205,7 @@
 	shooters will."
 	projectile_type = /obj/projectile/bullet/reusable/arrow/iron
 	// Barbed: bleeds more and tears coming out.
-	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 20, "embedded_bloodloss" = 1.5, "embedded_unsafe_removal_pain_multiplier" = 15)
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 1.5, "embedded_unsafe_removal_pain_multiplier" = 15)
 
 /obj/item/ammo_casing/caseless/rogue/arrow/iron/decrepit
 	name = "decrepit broadhead arrow"
@@ -221,7 +221,7 @@
 	to steel-heads on another. Crafted for more well-prepared targets."
 	projectile_type = /obj/projectile/bullet/reusable/arrow/steel
 	// Narrow point: a cleaner wound.
-	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 20, "embedded_bloodloss" = 0.75, "embedded_unsafe_removal_pain_multiplier" = 8)
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 0.75, "embedded_unsafe_removal_pain_multiplier" = 8)
 
 /obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient
 	name = "ancient bodkin arrow"
@@ -305,6 +305,8 @@
 	embedchance = 50
 	speed = 0.6
 	npc_simple_damage_mult = 3
+	// Bodkins beat most armor, so they wear it less per hit than blunt weapons do.
+	pen_integrity_factor = 0.35
 
 /obj/projectile/bullet/reusable/arrow/steel/ancient
 	name = "ancient bodkin arrow"
@@ -326,7 +328,7 @@
 	desc = "A magnificent arrow of blacksteel. It shreds flesh, pierces armor, and \
 	always lands where one aims; perfect, yet marred by a prohibitively high cost."
 	projectile_type = /obj/projectile/bullet/reusable/arrow/blacksteel
-	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 20, "embedded_bloodloss" = 0.75, "embedded_unsafe_removal_pain_multiplier" = 8)
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 0.75, "embedded_unsafe_removal_pain_multiplier" = 8)
 
 /obj/projectile/bullet/reusable/arrow/blacksteel
 	name = "blacksteel arrow"
