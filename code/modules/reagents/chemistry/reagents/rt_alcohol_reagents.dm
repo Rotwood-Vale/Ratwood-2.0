@@ -414,7 +414,7 @@
 	color = "#543633"
 	quality = DRINK_GOOD
 
-/datum/reagent/consumable/ethanol/gronnmead
+/datum/reagent/consumable/ethanol/hammerholdmead
 	name = "Ragnar's Brew"
 	boozepwr = 35
 	taste_description = "notes of honey and red berries" //I love red mead ok...
