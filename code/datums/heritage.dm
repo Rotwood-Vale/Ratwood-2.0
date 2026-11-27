@@ -174,8 +174,11 @@
 	var/datum/heritage/family
 	var/list/parents = list() // Direct parents (max 2)
 	var/list/children = list() // Direct children
+	var/list/siblings = list()
 	var/list/spouses = list() // Current spouses
 	var/list/former_spouses = list() // Divorced spouses
+	var/list/other_relations = list()
+	var/datum/family_member/lover
 	var/adoption_status = FALSE // TRUE if adopted into family
 	var/generation = 0 // 0 = founder, 1 = their children, etc.
 	var/tmp/recalculating_generation = FALSE
@@ -253,6 +256,19 @@
 		child.RemoveParent(src, TRUE) // TRUE = skip reciprocal call
 
 	child.RecalculateGeneration()
+	return TRUE
+
+/datum/family_member/proc/UpdateAdoption()
+	adoption_status = TRUE
+	for(var/datum/family_member/parent in parents)
+		if(length(parent.person.dna.species.race_groups & person.dna.species.race_groups))
+			adoption_status = FALSE
+
+/datum/family_member/proc/AddSibling(datum/family_member/sibling)
+	if(!sibling || sibling == src || (sibling in siblings))
+		return FALSE
+	siblings += sibling
+	sibling.siblings += src
 	return TRUE
 
 /datum/family_member/proc/AddSpouse(datum/family_member/spouse, skip_reciprocal = FALSE)
@@ -363,6 +379,9 @@
 	if(!other || other == src)
 		return null
 
+	if(other_relations[other])
+		return other_relations[other]
+
 	// Direct relationships
 	if(other in parents)
 		return other.person?.pronouns == HE_HIM ? "father" : "mother"
@@ -440,6 +459,9 @@
 /datum/family_member/proc/AreSiblings(datum/family_member/other)
 	if(!other || other == src)
 		return FALSE
+	// this kinda fucks up parents but it's Needed
+	if(other in siblings)
+		return TRUE
 	if(!parents.len || !other.parents.len)
 		return FALSE
 
@@ -517,7 +539,7 @@
 
 	return null
 
-/datum/heritage/New(mob/living/carbon/human/founder_person, new_name, majority_species)
+/datum/heritage/New(mob/living/carbon/human/founder_person, new_name, majority_species, mob/living/carbon/human/other_person)
 	if(majority_species)
 		dominant_species = majority_species
 		var/datum/species/S = new majority_species()
@@ -528,7 +550,7 @@
 		founder.generation = 0
 
 		if(!new_name)
-			housename = SurnameFormatting(founder_person)
+			housename = SurnameFormatting(founder_person, other_person)
 		else
 			housename = new_name
 
@@ -545,12 +567,18 @@
 		if(existing.person == person)
 			return existing
 
+	if(!person.pronouns)
+		if(person.gender == MALE)
+			person.pronouns = HE_HIM
+		else
+			person.pronouns = SHE_HER
 	var/datum/family_member/new_member = new(person, src)
 	members += new_member
 	person?.family_datum = src
 
 	AddFamilyIcon(person)
 	LateJoinAddToUI(person)
+	person.ShowFamilyUI()
 
 	return new_member
 
@@ -622,7 +650,7 @@
 	var/p_He = lookee.p_they(TRUE)
 	var/relationship_text = "[p_He] is my [relationship]"
 
-	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child")))
+	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child", "brother", "sister")))
 		relationship_text += " (adopted)"
 
 	return span_love(span_bold("[relationship_text]."))
@@ -663,6 +691,12 @@
 						name_color = "FFD700"
 					if("husband", "wife")
 						name_color = "FF69B4"
+					if("lover")
+						name_color = "DC143C"
+					if("cousin")
+						name_color = "FFA500"
+					if("friend")
+						name_color = "40E0D0"
 			if(member.adoption_status)
 				status_text = " (Adopted)"
 			if(member.spouses.len)
@@ -746,18 +780,15 @@
 
 	return FALSE
 
-/datum/heritage/proc/SurnameFormatting(mob/living/carbon/human/person)
-	var/surname2use
-	var/index = findtext(person?.real_name, " ")
+GLOBAL_LIST_INIT(name_titles, list("Ser", "Dame", "Sister", "Brother", "Prelate", "Devotee", "Votary", "Lord", "Lady"))
+
+/datum/heritage/proc/SurnameFormatting(mob/living/carbon/human/person, mob/living/carbon/human/other)
 	person?.original_name = person?.real_name
-	if(!index)
-		surname2use = person?.dna?.species?.random_surname()
-	else
-		if(findtext(person?.real_name, " of ") || findtext(person?.real_name, " the "))
-			surname2use = person?.dna?.species?.random_surname()
-		else
-			surname2use = copytext(person?.real_name, index)
-	return surname2use
+	for(var/mob/living/carbon/human/candidate in list(person, other))
+		var/index = findlasttext(candidate.real_name, " ")
+		if(index && !(copytext(candidate.real_name, 1, index) in GLOB.name_titles) && !findtext(candidate.real_name, " of ") && !findtext(candidate.real_name, " the "))
+			return copytext(candidate.real_name, index)
+	return person?.dna?.species?.random_surname()
 
 /datum/heritage/proc/ApplyUI(mob/living/carbon/human/iconer, toggle_true = FALSE)
 	if(!iconer.client)
@@ -773,7 +804,7 @@
 /datum/heritage/proc/LateJoinAddToUI(mob/living/carbon/human/new_fam)
 	for(var/datum/family_member/member in members)
 		var/mob/living/carbon/human/H = member.person
-		if(H && H.family_UI && H.client && H != new_fam)
+		if(H && H.client && H != new_fam)
 			if(new_fam in family_icons)
 				H.client.images.Add(family_icons[new_fam])
 
@@ -806,23 +837,11 @@
 	else
 		to_chat(src, "You're not part of any notable family.")
 
-/mob/living/carbon/human/verb/ToggleFamilyUI()
-	set name = "Family UI"
-	set category = "IC"
-	ShowFamilyUI(FALSE)
-
-/mob/living/carbon/human/proc/ShowFamilyUI(silent)
+/mob/living/carbon/human/proc/ShowFamilyUI()
 	if(spouse_mob)
-		ApplySpouseUI(family_UI)
+		ApplySpouseUI()
 	if(family_datum)
-		family_datum.ApplyUI(src, family_UI)
-	else if(!silent)
-		to_chat(src, "You're not part of any notable family.")
-
-	family_UI = !family_UI
-
-	if(!silent)
-		to_chat(src, "FamilyUI Toggled [family_UI ? "On" : "Off"]")
+		family_datum.ApplyUI(src)
 
 /mob/living/carbon/human/proc/ApplySpouseUI(toggle_true = FALSE)
 	if(!spouse_mob || !client)

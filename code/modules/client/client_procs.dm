@@ -360,6 +360,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
+	SSfamilytree.RestoreAd(prefs)
 
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")

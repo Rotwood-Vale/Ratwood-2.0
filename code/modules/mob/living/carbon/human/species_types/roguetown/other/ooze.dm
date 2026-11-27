@@ -1,6 +1,7 @@
 /datum/species/ooze
 	name = "Ooze"
 	id = "ooze"
+	race_groups = list("Construct")
 	desc = "<b>Ooze</b><br>\
 	In the dungeons and ruins of the duchy of Rockhill, corpses both ancient and fresh litter the ground. \
 	With the appearance of Rot in our realm there was a reactionary substance formed by the natural world, the Ooze. \
