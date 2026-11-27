@@ -3126,6 +3126,11 @@
 /obj/item/clothing/neck/roguetown/cursed_collar,
 /obj/item/clothing/neck/roguetown/cursed_collar,
 /obj/item/clothing/neck/roguetown/cursed_collar,
+/obj/item/chastity,
+/obj/item/chastity/chastity_belt,
+/obj/item/chastity/chastity_cage,
+/obj/item/chastity/cursed,
+/obj/item/chastity/chastity_cage/spiked,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/banditcamp)
 "OU" = (
