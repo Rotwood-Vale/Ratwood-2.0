@@ -268,7 +268,6 @@
 		/datum/skill/labor/mining = SKILL_LEVEL_EXPERT,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_LEGENDARY,
 	)
-	adv_stat_ceiling = list(STAT_CONSTITUTION = 10, STAT_WILLPOWER = 14)
 
 /datum/outfit/job/roguetown/ashen_host/hollow/sapper/pre_equip(mob/living/carbon/human/H)
 	..()
