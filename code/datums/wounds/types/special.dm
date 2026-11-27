@@ -319,7 +319,7 @@
 	bleed_rate = 25 // equivalent to carotid artery tear
 	sewn_bleed_rate = 0.5
 	can_sew = TRUE
-	can_cauterize = FALSE
+	can_cauterize = TRUE
 	var/immunity_time = 12 SECONDS // how long the wound actively prevents further dismemberment attempts for
 
 /datum/wound/grievous/on_bodypart_gain(obj/item/bodypart/affected)
@@ -666,7 +666,7 @@
 	if(C.bodytemperature <= BODYTEMP_NORMAL_MAX)
 		if(!cure_timer)
 			to_chat(C, span_notice("The heat begins to slowly fade from my body..."))
-			cure_timer = addtimer(CALLBACK(src, PROC_REF(cure_heatstroke)), 2 MINUTES)
+			cure_timer = addtimer(CALLBACK(src, PROC_REF(cure_heatstroke)), 2 MINUTES, TIMER_STOPPABLE)
 
 	// If overheating again, cancel cure timer
 	else

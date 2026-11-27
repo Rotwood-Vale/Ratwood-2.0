@@ -523,7 +523,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 				target = "themselves"
 			if(A.loc == src)
 				target = "[src.p_their()] [A.name]"
-			if(A.loc.loc == src)
+			if(A.loc?.loc == src)
 				message = "[src] looks into"
 				target = "[src.p_their()] [A.loc.name]"
 			if(isliving(A))

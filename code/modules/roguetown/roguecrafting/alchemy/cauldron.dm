@@ -102,6 +102,7 @@
 							src.reagents.remove_reagent(/datum/reagent/water, in_cauldron)
 						for(var/obj/item/ing in src.ingredients)
 							qdel(ing)
+						ingredients = list()
 						src.reagents.add_reagent(/datum/reagent/yuck, in_cauldron) // 1 to 1 transmutation of yuck
 						// Learn from your failure (Yeah you can technically still grind this way you just blow through a lot of ingredients)
 						lastuser?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE) 

@@ -99,7 +99,7 @@
 
 /obj/item/rogueweapon/scabbard/sheath/aavnik/Initialize(mapload)
 	. = ..()
-	if(!sheathed)
+	if(!hol_comp.sheathed)
 		var/obj/item/rogueweapon/huntingknife/D = new(src)
-		sheathed = D
+		hol_comp.sheathed = D
 		update_icon()
