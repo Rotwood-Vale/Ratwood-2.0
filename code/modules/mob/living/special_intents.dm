@@ -1279,9 +1279,9 @@ SPECIALS START HERE
 	var/self_commit = 0.7 SECONDS
 
 	var/vine_begin_delay = 1.5 SECONDS
-	var/vine_mid_duration = 7 SECONDS
+	var/vine_mid_duration = 3 SECONDS
 	var/vine_end_duration = 0.3 SECONDS
-	var/entangle_dur = 3 SECONDS
+	var/entangle_dur = 3.3 SECONDS
 
 	var/exposed_dur = 3 SECONDS
 	var/vulnerable_dur = 3 SECONDS

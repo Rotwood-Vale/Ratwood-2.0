@@ -799,6 +799,12 @@
 	created_item = /obj/item/clothing/under/roguetown/platelegs/skirt
 	display_category = ITEM_CAT_ARMOR_LEGS
 
+/datum/anvil_recipe/armor/steel/kneelpad
+	name = "Poleyns, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/under/roguetown/splintlegs/kneelpad
+	display_category = ITEM_CAT_ARMOR_LEGS
+
 /datum/anvil_recipe/armor/steel/platelegs
 	name = "Plated Chausses, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)

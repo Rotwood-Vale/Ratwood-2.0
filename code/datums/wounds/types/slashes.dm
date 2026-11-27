@@ -117,6 +117,7 @@
 	clotting_threshold = 10
 	sewn_clotting_threshold = 0.5
 	sew_threshold = 150 //absolutely awful to sew up
+	can_cauterize = TRUE
 	critical = TRUE
 	/// Organs we can disembowel associated with chance to disembowel
 	var/static/list/affected_organs = list(
@@ -170,6 +171,7 @@
 	sew_threshold = 75
 	passive_healing = 0
 	sleep_healing = 0
+	can_cauterize = TRUE
 
 /datum/wound/slash/incision/sew_wound()
 	qdel(src)
@@ -211,7 +213,7 @@
 	woundpain = 10
 	mob_overlay = "cut"
 	can_sew = TRUE
-	can_cauterize = FALSE	//Ouch owie oof
+	can_cauterize = TRUE
 	severity_names = list(
 		"light" = 5,
 		"deep" = 10,
@@ -260,7 +262,7 @@
 	woundpain = 10
 	mob_overlay = "cut"
 	can_sew = TRUE
-	can_cauterize = FALSE	//Ouch owie oof
+	can_cauterize = TRUE
 	severity_names = list(
 		"light" = 5,
 		"deep" = 10,
@@ -362,3 +364,4 @@
 	sewn_clotting_threshold = 0.5
 	sew_threshold = 150
 	critical = TRUE
+	can_cauterize = TRUE

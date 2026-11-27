@@ -462,7 +462,7 @@
 	force = 15
 	force_wielded = 25
 	possible_item_intents = list(SPEAR_BASH)
-	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE)
+	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE, /datum/intent/reap)
 	name = "scythe"
 	desc = "The bane of fields, the trimmer of grass, the harvester of wheat, and - depending on who you ask - the shepherd of souls to the afterlyfe."
 	icon_state = "peasantscythe"
@@ -486,6 +486,35 @@
 	throwforce = 10
 	resistance_flags = FLAMMABLE
 	is_tool = TRUE
+
+/obj/item/rogueweapon/scythe/attack_turf(turf/T, mob/living/user)
+	if(user.used_intent?.type == /datum/intent/reap)
+		reap_area(T, user)
+		return
+	return ..()
+
+/// Swings over a 3 wide x 2 deep block starting at center and running away from the user, harvesting every ripe plant in it.
+/obj/item/rogueweapon/scythe/proc/reap_area(turf/center, mob/living/user)
+	var/dir_swing = get_dir(user, center) || user.dir
+	if(dir_swing & (dir_swing - 1)) // diagonal: snap to the user's facing, else the north/south component
+		dir_swing = (user.dir & (user.dir - 1)) ? (dir_swing & (NORTH|SOUTH)) : user.dir
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(!do_after(user, get_farming_do_time(user, 1.5 SECONDS), target = center))
+		return
+	playsound(user, pick(BLADEWOOSH_LARGE), 100, FALSE)
+	var/side = turn(dir_swing, 90)
+	var/reaped = 0
+	for(var/turf/row in list(center, get_step(center, dir_swing)))
+		for(var/turf/T in list(row, get_step(row, side), get_step(row, turn(side, 180))))
+			new /obj/effect/temp_visual/dir_setting/cleave_visual(T, dir_swing)
+			var/obj/structure/soil/S = locate() in T
+			if(S?.plant && S.produce_ready)
+				S.user_harvests(user)
+				reaped++
+	if(!reaped)
+		to_chat(user, span_warning("There is nothing to harvest!"))
+		return
+	playsound(center, 'sound/items/seed.ogg', 100, FALSE)
 
 /obj/item/rogueweapon/scythe/getonmobprop(tag)
 	. = ..()
