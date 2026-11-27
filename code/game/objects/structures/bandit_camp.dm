@@ -33,6 +33,8 @@
 	var/next_whisper = 0
 	/// The last line whispered, so it is not repeated straight away
 	var/last_whisper
+	/// The throne's layer while nobody sits in it, restored when they get up
+	var/empty_layer
 	var/static/list/whispers = list(
 		"More. There is always more gold.",
 		"Their coffers groan while your belly does. Take what is owed.",
@@ -52,6 +54,10 @@
 	..()
 	density = TRUE
 	M.set_mob_offsets("bed_buckle", _x = 0, _y = 8)
+	// Maps may raise the throne above mobs so its tall back covers what stands behind it; drop under the sitter while seated
+	if(isnull(empty_layer))
+		empty_layer = layer
+	layer = min(empty_layer, BELOW_MOB_LAYER)
 	next_whisper = world.time + 20 SECONDS
 	START_PROCESSING(SSobj, src)
 
@@ -60,6 +66,8 @@
 	density = FALSE
 	M.reset_offsets("bed_buckle")
 	if(!length(buckled_mobs))
+		if(!isnull(empty_layer))
+			layer = empty_layer
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/ruined_throne/process()

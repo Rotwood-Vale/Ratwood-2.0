@@ -64,22 +64,18 @@ const markLabelStyle = (left: number): CSSProperties => ({
 });
 
 const ProgressCard = (props: { progress: Progress }) => {
-  const { label, value, max, unit, marks, lines } = props.progress;
+  const { label, value, max, marks, lines } = props.progress;
   const fill = pct(value, max);
   return (
     <div style={cardStyle}>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
+          fontWeight: 'bold',
+          textAlign: 'center',
           marginBottom: '6px',
         }}
       >
-        <span style={{ fontWeight: 'bold' }}>{label}</span>
-        <span style={{ color: INK_SOFT }}>
-          {value} {unit}
-        </span>
+        {label}
       </div>
       <div
         style={{

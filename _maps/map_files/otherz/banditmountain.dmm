@@ -2443,7 +2443,9 @@
 /obj/structure/mineral_door/wood/donjon/stone{
 	name = "Iconoclast's Quarters"
 	},
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/open/floor/rogue/church/purple/damaged{
+	dir = 8
+	},
 /area/rogue/indoors/banditcamp)
 "Hr" = (
 /obj/structure/bed/rogue{
@@ -2782,7 +2784,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Infirmary"
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/open/floor/rogue/cobble,
 /area/rogue/indoors/banditcamp)
 "LD" = (
 /turf/open/floor/rogue/naturalstone,
@@ -2885,7 +2887,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Herb Garden"
 	},
-/turf/open/floor/rogue/herringbone,
+/turf/open/floor/rogue/cobble,
 /area/rogue/indoors/banditcamp)
 "MW" = (
 /obj/structure/chair/stool/rogue,
