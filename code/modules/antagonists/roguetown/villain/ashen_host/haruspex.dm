@@ -75,6 +75,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/raise_skeleton)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lacrima/free)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_greater_deadite)
 	H.grant_language(/datum/language/undead)
 
 	var/staffs = list(
@@ -105,7 +106,7 @@
 
 /datum/mind/proc/necro_crystal_cap()
 	if(has_necromancer_kit())	//necromancers get a cap of 1
-		return 1
+		return 3
 	if(has_lich_kit())			//proper liches get a cap of 6
 		return 6
 	return 0					//nonnecromancer/lich heretics get 0

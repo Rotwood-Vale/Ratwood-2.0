@@ -533,3 +533,67 @@
 							else
 								minion.faction += "neutral"
 								to_chat(caster, "[minion.name] calms down.")
+
+//RAISE GREATER DEADITE BASED ON THE CULT GATE VERSION
+/obj/effect/proc_holder/spell/invoked/raise_greater_deadite
+	name = "Raise Greater Deadite"
+	desc = "Drags a fresh corpse back from the grave as a Greater Deadite. Greater deadites are intelligent and capable of using items and weaponry, but suffer all the other drawbacks of being a deadite. They are not guaranteed to be loyal."
+	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "skeleton"
+	range = 4
+	sound = list('sound/magic/magnet.ogg')
+	releasedrain = 60
+	chargetime = 5 SECONDS
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 2
+	chargedloop = /datum/looping_sound/invokegen
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/arcane
+	recharge_time = 5 MINUTES
+	hide_charge_effect = TRUE
+	zizo_spell = TRUE
+	miracle = FALSE
+
+/obj/effect/proc_holder/spell/invoked/raise_greater_deadite/cast(list/targets, mob/living/user)
+	..()
+
+	var/mob/living/carbon/human/corpse
+	if(ishuman(targets[1]))
+		corpse = targets[1]
+	else
+		var/turf/T = get_turf(targets[1])
+		if(T)
+			corpse = locate(/mob/living/carbon/human) in T.contents
+
+	if(!corpse || corpse.stat != DEAD)
+		to_chat(user, span_warning("YOU NEED A CORPSE."))
+		revert_cast()
+		return FALSE
+
+	if(!corpse.mind)
+		to_chat(user, span_warning("[corpse] has no spirit left to call back."))
+		revert_cast()
+		return FALSE
+
+	playsound(get_turf(corpse), 'sound/magic/magnet.ogg', 80, TRUE)
+	new /obj/effect/temp_visual/bluespace_fissure(get_turf(corpse))
+
+	corpse.set_blood_volume(BLOOD_VOLUME_NORMAL)
+	corpse.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
+	corpse.setToxLoss(0, updating_health = FALSE, forced = TRUE)
+	corpse.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	corpse.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	corpse.heal_wounds(INFINITY)
+	corpse.zombie_check_can_convert()
+	var/datum/antagonist/zombie/Z = corpse.mind.has_antag_datum(/datum/antagonist/zombie)
+	if(Z)
+		Z.wake_zombie(TRUE)
+	REMOVE_TRAIT(corpse, TRAIT_CHUNKYFINGERS, "/datum/antagonist/zombie")
+	REMOVE_TRAIT(corpse, TRAIT_ZOMBIE_SPEECH, "/datum/antagonist/zombie")
+	corpse.emote("scream")
+	to_chat(corpse, span_userdanger("I FEEL MORE COMPETENT THAN THE AVERAGE DEADITE."))
+	corpse.visible_message(span_danger("[corpse] jerks upright, the dark magic forcing life back into [corpse.p_their()] limbs!"))
+	return TRUE
