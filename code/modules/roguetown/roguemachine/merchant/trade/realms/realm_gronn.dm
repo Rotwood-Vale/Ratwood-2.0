@@ -86,7 +86,6 @@
 		/datum/supply_pack/rogue/gronn/spider_honey,
 		/datum/supply_pack/rogue/gronn/cured_megafauna,
 		/datum/supply_pack/rogue/gronn/ring_courage,
-		/datum/supply_pack/rogue/alcohol/gronnmead,
 	)
 	hail_lines = list(
 		"Southlander. Hide, iron, fur. Salt, coal, steel. The trade is simple. Do not complicate it.",
