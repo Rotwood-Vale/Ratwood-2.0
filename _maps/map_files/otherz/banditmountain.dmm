@@ -21,6 +21,9 @@
 /obj/structure/stairs/fancy/c{
 	dir = 1
 	},
+/obj/structure/stairs/ruined{
+	dir = 1
+	},
 /turf/open/floor/rogue/carpet/ruined/center,
 /area/rogue/indoors/banditcamp)
 "am" = (
@@ -193,6 +196,9 @@
 	})
 "ef" = (
 /obj/structure/stairs/fancy/l{
+	dir = 1
+	},
+/obj/structure/stairs/ruined/l{
 	dir = 1
 	},
 /turf/open/floor/rogue/carpet/ruined/left,
@@ -2209,6 +2215,9 @@
 /area/rogue/indoors/banditcamp)
 "NG" = (
 /obj/structure/stairs/fancy/r{
+	dir = 1
+	},
+/obj/structure/stairs/ruined/r{
 	dir = 1
 	},
 /turf/open/floor/rogue/carpet/ruined/right,

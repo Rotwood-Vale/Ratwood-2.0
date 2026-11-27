@@ -1744,7 +1744,9 @@
 /turf/open/floor/rogue/carpet/ruined/center
 	icon_state = "ruined_carpet_c"
 
+/// Three states of four dirs each give twelve worn variants, so a long runner does not repeat.
 /turf/open/floor/rogue/carpet/ruined/center/Initialize(mapload)
+	icon_state = pick("ruined_carpet_c", "ruined_carpet_c2", "ruined_carpet_c3")
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
