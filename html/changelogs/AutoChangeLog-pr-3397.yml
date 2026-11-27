@@ -1,5 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - bugfix: "fingerless leather gloves and otavan leather gloves now have leather-tier protection as intended."
-  - bugfix: "fixed a handful of simplemob/wildshape penetration bugs where armor penetration wasn't being properly assigned."

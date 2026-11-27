@@ -34,6 +34,16 @@
 	craftdiff = 2
 	display_category = ITEM_CAT_ARMOR_LEGS
 
+/datum/crafting_recipe/roguetown/leather/armor/kneelpads
+	name = "leather poleyns"
+	result = /obj/item/clothing/under/roguetown/trou/leathertights/kneelpads
+	reqs = list(/obj/item/natural/hide/cured = 2,
+				/obj/item/reagent_containers/food/snacks/tallow = 1,
+				/obj/item/natural/fibers = 1)
+	sellprice = 10
+	craftdiff = 3
+	display_category = ITEM_CAT_ARMOR_LEGS
+
 /datum/crafting_recipe/roguetown/leather/armor/volfhelm
 	name = "volf helm"
 	result = list(/obj/item/clothing/head/roguetown/helmet/leather/volfhelm)

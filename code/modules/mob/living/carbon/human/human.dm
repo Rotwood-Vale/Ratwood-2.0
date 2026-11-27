@@ -79,12 +79,6 @@
 			return
 		if(!buckle_mob(user, TRUE, FALSE))
 			return
-		var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
-		riding_datum.vehicle_move_delay = 4
-		if(user.mind)
-			var/riding_skill = user.get_skill_level(/datum/skill/misc/riding)
-			if(riding_skill)
-				riding_datum.vehicle_move_delay = max(1, 3 - (riding_skill * 0.2))
 		return TRUE
 #endif
 
@@ -93,6 +87,8 @@
 	sexcon = new /datum/sex_controller(src)
 #endif
 	verbs += /mob/living/proc/lay_down
+	RegisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_PONYGIRL_RIDEABLE), SIGNAL_REMOVETRAIT(TRAIT_PONYGIRL_RIDEABLE)), PROC_REF(update_rider_steering_verb))
+	update_rider_steering_verb()
 
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
@@ -789,10 +785,12 @@
 							nsfw_img_gallery = list()
 							client.prefs?.img_gallery = list()
 							client.prefs?.nsfw_img_gallery = list()
+							client.prefs?.blocked_links = list()
 						else
 							return
 					client.prefs?.save_preferences()
 					client.prefs?.save_character()
+					client.prefs?.refresh_character_gallery()
 
 	if(href_list[VV_HK_PURGE_SLOT])
 		if(!check_rights(R_SPAWN))
@@ -830,8 +828,10 @@
 					client.prefs?.song_title = null
 					client.prefs?.img_gallery = list()
 					client.prefs?.nsfw_img_gallery = list()
+					client.prefs?.blocked_links = list()
 					client.prefs?.save_preferences()
 					client.prefs?.save_character()
+					client.prefs?.refresh_character_gallery()
 					to_chat(usr, span_warn("Slot purged successfully."))
 				else
 					to_chat(usr, span_warn("Slot purged partially. (Client inaccessible -- likely disconnected)"))
@@ -924,6 +924,8 @@
 	if(!is_type_in_typecache(target, can_ride_typecache))
 		target.visible_message(span_warning("[target] really can't seem to mount [src]..."))
 		return
+	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && (IsKnockdown() || IsParalyzed() || IsUnconscious() || stat != CONSCIOUS))
+		return FALSE
 	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
 	if(target_hands_needed)
@@ -1040,8 +1042,8 @@
 	shavelevel = target.shavelevel
 	socks = target.socks
 	has_stubble = target.has_stubble
-	headshot_link = target.headshot_link
 	flavortext = target.flavortext
+	clear_gallery_images()
 
 	var/obj/item/bodypart/head/target_head = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!isnull(target_head))
@@ -1049,6 +1051,25 @@
 		user_head.bodypart_features = target_head.bodypart_features
 
 	regenerate_icons()
+
+/mob/living/carbon/human/proc/clear_gallery_images()
+	headshot_link = null
+	reset_gallery_frame(src)
+	headshot_frame_chat = FALSE
+	image_backdrop = GALLERY_BACKDROP_TAVERN
+	ooc_extra_img = null
+	ooc_extra_img_link = null
+	nsfw_ooc_extra_img = null
+	nsfw_ooc_extra_img_link = null
+	img_gallery = list()
+	nsfw_img_gallery = list()
+	card_backgrounds = list()
+	art_view_settings = list()
+
+/mob/living/carbon/human/proc/chat_headshot_markup()
+	if(!headshot_frame_chat)
+		return chat_headshot(GALLERY_ATTRIBUTE_LINK(headshot_link))
+	return "<div class='chat_headshot'><div class='chat_headshot_frame'><img src='[GALLERY_ATTRIBUTE_LINK(headshot_link)]' style='[headshot_picture_style(headshot_zoom, headshot_x, headshot_y)]'/></div></div>"
 
 
 /mob/living/carbon/human/proc/copy_bodyparts(mob/living/carbon/human/target)

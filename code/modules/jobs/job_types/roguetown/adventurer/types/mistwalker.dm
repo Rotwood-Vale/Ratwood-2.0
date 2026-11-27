@@ -130,6 +130,37 @@
 				H.change_stat(STATKEY_PER, 2)
 		wretch_select_bounty(H)
 
+/obj/effect/proc_holder/spell/self/bloodlet
+	source_aspect = /datum/magic_aspect/pseudo/mistwalker
+	name = "Red Tides"
+	desc = "Take a brief moment to open yourself up to the flow of battle, both in body and mynd. Allow the raging tides of blood to wash through you and embrace the current driven by its dissipation. Teetering on the edge of sanity and heresy, Gaiyuke will find no joy in your suffering, only the resolve to see it through."
+	antimagic_allowed = TRUE
+	clothes_req = FALSE
+	chargetime = 3 SECONDS
+	recharge_time = 5 MINUTES
+	invocations = list("surrenders their lyfeblood to the tide of battle!")
+	invocation_type = "emote"
+
+/obj/effect/proc_holder/spell/self/bloodlet/cast(mob/living/carbon/human/user)
+	. = ..()
+	var/bloodbuff_duration = 15 SECONDS
+	if(!ishuman(user))
+		revert_cast()
+		return FALSE
+	if(user.get_blood_volume() <= BLOOD_VOLUME_OKAY) //336
+		to_chat(user, span_warning("I can't let go of more willingly!"))
+		revert_cast()
+		return FALSE
+	if(!do_after(user, 3 SECONDS, TRUE, null, TRUE, null, FALSE, FALSE, TRUE))
+		to_chat(user, span_warning("Action interrupted!"))
+		revert_cast()
+		return FALSE
+	user.set_blood_volume(max(user.get_blood_volume()-150, 0)) //226
+	user.apply_status_effect(/datum/status_effect/buff/empowered_strike, bloodbuff_duration)
+	to_chat(user, span_notice("Calm as the mountain lake. Inevitable as the raging tides."))
+	playsound(user, 'sound/combat/hits/bladed/genthrust (1).ogg', 100, TRUE)
+	return TRUE
+
 /obj/item/clothing/wrists/roguetown/bracers/black
 	color = CLOTHING_BLACK
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/black

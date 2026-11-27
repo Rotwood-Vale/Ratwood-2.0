@@ -80,7 +80,15 @@
 			human_rider.vars["last_mount_move_time"] = world.time
 			human_rider.update_mob_action_buttons()
 			addtimer(CALLBACK(human_rider, TYPE_PROC_REF(/mob, update_mob_action_buttons)), 2 SECONDS)
-	// Award riding XP only to the driver, once per completed mount move.
+	if(!ishuman(AM) || !HAS_TRAIT(AM, TRAIT_PONYGIRL_RIDEABLE))
+		award_riding_experience(current_driver)
+	handle_vehicle_offsets(rider)
+	handle_vehicle_layer()
+	if(driver && driver.IsImmobilized())
+		force_dismount(driver)
+
+/datum/component/riding/proc/award_riding_experience(mob/living/current_driver)
+	var/atom/movable/AM = parent
 	if(current_driver && !QDELETED(current_driver) && (current_driver in AM.buckled_mobs))
 		if(current_driver.m_intent == MOVE_INTENT_RUN)
 			riding_xp_move_counter++
@@ -97,10 +105,6 @@
 			riding_xp_move_counter = 0 //reset counter if not running
 	else
 		riding_xp_move_counter = 0
-	handle_vehicle_offsets(rider)
-	handle_vehicle_layer()
-	if(driver && driver.IsImmobilized())
-		force_dismount(driver)
 
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
@@ -271,7 +275,7 @@
 					if(blocker.density && (blocker.flags_1 & ON_BORDER_1) && blocker.dir == turn(direction, 180))
 						can_force = FALSE
 						break
-			if(can_force)
+			if(can_force && !(ishuman(AM) && HAS_TRAIT(AM, TRAIT_PONYGIRL_RIDEABLE)))
 				AM.forceMove(next)
 
 		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
@@ -323,15 +327,110 @@
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
 	del_on_unbuckle_all = TRUE
+	var/steering_generation = 0
 
 /datum/component/riding/human/Initialize()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_host_unarmed_melee))
 
+/// Player passengers request actions from the mount; they never supply its stats.
+/datum/component/riding/human/proc/can_rider_steer(mob/user)
+	var/mob/living/carbon/human/mount = parent
+	if(QDELETED(mount) || QDELETED(user) || !HAS_TRAIT(mount, TRAIT_PONYGIRL_RIDEABLE) || !mount.allow_rider_steering)
+		return FALSE
+	if(user != driver || user.buckled != mount || !(user in mount.buckled_mobs) || !isturf(mount.loc) || user.loc != mount.loc)
+		return FALSE
+	if(user.incapacitated() || user.restrained() || mount.incapacitated() || !(mount.mobility_flags & MOBILITY_MOVE) || !(mount.mobility_flags & MOBILITY_STAND))
+		return FALSE
+	return !mount.IsKnockdown() && !mount.IsImmobilized() && !mount.IsFrozen() && !mount.buckled && !mount.throwing && !mount.remote_control && !mount.control_object
+
+/datum/component/riding/human/handle_ride(mob/user, direction)
+	var/mob/living/carbon/human/mount = parent
+	if(!HAS_TRAIT(mount, TRAIT_PONYGIRL_RIDEABLE))
+		return ..()
+	if(!can_rider_steer(user) || mount.doing)
+		return FALSE
+	user.rider_look_dir = 0
+	// Both keyboards use the same client Move timer, stamina and collision path.
+	// A disconnected player cannot be driven through a separate, faster NPC path.
+	. = mount.execute_piloted_move(direction)
+
+/// Only rider-requested Sneak is shared; internal fatigue/rest changes stay local.
+/datum/component/riding/human/proc/handle_movement_intent(mob/living/user, intent)
+	if(!can_rider_steer(user))
+		return FALSE
+	var/mob/living/carbon/human/mount = parent
+	var/was_sneaking = mount.m_intent == MOVE_INTENT_SNEAK
+	var/rider_was_sneaking = user.m_intent == MOVE_INTENT_SNEAK
+	mount.toggle_rogmove_intent(intent)
+	if(mount.m_intent != intent)
+		return FALSE
+	if(intent == MOVE_INTENT_SNEAK)
+		user.toggle_rogmove_intent(MOVE_INTENT_SNEAK, TRUE)
+		if(!was_sneaking || !rider_was_sneaking)
+			var/message = span_notice("[user] urges [mount] to lower their stance and walk more cautiously.")
+			to_chat(user, message)
+			to_chat(mount, message)
+	else if(rider_was_sneaking)
+		user.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+	user.update_sneak_invis()
+	mount.update_sneak_invis()
+	if(intent != MOVE_INTENT_SNEAK && was_sneaking)
+		user.visible_message(span_notice("[user] guides [mount] to relax their posture again."), span_notice("I guide [mount] to relax their posture again."))
+	return TRUE
+
+/datum/component/riding/human/proc/can_rider_act(mob/user)
+	var/mob/living/carbon/human/mount = parent
+	return can_rider_steer(user) && !mount.doing && mount.next_move <= world.time && !mount.is_swinging()
+
+/datum/component/riding/human/proc/handle_jump(mob/user, atom/target)
+	if(!can_rider_act(user))
+		return FALSE
+	var/mob/living/carbon/human/mount = parent
+	return mount.jump_action(target)
+
+/datum/component/riding/human/proc/handle_climb(mob/user, atom/target, along_wall = FALSE)
+	if(!can_rider_act(user) || !target || !target.Adjacent(parent))
+		return FALSE
+	var/mob/living/carbon/human/mount = parent
+	if(!(mount.mobility_flags & MOBILITY_USE))
+		return FALSE
+	if(!along_wall && mount.get_active_held_item())
+		to_chat(user, span_warning("[mount] needs an empty active hand to climb here."))
+		return FALSE
+	var/datum/callback/still_steering = CALLBACK(src, PROC_REF(continue_climb), user, steering_generation)
+	mount.changeNext_move(CLICK_CD_MELEE)
+	if(along_wall)
+		var/turf/open/transparent/openspace/space = target
+		if(istype(space))
+			. = space.climb_from_openspace(mount, still_steering)
+	else if(isturf(target))
+		var/turf/climb_target = target
+		. = climb_target.attack_hand(mount, null, still_steering)
+	else if(istype(target, /obj/structure/flora/newtree) || istype(target, /obj/structure/flora/newtreealt))
+		var/obj/structure/flora/tree = target
+		. = tree.climb_tree(mount, still_steering)
+	qdel(still_steering)
+
+/datum/component/riding/human/proc/continue_climb(mob/user, generation)
+	return !QDELETED(src) && generation == steering_generation && can_rider_steer(user)
+
+/datum/component/riding/human/vehicle_moved(datum/source, atom/old_loc, direction, forced = FALSE)
+	var/mob/living/carbon/human/mount = parent
+	// Normal Move carries buckled mobs already. Cliff climbing and wall
+	// traversal use forceMove, which otherwise leaves passengers behind.
+	if(forced && HAS_TRAIT(mount, TRAIT_PONYGIRL_RIDEABLE) && isturf(mount.loc) && mount.has_buckled_mobs())
+		for(var/mob/living/rider in mount.buckled_mobs.Copy())
+			if(!QDELETED(rider) && rider.buckled == mount && rider.loc != mount.loc)
+				rider.forceMove(mount.loc)
+	return ..()
+
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	var/mob/living/carbon/human/H = parent
+	steering_generation++
 	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
 	. = ..()
+	M.refresh_movement_buttons()
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
@@ -345,6 +444,7 @@
 	if(H.STASTR < reqstrength)
 		amt2use += 2
 	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = amt2use)
+	M.refresh_movement_buttons()
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/H = parent

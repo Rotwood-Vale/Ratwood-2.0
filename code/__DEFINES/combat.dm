@@ -420,22 +420,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
 #define EXPOSED_CAST_LOCKOUT 4 SECONDS	// Cap on how long Exposed can deny casting
-#define TEMPO_TAG_STAMLOSS_PARRY "parry"
-#define TEMPO_TAG_STAMLOSS_DODGE "dodge"
-#define TEMPO_TAG_ARMOR_INTEGFACTOR "integ"
-#define TEMPO_TAG_NOLOS_PARRY "nolosparry"
-#define TEMPO_TAG_NOLOS_DODGE "nolosdodge"
-#define TEMPO_TAG_DEF_SHARPNESSFACTOR "sharpness"
-#define TEMPO_TAG_DEF_INTEGFACTOR "parryinteg"
-#define TEMPO_TAG_PARRYCD_BONUS	"parrycd"
-#define TEMPO_TAG_RCLICK_CD_BONUS "rclickcd"
-#define TEMPO_TAG_FEINTBAIT_FOV "feintbaitfov"
-#define TEMPO_TAG_DODGE_LOSS "dodgeloss"
-	#define TEMPO_DODGE_LOSS_NORMAL 0
-	#define TEMPO_DODGE_LOSS_LESS 1
-	#define TEMPO_DODGE_LOSS_NONE 2
-#define TEMPO_TAG_BINDABLE "defbindable"
-#define TEMPO_TAG_EQUIPTOSS "equiptoss"
 
 //melee accuracy bonus and penlties used by melee_accuracy_check() and resolve_aimed_zone() in accuracy_checks.dm
 #define ACC_MAJOR_ZONE_BONUS 10			//Aiming at a major limb rather than one of its precise subzones.
