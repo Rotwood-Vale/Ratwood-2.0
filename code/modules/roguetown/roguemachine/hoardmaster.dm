@@ -12,6 +12,8 @@
 	var/upgrade_flags
 	/// ckey -> the category that player has open ("1" is the category menu). Per player, so one bandit's browsing never resets another's.
 	var/list/current_cats = list()
+	/// ckey -> world.time before which that player's refused purchases are logged but not alerted to admins
+	var/list/refusal_alert_cooldowns = list()
 
 
 /obj/structure/roguemachine/Hoardmaster/Initialize(mapload)
@@ -58,7 +60,10 @@
 		var/datum/supply_pack/PA = ispath(path, /datum/supply_pack) ? SSmerchant.supply_packs[path] : null
 		// Only packs listed under a category this bandit has unlocked: the link can be edited to name any pack
 		if(!PA || !(PA.group in unlocked_categories(M)))
-			message_admins("[ADMIN_LOOKUPFLW(usr)] tried to buy [path] from the Hoardmaster, which is not in their unlocked categories.")
+			log_admin("[key_name(usr)] tried to buy [path] from the Hoardmaster, which is not in their unlocked categories.")
+			if(world.time >= refusal_alert_cooldowns[usr.ckey]) // edited links can be clicked endlessly; alert admins once a minute per player
+				refusal_alert_cooldowns[usr.ckey] = world.time + 1 MINUTES
+				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to buy [path] from the Hoardmaster, which is not in their unlocked categories.")
 			return
 		var/cost = PA.cost
 		if(B.favor >= cost)
