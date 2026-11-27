@@ -39,7 +39,7 @@
 		if(attack_flag != "piercing")
 			if(armor_tier > 0)
 				if(armor_penetration >= armor_tier)
-					if(used_weapon)
+					if(isitem(used_weapon)) // projectiles lack sharpness var due to not being items
 						var/obj/item/I = used_weapon
 						if(I.sharpness)
 							if((I.blade_int / I.max_blade_int) <= SHARPNESS_TIER2_THRESHOLD) // Our sharpness is 'chunked' (<20%), so we do not pen at all.

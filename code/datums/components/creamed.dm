@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 /datum/component/creamed/Destroy(force, silent)
 	var/atom/A = parent
 	A.cut_overlay(creamface)
-	qdel(creamface)
+	creamface = null
 	return ..()
 
 /datum/component/creamed/RegisterWithParent()

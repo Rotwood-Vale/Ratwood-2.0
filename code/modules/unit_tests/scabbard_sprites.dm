@@ -15,11 +15,11 @@
 			if(!blade)
 				blade = allocate(blade_type)
 				blades[blade_type] = blade
-			if(!scabbard.weapon_check(null, blade))
+			if(!scabbard.hol_comp.weapon_check(null, blade))
 				continue
-			scabbard.sheathed = blade
+			scabbard.hol_comp.sheathed = blade
 			scabbard.update_icon()
 			if(!icon_exists(scabbard.icon, scabbard.icon_state))
 				TEST_FAIL("[scabbard_type] accepts [blade_type] but [scabbard.icon] has no \"[scabbard.icon_state]\" state, and no fallback")
-			scabbard.sheathed = null
+			scabbard.hol_comp.sheathed = null
 			scabbard.update_icon()
