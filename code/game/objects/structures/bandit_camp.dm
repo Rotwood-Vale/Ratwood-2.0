@@ -1,15 +1,21 @@
-// Set dressing for the bandit camp: the gang's standing banner and a ruined throne that Matthios whispers through.
+// Set dressing for the bandit camp: the gang's standard and wall banner, and a ruined throne that Matthios whispers through.
 
-/obj/structure/fluff/brigand_banner
-	name = "brigand banner"
+/obj/structure/fluff/brigand_standard
+	name = "brigand standard"
 	desc = "A ragged standard on a crooked pole, its cloth stitched from stolen finery. Where it flies, the Freefolk answer to no lord."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
-	icon_state = "brigand_banner"
+	icon_state = "brigand_standard"
 	layer = BELOW_OBJ_LAYER
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
+
+/// The standard's cloth without its pole, hung on a wall. Map it on the tile below the wall with pixel_y = 32, like the other wall banners.
+/obj/structure/fluff/walldeco/brigand_banner
+	name = "brigand banner"
+	desc = "The Freefolk's colours, torn and moth-eaten, nailed up to mark the place as theirs. Every rip in it was paid for by someone else."
+	icon_state = "brigand_banner"
 
 /// Looks and seats like the ducal throne, but is only decoration. Whoever sits in it hears Matthios.
 /obj/structure/ruined_throne

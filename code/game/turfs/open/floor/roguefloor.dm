@@ -1735,6 +1735,25 @@
 /turf/open/floor/rogue/carpet/lord/right
 	icon_state = "carpet_r"
 
+/// The lord carpet's layout in fixed purple and gold, worn through in places. Not a lord carpet, so the ducal colours never touch it.
+/turf/open/floor/rogue/carpet/ruined
+	name = "ruined carpet"
+	desc = "Once a lord's runner, now stained, threadbare and worn through to the stone. The gold trim still remembers better days."
+	icon_state = "ruined_carpet_c"
+
+/turf/open/floor/rogue/carpet/ruined/center
+	icon_state = "ruined_carpet_c"
+
+/turf/open/floor/rogue/carpet/ruined/center/Initialize(mapload)
+	dir = pick(GLOB.cardinals)
+	. = ..()
+
+/turf/open/floor/rogue/carpet/ruined/left
+	icon_state = "ruined_carpet_l"
+
+/turf/open/floor/rogue/carpet/ruined/right
+	icon_state = "ruined_carpet_r"
+
 /turf/open/floor/rogue/shroud
 	name = "treetop"
 	icon_state = "treetop1"
