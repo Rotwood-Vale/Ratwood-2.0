@@ -145,7 +145,8 @@
 	dat += "<a href='?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];rebootworld=1'>Reboot World</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a><br>"
-	dat += "<a href='?_src_=holder;[HrefToken()];check_hunted_targets=1'>Gnoll Information</a>"
+	dat += "<a href='?_src_=holder;[HrefToken()];check_hunted_targets=1'>Gnoll Information</a><br>"
+	dat += "<a href='?_src_=holder;[HrefToken()];brigand_goal=1'>Brigand Goal</a>"
 	var/connected_players = GLOB.clients.len
 	var/lobby_players = 0
 	var/observers = 0

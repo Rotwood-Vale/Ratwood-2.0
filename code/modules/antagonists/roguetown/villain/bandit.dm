@@ -134,20 +134,24 @@
 		. += BANDIT_TOP_OFFERER_TRIUMPHS
 
 /datum/antagonist/bandit/get_briefing_progress()
+	return SSmapping.retainer.bandit_hoard_progress(list("Your offerings: [personal_offered] mammons"))
+
+//THE HOARD: one band-wide total, kept on the antag retainer
+
+/// The hoard's progress bar for the briefing window (shape in /datum/antagonist/proc/get_briefing_progress), with lines under it
+/datum/antag_retainer/proc/bandit_hoard_progress(list/lines)
 	var/list/marks = list()
 	for(var/datum/objective/bandit_hoard/tier as anything in GLOB.bandit_hoard_tiers)
 		marks += list(list("at" = initial(tier.target_amount), "label" = initial(tier.tier_name)))
 	var/datum/objective/bandit_hoard/top_tier = GLOB.bandit_hoard_tiers[length(GLOB.bandit_hoard_tiers)]
 	return list(
 		"label" = "The brigand gang's hoard",
-		"value" = SSmapping.retainer.bandit_contribute,
+		"value" = bandit_contribute,
 		"max" = initial(top_tier.target_amount),
 		"unit" = "mammons",
 		"marks" = marks,
-		"lines" = list("Your offerings: [personal_offered] mammons"),
+		"lines" = lines,
 	)
-
-//THE HOARD: one band-wide total, kept on the antag retainer
 
 /// The highest hoard tier the band has reached, as its objective type, or null for none
 /datum/antag_retainer/proc/bandit_hoard_tier()
@@ -207,3 +211,60 @@
 		best.hoard_triumphs_awarded = best.hoard_triumphs_owed()
 		if(best.hoard_triumphs_awarded)
 			best.owner.adjust_triumphs(best.hoard_triumphs_awarded)
+
+//ADMIN VIEW: the brigand goal, opened from the F6 antagonist panel
+
+GLOBAL_DATUM_INIT(bandit_goal_view, /datum/bandit_goal_view, new)
+
+/// Read-only briefing window for admins: the band's hoard, each tier, and every bandit's offerings and favor
+/datum/bandit_goal_view
+
+/datum/bandit_goal_view/ui_state(mob/user)
+	return ADMIN_STATE(R_ADMIN)
+
+/datum/bandit_goal_view/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AntagBriefing", "Brigand Goal")
+		ui.open()
+
+/datum/bandit_goal_view/ui_static_data(mob/user)
+	return list(
+		"title" = "Brigand Goal",
+		"flavour" = null,
+		"explanation" = null, // the window heads this "Your Purpose", which reads wrongly for an admin
+	)
+
+/datum/bandit_goal_view/ui_data(mob/user)
+	var/list/goals = list()
+	for(var/datum/objective/bandit_hoard/tier as anything in GLOB.bandit_hoard_tiers)
+		goals += list(list(
+			"text" = "[initial(tier.tier_name)]: [initial(tier.target_amount)] mammons ([initial(tier.triumph_count)] triumphs each)",
+			"completed" = SSmapping.retainer.bandit_contribute >= initial(tier.target_amount),
+		))
+	var/list/bandits = list()
+	for(var/datum/antagonist/bandit/bandit in GLOB.antagonists)
+		if(bandit.owner)
+			bandits += bandit
+	sortTim(bandits, GLOBAL_PROC_REF(cmp_bandit_offered_dsc))
+	var/list/lines = list()
+	for(var/datum/antagonist/bandit/bandit as anything in bandits)
+		var/name = bandit.owner.current?.real_name || bandit.owner.name
+		lines += "[name] ([bandit.owner.key || "no key"]): offered [bandit.personal_offered], favor [bandit.favor]"
+	if(!length(lines))
+		lines += "No bandits this round."
+	return list(
+		"goals" = goals,
+		"progress" = SSmapping.retainer.bandit_hoard_progress(lines),
+	)
+
+/datum/bandit_goal_view/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(action == "close")
+		ui.close()
+		return TRUE
+
+/proc/cmp_bandit_offered_dsc(datum/antagonist/bandit/A, datum/antagonist/bandit/B)
+	return B.personal_offered - A.personal_offered

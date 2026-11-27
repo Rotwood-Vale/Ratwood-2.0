@@ -31,20 +31,25 @@
 /mob/dead/new_player/proc/VillainChoices()
 	var/list/dat = list()
 
+	// Players learn which queueable villains exist but never how many, and nothing of the greater villains: the round modifiers are hidden the same way
+	var/is_admin = !!client?.holder
 	if(!SSgamemode.modifiers_rolled)
 		dat += "Wait."
 	else
 		dat += "<b>Greater Villains:</b><br>"
-		if(!length(SSgamemode.rolled_villain_events))
-			dat += "None.<br>"
-		for(var/datum/round_event_control/antagonist/event in SSgamemode.rolled_villain_events)
-			var/slots = 1
-			if(istype(event, /datum/round_event_control/antagonist/solo))
-				var/datum/round_event_control/antagonist/solo/solo_event = event
-				slots = solo_event.get_antag_amount()
-			dat += "<b>[event.name]</b> ([slots] slots)<br>"
-		if(length(SSgamemode.rolled_villain_events))
-			dat += "<i>These roll at roundstart from your antag preferences.</i><br>"
+		if(!is_admin)
+			dat += "<i>Greater villains may roll at roundstart from your antag preferences.</i><br>"
+		else
+			if(!length(SSgamemode.rolled_villain_events))
+				dat += "None.<br>"
+			for(var/datum/round_event_control/antagonist/event in SSgamemode.rolled_villain_events)
+				var/slots = 1
+				if(istype(event, /datum/round_event_control/antagonist/solo))
+					var/datum/round_event_control/antagonist/solo/solo_event = event
+					slots = solo_event.get_antag_amount()
+				dat += "<b>[event.name]</b> ([slots] slots)<br>"
+			if(length(SSgamemode.rolled_villain_events))
+				dat += "<i>These roll at roundstart from your antag preferences. (Admin view: players see no list.)</i><br>"
 
 		dat += "<br><b>Lesser Villains:</b><br>"
 		var/found = FALSE
@@ -70,9 +75,11 @@
 						pref_label = "Low"
 						pref_color = "orange"
 						next_level = 2
-				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a>([J.total_positions] slots) - <a href='byond://?src=[REF(src)];villain_pref=[J.title];level=[next_level]'><font color=[pref_color]>[pref_label]</font></a><br>"
+				var/slot_text = is_admin ? "([J.total_positions] slots)" : ""
+				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a>[slot_text] - <a href='byond://?src=[REF(src)];villain_pref=[J.title];level=[next_level]'><font color=[pref_color]>[pref_label]</font></a><br>"
 			else
-				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a><a href='byond://?src=[REF(src)];SelectedJob=[J.title]'>([J.current_positions]/[J.total_positions])</a><a href='?src=[REF(J)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a><br>"
+				var/join_text = is_admin ? "([J.current_positions]/[J.total_positions])" : "(Join)"
+				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a><a href='byond://?src=[REF(src)];SelectedJob=[J.title]'>[join_text]</a><a href='?src=[REF(J)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a><br>"
 
 		if(!found)
 			dat += "No villain roles this round."

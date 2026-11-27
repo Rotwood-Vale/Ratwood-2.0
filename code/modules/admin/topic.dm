@@ -1552,6 +1552,11 @@
 			return
 		usr.client.check_antagonists()
 
+	else if(href_list["brigand_goal"])
+		if(!check_rights(R_ADMIN))
+			return
+		GLOB.bandit_goal_view.ui_interact(usr)
+
 	else if(href_list["check_hunted_targets"])
 		if(!check_rights(R_BAN))
 			return
