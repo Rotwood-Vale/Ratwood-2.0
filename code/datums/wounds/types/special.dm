@@ -319,7 +319,7 @@
 	bleed_rate = 25 // equivalent to carotid artery tear
 	sewn_bleed_rate = 0.5
 	can_sew = TRUE
-	can_cauterize = FALSE
+	can_cauterize = TRUE
 	var/immunity_time = 12 SECONDS // how long the wound actively prevents further dismemberment attempts for
 
 /datum/wound/grievous/on_bodypart_gain(obj/item/bodypart/affected)
