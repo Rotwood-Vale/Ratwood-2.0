@@ -1,0 +1,4 @@
+author: "Skuyno"
+delete-after: True
+changes:
+  - bugfix: "Fixed Australian Shepherd tail alignment."
