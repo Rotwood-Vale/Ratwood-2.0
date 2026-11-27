@@ -1,0 +1,6 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Diagnose will now inform you if somone is ooze or construct/doll"
+  - rscadd: "Caughtery can be used on some more wounds and removes bleed instead of setting it to clotting range"
+  - qol: "Cautgery surgery is now only performable if any wound on selected limb can be healed with it"

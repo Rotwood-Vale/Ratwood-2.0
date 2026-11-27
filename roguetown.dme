@@ -3552,6 +3552,8 @@
 #include "modular\code\datums\sexcon\sex_actions\magic\prestidigitation_self_penis.dm"
 #include "modular\code\datums\sexcon\sex_actions\magic\prestidigitation_self_vagina.dm"
 #include "modular\code\datums\sexcon\sex_actions\magic\prestidigitation_vagina.dm"
+#include "modular\code\datums\sexcon\sex_actions\perverse\_perverse.dm"
+#include "modular\code\datums\sexcon\sex_actions\perverse\perverse_earfuck.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\_tailmaw.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_chastity_tease.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_earfuck.dm"
