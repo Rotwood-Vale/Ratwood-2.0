@@ -75,3 +75,35 @@
 	last_whisper = pick(whispers - last_whisper)
 	to_chat(sitter, "<font color='#e6b422'><i>[last_whisper]</i></font>")
 	sitter.playsound_local(get_turf(sitter), 'sound/misc/coininsert.ogg', 25, FALSE)
+
+/// A chandelier that came down and smashed on the floor. Floor debris: it can be walked over.
+/obj/structure/fluff/fallen_chandelier
+	name = "fallen chandelier"
+	desc = "A chandelier that has torn free of the ceiling and smashed itself on the floor. Its candles lie scattered in pools of old wax."
+	icon = 'icons/roguetown/misc/tallwide.dmi'
+	icon_state = "chand_fallen"
+	pixel_x = -9
+	layer = BELOW_OBJ_LAYER
+	blade_dulling = DULLING_BASH
+	attacked_sound = list('sound/combat/hits/onmetal/sheet (1).ogg')
+
+/// A heap of fallen stone filling a single tile. Dense and not climbable, so it blocks the way.
+/obj/structure/rubble
+	name = "rubble"
+	desc = "A heap of broken stone where part of the ceiling came down. There is no getting past it."
+	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon_state = "rubble1"
+	density = TRUE
+	anchored = TRUE
+	opacity = FALSE
+	climbable = FALSE
+	layer = TABLE_LAYER
+	max_integrity = 300
+	blade_dulling = DULLING_BASH
+	attacked_sound = 'sound/foley/hit_rock.ogg'
+	destroy_sound = 'sound/foley/smash_rock.ogg'
+	static_debris = list(/obj/item/natural/stone = 3)
+
+/obj/structure/rubble/Initialize(mapload)
+	. = ..()
+	icon_state = "rubble[rand(1,3)]"
