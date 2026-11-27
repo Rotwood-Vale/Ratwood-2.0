@@ -151,11 +151,21 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		if(!patron || !patron.name)
 			continue
 		for(var/miracle in patron.miracles)
-			var/obj/effect/proc_holder/checked_miracle = miracle
-			if(patron.miracles[checked_miracle] == CLERIC_T4 && (initial(checked_miracle.priest_excluded) == FALSE))
-				t4[initial(checked_miracle.name)] = checked_miracle
-			if(patron.miracles[checked_miracle] == CLERIC_T3 && (initial(checked_miracle.priest_excluded) == FALSE))
-				t3[initial(checked_miracle.name)] = checked_miracle
+			var/list/tier_choices
+			switch(patron.miracles[miracle])
+				if(CLERIC_T4)
+					tier_choices = t4
+				if(CLERIC_T3)
+					tier_choices = t3
+				else
+					continue
+			if(ispath(miracle, /datum/action/cooldown/spell))
+				var/datum/action/cooldown/spell/action_miracle = miracle
+				tier_choices[initial(action_miracle.name)] = action_miracle
+			else if(ispath(miracle, /obj/effect/proc_holder))
+				var/obj/effect/proc_holder/legacy_miracle = miracle
+				if(initial(legacy_miracle.priest_excluded) == FALSE)
+					tier_choices[initial(legacy_miracle.name)] = legacy_miracle
 	for(var/miracle in t4)
 		if(H.mind.has_spell(t4[miracle]))
 			t4.Remove(miracle)
@@ -164,12 +174,12 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 			t3.Remove(miracle)
 	var/t4_choice = input(H, "Choose your Tier Four Miracle.", "TAKE UP KNAWLEDGE") as anything in t4
 	if(t4_choice)
-		var/obj/effect/proc_holder/chosen_miracle = t4[t4_choice]
+		var/chosen_miracle = t4[t4_choice]
 		H.mind.AddSpell(new chosen_miracle)
 	for(var/i in 1 to t3_count)
 		var/t3_choice = input(H, "Choose your Tier Three Miracle.", "TAKE UP KNAWLEDGE ([t3_count] CHOICES REMAIN)") as anything in t3
 		if(t3_choice)
-			var/obj/effect/proc_holder/chosen_miracle = t3[t3_choice]
+			var/chosen_miracle = t3[t3_choice]
 			H.mind.AddSpell(new chosen_miracle)
 			t3.Remove(t3_choice)
 			t3_count--
@@ -178,7 +188,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Bishop Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, {"Choose thy path.
+
+Loyalist -- Devote thyself to a single patron and keep their rites.
+
+Radical -- Seek wisdom beyond the teachings of thy patron. Thou mayst change thy patron as thy studies lead thee. Long years of study have sharpened thy mind and left thy body weary.
+
+Radical effects: -1 Constitution, +2 Will, +1 Speed, and Critical Weakness.
+Wrestling and Fistfighting start at level 2."}, "Bishop Doctrine", "Loyalist", "Radical")
 
 	if(choice == "Radical")
 		src.grant_radical_path(H)
@@ -198,6 +215,12 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	if(!H || !H.mind || !H.patron)
 		return
 	ADD_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	ADD_TRAIT(H, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+	H.adjust_skillrank_down_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_down_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.change_stat(STATKEY_CON, -1)
+	H.change_stat(STATKEY_WIL, 2)
+	H.change_stat(STATKEY_SPD, 1)
 	H.church_favor += 2400
 	H.miracle_points += 8
 	H.verbs |= /mob/living/carbon/human/proc/change_patron

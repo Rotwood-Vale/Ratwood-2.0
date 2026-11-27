@@ -100,6 +100,10 @@ GLOBAL_LIST_EMPTY(soil_list)
 	update_icon()
 
 /obj/structure/soil/proc/try_handle_harvest(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/rogueweapon/scythe) && user.used_intent?.type == /datum/intent/reap)
+		var/obj/item/rogueweapon/scythe/scythe = attacking_item
+		scythe.reap_area(get_turf(src), user)
+		return TRUE
 	if(istype(attacking_item, /obj/item/rogueweapon/sickle))
 		if(!plant || !produce_ready)
 			to_chat(user, span_warning("There is nothing to harvest!"))
