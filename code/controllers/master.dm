@@ -40,6 +40,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/tickdrift = 0
 	var/olddrift = 0
 	var/last_profiled = 0
+	var/td_elevated_since = 0
 
 	var/sleep_delta = 1
 
@@ -687,6 +688,18 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if(newdrift - olddrift >= CONFIG_GET(number/drift_dump_threshold) && CONFIG_GET(flag/auto_profile))
 			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
 		olddrift = newdrift
+
+		// Sustained elevated tick dilation: catches the "15-40% TD sustained for N seconds" case.
+		// Uses SStime_track.time_dilation_avg_fast (already a percentage, smoothed over ~few seconds).
+		var/sustained_td_threshold = CONFIG_GET(number/sustained_td_threshold_pct)
+		if(sustained_td_threshold > 0 && CONFIG_GET(flag/auto_profile) && SStime_track && SStime_track.time_dilation_avg_fast >= sustained_td_threshold)
+			if(!td_elevated_since)
+				td_elevated_since = REALTIMEOFDAY
+			else if(REALTIMEOFDAY - td_elevated_since >= CONFIG_GET(number/sustained_td_duration))
+				AttemptProfileDump(CONFIG_GET(number/sustained_td_delay))
+				td_elevated_since = 0
+		else
+			td_elevated_since = 0
 
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
