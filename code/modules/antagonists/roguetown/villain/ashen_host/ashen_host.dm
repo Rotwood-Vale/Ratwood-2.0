@@ -29,6 +29,7 @@
 	job_subclasses = list(
 		/datum/advclass/ashen_host/hollow,
 		/datum/advclass/ashen_host/hollow_ballistiares,
+		/datum/advclass/ashen_host/hollow_sapper,
 		/datum/advclass/ashen_host/legionary,
 		/datum/advclass/ashen_host/speculator,
 		/datum/advclass/ashen_host/haruspex,

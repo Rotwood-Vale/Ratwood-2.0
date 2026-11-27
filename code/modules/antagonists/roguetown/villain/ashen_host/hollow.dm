@@ -229,3 +229,75 @@
 	choose_neck(H)
 	choose_cloak(H)
 	finish_hollow(H)
+
+/datum/advclass/ashen_host/hollow_sapper
+	name = "Hollow Sapper"
+	tutorial = "You are a sapper of the Godslaying War, a bone-soldier dragged from the grave and bound to the Ashen Host. You were never meant to fight in the line. You break walls, haul powder and set the Host's bombard where the Legate points it. Your hands still remember the trade, and your mind is hollow enough to keep at it forever."
+	allowed_sexes = list(MALE, FEMALE)
+
+	outfit = /datum/outfit/job/roguetown/ashen_host/hollow/sapper
+	class_select_category = CLASS_CAT_ACCURSED
+	category_tags = list(CTAG_ASHEN)
+	maximum_possible_slots = 1
+	applies_post_equipment = TRUE
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_TRAINED_SMITH, TRAIT_LEGENDARY_MINER, TRAIT_FUSILIER)
+	subclass_stats = list(
+		STATKEY_WIL = 2,
+		STATKEY_CON = 2,
+		STATKEY_PER = 5,
+		STATKEY_SPD = -2,
+		STATKEY_INT = -4
+	)
+	subclass_skills = list(
+		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/sewing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,
+		/datum/skill/labor/mining = SKILL_LEVEL_EXPERT,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_LEGENDARY,
+	)
+	adv_stat_ceiling = list(STAT_CONSTITUTION = 10, STAT_WILLPOWER = 14)
+
+/datum/outfit/job/roguetown/ashen_host/hollow/sapper/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
+	mask = /obj/item/clothing/mask/rogue/spectacles/golden
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket/lich
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer/lich
+	pants = /obj/item/clothing/under/roguetown/trou/artipants/lich
+	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/angle
+	backr = /obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge
+	backl = /obj/item/storage/backpack/rogue/backpack
+	l_hand = /obj/item/bombard_frame
+	r_hand = /obj/item/bombard_barrel
+	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
+	beltl = /obj/item/rogueweapon/pick
+	backpack_contents = list(
+		/obj/item/rogueweapon/palantir = 1,
+		/obj/item/powderflask = 1,
+		/obj/item/cannonball/explosive = 10, //Yes they will fall to the ground
+		/obj/item/rogueweapon/hammer/ancient = 1,
+		/obj/item/rogueweapon/tongs/ancient = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/gilbranze = 1,
+		/obj/item/rogueweapon/chisel = 1,
+		/obj/item/rogueweapon/handsaw = 1,
+		/obj/item/dye_brush = 1,
+	)
+
+	H.adjust_blindness(-3)
+	choose_neck(H)
+	choose_cloak(H)
+	finish_hollow(H)

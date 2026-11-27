@@ -1,10 +1,10 @@
 // ASHEN HOST SCOMSTONE
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/ashen
-	name = "iron zcross"
-	desc = "A crude iron cross, cold to the touch."
-	icon = 'icons/roguetown/clothing/neck.dmi' //CHANGE THIS to whichever .dmi holds zcross_iron
-	icon_state = "zcross_iron"
+	name = "avantyne zcross"
+	desc = "The most vile of crosses, forged out of luxmetal, its center gem is said to contain the soul of a living, sentient being, grieving the words spoken through it to the interlinked souls trapped in a hell without end."
+	icon = 'icons/roguetown/clothing/neck.dmi'
+	icon_state = "zcross_d"
 	gripped_intents = null
 	possible_item_intents = list(INTENT_GENERIC)
 	slot_flags = ITEM_SLOT_RING|ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
@@ -20,6 +20,10 @@
 	grid_height = 32
 	var/listening = TRUE
 	var/speaking = TRUE
+
+/obj/item/clothing/neck/roguetown/psicross/inhumen/ashen/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "NECK")	
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/ashen/Initialize(mapload)
 	. = ..()

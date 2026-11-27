@@ -50,7 +50,6 @@
 		/datum/advclass/wretch/vigilante,
 		/datum/advclass/wretch/blackoakwyrm,
 		/datum/advclass/wretch/wretchedtoiler,
-		/datum/advclass/wretch/ancientchampion,
 		/datum/advclass/wretch/heretic_spellblade,
 		/datum/advclass/wretch/heretic_spellfist,
 	)
