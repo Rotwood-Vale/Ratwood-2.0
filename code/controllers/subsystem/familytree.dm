@@ -32,6 +32,7 @@ SUBSYSTEM_DEF(familytree)
 	// shit for da relationship board
 	var/board_path = "data/family_board.json"
 	var/list/board = list()
+	var/list/saved_ads = list()
 	var/list/requests = list()
 	var/list/links = list()
 	var/list/blocks = list()
@@ -345,9 +346,23 @@ SUBSYSTEM_DEF(familytree)
 /datum/controller/subsystem/familytree/proc/Token(id)
 	return md5("[id][salt]")
 
+// ppl were complaining abt putting ads up each time *sigh!!!
+/datum/controller/subsystem/familytree/proc/RestoreAd(datum/preferences/P)
+	var/my_id = "[P.parent.ckey]/[P.default_slot]"
+	for(var/ad_id in board.Copy())
+		if(board[ad_id]["ckey"] != P.parent.ckey || ad_id == my_id)
+			continue
+		board -= ad_id
+		for(var/list/req in requests.Copy())
+			if(req["to"] == ad_id)
+				requests -= list(req)
+	if(saved_ads[my_id])
+		board[my_id] = saved_ads[my_id]
+
 /datum/controller/subsystem/familytree/proc/SaveBoard()
+	var/data = json_encode(list("links" = links, "blocks" = blocks, "ads" = saved_ads))
 	fdel(board_path)
-	WRITE_FILE(file(board_path), json_encode(list("links" = links, "blocks" = blocks)))
+	WRITE_FILE(file(board_path), data)
 
 /datum/controller/subsystem/familytree/proc/PrefInfo(datum/preferences/P)
 	return list("id" = "[P.parent.ckey]/[P.default_slot]", "ckey" = P.parent.ckey, "name" = P.real_name, "species" = P.pref_species.name, "pronouns" = splittext(P.pronouns, " ")[1], "gender" = P.gender_choice, "species_filter" = P.species_filter.Copy(), "blacklist" = P.species_blacklist, "headshot" = P.headshot_link, "age" = P.age, "flavortext" = P.flavortext, "nsfwflavortext" = P.nsfwflavortext, "ooc_notes" = P.ooc_notes, "erpprefs" = P.erpprefs, "ooc_extra" = P.ooc_extra, "ooc_extra_img" = P.ooc_extra_img, "nsfw_ooc_extra_img" = P.nsfw_ooc_extra_img, "song_artist" = P.song_artist, "song_title" = P.song_title, "img_gallery" = P.img_gallery.Copy(), "nsfw_img_gallery" = P.nsfw_img_gallery.Copy(), "headshot_zoom" = P.headshot_zoom, "headshot_x" = P.headshot_x, "headshot_y" = P.headshot_y, "headshot_framed" = P.headshot_framed, "image_backdrop" = P.image_backdrop, "card_backgrounds" = P.card_backgrounds.Copy(), "art_view_settings" = P.art_view_settings.Copy()) // fuuuck

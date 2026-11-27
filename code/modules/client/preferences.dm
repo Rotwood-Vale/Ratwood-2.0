@@ -2790,6 +2790,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						if(!load_character(choice))
 							random_character(null, FALSE, FALSE)
 							save_character()
+						SSfamilytree.RestoreAd(src)
 
 				if("tab")
 					if (href_list["tab"])

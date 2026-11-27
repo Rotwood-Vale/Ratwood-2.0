@@ -30,6 +30,7 @@
 	var/list/ad = SSfamilytree.board[my_id]
 	if(ad && ad["name"] != prefs.real_name)
 		SSfamilytree.board -= my_id
+		SSfamilytree.saved_ads -= my_id
 		ad = null
 	if(ad)
 		for(var/key in me)
@@ -240,8 +241,10 @@
 					if(req["to"] == old_id)
 						SSfamilytree.requests -= list(req)
 			SSfamilytree.board[my_id] = new_ad
+			SSfamilytree.saved_ads[my_id] = new_ad
 		if("unpost")
 			SSfamilytree.board -= my_id
+			SSfamilytree.saved_ads -= my_id
 			for(var/list/req in SSfamilytree.requests.Copy())
 				if(req["to"] == my_id)
 					SSfamilytree.requests -= list(req)
