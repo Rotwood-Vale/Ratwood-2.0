@@ -544,6 +544,7 @@
 		/datum/sprite_accessory/hair/head/nimue,
 		/datum/sprite_accessory/hair/head/willow,
 		/datum/sprite_accessory/hair/head/aki,
+		/datum/sprite_accessory/hair/head/librarian,
 		)
 
 /datum/customizer_choice/bodypart_feature/hair/head/humanoid/get_random_accessory(datum/customizer_entry/entry, datum/preferences/prefs)
