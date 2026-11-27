@@ -24292,7 +24292,7 @@
 	},
 /obj/structure/rack/rogue/shelf,
 /obj/item/reagent_containers/glass/bottle/rogue/beer/nred,
-/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{
+/obj/item/reagent_containers/glass/bottle/rogue/beer/hammerholdmead{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/cobble,
@@ -27575,7 +27575,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault/four)
 "eVz" = (
-/obj/structure/fermentation_keg/gronmead,
+/obj/structure/fermentation_keg/hammerholdmead,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/town/basement/keep)
 "eVC" = (
@@ -47891,7 +47891,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter)
 "iBq" = (
-/obj/structure/fermentation_keg/gronmead,
+/obj/structure/fermentation_keg/hammerholdmead,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
 "iBs" = (
@@ -86636,7 +86636,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{
+/obj/item/reagent_containers/glass/bottle/rogue/beer/hammerholdmead{
 	pixel_x = 40;
 	pixel_y = 15
 	},
