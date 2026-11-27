@@ -6,6 +6,28 @@ GLOBAL_LIST_EMPTY(zizo_reality_rends)
 GLOBAL_LIST_EMPTY(zizo_fuges)
 GLOBAL_LIST_EMPTY(zizo_summoned)
 GLOBAL_LIST_EMPTY(zizo_marks)
+GLOBAL_DATUM_INIT(garrison_jam, /obj/structure/roguemachine/scomm, null)
+GLOBAL_LIST_INIT(zizo_propaganda, list(
+	"PRAISE ZIZO!",
+	"DEATH TO THE TEN...",
+	"Astrata will fail!",
+	"The Ten cannot stop me!",
+	"Zizo shows the way!",
+	"The Dark Lady has shown me the truth!",
+	"My life for Zizo...",
+	"Curse your Beast God!",
+	"Noc's magick is nothing to Zizo!",
+	"Abyssor is but a grain of salt!",
+	"Pestra is the most foul of goddesses!",
+	"Ravox's justice is flawed and dull!",
+	"Rip the Sun Tyrant from the sky!",
+	"Xylix is the tongue that must be severed off!",
+	"Cast Malum into the fires of hell!",
+	"The only truth there is lies with the Dark Elves!",
+	"I will defile Necra's dead, a thousand times!",
+	"I will butcher the Ten like Necra butchered Psydon!",
+	"Snuff out the beating hearts of Eora!",
+))
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
@@ -23,12 +45,12 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/transmutation/silencerleech, /datum/ritual/servantry/darksunmark,
 	/datum/ritual/strand/dream_jaunt, /datum/ritual/strand/strandsend,
 	/datum/ritual/strand/strandrecall, /datum/ritual/toil/progress,
-	/datum/ritual/toil/summonysis, /datum/ritual/toil/fulmenor,
+	/datum/ritual/toil/summonysis, /datum/ritual/toil/rust,
 	/datum/ritual/bite/necromancy, /datum/ritual/bite/resurrection,
 	/datum/ritual/bite/thanatophobia,
 	/datum/ritual/rot/transfuse, /datum/ritual/rot/blight,
 	/datum/ritual/rot/plague, /datum/ritual/noise/thermalvis,
-	/datum/ritual/noise/forgettongue, /datum/ritual/servantry/witchery,
+	/datum/ritual/noise/forgettongue, /datum/ritual/noise/jam, /datum/ritual/noise/madness, /datum/ritual/servantry/witchery,
 	/datum/ritual/pitch/fireresist, /datum/ritual/pitch/shadowform,
 	/datum/ritual/pitch/lightcurse, /datum/ritual/blood/transfuse,
 	/datum/ritual/blood/bloodsnare, /datum/ritual/blood/bloodbond,
@@ -1825,15 +1847,15 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), cooldown_time)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ysis_effect), src, 0), cooldown_time)
 
-/datum/ritual/toil/fulmenor
-	name = "Curse of Fulmenor"
+/datum/ritual/toil/rust
+	name = "Curse of Rust"
 	icon_type = /obj/item/natural/worms/leech
-	desc = "Transform the target into a horrific, yet extremely strong and regenerative monster. It attacks people at random. Lasts one minute. Requires a leech that fed from your target."
+	desc = "Your target's weapon skills are reduced, and their equipment's durability is massively reduced. Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 	research_cost = 5
 
-/datum/ritual/toil/fulmenor/invoke(mob/living/user, turf/center)
+/datum/ritual/toil/rust/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -1842,41 +1864,14 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
 		return
 	qdel(remnant)
-	victim.apply_status_effect(/datum/status_effect/fulmenor)
+	victim.apply_status_effect(/datum/status_effect/rust)
 	victim.emote("scream")
-	to_chat(victim, span_userdanger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
-	to_chat(user, span_notice("THEY SHALL WRECK HAVOC."))
+	to_chat(user, span_notice("MAY THEIR BLADES SNAP AND ARMOR CRUMBLE!"))
 
-/datum/status_effect/fulmenor
-	id = "fulmenor"
-	duration = 1 MINUTES
-	tick_interval = 5 SECONDS
+/datum/status_effect/rust
+	id = "rust"
+	duration = 10 MINUTES
 	alert_type = null
-
-/datum/status_effect/fulmenor/on_apply()
-	. = ..()
-	var/mob/living/carbon/human/H = owner
-	H.change_stat(STATKEY_STR, 6)
-	H.change_stat(STATKEY_CON, 6)
-	ADD_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_SILVER_WEAK, "fulmenor")
-	H.enter_frenzymod()
-	to_chat(H, span_notice("I WANT TO HURT PEOPLE!"))
-	return TRUE
-
-/datum/status_effect/fulmenor/tick()
-	var/mob/living/carbon/human/H = owner
-	H.heal_overall_damage(10, 10)
-
-/datum/status_effect/fulmenor/on_remove()
-	. = ..()
-	var/mob/living/carbon/human/H = owner
-	H.exit_frenzymod()
-	H.change_stat(STATKEY_STR, -6)
-	H.change_stat(STATKEY_CON, -6)
-	REMOVE_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
-	REMOVE_TRAIT(H, TRAIT_SILVER_WEAK, "fulmenor")
-	to_chat(H, span_notice("THE MONSTROUS HUNGER FADES FROM ME."))
 
 // BITE
 
@@ -2398,6 +2393,69 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	remnant.fed_from.emote("scream")
 	qdel(remnant)
 	to_chat(user, span_notice("IT EATS AWAY MEANING AND LEAVES NOTHING BUT NOISE."))
+
+/datum/ritual/noise/jam
+	name = "Hijack"
+	icon_type = /obj/structure/roguemachine/scomm
+	desc = "Temporarily convert the SCOM rats to heresy. The garrison's communications are interrupted for 15 minutes. Must be performed near a SCOM. Requires a dark crystal."
+	research_cost = 5
+	center_requirement = /obj/item/necro_relics/necro_crystal
+	keep_center = TRUE
+
+/datum/ritual/noise/jam/invoke(mob/living/user, turf/center)
+	if(GLOB.garrison_jam)
+		to_chat(user, span_warning("THE RATS ARE YET UNDER OUR SPELL!"))
+		return
+	var/obj/structure/roguemachine/scomm/S = locate() in range(1, center)
+	if(!S)
+		to_chat(user, span_warning("SCOM must be next to the sigil's center!"))
+		return
+	qdel(locate(/obj/item/necro_relics/necro_crystal) in center)
+	GLOB.garrison_jam = S
+	S.max_integrity = 300
+	S.obj_integrity = 300
+	S.color = "#ff0000"
+	S.set_light(7, 2, 3, l_color = "#ff0000")
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), S, -1, 0, 2, 0), 15 MINUTES)
+	addtimer(CALLBACK(S, TYPE_PROC_REF(/obj, take_damage), 9999, BRUTE, "", FALSE), 15 MINUTES)
+	to_chat(user, span_notice("THE SCOM RATS FALL UNDER OUR SPELL!"))
+
+/datum/ritual/noise/madness
+	name = "Curse of Madness"
+	icon_type = /obj/item/natural/worms/leech
+	desc = "Send the target into a fit of madness, attacking the nearest person. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
+	research_cost = 5
+
+/datum/ritual/noise/madness/invoke(mob/living/user, turf/center)
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	var/mob/living/carbon/human/victim = remnant.fed_from
+	if(!curse_target(victim))
+		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
+		return
+	qdel(remnant)
+	victim.apply_status_effect(/datum/status_effect/madness)
+	victim.emote("scream")
+	to_chat(user, span_notice("MAY THEY SLAY AND BE SLAIN IN TURN!"))
+
+/datum/status_effect/madness
+	id = "madness"
+	duration = 1 MINUTES
+	alert_type = null
+
+/datum/status_effect/madness/on_apply()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	H.enter_frenzymod()
+	return TRUE
+
+/datum/status_effect/madness/on_remove()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	H.exit_frenzymod()
 
 // PITCH
 

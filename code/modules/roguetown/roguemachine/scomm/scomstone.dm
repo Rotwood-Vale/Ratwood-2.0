@@ -175,6 +175,8 @@
 		input_text = "<small>[input_text]</small>"
 	playsound(loc, 'sound/misc/garrisonscom.ogg', 100, FALSE, -1)
 	if(garrisonline)
+		if(GLOB.garrison_jam)
+			input_text = pick(GLOB.zizo_propaganda)
 		input_text = "<big><span style='color: [GARRISON_SCOM_COLOR]'>[input_text]</span></big>" //Prettying up for Garrison line
 		for(var/obj/item/scomstone/bad/garrison/S in SSroguemachine.scomm_machines)
 			S.repeat_message(input_text, src, usedcolor)

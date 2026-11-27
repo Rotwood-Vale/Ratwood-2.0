@@ -266,6 +266,8 @@
 			level += 1
 		if(istype(S, /datum/skill/misc/music) && HAS_TRAIT(current, TRAIT_XYLIX))
 			level += 1
+	if(S.abstract_type == /datum/skill/combat && current?.has_status_effect(/datum/status_effect/rust))
+		level -= 2
 	level = clamp(level, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
 	return level
 
