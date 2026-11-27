@@ -539,3 +539,14 @@
 	default = 100
 	min_val = 0
 	max_val = 100
+
+/datum/config_entry/flag/auto_profile
+
+/datum/config_entry/number/profiler_interval
+	config_entry_value = 300 SECONDS
+
+/datum/config_entry/number/drift_dump_threshold
+	config_entry_value = 4 SECONDS
+
+/datum/config_entry/number/drift_profile_delay
+	config_entry_value = 15 SECONDS

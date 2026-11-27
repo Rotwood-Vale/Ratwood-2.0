@@ -38,6 +38,9 @@ GLOBAL_VAR(restart_counter)
 
 /world/New()
 
+	Profile(PROFILE_RESTART)
+	Profile(PROFILE_RESTART, type = "sendmaps")
+
 	log_world("World loaded at [time_stamp()]!")
 
 	SetupExternalRSC()

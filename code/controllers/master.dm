@@ -38,6 +38,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/init_timeofday
 	var/init_time
 	var/tickdrift = 0
+	var/olddrift = 0
+	var/last_profiled = 0
 
 	var/sleep_delta = 1
 
@@ -678,8 +680,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	//the actual loop.
 
 	while (1)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		var/newdrift = ((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
 		var/starting_tick_usage = TICK_USAGE
+
+		if(newdrift - olddrift >= CONFIG_GET(number/drift_dump_threshold) && CONFIG_GET(flag/auto_profile))
+			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
+		olddrift = newdrift
 
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
@@ -1045,3 +1052,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	for(var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
 		SS.OnConfigLoad()
+
+/datum/controller/master/proc/AttemptProfileDump(delay)
+	if(REALTIMEOFDAY - last_profiled <= delay)
+		return FALSE
+	last_profiled = REALTIMEOFDAY
+	SSprofiler.DumpFile(allow_yield = FALSE)

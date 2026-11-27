@@ -511,6 +511,18 @@ RESUME_AFTER_INITIALIZATIONS
 ## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
 ROUNDS_UNTIL_HARD_RESTART 0
 
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE
+
+## Determines the interval between each saved profiler snapshot (in deciseconds).
+#PROFILER_INTERVAL 3000
+
+## Threshold (in deciseconds) for real time between ticks before we start dumping profiles
+DRIFT_DUMP_THRESHOLD 40
+
+## How long to wait (in deciseconds) after a profile dump before logging another tickdrift sourced one
+DRIFT_PROFILE_DELAY 150
+
 
 ##Default view size, in tiles.
 ##	By default, this is 15x15, which gets simplified to 7 by byond
