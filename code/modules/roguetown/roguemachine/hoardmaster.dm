@@ -10,7 +10,8 @@
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	var/upgrade_flags
-	var/current_cat = "1"
+	/// ckey -> the category that player has open ("1" is the category menu). Per player, so one bandit's browsing never resets another's.
+	var/list/current_cats = list()
 
 
 /obj/structure/roguemachine/Hoardmaster/Initialize(mapload)
@@ -77,7 +78,7 @@
 				if(newitem.salvage_result)
 					newitem.salvage_result = /obj/item/ash
 	if(href_list["changecat"])
-		current_cat = href_list["changecat"]
+		current_cats[usr.ckey] = href_list["changecat"]
 	return attack_hand(usr)
 
 /obj/structure/roguemachine/Hoardmaster/attack_hand(mob/living/user)
@@ -114,8 +115,10 @@
 		if("Pioneer")
 			unlocked_cats+="Pioneer"
 
+	var/current_cat = current_cats[user.ckey] || "1"
 	if(!(current_cat in unlocked_cats))
 		current_cat = "1"
+		current_cats[user.ckey] = current_cat
 
 	if(current_cat == "1")
 		contents += "<center>"
