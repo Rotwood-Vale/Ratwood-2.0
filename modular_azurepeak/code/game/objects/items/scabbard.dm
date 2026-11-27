@@ -50,8 +50,6 @@
 /obj/item/rogueweapon/scabbard/Destroy()
 	hol_comp = null
 	return ..()
-	var/locked_sheath = FALSE // stops drawing of blade while true
-	var/hidden_blade = FALSE // no examine giving away blade sheathed
 
 
 /obj/item/rogueweapon/scabbard/attack_obj(obj/O, mob/living/user)
