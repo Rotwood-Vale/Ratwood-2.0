@@ -138,7 +138,7 @@ Reel teleports the attached atom to the grabbed turf.
 /obj/item/grapplinghook/proc/reset_tile(silent = FALSE)
 	if(tile_effect && grappled_turf)
 		grappled_turf.cut_overlay(tile_effect)
-		qdel(tile_effect)
+		tile_effect = null
 		grappled_turf = null
 	if(!silent)	//Silent is used during a successful reel because it has its own distinct sounds
 		playsound(src, 'sound/foley/trap.ogg', 100, FALSE , 5)
@@ -149,7 +149,7 @@ Reel teleports the attached atom to the grabbed turf.
 /obj/item/grapplinghook/proc/reset_target()
 	if(attached && target_effect)
 		attached.cut_overlay(target_effect)
-		qdel(target_effect)
+		target_effect = null
 		attached = null
 	in_use = FALSE
 	update_icon()
@@ -323,7 +323,7 @@ Reel teleports the attached atom to the grabbed turf.
 	if(A && !isturf(A))
 		if(target_effect && attached)
 			attached.cut_overlay(target_effect)
-			qdel(target_effect)
+			target_effect = null
 		playsound(A,'sound/misc/grapple_attach.ogg', 100, FALSE, 5)
 		attached = A
 		target_effect = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "aimwarn", layer = 20)

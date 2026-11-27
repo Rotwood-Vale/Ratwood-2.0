@@ -461,6 +461,15 @@
 		pixel_move(1, FALSE)
 
 /obj/projectile/proc/fire(angle, atom/direct_target)
+	if(QDELETED(src))
+		return
+	var/turf/fire_turf = get_turf(src)
+	if(!fire_turf)
+		stack_trace("WARNING: Projectile [type] fired from nullspace!")
+		qdel(src)
+		return
+	if(!starting)
+		starting = fire_turf
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	//If no angle needs to resolve it from xo/yo!
@@ -475,13 +484,12 @@
 		setAngle(angle)
 	if(spread)
 		setAngle(Angle + ((rand() - 0.5) * spread))
-	var/turf/starting = get_turf(src)
 	if(isnull(Angle))	//Try to resolve through offsets if there's no angle set.
 		if(isnull(xo) || isnull(yo))
 			stack_trace("WARNING: Projectile [type] deleted due to being unable to resolve a target after angle was null!")
 			qdel(src)
 			return
-		var/turf/target = locate(CLAMP(starting + xo, 1, world.maxx), CLAMP(starting + yo, 1, world.maxy), starting.z)
+		var/turf/target = locate(CLAMP(fire_turf.x + xo, 1, world.maxx), CLAMP(fire_turf.y + yo, 1, world.maxy), fire_turf.z)
 		setAngle(Get_Angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
@@ -489,9 +497,9 @@
 		M.Turn(Angle)
 		transform = M
 	trajectory_ignore_forcemove = TRUE
-	forceMove(starting)
+	forceMove(fire_turf)
 	trajectory_ignore_forcemove = FALSE
-	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
+	trajectory = new(fire_turf.x, fire_turf.y, fire_turf.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
 	if(hitscan)
