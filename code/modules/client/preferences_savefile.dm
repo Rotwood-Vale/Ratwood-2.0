@@ -1085,7 +1085,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	setspouse 		= setspouse
 	xenophobe_pref 	= xenophobe_pref
 	restricted_species_pref = restricted_species_pref
-	extra_language  = extra_language
+	extra_language  = string_to_typepath(extra_language) || "None"
 	selected_title  = selected_title
 	voice_color		= voice_color
 	voice_pitch		= voice_pitch
