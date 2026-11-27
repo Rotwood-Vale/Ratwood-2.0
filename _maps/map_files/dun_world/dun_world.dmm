@@ -72768,6 +72768,10 @@
 "mWp" = (
 /turf/closed/wall/mineral/rogue/decostone/cand,
 /area/rogue/under/cave/licharena)
+"mWu" = (
+/obj/item/roguebin/water,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/town/cell)
 "mWv" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/dirt/road,
@@ -119760,14 +119764,14 @@
 /obj/item/clothing/neck/roguetown/collar/leather,
 /obj/item/rogueweapon/whip,
 /obj/item/rogueweapon/whip,
-/obj/item/clothing/neck/roguetown/gorget/cursed_collar,
-/obj/item/clothing/neck/roguetown/gorget/cursed_collar,
 /obj/item/leash/leather,
 /obj/item/leash/leather,
 /obj/structure/closet/crate/roguecloset{
 	keylock = 1;
 	lockid = "dungeon"
 	},
+/obj/item/clothing/neck/roguetown/cursed_collar,
+/obj/item/clothing/neck/roguetown/cursed_collar,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell)
 "vjH" = (
@@ -131303,7 +131307,7 @@
 	name = "Secure section";
 	dir = 1
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/manor)
 "xns" = (
 /obj/structure/vine,
@@ -244970,7 +244974,7 @@ lRg
 lbX
 rwi
 wqC
-uuS
+mWu
 lbX
 uuS
 uuS
