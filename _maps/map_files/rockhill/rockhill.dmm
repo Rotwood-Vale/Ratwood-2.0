@@ -23873,13 +23873,6 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/dungeon/tricksntraps)
-"eIO" = (
-/obj/structure/roguemachine/mail{
-	pixel_y = -32;
-	mailtag = "Soilsons Building One"
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/outdoors/rtfield/rockhill)
 "eIT" = (
 /obj/structure/table/cooling{
 	icon_state = "largetable";
@@ -38304,6 +38297,10 @@
 /obj/structure/fluff/railing/border{
 	dir = 9
 	},
+/obj/structure/roguemachine/mail{
+	pixel_y = -32;
+	mailtag = "Soilsons Building One"
+	},
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/rtfield/rockhill)
 "hEd" = (
@@ -40285,6 +40282,10 @@
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 1;
 	name = "Inner Shrine"
+	},
+/obj/structure/curtain/directional/blue{
+	color = "#415e96";
+	dir = 1
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/town/magician/rockhill)
@@ -71151,6 +71152,7 @@
 /obj/structure/fluff/railing/border{
 	plane = -5
 	},
+/obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/tile/bath{
 	icon_state = "bathtileratwood"
 	},
@@ -71317,6 +71319,9 @@
 "ohJ" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	name = "Forbidden Archive"
+	},
+/obj/structure/curtain/directional/blue{
+	color = "#415e96"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/town/magician/rockhill)
@@ -303366,7 +303371,7 @@ wSn
 wSn
 xFA
 dfc
-eIO
+dfc
 nqU
 mck
 xgR
