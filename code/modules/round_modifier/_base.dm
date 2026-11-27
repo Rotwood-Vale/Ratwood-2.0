@@ -5,7 +5,10 @@
 	var/weight = 10
 	var/min_chaos = 1
 	var/max_chaos = 3
+	/// Never announced to players; admins still see it
 	var/hidden = FALSE
+	/// If set, players are told this instead of the name and desc, so they learn the antag is present but not how many
+	var/public_text
 	var/list/incompatible
 	var/list/villain_events
 	var/list/trigger_events
