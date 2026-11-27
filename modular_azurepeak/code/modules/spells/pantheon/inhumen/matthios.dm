@@ -703,7 +703,7 @@
 		fireball.Grant(src)
 		spitfire.Grant(src)
 
-		AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
+		AddSpell(new /obj/effect/proc_holder/spell/self/dragon_respite)
 		src.apply_status_effect(/datum/status_effect/buff/twilight_dragon_form)
 
 		real_name = "Gilded Dragon"
@@ -858,6 +858,82 @@
 #undef GILDED_SWOOP_INVULNERABLE
 #undef GILDED_SWOOP_HEIGHT
 #undef GILDED_SWOOP_DIRECTION_CHANGE_RANGE
+
+/obj/effect/proc_holder/spell/self/dragon_respite
+	name = "Draconic Respite"
+	desc = "Settle your vast bulk and let stolen fyre knit your scales and flesh."
+	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
+	action_icon = 'icons/mob/actions/genericmiracles.dmi'
+	overlay_state = "lesserheal"
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	releasedrain = 0
+	chargedrain = 0
+	chargetime = 0
+	antimagic_allowed = TRUE
+	recharge_time = 20 SECONDS
+	invocation_type = "none"
+	associated_skill = /datum/skill/magic/holy
+	miracle = FALSE
+	devotion_cost = 0
+
+/obj/effect/proc_holder/spell/self/dragon_respite/cast(list/targets, mob/living/carbon/human/user = usr)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human/species/wildshape/dragon_matthios))
+		revert_cast(user)
+		return FALSE
+
+	to_chat(user, span_info("I settle my vast bulk and let the stolen fyre knit my scales..."))
+	var/ticks_done = 0
+
+	while(do_after(user, 5 SECONDS, target = user))
+		var/brute = user.getBruteLoss()
+		var/burn = user.getFireLoss()
+		var/brute_heal = -7
+		var/burn_heal = -7
+
+		if(brute > 100)
+			brute_heal = -9
+		if(brute > 150)
+			brute_heal = -11
+		if(brute > 200)
+			brute_heal = -13
+		if(brute > 300)
+			brute_heal = -15
+		if(brute > 350)
+			brute_heal = -17
+		if(brute > 400)
+			brute_heal = -21
+
+		if(burn > 100)
+			burn_heal = -9
+		if(burn > 150)
+			burn_heal = -11
+		if(burn > 200)
+			burn_heal = -13
+		if(burn > 300)
+			burn_heal = -15
+		if(burn > 350)
+			burn_heal = -17
+		if(burn > 400)
+			burn_heal = -21
+
+		playsound(user, 'sound/magic/psydonrespite.ogg', 100, TRUE)
+		new /obj/effect/temp_visual/heal_rogue(get_turf(user), "#FFD700")
+		new /obj/effect/temp_visual/heal_rogue(get_turf(user), "#FFD700")
+		user.adjustBruteLoss(brute_heal)
+		user.adjustFireLoss(burn_heal)
+		ticks_done++
+
+		if(user.getBruteLoss() <= 0 && user.getFireLoss() <= 0)
+			break
+
+	if(!ticks_done)
+		to_chat(user, span_warning("My thoughts and sense of quiet escape me."))
+		revert_cast(user)
+		return FALSE
+
+	return TRUE
 
 /datum/species/dragon_matthios
 	name = "Gilded Dragon"
