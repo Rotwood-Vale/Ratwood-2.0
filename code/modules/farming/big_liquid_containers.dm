@@ -121,12 +121,12 @@
 	reagents.add_reagent(/datum/reagent/consumable/ethanol/avarrice,900)
 
 
-/obj/structure/fermentation_keg/gronmead
-	desc = "A barrel with a Shieldmaiden Brewery mark. A deep red honey-wine, refined with the red berries native to Gronns highlands."
+/obj/structure/fermentation_keg/hammerholdmead
+	desc = "A barrel with a Shieldmaiden Brewery mark. A deep red honey-wine, refined with the red berries native to Hammerholdian highlands."
 
-/obj/structure/fermentation_keg/gronmead/Initialize(mapload)
+/obj/structure/fermentation_keg/hammerholdmead/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/ethanol/gronnmead,900)
+	reagents.add_reagent(/datum/reagent/consumable/ethanol/hammerholdmead,900)
 
 /obj/structure/fermentation_keg/coffee
 	desc = "A barrel with the mark of a brewed cup of coffee.  A strong, bitter drink that rejuvenates the body and mind."
