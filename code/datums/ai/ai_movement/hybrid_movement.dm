@@ -3,8 +3,6 @@
 	requires_processing = TRUE
 	max_pathing_attempts = 12
 	max_path_distance = 30
-	var/fallbacking = FALSE
-	var/fallback_fail = 0
 
 	// Variables for asynchronous path generation
 	var/repath_anticipation_distance = 5 // Start generating new path when this close to the end
@@ -59,8 +57,8 @@
 				if(!can_go_up)
 					controller.movement_path = null
 					controller.clear_blackboard_key(future_path_blackboard_key)
-					fallbacking = FALSE
-					fallback_fail = 0
+					controller.hybrid_fallbacking = FALSE
+					controller.hybrid_fallback_fail = 0
 					continue
 
 		// Basic movement for targets on the same z-level with no existing path
@@ -77,7 +75,7 @@
 					advanced = TRUE
 					controller.movement_path = null
 					controller.clear_blackboard_key(future_path_blackboard_key)
-					fallbacking = TRUE
+					controller.hybrid_fallbacking = TRUE
 					SEND_SIGNAL(movable_pawn, COMSIG_AI_GENERAL_CHANGE, "Unable to Basic Move swapping to AStar.")
 
 			if(!advanced)
@@ -164,17 +162,18 @@
 						if(get_turf(movable_pawn) == double_checked) // Handle z-level stack issues
 							controller.movement_path.Cut(1,2)
 
-					if(!length(controller.movement_path) && fallbacking)
-						fallbacking = FALSE
+					if(!length(controller.movement_path) && controller.hybrid_fallbacking)
+						controller.hybrid_fallbacking = FALSE
 				else
-					if(!fallbacking)
+					if(!controller.hybrid_fallbacking)
 						generate_path = TRUE
 						controller.clear_blackboard_key(future_path_blackboard_key)
 					else
-						fallback_fail++
-						if(fallback_fail >= 2)
+						controller.hybrid_fallback_fail++
+						if(controller.hybrid_fallback_fail >= 2)
 							generate_path = TRUE
-							fallbacking = FALSE
+							controller.hybrid_fallbacking = FALSE
+							controller.hybrid_fallback_fail = 0
 							controller.clear_blackboard_key(future_path_blackboard_key)
 
 				// If we're nearing the end of our path, preemptively generate the next path
