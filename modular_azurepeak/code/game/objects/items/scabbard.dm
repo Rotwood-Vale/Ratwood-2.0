@@ -59,9 +59,6 @@
 
 
 /obj/item/rogueweapon/scabbard/proc/weapon_check(mob/living/user, obj/A)
-	if(sheathed && QDELETED(sheathed))
-		sheathed = null
-		update_icon(user)
 	if(sheathed)
 		to_chat(user, span_warning("The sheath is occupied!"))
 		return FALSE
@@ -114,11 +111,6 @@
 	if(!sheathed)
 		return FALSE
 
-	if(QDELETED(sheathed)) // the blade deleted itself inside the scabbard (e.g. the martyr sword)
-		sheathed = null
-		update_icon(user)
-		return FALSE
-
 	if(obj_broken)
 		user.visible_message(
 			span_warning("[user] begins to force [sheathed] out of [src]!"),
@@ -128,11 +120,13 @@
 			return FALSE
 	if(!move_after(user, sheathe_time, target = user))
 		return FALSE
+	if(!sheathed)
+		return FALSE
 
-	sheathed.forceMove(user.loc)
-	sheathed.pickup(user)
-	user.put_in_hands(sheathed)
-	sheathed = null
+	var/obj/item/drawn = sheathed
+	drawn.forceMove(user.loc)
+	drawn.pickup(user)
+	user.put_in_hands(drawn)
 	update_icon(user)
 
 	user.visible_message(
@@ -140,6 +134,12 @@
 		span_notice("I draw out of [src].")
 	)
 	return TRUE
+
+/obj/item/rogueweapon/scabbard/Exited(atom/movable/gone, atom/newLoc)
+	. = ..()
+	if(gone == sheathed)
+		sheathed = null
+		update_icon(ismob(loc) ? loc : null)
 
 
 /obj/item/rogueweapon/scabbard/MouseDrop(atom/over)
