@@ -138,7 +138,7 @@
 			return 0
 	if(!swim_skill)
 		return 0 // no stam cost
-	if(swimmer.is_floor_hazard_immune())
+	if(swimmer.path_cached_floor_hazard_immune())
 		return 0 // floating!
 	if(swimdir && travel_dir && travel_dir == dir)
 		return 0 // going with the flow
@@ -147,7 +147,7 @@
 	if(!ishuman(swimmer))
 		return 0
 	var/mob/living/carbon/human/human_swimmer = swimmer
-	var/ac = human_swimmer.highest_ac_worn(check_hands = TRUE)
+	var/ac = human_swimmer.path_cached_highest_ac_worn(check_hands = TRUE)
 	var/xpmod = BASE_XP_GAIN
 	var/base_drain = BASE_STAM_DRAIN
 
@@ -160,11 +160,11 @@
 			base_drain = MEDIUM_ARMOR_PENALTY
 
 	var/abyssor_swim_bonus = HAS_TRAIT(human_swimmer, TRAIT_ABYSSOR_SWIM) ? 5 : 0
-	var/swimming_skill_level = human_swimmer.get_skill_level(/datum/skill/misc/swimming)
+	var/swimming_skill_level = human_swimmer.path_cached_skill_level(/datum/skill/misc/swimming)
 	. = max(base_drain - (swimming_skill_level * STAM_PER_LEVEL) - abyssor_swim_bonus, MIN_STAM_DRAIN)
-	if(human_swimmer.mind)
+	if(human_swimmer.mind && !human_swimmer.get_path_cost_cache())
 		human_swimmer.mind.add_sleep_experience(/datum/skill/misc/swimming, human_swimmer.STAINT * xpmod)
-	if(!human_swimmer.check_armor_skill())
+	if(!human_swimmer.path_cached_armor_skill())
 		. += UNSKILLED_ARMOR_PENALTY
 	if(.) // this check is expensive so we only run it if we do expect to use stamina
 		if(platform_atom_count > 0)
@@ -406,7 +406,7 @@
 	var/returned = slowdown
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/ac = H.highest_ac_worn()
+		var/ac = H.path_cached_highest_ac_worn()
 		switch(ac)
 			if(ARMOR_CLASS_HEAVY)
 				returned += 1.5
@@ -650,7 +650,11 @@
 	var/const/DOWNSTREAM_BONUS = -2 //Ratwood edit, Azure: -1
 	var/const/SIDESTREAM_PENALTY = 1 //Ratwood edit, Azure: 2
 	. = ..()
-	if(traverser.is_floor_hazard_immune())
+	if(isliving(traverser))
+		var/mob/living/living_traverser = traverser
+		if(living_traverser.path_cached_floor_hazard_immune())
+			return
+	else if(traverser.is_floor_hazard_immune())
 		return
 	if(platform_atom_count > 0)
 		return
