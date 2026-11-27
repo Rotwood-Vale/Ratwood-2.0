@@ -2228,7 +2228,7 @@
 						user.emote("cry")
 						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
-							psydonadmonishment(target)
+							psydonadmonishment(target, user)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
 			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
@@ -2306,7 +2306,7 @@
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
 		loc.visible_message(span_cult("[target] stands untouched. They reject His will."))
 
-/obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's admonishment.")
 		return
@@ -2321,9 +2321,13 @@
 
 	// Remove divine curses
 	for(var/datum/curse/C in target.curses)
-		target.remove_curse(C)
-		loc.visible_message(span_warning("With masterfull precision, the divine curse on [target] is unvowen."))
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(target.remove_curse(C))
+			target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+			if(HAS_TRAIT(user, TRAIT_INQUISITION)) // aka absolver
+				loc.visible_message(span_warning("With masterful precision, the divine curse on [target] is unwoven."))
+			else
+				loc.visible_message(span_warning("The divine curse on [target] is transferred to [user]"))
+				user.add_curse(C.type)
 
 	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
 	var/datum/antagonist/werewolf/lesser/Wereless = target.mind.has_antag_datum(/datum/antagonist/werewolf/lesser/)
@@ -2616,10 +2620,6 @@
 	target.remove_status_effect(/datum/status_effect/debuff/excomm)
 	target.remove_stress(/datum/stressevent/apostasy)
 	target.remove_stress(/datum/stressevent/excommunicated)
-
-	// Remove divine curses
-	for(var/datum/curse/C in target.curses)
-		target.remove_curse(C)
 	
 	if(target.devotion == null)
 		target.set_patron(new /datum/patron/old_god)

@@ -114,7 +114,13 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/transparent/openspace/proc/CanBuildHere()
 	return can_build_on
 
-/turf/open/transparent/openspace/attack_hand(mob/user)
+/turf/open/transparent/openspace/attack_hand(mob/user, params, datum/callback/pilot_check = null)
+	if(isliving(user))
+		var/mob/living/passenger = user
+		var/mob/living/carbon/human/mount = passenger.get_mountable_mount()
+		if(mount)
+			var/datum/component/riding/human/riding = mount.GetComponent(/datum/component/riding)
+			return riding?.handle_climb(user, src)
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.stat != CONSCIOUS)
@@ -130,7 +136,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
 		user.visible_message(span_warning("[user] starts to climb down."), span_warning("I start to climb down."))
 		var/climber2wall_dir = get_dir(src, L)
-		if(do_after(L, (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30), target = src))
+		if(do_after(L, (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30), target = src, extra_checks = pilot_check) && (!pilot_check || pilot_check.Invoke()))
 			if(user.m_intent != MOVE_INTENT_SNEAK)
 				playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
 			var/pulling = user.pulling
@@ -172,6 +178,12 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 ///////////////////////////////////////////////////////////////////////////////
 
 /turf/open/transparent/openspace/MouseDrop_T(atom/movable/O, mob/user)
+	if(isliving(user))
+		var/mob/living/passenger = user
+		var/mob/living/carbon/human/mount = passenger.get_mountable_mount()
+		if(mount && (O == user || O == mount))
+			var/datum/component/riding/human/riding = mount.GetComponent(/datum/component/riding)
+			return riding?.handle_climb(user, src, TRUE)
 	. = ..()
 	if(user == O && isliving(O))
 		var/mob/living/L = O
@@ -183,7 +195,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			climb_from_openspace(L)
 			return
 
-/turf/open/transparent/openspace/proc/climb_from_openspace(mob/living/user) // only cardinals, correct chat
+/turf/open/transparent/openspace/proc/climb_from_openspace(mob/living/user, datum/callback/pilot_check = null) // only cardinals, correct chat
 	var/turf/climb_target = src
 	var/mob/living/carbon/human/climber = user // https://discord.com/channels/1389349752700928050/1389452066493169765/1413195734441922580
 	if(!(climber.stat != CONSCIOUS))
@@ -223,7 +235,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 				var/baseline_stamina_cost = 15
 				if(climber.m_intent == MOVE_INTENT_SNEAK)
 					climb_along_delay = climb_along_delay * 1.5
-				if(do_after(climber, climb_along_delay, wall_for_message))
+				if(do_after(climber, climb_along_delay, target = wall_for_message, extra_checks = pilot_check) && (!pilot_check || pilot_check.Invoke()))
 					climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
 					climber_armor_class = climber.highest_ac_worn()
 					if(!(climber_armor_class <= ARMOR_CLASS_LIGHT))

@@ -1,9 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - refactor: "Gear now bounces off from the attack when struck on the ground."
-  - refactor: "Using a torch (or another source of fire damage) on a broken item will melt it down. This can be used on Iron-scrappable equipment without needing to first break it."
-  - refactor: "Gear & Weapons, once broken, will take minimal damage from direct weapon damage on the ground."
-  - bugfix: "Fixed a bug that did not remove armor coverage once it was broken."
-  - qol: "Punching items on the floor in combat mode will now appropriately hit them rather than have the user try to pick them up."
-  - bugfix: "Fixed a bug that prevented CHOP weapons and demolition modifiers from dealing their intended integrity damage against shield - they now calculate 1/3rd of their assigned force into the demolition modifier."

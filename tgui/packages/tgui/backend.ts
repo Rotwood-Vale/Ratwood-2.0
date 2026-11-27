@@ -31,6 +31,9 @@ export const setGlobalStore = (store) => {
 export const backendUpdate = createAction('backend/update');
 export const backendSetSharedState = createAction('backend/setSharedState');
 export const backendSuspendStart = createAction('backend/suspendStart');
+export const backendWindowGeometryReady = createAction(
+  'backend/windowGeometryReady',
+);
 export const backendCreatePayloadQueue = createAction(
   'backend/createPayloadQueue',
 );
@@ -57,6 +60,8 @@ const initialState = {
   // Start as suspended
   suspended: Date.now(),
   suspending: false,
+  // Distinguishes uses of the same pooled window when an earlier geometry read finishes late.
+  windowSession: 0,
 };
 
 export const backendReducer = (state = initialState, action) => {
@@ -127,6 +132,7 @@ export const backendReducer = (state = initialState, action) => {
       },
       suspending: false,
       suspended: timestamp,
+      windowSession: state.windowSession + 1,
     };
   }
 
@@ -171,14 +177,28 @@ export const backendReducer = (state = initialState, action) => {
   return state;
 };
 
+export const waitsForWindowGeometry = (interfaceName: string | undefined) =>
+  interfaceName === 'CharacterGallery' ||
+  interfaceName === 'ArtworkEditorPreview';
+
+const showResumedWindow = () => {
+  perf.mark('resume/start');
+  Byond.winset(Byond.windowId, { 'is-visible': true });
+  Byond.sendMessage('visible');
+  perf.mark('resume/finish');
+  if (process.env.NODE_ENV !== 'production') {
+    logger.log('visible in', perf.measure('render/finish', 'resume/finish'));
+  }
+};
+
 export const backendMiddleware = (store) => {
   let fancyState;
   let suspendInterval;
+  let galleryRevealed = false;
 
   return (next) => (action) => {
-    const { suspended, outgoingPayloadQueues } = selectBackend(
-      store.getState(),
-    );
+    const { config, suspended, suspending, outgoingPayloadQueues } =
+      selectBackend(store.getState());
     const { type, payload } = action;
 
     if (type === 'update') {
@@ -209,10 +229,27 @@ export const backendMiddleware = (store) => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
+      galleryRevealed = false;
       Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
       setTimeout(() => focusMap());
+    }
+
+    if (type === 'backend/windowGeometryReady') {
+      if (
+        !suspended &&
+        !suspending &&
+        waitsForWindowGeometry(config?.interface?.name)
+      ) {
+        if (galleryRevealed) {
+          Byond.winset(Byond.windowId, { 'is-visible': true });
+        } else {
+          galleryRevealed = true;
+          showResumedWindow();
+        }
+      }
+      return;
     }
 
     if (type === 'backend/update') {
@@ -238,29 +275,19 @@ export const backendMiddleware = (store) => {
       logger.log('backend/update', payload);
       // Signal renderer that we have resumed
       resumeRenderer();
-      // Setup drag
-      setupDrag();
-      // We schedule this for the next tick here because resizing and unhiding
-      // during the same tick will flash with a white background.
-      setTimeout(() => {
-        perf.mark('resume/start');
-        // Doublecheck if we are not re-suspended.
-        const { suspended } = selectBackend(store.getState());
-        if (suspended) {
-          return;
-        }
-        Byond.winset(Byond.windowId, {
-          'is-visible': true,
+      const waitForGeometry = waitsForWindowGeometry(
+        payload.config?.interface?.name ?? config?.interface?.name,
+      );
+      setupDrag(waitForGeometry);
+      if (!waitForGeometry) {
+        // Resizing and unhiding in the same tick can flash a white background.
+        setTimeout(() => {
+          const { config, suspended } = selectBackend(store.getState());
+          if (!suspended && !waitsForWindowGeometry(config?.interface?.name)) {
+            showResumedWindow();
+          }
         });
-        Byond.sendMessage('visible');
-        perf.mark('resume/finish');
-        if (process.env.NODE_ENV !== 'production') {
-          logger.log(
-            'visible in',
-            perf.measure('render/finish', 'resume/finish'),
-          );
-        }
-      });
+      }
     }
 
     if (type === 'oversizePayloadResponse') {
@@ -348,7 +375,11 @@ const chunkSplitter = {
  * is associated with.
  */
 export type ActFunctionType = (action: string, payload?: object) => void;
-export type RoutedActFunctionType = (action: string, payload?: object, routeId?: string | null) => void;
+export type RoutedActFunctionType = (
+  action: string,
+  payload?: object,
+  routeId?: string | null,
+) => void;
 
 export const sendAct = (action: string, payload: object = {}) => {
   // Validate that payload is an object
@@ -420,6 +451,7 @@ type BackendState<TData> = {
   outgoingPayloadQueues: Record<string, any[]>;
   suspending: boolean;
   suspended: boolean;
+  windowSession: number;
 };
 
 /**

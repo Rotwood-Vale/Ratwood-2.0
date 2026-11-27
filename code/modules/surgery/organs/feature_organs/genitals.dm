@@ -187,8 +187,8 @@
 		return FALSE
 	if(owner.stat == DEAD)
 		return FALSE
-	if(HAS_TRAIT(father, TRAIT_OVIPOSITOR))
-		owner.apply_status_effect(/datum/status_effect/egg_gestation, father)
+	if(HAS_TRAIT(owner, TRAIT_OVIPOSITOR))
+		owner.apply_status_effect(/datum/status_effect/egg_gestation)
 		to_chat(owner, span_love("I feel a surge of warmth in my belly, something is growing inside me..."))
 		return FALSE
 	if(pregnant)

@@ -197,19 +197,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/badsight/on_mob_creation(mob/user)
 	..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(!H.wear_mask)
-		H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/spectacles(H), SLOT_WEAR_MASK)
-	else
-		new /obj/item/clothing/mask/rogue/spectacles(get_turf(H))
-
 	// we don't seem to have a mind when on_mob_creation fires, so set up a timer to check when we probably will
-	addtimer(CALLBACK(src, PROC_REF(apply_reading_skill), H), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_effects), user), 10 SECONDS)
 
-/datum/charflaw/badsight/proc/apply_reading_skill(mob/living/carbon/human/H)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+/datum/charflaw/badsight/proc/apply_effects(mob/living/carbon/human/user)
+	user.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+	user.mind?.special_items["Spectacles"] = /obj/item/clothing/mask/rogue/spectacles
 
 /datum/charflaw/paranoid
 	name = "Paranoid"

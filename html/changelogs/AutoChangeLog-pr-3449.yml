@@ -1,0 +1,4 @@
+author: "Ilmir037"
+delete-after: True
+changes:
+  - bugfix: "The hem of the clothes will not drops after the step"

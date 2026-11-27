@@ -858,15 +858,15 @@
 /atom/movable/screen/rogmove/proc/toggle(mob/user)
 	if(isobserver(user))
 		return
-	if(user.m_intent == MOVE_INTENT_SNEAK)
-		user.toggle_rogmove_intent(MOVE_INTENT_WALK)
+	if(user.get_controlled_movement_intent() == MOVE_INTENT_SNEAK)
+		user.request_movement_intent(MOVE_INTENT_WALK)
 	else
-		user.toggle_rogmove_intent(MOVE_INTENT_SNEAK)
+		user.request_movement_intent(MOVE_INTENT_SNEAK)
 	update_icon_state()
 	user.update_sneak_invis()
 
 /atom/movable/screen/rogmove/update_icon_state()
-	if(hud?.mymob?.m_intent == MOVE_INTENT_SNEAK)
+	if(hud?.mymob?.get_controlled_movement_intent() == MOVE_INTENT_SNEAK)
 		icon_state = "sneak1"
 	else
 		icon_state = "sneak0"
@@ -880,14 +880,14 @@
 /atom/movable/screen/rogmove/sprint/toggle(mob/user)
 	if(isobserver(user))
 		return
-	if(user.m_intent == MOVE_INTENT_RUN)
-		user.toggle_rogmove_intent(MOVE_INTENT_WALK)
+	if(user.get_controlled_movement_intent() == MOVE_INTENT_RUN)
+		user.request_movement_intent(MOVE_INTENT_WALK)
 	else
-		user.toggle_rogmove_intent(MOVE_INTENT_RUN)
+		user.request_movement_intent(MOVE_INTENT_RUN)
 	update_icon_state()
 
 /atom/movable/screen/rogmove/sprint/update_icon_state()
-	if(hud?.mymob?.m_intent == MOVE_INTENT_RUN)
+	if(hud?.mymob?.get_controlled_movement_intent() == MOVE_INTENT_RUN)
 		icon_state = "sprint1"
 	else
 		icon_state = "sprint0"
