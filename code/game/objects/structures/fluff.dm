@@ -1296,6 +1296,9 @@
 /obj/structure/fluff/statue/evil/attackby(obj/item/W, mob/user, params)
 	if(!HAS_TRAIT(user, TRAIT_COMMIE))
 		return
+	if(!user.mind?.has_antag_datum(/datum/antagonist/bandit)) // Matthios's other faithful share the trait; the hoard is the band's alone
+		to_chat(user, span_warning("The idol does not stir. It takes offerings only from the Freefolk."))
+		return
 	var/donatedamnt = W.get_real_price()
 	if(user.mind)
 		if(user)

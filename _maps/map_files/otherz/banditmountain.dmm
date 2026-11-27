@@ -1692,6 +1692,10 @@
 /obj/structure/roguewindow/stained/matthios,
 /turf/closed/wall/mineral/rogue/decostone/long,
 /area/rogue/indoors/banditcamp)
+"wt" = (
+/obj/structure/fluff/statue/small,
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/indoors/banditcamp)
 "wu" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/cleanshallow,
@@ -4446,7 +4450,7 @@ NQ
 dy
 cR
 cU
-XX
+wt
 he
 he
 Ik
@@ -4862,7 +4866,7 @@ AE
 AE
 AE
 he
-XX
+wt
 Sj
 cR
 QV
@@ -8045,7 +8049,7 @@ qo
 Dy
 Wn
 Ik
-Ik
+yK
 Ik
 Ik
 Ik

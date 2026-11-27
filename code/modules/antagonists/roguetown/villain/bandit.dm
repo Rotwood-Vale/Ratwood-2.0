@@ -15,7 +15,7 @@
 	briefing_flavour = "At some point in your lyfe, you fell to the wrong side of the carriage. Whether by butchery or finesse, your face now hangs on the wall of the local inn, one of many told of in hushed tavern tales. You lyve among the Freefolk in a hidden camp, beyond the reach of the realm's laws, in reverence to MATTHIOS, the Transactor, who teaches that what the few hoard belongs to all."
 	briefing_explanation = "The idol of Matthios in your camp hungers for the treasures of the civilized wretches: coin, gems, metals and finery. Every offering grants favour to the whole band, which the Hoardmaster trades for arms, armour and supplies. What the idol swallows counts toward the brigand gang's hoard, and spending favour never takes it away. Rob, ambush, extort and raid. Make the realm feel your presence."
 	briefing_live_goals = TRUE
-	/// Spendable at the Hoardmaster. Every offering by anyone credits every connected bandit.
+	/// Spendable at the Hoardmaster. Every offering by any bandit credits every connected bandit.
 	var/favor = 150
 	/// Mammons' worth this bandit offered to the idol with their own hands
 	var/personal_offered = 0
@@ -199,7 +199,8 @@
 			continue
 		var/player_ckey = ckey(bandit.owner.key)
 		var/datum/antagonist/bandit/best = best_by_ckey[player_ckey]
-		if(!best || bandit.hoard_triumphs_owed() > best.hoard_triumphs_owed())
+		// >= so a tie goes to the later datum (GLOB.antagonists is in creation order): the character they ended the round as
+		if(!best || bandit.hoard_triumphs_owed() >= best.hoard_triumphs_owed())
 			best_by_ckey[player_ckey] = bandit
 	for(var/player_ckey in best_by_ckey)
 		var/datum/antagonist/bandit/best = best_by_ckey[player_ckey]
