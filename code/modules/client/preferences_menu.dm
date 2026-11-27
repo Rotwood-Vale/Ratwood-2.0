@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(pref_categories, list(
 ))
 
 // skips char preview update on these options 2 avoid topic lag
-GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "character_gallery", "rumour", "gossip", "rumour_preview", "ooc_extra", "change_title", "change_artist", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkvolume", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
+GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "character_gallery", "rumour", "gossip", "rumour_preview", "ooc_extra", "change_title", "change_artist", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkvolume", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "family_board", "family", "gender_choice", "species_choice"))
 
 GLOBAL_LIST_INIT(pref_columns, list(
 	list("Identity", "Origin", "Voice", "Customization"),
@@ -266,23 +266,13 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	var/origin_name = "None"
 	if(origin)
 		origin_name = origin.name
-	html += pref_line(list(pref_item("Origin", pref_link(origin_name, "origin")), pref_item("Family", pref_link(family || "None", "family", ""))))
-	if(family != FAMILY_NONE)
-		var/spousename = "Preferred Spouse"
-		if(family == FAMILY_PARTIAL)
-			spousename = "Preferred Parent"
-		var/species_text = "<font color='#1cb308'>Unrestricted</font>"
-		if(xenophobe_pref == 1)
-			species_text = "<font color='#FFA500'>Same Race</font>"
-		if(xenophobe_pref == 2 && restricted_species_pref)
-			species_text = "<font color='#aa0202'>[restricted_species_pref] Only</font>"
-		html += pref_line(list(pref_item(spousename, pref_link(setspouse || "None", "setspouse", "")), pref_item("Preferred Gender", pref_link(gender_choice || "Any Gender", "gender_choice", "")), pref_item("Restrict Species", pref_link(species_text, "species_choice", ""))))
+	html += pref_line(list(pref_item("Origin", pref_link(origin_name, "origin"))))
 	var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
 	html += pref_line(list(pref_item("Faith", pref_link(selected_faith?.name || "INVALID", "faith")), pref_item("Patron", pref_link(selected_patron?.name || "INVALID", "patron"))))
 	var/language_text = "Locked by origin"
 	if(!origin?.origin_language)
 		language_text = get_language_link(extra_language, "lang_free")
-	html += pref_line(list(pref_item("Language", language_text), pref_item("Food Preferences", pref_link("Change", "culinary", "menu"))))
+	html += pref_line(list(pref_item("Language", language_text), pref_item("Relationships", pref_link("Change", "family_board", "menu")), pref_item("Food Preferences", pref_link("Change", "culinary", "menu"))))
 	return html
 
 /datum/preferences/proc/page_loadout(mob/user)

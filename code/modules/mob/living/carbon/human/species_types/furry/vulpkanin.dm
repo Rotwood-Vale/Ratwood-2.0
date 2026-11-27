@@ -4,6 +4,7 @@
 /datum/species/vulpkanin
 	name = "Venardine"
 	id = "vulpkanin"
+	race_groups = list("Beastvolk")
 	desc = "<b>Venardine</b> <br>\
 	Venardine are a fox-like Beastling race with the majority hailing from the Kingdom \
 	of Vulpkheim, which borders Hammerhold. However, there are a few Venardine tribes that \

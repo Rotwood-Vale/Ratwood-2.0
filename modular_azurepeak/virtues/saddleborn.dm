@@ -3,7 +3,7 @@
 	desc = "I am skilled at riding animals of all kinds, and have an especially strong bond with one, allowing me to call it from afar and send it away as needed. Should my treasured companion ever die, my mood will not recover."
 	custom_text = "Provides an ability that allows you to select a type of mount to call to your side, and additionally name. Noble characters are able to choose horses. Gains two abilities to send the mount away and call it back as needed (outdoors only). If the chosen mount dies, -10 to mood for the rest of the round (cannot be recovered from in any circumstance)."
 	added_traits = list(TRAIT_EQUESTRIAN)
-	added_stashed_items = list("Saddle" = /obj/item/natural/saddle)
+	added_stashed_items = list("Saddle" = /obj/item/natural/saddle, "Apple" = /obj/item/reagent_containers/food/snacks/grown/apple)
 	added_skills = list(
 		list(/datum/skill/misc/riding, SKILL_LEVEL_APPRENTICE, SKILL_LEVEL_APPRENTICE)
 	)

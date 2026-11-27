@@ -4,6 +4,7 @@
 /datum/species/anthromorphsmall
 	name = "Critterkin"
 	id = "anthromorphsmall"
+	race_groups = list("Beastvolk")
 	desc = "<b>Critterkin</b><br>\
 	A race akin to wild-kin, except afflicted with significantly smaller stature. \
 	Sometimes referred to with the derogatory term 'verminfolk' by those that disrespect the small.<br>\

@@ -106,6 +106,9 @@
 		if(item)
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
+	if(user != src && (HAS_TRAIT(user, TRAIT_PURITAN) || HAS_TRAIT(user, TRAIT_CHOSEN)) && HAS_TRAIT(src, TRAIT_CLERGYRADICAL) && HAS_TRAIT(src, TRAIT_FORBIDDEN_RESEARCH))
+		. += span_warning("[m1] clearly studying forbidden knowledge.")
+
 	// Try to see if they smell
 	if(get_dist(user, src) <= 3 && !HAS_TRAIT(user, TRAIT_MISSING_NOSE) && !HAS_TRAIT(user, TRAIT_NOSTINK)) // Need to be close enough + able to smell
 		if(user != src) // You can't smell your own scent
@@ -1019,23 +1022,10 @@
 				display_as_wanderer = TRUE
 			else if(J.lowlife_examine)
 				display_as_lowlife = TRUE
-		var/rank_color = "#725D4C"
-		if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4)
-			social_rank = SOCIAL_RANK_MINOR_NOBLE
-		switch(social_rank)
-			if(SOCIAL_RANK_PEASANT)
-				rank_color = "#91733B"
-			if(SOCIAL_RANK_YEOMAN)
-				rank_color = "#B1892A"
-			if(SOCIAL_RANK_MINOR_NOBLE)
-				rank_color = "#D09F19"
-			if(SOCIAL_RANK_NOBLE)
-				rank_color = "#ECB20A"
-			if(SOCIAL_RANK_ROYAL)
-				rank_color = "#FFBF00"
-		var/social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⚜</font></A>"
+		var/rank_color = social_rank_color()
+		var/social_strata = "<a href='?src=[REF(src)];social_strata=1' style='color:[rank_color]'>⛭</a>"
 		if(family_datum)
-			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
+			social_strata = "<a href='?src=[REF(src)];social_strata=1' style='color:[rank_color]'>⛯</a>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
 		if(migrant_type)
