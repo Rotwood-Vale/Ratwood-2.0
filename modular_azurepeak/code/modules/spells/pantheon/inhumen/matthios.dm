@@ -618,6 +618,11 @@
 /obj/effect/proc_holder/spell/self/wingsoffreedom/cast(list/targets, mob/living/carbon/human/user = usr)
 	. = ..()
 
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot change form while restrained or incapacitated!"))
+		revert_cast(user)
+		return FALSE
+		
 	if(user.has_status_effect(/datum/status_effect/debuff/submissive))
 		to_chat(user, span_warning("Your will is too broken to change form."))
 		revert_cast(user)
