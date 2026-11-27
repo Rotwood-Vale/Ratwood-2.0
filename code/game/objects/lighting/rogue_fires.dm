@@ -212,6 +212,16 @@
 	icon = 'icons/roguetown/misc/wallfireblue.dmi'
 	bulb_colour = "#6e90ff"
 
+/// A fireplace two tiles wide. Map it on the left of the two wall tiles; the sprite covers the tile to its east.
+/obj/machinery/light/rogue/campfire/fireplace/wide
+	name = "great fireplace"
+	desc = "A broad stone hearth, wide enough to roast a whole boar. A warm fire dances across its bed of embers."
+	icon = 'icons/roguetown/misc/fireplace64.dmi'
+	icon_state = "fireplace1"
+	base_state = "fireplace"
+	light_outer_range = 5
+	healing_range = 3
+
 /obj/machinery/light/rogue/candle
 	name = "candles"
 	desc = "Tiny flames flicker to the slightest breeze and offer enough light to see."
