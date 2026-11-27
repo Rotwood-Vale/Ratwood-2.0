@@ -21,7 +21,7 @@
 /obj/structure/stairs/fancy/c{
 	dir = 1
 	},
-/turf/open/floor/rogue/carpet/lord/center,
+/turf/open/floor/rogue/carpet/ruined/center,
 /area/rogue/indoors/banditcamp)
 "am" = (
 /obj/structure/mineral_door/wood{
@@ -195,7 +195,7 @@
 /obj/structure/stairs/fancy/l{
 	dir = 1
 	},
-/turf/open/floor/rogue/carpet/lord/left,
+/turf/open/floor/rogue/carpet/ruined/left,
 /area/rogue/indoors/banditcamp)
 "en" = (
 /obj/structure/stairs/d,
@@ -373,7 +373,7 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor6-old"
 	},
-/turf/open/floor/rogue/carpet/lord/left,
+/turf/open/floor/rogue/carpet/ruined/left,
 /area/rogue/indoors/banditcamp)
 "gO" = (
 /obj/item/reagent_containers/powder/salt,
@@ -937,7 +937,7 @@
 /obj/structure/roguemachine/Hoardmaster{
 	pixel_x = -16
 	},
-/turf/open/floor/rogue/carpet/lord/center,
+/turf/open/floor/rogue/carpet/ruined/center,
 /area/rogue/indoors/banditcamp)
 "qS" = (
 /obj/structure/fluff/walldeco/brigand_banner{
@@ -1238,7 +1238,7 @@
 /turf/closed/mineral/random/rogue/high,
 /area/rogue)
 "wl" = (
-/turf/open/floor/rogue/carpet/lord/center,
+/turf/open/floor/rogue/carpet/ruined/center,
 /area/rogue/indoors/banditcamp)
 "wp" = (
 /obj/machinery/light/rogue/candle/red/l,
@@ -1290,7 +1290,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp)
 "wS" = (
-/turf/open/floor/rogue/carpet/lord/left,
+/turf/open/floor/rogue/carpet/ruined/left,
 /area/rogue/indoors/banditcamp)
 "wV" = (
 /obj/structure/rack/rogue,
@@ -1324,7 +1324,7 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor5-old"
 	},
-/turf/open/floor/rogue/carpet/lord/left,
+/turf/open/floor/rogue/carpet/ruined/left,
 /area/rogue/indoors/banditcamp)
 "xD" = (
 /obj/structure/table/wood{
@@ -1448,7 +1448,7 @@
 	})
 "Au" = (
 /obj/machinery/light/rogue/torchholder/l,
-/turf/open/floor/rogue/carpet/lord/left,
+/turf/open/floor/rogue/carpet/ruined/left,
 /area/rogue/indoors/banditcamp)
 "Aw" = (
 /obj/structure/rack/rogue,
@@ -2116,7 +2116,7 @@
 /obj/structure/ruined_throne{
 	layer = 5
 	},
-/turf/open/floor/rogue/carpet/lord/center,
+/turf/open/floor/rogue/carpet/ruined/center,
 /area/rogue/indoors/banditcamp)
 "LM" = (
 /obj/structure/fluff/psycross/matthios/decorated,
@@ -2211,7 +2211,7 @@
 /obj/structure/stairs/fancy/r{
 	dir = 1
 	},
-/turf/open/floor/rogue/carpet/lord/right,
+/turf/open/floor/rogue/carpet/ruined/right,
 /area/rogue/indoors/banditcamp)
 "NQ" = (
 /obj/machinery/light/rogue/candle/r,
@@ -2592,10 +2592,10 @@
 	})
 "SY" = (
 /obj/machinery/light/rogue/torchholder/r,
-/turf/open/floor/rogue/carpet/lord/right,
+/turf/open/floor/rogue/carpet/ruined/right,
 /area/rogue/indoors/banditcamp)
 "SZ" = (
-/turf/open/floor/rogue/carpet/lord/right,
+/turf/open/floor/rogue/carpet/ruined/right,
 /area/rogue/indoors/banditcamp)
 "Tv" = (
 /obj/item/roguecoin/gold/pile,
@@ -2879,7 +2879,7 @@
 	pixel_x = -11;
 	pixel_y = -5
 	},
-/turf/open/floor/rogue/carpet/lord/right,
+/turf/open/floor/rogue/carpet/ruined/right,
 /area/rogue/indoors/banditcamp)
 "Zj" = (
 /obj/structure/fluff/psycross/matthios,
