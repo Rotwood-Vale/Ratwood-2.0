@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/bite/thanatophobia,
 	/datum/ritual/rot/transfuse, /datum/ritual/rot/blight,
 	/datum/ritual/rot/plague, /datum/ritual/noise/thermalvis,
-	/datum/ritual/noise/forgettongue, /datum/ritual/noise/jam, /datum/ritual/noise/madness, /datum/ritual/servantry/witchery,
+	/datum/ritual/noise/jam, /datum/ritual/noise/madness, /datum/ritual/servantry/witchery,
 	/datum/ritual/pitch/fireresist, /datum/ritual/pitch/shadowform,
 	/datum/ritual/pitch/lightcurse, /datum/ritual/blood/transfuse,
 	/datum/ritual/blood/bloodsnare, /datum/ritual/blood/bloodbond,
@@ -1674,6 +1674,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Teleport yourself and your target into a pocket dimension for 3 minutes. Anyone you or your target grabs is brought with. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/strand/strandrecall/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -1853,7 +1854,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Your target's weapon skills are reduced, and their equipment's durability is massively reduced. Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
-	research_cost = 5
+	research_cost = 3
 
 /datum/ritual/toil/rust/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -1928,7 +1929,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "The target becomes extremely afraid of skeletons and corpses. Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
-	research_cost = 5
+	research_cost = 3
 
 /datum/ritual/bite/thanatophobia/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -2171,6 +2172,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Curse your target with the black rot. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/rot/plague/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -2373,27 +2375,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/witch_possess)
 	return
 
-/datum/ritual/noise/forgettongue
-	name = "Curse of Babel"
-	icon_type = /obj/item/natural/worms/leech
-	desc = "Curse your target to forget the common tongue and become illiterate. Requires a leech that fed from your target."
-	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
-
-/datum/ritual/noise/forgettongue/invoke(mob/living/user, turf/center)
-	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
-	if(!remnant)
-		return
-	if(!curse_target(remnant.fed_from))
-		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
-		return
-	remnant.fed_from.remove_language(/datum/language/common, source = LANGUAGE_SOURCE_ALL)
-	remnant.fed_from.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)
-	to_chat(remnant.fed_from, span_danger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
-	remnant.fed_from.emote("scream")
-	qdel(remnant)
-	to_chat(user, span_notice("IT EATS AWAY MEANING AND LEAVES NOTHING BUT NOISE."))
-
 /datum/ritual/noise/jam
 	name = "Hijack"
 	icon_type = /obj/structure/roguemachine/scomm
@@ -2426,7 +2407,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Send the target into a fit of madness, attacking the nearest person. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
-	research_cost = 5
+	research_cost = 3
 
 /datum/ritual/noise/madness/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -2707,6 +2688,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Curse a target to burn in the light. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/pitch/lightcurse/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -2845,6 +2827,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Curse two targets to slowly die when apart from each other. Requires two leeches that fed from separate targets."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/blood/bloodbond/invoke(mob/living/user, turf/center)
 	var/list/found = list()

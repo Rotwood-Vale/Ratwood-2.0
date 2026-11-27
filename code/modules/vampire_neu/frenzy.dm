@@ -68,6 +68,10 @@
 	if(HAS_TRAIT(src, TRAIT_IN_FRENZY))
 		return
 	ADD_TRAIT(src, TRAIT_IN_FRENZY, MAGIC_TRAIT)
+	if(!clan)
+		for(var/obj/item/I in held_items)
+			if(I.force >= 10)
+				ADD_TRAIT(I, TRAIT_NODROP, "frenzy")
 	log_combat(src, src, "enters frenzy!")
 	beast_take_over()
 	GLOB.frenzy_list += src
@@ -77,6 +81,8 @@
 		return
 
 	REMOVE_TRAIT(src, TRAIT_IN_FRENZY, MAGIC_TRAIT)
+	for(var/obj/item/I in held_items)
+		REMOVE_TRAIT(I, TRAIT_NODROP, "frenzy")
 	beast_release()
 	log_combat(src, src, "exits frenzy!")
 	GLOB.frenzy_list -= src
@@ -146,16 +152,32 @@
 			if(isliving(frenzy_target))
 				var/mob/living/L = frenzy_target
 				if(L.stat != DEAD)
-					a_intent = INTENT_HARM
-					if(last_rage_hit+5 < world.time)
-						last_rage_hit = world.time
-						UnarmedAttack(L)
+					var/obj/item/weapon = get_active_held_item()
+					if(!weapon || weapon.force < 10)
+						weapon = null
+						for(var/obj/item/rogueweapon/I in GetAllContents(/obj/item/rogueweapon))
+							if(I.force >= 10)
+								dropItemToGround(get_active_held_item())
+								if(putItemFromInventoryInHandIfPossible(I, active_hand_index))
+									weapon = I
+								break
+					if(weapon)
+						ADD_TRAIT(weapon, TRAIT_NODROP, "frenzy")
+						if(next_move <= world.time)
+							rog_intent_change(1)
+							used_intent = a_intent
+							weapon.melee_attack_chain(src, L)
+					else
+						a_intent = INTENT_HARM
+						if(last_rage_hit+5 < world.time)
+							last_rage_hit = world.time
+							UnarmedAttack(L)
 		else
 			frenzy_pathfind_to_target()
 			face_atom(frenzy_target)
 
 	// Continue the frenzy loop
-	addtimer(CALLBACK(src, PROC_REF(frenzystep)), total_multiplicative_slowdown())
+	addtimer(CALLBACK(src, PROC_REF(frenzystep)), total_multiplicative_slowdown(), TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /mob/living/carbon/proc/can_frenzy_feed_on(atom/prey)
 	if(prey == src || !ishuman(prey))
