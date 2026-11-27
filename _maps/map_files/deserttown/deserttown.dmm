@@ -15,7 +15,7 @@
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/indoors/town/church/basement)
 "aaw" = (
-/obj/structure/roguewindow/harem3,F
+/obj/structure/roguewindow/harem3,
 /obj/structure/curtain/brown,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/town/roofs/desert/church)
