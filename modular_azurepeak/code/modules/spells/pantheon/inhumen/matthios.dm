@@ -932,7 +932,7 @@
 	blade_class = BCLASS_CUT
 	attack_verb = list("claws", "mauls", "eviscerates")
 	animname = "cut"
-	hitsound = "genslash"
+	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
 	penfactor = PEN_MEDIUM
 	reach = 1
 	dodgeable_intent = TRUE
@@ -947,7 +947,7 @@
 	blade_class = BCLASS_CHOP
 	attack_verb = list("claws", "mauls", "eviscerates")
 	animname = "chop"
-	hitsound = "genslash"
+	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	penfactor = PEN_HEAVY
 	dodgeable_intent = FALSE
 	parriable_intent = FALSE
