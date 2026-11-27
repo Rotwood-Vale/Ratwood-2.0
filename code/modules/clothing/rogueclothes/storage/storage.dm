@@ -29,8 +29,8 @@
 		var/obj/item/rogueweapon/huntingknife/K = W
 		if(K.sheathe_icon)
 			for(var/obj/item/rogueweapon/scabbard/sheath/sheath in contents)
-				if(!sheath.sheathed) // if no weapon in there
-					if(sheath.eat_sword(user, K, TRUE))
+				if(!sheath.hol_comp.sheathed) // if no weapon in there
+					if(sheath.hol_comp.eat_sword(user, K, TRUE))
 						user.visible_message(
 							span_notice("[user] slips [W] into [src]'s sheath."),
 							span_notice("I slip [W] into [src]'s sheath.")
