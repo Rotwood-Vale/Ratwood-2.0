@@ -518,7 +518,11 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)
 				client.screen += wear_wrists
 		update_observer_view(wear_wrists,1)
-		if(dna && dna.species.sexes)
+		var/hide_wrists = FALSE
+		if(istype(wear_wrists, /obj/item/clothing/wrists/roguetown))
+			var/obj/item/clothing/wrists/roguetown/hide_check = wear_wrists
+			hide_wrists = hide_check.hide_worn
+		if(dna && dna.species.sexes && !hide_wrists)
 			var/racecustom
 			if(dna.species.custom_clothes)
 				racecustom = dna.species.clothes_id
@@ -1885,6 +1889,7 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!I)
 		return
 	var/list/sleeves = list()
+	var/original_sleeveindex = sleeveindex
 
 	if(I.r_sleeve_status == SLEEVE_TORN || I.r_sleeve_status == SLEEVE_ROLLED)
 		if(sleeveindex == 4 || sleeveindex == 2)
@@ -1968,7 +1973,45 @@ generate/load female uniform sprites matching all previously decided variables
 			var/mutable_appearance/pic = mutable_appearance(blood_overlay, layer=-layer2use)
 			pic.name = BLOOD_OVERLAY_NAME
 			sleeves += pic
-
+			
+	// cosmetic gloves need their own limb sleeves too, or they vanish on east/west
+	if(istype(I, /obj/item/clothing/gloves/roguetown))
+		var/obj/item/clothing/gloves/roguetown/parent_gloves = I
+		if(parent_gloves.attachment_component)
+			var/datum/component/storage/concrete/roguetown/gloves/comp = parent_gloves.GetComponent(parent_gloves.attachment_component)
+			if(comp && length(comp.item_to_grid_coordinates))
+				for(var/obj/item/thing as anything in comp.item_to_grid_coordinates)
+					if(!thing.sleeved)
+						continue
+					var/list/extra_sleeves = get_sleeves_layer(thing, original_sleeveindex, layer2use - 0.01)
+					if(extra_sleeves)
+						sleeves += extra_sleeves
+	if(istype(I, /obj/item/clothing/under/roguetown))
+		var/obj/item/clothing/under/roguetown/parent_pants = I
+		if(parent_pants.attachment_component)
+			var/datum/component/storage/concrete/roguetown/under/comp = parent_pants.GetComponent(parent_pants.attachment_component)
+			if(comp && length(comp.item_to_grid_coordinates))
+				if(parent_pants.hide_base)
+					sleeves.Cut()
+				for(var/obj/item/thing as anything in comp.item_to_grid_coordinates)
+					if(!thing.sleeved)
+						continue
+					var/list/extra_sleeves = get_sleeves_layer(thing, sleeveindex, layer2use - 0.01)
+					if(extra_sleeves)
+						sleeves += extra_sleeves
+	if(istype(I, /obj/item/clothing/shoes))
+		var/obj/item/clothing/shoes/parent_shoes = I
+		if(parent_shoes.attachment_component)
+			var/datum/component/storage/concrete/roguetown/shoes/comp = parent_shoes.GetComponent(parent_shoes.attachment_component)
+			if(comp && length(comp.item_to_grid_coordinates))
+				if(parent_shoes.hide_base)
+					sleeves.Cut()
+				for(var/obj/item/thing as anything in comp.item_to_grid_coordinates)
+					if(!thing.sleeved)
+						continue
+					var/list/extra_sleeves = get_sleeves_layer(thing, sleeveindex, layer2use - 0.01)
+					if(extra_sleeves)
+						sleeves += extra_sleeves
 	return sleeves
 
 
