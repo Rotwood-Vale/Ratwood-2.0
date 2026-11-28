@@ -1739,7 +1739,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
-		L.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
+		var/datum/status_effect/buff/healing/heal = L.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
+		heal?.healing_on_tick = 10
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			for(var/obj/item/I in H.get_equipped_items())
@@ -1837,8 +1838,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/datum/status_effect/buff/healing/heal = H.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
 	if(heal)
 		heal.duration = world.time + 5 SECONDS
+		heal.healing_on_tick = 20
 	for(var/obj/item/I in H.get_equipped_items())
-		I.obj_integrity = min(I.obj_integrity + (I.max_integrity * 0.2), I.max_integrity)
+		I.obj_integrity = min(I.obj_integrity + (I.max_integrity * 0.5), I.max_integrity)
 	to_chat(H, span_notice("YSIS MENDS ME."))
 	playsound(src, 'sound/magic/lightning.ogg', 60, TRUE)
 	ysis_effect(H, 8)
@@ -2674,6 +2676,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	ADD_TRAIT(target, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_MONSTROUS, TRAIT_GENERIC)
+	target.add_overlay(mutable_appearance('icons/roguetown/cult/halo.dmi', "halo1", ABOVE_ALL_MOB_LAYER))
 	ADD_TRAIT(target, TRAIT_NOFIRE, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_FIRE_RESIST, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_RESISTHEAT, TRAIT_GENERIC)
