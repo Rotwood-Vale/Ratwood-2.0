@@ -306,6 +306,8 @@
 #define TRAIT_DEBTOR_BATHHOUSE "Debtor of the Bathhouse"
 #define TRAIT_AGENT_MERCHANT "Agent of the Merchant Guild"
 #define TRAIT_AGENT_BATHHOUSE "Agent of the Bathhouse"
+#define TRAIT_COURTAGENT "Agent of the Court"
+#define TRAIT_AGENTHIDEOUT "Court Agent Hideout"
 #define TRAIT_AGENT_CHURCH "Ecclesiastical Benefactor"
 #define TRAIT_OWNED_SLAVE "Owned Slave"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
@@ -452,6 +454,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DEBTOR_BATHHOUSE = span_warning("I am indebted to the Bathhouse."),
 	TRAIT_AGENT_MERCHANT = span_info("I am a chartered agent of the Merchant Guild. I keep its tally and ledger."),
 	TRAIT_AGENT_BATHHOUSE = span_info("I am an agent of the Bathhouse. I keep its tally and ledger."),
+	TRAIT_COURTAGENT = span_info("I am an expendable worker, serving beneath the Hand. Secrecy is key; exposing my identity could result in my death, firing, or worse."),
 	TRAIT_AGENT_CHURCH = span_info("I am a Benefactor of the Church. The faithful know my name."),
 	TRAIT_OWNED_SLAVE = span_info("I am a marked slave, previously broken and now owned by a Master."),
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),

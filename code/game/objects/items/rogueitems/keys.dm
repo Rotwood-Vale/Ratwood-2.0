@@ -824,6 +824,12 @@
 	icon_state = "brownkey"
 	lockid = "SlaveAuction"
 
+/obj/item/roguekey/courtagent
+	name = "Worn-out Key"
+	desc = "An old decrepit key, it looks like it hasn't been used in a while."
+	icon_state = "rustkey"
+	lockid = "CourtAgent"
+
 //custom key
 /obj/item/roguekey/custom
 	name = "custom key"

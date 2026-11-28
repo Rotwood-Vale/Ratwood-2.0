@@ -9,7 +9,7 @@
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_OUTDOORSMAN, TRAIT_EXPERT_HUNTER)
-	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
+	category_tags = list(CTAG_ADVENTURER, CTAG_LICKER_WRETCH)
 	subclass_stats = list(
 		STATKEY_PER = 3,
 		STATKEY_SPD = 2,

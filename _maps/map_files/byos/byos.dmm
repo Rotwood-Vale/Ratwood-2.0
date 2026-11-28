@@ -5345,8 +5345,8 @@
 "fZI" = (
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/flashlight/flare/torch/lantern,
-/obj/item/listeningdevice,
-/obj/item/listeningdevice,
+/obj/item/listeningdevice/inq,
+/obj/item/listeningdevice/inq,
 /obj/item/speakerinq,
 /obj/item/speakerinq,
 /obj/structure/closet/crate/roguecloset,

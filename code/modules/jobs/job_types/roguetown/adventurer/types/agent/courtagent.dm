@@ -1,0 +1,34 @@
+/datum/job/roguetown/adventurer/courtagent
+	title = "Court Agent"
+	flag = COURTAGENT
+	display_order = JDO_COURTAGENT
+	allowed_races = RACES_ALL_KINDS
+	total_positions = 2
+	spawn_positions = 2
+	round_contrib_points = 2
+	job_traits = list(TRAIT_STEELHEARTED, TRAIT_KEENEARS, TRAIT_COURTAGENT)
+	tutorial = "Whether acquired by merit, shrewd negotiation or fulfilled bounties, you have found yourself under the underhanded employ of the Hand along with other unfortunate souls to make the same mistake as you. Together you form 'The Collective'. Fulfill desires and whims of the court that they would rather not be publicly known. Your position is anything but secure, and any mistake can leave you disowned and charged like the petty criminal are. Only The Hand knows who you are."
+	min_pq = 5
+	job_reopens_slots_on_death = FALSE
+	always_show_on_latechoices = TRUE
+	show_in_credits = TRUE
+	advclass_cat_rolls = list(CTAG_COURTAGENT = 20)
+	obsfuscated_job = TRUE
+	class_setup_examine = FALSE
+	job_subclasses = list(
+	/datum/advclass/agent/sicaire,
+	/datum/advclass/agent/sicario,
+	/datum/advclass/agent/nachtjager,
+	/datum/advclass/agent/expendable,
+	/datum/advclass/agent/arcane
+	)
+//Hooking in here does not mess with their equipment procs
+/datum/job/roguetown/adventurer/courtagent/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	if(L)
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			GLOB.court_agents += H.real_name
+			if(H.mind)
+				H.mind.special_role = "Court Agent" //For obfuscating them in the Actors list: _job.dm L:216
+			to_chat(H, span_danger("You are a Court Agent, you are expected to maintain secrecy while fulfilling the whims of the crown. Do not let anyone besides the Hand or the Duke know of your true identity, compromising your secrecy could result in your death, imprisoment or firing.. Do not expect The Hand to have your back when you get arrested or caught commiting a crime.."))
+	..()

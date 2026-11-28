@@ -1004,3 +1004,28 @@
 
 /obj/item/inqarticles/indexer/can_be_package_wrapped()
 	return 0
+
+/obj/item/frumentarii
+	name = "frumentarii scroll"
+	desc = "An official scroll of the hand listing the names and various information about the court agent and their hideout within the duchy.."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "frumentarii_scroll"
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_range = 2
+	throw_speed = 1
+	slot_flags = null
+	resistance_flags = FIRE_PROOF
+
+/obj/item/frumentarii/examine(mob/user)
+	. = ..()
+	if(user.mind && !HAS_TRAIT(user.mind, TRAIT_AGENTHIDEOUT))
+		ADD_TRAIT(user.mind, TRAIT_AGENTHIDEOUT, GENERIC)
+		user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
+		to_chat(user, span_smallgreen("I now know of the court agents of the duchy."))
+	if(!length(GLOB.court_agents))
+		to_chat(user, span_notice("There are no agents on the list currently in the duchy."))
+	else
+		to_chat(user, span_notice("Here are the currently active agents:"))
+		for(var/name in GLOB.court_agents)
+			to_chat(user, span_notice(name))

@@ -548,7 +548,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		var/hearall = FALSE
 		var/turf/listener_turf = get_turf(AM)
 		var/turf/listener_ceiling = get_step_multiz(listener_turf, UP)
-		if(istype(AM, /obj/item/listeningdevice)) // Very evil snowflake code.
+		if(istype(AM, /obj/item/listeningdevice/inq)) // Very evil snowflake code.
 			hearall = TRUE
 		listener_has_ceiling = listener_ceiling && !istransparentturf(listener_ceiling)
 		if(!hearall && !Zs_too && !admin_listeners[AM] && AM.z != src.z)

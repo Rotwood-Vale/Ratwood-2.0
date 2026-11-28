@@ -337,7 +337,7 @@
 
 /datum/inqports/articles/listener
 	name = "1 Attentive Ear"
-	item_type = /obj/item/listeningdevice
+	item_type = /obj/item/listeningdevice/inq
 	marquescost = 3
 
 /datum/inqports/articles/whisperer

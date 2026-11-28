@@ -586,6 +586,11 @@
 	stressadd = 3
 	desc = span_red("I couldn't pay my debts in time.")
 
+/datum/stressevent/ear_crushed
+	desc = span_red("My phantom ear was destroyed!")
+	stressadd = 1
+	timer = 2 MINUTES
+
 /datum/stressevent/archivist_shushed
 	timer = 1 MINUTES
 	stressadd = 4

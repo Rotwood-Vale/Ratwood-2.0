@@ -72867,8 +72867,8 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cavewet/bogcaves)
 "uuh" = (
-/obj/item/listeningdevice,
-/obj/item/listeningdevice,
+/obj/item/listeningdevice/inq,
+/obj/item/listeningdevice/inq,
 /obj/item/speakerinq,
 /obj/item/speakerinq,
 /obj/structure/rack/rogue/shelf/biggest,

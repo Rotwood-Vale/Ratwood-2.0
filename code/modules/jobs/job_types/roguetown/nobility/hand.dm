@@ -206,7 +206,7 @@
 /datum/outfit/job/roguetown/hand/advisor/pre_equip(mob/living/carbon/human/H)
 	backpack_contents = list(
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
-		/obj/item/storage/keyring/lord = 1,
+		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//starts with a vial of poison, like all wizened evil advisors do!
 		/obj/item/rogueweapon/spellbook = 1,
@@ -221,7 +221,7 @@
 	if(!GLOB.court_agents.len)
 		to_chat(H, span_boldnotice("You begun the week with no agents."))
 	else
-		to_chat(H, span_boldnotice("We begun the week with these agents:"))
+		to_chat(H, span_boldnotice("You have been graced with expendable pawns to do your bidding. Together they form 'The Collective'."))
 		for(var/name in GLOB.court_agents)
 			to_chat(H, span_greentext(name))
 
@@ -229,7 +229,7 @@
 	set name = "Remember Agents"
 	set category = "Voice of Command"
 
-	to_chat(usr, span_boldnotice("I have these agents present:"))
+	to_chat(usr, span_boldnotice("These are the members of 'The Collective' present:"))
 	for(var/name in GLOB.court_agents)
 		to_chat(usr, span_greentext(name))
 	return
@@ -249,7 +249,8 @@
 	if(!.)
 		return
 	GLOB.court_agents += recruit.real_name
-
+	ADD_TRAIT(recruit, TRAIT_COURTAGENT, TRAIT_GENERIC)
+	
 /datum/outfit/job/roguetown/hand/advisor
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold

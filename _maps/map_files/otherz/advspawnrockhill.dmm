@@ -26,7 +26,6 @@
 /obj/effect/landmark/start/adventurerlate{
 	dir = 1
 	},
-/obj/effect/landmark/start/courtagent,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn/start)
 "dI" = (
@@ -284,12 +283,24 @@
 "Hm" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/underworld/adventurespawn/start)
+"IX" = (
+/obj/structure/underworld/barrier,
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn/start)
 "Jn" = (
 /obj/structure/underworld/barrier,
 /obj/effect/landmark/start/adventurerlate{
 	dir = 1
 	},
-/obj/effect/landmark/start/courtagent,
 /obj/effect/landmark/start/adventurerlate{
 	dir = 1
 	},
@@ -340,20 +351,6 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
-"Pk" = (
-/obj/structure/underworld/barrier,
-/obj/effect/landmark/start/adventurerlate{
-	dir = 1
-	},
-/obj/effect/landmark/start/courtagent,
-/obj/effect/landmark/start/adventurerlate{
-	dir = 1
-	},
-/obj/effect/landmark/start/adventurerlate{
-	dir = 1
-	},
-/turf/open/floor/rogue/churchrough,
-/area/rogue/underworld/adventurespawn/start)
 "QK" = (
 /obj/structure/flora/roguetree/underworld,
 /turf/open/floor/rogue/churchrough,
@@ -861,7 +858,7 @@ MR
 fs
 MR
 MR
-Pk
+IX
 iY
 Rt
 Al
@@ -890,7 +887,7 @@ MR
 MR
 MR
 MR
-Pk
+IX
 dA
 dA
 Al

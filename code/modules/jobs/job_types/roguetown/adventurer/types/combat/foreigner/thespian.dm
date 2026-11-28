@@ -7,7 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/bronzeclad
 	cmode_music = 'sound/music/combat_thespian.ogg'
 	allowed_races = RACES_ALL_KINDS
-	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)//vampires aren't allowed to gladiator larp, sire
+	category_tags = list(CTAG_ADVENTURER)//vampires aren't allowed to gladiator larp, sire
 	maximum_possible_slots = 3 //Should be categorically rarer to see than Iron- and Steel-clad adventurers. Tickles the powerscale ala the Exorcist, albeit to a wider extent with its potential combinations.
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_BLOOD_RESISTANCE)//may work on a lesser TRAIT_STRONGKICK so the leonidus wannabes can do the spartan kick.
 	subclass_languages = list(/datum/language/etruscan)

@@ -193,3 +193,9 @@
 	name = "watch captain's seal"
 	seal_label = "The Watch Captain of Rotwood Vale"
 	seal_color = "#1e4a7e"
+
+//Court Agent's seal
+/obj/item/seal/courtagent
+	name = "court agent's seal"
+	seal_label = "The Collective"
+	seal_color = "#94ffc4"
