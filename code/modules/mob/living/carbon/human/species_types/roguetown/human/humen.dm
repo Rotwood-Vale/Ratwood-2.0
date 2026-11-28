@@ -4,6 +4,7 @@
 /datum/species/human/northern
 	name = "Humen"
 	id = "humen"
+	race_groups = list("Humen")
 	desc = "<b>Humen</b><br>\
 	Humens (or \"Humans\") are the eldest of the Weeping God's creations. Noted for their \
 	tenacity and overwhelming population, humens are the most commonly seen race across the lands, \

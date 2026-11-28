@@ -4,6 +4,7 @@
 /datum/species/akula
 	name = "Axian"
 	id = "akula"
+	race_groups = list("Beastvolk")
 	desc = "<b>Axian</b><br>\
 	Axians are a proud, shark-like people that have a heritage founded in maritime trade, tax evasion, and piracy. \
 	While known for being strong in spirit and promoting robust commercial practices, they have gained infamy for \

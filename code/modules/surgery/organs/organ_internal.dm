@@ -314,7 +314,7 @@
 		return
 
 	if(accessory_type)
-		var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
+		var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(get_render_accessory_type())
 		var/list/appearances = accessory?.get_appearance(src, bodypart, accessory_colors)
 		if(!appearances)
 			return
@@ -335,13 +335,17 @@
 		bodypart_overlays(organ_overlay)
 		return organ_overlay
 
+/// Rendering may select body-compatible art without rewriting the organ's saved appearance.
+/obj/item/organ/proc/get_render_accessory_type()
+	return accessory_type
+
 /obj/item/organ/proc/get_icon_cache_key(obj/item/bodypart/bodypart)
 	return jointext(list(
 		bodypart_icon,
 		bodypart_icon_state,
 		bodypart_layer,
 		color,
-		accessory_type,
+		get_render_accessory_type(),
 		accessory_colors
 	), "-")
 

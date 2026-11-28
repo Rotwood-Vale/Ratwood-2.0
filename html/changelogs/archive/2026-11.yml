@@ -675,3 +675,25 @@
   - balance: Elven boots and gloves now have the same integrity and protection as
       hardened leather.
   - balance: Black Oak Pariah now spawns with hardened leather pants and bracers.
+2026-11-28:
+  CentralSmith:
+  - bugfix: Loyalist Bishops can pick Arcyne Affinity as a Tier 3 miracle again.
+  Ilmir037:
+  - bugfix: The hem of the clothes will not drops after the step
+  Kroto-Ker:
+  - rscadd: Reworks Family System + Adds Relationship Menu
+  Skuyno:
+  - bugfix: Fixed Australian Shepherd tail alignment.
+  Teragenic:
+  - qol: Apple added to Equestrian Virtue Stash
+  Tzi23:
+  - rscadd: ear penetration sexverb
+  - rscadd: new "perverse" category for extreme content that doesn't fit other categories
+  WolfOrion:
+  - rscadd: Added recipes for leather and steel poleyns
+  wikimody:
+  - rscadd: Diagnose will now inform you if somone is ooze or construct/doll
+  - rscadd: Caughtery can be used on some more wounds and removes bleed instead of
+      setting it to clotting range
+  - qol: Cautgery surgery is now only performable if any wound on selected limb can
+      be healed with it

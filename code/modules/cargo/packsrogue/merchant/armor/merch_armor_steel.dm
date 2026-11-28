@@ -71,6 +71,11 @@
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/neck/roguetown/chaincoif)
 
+/datum/supply_pack/rogue/armor_steel/chaincoif_steel_full
+	name = "Full Chain Coif"
+	cost = 90 // 2 Steel
+	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/full)
+
 /datum/supply_pack/rogue/armor_steel/chainmantle
 	name = "Chain Mantle"
 	cost = 50 // 1 Steel

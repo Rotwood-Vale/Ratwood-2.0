@@ -867,11 +867,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]			>> hair_color
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
-	S["family"]				>> family
 	S["gender_choice"] 		>> gender_choice
-	S["setspouse"] 			>> setspouse
-	S["xenophobe_pref"]		>> xenophobe_pref
-	S["restricted_species_pref"]	>> restricted_species_pref
+	S["random_match"]		>> random_match
+	S["random_match_on"]	>> random_match_on
+	S["take_house_name"]	>> take_house_name
+	S["species_filter"]		>> species_filter
+	S["species_blacklist"]	>> species_blacklist
 	S["extra_language"]		>> extra_language
 	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
@@ -1080,12 +1081,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	age				= sanitize_inlist(age, pref_species.possible_ages)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
-	family 			= family
 	gender_choice 	= gender_choice
-	setspouse 		= setspouse
-	xenophobe_pref 	= xenophobe_pref
-	restricted_species_pref = restricted_species_pref
-	extra_language  = extra_language
+	random_match 	= SANITIZE_LIST(random_match)
+	if(isnull(species_blacklist))
+		species_blacklist = TRUE
+	species_filter 	= SANITIZE_LIST(species_filter)
+	extra_language  = string_to_typepath(extra_language) || "None"
 	selected_title  = selected_title
 	voice_color		= voice_color
 	voice_pitch		= voice_pitch
@@ -1197,11 +1198,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["species"]				, pref_species?.name)
 	WRITE_FILE(S["charflaw"]				, preferences_typepath_or_null(charflaw))
 	WRITE_FILE(S["be_special"], be_special)
-	WRITE_FILE(S["family"], family)
 	WRITE_FILE(S["gender_choice"], gender_choice)
-	WRITE_FILE(S["setspouse"], setspouse)
-	WRITE_FILE(S["xenophobe_pref"], xenophobe_pref)
-	WRITE_FILE(S["restricted_species_pref"], restricted_species_pref)
+	WRITE_FILE(S["random_match"], random_match)
+	WRITE_FILE(S["random_match_on"], random_match_on)
+	WRITE_FILE(S["take_house_name"], take_house_name)
+	WRITE_FILE(S["species_filter"], species_filter)
+	WRITE_FILE(S["species_blacklist"], species_blacklist)
 	// Save new vice system
 	WRITE_FILE(S["vice1"], preferences_typepath_or_null(vice1))
 	WRITE_FILE(S["vice2"], preferences_typepath_or_null(vice2))

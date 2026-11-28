@@ -302,7 +302,7 @@
 	icon_state = "rmbweak"
 
 /datum/rmb_intent/weak/special_attack(mob/living/user, atom/target)
-	if(!target.Adjacent(user))
+	if(!target?.Adjacent(user))
 		return
 	if(!ishuman(user) || !ishuman(target))
 		return

@@ -352,12 +352,14 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	set waitfor = FALSE
 	for(var/i in 1 to 4)
 		A.set_light_on(FALSE)
-		A.update_light()
+		if(A.light_system == STATIC_LIGHT)
+			A.update_light()
 		sleep(rand(1, 3))
 		if(QDELETED(A))
 			return
 		A.set_light_on(TRUE)
-		A.update_light()
+		if(A.light_system == STATIC_LIGHT)
+			A.update_light()
 		sleep(rand(1, 3))
 		if(QDELETED(A))
 			return
