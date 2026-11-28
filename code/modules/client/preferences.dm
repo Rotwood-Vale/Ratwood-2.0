@@ -355,6 +355,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/list/random_match = list()
 	var/random_match_on = FALSE
 	var/take_house_name = FALSE
+	var/list/family_links = list()
+	var/list/family_ad
+	var/list/family_blocks = list()
 	var/datum/family_board_menu/family_menu
 
 	var/static/default_cmusic_type = /datum/combat_music/default
@@ -2788,6 +2791,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					if(choice)
 						choice = choices[choice]
 						if(!load_character(choice))
+							family_links = list()
+							family_ad = null
 							random_character(null, FALSE, FALSE)
 							save_character()
 						SSfamilytree.RestoreAd(src)
