@@ -1,8 +1,24 @@
+/// Keep both catalogues for saves; expose only the one matching the selected body.
+/datum/preferences/proc/get_customizers(include_inactive = FALSE)
+	var/list/customizers = list()
+	for(var/customizer_type in pref_species?.customizers)
+		var/taur_customizer
+		if(ispath(customizer_type, /datum/customizer/organ/penis))
+			taur_customizer = /datum/customizer/organ/penis/taur
+		else if(ispath(customizer_type, /datum/customizer/organ/testicles))
+			taur_customizer = /datum/customizer/organ/testicles/taur
+		if(taur_customizer && !include_inactive && uses_taur_genital_sprites(taur_type))
+			customizers += taur_customizer
+		else
+			customizers += customizer_type
+			if(taur_customizer && include_inactive)
+				customizers += taur_customizer
+	return customizers
+
 /datum/preferences/proc/validate_customizer_entries()
 	customizer_entries = SANITIZE_LIST(customizer_entries)
 	listclearnulls(customizer_entries)
-	var/datum/species/species = pref_species
-	var/list/customizers = species.customizers
+	var/list/customizers = get_customizers(TRUE)
 	/// Check if we have any customizer entries that don't match.
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)
 		// Preserve saved tail choices and colors when adding the fertility setting.
@@ -15,6 +31,14 @@
 			tail_entry.disabled = entry.disabled
 			customizer_entries[customizer_entries.Find(entry)] = tail_entry
 			entry = tail_entry
+		// Migrate the earlier single-choice taur save without losing its selected shape.
+		if(entry.customizer_type == /datum/customizer/organ/penis/taur && entry.customizer_choice_type == /datum/customizer_choice/organ/penis/taur)
+			var/datum/customizer/taur_customizer = CUSTOMIZER(/datum/customizer/organ/penis/taur)
+			for(var/choice_type in taur_customizer.customizer_choices)
+				var/datum/customizer_choice/choice = CUSTOMIZER_CHOICE(choice_type)
+				if(entry.accessory_type in choice.sprite_accessories)
+					entry.customizer_choice_type = choice_type
+					break
 		var/validated = FALSE
 		for(var/customizer_type as anything in customizers)
 			if(customizer_type != entry.customizer_type)
@@ -54,7 +78,7 @@
 	. = dat
 	if(!pref_species)
 		return
-	var/list/customizers = pref_species.customizers
+	var/list/customizers = get_customizers()
 	if(!customizers)
 		return
 	dat += "<table width='100%'>"
@@ -111,16 +135,23 @@
 		if(entry.customizer_type == customizer_type)
 			return entry
 
+/// Inactive saved settings must never create or modify the current character's organs.
+/datum/preferences/proc/get_enabled_customizer_entries()
+	var/list/entries = list()
+	var/list/active = get_customizers()
+	for(var/datum/customizer_entry/entry as anything in customizer_entries)
+		if(entry.disabled || !(entry.customizer_type in active))
+			continue
+		var/datum/customizer/customizer = CUSTOMIZER(entry.customizer_type)
+		if(customizer.is_allowed(src))
+			entries += entry
+	return entries
+
 /// Gets an associative list of organ slots to organ dna created from organ customization
 /datum/preferences/proc/get_organ_dna_list()
 	var/list/organ_list = list()
-	for(var/datum/customizer_entry/entry as anything in customizer_entries)
+	for(var/datum/customizer_entry/entry as anything in get_enabled_customizer_entries())
 		var/datum/customizer_choice/customizer_choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
-		var/datum/customizer/customizer = CUSTOMIZER(entry.customizer_type)
-		if(!customizer.is_allowed(src))
-			continue
-		if(entry.disabled)
-			continue
 		var/datum/organ_dna/dna = customizer_choice.create_organ_dna(entry, src)
 		if(!dna)
 			continue
@@ -129,26 +160,26 @@
 	return organ_list
 
 /datum/preferences/proc/customize_organ(obj/item/organ/organ)
-	for(var/datum/customizer_entry/entry as anything in customizer_entries)
+	for(var/datum/customizer_entry/entry as anything in get_enabled_customizer_entries())
 		var/datum/customizer_choice/customizer_choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
-		var/datum/customizer/customizer = CUSTOMIZER(entry.customizer_type)
-		if(!customizer.is_allowed(src))
-			continue
-		if(entry.disabled)
-			continue
 		if(!(customizer_choice.get_organ_slot() == organ.slot))
 			continue
 		customizer_choice.customize_organ(organ, entry)
 
 /datum/preferences/proc/apply_customizers_to_character(mob/living/carbon/human/human)
-	for(var/datum/customizer_entry/entry as anything in customizer_entries)
+	for(var/datum/customizer_entry/entry as anything in get_enabled_customizer_entries())
 		var/datum/customizer_choice/customizer_choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
-		var/datum/customizer/customizer = CUSTOMIZER(entry.customizer_type)
-		if(!customizer.is_allowed(src))
-			continue
-		if(entry.disabled)
-			continue
 		customizer_choice.apply_customizer_to_character(human, src, entry)
+
+/// Dialogs can outlive the character slot, species or body they were opened for.
+/datum/preferences/proc/can_edit_customizer_entry(datum/customizer/customizer, datum/customizer_entry/entry)
+	if(!customizer || !entry || !pref_species)
+		return FALSE
+	if(!(customizer.type in get_customizers()) || !customizer.is_allowed(src))
+		return FALSE
+	if(entry.customizer_type != customizer.type || !(entry in customizer_entries))
+		return FALSE
+	return entry.customizer_choice_type in customizer.customizer_choices
 
 /datum/preferences/proc/handle_customizer_topic(mob/user, href_list)
 	//needs_update = TRUE
@@ -158,6 +189,8 @@
 		return
 	var/datum/customizer_choice/choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
 	var/datum/customizer/customizer = CUSTOMIZER(customizer_type)
+	if(!can_edit_customizer_entry(customizer, entry))
+		return
 	switch(href_list["customizer_task"])
 		if("toggle_missing")
 			if(customizer.allows_disabling)
@@ -171,10 +204,13 @@
 			if(!chosen_input)
 				return
 			var/choice_type = choice_list[chosen_input]
+			if(!can_edit_customizer_entry(customizer, entry) || !(choice_type in customizer.customizer_choices))
+				return
 			if(choice_type == choice.type)
 				return
+			var/datum/customizer_entry/replacement = customizer.create_customizer_entry(src, choice_type)
 			customizer_entries -= entry
-			customizer_entries += customizer.create_customizer_entry(src, choice_type)
+			customizer_entries += replacement
 		else
 			choice.handle_topic(user, href_list, src, entry, customizer_type)
 	if(ishuman(user))
@@ -240,8 +276,7 @@
 
 /datum/preferences/proc/genderize_customizer_entries()
 	customizer_entries = SANITIZE_LIST(customizer_entries)
-	var/datum/species/species = pref_species
-	var/list/customizers = species.customizers
+	var/list/customizers = get_customizers(TRUE)
 
 	/// Check if we have any missing customizer entries
 	for(var/datum/customizer/customizer_type as anything in customizers)
