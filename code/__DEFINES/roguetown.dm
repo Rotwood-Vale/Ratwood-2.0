@@ -173,8 +173,6 @@ Balloon Alert / Floating Text defines
 	/datum/species/demihuman,\
 	/datum/species/halforc,\
 	/datum/species/harpy,\
-	/datum/species/construct/metal,\
-	/datum/species/construct/metal/porcelain,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/arachnid,\
