@@ -416,7 +416,7 @@
 /obj/item/storage/keyring/baron_manor/baron
 	name = "baron's keyring"
 	desc = "A keyring engraved with lordly designs borrowed from the Baron of Lowtown's coat of arms. The personal keyring of the baron."
-	keys = list(/obj/item/roguekey/baron, /obj/item/roguekey/baronguest, /obj/item/roguekey/baronservant, /obj/item/roguekey/baronretainer, /obj/item/roguekey/barondungeon, /obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse, /obj/item/roguekey/manor, /obj/item/seal/baron)
+	keys = list(/obj/item/roguekey/baron, /obj/item/roguekey/baronguest, /obj/item/roguekey/baronservant, /obj/item/roguekey/baronretainer, /obj/item/roguekey/barondungeon, /obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse, /obj/item/roguekey/manor, /obj/item/inqarticles/tallowpot/prefilled/soft, /obj/item/seal/baron)
 
 /obj/item/storage/keyring/baron_manor/spares
 	name = "baron's spare keyring"
