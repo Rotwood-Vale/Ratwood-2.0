@@ -289,6 +289,10 @@
 	name = "Fade (None)"
 	icon_state = "fade-none"
 
+/datum/sprite_accessory/hair/head/librarian
+	name = "Librarian"
+	icon_state = "librarian"
+
 /datum/sprite_accessory/hair/head/lowfade
 	name = "Fade (Low)"
 	icon_state = "fade-low"
