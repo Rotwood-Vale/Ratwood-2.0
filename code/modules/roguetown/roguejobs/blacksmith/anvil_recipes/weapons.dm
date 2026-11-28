@@ -1693,6 +1693,100 @@
 
 // HOLY STEEL
 
+/datum/anvil_recipe/weapons/holysteel/astrata_greatsword
+	name = "Executioner Sword, Astrata (+2 Holy Steel, +1 Gold)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy, /obj/item/ingot/gold)
+	created_item = /obj/item/rogueweapon/sword/long/exe/astrata
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/holysteel/astrata_sword
+	name = "Longsword, Astrata (+1 Holy Steel)"
+	additional_items = list(/obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/sword/long/holysee_lesser
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/holysteel/ravox_claymore
+	name = "Claymore, Ravox (+2 Holy Steel)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/holysteel/noc_saber
+	name = "Sabre, Noc (+1 Mana Crystal)"
+	additional_items = list(/obj/item/magic/manacrystal)
+	created_item = /obj/item/rogueweapon/sword/sabre/nockhopesh
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/holysteel/necra_greataxe
+	name = "Greataxe, Necra (+2 Holy Steel, +1 Toll)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy, /obj/item/thetoll)
+	created_item = /obj/item/rogueweapon/greataxe/steel/necran
+	display_category = ITEM_CAT_WEAPONS_AXES
+
+/datum/anvil_recipe/weapons/holysteel/necra_flail
+	name = "Flail, Necra (+1 Holy Steel, +3 Bones)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/natural/bone, /obj/item/natural/bone, /obj/item/natural/bone)
+	created_item = /obj/item/rogueweapon/flail/sflail/necraflail
+	display_category = ITEM_CAT_WEAPONS_FLAILS
+
+/datum/anvil_recipe/weapons/holysteel/malum_maul
+	name = "Grand Maul, Malum (+2 Holy Steel, +1 Boulder)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy, /obj/item/natural/rock)
+	created_item = /obj/item/rogueweapon/mace/maul/grand/malum
+	display_category = ITEM_CAT_WEAPONS_MACES
+
+/datum/anvil_recipe/weapons/holysteel/malum_claymore
+	name = "Forgefiend Claymore, Malum (+3 Holy Steel, +1 Riddle of Steel)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy, /obj/item/ingot/steelholy, /obj/item/riddleofsteel)
+	created_item = /obj/item/rogueweapon/greatsword/grenz/flamberge/malum
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/holysteel/dendor_scythe
+	name = "Scythe, Dendor (+1 Holy Steel, +1 Essence of Dendor)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/grown/log/tree/small/essence)
+	created_item = /obj/item/rogueweapon/halberd/bardiche/scythe
+	display_category = ITEM_CAT_WEAPONS_POLEARMS
+
+/datum/anvil_recipe/weapons/holysteel/abyssor_axe
+	name = "Axe, Abyssor (+1 Holy Steel, +1 Angler Fish)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/reagent_containers/food/snacks/fish/angler)
+	created_item = /obj/item/rogueweapon/stoneaxe/battle/abyssoraxe
+	display_category = ITEM_CAT_WEAPONS_AXES
+
+/datum/anvil_recipe/weapons/holysteel/abyssor_katar
+	name = "Katar, Abyssor (+1 Crab)"
+	additional_items = list(/obj/item/reagent_containers/food/snacks/fish/crab)
+	created_item = /obj/item/rogueweapon/katar/abyssor
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/holysteel/xylix_whip
+	name = "Whip, Xylix (+3 Cured Leather)"
+	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
+	created_item = /obj/item/rogueweapon/whip/xylix
+	display_category = ITEM_CAT_WEAPONS_FLAILS
+
+/datum/anvil_recipe/weapons/holysteel/eora_rapier
+	name = "Rapier, Eora (+1 Holy Steel, +1 Eoran Bud)"
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/clothing/head/peaceflower)
+	created_item = /obj/item/rogueweapon/sword/rapier/eora
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/holysteel/eora_knuckles
+	name = "Knuckles, Eora (+1 Eoran Bud)"
+	additional_items = list(/obj/item/clothing/head/peaceflower)
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/eora
+	display_category = ITEM_CAT_WEAPONS_MACES
+
+/datum/anvil_recipe/weapons/holysteel/eora_longbow
+	name = "Longbow, Eora (+1 Bowstring, +1 Eoran Bud)"
+	additional_items = list(/obj/item/natural/bowstring, /obj/item/clothing/head/peaceflower)
+	created_item = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/eora
+
+/datum/anvil_recipe/weapons/holysteel/eora_recurvebow
+	name = "Recurve Bow, Eora (+1 Bowstring, +1 Eoran Bud)"
+	additional_items = list(/obj/item/natural/bowstring, /obj/item/clothing/head/peaceflower)
+	created_item = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/eora
+
 /datum/anvil_recipe/weapons/holysteel/church_longsword
 	name = "Longsword, Templaric"
 	created_item = /obj/item/rogueweapon/sword/long/church
