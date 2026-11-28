@@ -91,8 +91,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			GLOB.cached_loadout_icons[cache_key] = icon(icon_file, icon_state)
 		user << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_icon_[slot].png")
 		html += "<img src='loadout_icon_[slot].png' width='46' height='46'>"
-	html += "</div></td><td valign='top'><div class='name'>[custom_name || current_item.name]</div>"
-	html += "<div class='small'>[custom_desc || item_desc || current_item.desc]</div>"
+	html += "</div></td><td valign='top'><div class='name'>[custom_name ? html_encode(html_decode(custom_name)) : current_item.name]</div>"
+	html += "<div class='small'>[custom_desc ? html_encode(html_decode(custom_desc)) : (item_desc || current_item.desc)]</div>"
 	if(custom_name || custom_desc)
 		html += "<div class='small' style='font-size: 0.7em;'>✎ Customized</div>"
 	if(item_color)
