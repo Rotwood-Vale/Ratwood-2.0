@@ -1325,12 +1325,14 @@
 		owner.add_filter(CRANKBOX_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	to_chat(owner, span_warning("I feel the wailing box distorting magicks around me!"))
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_SPELL_DISPERSION, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/buff/churnerprotection/on_remove()
 	. = ..()
 	to_chat(owner, span_warning("The wailing box's protection fades..."))
 	owner.remove_filter(CRANKBOX_FILTER)
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_SPELL_DISPERSION, TRAIT_STATUS_EFFECT(id))
 
 #undef CRANKBOX_FILTER
 #undef MIRACLE_HEALING_FILTER
