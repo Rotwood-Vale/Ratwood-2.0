@@ -332,3 +332,68 @@
 	name = "runelock pistol"
 	desc = "A hastily-inscribed runelock. The runes are shallow and the channeling inefficient"
 	damfactor = 0.8
+
+/obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle/bayonet
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "runelock_bayonet"
+	icon_state_ready = "runelock_loaded_bayonet"
+	default_icon_state = "runelock_bayonet"
+	item_state = "runelock_bayonet"
+	force_wielded = 25
+	gripped_intents = list()
+	alt_grips = list(/datum/alt_grip/abbot_shoot, /datum/alt_grip/abbot_bayonet)
+	special = /datum/special_intent/quarterstaff_sweep
+
+/obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle/bayonet/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/datum/alt_grip/abbot_shoot
+	name = "firing grip"
+	two_handed = TRUE
+	grip_intents = list(
+		/datum/intent/shoot/twilight_runelock,
+		/datum/intent/arc/twilight_runelock,
+		INTENT_GENERIC,
+	)
+	onmobprop_overrides = list(
+		"altgrip" = list(
+			"shrink" = 0.6,
+			"sx" = 5,
+			"sy" = -2,
+			"nx" = -5,
+			"ny" = -1,
+			"wx" = -8,
+			"wy" = 2,
+			"ex" = 8,
+			"ey" = 2,
+			"northabove" = 0,
+			"southabove" = 1,
+			"eastabove" = 1,
+			"westabove" = 1,
+			"nturn" = -45,
+			"sturn" = 45,
+			"wturn" = 0,
+			"eturn" = 0,
+			"nflip" = 8,
+			"sflip" = 0,
+			"wflip" = 8,
+			"eflip" = 0,
+		),
+	)
+
+/datum/alt_grip/abbot_bayonet
+	name = "bayonet grip"
+	two_handed = TRUE
+	grip_intents = list(
+		/datum/intent/sword/thrust/estoc/lunge,
+		/datum/intent/sword/thrust/rapier/lunge,
+		/datum/intent/sword/strike/bash/mordhau/smash,
+	)

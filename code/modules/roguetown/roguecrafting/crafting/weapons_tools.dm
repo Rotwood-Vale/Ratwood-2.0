@@ -441,3 +441,14 @@
 				/obj/item/natural/stoneblock = 3)
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/survival/abbot_bayonet
+	name = "Abbot"
+	result = /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle/bayonet
+	reqs = list(
+		/obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy = 1
+	)
+	skillcraft = /datum/skill/craft/carpentry
+	always_availible = FALSE
+	craftdiff = 0

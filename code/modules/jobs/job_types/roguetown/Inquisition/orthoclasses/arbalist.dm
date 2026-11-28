@@ -95,6 +95,7 @@
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/arbalist, SLOT_BELT_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/arbalist/mark, SLOT_IN_BACKPACK, TRUE)//You get ONE.
+			H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/survival/abbot_bayonet)
 
 
 //Stake belt. Here because nothing else uses it. It's just a throwing knife belt, but for stake bolts.
