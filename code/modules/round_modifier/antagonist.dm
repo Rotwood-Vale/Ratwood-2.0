@@ -100,16 +100,7 @@
 	min_chaos = 2
 	villain_events = list(/datum/round_event_control/antagonist/solo/dreamwalker)
 
-/datum/round_modifier/zizocult
-	name = "Cultists"
-	desc = "Vile heretics steal the power of gods!"
-	cost = 5
-	min_chaos = 2
-	weight = 20
-	incompatible = list(/datum/round_modifier/high_wretches, /datum/round_modifier/vampire, /datum/round_modifier/vampirelord)
-	villain_events = list(/datum/round_event_control/antagonist/solo/zizo_cult)
 
-/*
 /datum/round_modifier/lich
 	name = "Lich"
 	desc = "The dead march forward in lockstep!"
@@ -117,4 +108,15 @@
 	weight = 6
 	min_chaos = 3
 	villain_events = list(/datum/round_event_control/antagonist/solo/lich)
-*/
+
+/datum/round_modifier/zizocult
+	name = "Cultists"
+	desc = "Vile heretics steal the power of gods!"
+	cost = 5
+	min_chaos = 2
+	weight = 20
+	incompatible = list(/datum/round_modifier/high_wretches, /datum/round_modifier/vampire, /datum/round_modifier/vampirelord, /datum/round_modifier/lich)
+	villain_events = list(/datum/round_event_control/antagonist/solo/zizo_cult)
+
+
+
