@@ -738,3 +738,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_RING
 	recall_energy_cost = 100 // special ammo
+
+/obj/item/quiver/twilight_bullet/runicbag/lesser
+	name = "Cucurum"
+	desc = "A smaller lightweight leather pouch designed to store runic bullets. The rune inscribed on the lock binds to the ammunition stored inside, and upon activation, returns spent runic bullets to the pouch for reuse."
+	icon_state = "runebag"
+	item_state = "runebag"
+	max_storage = 8
+	has_types = FALSE
+	ammo_type1 = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
+	ammo_type_name1 = "blessed"
+	recall_energy_cost = 25

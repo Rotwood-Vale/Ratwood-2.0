@@ -360,28 +360,27 @@
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/storage/roguebag = 1,
 		/obj/item/ritechalk = 1,
-		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
 		)
 	to_chat(H, span_warning("Nimble of dagger and foot both, you are the shadowy herald of the cabal. They will not see you coming."))
 	H.cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/weapons = list("Daggers", "Rapier", "Sabre","Whip", "Bow", "Crossbow", "Slurbow", "Urumi")
+		var/weapons = list("Dagger", "Rapier", "Sabre","Whip", "Bow", "Crossbow", "Slurbow", "Urumi")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Daggers")
+			if("Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
 					l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 				else
-					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
+					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 				beltl = /obj/item/rogueweapon/scabbard/sheath
-				beltr = /obj/item/rogueweapon/scabbard/sheath
 			if("Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
@@ -543,7 +542,13 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan, SLOT_PANTS, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed, SLOT_WEAR_MASK, TRUE) //Dark vision but bad. Still better than being entirely blind in the dark.
+					H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed, SLOT_WEAR_MASK, TRUE) 
+					H.put_in_hands(new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt, TRUE)
+					H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_EXPERT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/lesser(H), SLOT_BELT_R, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/lesser, SLOT_BACK_R, TRUE)
+					ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
+					//Dark vision but bad. Still better than being entirely blind in the dark.
 					//Perceptive players will see past your disguise: you lack the beltpack and the silver signet ring, and your gas mask is lensed from get-go.
 				if("Reformist") //You look like a Reformist Freifechter.
 					to_chat(H, span_warning("God is dead, but this world HE left is beautiful and worth of loving. Don't let the butchers from Otava tell you otherwise."))
