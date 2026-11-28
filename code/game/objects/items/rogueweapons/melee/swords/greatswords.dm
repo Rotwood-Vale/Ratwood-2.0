@@ -90,6 +90,7 @@
 /obj/item/rogueweapon/greatsword/zwei
 	name = "claymore"
 	desc = "This is much longer than a common greatsword, and well balanced too!"
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/cut/zwei/cleave/rend, /datum/intent/sword/cut/zwei/sweep)
 	icon_state = "claymore"
 	smeltresult = /obj/item/ingot/iron
 	smelt_bar_num = 3
@@ -146,6 +147,7 @@
 /obj/item/rogueweapon/greatsword/grenz
 	name = "zweihander"
 	icon_state = "steelzwei"
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/cut/zwei/cleave/rend, /datum/intent/sword/cut/zwei/sweep)
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 3
 	max_blade_int = 240
