@@ -393,57 +393,34 @@
 						head.add_bodypart_feature(detail_feature)
 					should_update = TRUE
 
-		if("Penis")
-			var/list/valid_penis_types = list("none")
-			for(var/penis_path in subtypesof(/datum/sprite_accessory/penis))
-				var/datum/sprite_accessory/penis/penis = new penis_path()
-				valid_penis_types[penis.name] = penis_path
+		if("Penis", "Testicles")
+			var/slot = chosen == "Penis" ? ORGAN_SLOT_PENIS : ORGAN_SLOT_TESTICLES
+			var/obj/item/bodypart/taur/body = H.get_bodypart(BODY_ZONE_TAUR)
+			var/body_type = body?.type
+			var/list/options = get_mirror_genital_options(slot, body_type)
+			var/list/labels = list("none")
+			var/list/label_counts = list()
+			for(var/accessory_type in options)
+				var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
+				labels[avoid_assoc_duplicate_keys(accessory.name, label_counts)] = accessory_type
 
-			var/new_style = input(H, "Choose your penis type", "Penis Customization") as null|anything in valid_penis_types
-			if(new_style)
-				if(new_style == "none")
-					var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-					if(penis)
-						penis.Remove(H)
-						qdel(penis)
-						H.update_body()
-						should_update = TRUE
-				else
-					var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-					if(!penis)
-						penis = new()
-						penis.Insert(H, TRUE, FALSE)
-					penis.accessory_type = valid_penis_types[new_style]
-					var/datum/sprite_accessory/penis/penis_type = SPRITE_ACCESSORY(penis.accessory_type)
-					penis.accessory_colors = penis_type.get_default_colors(color_key_source_list_from_carbon(H))
-					H.update_body()
-					should_update = TRUE
-
-		if("Testicles")
-			var/list/valid_testicle_types = list("none")
-			for(var/testicle_path in subtypesof(/datum/sprite_accessory/testicles))
-				var/datum/sprite_accessory/testicles/testicles = new testicle_path()
-				valid_testicle_types[testicles.name] = testicle_path
-
-			var/new_style = input(H, "Choose your testicles type", "Testicles Customization") as null|anything in valid_testicle_types
-			if(new_style)
-				if(new_style == "none")
-					var/obj/item/organ/testicles/testicles = H.getorganslot(ORGAN_SLOT_TESTICLES)
-					if(testicles)
-						testicles.Remove(H)
-						qdel(testicles)
-						H.update_body()
-						should_update = TRUE
-				else
-					var/obj/item/organ/testicles/testicles = H.getorganslot(ORGAN_SLOT_TESTICLES)
-					if(!testicles)
-						testicles = new()
-						testicles.Insert(H, TRUE, FALSE)
-					testicles.accessory_type = valid_testicle_types[new_style]
-					var/datum/sprite_accessory/testicles/testicles_type = SPRITE_ACCESSORY(testicles.accessory_type)
-					testicles_type.get_default_colors(color_key_source_list_from_carbon(H))
-					H.update_body()
-					should_update = TRUE
+			var/selection = input(H, "Choose your [LOWER_TEXT(chosen)] type", "[chosen] Customization") as null|anything in labels
+			if(!selection || QDELETED(H))
+				return
+			body = H.get_bodypart(BODY_ZONE_TAUR)
+			if(body_type != body?.type)
+				return
+			if(selection == "none")
+				var/obj/item/organ/organ = H.getorganslot(slot)
+				if(!organ)
+					return
+				organ.Remove(H)
+				qdel(organ)
+			else
+				var/accessory_type = labels[selection]
+				if(!apply_mirror_genital_appearance(H, slot, accessory_type, options))
+					return
+			should_update = TRUE
 
 		if("Breast Quantity")
 			var/list/valid_breast_types = list("none")
@@ -999,3 +976,37 @@
 		H.update_hair()
 		H.update_body()
 		H.update_body_parts()
+
+/// Maps each selectable appearance to the organ to create if the slot is empty.
+/proc/get_mirror_genital_options(slot, taur_type)
+	var/list/options = list()
+	if(uses_taur_genital_sprites(taur_type))
+		var/datum/customizer/catalogue = slot == ORGAN_SLOT_PENIS ? CUSTOMIZER(/datum/customizer/organ/penis/taur) : CUSTOMIZER(/datum/customizer/organ/testicles/taur)
+		for(var/choice_type in catalogue.customizer_choices)
+			var/datum/customizer_choice/organ/choice = CUSTOMIZER_CHOICE(choice_type)
+			for(var/accessory_type in choice.sprite_accessories)
+				options[accessory_type] = choice.organ_type
+		return options
+
+	var/base = slot == ORGAN_SLOT_PENIS ? /datum/sprite_accessory/penis : /datum/sprite_accessory/testicles
+	var/taur_base = slot == ORGAN_SLOT_PENIS ? /datum/sprite_accessory/penis/taur : /datum/sprite_accessory/testicles/taur
+	var/organ_type = slot == ORGAN_SLOT_PENIS ? /obj/item/organ/penis : /obj/item/organ/testicles
+	for(var/accessory_type in subtypesof(base))
+		if(!ispath(accessory_type, taur_base))
+			options[accessory_type] = organ_type
+	return options
+
+/// A cosmetic edit retains the existing organ, including damage, branding and purchased traits.
+/proc/apply_mirror_genital_appearance(mob/living/carbon/human/target, slot, accessory_type, list/options)
+	var/organ_type = options[accessory_type]
+	if(!organ_type)
+		return FALSE
+	var/obj/item/organ/organ = target.getorganslot(slot)
+	if(organ)
+		organ.set_accessory_type(accessory_type, organ.accessory_colors)
+	else
+		organ = new organ_type()
+		organ.set_accessory_type(accessory_type)
+		organ.build_colors_for_accessory(color_key_source_list_from_carbon(target))
+		organ.Insert(target, TRUE, FALSE)
+	return TRUE

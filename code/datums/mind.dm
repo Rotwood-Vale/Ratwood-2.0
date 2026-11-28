@@ -532,6 +532,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		recipient = current
 	var/output = "<B>[current.real_name]'s Memories:</B><br>"
 	output += memory
+	if(window && recipient.mind == src)
+		output += "<br><a href='?src=[REF(src)];memory_edit_self=1'>Edit Memories</a><br>"
 
 	if(personal_objectives.len)
 		output += "<B>Personal Objectives:</B>"
@@ -635,6 +637,23 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		recipient << browse(output,"window=memory")
 
 /datum/mind/Topic(href, href_list)
+	if(href_list["memory_edit_self"])
+		if(!usr)
+			return
+		if(usr.mind != src)
+			to_chat(usr, span_warning("You can only edit your own memories."))
+			return
+		var/new_memory = input(usr, "Edit your memories:", "Memories", memory) as null|message
+		if(isnull(new_memory))
+			return
+		if(!usr || usr.mind != src)
+			if(usr)
+				to_chat(usr, span_warning("You can only edit your own memories."))
+			return
+		memory = copytext(sanitize(new_memory), 1, MAX_MESSAGE_LEN * 100)
+		show_memory(usr)
+		return
+
 	if(!check_rights(R_ADMIN))
 		return
 

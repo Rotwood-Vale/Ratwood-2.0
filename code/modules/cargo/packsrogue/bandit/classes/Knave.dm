@@ -212,6 +212,11 @@
 	cost = 20
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow)
 
+/datum/supply_pack/rogue/Knave/siegecrossbow
+	name = "Siegecrossbow"
+	cost = 100
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy)
+
 /datum/supply_pack/rogue/Knave/recurvebow
 	name = "Recurve Bow"
 	cost = 20
@@ -261,11 +266,20 @@
 	cost = 20
 	contains = list(/obj/item/quiver/bolts)
 
+/datum/supply_pack/rogue/Knave/quivers/heavybolts
+	name = "Quiver of Heavy Bolts"
+	cost = 40
+	contains = list(/obj/item/quiver/heavybolts)
+
 /datum/supply_pack/rogue/Knave/Sarrows
 	name = "Steel Bodkin Arrow"
 	cost = 3
 	contains = list(/obj/item/ammo_casing/caseless/rogue/arrow/steel)
 
+/datum/supply_pack/rogue/Knave/Hbolts
+	name = "Heavy Bolt"
+	cost = 2
+	contains = list(/obj/item/ammo_casing/caseless/rogue/heavy_bolt)
 /datum/supply_pack/rogue/Knave/Warrows
 	name = "Water Arrows (x5)"
 	cost = 1

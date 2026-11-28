@@ -1802,6 +1802,50 @@
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)//3 blades so 1 more buillion over non-psydonite silver urumi
 	display_category = ITEM_CAT_WEAPONS_FLAILS
 
+// DOLABRAS, SMITHED VERSIONS, ENGINEERED ONES ARE CHEAPER TO PRODUCE
+
+/datum/anvil_recipe/weapons/copper/dolabra
+	name = "Copper Dolabra (+3 Copper)(+1 Quarterstaff)(Smithed)"
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/copper
+	additional_items = list(/obj/item/ingot/copper, /obj/item/ingot/copper, /obj/item/ingot/copper, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	craftdiff = 2
+	display_category = ITEM_CAT_WEAPONS_AXES
+
+/datum/anvil_recipe/weapons/iron/dolabra
+	name = "Iron Dolabra (+3 Iron)(+1 Quarterstaff)(Smithed)"
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/iron
+	craftdiff = 3
+	display_category = ITEM_CAT_WEAPONS_AXES
+
+/datum/anvil_recipe/weapons/steel/dolabra
+	name = "Steel Dolabra (+3 Steel)(+1 Silk)(+1 Quarterstaff)(Smithed)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/silk, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/steel
+	craftdiff = 4
+	display_category = ITEM_CAT_WEAPONS_AXES
+
+/datum/anvil_recipe/weapons/silver/dolabra
+	name = "Silver Dolabra (+3 Silver)(+1 Silk)(+1 Quarterstaff)(Smithed)"
+	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/natural/silk, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/silver
+	craftdiff = 5
+	display_category = ITEM_CAT_WEAPONS_AXES
+
+/datum/anvil_recipe/weapons/gold/dolabra
+	name = "Gold Dolabra (+3 Gold, +1 Silk, +2 Silver, +1 Dorpel, +1 Quarterstaff)(Smithed)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/roguegem/diamond, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/gold
+	craftdiff = 6
+	display_category = ITEM_CAT_WEAPONS_AXES
+
+/datum/anvil_recipe/weapons/blacksteel/dolabra
+	name = "Blacksteel Dolabra (+2 Blacksteel, +1 Silk, +1 Dorpel, +1 Quarterstaff)(Smithed)"
+	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/natural/silk, /obj/item/roguegem/diamond, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/pick/woodcutter/dolabra/blacksteel
+	craftdiff = 5
+	display_category = ITEM_CAT_WEAPONS_AXES
+
 /// BLESSED SILVER, BULLION VARIANTS - FALLBACK
 //cutting out the duplicate variables so it's more clear what these subtypes actually do
 /datum/anvil_recipe/weapons/psy/axe/inq

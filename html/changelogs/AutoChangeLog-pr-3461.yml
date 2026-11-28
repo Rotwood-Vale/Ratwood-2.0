@@ -1,0 +1,5 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - rscadd: "Added ferentian pilum (freeze projectile) to the Newmoon"
+  - balance: "Removed -2 CON from Newmoon statline"

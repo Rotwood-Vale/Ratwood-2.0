@@ -1,0 +1,5 @@
+author: "RandomGooberCoder"
+delete-after: True
+changes:
+  - bugfix: "Fixes broken matrix transformation with Advance! spell that caused inverted spellblades"
+  - bugfix: "Fixes spellblade weapon recall that caused sheaths to still store the recalled weapon"
