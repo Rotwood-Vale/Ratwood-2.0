@@ -27,6 +27,9 @@
 
 	COOLDOWN_DECLARE(shield_bang)
 
+	var/locked_sheath = FALSE // stops drawing of blade while true
+	var/hidden_blade = FALSE // no examine giving away blade sheathed
+
 	/// Weapon path and its children that are allowed
 	var/obj/item/rogueweapon/valid_blade
 	/// Specific weapons that are allowed. Bypasses valid_blade
@@ -45,12 +48,11 @@
 
 /obj/item/rogueweapon/scabbard/Initialize(mapload)
 	. = ..()
-	hol_comp = AddComponent(holster_type, valid_blade, valid_blades, invalid_blades, sheathe_time)
+	hol_comp = AddComponent(holster_type, valid_blade, valid_blades, invalid_blades, sheathe_time, locked_sheath, hidden_blade)
 
 /obj/item/rogueweapon/scabbard/Destroy()
 	hol_comp = null
 	return ..()
-
 
 /obj/item/rogueweapon/scabbard/attack_obj(obj/O, mob/living/user)
 	return FALSE
@@ -63,84 +65,6 @@
 			break
 
 	..()
-
-
-/obj/item/rogueweapon/scabbard/proc/weapon_check(mob/living/user, obj/A)
-	if(sheathed)
-		to_chat(user, span_warning("The sheath is occupied!"))
-		return FALSE
-	if(HAS_TRAIT(A, TRAIT_NODROP))
-		to_chat(user, span_warning("I cannot sheath [A] while it is bound."))
-		return FALSE
-	if(valid_blade && !istype(A, valid_blade))
-		to_chat(user, span_warning("[A] won't fit in there."))
-		return FALSE
-	if(valid_blades)
-		if(!(A.type in valid_blades))
-			to_chat(user, span_warning("[A] won't fit in there."))
-			return FALSE
-	if(invalid_blades)
-		if(A.type in invalid_blades)
-			to_chat(user, span_warning("[A] won't fit in there."))
-			return FALSE
-	return TRUE
-
-
-/obj/item/rogueweapon/scabbard/proc/eat_sword(mob/living/user, obj/A, sheathing_from_belt = FALSE)
-	if(!weapon_check(user, A))
-		return FALSE
-	if(obj_broken)
-		user.visible_message(
-			span_warning("[user] begins to force [A] into [src]!"),
-			span_warningbig("I begin to force [A] into [src].")
-		)
-		if(!move_after(user, 2 SECONDS, target = user))
-			return FALSE
-		return FALSE
-	if(!move_after(user, sheathe_time, target = user))
-		return FALSE
-
-	A.forceMove(src)
-	sheathed = A
-	update_icon(user)
-
-	if(!sheathing_from_belt)
-		user.visible_message(
-			span_notice("[user] sheathes [A] into [src]."),
-			span_notice("I sheathe [A] into [src].")
-		)
-
-	playsound(src, sheathe_sound, 100, TRUE)
-	return TRUE
-
-
-/obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
-	if(!sheathed)
-		return FALSE
-	if(locked_sheath)
-		return FALSE
-
-	if(obj_broken)
-		user.visible_message(
-			span_warning("[user] begins to force [sheathed] out of [src]!"),
-			span_warningbig("I begin to force [sheathed] out of [src].")
-		)
-		if(!move_after(user, 2 SECONDS, target = user))
-			return FALSE
-	if(!move_after(user, sheathe_time, target = user))
-		return FALSE
-
-	sheathed.forceMove(user.loc)
-	sheathed.pickup(user)
-	user.put_in_hands(sheathed)
-	sheathed = null
-	update_icon(user)
-
-	user.visible_message(
-		span_warning("[user] draws out of [src]!"),
-		span_notice("I draw out of [src].")
-	)
-	return TRUE
 
 
 /obj/item/rogueweapon/scabbard/MouseDrop(atom/over)
@@ -156,14 +80,14 @@
 
 
 /obj/item/rogueweapon/scabbard/attack_hand(mob/user)
-	if(hol_comp.sheathed && !locked_sheath)
+	if(hol_comp.sheathed && !hol_comp.locked_sheath)
 		return hol_comp.puke_sword(user)
 
 	..()
 
 
 /obj/item/rogueweapon/scabbard/attackby(obj/item/I, mob/user, params)
-	if(!hol_comp.sheathed || locked_sheath)
+	if(!hol_comp.sheathed || hol_comp.locked_sheath)
 		if(!hol_comp.eat_sword(user, I))
 			return ..()
 
@@ -175,13 +99,6 @@
 	if(hol_comp.sheathed)
 		attack_hand(user)
 	return TRUE
-
-
-/obj/item/rogueweapon/scabbard/examine(mob/user)
-	. = ..()
-
-	if(sheathed && !hidden_blade)
-		. += span_notice("The sheath is occupied by [sheathed]. Left-click to pull it out.")
 
 
 /obj/item/rogueweapon/scabbard/update_icon(mob/living/user)
@@ -655,7 +572,7 @@
 		var/mob/living/carbon/human/H = user
 		var/medskill = H.get_skill_level(/datum/skill/misc/medicine)
 		if((medskill >= SKILL_LEVEL_LEGENDARY && !hands) || (H.job == "Hand" && hands)) // everyone who can have it has legendary med
-			if(locked_sheath)
+			if(hol_comp?.locked_sheath)
 				. += span_notice("The cane has a lock on it stopping the blade from being pulled. Midle click to disable it.")
 			else
 				. += span_notice("The cane has a lock on it with coudl be set to stop the blade from being pulled. Midle click to enable it.")
@@ -666,12 +583,12 @@
 		var/mob/living/carbon/human/H = user
 		var/medskill = H.get_skill_level(/datum/skill/misc/medicine)
 		if((medskill >= SKILL_LEVEL_LEGENDARY && !hands) || (H.job == "Hand" && hands)) // everyone who can have it has legendary med
-			if(locked_sheath)
+			if(hol_comp?.locked_sheath)
 				to_chat(H, span_notice("I undo the lock on my cane."))
-				locked_sheath = FALSE
+				hol_comp?.locked_sheath = FALSE
 			else
 				to_chat(H, span_notice("I set the lock on my cane."))
-				locked_sheath = TRUE
+				hol_comp?.locked_sheath = TRUE
 
 
 /obj/item/rogueweapon/scabbard/sword/royal/courtphysician/getonmobprop(tag)
@@ -759,7 +676,6 @@
 	icon_state = "staffsheath"
 	item_state = "staffsheath"
 	valid_blade = /obj/item/rogueweapon/sword/rapier/hand
-	locked_sheath = FALSE
 	implement_tier = IMPLEMENT_TIER_GREATER
 	implement_refund = IMPLEMENT_REFUND_GREATER
 	hands = TRUE
