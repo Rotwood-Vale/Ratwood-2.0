@@ -31,7 +31,7 @@
 	H.adjust_blindness(-3)
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
-	head = /obj/item/clothing/head/roguetown/helmet/kettle
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
