@@ -103,7 +103,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ashen
 	H.taints_loot = TRUE
 
 	if(H.mind)
