@@ -694,7 +694,7 @@
 
 				var/current_category
 				var/datum/antagonist/previous_category
-				sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
+				sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_roundend))
 
 				for(var/datum/antagonist/A in all_antagonists)
 					if(A.roundend_category != current_category)
@@ -702,6 +702,9 @@
 							data += "</div></div>"
 						data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
 						data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[capitalize(A.roundend_category)]</div>"
+						var/category_line = A.roundend_panel_category_line()
+						if(category_line)
+							data += "<div style='margin-bottom: 8px;'>[category_line]</div>"
 						data += "<div style='margin-left: 10px;'>"
 						current_category = A.roundend_category
 						previous_category = A
@@ -734,6 +737,9 @@
 							data += "</div>"
 							obj_count++
 						data += "</div>"
+					var/result_line = A.roundend_panel_result_line()
+					if(result_line)
+						data += "<div style='margin-left: 15px; margin-top: 3px; color: #c8b89a;'>[result_line]</div>"
 					data += "</div>"
 
 				if(all_antagonists.len)

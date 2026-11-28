@@ -271,7 +271,7 @@
 	var/currrent_category
 	var/datum/antagonist/previous_category
 
-	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
+	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_roundend))
 
 	for(var/datum/antagonist/A in all_antagonists)
 		if(!A.show_in_roundend)
@@ -499,7 +499,7 @@
 	var/currrent_category
 	var/datum/antagonist/previous_category
 
-	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
+	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_roundend))
 
 	for(var/datum/antagonist/A in all_antagonists)
 		if(!A.show_in_roundend)
@@ -525,6 +525,12 @@
 
 /proc/cmp_antag_category(datum/antagonist/A,datum/antagonist/B)
 	return sorttext(B.roundend_category,A.roundend_category)
+
+/// Round-end order: by category, then each antag's roundend_sort_order() within it
+/proc/cmp_antag_roundend(datum/antagonist/A,datum/antagonist/B)
+	. = cmp_antag_category(A, B)
+	if(!.)
+		. = A.roundend_sort_order() - B.roundend_sort_order()
 
 /datum/controller/subsystem/ticker/proc/give_show_report_button(client/C)
 	var/datum/action/report/R = new

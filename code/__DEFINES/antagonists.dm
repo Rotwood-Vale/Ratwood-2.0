@@ -65,3 +65,15 @@
 
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
+
+//Bandit hoard tiers: mammons' worth offered to Matthios's idol by the whole band
+#define BANDIT_HOARD_SMALL 1000
+#define BANDIT_HOARD_DECENT 2000
+#define BANDIT_HOARD_MASSIVE 3000
+
+//Triumphs for the highest hoard tier reached (not additive)
+#define BANDIT_HOARD_TRIUMPHS_SMALL 3
+#define BANDIT_HOARD_TRIUMPHS_DECENT 5
+#define BANDIT_HOARD_TRIUMPHS_MASSIVE 10
+//Extra triumphs for the bandit who personally offered the most
+#define BANDIT_TOP_OFFERER_TRIUMPHS 2

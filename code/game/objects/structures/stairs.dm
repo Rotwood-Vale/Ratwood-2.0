@@ -94,6 +94,20 @@
 	M.color = primary
 	add_overlay(M)
 
+/// The fancy stairs' layout in fixed purple and gold, matching the ruined carpet. Not fancy stairs, so the ducal colours never touch them.
+/obj/structure/stairs/ruined
+	name = "ruined stairs"
+	icon_state = "ruined_stairs_c"
+
+/obj/structure/stairs/ruined/c
+	icon_state = "ruined_stairs_c"
+
+/obj/structure/stairs/ruined/r
+	icon_state = "ruined_stairs_r"
+
+/obj/structure/stairs/ruined/l
+	icon_state = "ruined_stairs_l"
+
 /obj/structure/stairs/OnCrafted(dirin)
 	. = ..()
 	var/turf/partner = get_step_multiz(get_turf(src), UP)

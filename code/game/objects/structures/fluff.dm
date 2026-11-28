@@ -1296,6 +1296,9 @@
 /obj/structure/fluff/statue/evil/attackby(obj/item/W, mob/user, params)
 	if(!HAS_TRAIT(user, TRAIT_COMMIE))
 		return
+	if(!user.mind?.has_antag_datum(/datum/antagonist/bandit)) // Matthios's other faithful share the trait; the hoard is the band's alone
+		to_chat(user, span_warning("The idol does not stir. It takes offerings only from the Freefolk."))
+		return
 	var/donatedamnt = W.get_real_price()
 	if(user.mind)
 		if(user)
@@ -1311,21 +1314,44 @@
 					proceed_with_offer = TRUE
 					break
 			if(proceed_with_offer)
+				if(SSticker.current_state >= GAME_STATE_FINISHED) // The hoard is paid out and reported; keep it as it was
+					to_chat(user, span_warning("The idol is still. Matthios has already counted his due."))
+					return
 				playsound(loc,'sound/items/carvty.ogg', 50, TRUE)
-				qdel(W)
-				for(var/mob/player in GLOB.player_list)
-					if(player.mind)
-						if(player.mind.has_antag_datum(/datum/antagonist/bandit))
-							var/datum/antagonist/bandit/bandit_players = player.mind.has_antag_datum(/datum/antagonist/bandit)
-							record_round_statistic(STATS_SHRINE_VALUE, W.get_real_price())
-							bandit_players.favor += donatedamnt
-							bandit_players.totaldonated += donatedamnt
-							to_chat(player, ("<font color='yellow'>[user.name] donates [donatedamnt] to the shrine! You now have [bandit_players.favor] favor.</font>"))
+				send_to_hoard(W, user)
+				record_round_statistic(STATS_SHRINE_VALUE, donatedamnt)
+				SSmapping.retainer.add_bandit_offering(user, donatedamnt)
+				return TRUE // The item lives on in the hoard; don't also hit the idol with it
 
 			else
 				to_chat(user, span_warning("This item isn't a good offering."))
 				return
 	..()
+
+/**
+ * Takes an accepted offering from user's hand. Coins are accepted but don't go to the display. Other treasure lands on a random floor
+ * of the Bandit Hoard, anchored so it can be seen but never lifted. If there is no hoard mapped, it will still count, just not go anywhere.
+ */
+/obj/structure/fluff/statue/evil/proc/send_to_hoard(obj/item/offering, mob/user)
+	to_chat(user, span_notice("The idol swallows [offering]."))
+	var/turf/destination = istype(offering, /obj/item/roguecoin) ? null : pick_hoard_turf()
+	if(!destination || !user.transferItemToLoc(offering, destination))
+		qdel(offering)
+		return
+	offering.anchored = TRUE
+	for(var/mob/hearer in hearers(7, destination))
+		to_chat(hearer, span_notice("[offering] tumbles out of a glint of gold onto the hoard."))
+
+/// A random open floor of the Bandit Hoard, or null if this map has none
+/obj/structure/fluff/statue/evil/proc/pick_hoard_turf()
+	var/area/hoard = GLOB.areas_by_type[/area/rogue/indoors/banditcamp/hoard]
+	if(!hoard)
+		return
+	var/list/floors = list()
+	for(var/turf/open/floor/floor in hoard)
+		floors += floor
+	if(length(floors))
+		return pick(floors)
 
 /obj/structure/fluff/psycross
 	name = "pantheon cross"

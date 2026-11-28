@@ -1,14 +1,41 @@
-/datum/objective/bandit
-	name = "bandit"
-	explanation_text = "Feed valuables to the idol."
+/// One tier of the band-wide hoard. Completed once the whole band has offered target_amount to the idol.
+/datum/objective/bandit_hoard
+	name = "bandit hoard"
+	martyr_compatible = TRUE
+	/// Shown in the objective, the briefing bar and the round-end summary
+	var/tier_name
 
-/datum/objective/bandit/check_completion()
-	if(SSmapping.retainer.bandit_contribute >= SSmapping.retainer.bandit_goal)
-		return TRUE
+/datum/objective/bandit_hoard/New(text, datum/mind/owner)
+	. = ..()
+	update_explanation_text()
 
-/datum/objective/bandit/update_explanation_text()
-	..()
-	explanation_text = "Feed [SSmapping.retainer.bandit_goal] mammon to an idol of greed."
+/datum/objective/bandit_hoard/check_completion()
+	return SSmapping.retainer.bandit_contribute >= target_amount
+
+/datum/objective/bandit_hoard/update_explanation_text()
+	explanation_text = "[tier_name]: offer [target_amount] mammons' worth of loot to Matthios's idol."
+
+/datum/objective/bandit_hoard/small
+	tier_name = "Small Haul"
+	target_amount = BANDIT_HOARD_SMALL
+	triumph_count = BANDIT_HOARD_TRIUMPHS_SMALL
+
+/datum/objective/bandit_hoard/decent
+	tier_name = "Decent Stash"
+	target_amount = BANDIT_HOARD_DECENT
+	triumph_count = BANDIT_HOARD_TRIUMPHS_DECENT
+
+/datum/objective/bandit_hoard/massive
+	tier_name = "Massive Hoard"
+	target_amount = BANDIT_HOARD_MASSIVE
+	triumph_count = BANDIT_HOARD_TRIUMPHS_MASSIVE
+
+/// Every hoard tier, lowest first. Adding a tier means adding a subtype above and listing it here.
+GLOBAL_LIST_INIT(bandit_hoard_tiers, list(
+	/datum/objective/bandit_hoard/small,
+	/datum/objective/bandit_hoard/decent,
+	/datum/objective/bandit_hoard/massive,
+))
 
 
 /datum/objective/delf

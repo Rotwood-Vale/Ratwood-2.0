@@ -1247,6 +1247,37 @@
 /turf/open/floor/rogue/churchrough/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
+
+// Faint purple church floors. The damaged states hold four different damage layouts as their four dirs,
+// so the parents' random dir also picks the layout.
+
+/turf/open/floor/rogue/church/purple
+	icon_state = "church_purple"
+
+/turf/open/floor/rogue/church/purple/damaged
+	icon_state = "church_purple_damaged"
+	desc = "Glazed tiling gone to ruin. Whole tiles have been prised up, and the dirt beneath shows through the gaps."
+
+/turf/open/floor/rogue/churchmarble/purple
+	icon_state = "church_marble_purple"
+
+/turf/open/floor/rogue/churchmarble/purple/damaged
+	icon_state = "church_marble_purple_damaged"
+	desc = "Marble tiling, cracked and missing stones. Someone thought the rest worth taking."
+
+/turf/open/floor/rogue/churchbrick/purple
+	icon_state = "church_brick_purple"
+
+/turf/open/floor/rogue/churchbrick/purple/damaged
+	icon_state = "church_brick_purple_damaged"
+	desc = "Cracked tiling with stones missing, the bare earth showing through."
+
+/turf/open/floor/rogue/churchrough/purple
+	icon_state = "church_rough_purple"
+
+/turf/open/floor/rogue/churchrough/purple/damaged
+	icon_state = "church_rough_purple_damaged"
+	desc = "Worn brickwork with a few bricks gone, the dirt beneath showing through."
 //
 /turf/open/floor/rogue/herringbone
 	icon_state = "herringbone"
@@ -1734,6 +1765,27 @@
 
 /turf/open/floor/rogue/carpet/lord/right
 	icon_state = "carpet_r"
+
+/// The lord carpet's layout in fixed purple and gold, worn through in places. Not a lord carpet, so the ducal colours never touch it.
+/turf/open/floor/rogue/carpet/ruined
+	name = "ruined carpet"
+	desc = "Once a lord's runner, now stained, threadbare and worn through to the stone. The gold trim still remembers better days."
+	icon_state = "ruined_carpet_c"
+
+/turf/open/floor/rogue/carpet/ruined/center
+	icon_state = "ruined_carpet_c"
+
+/// Three states of four dirs each give twelve worn variants, so a long runner does not repeat.
+/turf/open/floor/rogue/carpet/ruined/center/Initialize(mapload)
+	icon_state = pick("ruined_carpet_c", "ruined_carpet_c2", "ruined_carpet_c3")
+	dir = pick(GLOB.cardinals)
+	. = ..()
+
+/turf/open/floor/rogue/carpet/ruined/left
+	icon_state = "ruined_carpet_l"
+
+/turf/open/floor/rogue/carpet/ruined/right
+	icon_state = "ruined_carpet_r"
 
 /turf/open/floor/rogue/shroud
 	name = "treetop"

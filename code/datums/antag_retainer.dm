@@ -29,8 +29,10 @@
 	var/delf_goal = 1
 
 	///bandit stuff
-	var/bandit_goal = 1
+	/// Mammons' worth offered to Matthios's idol by the whole band this round
 	var/bandit_contribute = 0
+	/// TRUE once the hoard's round-end payout is queued. Queued once, so it pays once.
+	var/bandit_hoard_payout_queued = FALSE
 
 /proc/vampire_werewolf()
 	var/vampyr = 0

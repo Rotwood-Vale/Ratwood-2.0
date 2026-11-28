@@ -83,6 +83,14 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(list(/area/rogue/indoors
 	deathsight_message = "a place of greed and excess"
 	hoardmaster_protected = TRUE
 
+/// Where the idol of Matthios sends offerings, to be seen but never touched. Anyone who gets in is dusted.
+/area/rogue/indoors/banditcamp/hoard
+	name = "Bandit Hoard"
+	icon_state = "rogue"
+	first_time_text = "A MISTAKE"
+	deathsight_message = "a place of greed and excess"
+	hoardmaster_protected = TRUE
+
 /area/rogue/indoors/vampire_manor
 	name = "Vampire Manor"
 	first_time_text = "The House of Blood"

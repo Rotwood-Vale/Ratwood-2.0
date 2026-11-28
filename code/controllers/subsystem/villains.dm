@@ -31,20 +31,25 @@
 /mob/dead/new_player/proc/VillainChoices()
 	var/list/dat = list()
 
+	// Greater villains are hidden from players like their round modifiers; queueable (lesser) villains show their slots
+	var/is_admin = !!client?.holder
 	if(!SSgamemode.modifiers_rolled)
 		dat += "Wait."
 	else
 		dat += "<b>Greater Villains:</b><br>"
-		if(!length(SSgamemode.rolled_villain_events))
-			dat += "None.<br>"
-		for(var/datum/round_event_control/antagonist/event in SSgamemode.rolled_villain_events)
-			var/slots = 1
-			if(istype(event, /datum/round_event_control/antagonist/solo))
-				var/datum/round_event_control/antagonist/solo/solo_event = event
-				slots = solo_event.get_antag_amount()
-			dat += "<b>[event.name]</b> ([slots] slots)<br>"
-		if(length(SSgamemode.rolled_villain_events))
-			dat += "<i>These roll at roundstart from your antag preferences.</i><br>"
+		if(!is_admin)
+			dat += "<i>Greater villains may roll at roundstart from your antag preferences.</i><br>"
+		else
+			if(!length(SSgamemode.rolled_villain_events))
+				dat += "None.<br>"
+			for(var/datum/round_event_control/antagonist/event in SSgamemode.rolled_villain_events)
+				var/slots = 1
+				if(istype(event, /datum/round_event_control/antagonist/solo))
+					var/datum/round_event_control/antagonist/solo/solo_event = event
+					slots = solo_event.get_antag_amount()
+				dat += "<b>[event.name]</b> ([slots] slots)<br>"
+			if(length(SSgamemode.rolled_villain_events))
+				dat += "<i>These roll at roundstart from your antag preferences. (Admin view: players see no list.)</i><br>"
 
 		dat += "<br><b>Lesser Villains:</b><br>"
 		var/found = FALSE

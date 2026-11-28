@@ -127,6 +127,12 @@
 	icon_state = "stained-zizo"
 	base_state = "stained-zizo"
 
+/obj/structure/roguewindow/stained/matthios
+	name = "matthiosan window"
+	desc = "Pale violet glass leaded around the Freefolk's gilded mark. Every pane was prised from some lord's chapel, and none of them were paid for."
+	icon_state = "stained-matthios"
+	base_state = "stained-matthios"
+
 /obj/structure/roguewindow/openclose
 	icon_state = "woodwindowdir"
 	base_state = "woodwindow"

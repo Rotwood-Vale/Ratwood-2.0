@@ -30,11 +30,24 @@ GLOBAL_LIST_EMPTY(antagonists)
 	///flags used by storytellers
 	var/antag_flags = NONE
 
+	//Briefing popup. An antag opts in by setting briefing_title; goals come from objectives.
+	/// Banner shown at the top of the briefing window. No title means no briefing.
+	var/briefing_title
+	/// Lore paragraph under the banner
+	var/briefing_flavour
+	/// How-to-play paragraph
+	var/briefing_explanation
+	/// If TRUE the briefing ticks off objectives as they are completed during the round
+	var/briefing_live_goals = FALSE
+	/// The briefing window handler, made on first open
+	var/datum/antag_briefing/briefing
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
 /datum/antagonist/Destroy()
+	QDEL_NULL(briefing)
 	GLOB.antagonists -= src
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
@@ -70,6 +83,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	remove_innate_effects(old_body)
 	apply_innate_effects(new_body)
+	old_body?.update_antagonist_briefing_verb() // its mind is already cleared, so this takes the verb away
+	new_body?.update_antagonist_briefing_verb()
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
@@ -116,6 +131,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 //		if(!silent)
 //			greet()
 		apply_innate_effects()
+		owner.current.update_antagonist_briefing_verb()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -144,6 +160,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+		owner.current?.update_antagonist_briefing_verb()
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
@@ -196,6 +213,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/roundend_report_footer()
 	return
 
+/// This antag's own result, one line of HTML shown under its objectives in the round-end panel, or null
+/datum/antagonist/proc/roundend_panel_result_line()
+	return
+
+/// The whole category's result, one line of HTML shown once under its title in the round-end panel, or null
+/datum/antagonist/proc/roundend_panel_category_line()
+	return
+
+/// Order within a round-end category: higher numbers are listed later
+/datum/antagonist/proc/roundend_sort_order()
+	return 0
+
 
 //ADMIN TOOLS
 
@@ -204,6 +233,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	new_owner.add_antag_datum(datum_type_or_instance = src, team = null, admin_panel = TRUE)
+	show_briefing()
 
 //Called when removing antagonist using admin tools
 /datum/antagonist/proc/admin_remove(mob/user)

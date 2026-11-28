@@ -59,6 +59,20 @@
 		budget -= M.cost
 		active_modifiers += M
 
+	// Chaos rounds always have bandits: if none rolled, the smallest band this chaos level allows is added on top of the budget.
+	// Adventure (level 0) is skipped, as its vote promises no villains.
+	var/static/list/bandit_modifiers = list(/datum/round_modifier/low_bandits, /datum/round_modifier/medium_bandits, /datum/round_modifier/high_bandits)
+	var/has_bandits = FALSE
+	for(var/datum/round_modifier/M in active_modifiers)
+		if(M.type in bandit_modifiers)
+			has_bandits = TRUE
+			break
+	if(!has_bandits && level > 0)
+		if(level >= 3)
+			active_modifiers += new /datum/round_modifier/medium_bandits
+		else
+			active_modifiers += new /datum/round_modifier/low_bandits
+
 	var/list/slots = list()
 	var/datum/forecast/forecast = SSParticleWeather?.selected_forecast
 
@@ -82,10 +96,27 @@
 		J.total_positions += slots[job_title]
 		J.spawn_positions += slots[job_title]
 
-	if(!length(active_modifiers))
-		to_chat(world, span_notice("<b>Nothing.</b>"))
-		return
-	to_chat(world, span_boldnotice("Modifiers:"))
+	announce_round_modifiers()
+
+/// Players hear only what each modifier lets them: vague text for queueable antags, nothing for hidden ones. Admins get the full list.
+/datum/controller/subsystem/gamemode/proc/announce_round_modifiers()
+	var/list/public_lines = list()
+	var/list/admin_lines = list()
+	var/list/log_names = list()
 	for(var/datum/round_modifier/M in active_modifiers)
-		if(!M.hidden)
-			to_chat(world, span_notice("<b>[M.name]</b> - [M.desc]"))
+		admin_lines += "<b>[M.name]</b>[M.hidden ? " (hidden)" : ""] - [M.desc]"
+		log_names += "[M.name][M.hidden ? " (hidden)" : ""]"
+		if(M.hidden)
+			continue
+		public_lines |= M.public_text || "<b>[M.name]</b> - [M.desc]" // |= so two tiers of one antag would still read as one line
+
+	if(length(public_lines))
+		to_chat(world, span_boldnotice("Modifiers:"))
+		for(var/line in public_lines)
+			to_chat(world, span_notice(line))
+	else
+		to_chat(world, span_notice("<b>Nothing.</b>"))
+
+	log_game("ROUND MODIFIERS: chaos level [level]: [length(log_names) ? log_names.Join(", ") : "none"]")
+	if(length(admin_lines))
+		message_admins("Round modifiers: [admin_lines.Join("; ")]")

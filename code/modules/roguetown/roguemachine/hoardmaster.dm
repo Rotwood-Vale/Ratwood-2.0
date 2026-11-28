@@ -10,7 +10,10 @@
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	var/upgrade_flags
-	var/current_cat = "1"
+	/// ckey -> the category that player has open ("1" is the category menu). Per player, so one bandit's browsing never resets another's.
+	var/list/current_cats = list()
+	/// ckey -> world.time before which that player's refused purchases are logged but not alerted to admins
+	var/list/refusal_alert_cooldowns = list()
 
 
 /obj/structure/roguemachine/Hoardmaster/Initialize(mapload)
@@ -48,14 +51,20 @@
 		return
 	if(!ishuman(usr))
 		return
+	var/datum/antagonist/bandit/B = usr.mind?.has_antag_datum(/datum/antagonist/bandit)
+	if(!B) // Matthios's other faithful share the trait, but only the band holds favor
+		return
 	if(href_list["buy"])
 		var/mob/M = usr
-		var/datum/antagonist/bandit/B = M.mind.has_antag_datum(/datum/antagonist/bandit)
 		var/path = text2path(href_list["buy"])
-		if(!ispath(path, /datum/supply_pack))
-			message_admins("silly MOTHERFUCKER [usr.key] IS TRYING TO BUY A [path] WITH THE HOARDMASTER")
+		var/datum/supply_pack/PA = ispath(path, /datum/supply_pack) ? SSmerchant.supply_packs[path] : null
+		// Only packs listed under a category this bandit has unlocked: the link can be edited to name any pack
+		if(!PA || !(PA.group in unlocked_categories(M)))
+			log_admin("[key_name(usr)] tried to buy [path] from the Hoardmaster, which is not in their unlocked categories.")
+			if(world.time >= refusal_alert_cooldowns[usr.ckey]) // edited links can be clicked endlessly; alert admins once a minute per player
+				refusal_alert_cooldowns[usr.ckey] = world.time + 1 MINUTES
+				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to buy [path] from the Hoardmaster, which is not in their unlocked categories.")
 			return
-		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
 		var/cost = PA.cost
 		if(B.favor >= cost)
 			B.favor -= cost
@@ -77,13 +86,37 @@
 				if(newitem.salvage_result)
 					newitem.salvage_result = /obj/item/ash
 	if(href_list["changecat"])
-		current_cat = href_list["changecat"]
+		current_cats[usr.ckey] = href_list["changecat"]
 	return attack_hand(usr)
+
+/// The Hoardmaster categories user may browse and buy from: the shared three, plus their own bandit class's
+/obj/structure/roguemachine/Hoardmaster/proc/unlocked_categories(mob/user)
+	. = list("Supplies", "Medicaments", "Clothing")
+	switch(user.advjob)
+		if("Brigand")
+			. += "Brigand"
+		if("Sellsword")
+			. += "Sellsword"
+		if("Sawbones")
+			. += "Sawbones"
+		if("Hedge Knight")
+			. += "Knight"
+		if("Hedge Mage")
+			. += "Mage"
+		if("Knave")
+			. += "Knave"
+		if("Iconoclast")
+			. += "Iconoclast"
+		if("Pioneer")
+			. += "Pioneer"
 
 /obj/structure/roguemachine/Hoardmaster/attack_hand(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_COMMIE))
 		return
-	var/datum/antagonist/bandit/B = usr.mind.has_antag_datum(/datum/antagonist/bandit)
+	var/datum/antagonist/bandit/B = user.mind?.has_antag_datum(/datum/antagonist/bandit)
+	if(!B) // Matthios's other faithful share the trait, but only the band trades here
+		to_chat(user, span_warning("The Hoardmaster's eyes pass over me. It trades only with the Freefolk."))
+		return
 	. = ..()
 	if(.)
 		return
@@ -94,28 +127,12 @@
 	contents = "<center>Wishes for the Free<BR>"
 	contents += "<a href='?src=[REF(src)];change=1'>Your favor:</a> [B.favor]<BR>"
 
+	var/list/unlocked_cats = unlocked_categories(user)
 
-	var/list/unlocked_cats = list("Supplies", "Medicaments", "Clothing")
-	switch(usr.advjob)
-		if("Brigand")
-			unlocked_cats+="Brigand"
-		if("Sellsword")
-			unlocked_cats+="Sellsword"
-		if("Sawbones")
-			unlocked_cats+="Sawbones"
-		if("Hedge Knight")
-			unlocked_cats+="Knight"
-		if("Hedge Mage")
-			unlocked_cats+="Mage"
-		if("Knave")
-			unlocked_cats+="Knave"
-		if("Iconoclast")
-			unlocked_cats+="Iconoclast"
-		if("Pioneer")
-			unlocked_cats+="Pioneer"
-
+	var/current_cat = current_cats[user.ckey] || "1"
 	if(!(current_cat in unlocked_cats))
 		current_cat = "1"
+		current_cats[user.ckey] = current_cat
 
 	if(current_cat == "1")
 		contents += "<center>"
