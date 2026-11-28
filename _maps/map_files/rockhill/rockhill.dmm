@@ -169,6 +169,23 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
+"aaF" = (
+/obj/item/candle/gold/lit{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/glass/cup/golden/small{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
+	},
+/obj/structure/table/wood/long_table{
+	pixel_x = 3
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aaG" = (
 /obj/structure/bed/rogue/inn,
 /obj/item/bedsheet/rogue/pelt,
@@ -234,25 +251,6 @@
 	},
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
 /obj/item/rogueweapon/scabbard/sword/noble,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
-"aaM" = (
-/obj/item/candle/gold/lit{
-	pixel_y = 13;
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/glass/cup/golden/small{
-	pixel_y = 5;
-	pixel_x = 11
-	},
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Lowtown Baron's Manor - Baron's Quarters"
-	},
-/obj/item/inqarticles/tallowpot,
-/obj/item/reagent_containers/food/snacks/tallow/soft,
-/obj/structure/table/wood/long_table{
-	pixel_x = 3
-	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "aaN" = (
@@ -499536,7 +499534,7 @@ ryI
 cDa
 cDc
 nog
-aaM
+aaF
 aau
 xlA
 xlA
