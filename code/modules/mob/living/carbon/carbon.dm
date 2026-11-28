@@ -256,10 +256,9 @@
 								return
 						var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 						var/turf/end_T = get_turf(target)
-						if(throwable_mob.cmode)
-							if(start_T.z != end_T.z && throwable_mob.mobility_flags & MOBILITY_STAND)
-								return
 						if(start_T && end_T)
+							if(throwable_mob.cmode && start_T.z != end_T.z && throwable_mob.mobility_flags & MOBILITY_STAND)
+								return
 							log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 				else
 					thrown_thing = pulling

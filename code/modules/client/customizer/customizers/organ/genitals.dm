@@ -5,9 +5,6 @@
 	default_disabled = TRUE
 	gender_enabled = MALE
 
-/datum/customizer/organ/penis/is_allowed(datum/preferences/prefs)
-	return TRUE
-
 /proc/sheath_type_preference_label(sheath_type)
 	switch(sheath_type)
 		if(SHEATH_TYPE_NORMAL)
@@ -23,6 +20,7 @@
 	organ_slot = ORGAN_SLOT_PENIS
 	organ_dna_type = /datum/organ_dna/penis
 	customizer_entry_type = /datum/customizer_entry/organ/penis
+	var/can_customize_functional = TRUE
 
 /datum/customizer_choice/organ/penis/validate_entry(datum/preferences/prefs, datum/customizer_entry/entry)
 	..()
@@ -35,7 +33,7 @@
 	var/datum/organ_dna/penis/penis_dna = organ_dna
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
 	penis_dna.penis_size = penis_entry.penis_size
-	penis_dna.functional = penis_entry.functional
+	penis_dna.functional = !can_customize_functional || penis_entry.functional
 	penis_dna.sheath_type = penis_entry.sheath_type
 
 /datum/customizer_choice/organ/penis/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
@@ -44,7 +42,8 @@
 	dat += "<br>Penis size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=penis_size''>[find_key_by_value(GLOB.named_penis_sizes, penis_entry.penis_size)]</a>"
 	if(penis_entry.can_be_massive())
 		dat += "<br>Massive: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=massive''>[penis_entry.massive ? "YES" : "NO"]</a> ([MASSIVE_PENIS_TRIUMPH_COST] TRI per round)"
-	dat += "<br>Functional: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=functional''>[penis_entry.functional ? "YES" : "NO"]</a>"
+	if(can_customize_functional)
+		dat += "<br>Functional: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=functional''>[penis_entry.functional ? "YES" : "NO"]</a>"
 	dat += "<br>Sheath: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=sheath_type''>[sheath_type_preference_label(penis_entry.sheath_type)]</a>"
 
 /datum/customizer_choice/organ/penis/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
@@ -53,12 +52,14 @@
 	switch(href_list["customizer_task"])
 		if("penis_size")
 			var/named_size = input(user, "Choose your penis size:", "Character Preference", find_key_by_value(GLOB.named_penis_sizes, penis_entry.penis_size)) as anything in GLOB.named_penis_sizes
-			if(isnull(named_size))
+			if(isnull(named_size) || !prefs.can_edit_customizer_entry(CUSTOMIZER(customizer_type), entry))
 				return
 			penis_entry.set_penis_size(GLOB.named_penis_sizes[named_size])
 		if("massive")
 			penis_entry.set_massive(!penis_entry.massive)
 		if("functional")
+			if(!can_customize_functional)
+				return
 			penis_entry.functional = !penis_entry.functional
 		if("sheath_type")
 			switch(penis_entry.sheath_type)
@@ -89,8 +90,8 @@
 
 /// TRUE if the active slot has an enabled Large pintle with the massive option ticked.
 /datum/preferences/proc/wants_massive_pintle()
-	for(var/datum/customizer_entry/organ/penis/penis_entry in customizer_entries)
-		if(!penis_entry.disabled && penis_entry.massive && penis_entry.can_be_massive())
+	for(var/datum/customizer_entry/organ/penis/penis_entry in get_enabled_customizer_entries())
+		if(penis_entry.massive && penis_entry.can_be_massive())
 			return TRUE
 	return FALSE
 
@@ -290,9 +291,6 @@
 	default_disabled = TRUE
 	gender_enabled = MALE
 
-/datum/customizer/organ/testicles/is_allowed(datum/preferences/prefs)
-	return TRUE
-
 /datum/customizer_choice/organ/testicles
 	abstract_type = /datum/customizer_choice/organ/testicles
 	name = "Testicles"
@@ -328,7 +326,7 @@
 	switch(href_list["customizer_task"])
 		if("ball_size")
 			var/named_size = input(user, "Choose your ball size:", "Character Preference", find_key_by_value(GLOB.named_ball_sizes, testicles_entry.ball_size)) as anything in GLOB.named_ball_sizes
-			if(isnull(named_size))
+			if(isnull(named_size) || !prefs.can_edit_customizer_entry(CUSTOMIZER(customizer_type), entry))
 				return
 			var/new_size = GLOB.named_ball_sizes[named_size]
 			testicles_entry.ball_size = sanitize_integer(new_size, MIN_TESTICLES_SIZE, MAX_TESTICLES_SIZE, DEFAULT_TESTICLES_SIZE)
@@ -418,7 +416,7 @@
 	switch(href_list["customizer_task"])
 		if("breast_size")
 			var/named_size = input(user, "Choose your breast size:", "Character Preference", find_key_by_value(GLOB.named_breast_sizes, breasts_entry.breast_size)) as anything in GLOB.named_breast_sizes
-			if(isnull(named_size))
+			if(isnull(named_size) || !prefs.can_edit_customizer_entry(CUSTOMIZER(customizer_type), entry))
 				return
 			var/new_size = GLOB.named_breast_sizes[named_size]
 			breasts_entry.breast_size = sanitize_integer(new_size, MIN_BREASTS_SIZE, MAX_BREASTS_SIZE, DEFAULT_BREASTS_SIZE)

@@ -666,7 +666,7 @@
 	if(C.bodytemperature <= BODYTEMP_NORMAL_MAX)
 		if(!cure_timer)
 			to_chat(C, span_notice("The heat begins to slowly fade from my body..."))
-			cure_timer = addtimer(CALLBACK(src, PROC_REF(cure_heatstroke)), 2 MINUTES)
+			cure_timer = addtimer(CALLBACK(src, PROC_REF(cure_heatstroke)), 2 MINUTES, TIMER_STOPPABLE)
 
 	// If overheating again, cancel cure timer
 	else

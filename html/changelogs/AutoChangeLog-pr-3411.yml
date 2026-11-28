@@ -1,0 +1,7 @@
+author: "annikaRU"
+delete-after: True
+changes:
+  - rscadd: "Added five new dolabra types to be smithed, that being copper, iron, steel, silver and gold"
+  - qol: "Dolabras are now able to be smithed at an additional cost compared to visiting an engineer"
+  - balance: "Dolabras no longer has 1200 sharpness as this was an oversight when it was necessary"
+  - code_imp: "Take apprentice should now work as intended for engineer's allowing them to grant people TRAIT_ENGINEER"
