@@ -222,12 +222,14 @@
 				if(WLENGTH_GREAT)
 					html += "Great<br>"
 
-		if(bookweapon.has_altgrip_modes())
+		if(length(initial(bookweapon.alt_grips)))
 			html += "\n<b>GRIP: ALT-GRIP (RCLICK/HOTKEY(B)/CTRL+SCRLWHL)</b><br>"
+		/* Disabled: needs a real item, bookweapon is only a type path here.
 			var/list/alt_grip_lines = bookweapon.get_altgrip_lines(src, user)
 			if(length(alt_grip_lines))
 				for(var/alt_grip_line in alt_grip_lines)
 					html += "[alt_grip_line]<br>"
+		*/
 		if(bookweapon.gripped_intents)
 			html += "\n<b>TWO-HANDED: Yes</b><br>"
 

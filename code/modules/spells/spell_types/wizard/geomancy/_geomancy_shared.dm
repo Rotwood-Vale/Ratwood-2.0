@@ -107,11 +107,9 @@
 	var/list/dirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 	for(var/i in 1 to fragment_count)
 		var/dir = pick_n_take(dirs)
-		var/turf/target = get_ranged_target_turf(T, dir, 3)
 		var/obj/projectile/magic/gravel_blast/frag = new(T)
 		frag.damage = fragment_damage
 		frag.ricochets_max = 0
 		if(caster)
 			frag.firer = caster
-		frag.preparePixelProjectile(target, T)
-		frag.fire()
+		frag.fire(dir2angle(dir))

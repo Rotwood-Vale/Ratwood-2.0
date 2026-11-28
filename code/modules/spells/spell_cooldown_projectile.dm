@@ -63,10 +63,18 @@
 	if(!click_to_activate && (QDELETED(cast_on) || cast_on == owner))
 		var/aim_dir = cardinal_aim ? angle2dir_cardinal(dir2angle(owner.dir)) : owner.dir
 		target = get_ranged_target_turf(owner, aim_dir, cast_range)
+		if(target == owner.loc)
+			aim_locked_turf = null
+			return FALSE
 	else if(aim_locked_turf && isliving(owner))
 		var/mob/living/caster = owner
 		var/obj/projectile/active_type = (arc_mode && projectile_type_arc) ? projectile_type_arc : projectile_type
 		target = caster.get_ranged_lead_turf(target, aim_locked_turf, initial(active_type.speed), caster.STAINT) || target
+
+	// a clicked target can vanish before the cast, or sit off the map (screen objects, nullspace)
+	if(QDELETED(target) || !get_turf(target))
+		aim_locked_turf = null
+		return FALSE
 
 	fire_projectile(target)
 	aim_locked_turf = null

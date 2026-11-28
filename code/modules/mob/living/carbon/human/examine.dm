@@ -106,6 +106,9 @@
 		if(item)
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
+	if(user != src && (HAS_TRAIT(user, TRAIT_PURITAN) || HAS_TRAIT(user, TRAIT_CHOSEN)) && HAS_TRAIT(src, TRAIT_CLERGYRADICAL) && HAS_TRAIT(src, TRAIT_FORBIDDEN_RESEARCH))
+		. += span_warning("[m1] clearly studying forbidden knowledge.")
+
 	// Try to see if they smell
 	if(get_dist(user, src) <= 3 && !HAS_TRAIT(user, TRAIT_MISSING_NOSE) && !HAS_TRAIT(user, TRAIT_NOSTINK)) // Need to be close enough + able to smell
 		if(user != src) // You can't smell your own scent

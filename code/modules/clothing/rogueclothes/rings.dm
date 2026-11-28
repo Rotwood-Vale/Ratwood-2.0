@@ -349,6 +349,7 @@
 	name = "bronze weddingband"
 	desc = "A resilient weddingband of bronze, ornately decorated with the engravings of a lover's name."
 	icon_state = "b_ring_wedding"
+	is_silver = FALSE
 
 //blacksteel rings
 /obj/item/clothing/ring/emeraldbs

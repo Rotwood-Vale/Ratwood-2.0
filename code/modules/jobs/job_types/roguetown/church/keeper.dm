@@ -94,7 +94,14 @@
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Keeper Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, {"Choose thy path.
+
+Loyalist -- Devote thyself to a single patron and keep their rites.
+
+Radical -- Seek wisdom beyond the teachings of thy patron. Long years of study have sharpened thy mind and left thy body weary.
+
+Radical effects: -1 Constitution, +2 Will, +1 Speed, and Critical Weakness.
+Wrestling and Fistfighting start at level 2."}, "Keeper Doctrine", "Loyalist", "Radical")
 
 	if(choice == "Radical")
 		grant_radical_path(H)
@@ -147,9 +154,14 @@
 		return
 
 	ADD_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
-
+	ADD_TRAIT(H, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
 	H.miracle_points += 3
 	H.church_favor += 1500
+	H.adjust_skillrank_down_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_down_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.change_stat(STATKEY_CON, -1)
+	H.change_stat(STATKEY_WIL, 2)
+	H.change_stat(STATKEY_SPD, 1)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)

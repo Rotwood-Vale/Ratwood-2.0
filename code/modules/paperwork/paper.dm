@@ -988,7 +988,7 @@
 		name = "[name] ([str])"
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
-	return 1
+	return !(item_flags & ABSTRACT) // abstract items (spell hands, grabs) delete themselves when dropped
 
 /obj/item/storage/can_be_package_wrapped()
 	return 0

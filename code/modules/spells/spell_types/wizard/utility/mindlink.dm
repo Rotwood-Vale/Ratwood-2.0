@@ -76,6 +76,10 @@
 		if(HL.real_name == second_target_name)
 			second_target = HL
 
+	if(!first_target || !second_target) // a known name may have no living body to find
+		to_chat(user, span_warning("I cannot reach one of those minds!"))
+		return FALSE
+
 	for(var/datum/mindlink/ML in GLOB.mindlinks)
 		if(ML)
 			if(ML.owner == first_target || ML.target == first_target || ML.owner == second_target || ML.target == second_target)
