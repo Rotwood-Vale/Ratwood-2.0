@@ -31,7 +31,7 @@
 /mob/dead/new_player/proc/VillainChoices()
 	var/list/dat = list()
 
-	// Players learn which queueable villains exist but never how many, and nothing of the greater villains: the round modifiers are hidden the same way
+	// Greater villains are hidden from players like their round modifiers; queueable (lesser) villains show their slots
 	var/is_admin = !!client?.holder
 	if(!SSgamemode.modifiers_rolled)
 		dat += "Wait."
@@ -75,11 +75,9 @@
 						pref_label = "Low"
 						pref_color = "orange"
 						next_level = 2
-				var/slot_text = is_admin ? "([J.total_positions] slots)" : ""
-				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a>[slot_text] - <a href='byond://?src=[REF(src)];villain_pref=[J.title];level=[next_level]'><font color=[pref_color]>[pref_label]</font></a><br>"
+				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a>([J.total_positions] slots) - <a href='byond://?src=[REF(src)];villain_pref=[J.title];level=[next_level]'><font color=[pref_color]>[pref_label]</font></a><br>"
 			else
-				var/join_text = is_admin ? "([J.current_positions]/[J.total_positions])" : "(Join)"
-				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a><a href='byond://?src=[REF(src)];SelectedJob=[J.title]'>[join_text]</a><a href='?src=[REF(J)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a><br>"
+				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a><a href='byond://?src=[REF(src)];SelectedJob=[J.title]'>([J.current_positions]/[J.total_positions])</a><a href='?src=[REF(J)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a><br>"
 
 		if(!found)
 			dat += "No villain roles this round."
