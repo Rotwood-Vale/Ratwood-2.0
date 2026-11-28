@@ -92,9 +92,9 @@
 		H.update_inv_shirt()
 		H.update_inv_armor()
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
-	name = "royal gambeson"
-	desc = "A fancy gambeson for royalty. Adorned with extra details and padded for extra protection."
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored
+	name = "house gambeson"
+	desc = "A fancy gambeson for those of, or sworn to, a noble house. Adorned with extra details and padded for extra protection."
 	icon_state = "royalgamb"
 	color = "#FFFFFF"
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -107,17 +107,7 @@
 	max_integrity = 250 //Same as grenzelshirt
 	shiftable = FALSE
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Initialize(mapload)
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	GLOB.lordcolor += src
-
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Destroy()
-	. = ..()
-	GLOB.lordcolor -= src
-
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/update_icon()
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
 		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
@@ -126,13 +116,47 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/lordcolor(primary,secondary)
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/proc/apply_house_colors(primary, secondary)
 	color = primary
 	detail_color = secondary
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_armor()
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal
+	name = "royal gambeson"
+	desc = "A fancy gambeson for royalty. Adorned with extra details and padded for extra protection."
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal/lordcolor(primary, secondary)
+	apply_house_colors(primary, secondary)
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal/Initialize(mapload)
+	. = ..()
+	if(GLOB.lordprimary)
+		apply_house_colors(GLOB.lordprimary,GLOB.lordsecondary)
+	GLOB.lordcolor += src
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/royal/Destroy()
+	. = ..()
+	GLOB.lordcolor -= src
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/baronial
+	name = "baronial gambeson"
+	desc = "A fancy gambeson for landed nobility. Adorned with extra details and padded for extra protection."
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/baronial/baronycolor(primary, secondary)
+	apply_house_colors(primary, secondary)
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/baronial/Initialize(mapload)
+	. = ..()
+	if(GLOB.baronprimary)
+		apply_house_colors(GLOB.baronprimary, GLOB.baronsecondary)
+	GLOB.baronycolor += src
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/baronial/Destroy()
+	. = ..()
+	GLOB.baronycolor -= src
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
 	name = "fencing gambeson"

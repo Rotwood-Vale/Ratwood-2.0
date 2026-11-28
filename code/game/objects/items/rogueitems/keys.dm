@@ -793,34 +793,53 @@
 	icon_state = "bosskey"
 	lockid = "tribalchief"
 
-//Rockhill Slaver/Baron and Related Keys
+// Baron of Lowtown and related keys
 /obj/item/roguekey/baron
-	name = "Lowtown Manor Key"
-	desc = "A key to the Lowtown Manor, home of the Baron"
+	name = "baron's manor key"
+	desc = "A key to the Lowtown manor, home of the baron."
 	icon_state = "brownkey"
 	lockid = "BaronManor"
 
 /obj/item/roguekey/baronguest
-	name = "Lowtown Manor Guest Key"
-	desc = "A key to the guest rooms of the Lowtown Manor."
-	icon_state = "brownkey"
+	name = "baron's manor guest key"
+	desc = "A key to the guest room in the Lowtown manor."
+	icon_state = "cheesekey"
 	lockid = "BaronManorGuest"
 
+/obj/item/roguekey/baronservant
+	name = "baron's servant key"
+	desc = "A key to the servant's quarters in the Lowtown manor."
+	icon_state = "rustkey"
+	lockid = "BaronManorServant"
+
+/obj/item/roguekey/baronretainer
+	name = "baron's retainer key"
+	desc = "A key to the retainer's quarters in the Lowtown manor."
+	icon_state = "greenkey"
+	lockid = "BaronManorRetainer"
+
+/obj/item/roguekey/barondungeon
+	name = "baron's manor \"guest\" key"
+	desc = "A key to the extra-special guest room of the Lowtown manor."
+	icon_state = "spikekey"
+	lockid = "BaronManorDungeon"
+
+// Lowtown slaver and related keys
 /obj/item/roguekey/slaverhouse
-	name = "Slaver's Office Key"
-	desc = "A key to the Slaver Office in Lowtown"
+	name = "slaver's office key"
+	desc = "A key to the slaver office in Lowtown."
 	icon_state = "brownkey"
 	lockid = "SlaverHome"
 
 /obj/item/roguekey/slaverdungeon
-	name = "Slaver's Dungeon Key"
-	desc = "A key to the Slaver Dungeon in Lowtown"
+	name = "slaver's dungeon key"
+	desc = "A key to the slaver dungeon in Lowtown."
 	icon_state = "spikekey"
 	lockid = "DTManorCells"
 
 /obj/item/roguekey/slaverpillory
-	name = "Auction Pillory Key"
-	desc = "A key to the Slaver Pillories in Lowtown"
+	name = "auction pillory key"
+	desc = "A key to the slaver's pillories in Lowtown."
 	icon_state = "brownkey"
 	lockid = "SlaveAuction"
 

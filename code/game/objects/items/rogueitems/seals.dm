@@ -134,6 +134,11 @@
 	seal_label = "The Royal Council"
 	seal_color = "#7e243f"
 
+/obj/item/seal/baron
+	name = "baron's seal"
+	seal_label = "The Baron of Lowtown"
+	seal_color = "#b84511"
+
 // Merchant's seal
 /obj/item/seal/merchant
 	name = "merchant's seal"

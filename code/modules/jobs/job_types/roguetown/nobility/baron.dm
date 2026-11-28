@@ -35,8 +35,6 @@
 		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, baron_color_choice)), 50)
 
 /datum/outfit/job/roguetown/baron
-	neck = /obj/item/roguekey/manor
-	id = /obj/item/scomstone/bad/garrison
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 	pants = /obj/item/clothing/under/roguetown/trou/formal
 	cloak = /obj/item/clothing/cloak/lordcloak/baronycloak
@@ -45,9 +43,7 @@
 	head = /obj/item/clothing/head/roguetown/circlet
 	id = /obj/item/scomstone/garrison //Giving them a crownstone given their new position over lowtown garrison
 	belt = /obj/item/storage/belt/rogue/leather/black
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
-
-// Baron subclasses
+	beltr = /obj/item/storage/belt/rogue/pouch/coins/ultrarich
 
 /datum/advclass/baron/shrewd_nobleman
 	parent_type = /datum/advclass
@@ -55,6 +51,7 @@
 	tutorial = "A noble in the most traditional sense, you use your wit and status to achieve your goals."
 	outfit = /datum/outfit/job/roguetown/baron/shrewd_nobleman
 	category_tags = list(CTAG_BARON)
+	noble_income = 100
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -75,11 +72,10 @@
 
 /datum/outfit/job/roguetown/baron/shrewd_nobleman/pre_equip(mob/living/carbon/human/H)
 	..()
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/veryrich
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath/royal = 1, /obj/item/storage/keyring/baronretainer = 1)
+	backpack_contents = list(/obj/item/storage/keyring/baron_manor/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath/royal = 1, /obj/item/storage/keyring/baron_manor/spares = 1)
 
 /datum/advclass/baron/landed_knight
 	parent_type = /datum/advclass
@@ -109,9 +105,20 @@
 
 /datum/outfit/job/roguetown/baron/landed_knight/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/house_colored/baronial
 	beltl = /obj/item/rogueweapon/scabbard/sword/royal
-	r_hand = /obj/item/rogueweapon/sword/sabre/dec
 	backl = /obj/item/rogueweapon/shield/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath/royal = 1, /obj/item/storage/keyring/baronretainer = 1)
+	backpack_contents = list(/obj/item/storage/keyring/baron_manor/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath/royal = 1, /obj/item/storage/keyring/baron_manor/spares = 1)
+
+	if(H.mind)
+		var/weapons = list("Decorated Saber - Elegance and Splendor", "Longsword - Balance and Pragmatism", "Broadsword - Strength and Decisiveness")
+		var/weapon_choice = input(H, "What approach do you prefer nowadaes?", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Decorated Saber - Elegance and Splendor")
+				r_hand = /obj/item/rogueweapon/sword/sabre/dec
+			if("Longsword - Balance and Pragmatism")
+				r_hand = /obj/item/rogueweapon/sword/long
+			if("Broadsword - Strength and Decisiveness")
+				r_hand = /obj/item/rogueweapon/sword/long/broadsword
+
