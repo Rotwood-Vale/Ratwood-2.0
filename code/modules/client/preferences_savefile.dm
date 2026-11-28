@@ -301,6 +301,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	S["default_slot"]		>> default_slot
+	S["family_blocks"]		>> family_blocks
+	family_blocks = SANITIZE_LIST(family_blocks)
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["floating_text_toggles"]>> floating_text_toggles
@@ -524,6 +526,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
 	WRITE_FILE(S["default_slot"], default_slot)
+	WRITE_FILE(S["family_blocks"], family_blocks)
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
 	WRITE_FILE(S["floating_text_toggles"], floating_text_toggles)
@@ -873,6 +876,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["take_house_name"]	>> take_house_name
 	S["species_filter"]		>> species_filter
 	S["species_blacklist"]	>> species_blacklist
+	S["family_links"]		>> family_links
+	S["family_ad"]			>> family_ad
 	S["extra_language"]		>> extra_language
 	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
@@ -1086,6 +1091,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(isnull(species_blacklist))
 		species_blacklist = TRUE
 	species_filter 	= SANITIZE_LIST(species_filter)
+	family_links = SANITIZE_LIST(family_links)
+	for(var/link in family_links.Copy())
+		if(!islist(link) || length(link) < 5)
+			family_links -= list(link)
+	if(!islist(family_ad))
+		family_ad = null
 	extra_language  = string_to_typepath(extra_language) || "None"
 	selected_title  = selected_title
 	voice_color		= voice_color
@@ -1159,6 +1170,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	finish_gallery_load(gnoll_gallery_loaded)
 	return TRUE
 
+/datum/preferences/proc/save_family_data()
+	if(!path || !fexists(path))
+		return FALSE
+	var/savefile/S = new /savefile(path)
+	S.cd = "/"
+	WRITE_FILE(S["family_blocks"], family_blocks)
+	if(!("character[default_slot]" in S.dir))
+		return FALSE
+	S.cd = "/character[default_slot]"
+	WRITE_FILE(S["family_links"], family_links)
+	WRITE_FILE(S["family_ad"], family_ad)
+	return TRUE
+
 /datum/preferences/proc/save_character()
 	if(!path)
 		return FALSE
@@ -1204,6 +1228,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["take_house_name"], take_house_name)
 	WRITE_FILE(S["species_filter"], species_filter)
 	WRITE_FILE(S["species_blacklist"], species_blacklist)
+	WRITE_FILE(S["family_links"], family_links)
+	WRITE_FILE(S["family_ad"], family_ad)
 	// Save new vice system
 	WRITE_FILE(S["vice1"], preferences_typepath_or_null(vice1))
 	WRITE_FILE(S["vice2"], preferences_typepath_or_null(vice2))

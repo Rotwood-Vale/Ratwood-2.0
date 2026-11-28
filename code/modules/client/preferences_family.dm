@@ -24,14 +24,7 @@
 	var/list/me = SSfamilytree.PrefInfo(prefs)
 	var/my_id = me["id"]
 	var/my_ckey = me["ckey"]
-	for(var/list/link in SSfamilytree.links.Copy())
-		if((link[1] == my_id && link[4] != prefs.real_name) || (link[2] == my_id && link[5] != prefs.real_name))
-			SSfamilytree.links -= list(link)
 	var/list/ad = SSfamilytree.board[my_id]
-	if(ad && ad["name"] != prefs.real_name)
-		SSfamilytree.board -= my_id
-		SSfamilytree.saved_ads -= my_id
-		ad = null
 	if(ad)
 		for(var/key in me)
 			ad[key] = me[key]
@@ -105,6 +98,8 @@
 	for(var/list/link in SSfamilytree.links)
 		if(link[1] != my_id && link[2] != my_id)
 			continue
+		if((link[1] == my_id && link[4] != prefs.real_name) || (link[2] == my_id && link[5] != prefs.real_name))
+			continue
 		var/other_name = link[5]
 		if(link[2] == my_id)
 			other_name = link[4]
@@ -124,7 +119,7 @@
 	if(!relations_html)
 		relations_html = "No relationships yet."
 	var/links_html = pref_line_html("Take House Name?", "<a href='[base]house_name'>[house_state]</a>") + relations_html
-	if(length(SSfamilytree.blocks[my_ckey]))
+	if(length(prefs.family_blocks))
 		links_html += "<br><a href='[base]unblock_all'>Clear Blocked Players</a>"
 
 	var/requests_label = "Requests"
@@ -241,10 +236,12 @@
 					if(req["to"] == old_id)
 						SSfamilytree.requests -= list(req)
 			SSfamilytree.board[my_id] = new_ad
-			SSfamilytree.saved_ads[my_id] = new_ad
+			prefs.family_ad = list("relations" = relations, "blurb" = blurb)
+			prefs.save_family_data()
 		if("unpost")
 			SSfamilytree.board -= my_id
-			SSfamilytree.saved_ads -= my_id
+			prefs.family_ad = null
+			prefs.save_family_data()
 			for(var/list/req in SSfamilytree.requests.Copy())
 				if(req["to"] == my_id)
 					SSfamilytree.requests -= list(req)
@@ -298,9 +295,8 @@
 				SSfamilytree.requests -= list(req)
 				var/list/from = req["info"]
 				if(act == "block")
-					if(!SSfamilytree.blocks[my_ckey])
-						SSfamilytree.blocks[my_ckey] = list()
-					SSfamilytree.blocks[my_ckey] += from["ckey"]
+					prefs.family_blocks |= from["ckey"]
+					prefs.save_family_data()
 					for(var/list/other_req in SSfamilytree.requests.Copy())
 						if(other_req["to"] == my_id && other_req["info"]["ckey"] == from["ckey"])
 							SSfamilytree.requests -= list(other_req)
@@ -314,7 +310,24 @@
 						link[3] = "parent"
 					if(req["relation"] == "Parent")
 						link = list(req["from"], my_id, "parent", from["name"], prefs.real_name)
-					SSfamilytree.links += list(link)
+					var/datum/preferences/from_prefs = SSfamilytree.SlotPrefs(req["from"])
+					if(!from_prefs)
+						to_chat(user, span_warning("That character is no longer available."))
+						continue
+					if(!SSfamilytree.FindLink(prefs.family_links, link[1], link[2], link[3]))
+						var/saved = TRUE
+						for(var/datum/preferences/P in list(prefs, from_prefs))
+							P.family_links += list(list(link[1], link[2], link[3], link[4], link[5], list()))
+							if(!P.save_family_data())
+								saved = FALSE
+						if(!saved)
+							for(var/datum/preferences/P in list(prefs, from_prefs))
+								P.family_links -= list(SSfamilytree.FindLink(P.family_links, link[1], link[2], link[3]))
+								P.save_family_data()
+							to_chat(user, span_warning("That relationship could not be saved."))
+							continue
+					if(!SSfamilytree.FindLink(SSfamilytree.links, link[1], link[2], link[3]))
+						SSfamilytree.links += list(list(link[1], link[2], link[3], link[4], link[5], list()))
 					var/client/from_client = GLOB.directory[from["ckey"]]
 					if(from_client)
 						SEND_SOUND(from_client.mob, sound('sound/misc/notice (2).ogg'))
@@ -322,8 +335,7 @@
 		if("unlink")
 			for(var/list/link in SSfamilytree.links.Copy())
 				if((link[1] == my_id || link[2] == my_id) && SSfamilytree.Token("[link[1]]>[link[2]]") == rid)
-					SSfamilytree.links -= list(link)
-					SSfamilytree.connected -= list(link)
+					SSfamilytree.RemoveLink(link)
 					var/mob/living/carbon/human/first
 					var/mob/living/carbon/human/second
 					for(var/mob/living/carbon/human/H in GLOB.human_list)
@@ -357,8 +369,17 @@
 						link[6] -= list(my_id)
 					else
 						link[6] += my_id
+					var/list/own = SSfamilytree.FindLink(prefs.family_links, link[1], link[2], link[3])
+					if(own)
+						while(length(own) < 6)
+							own += list(list())
+						own[6] = list()
+						if(my_id in link[6])
+							own[6] += my_id
+						prefs.save_family_data()
 		if("unblock_all")
-			SSfamilytree.blocks -= my_ckey
+			prefs.family_blocks = list()
+			prefs.save_family_data()
 		if("house_name")
 			prefs.take_house_name = !prefs.take_house_name
 			save_matching()
@@ -397,7 +418,6 @@
 				prefs.species_filter = chosen
 				save_matching()
 			return
-	SSfamilytree.SaveBoard()
 
 // saves shit right to slot I THINK it's fine.
 /datum/family_board_menu/proc/save_matching()

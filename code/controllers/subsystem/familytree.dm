@@ -30,12 +30,9 @@ SUBSYSTEM_DEF(familytree)
 	*/
 	var/list/viable_spouses = list()
 	// shit for da relationship board
-	var/board_path = "data/family_board.json"
 	var/list/board = list()
-	var/list/saved_ads = list()
 	var/list/requests = list()
 	var/list/links = list()
-	var/list/blocks = list()
 	var/list/connected = list()
 	// random string
 	var/salt = ""
@@ -85,14 +82,8 @@ SUBSYSTEM_DEF(familytree)
 
 	salt = md5("[world.realtime][rand()]")
 	// relationship links save between rounds! kinda 50/50 on this
-	if(fexists(board_path))
-		var/list/saved = json_decode(file2text(board_path))
-		if(saved)
-			links = saved["links"] || list()
-			blocks = saved["blocks"] || list()
-			saved_ads = saved["ads"] || list()
-			for(var/client/C in GLOB.clients)
-				RestoreAd(C.prefs)
+	for(var/client/C in GLOB.clients)
+		RestoreAd(C.prefs)
 
 	return ..()
 
@@ -359,13 +350,63 @@ SUBSYSTEM_DEF(familytree)
 		for(var/list/req in requests.Copy())
 			if(req["to"] == ad_id)
 				requests -= list(req)
-	if(saved_ads[my_id])
-		board[my_id] = saved_ads[my_id]
+	if(P.family_ad)
+		var/list/ad = PrefInfo(P)
+		ad["relations"] = P.family_ad["relations"] || list()
+		ad["blurb"] = P.family_ad["blurb"] || ""
+		board[my_id] = ad
+	for(var/list/link in links.Copy())
+		if(link[1] != my_id && link[2] != my_id)
+			continue
+		if(!FindLink(P.family_links, link[1], link[2], link[3]))
+			RemoveLink(link)
+	for(var/list/own in P.family_links.Copy())
+		if(own[1] == own[2] || (own[1] != my_id && own[2] != my_id))
+			P.family_links -= list(own)
+			P.save_family_data()
+			continue
+		var/other_id = own[1]
+		if(other_id == my_id)
+			other_id = own[2]
+		var/datum/preferences/other = SlotPrefs(other_id)
+		if(other && !FindLink(other.family_links, own[1], own[2], own[3]))
+			P.family_links -= list(own)
+			P.save_family_data()
+			continue
+		var/list/live = FindLink(links, own[1], own[2], own[3])
+		if(!live)
+			live = list(own[1], own[2], own[3], own[4], own[5], list())
+			links += list(live)
+		if(length(own) >= 6 && islist(own[6]))
+			for(var/disabled_id in own[6])
+				if(!(disabled_id in live[6]))
+					live[6] += disabled_id
 
-/datum/controller/subsystem/familytree/proc/SaveBoard()
-	var/data = json_encode(list("links" = links, "blocks" = blocks, "ads" = saved_ads))
-	fdel(board_path)
-	WRITE_FILE(file(board_path), data)
+/datum/controller/subsystem/familytree/proc/FindLink(list/from_list, first, second, type)
+	for(var/list/link in from_list)
+		if(link[1] == first && link[2] == second && link[3] == type)
+			return link
+
+/datum/controller/subsystem/familytree/proc/SlotPrefs(id)
+	var/list/parts = splittext(id, "/")
+	if(length(parts) < 2)
+		return
+	var/client/C = GLOB.directory[parts[1]]
+	if(!C?.prefs || "[C.prefs.default_slot]" != parts[2])
+		return
+	return C.prefs
+
+/datum/controller/subsystem/familytree/proc/RemoveLink(list/link)
+	links -= list(link)
+	connected -= list(link)
+	for(var/id in list(link[1], link[2]))
+		var/datum/preferences/P = SlotPrefs(id)
+		if(!P)
+			continue
+		var/list/own = FindLink(P.family_links, link[1], link[2], link[3])
+		if(own)
+			P.family_links -= list(own)
+			P.save_family_data()
 
 /datum/controller/subsystem/familytree/proc/PrefInfo(datum/preferences/P)
 	return list("id" = "[P.parent.ckey]/[P.default_slot]", "ckey" = P.parent.ckey, "name" = P.real_name, "species" = P.pref_species.name, "pronouns" = splittext(P.pronouns, " ")[1], "gender" = P.gender_choice, "species_filter" = P.species_filter.Copy(), "blacklist" = P.species_blacklist, "headshot" = P.headshot_link, "age" = P.age, "flavortext" = P.flavortext, "nsfwflavortext" = P.nsfwflavortext, "ooc_notes" = P.ooc_notes, "erpprefs" = P.erpprefs, "ooc_extra" = P.ooc_extra, "ooc_extra_img" = P.ooc_extra_img, "nsfw_ooc_extra_img" = P.nsfw_ooc_extra_img, "song_artist" = P.song_artist, "song_title" = P.song_title, "img_gallery" = P.img_gallery.Copy(), "nsfw_img_gallery" = P.nsfw_img_gallery.Copy(), "headshot_zoom" = P.headshot_zoom, "headshot_x" = P.headshot_x, "headshot_y" = P.headshot_y, "headshot_framed" = P.headshot_framed, "image_backdrop" = P.image_backdrop, "card_backgrounds" = P.card_backgrounds.Copy(), "art_view_settings" = P.art_view_settings.Copy()) // fuuuck
@@ -390,7 +431,9 @@ SUBSYSTEM_DEF(familytree)
 
 // u see I am wise & know ppl will be shitty
 /datum/controller/subsystem/familytree/proc/Blocked(ckey_a, ckey_b)
-	return (ckey_b in blocks[ckey_a]) || (ckey_a in blocks[ckey_b])
+	var/client/A = GLOB.directory[ckey_a]
+	var/client/B = GLOB.directory[ckey_b]
+	return (ckey_b in A?.prefs?.family_blocks) || (ckey_a in B?.prefs?.family_blocks)
 
 /datum/controller/subsystem/familytree/proc/LinkSpawn(mob/living/carbon/human/H)
 	if(!H.family_id || (H.job in royal_jobs))

@@ -324,8 +324,9 @@
 		primary_member = primary_family.founder
 		secondary_member = primary_family.CreateFamilyMember(spouse)
 
-	if(primary_family.housename && secondary_member?.person && secondary_member.person.take_house_name && (relation == "spouse" || relation == "sibling" || relation == "parent") && secondary_member.family == primary_family && secondary_member != primary_family.founder)
-		secondary_member.person.TakeHouseName(primary_family.housename)
+	for(var/datum/family_member/member in list(primary_member, secondary_member))
+		if(primary_family.housename && member?.person && member.person.take_house_name && (relation == "spouse" || relation == "sibling" || relation == "parent") && member.family == primary_family && (member != primary_member || member == primary_family.founder) && !findtext(member.person.real_name, trim(primary_family.housename)))
+			member.person.TakeHouseName(primary_family.housename)
 
 	// Add spouse relationship in family system
 	if(primary_member && secondary_member && primary_family)
