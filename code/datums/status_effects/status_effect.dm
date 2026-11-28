@@ -83,6 +83,11 @@
 		on_remove()
 		qdel(src)
 		return
+	if(QDELETED(src)) // on_apply() can remove the effect or its owner
+		return
+	if(!owner)
+		qdel(src)
+		return
 
 	if(duration != -1)
 		duration = world.time + duration
@@ -404,5 +409,5 @@
 	if(owner)
 		owner.cut_overlay(status_overlay)
 		owner.underlays -= status_underlay
-	QDEL_NULL(status_overlay)
+	status_overlay = null
 	return ..()

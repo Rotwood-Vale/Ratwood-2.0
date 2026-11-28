@@ -254,10 +254,11 @@
 	LAZYREMOVE(simple_embedded_objects, embedder)
 	embedder.is_embedded = FALSE
 	var/drop_location = drop_location()
-	if(drop_location)
-		embedder.forceMove(drop_location)
-	else
-		qdel(embedder)
+	if(!QDELETED(embedder))
+		if(drop_location)
+			embedder.forceMove(drop_location)
+		else
+			qdel(embedder)
 	if(!has_embedded_objects())
 		clear_alert("embeddedobject")
 	return TRUE

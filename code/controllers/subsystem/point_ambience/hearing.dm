@@ -111,12 +111,15 @@
 	holder = outermost
 	if(holder)
 		RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
-		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_holder_deleted))
+		if(holder != body) // the body already has a deletion handler
+			RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_holder_deleted))
 
 /datum/point_ambience_head_watch/proc/unhook_holder()
 	if(!holder)
 		return
-	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
+	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)
+	if(holder != body)
+		UnregisterSignal(holder, COMSIG_QDELETING)
 	holder = null
 
 /**

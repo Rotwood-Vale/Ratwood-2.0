@@ -98,6 +98,7 @@ PROCESSING_SUBSYSTEM_DEF(tracks)
 		qdel(T)
 		return
 
+	processing -= T
 	T.soft_reset()
 	T.moveToNullspace()
 	pool += T

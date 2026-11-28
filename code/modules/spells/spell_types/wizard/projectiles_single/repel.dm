@@ -30,7 +30,8 @@
 	allow_cross_z = FALSE
 
 /datum/action/cooldown/spell/projectile/repel/cast(atom/cast_on)
-	if(ishuman(owner))
+	. = ..()
+	if(. && ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		var/obj/I = H.get_active_held_item()
 		if(isobj(I) && H.in_throw_mode)
@@ -40,8 +41,6 @@
 				if(I)
 					I.throw_at(throw_target, 7, 4)
 					H.throw_mode_off()
-				return ..()
-	return ..()
 
 /obj/projectile/magic/repel
 	name = "bolt of repelling"
