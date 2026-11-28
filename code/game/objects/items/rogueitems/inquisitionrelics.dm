@@ -182,7 +182,7 @@
 				skie.gib()
 
 
-/datum/status_effect/buff/cranking_soulchurner/proc/apply_churner_debuff(var/mob/living/carbon/human/H)
+/datum/status_effect/buff/cranking_soulchurner/proc/apply_churner_debuff(mob/living/carbon/human/H)
 	to_chat(H, (span_hypnophrase("A voice calls out from the song for you...")))
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
