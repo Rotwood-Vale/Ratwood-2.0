@@ -17,6 +17,8 @@
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
+		TRAIT_ZOMBIE_IMMUNE,
+		TRAIT_SILVER_BLESSED,
 	)
 	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_stats = list(//+9, You get PER/STR for the crossbow.
@@ -37,6 +39,9 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE, // that guy pulls his lux on regual
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE, // for holy stakes
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE, // for holy stakes
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
@@ -52,7 +57,7 @@
 	head = /obj/item/clothing/head/roguetown/headband/bloodied
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
 	shirt = /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest/confessor
-	cloak = /obj/item/clothing/cloak/psydontabard/alt
+	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -77,13 +82,14 @@
 	switch(ranged_choice)
 		if("Arbalest")
 			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/stakebelt, SLOT_BELT, TRUE)//Because your 'crossbow' FUCKS.
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/heavybolts, SLOT_BELT_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest, SLOT_IN_BACKPACK, TRUE)//You get ONE.
 			if(H.mind)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inviolability)//A shield against the undead.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_lux_bolt)//Take a guess. Exclusive to arbalist.
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/arbalist_blood_runes)// SAY HELLO TO BLOOD MAGIC, m'lord. Exclusive to arbalist.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
 		if("Fusilier")
 			ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
@@ -91,7 +97,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)// To parry with the Rifle
 			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/entropy_sphere_belt, SLOT_BELT, TRUE) // stakes < concept of entropy
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/arbalist, SLOT_BELT_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/arbalist/mark, SLOT_IN_BACKPACK, TRUE)//You get ONE.
