@@ -3706,6 +3706,7 @@
 #include "modular_azurepeak\code\game\objects\items\holster_component.dm"
 #include "modular_azurepeak\code\game\objects\items\hurlstrap.dm"
 #include "modular_azurepeak\code\game\objects\items\magic_staffs.dm"
+#include "modular_azurepeak\code\game\objects\items\matthios_tools.dm"
 #include "modular_azurepeak\code\game\objects\items\mercmedals.dm"
 #include "modular_azurepeak\code\game\objects\items\mundanities.dm"
 #include "modular_azurepeak\code\game\objects\items\quicksilver.dm"

@@ -177,7 +177,7 @@
 #define ARMOR_LEATHER list("blunt" = DR_ULTRA, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_HEAVY, "fire" = DR_MEDIUM, "acid" = DR_NONE, "bullet" = DR_NONE)
 
 // LIGHT ARMOR - SNOWFLAKE. Not comfortable with them, but not touching it atm.
-#define ARMOR_DRAGONSKIN list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE) // Iconoclast dragon skin. Fire resistant.
+#define ARMOR_DRAGONSKIN list("blunt" = DR_SUPER, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_SUPER, "acid" = DR_NONE, "bullet" = DR_NONE) // Iconoclast dragon skin. Fire resistant.
 #define ARMOR_DRAGONHIDE list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_LIGHT, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE) // snowflake armor for dragonhide - a bit worse than hard leather but w/ decent fire resist
 
 // BRONZE - All bronze armor. Not particularly good against any specialized AP intent, but uniquely resistant to fire damage from mage spells and the like. THIS IS ONLY FOR AUXILLARY ARMOR PIECES, SUCH AS BRACERS, BOOTS, GAUNTLETS, AND KILTS. HELMETS/CHEST ARMOR SHOULD BE USING ARMOR_PLATE.
