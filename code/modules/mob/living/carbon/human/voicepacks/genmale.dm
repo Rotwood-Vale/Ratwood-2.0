@@ -193,4 +193,6 @@
 			//jokes on YOU, I'm adding the yeen cackle!
 			if("ycackle")
 				used = list('sound/vo/mobs/hyena/cackle.ogg')
+			if("eflick")
+				used = list('sound/misc/blackbag4.ogg') // same sound
 	return used
