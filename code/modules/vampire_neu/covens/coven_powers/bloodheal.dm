@@ -1,4 +1,3 @@
-#define HEAL_MULTIPLIER 3.8
 /datum/coven/bloodheal
 	name = "Bloodheal"
 	desc = "Use the power of your Vitae to slowly regenerate your flesh."
@@ -40,12 +39,12 @@
 	trigger_healing()
 
 /datum/coven_power/bloodheal/proc/trigger_healing()
-	owner.adjustBruteLoss(-HEAL_MULTIPLIER * level, 0)
-	owner.adjustFireLoss(-HEAL_MULTIPLIER * level, 0)
-	owner.adjustOxyLoss(-HEAL_MULTIPLIER * level, 0)
-	owner.adjustToxLoss(-HEAL_MULTIPLIER * level, 0)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -HEAL_MULTIPLIER * level)
-	owner.adjustCloneLoss(-HEAL_MULTIPLIER * level, 0)
+	owner.adjustBruteLoss(-BLOODHEAL_HEAL_MULTIPLIER * level, 0)
+	owner.adjustFireLoss(-BLOODHEAL_HEAL_MULTIPLIER * level, 0)
+	owner.adjustOxyLoss(-BLOODHEAL_HEAL_MULTIPLIER * level, 0)
+	owner.adjustToxLoss(-BLOODHEAL_HEAL_MULTIPLIER * level, 0)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -BLOODHEAL_HEAL_MULTIPLIER * level)
+	owner.adjustCloneLoss(-BLOODHEAL_HEAL_MULTIPLIER * level, 0)
 
 	owner.heal_wounds(level * 5)
 
@@ -115,5 +114,3 @@
 	owner.adjustCloneLoss(-4.5 * level, 0)
 
 	owner.heal_wounds(level * 5)
-
-#undef HEAL_MULTIPLIER

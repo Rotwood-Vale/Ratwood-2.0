@@ -1,8 +1,3 @@
-#define COMBAT_COOLDOWN_LENGTH 45 SECONDS
-#define REVEAL_COOLDOWN_LENGTH 15 SECONDS
-#define OBFUSCATE_ALPHA 10
-#define OBFUSCATE_FADE_TIME 0.5 SECONDS
-
 /datum/coven/obfuscate
 	name = "Obfuscate"
 	desc = "Makes you less noticeable to living and unliving beings."
@@ -28,7 +23,7 @@
 	try_deactivate(direct = TRUE)
 
 	deltimer(cooldown_timer)
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), COMBAT_COOLDOWN_LENGTH, TIMER_STOPPABLE)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), OBFUSCATE_COMBAT_COOLDOWN_LENGTH, TIMER_STOPPABLE)
 
 /datum/coven_power/obfuscate/proc/conceal(mob/living/target)
 	if (!target)
@@ -124,7 +119,7 @@
 	try_deactivate(direct = TRUE)
 
 	deltimer(cooldown_timer)
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), OBFUSCATE_REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
 
 //UNSEEN PRESENCE - Can move while stealthed, but only walking speed
 /datum/coven_power/obfuscate/unseen_presence
@@ -162,7 +157,7 @@
 		try_deactivate(direct = TRUE)
 
 		deltimer(cooldown_timer)
-		cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
+		cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), OBFUSCATE_REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
 
 //VANISH FROM THE MIND'S EYE - Instant stealth activation + memory wipe
 /datum/coven_power/obfuscate/vanish_from_the_minds_eye
@@ -207,7 +202,7 @@
 		try_deactivate(direct = TRUE)
 
 		deltimer(cooldown_timer)
-		cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
+		cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), OBFUSCATE_REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
 
 //CLOAK THE GATHERING - Group stealth for multiple people
 /datum/coven_power/obfuscate/cloak_the_gathering
@@ -272,7 +267,7 @@
 	try_deactivate(direct = TRUE)
 
 	deltimer(cooldown_timer)
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), OBFUSCATE_REVEAL_COOLDOWN_LENGTH, TIMER_STOPPABLE)
 
 /datum/coven_power/obfuscate/cloak_the_gathering/proc/on_ally_combat_signal(datum/source)
 	SIGNAL_HANDLER
@@ -289,8 +284,3 @@
 
 	cloaked_mobs -= source
 	return ..()
-
-#undef COMBAT_COOLDOWN_LENGTH
-#undef REVEAL_COOLDOWN_LENGTH
-#undef OBFUSCATE_ALPHA
-#undef OBFUSCATE_FADE_TIME
