@@ -1,4 +1,4 @@
-// DEAD_TO_ZOMBIE_TIME lives in __DEFINES/mobs.dm, the ghost lock in observer.dm uses it too
+// DEAD_TO_ZOMBIE_TIME lives in __DEFINES/zombie_defines.dm, the ghost lock in observer.dm uses it too
 
 #define SIMPLE_CORPSE_ROT_START 15 MINUTES
 #define SIMPLE_CORPSE_DUST_TIME 25 MINUTES
