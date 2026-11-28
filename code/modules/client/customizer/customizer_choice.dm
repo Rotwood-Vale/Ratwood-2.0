@@ -95,6 +95,8 @@
 			var/chosen_input = tgui_input_list(user, "Choose your [LOWER_TEXT(name)] appearance:", "Character Preference",choice_list)
 			if(!chosen_input)
 				return
+			if(!prefs.can_edit_customizer_entry(CUSTOMIZER(customizer_type), entry))
+				return
 			var/choice_type = choice_list[chosen_input]
 			set_accessory_type(prefs, choice_type, entry)
 
@@ -128,12 +130,13 @@
 				return
 			var/index = text2num(href_list["color_index"])
 			var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(entry.accessory_type)
-			if(index > accessory.color_keys)
+			if(!accessory || !isnum(index) || index != round(index) || index < 1 || index > accessory.color_keys)
 				return
 			var/list/color_list = color_string_to_list(entry.accessory_colors)
 			var/new_color = color_pick_sanitized(user, "Choose your accessory color:", "Character Preference","[color_list[index]]")
-			if(!new_color)
+			if(!new_color || !prefs.can_edit_customizer_entry(CUSTOMIZER(customizer_type), entry) || entry.accessory_type != accessory.type)
 				return
+			color_list = color_string_to_list(entry.accessory_colors)
 			color_list[index] = sanitize_hexcolor(new_color, 6, TRUE)
 			entry.accessory_colors = color_list_to_string(color_list)
 		if("reset_colors")

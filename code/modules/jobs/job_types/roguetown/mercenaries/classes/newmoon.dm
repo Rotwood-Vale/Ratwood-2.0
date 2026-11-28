@@ -22,8 +22,7 @@
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = -2,
+		STATKEY_WIL = 2
 	)
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 6)
 	subclass_skills = list(
@@ -80,6 +79,7 @@
 	if(H.mind)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/caedo)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/air_strike)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/azurean_pilum)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/leyline_anchor)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/blade_storm)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/recall_weapon)
