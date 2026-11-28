@@ -14,6 +14,14 @@
 	var/flavortext
 	var/nsfwflavortext
 	var/headshot_link
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_X_DEFAULT
+	var/headshot_y = HEADSHOT_Y_DEFAULT
+	var/headshot_framed = FALSE
+	var/headshot_frame_chat = FALSE
+	var/image_backdrop = GALLERY_BACKDROP_TAVERN
+	var/list/card_backgrounds = list()
+	var/list/art_view_settings = list()
 	var/rumour
 	var/noble_gossip
 	var/list/img_gallery
@@ -33,6 +41,7 @@
 	var/vocal_speed
 	var/vocal_pitch
 	var/vocal_pitch_range
+	var/vocal_volume
 	/// Snapshot of the character's dna, including organ_dna, for remaking a claimed body
 	var/datum/dna/stored_dna
 	/**
@@ -56,6 +65,8 @@
 	flavortext = H.flavortext
 	nsfwflavortext = H.nsfwflavortext
 	headshot_link = H.headshot_link
+	COPY_GALLERY_PRESENTATION(src, H)
+	headshot_frame_chat = H.headshot_frame_chat
 	rumour = H.rumour
 	noble_gossip = H.noble_gossip
 	img_gallery = H.img_gallery?.Copy()
@@ -74,6 +85,7 @@
 	vocal_speed = H.vocal_speed
 	vocal_pitch = H.vocal_pitch
 	vocal_pitch_range = H.vocal_pitch_range
+	vocal_volume = H.vocal_volume
 	ooc_notes = H.ooc_notes
 	erpprefs = H.erpprefs
 	if(!H.dna)
@@ -93,6 +105,8 @@
 	H.flavortext = flavortext
 	H.nsfwflavortext = nsfwflavortext
 	H.headshot_link = headshot_link
+	COPY_GALLERY_PRESENTATION(H, src)
+	H.headshot_frame_chat = headshot_frame_chat
 	H.rumour = rumour
 	H.noble_gossip = noble_gossip
 	H.img_gallery = img_gallery?.Copy()
@@ -111,6 +125,7 @@
 	H.vocal_speed = vocal_speed
 	H.vocal_pitch = vocal_pitch
 	H.vocal_pitch_range = vocal_pitch_range
+	H.vocal_volume = vocal_volume
 	H.ooc_notes = ooc_notes
 	H.erpprefs = erpprefs
 

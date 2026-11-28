@@ -105,7 +105,7 @@
 
 /datum/surgery_step/cauterize/validate_bodypart(mob/user, mob/living/carbon/target, obj/item/bodypart/bodypart, target_zone)
 	// If you have medicine expert, you can caut thru armor. Also fails if they're in cmode.
-	if(islist(user.status_traits) && ("Medicine Expert" in user.status_traits) && (target.cmode == 0)) 
+	if(user.get_skill_level(skill_used) >= SKILL_LEVEL_MASTER && (target.cmode == 0)) 
 		ignore_clothes = TRUE
 	else // IDK if this is necessary but probably good 4 clarification.
 		ignore_clothes = FALSE
@@ -126,12 +126,23 @@
 		span_notice("[user] cauterizes the wounds on [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] cauterizes the wounds on [target]'s [parse_zone(target_zone)]."))
 	var/obj/item/bodypart/bodypart = target.get_bodypart(check_zone(target_zone))
+	var/skill_level = user.get_skill_level(skill_used)
+	var/damage = 30 - skill_level * 5
 	if(bodypart)
 		for(var/datum/wound/bleeder in bodypart.wounds)
 			bleeder.cauterize_wound()
-		bodypart.receive_damage(burn = 25) //painful, but the wounds go away eh?
-	if (target.has_status_effect(/datum/status_effect/buff/ozium))
-		target.emote ("groan")
+		bodypart.receive_damage(burn = damage) //down to 0 at legendary medicine
+	if (!target.has_status_effect(/datum/status_effect/buff/ozium) && damage > 0)
+		target.emote("scream")
+	return TRUE
+
+/datum/surgery_step/cauterize/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
+	display_results(user, target, span_notice("I'm carless and burn [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] is carless and burns [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] is carless and burns [target]'s [parse_zone(target_zone)]."))
+	var/obj/item/bodypart/bodypart = target.get_bodypart(check_zone(target_zone))
+	if(bodypart)
+		bodypart.receive_damage(burn = 50)
 	if (!target.has_status_effect(/datum/status_effect/buff/ozium))
 		target.emote("scream")
 	return TRUE

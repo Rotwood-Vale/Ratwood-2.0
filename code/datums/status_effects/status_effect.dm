@@ -18,6 +18,8 @@
 	/// While processing, this becomes the world.time when the next tick will occur.
 	/// -1 = will prevent ticks, and if duration is also unlimited (-1), stop processing wholesale.
 	var/tick_interval = 1 SECONDS
+	/// world.time of the last [proc/tick], so it can be told how long it's really been, ticks run late under load
+	var/last_tick_time
 	/// The mob affected by the status effect.
 	var/mob/living/owner
 	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
@@ -85,6 +87,7 @@
 	if(duration != -1)
 		duration = world.time + duration
 	tick_interval = world.time + tick_interval
+	last_tick_time = world.time
 	if(alert_type)
 		var/atom/movable/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A?.attached_effect = src //so the alert can reference us, if it needs to
@@ -118,7 +121,8 @@
 		qdel(src)
 		return
 	if(tick_interval < world.time)
-		tick(wait)
+		tick(wait, world.time - last_tick_time)
+		last_tick_time = world.time
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
@@ -140,7 +144,9 @@
 		owner.change_stat(S, effectedstats[S])
 	return TRUE
 
-/datum/status_effect/proc/tick() //Called every tick.
+/// Called every tick. wait is the processing subsystem's own wait, delta_time is how long it has really been since
+/// the last tick, which is at least tick_interval and more when the server is under load
+/datum/status_effect/proc/tick(wait, delta_time)
 
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
 	for(var/S in effectedstats)
@@ -276,17 +282,24 @@
 	var/effect_id = initial(checked_effect.id)
 	return status_effects_by_id[effect_id]
 
-/mob/living/proc/has_status_effect_list(datum/status_effect/checked_effect)
+/**
+ * Returns a list of all status effects that share the passed effect type's ID
+ *
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
+ *
+ * Returns a list
+ */
+/mob/proc/has_status_effect_list(datum/status_effect/checked_effect)
+	// See [/mob/proc/has_status_effect] for reason behind having this on the mob level
+	return null
+
+/mob/living/has_status_effect_list(datum/status_effect/checked_effect)
 	RETURN_TYPE(/list)
 
 	var/list/effects_found = list()
-	if(!status_effects_by_id)
-		return effects_found
-
-	var/effect_id = initial(checked_effect.id)
-	var/datum/status_effect/S = status_effects_by_id[effect_id]
-	if(S)
-		effects_found += S
+	for(var/datum/status_effect/present_effect as anything in status_effects)
+		if(present_effect.id == initial(checked_effect.id))
+			effects_found += present_effect
 
 	return effects_found
 

@@ -41,6 +41,15 @@
 	var/obj/effect/proc_holder/spell/user_required_spell_type
 	/// If solo is TRUE, user must equal target.
 	var/solo = FALSE
+	/// TRUE for acts that use both cocks of a double pintle. Only used for wording.
+	var/uses_both_cocks = FALSE
+
+/// TRUE if this action penetrates with the user's cock, or with the target's cock when cock_on_target is set.
+/datum/sex_action/proc/is_cock_penetration(cock_on_target = FALSE)
+	if(!(category & SEX_CATEGORY_PENETRATE))
+		return FALSE
+	var/cock_part = cock_on_target ? target_sex_part : user_sex_part
+	return (cock_part & SEX_PART_COCK) != 0
 
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(solo)
@@ -263,7 +272,7 @@
 	return "chastity device"
 
 // Unified sound helper: supports single sound or list input with optional chance gating.
-/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, frequency = -1)
+/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, extrarange = -1)
 	if(!target || !sound_to_play)
 		return FALSE
 	if(chance < 100 && !prob(chance))
@@ -271,7 +280,7 @@
 	if(islist(sound_to_play))
 		if(!length(sound_to_play))
 			return FALSE
-		playsound(get_turf(target), pick(sound_to_play), volume, vary, frequency)
+		playsound_erp(get_turf(target), pick(sound_to_play), volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 		return TRUE
-	playsound(get_turf(target), sound_to_play, volume, vary, frequency)
+	playsound_erp(get_turf(target), sound_to_play, volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 	return TRUE

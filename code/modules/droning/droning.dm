@@ -6,6 +6,10 @@ SUBSYSTEM_DEF(droning)
 /datum/controller/subsystem/droning/proc/get_channel_volume(client/listener, channel)
 	if(!listener?.prefs)
 		return 50
+	return listener.prefs.at_overall(get_channel_slider(listener, channel))
+
+/// The slider a music or ambience channel follows, before Master
+/datum/controller/subsystem/droning/proc/get_channel_slider(client/listener, channel)
 	if(channel == CHANNEL_BUZZ || channel == CHANNEL_CMUSIC1 || channel == CHANNEL_CMUSIC2 || channel == CHANNEL_CMUSIC3 || channel == CHANNEL_CMUSIC4)
 		var/combat_volume = listener.prefs.combatmusicvol
 		if(!isnum(combat_volume))
@@ -102,9 +106,6 @@ SUBSYSTEM_DEF(droning)
 
 	var/frenq = 1
 
-	if(HAS_TRAIT(dreamer.mob, TRAIT_DRUQK))
-		frenq = -1
-
 	if(ishuman(dreamer.mob))
 		var/mob/living/carbon/human/H = dreamer.mob
 		if(H.has_status_effect(/datum/status_effect/buff/moondust))
@@ -118,6 +119,7 @@ SUBSYSTEM_DEF(droning)
 	combat_music.frequency = frenq
 	if(!HAS_TRAIT(dreamer.mob, TRAIT_DRUQK))
 		combat_music.pitch = 1 / combat_music.frequency
+	combat_music.status = SOUND_STREAM
 	SEND_SOUND(dreamer, combat_music)
 	dreamer.droning_sound = combat_music
 	dreamer.last_droning_sound = combat_music.file
@@ -137,6 +139,7 @@ SUBSYSTEM_DEF(droning)
 			droning.file = 'sound/music/dreamer_is_still_asleep.ogg'
 		else if(HAS_TRAIT(listener.mob, TRAIT_DRUQK))
 			droning.file = 'sound/music/spice.ogg'
+		droning.status = SOUND_STREAM
 
 		listener.droning_sound = droning
 		listener.last_droning_sound = area_player.droning_sound
@@ -160,6 +163,7 @@ SUBSYSTEM_DEF(droning)
 			droning.file = 'sound/music/dreamer_is_still_asleep.ogg'
 		else if(HAS_TRAIT(listener.mob, TRAIT_DRUQK))
 			droning.file = 'sound/music/spice.ogg'
+		droning.status = SOUND_STREAM
 
 		listener.droning_sound = droning
 		listener.last_droning_sound = area_player.droning_sound_current
@@ -197,7 +201,7 @@ SUBSYSTEM_DEF(droning)
 	if(!amb_sound_list)
 		return
 	var/loop_file = pick(amb_sound_list)
-	var/sound/loop_sound = sound(loop_file, repeat = TRUE, wait = 0, channel = CHANNEL_AMBIENCE, volume = dreamer?.prefs.ambiencevol)
+	var/sound/loop_sound = sound(loop_file, repeat = TRUE, wait = 0, channel = CHANNEL_AMBIENCE, volume = get_channel_volume(dreamer, CHANNEL_AMBIENCE))
 	SEND_SOUND(dreamer, loop_sound)
 	dreamer.loop_sound = TRUE
 	dreamer.loop_sound_file = loop_file
@@ -227,6 +231,6 @@ SUBSYSTEM_DEF(droning)
 
 	if(!amb_sound_list)
 		return
-	var/sound/loop_sound = sound(pick(amb_sound_list), repeat = TRUE, wait = 0, channel = CHANNEL_RAIN, volume = dreamer?.prefs.ambiencevol)
+	var/sound/loop_sound = sound(pick(amb_sound_list), repeat = TRUE, wait = 0, channel = CHANNEL_RAIN, volume = get_channel_volume(dreamer, CHANNEL_RAIN))
 	SEND_SOUND(dreamer, loop_sound)
 	dreamer.rain_sound = TRUE

@@ -14,7 +14,6 @@
 	hide_charge_effect = TRUE
 	gesture_required = TRUE // Mobility spell
 	spell_tier = 2
-	req_items = list(/obj/item/clothing/mask/rogue/lordmask/naledi)
 	// This is super telegraphed so it shouldn't need any whisper. It can stay silent as a unique.
 	var/area_of_effect = 1
 	var/max_range = 7
@@ -22,7 +21,6 @@
 	var/turf/user_turf
 	var/mutable_appearance/tile_effect
 	var/mutable_appearance/target_effect
-	var/datum/looping_sound/invokeshadow/shadowloop
 
 //Resets the tile and turf effects.
 /obj/effect/proc_holder/spell/invoked/shadowstep/proc/reset(silent = FALSE)

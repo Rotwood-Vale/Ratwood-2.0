@@ -13,18 +13,25 @@
 	skin_tone = skins[pick(skins)]
 	eye_color = random_eye_color()
 	if(ft_reset)
+		slot_randomized = TRUE
+		reset_gallery_links()
 		flavortext = null
 		nsfwflavortext = null
 		ooc_extra_img = null
 		ooc_extra_img_link = null
+		ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 		nsfw_ooc_extra_img = null
 		nsfw_ooc_extra_img_link = null
+		nsfw_ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 		erpprefs = null
 		ooc_notes = null
 		ooc_extra = null
 		song_title = null
 		song_artist = null
 		headshot_link = null
+		reset_gallery_frame(src)
+		headshot_frame_chat = FALSE
+		image_backdrop = GALLERY_BACKDROP_TAVERN
 		img_gallery = null
 		nsfw_img_gallery = null
 	features = pref_species.get_random_features()
@@ -35,6 +42,7 @@
 	bark_variance = BARK_VARIANCE_RAND
 	reset_all_customizer_accessory_colors()
 	randomize_all_customizer_accessories()
+	refresh_character_gallery()
 
 /datum/preferences/proc/random_species()
 	var/random_species_type = GLOB.species_list[pick(get_selectable_species())]

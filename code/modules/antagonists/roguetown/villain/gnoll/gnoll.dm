@@ -14,7 +14,6 @@
 	max_integrity = 675
 	item_flags = DROPDEL
 	repair_time = 14 SECONDS
-	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/Initialize(mapload)
 	. = ..()
@@ -22,6 +21,9 @@
 	// loc is shitcode here because the skin is created inside the gnoll so we can juse abuse that logic
 	RegisterSignal(loc, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by), override = TRUE)
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "HIDE", "#GNOLLED")/// no one should ever see this unless they spawn in gnoll skin via the game panel
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/proc/on_attacked_by()
+	return
 
 /datum/antagonist/gnoll
 	name = "Gnoll"
@@ -155,7 +157,7 @@
 	return "Tracked: [target_display]"
 
 /mob/living/carbon/human/proc/gnoll_can_feed_heal()
-	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+	if(is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder) || is_burning_with(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 		to_chat(src, span_notice("My power is weakened, I cannot heal!"))
 		return FALSE
 	return TRUE
@@ -238,7 +240,7 @@
 	swingdelay = 1 SECONDS
 	clickcd = CLICK_CD_CHARGED
 	parriable_intent = FALSE
-	swingdelay_type = SWINGDELAY_CANCEL
+	swingdelay_type = SWINGDELAY_PENALTY
 
 /datum/intent/mace/strike/gnoll
 	name = "armor rending strike"
