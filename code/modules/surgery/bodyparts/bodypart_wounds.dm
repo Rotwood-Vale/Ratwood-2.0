@@ -585,11 +585,12 @@
 	return FALSE
 
 /// Embeds an object in this bodypart
-/obj/item/bodypart/proc/add_embedded_object(obj/item/embedder, silent = FALSE, crit_message = FALSE)
+/obj/item/bodypart/proc/add_embedded_object(obj/item/embedder, silent = FALSE, crit_message = FALSE, entry_side = EMBED_ENTRY_FRONT)
 	if(!embedder || !can_embed(embedder))
 		return FALSE
 	if(owner && ((owner.status_flags & GODMODE) || HAS_TRAIT(owner, TRAIT_PIERCEIMMUNE)))
 		return FALSE
+	embedder.embedded_entry_side = entry_side
 	if(istype(embedder, /obj/item/natural/worms/leech))
 		record_round_statistic(STATS_LEECHES_EMBEDDED)
 	LAZYADD(embedded_objects, embedder)
@@ -613,6 +614,8 @@
 			owner.adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
 			to_chat(owner, span_danger("the [embedder] in your body painfully jostles!"))
 		owner.mark_zone_selector_hud_dirty()
+		owner.update_embedded_leg_slowdown()
+		owner.update_embedded_arrow_overlays()
 	return TRUE
 
 /// Removes an embedded object from this bodypart
@@ -625,6 +628,7 @@
 		return FALSE
 	LAZYREMOVE(embedded_objects, embedder)
 	embedder.is_embedded = FALSE
+	embedder.embedded_entry_side = null
 	var/drop_location = owner?.drop_location() || drop_location()
 	if(!QDELETED(embedder))
 		if(drop_location)
@@ -636,6 +640,8 @@
 			owner.clear_alert("embeddedobject")
 		update_disabled()
 		owner.mark_zone_selector_hud_dirty()
+		owner.update_embedded_leg_slowdown()
+		owner.update_embedded_arrow_overlays()
 	return TRUE
 
 /obj/item/bodypart/proc/try_bandage(obj/item/new_bandage)

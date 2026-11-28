@@ -1,10 +1,3 @@
-#define ARROW_DAMAGE		50
-#define BOLT_DAMAGE			70
-#define BULLET_DAMAGE		80
-#define ARROW_PENETRATION	40
-#define BOLT_PENETRATION	50
-#define BULLET_PENETRATION	100
-
 //parent of all bolts and arrows ฅ^•ﻌ•^ฅ
 /obj/item/ammo_casing/caseless/rogue
 	firing_effect_type = null
@@ -167,6 +160,19 @@
 	dropshrink = 0.6
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
 	max_integrity = 10
+	// A lodged arrow stays until pulled out, which takes time and hurts.
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 1, "embedded_unsafe_removal_pain_multiplier" = 10)
+
+/// Working an arrow out of yourself takes a moment. Someone else can pull it straight out.
+/obj/item/ammo_casing/caseless/rogue/arrow/get_embed_removal_time(mob/user, mob/living/target)
+	if(user != target)
+		return 0
+	return ..()
+
+/// Lodged arrows are drawn from their projectile's sprite.
+/obj/item/ammo_casing/caseless/rogue/arrow/get_embedded_overlay_state()
+	var/obj/projectile/arrow_type = projectile_type
+	return arrow_type ? initial(arrow_type.icon_state) : null
 
 /obj/item/ammo_casing/caseless/rogue/arrow/blunt
 	name = "blunt arrow"
@@ -198,6 +204,8 @@
 	to iron-heads on another. With flight feathers lashed it will fly true to its \
 	shooters will."
 	projectile_type = /obj/projectile/bullet/reusable/arrow/iron
+	// Barbed: bleeds more and tears coming out.
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 1.5, "embedded_unsafe_removal_pain_multiplier" = 15)
 
 /obj/item/ammo_casing/caseless/rogue/arrow/iron/decrepit
 	name = "decrepit broadhead arrow"
@@ -212,6 +220,8 @@
 	desc = "Bundles of steam straightened dowels are notched at one end and fastened \
 	to steel-heads on another. Crafted for more well-prepared targets."
 	projectile_type = /obj/projectile/bullet/reusable/arrow/steel
+	// Narrow point: a cleaner wound.
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 0.75, "embedded_unsafe_removal_pain_multiplier" = 8)
 
 /obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient
 	name = "ancient bodkin arrow"
@@ -234,6 +244,11 @@
 	woundclass = BCLASS_PIERCE
 	flag = "piercing"
 	speed = 0.4
+	// Bow damage scales hard with PER, so arrows wear armor at a fraction of it: roughly a sword cut when they glance off,
+	// between a sword and a mace when they get through.
+	pen_integrity_factor = 0.5
+	blocked_integrity_factor = 0.25
+	embed_needs_full_pen = TRUE
 
 /obj/projectile/bullet/reusable/arrow/on_hit(atom/target)
 	..()
@@ -271,7 +286,7 @@
 
 	damage = 40
 	armor_penetration = PEN_LIGHT
-	embedchance = 30
+	embedchance = 60
 	npc_simple_damage_mult = 2
 
 /obj/projectile/bullet/reusable/arrow/iron/decrepit
@@ -287,9 +302,11 @@
 	accuracy = 75
 	damage = 25
 	armor_penetration = PEN_HEAVY
-	embedchance = 80
+	embedchance = 50
 	speed = 0.6
 	npc_simple_damage_mult = 3
+	// Bodkins beat most armor, so they wear it less per hit than blunt weapons do.
+	pen_integrity_factor = 0.35
 
 /obj/projectile/bullet/reusable/arrow/steel/ancient
 	name = "ancient bodkin arrow"
@@ -311,14 +328,15 @@
 	desc = "A magnificent arrow of blacksteel. It shreds flesh, pierces armor, and \
 	always lands where one aims; perfect, yet marred by a prohibitively high cost."
 	projectile_type = /obj/projectile/bullet/reusable/arrow/blacksteel
+	embedding = list("embedded_fall_chance" = 0, "embedded_unsafe_removal_time" = 15, "embedded_bloodloss" = 0.75, "embedded_unsafe_removal_pain_multiplier" = 8)
 
 /obj/projectile/bullet/reusable/arrow/blacksteel
 	name = "blacksteel arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/blacksteel
 	damage = 50
-	armor_penetration = PEN_HEAVY
+	armor_penetration = PEN_BSTEEL
 	icon_state = "blacksteelarrow_proj"
-	embedchance = 80
+	embedchance = 50
 	npc_simple_damage_mult = 7 //..or 350 damage against a mindless mob.
 	accuracy = 100
 
@@ -1129,10 +1147,3 @@
 		var/mob/living/M = target
 		M.apply_status_effect(/datum/status_effect/debuff/exposed)
 		M.blind_eyes(6)
-
-#undef ARROW_DAMAGE
-#undef BOLT_DAMAGE
-#undef BULLET_DAMAGE
-#undef ARROW_PENETRATION
-#undef BOLT_PENETRATION
-#undef BULLET_PENETRATION

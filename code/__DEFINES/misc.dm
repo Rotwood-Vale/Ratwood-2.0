@@ -16,6 +16,7 @@
 
 //Human Overlays Indexes/////////
 
+#define EMBEDDED_ARROWS_CACHE_INDEX	57	// Cache only; use EMBEDDED_ARROWS_LAYER for the fractional render layer.
 #define UNDER_ARMOR_CACHE_INDEX	56		// Cache only; use UNDER_ARMOR_LAYER for the fractional render layer.
 #define JOYBRINGER_LAYER		55
 #define BLACK_ROT_LAYER			54
@@ -75,7 +76,7 @@
 #define SUNDER_LAYER			3
 #define FIRE_LAYER				2		//If you're on fire
 #define TURF_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			56		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			57		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 /// Name given to blood overlays on worn clothing and hands, so snapshots (credits portraits) can strip them.
 #define BLOOD_OVERLAY_NAME "blood overlay"
@@ -89,6 +90,7 @@
 #define UNDER_ARMOR_LAYER			(ARMOR_LAYER+0.5)
 #define UNDER_ARMORSLEEVE_LAYER		(ARMORSLEEVE_LAYER+0.5)
 #define UNDER_HAT_LAYER			(HEAD_LAYER+1)
+#define EMBEDDED_ARROWS_LAYER		(HANDS_LAYER+0.5)	// Lodged arrows: over everything worn, under held items.
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 #define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)

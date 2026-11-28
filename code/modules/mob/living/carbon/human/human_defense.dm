@@ -43,12 +43,16 @@
 					consume_debuff = FALSE
 					intdamage = damage * (1 - (pen_info * PEN_PASSTHROUGH_RATIO))
 			else
-				if(armor_penetration == protection)
+				// Projectiles can set their own share of damage that goes into the armor (arrows do).
+				var/obj/projectile/proj = istype(used_weapon, /obj/projectile) ? used_weapon : null
+				if(armor_penetration >= protection)
 					consume_debuff = FALSE
-					intdamage = damage * PEN_PASSTHROUGH_PROJ_EQUAL
-				if(armor_penetration > protection)
-					consume_debuff = FALSE
-					intdamage = damage * PEN_PASSTHROUGH_PROJ_MORE
+					if(proj && !isnull(proj.pen_integrity_factor))
+						intdamage = damage * proj.pen_integrity_factor
+					else
+						intdamage = damage * (armor_penetration > protection ? PEN_PASSTHROUGH_PROJ_MORE : PEN_PASSTHROUGH_PROJ_EQUAL)
+				else if(proj && !isnull(proj.blocked_integrity_factor))
+					intdamage = damage * proj.blocked_integrity_factor
 
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
@@ -143,6 +147,10 @@
 
 	if(physiology)
 		protection += physiology.armor.getRating(d_type)
+
+	if(istype(used_weapon, /obj/projectile))
+		var/obj/projectile/struck_by = used_weapon
+		struck_by.struck_armor_tier = protection
 
 	if(dr_armor_present && protection < 1)
 		return protection + 1
@@ -300,7 +308,7 @@
 			if(can_embed(I) && prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 				//throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 				var/obj/item/bodypart/L = pick(bodyparts)
-				L.add_embedded_object(I, silent = FALSE, crit_message = TRUE)
+				L.add_embedded_object(I, silent = FALSE, crit_message = TRUE, entry_side = get_embed_entry_side(throwingdatum?.thrower || I.thrownby))
 				emote("embed")
 				L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
 //					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='danger'>[I] embeds itself in my [L.name]!</span>")

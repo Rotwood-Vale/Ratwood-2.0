@@ -1,9 +1,25 @@
 //intent datums ฅ^•ﻌ•^ฅ
 
+/// Seconds at full draw before holding starts to drain stamina.
+#define BOW_HOLD_GRACE (1 SECONDS)
+/// Fraction of the hold drain removed per bow skill level.
+#define BOW_HOLD_DRAIN_SKILL_REDUCTION 0.1
+
+/// Shared hold drain for bow intents: free for a moment after reaching full draw, then reduced by bow skill.
+/proc/bow_hold_drain(datum/intent/bow_intent, held_for)
+	if(held_for < BOW_HOLD_GRACE)
+		return 0
+	var/skill = bow_intent.mastermob ? bow_intent.mastermob.get_skill_level(/datum/skill/combat/bows) : 0
+	return max(0, bow_intent.chargedrain * (1 - (BOW_HOLD_DRAIN_SKILL_REDUCTION * skill)))
+
 /datum/intent/shoot/bow
 	chargetime = 1 //used for edge cases only, /datum/intent/shoot/bow/get_chargetime handles the actual number
 	chargedrain = 2
 	charging_slowdown = 3
+	ease_off_on_exhaust = TRUE
+
+/datum/intent/shoot/bow/get_chargedrain(held_for = 0)
+	return bow_hold_drain(src, held_for)
 
 /datum/intent/shoot/bow/can_charge(atom/clicked_object)
 	if(mastermob?.get_num_arms(FALSE) < 2 || mastermob.get_inactive_held_item())
@@ -42,6 +58,10 @@
 	chargetime = 1
 	chargedrain = 2
 	charging_slowdown = 3
+	ease_off_on_exhaust = TRUE
+
+/datum/intent/arc/bow/get_chargedrain(held_for = 0)
+	return bow_hold_drain(src, held_for)
 
 /datum/intent/arc/bow/can_charge(atom/clicked_object)
 	if(mastermob?.get_num_arms(FALSE) < 2 || mastermob.get_inactive_held_item())
@@ -198,6 +218,14 @@
 					)
 
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Bow damage scales with <b>PERCEPTION</b>, with diminishing returns past [RANGED_STAT_SOFTCAP]. \
+	Bow skill shortens the draw and lets me hold a full draw for longer.")
+	. += span_info("Holding a full draw drains stamina. If I run out, I ease the string off instead of loosing.")
+	if(penfactor > 0)
+		. += span_info("This bow <b>increases</b> arrow penetration by <b>[penfactor]</b> tier(s) on a full draw.")
+
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/shoot_with_empty_chamber()
 	return
 
@@ -217,28 +245,25 @@
 	if(user.get_inactive_held_item() || user.get_num_arms(FALSE) < 2)
 		to_chat(user, span_warning("I need a free hand to fire \the [src]!"))
 		return FALSE
-	if(user.client)
-		if(user.client.chargedprog >= 100)
-			spread = 0
-		else
-			spread = 150 - (150 * (user.client.chargedprog / 100))
-	else
+	// Clientless shooters count as fully drawn.
+	var/draw_progress = user.client ? user.client.chargedprog : 100
+	var/full_draw = draw_progress >= 100
+	if(full_draw)
 		spread = 0
+	else
+		spread = 150 - (150 * (draw_progress / 100))
 	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
 		var/obj/projectile/BB = CB.BB
 		BB.accuracy += accfactor * (user.STAPER - 9) * 4 // 9+ PER gives +4 per level. Exponential.
 		BB.bonus_accuracy += (user.STAPER - 8) * 3 // 8+ PER gives +3 per level. Does not decrease over range.
 		BB.bonus_accuracy += (user.get_skill_level(/datum/skill/combat/bows) * 5) // +5 per Bow level.
 
-		if(user.client.chargedprog < 100)
-			BB.damage -= (BB.damage * (user.client.chargedprog / 100))
+		if(full_draw)
+			BB.armor_penetration = clamp(BB.armor_penetration + penfactor, PEN_NONE, PEN_BSTEEL)
+		else
+			BB.damage *= (draw_progress / 100) // A partial draw hits for that share of full damage.
 			BB.embedchance /= 2
 			BB.accuracy -= 15
-		var/perception_modifier = user.STAPER
-		if(perception_modifier > 15) // Bow damage hardcapped at 15 PER
-			perception_modifier = 15
-		if(perception_modifier < 10)
-			perception_modifier = 10
 		var/per_scaling = 1 + (min(user.STAPER, RANGED_STAT_SOFTCAP) * RANGED_STAT_MULT) + (max(0, user.STAPER - RANGED_STAT_SOFTCAP) * RANGED_STAT_CAPPEDMULT)
 		BB.damage *= damfactor * per_scaling
 	return ..()
@@ -387,6 +412,7 @@
 	force = 12
 	damfactor = 1.3
 	accfactor = 0.9
+	penfactor = 1
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/getonmobprop(tag)
 	. = ..()
@@ -542,3 +568,6 @@
 		/datum/intent/arc/bow/short,
 		INTENT_GENERIC,
 		)
+
+#undef BOW_HOLD_GRACE
+#undef BOW_HOLD_DRAIN_SKILL_REDUCTION

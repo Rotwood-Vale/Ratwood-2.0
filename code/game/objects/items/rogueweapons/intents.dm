@@ -26,6 +26,8 @@
 	var/chargetime = 0
 	/// Amount of fatigue removed per tick of full charge.
 	var/chargedrain = 0
+	/// If running out of stamina while holding a full charge would exhaust us, cancel the charge instead.
+	var/ease_off_on_exhaust = FALSE
 	/// Fatigue removed on release.
 	var/releasedrain = 1
 	/// Extra fatigue removed on missing the target, or if the enemy dodges.

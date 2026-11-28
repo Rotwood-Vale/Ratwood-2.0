@@ -63,6 +63,8 @@
 	var/goal
 	var/progress
 	var/doneset
+	/// world.time at which the current charge reached full.
+	var/full_charge_time = 0
 	var/aghost_toggle
 	var/show_lobby_ooc = TRUE // Admin preference: see lobby OOC even when not in lobby
 	var/charge_start_time = 0
@@ -108,6 +110,7 @@
 	mob.atkswinging = null
 	charging = 0
 	chargedprog = 0
+	full_charge_time = 0
 
 	if(was_charging)
 		STOP_PROCESSING(SSmousecharge, src)
@@ -245,6 +248,7 @@
 
 	if(mob.stat != CONSCIOUS)
 		chargedprog = 0
+		full_charge_time = 0
 		mob.atkswinging = null
 		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 		return
@@ -289,6 +293,7 @@
 		lastplayed = 0
 		doneset = 0
 		chargedprog = 0
+		full_charge_time = 0
 		START_PROCESSING(SSmousecharge, src)
 
 /client/Destroy()
@@ -321,6 +326,7 @@
 		else //Fully charged spell
 			if(!doneset)
 				doneset = 1
+				full_charge_time = world.time
 				chargedprog = 100
 				if(!(mob.used_intent.charge_pointer & mob.used_intent.charged_pointer))
 					mouse_pointer_icon = 'icons/effects/mousemice/charge/default/100.dmi'
@@ -337,7 +343,11 @@
 				if(mouse_pointer_icon != new_icon)
 					mouse_pointer_icon = new_icon
 			else
-				if(!L.stamina_add(L.used_intent.chargedrain))
+				var/drain = L.used_intent.get_chargedrain(world.time - full_charge_time)
+				if(L.used_intent.ease_off_on_exhaust && L.would_exhaust(drain))
+					to_chat(L, span_warning("My arms tremble; I ease off before I collapse."))
+					L.stop_attack()
+				else if(!L.stamina_add(drain))
 					L.stop_attack()
 		return TRUE
 	else

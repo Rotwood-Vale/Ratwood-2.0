@@ -104,6 +104,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/embedding_behavior/embedding
 	var/is_embedded = FALSE
+	/// EMBED_ENTRY_* side this item went into its current host from, if known. Used to draw it on the right side.
+	var/embedded_entry_side
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0

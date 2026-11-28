@@ -52,7 +52,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
 		if(!I) //no item, no limb, or item is not in limb or in the person anymore
 			return
-		var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
+		var/time_taken = I.get_embed_removal_time(usr, src)
 		if(usr == src)
 			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='warning'>I attempt to remove [I] from my [L.name]...</span>")
 		else
