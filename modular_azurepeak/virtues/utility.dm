@@ -14,6 +14,13 @@
 			REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
 		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
 
+/datum/virtue/utility/amphibian
+	name = "Amphibian"
+	desc = "By some quirk of biology I am able to breathe in water as easily as air."
+	added_traits = list(TRAIT_WATERBREATHING, TRAIT_WATERLOVING)
+	added_skills = list(list(/datum/skill/misc/swimming, 2, 4))
+	incompatible_traits = list(TRAIT_WATERBREATHING, TRAIT_WATERLOVING)
+
 /datum/virtue/utility/deadened
 	name = "Deadened"
 	desc = "Some terrible incident colours my past, and now, I feel nothing."
