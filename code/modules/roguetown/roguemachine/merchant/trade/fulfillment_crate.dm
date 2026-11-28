@@ -210,10 +210,6 @@
 	if(!SSmerchant_trade)
 		return
 	if(istype(I, /obj/structure/handcart))
-		// Ratwood deviation: AP's handcart tracks contents in contained_items with a remove_from()
-		// proc; ES's handcart (code/game/objects/structures/roguetown/handcart.dm) uses stuff_shit
-		// instead and has no remove_from() - forceMove() out + manually clearing stuff_shit/
-		// current_capacity mirrors what ES's own dump_contents() does.
 		var/obj/structure/handcart/cart = I
 		var/turf/cart_loc = get_turf(cart)
 		var/list/cart_contents = cart.stuff_shit.Copy()
@@ -222,6 +218,7 @@
 				attempt_deposit(cart_content, user, message, FALSE, tally)
 		for(var/atom/movable/remaining in cart_contents)
 			if(!QDELETED(remaining))
+				cart.remove_from(remaining)
 				remaining.forceMove(cart_loc)
 		cart.stuff_shit = list()
 		cart.current_capacity = 0

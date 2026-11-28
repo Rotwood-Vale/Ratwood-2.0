@@ -16,10 +16,35 @@
 	return ..()
 
 /datum/crafting_recipe/roguetown/structure/handcart
-	name = "handcart"
+	name = "wooden handcart"
 	result = /obj/structure/handcart
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/rope = 1)
+
+/datum/crafting_recipe/roguetown/structure/handcart/bronze
+	name = "bronze handcart"
+	result = /obj/structure/handcart/bronze
+	reqs = list(/obj/item/natural/wood/plank = 3,
+				/obj/item/ingot/bronze = 4,
+				/obj/item/roguegear/bronze = 2)
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/structure/handcart/iron
+	name = "iron handcart"
+	result = /obj/structure/handcart/iron
+	reqs = list(/obj/item/natural/wood/plank = 3,
+				/obj/item/ingot/iron = 2)
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/handcart/steel
+	name = "steel handcart"
+	result = /obj/structure/handcart/steel
+	reqs = list(/obj/item/natural/wood/plank = 5,
+				/obj/item/ingot/steel = 5)
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/structure/noose
 	name = "noose"
