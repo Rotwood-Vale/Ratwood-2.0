@@ -51,10 +51,25 @@
 
 /obj/structure/stairs/proc/user_walk_into_target_loc(atom/movable/AM, dirmove)
 	var/turf/newtarg = get_target_loc(dirmove)
-	if(newtarg)
-		INVOKE_ASYNC(src, GLOBAL_PROC_REF(movable_travel_z_level), AM, newtarg)
-		return TRUE
-	return FALSE
+	if(!newtarg)
+		return FALSE
+	if(iscarbon(AM))
+		var/mob/living/carbon/C = AM
+		var/chance = 0
+		chance -= (C.STALUC-10) * 5
+		if(C.has_status_effect(/datum/status_effect/buff/drunk))
+			chance += 20
+		if(C.has_status_effect(/datum/status_effect/incapacitating/off_balanced))
+			chance += 50
+		chance = clamp(chance, 0, 100)
+		if(prob(chance))
+			C.visible_message("<span class='danger'>You stumble on the stairs!</span>")
+			C.Stun(1 SECONDS)
+			C.Knockdown(1 SECONDS)
+			return FALSE
+	INVOKE_ASYNC(src, GLOBAL_PROC_REF(movable_travel_z_level), AM, newtarg)
+	return TRUE
+	
 
 /obj/structure/stairs/stone
 	name = "stone stairs"
