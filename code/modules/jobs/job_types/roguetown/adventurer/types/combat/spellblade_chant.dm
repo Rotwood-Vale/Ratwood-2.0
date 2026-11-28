@@ -68,7 +68,7 @@
 <li><b>Thornfall</b> — Rain arcyne thorns on a 3x3 area up to 7 tiles away after a short telegraph. Costs no arrows. Empowered: doubles damage.</li>
 <li><b>Withdraw</b> — Leap 3 tiles away from your target, passing through enemies. Empowered: leave a burst behind that batters and hurls back anyone adjacent.</li>
 <li><b>Skyrend</b> — Loose a volley of arcyne arrows that follow your target. 7 Momentum: 5 arrows. At 10: 8 arrows. Arrows can be caught by shields or anyone in the way!</li>
-<li><b>Bound Bow</b> — Each arrow hit builds 1 Momentum. Empower Weapon makes your next arrow strike exactly where you aimed and punch through armor like a bodkin.</li>
+<li><b>Bound Bow</b> — Each arrow hit builds 2 Momentum. Empower Weapon makes your next arrow strike exactly where you aimed and punch through armor like a bodkin.</li>
 </ul>
 </div>
 <p class="weapon-info">Woad Recurve Bow & Quiver / Elvish Saber or Elvish Dagger</p>
@@ -381,6 +381,7 @@ a.choose-btn:hover {
 <li><b>Maximum (10)</b> — Unleash an empowered version of your ultimate ability.</li>
 <li><b>Empower Weapon</b> — Requires 5+ momentum. Burns ALL momentum to empower your next melee attack, bypassing parry and dodge. Visible red glow warns enemies. 30s cooldown. 8s duration.</li>
 <li><b>Arcyne Surge</b> — Certain non-ultimate abilities that strike 2 or more targets grant 1 bonus Momentum.</li>
+<li><b>Banking</b> — Press Toggle Spell Alt Mode (Shift+G) to bank Momentum. While banking, abilities no longer spend 3 on empowered effects. Press again to resume spending.</li>
 <li><b>Precision</b> — Arcyne strikes roll to place their blow the same way a melee swing does. Skill and Perception above ten both improve where it lands. A blow aimed at the chest always connects.</li>
 </ul>
 </div>

@@ -98,14 +98,19 @@
 	var/mob/living/carbon/human/H = user.mob
 
 	// Check new V2 spell system first
+	var/datum/status_effect/buff/arcyne_momentum/momentum = H.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
 	var/datum/action/cooldown/spell/projectile/v2_spell = H.click_intercept
-	if(istype(v2_spell))
+	if(istype(v2_spell) && (v2_spell.projectile_type_arc || !momentum))
 		v2_spell.toggle_arc_mode(H)
 		return TRUE
 
 	// Check for generic alt mode (ward cycling, etc.)
 	var/datum/action/cooldown/spell/v2_generic = H.click_intercept
 	if(istype(v2_generic) && v2_generic.toggle_alt_mode(H))
+		return TRUE
+
+	if(momentum)
+		momentum.toggle_hold()
 		return TRUE
 
 	// Fall back to old proc_holder system

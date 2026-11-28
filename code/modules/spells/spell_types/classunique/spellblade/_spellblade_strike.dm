@@ -51,8 +51,7 @@
 	else
 		blade_class = BCLASS_CUT
 	var/datum/status_effect/buff/arcyne_momentum/M = H.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
-	if(M && M.stacks >= momentum_cost)
-		M.consume_stacks(momentum_cost)
+	if(M?.try_spend(momentum_cost))
 		empowered = TRUE
 		to_chat(H, span_notice("[momentum_cost] momentum released - empowered strike!"))
 

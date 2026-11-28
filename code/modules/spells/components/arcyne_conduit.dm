@@ -72,7 +72,7 @@
 	var/datum/status_effect/buff/arcyne_momentum/M = firer.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
 	if(!M)
 		return
-	M.add_stacks(1)
+	M.add_stacks(2)
 	last_ranged_gain = world.time
 
 /datum/component/arcyne_conduit/proc/on_examine(datum/source, mob/user, list/examine_list)
