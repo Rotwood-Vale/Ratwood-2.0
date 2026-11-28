@@ -89,6 +89,9 @@ SUBSYSTEM_DEF(familytree)
 		if(saved)
 			links = saved["links"] || list()
 			blocks = saved["blocks"] || list()
+			saved_ads = saved["ads"] || list()
+			for(var/client/C in GLOB.clients)
+				RestoreAd(C.prefs)
 
 	return SS_INIT_SUCCESS
 
