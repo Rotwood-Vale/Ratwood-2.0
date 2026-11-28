@@ -52,6 +52,13 @@
 	else if(ismob(bound_weapon.loc))
 		var/mob/holder = bound_weapon.loc
 		holder.dropItemToGround(bound_weapon, TRUE)
+	else if(istype(bound_weapon.loc, /obj/item/rogueweapon/scabbard))
+		var/obj/item/rogueweapon/scabbard/sheath = bound_weapon.loc
+		sheath.sheathed = null
+		if(ismob(sheath.loc))
+			sheath.update_icon(sheath.loc)
+		else
+			sheath.update_icon()
 
 	var/turf/weapon_turf = get_turf(bound_weapon)
 	if(!weapon_turf)
