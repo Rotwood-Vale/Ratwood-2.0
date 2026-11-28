@@ -81,6 +81,14 @@
 	targets_from = null
 	return ..()
 
+/mob/living/simple_animal/hostile/on_enemy_destroyed(datum/source)
+	. = ..()
+	if(source == target)
+		target = null
+
+/mob/living/simple_animal/hostile/is_watched_target(datum/thing)
+	return thing == target
+
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
 	if(!.) //dead
@@ -307,6 +315,7 @@
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 
 	target = new_target
+	watch_target(target)
 	LosePatience()
 	if(target != null)
 		GainPatience()

@@ -214,6 +214,9 @@ GLOBAL_LIST(teleport_runes)
 			to_chat(user, span_danger("You need [req_invokers - length(invokers)] more adjacent invokers to use this rune in such a manner."))	//Needs more invokers, fails invoke
 			rune_in_use = FALSE
 			fail_invoke()
+	selected_atoms = null
+	atoms_in_range = null
+	ritual_result = null
 	. = ..()
 
 

@@ -129,7 +129,7 @@
 		return TRUE
 	if(CONFIG_GET(flag/auto_deadmin_players) || (client.prefs?.toggles & DEADMIN_ALWAYS))
 		return client.holder.auto_deadmin()
-	if(mind.has_antag_datum(/datum/antagonist) && (CONFIG_GET(flag/auto_deadmin_antagonists) || client.prefs?.toggles & DEADMIN_ANTAGONIST))
+	if(mind?.has_antag_datum(/datum/antagonist) && (CONFIG_GET(flag/auto_deadmin_antagonists) || client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		return client.holder.auto_deadmin()
 	if(job)
 		return SSjob.handle_auto_deadmin_roles(client, job)

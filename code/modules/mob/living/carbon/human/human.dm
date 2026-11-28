@@ -216,6 +216,16 @@
 			if(F)
 				F.remove_pending_invite(real_name)
 		incoming_fellowship_invites.Cut()
+	var/mob/living/carbon/human/spouse = spouse_mob
+	spouse_mob = null
+	if(istype(spouse) && spouse.spouse_mob == src)
+		spouse.spouse_mob = null
+		if(spouse.spouse_indicator)
+			spouse.client?.images -= spouse.spouse_indicator
+			spouse.spouse_indicator = null
+	if(spouse_indicator)
+		client?.images -= spouse_indicator
+		spouse_indicator = null
 	. = ..()
 	// after the parent chain, or damage overlay updates during it put us straight back in
 	STOP_PROCESSING(SSdamoverlays, src)

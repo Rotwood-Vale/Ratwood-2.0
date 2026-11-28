@@ -51,6 +51,7 @@
 
 // Called on the cloak by the linked hood right before it's destroyed.
 /obj/item/clothing/proc/RemoveHood()
+	connected_hood = null
 	hoodtoggled = FALSE
 	if(toggle_icon_state)
 		icon_state = initial(icon_state)

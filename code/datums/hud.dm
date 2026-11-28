@@ -54,6 +54,17 @@ GLOBAL_LIST_INIT(huds, alist(
 	hudatoms -= A
 	return TRUE
 
+/datum/atom_hud/proc/on_member_deleted(atom/A)
+	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
+	if(A in hudatoms)
+		remove_from_hud(A)
+	hudusers -= A
+	next_time_allowed -= A
+	queued_to_see -= A
+	hud_exceptions -= A
+
 /datum/atom_hud/proc/remove_from_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
 	if(!M || !M.client || !A)
 		return
@@ -63,6 +74,7 @@ GLOBAL_LIST_INIT(huds, alist(
 /datum/atom_hud/proc/add_hud_to(mob/M)
 	if(!M)
 		return
+	RegisterSignal(M, COMSIG_QDELETING, PROC_REF(on_member_deleted), override = TRUE)
 	if(!hudusers[M])
 		hudusers[M] = 1
 		if(next_time_allowed[M] > world.time)
@@ -99,6 +111,7 @@ GLOBAL_LIST_INIT(huds, alist(
 /datum/atom_hud/proc/add_to_hud(atom/A)
 	if(!A)
 		return FALSE
+	RegisterSignal(A, COMSIG_QDELETING, PROC_REF(on_member_deleted), override = TRUE)
 	hudatoms |= A
 	for(var/mob/M in hudusers)
 		if(!queued_to_see[M])

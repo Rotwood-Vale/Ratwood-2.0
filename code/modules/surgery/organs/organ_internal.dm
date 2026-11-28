@@ -49,7 +49,7 @@
 	/// What food typepath should be used when eaten
 	var/food_type = /obj/item/reagent_containers/food/snacks/organ
 	/// Original owner of the organ, the one who had it inside them last
-	var/mob/living/carbon/last_owner = null
+	var/datum/weakref/last_owner = null
 	/// Whether or not this organ should be regenerated at /datum/job/proc/equip() in _job.dm via /mob/living/carbon/proc/apply_organ_stuff()
 	var/should_regenerate = FALSE
 	/// Branded enslavement mark on this organ
@@ -75,7 +75,7 @@
 			qdel(replaced)
 
 	owner = M
-	last_owner = M
+	last_owner = WEAKREF(M)
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
 	moveToNullspace()

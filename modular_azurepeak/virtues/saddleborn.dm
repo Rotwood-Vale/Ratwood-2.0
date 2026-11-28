@@ -191,6 +191,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	user.AddSpell(new /obj/effect/proc_holder/spell/self/saddleborn/sendaway)
 	user.AddSpell(new /obj/effect/proc_holder/spell/self/saddleborn/whistle)
 	qdel(src)
+	return FALSE
 
 /obj/effect/proc_holder/spell/self/saddleborn/proc/get_mount(mob/living/carbon/human/user)
 	return user.saddleborn_mount?.resolve()

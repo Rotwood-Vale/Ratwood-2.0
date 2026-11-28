@@ -53,6 +53,9 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	if(simple_wounds)
+		for(var/datum/wound/wound as anything in simple_wounds.Copy())
+			qdel(wound)
 	clear_enemies()
 	enemies = null
 	return ..()
@@ -62,7 +65,7 @@
 	if(!new_enemy || new_enemy == src || (new_enemy in enemies))
 		return
 	LAZYSET(enemies, new_enemy, null)
-	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed))
+	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed), override = TRUE)
 
 /// As add_enemy, but stores an associated value against the mob.
 /mob/living/proc/set_enemy(mob/living/new_enemy, value)
@@ -75,13 +78,25 @@
 	for(var/mob/living/new_enemy as anything in new_enemies)
 		add_enemy(new_enemy)
 
+/// Also drops AI targets, since one QDELETING registration per atom has to serve both
 /mob/living/proc/on_enemy_destroyed(datum/source)
 	SIGNAL_HANDLER
-	enemies -= source
+	if(enemies)
+		enemies -= source
+
+/// Drops our AI target reference if the target is ever destroyed, even while our AI is asleep.
+/mob/living/proc/watch_target(atom/new_target)
+	if(isatom(new_target) && !isturf(new_target) && new_target != src)
+		RegisterSignal(new_target, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed), override = TRUE)
+
+/// Whether on_enemy_destroyed still needs to hear about this atom for a non-enemy reason.
+/mob/living/proc/is_watched_target(datum/thing)
+	return FALSE
 
 /mob/living/proc/clear_enemies()
 	for(var/mob/living/enemy as anything in enemies)
-		UnregisterSignal(enemy, COMSIG_QDELETING)
+		if(!is_watched_target(enemy))
+			UnregisterSignal(enemy, COMSIG_QDELETING)
 	enemies = list()
 
 /mob/living/onZImpact(turf/T, levels)

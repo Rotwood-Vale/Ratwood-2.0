@@ -181,6 +181,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.harddel_log = "[GLOB.log_directory]/harddels.log"
 	GLOB.world_mem_log = "[GLOB.log_directory]/memory_stats.log"
 	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
 	GLOB.character_list_log = "[GLOB.log_directory]/character_list.log"

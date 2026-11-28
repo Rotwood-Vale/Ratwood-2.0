@@ -100,6 +100,7 @@ And it also helps for the character set panel
 
 	// Add to appropriate member lists
 	clan_members |= H
+	RegisterSignal(H, COMSIG_QDELETING, PROC_REF(on_member_deleted), override = TRUE)
 	if(is_vampire)
 		cache_pre_embrace_state(H)
 		apply_clan_components(H)
@@ -295,7 +296,7 @@ And it also helps for the character set panel
 	SHOULD_CALL_PARENT(TRUE)
 
 	// the organ hook has to go first, it re-implants the vampire eyes the moment we pull them out below
-	UnregisterSignal(vampire, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_ORGAN_REMOVED, COMSIG_LIVING_FULLY_HEALED))
+	UnregisterSignal(vampire, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_ORGAN_REMOVED, COMSIG_LIVING_FULLY_HEALED, COMSIG_QDELETING))
 	restore_mortal_eyes(vampire)
 
 	var/datum/action/clan_menu/clan_action = locate(/datum/action/clan_menu) in vampire.actions
@@ -331,6 +332,7 @@ And it also helps for the character set panel
 	vampire.verbs -= /mob/living/carbon/human/proc/disguise_verb
 
 	clan_members -= vampire
+	non_vampire_members -= vampire
 
 	if(vampire.clan_position)
 		vampire.clan_position.remove_member()
@@ -355,6 +357,15 @@ And it also helps for the character set panel
 
 	// last, because remove_leader() subtracts its vitae bonus off this and would leave us short
 	vampire.reset_maxbloodpool()
+
+/datum/clan/proc/on_member_deleted(mob/living/carbon/human/member)
+	SIGNAL_HANDLER
+	member.clan_position?.remove_member()
+	clan_members -= member
+	non_vampire_members -= member
+	if(member == clan_leader)
+		clan_leader = null
+		handle_leadership_succession()
 
 /datum/clan/proc/handle_leadership_succession()
 	// Find someone else with a position to promote
@@ -382,6 +393,7 @@ And it also helps for the character set panel
 	if(new_leader)
 		hierarchy_root.assign_member(new_leader)
 		leader.make_new_leader(new_leader)
+		clan_leader = new_leader
 
 		to_chat(new_leader, "<span class='notice'>You have been promoted to [leader_title] of [name]!</span>")
 
