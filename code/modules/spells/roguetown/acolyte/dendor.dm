@@ -409,7 +409,7 @@
 	if(!animal || QDELETED(animal))
 		return FALSE
 	visible_message(span_green("[user] soothes the beastblood with Dendor's whisper."))
-	animal.tamed(TRUE)
+	animal.tamed(user)
 	if(istype(animal, /mob/living/simple_animal/hostile/retaliate))
 		var/mob/living/simple_animal/hostile/retaliate/retaliate_animal = animal
 		retaliate_animal.aggressive = FALSE

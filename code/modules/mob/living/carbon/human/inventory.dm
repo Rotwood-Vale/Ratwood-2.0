@@ -512,7 +512,7 @@
 	if(!istype(scab))
 		return FALSE
 	if(!thing)
-		if(!scab.sheathed)
+		if(!scab.hol_comp.sheathed)
 			return FALSE
 		return scab.attack_hand(src)
 	if(!istype(thing, scab.valid_blade))

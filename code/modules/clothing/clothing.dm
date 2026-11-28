@@ -241,7 +241,7 @@
 	flags_inv &= ~HIDECROTCH
 	hem_coverage_restore = body_parts_covered_dynamic & GROIN
 	body_parts_covered_dynamic &= ~GROIN
-	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_hem_interrupt))
+	RegisterSignal(user, list(COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_hem_interrupt))
 	update_icon()
 	refresh_hem_visuals(user)
 	return TRUE
@@ -274,7 +274,7 @@
 		hem_coverage_restore = null
 	if(hem_holder)
 		if(!QDELETED(hem_holder))
-			UnregisterSignal(hem_holder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND))
+			UnregisterSignal(hem_holder, list(COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND))
 		hem_holder = null
 	var/list/grips = hem_grips
 	hem_grips = null

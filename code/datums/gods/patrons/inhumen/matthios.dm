@@ -42,8 +42,7 @@
 		return TRUE
 	// Spend 5/10 mammon to pray. Megachurch pastors be like.....
 	var/obj/item/held_item = follower.get_active_held_item()
-	var/helditemvalue = held_item.get_real_price()
-	if(istype(held_item, /obj/item/roguecoin) && helditemvalue >= 5)
+	if(istype(held_item, /obj/item/roguecoin) && held_item.get_real_price() >= 5)
 		qdel(held_item)
 		return TRUE
 	// Allows praying atop ritual chalk of the god.

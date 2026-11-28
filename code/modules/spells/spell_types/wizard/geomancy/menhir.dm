@@ -164,14 +164,12 @@
 	var/static/list/burst_dirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 	for(var/i in 1 to frag_count)
 		var/fdir = pick(burst_dirs)
-		var/turf/ftarget = get_ranged_target_turf(T, fdir, 3)
 		var/obj/projectile/magic/gravel_blast/frag = new(T)
 		frag.damage = frag_damage
 		frag.range = 3
 		frag.ricochets_max = 0
 		frag.firer = H
-		frag.preparePixelProjectile(ftarget, T)
-		frag.fire()
+		frag.fire(dir2angle(fdir))
 
 /obj/projectile/magic/boulder
 	name = "boulder"

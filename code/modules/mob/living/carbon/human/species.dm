@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/desc
 	/// if alien colors are disabled, this is the color that will be used by that race
 	var/default_color = "#FFF"
+	var/list/race_groups
 	var/limbs_icon_m
 	var/limbs_icon_f
 	var/icon_override
@@ -264,6 +265,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/New()
 	add_marking_sets_to_markings()
+	if(!length(race_groups))
+		race_groups = list(name)
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
 		limbs_id = name
 	if(!clothes_id)
@@ -1992,7 +1995,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			nodmg = TRUE
 			H.next_attack_msg += VISMSG_ARMOR_BLOCKED
 			var/obj/item/clothing/C = H.get_best_worn_armor(def_zone, I.d_type)	//this is kinda relying on the proc returnig the same as run_armor_check did. Clunky!
-			var/extra_msg = C.get_armor_integ()
+			var/extra_msg = C?.get_armor_integ()
 			if(extra_msg)
 				H.next_attack_msg += extra_msg
 			if(I)

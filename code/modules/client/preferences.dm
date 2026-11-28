@@ -138,9 +138,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
-	var/restricted_species_pref = null
 	var/wildshape_name = TRUE
-	var/xenophobe_pref = 0
+	var/list/species_filter = list()
+	var/species_blacklist = TRUE
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
@@ -351,14 +351,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/redolent_type = REDOLENT_SMELL_NEUTRAL
 	var/redolent_scent = ""
 
-	var/setspouse = ""
 	var/gender_choice = ANY_GENDER
+	var/list/random_match = list()
+	var/random_match_on = FALSE
+	var/take_house_name = FALSE
+	var/datum/family_board_menu/family_menu
 
 	var/static/default_cmusic_type = /datum/combat_music/default
 	var/datum/combat_music/combat_music
 	var/combat_music_helptext_shown = FALSE
 
-	var/family = FAMILY_NONE
 
 	var/crt = FALSE
 	var/grain = TRUE
@@ -1490,6 +1492,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		else
 			to_chat(usr, span_love("- You have been successfully <b>AGE-VERIFIED!</b>"))
 
+	else if(href_list["preference"] == "family_board")
+		if(!family_menu)
+			family_menu = new(src)
+		family_menu.handle_topic(user, href_list)
+		family_menu.show(user)
+		return
 	else if(href_list["preference"] == "culinary")
 		show_culinary_ui(user)
 		return
@@ -1737,7 +1745,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 								to_chat(user, "In a place as lethal as PSYDONIA, the elderly are all but marvels... or beneficiaries of the habitually privileged. (-1 STR, -2 SPE, -1 PER, -2 CON, +3 INT, +1 FOR)")
 						// LETHALSTONE EDIT END
 						ResetJobs()
-						family = FAMILY_NONE
 						to_chat(user, "<font color='red'>Classes reset.</font>")
 
 				if("map_preference")
@@ -2495,31 +2502,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						domhand = 2
 					else
 						domhand = 1
-				if("family")
-					var/list/famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, "EXPLAIN THIS TO ME")
-					if(age != AGE_ADULT)
-						famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, FAMILY_FULL, "EXPLAIN THIS TO ME")
-					var/new_family = tgui_input_list(user, "SELECT YOUR HERO'S BOND", "BLOOD IS THICKER THAN WATER", famtree_options_list, family)
-					if(new_family == "EXPLAIN THIS TO ME")
-						to_chat(user, span_purple("\
-						--[FAMILY_NONE] will disable this feature.<br>\
-						--[FAMILY_PARTIAL] will assign you as a progeny of a local house based on your species. This feature will instead assign you as a aunt or uncle to a local family if your older than ADULT.<br>\
-						--[FAMILY_NEWLYWED] assigns you a spouse without adding you to a family. Setspouse will prioritize pairing you with another newlywed with the same name as your setspouse.<br>\
-						--[FAMILY_FULL] will attempt to assign you as matriarch or patriarch of one of the local houses of the kingdom/town. Setspouse will will prevent \
-						players with the setspouse = None from matching with you unless their name equals your setspouse."))
-
-					else if(new_family)
-						family = new_family
-						setspouse = null
-						gender_choice = ANY_GENDER
-						xenophobe_pref = 0
 				//Setspouse is part of the family subsystem. It will check existing families for this character and attempt to place you in this family.
-				if("setspouse")
-					var/newspouse = tgui_input_text(user, "INPUT THE IDENTITY OF ANOTHER HERO", "TIL DEATH DO US PART")
-					if(newspouse)
-						setspouse = newspouse
-					else
-						setspouse = null
 				//Gender_choice is part of the family subsytem. It will check existing families members with the same preference of this character and attempt to place you in this family.
 				if("gender_choice")
 					// If pronouns are neutral, lock to ANY_GENDER
@@ -2531,26 +2514,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/new_gender_choice  = tgui_input_list(user, "SELECT YOUR HERO'S PREFERENCE", "TO LOVE AND TO CHERISH", gender_choice_option_list, gender_choice)
 						if(new_gender_choice)
 							gender_choice = new_gender_choice
-				if("species_choice")
-					var/list/restriction_options = list("Unrestricted", "Same Race", "Select Specific Race")
-					var/choice = tgui_input_list(user, "SELECT SPOUSE SPECIES RESTRICTION", "SPECIES RESTRICTION", restriction_options)
-					if(choice == "Unrestricted")
-						xenophobe_pref = 0
-						restricted_species_pref = null
-						to_chat(user, "Spouse species is unrestricted.")
-					else if(choice == "Same Race")
-						xenophobe_pref = 1
-						restricted_species_pref = null
-						to_chat(user, "Spouse species will be restricted to your race.")
-					else if(choice == "Select Specific Race")
-						var/list/available_races = list()
-						for(var/race_name in GLOB.roundstart_races)
-							available_races += race_name
-						var/selected_race = tgui_input_list(user, "SELECT ALLOWED SPOUSE RACE", "SPECIES SELECTION", available_races)
-						if(selected_race)
-							xenophobe_pref = 2
-							restricted_species_pref = selected_race
-							to_chat(user, "Spouse species will be restricted to [selected_race].")
 				if("hotkeys")
 					hotkeys = !hotkeys
 					if(hotkeys)
@@ -2827,6 +2790,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						if(!load_character(choice))
 							random_character(null, FALSE, FALSE)
 							save_character()
+						SSfamilytree.RestoreAd(src)
 
 				if("tab")
 					if (href_list["tab"])
@@ -3031,11 +2995,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.set_patron(selected_patron)
 	character.backpack = backpack
 
-	character.familytree_pref = family
 	character.gender_choice_pref = gender_choice
-	character.setspouse = setspouse
-	character.xenophobe = xenophobe_pref
-	character.restricted_species = restricted_species_pref
+	if(parent)
+		character.family_id = "[parent.ckey]/[default_slot]"
+	if(random_match_on)
+		character.random_match = random_match.Copy()
+	character.species_filter = species_filter.Copy()
+	character.species_blacklist = species_blacklist
+	character.take_house_name = take_house_name
 
 	character.jumpsuit_style = jumpsuit_style
 

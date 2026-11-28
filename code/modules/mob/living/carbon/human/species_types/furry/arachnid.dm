@@ -4,6 +4,7 @@
 /datum/species/arachnid
 	name = "Arachnid"
 	id = "arachnid"
+	race_groups = list("Beastvolk")
 	clothes_id = "lamia"
 	desc = "<b>Arachnid</b><br>\
 	(+1 Strength, -1 Speed, Webwalk Trait, Longstrider Trait, Venomous Trait)"

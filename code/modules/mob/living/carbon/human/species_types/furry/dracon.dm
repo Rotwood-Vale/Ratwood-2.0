@@ -4,6 +4,7 @@
 /datum/species/dracon
 	name = "Drakian"
 	id = "dracon"
+	race_groups = list("Reptilian")
 	desc = "<b>Drakian</b><br>\
 	Drakians are a proud and ancient race that trace their heritage to dragons of old. \
 	They are highly protective of their bloodline and do everything in their power to make sure it does not spread beyond their own, \

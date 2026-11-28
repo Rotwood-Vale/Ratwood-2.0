@@ -2055,9 +2055,11 @@
 
 		if(!owner.cmode)
 			remove_self()
+			return // owner is nulled once removed
 		//We lost the shield we used this with from our hands.
 		if((owner.get_inactive_held_item() != shield_origin) && (owner.get_active_held_item() != shield_origin))
 			remove_self()
+			return
 		if(!owner.stamina_add(0.2))	//It essentially halts green regen. Token price so it can't be maintained forever.
 			remove_self()
 
@@ -2869,5 +2871,7 @@
 
 /datum/status_effect/buff/dagger_boost/process()
 	. = ..()
+	if(QDELETED(owner))
+		return
 	if(!istype(owner.get_active_held_item(), held_dagger))
 		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)
