@@ -52,6 +52,10 @@ SUBSYSTEM_DEF(time_track)
 		list(
 			"time",
 			"players",
+			"live_players",
+			"mobs",
+			"world_contents",
+			"rss_mb",
 			"tidi",
 			"tidi_fastavg",
 			"tidi_avg",
@@ -109,11 +113,20 @@ SUBSYSTEM_DEF(time_track)
 		send_maps_values += packet["value"]
 		send_maps_values += packet["calls"]
 
+	var/live_players = 0
+	for(var/mob/living/player as anything in GLOB.player_list)
+		if(isliving(player) && player.stat != DEAD)
+			live_players++
+
 	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[SQLtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
 	log_perf(
 		list(
 			world.time,
 			length(GLOB.clients),
+			live_players,
+			length(GLOB.mob_list),
+			length(world.contents),
+			SSmemory_stats.last_rss_mb,
 			time_dilation_current,
 			time_dilation_avg_fast,
 			time_dilation_avg,
