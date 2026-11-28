@@ -1,14 +1,13 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	init_order = INIT_ORDER_MACHINES
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 //	wait = 1
 	var/list/processing = list()
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/machines/Initialize()
 	fire()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/machines/stat_entry()
 	..("M:[processing.len]")

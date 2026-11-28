@@ -392,12 +392,10 @@
 
 //SSicon_smooth
 /proc/queue_smooth(atom/A)
-	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
+	if(!A.smooth)
 		return
 
-	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
-	A.smooth |= SMOOTH_QUEUED
+	SSicon_smooth.add_to_queue(A)
 
 
 //Example smooth wall

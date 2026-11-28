@@ -36,6 +36,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/list/behavior_args = list()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/pathing_attempts
+	var/hybrid_fallbacking = FALSE
+	var/hybrid_fallback_fail = 0
 	///Can the AI remain in control if there is a client?
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target

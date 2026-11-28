@@ -613,7 +613,7 @@
 		var/datum/admins/A = GLOB.protected_admins[i]
 		sql_admins += list(list("ckey" = A.target, "rank" = A.rank.name))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
-	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
+	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()
 	qdel(query_admin_rank_update)
 
@@ -637,26 +637,26 @@
 
 /datum/controller/subsystem/ticker/proc/update_everything_flag_in_db()
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		var/list/flags = list()
+		var/list/ss_flags = list()
 		if(R.include_rights == R_EVERYTHING)
-			flags += "flags"
+			ss_flags += "ss_flags"
 		if(R.exclude_rights == R_EVERYTHING)
-			flags += "exclude_flags"
+			ss_flags += "exclude_flags"
 		if(R.can_edit_rights == R_EVERYTHING)
-			flags += "can_edit_flags"
-		if(!flags.len)
+			ss_flags += "can_edit_flags"
+		if(!ss_flags.len)
 			continue
-		var/flags_to_check = flags.Join(" != [R_EVERYTHING] AND ") + " != [R_EVERYTHING]"
-		var/datum/DBQuery/query_check_everything_ranks = SSdbcore.NewQuery(
-			"SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = :rank AND ([flags_to_check])",
+		var/flags_to_check = ss_flags.Join(" != [R_EVERYTHING] AND ") + " != [R_EVERYTHING]"
+		var/datum/db_query/query_check_everything_ranks = SSdbcore.NewQuery(
+			"SELECT ss_flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = :rank AND ([flags_to_check])",
 			list("rank" = R.name)
 		)
 		if(!query_check_everything_ranks.Execute())
 			qdel(query_check_everything_ranks)
 			return
 		if(query_check_everything_ranks.NextRow()) //no row is returned if the rank already has the correct flag value
-			var/flags_to_update = flags.Join(" = [R_EVERYTHING], ") + " = [R_EVERYTHING]"
-			var/datum/DBQuery/query_update_everything_ranks = SSdbcore.NewQuery(
+			var/flags_to_update = ss_flags.Join(" = [R_EVERYTHING], ") + " = [R_EVERYTHING]"
+			var/datum/db_query/query_update_everything_ranks = SSdbcore.NewQuery(
 				"UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE rank = :rank",
 				list("rank" = R.name)
 			)

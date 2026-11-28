@@ -1,9 +1,8 @@
 SUBSYSTEM_DEF(questpool)
 	name = "Quest Pool"
 	wait = QUEST_POOL_REGEN_INTERVAL
-	flags = SS_KEEP_TIMING | SS_BACKGROUND
+	ss_flags = SS_KEEP_TIMING | SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME
-	init_order = INIT_ORDER_DEFAULT
 
 	var/list/datum/quest/pool = list()
 	var/list/recent_takes = list()
@@ -24,7 +23,7 @@ SUBSYSTEM_DEF(questpool)
 	for(var/obj/effect/landmark/quest_spawner/L in world)
 		world_spawners++
 	log_world("QuestPool: seeded [length(pool)] contracts from [length(GLOB.quest_landmarks_list)] landmarks ([world_spawners] spawner atoms in world, [length(SSregionthreat.threat_regions)] threat regions)")
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/questpool/proc/get_nearest_ledger_turf(turf/reference)
 	var/turf/closest

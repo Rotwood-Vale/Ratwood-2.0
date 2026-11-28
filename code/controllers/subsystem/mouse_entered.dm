@@ -1,0 +1,27 @@
+/// Defers MouseEntered inputs to only apply to the most recently hovered over atom in the tick
+SUBSYSTEM_DEF(mouse_entered)
+	name = "MouseEntered"
+	wait = 1
+	ss_flags = SS_NO_INIT | SS_TICKER
+	priority = FIRE_PRIORITY_MOUSE_ENTERED
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
+
+	var/list/hovers = list()
+
+/datum/controller/subsystem/mouse_entered/fire()
+	for (var/client/hovering_client as anything in hovers)
+		var/list/hover = hovers[hovering_client]
+		if (isnull(hover))
+			continue
+
+		// This intentionally runs `= null` and not `-= hovering_client`, as we want to prevent the list from shrinking,
+		// which could cause problems given the heat of MouseEntered.
+		// Lummox has teased this for 515: https://www.byond.com/forum/post/2621745
+		// ...though you're most likely reading this on BYOND version 600.
+		hovers[hovering_client] = null
+
+		var/atom/hovering_atom = hover[1]
+		if (QDELETED(hovering_atom) || !hovering_client?.mob)
+			continue
+		usr = hovering_client.mob
+		hovering_atom.handle_mouseover(hover[2], hover[3], hover[4])

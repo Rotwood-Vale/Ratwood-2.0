@@ -1,7 +1,7 @@
 //Used to manage sending droning sounds to various clients
 SUBSYSTEM_DEF(droning)
 	name = "Droning"
-	flags = SS_NO_INIT|SS_NO_FIRE
+	ss_flags = SS_NO_INIT|SS_NO_FIRE
 
 /datum/controller/subsystem/droning/proc/get_channel_volume(client/listener, channel)
 	if(!listener?.prefs)

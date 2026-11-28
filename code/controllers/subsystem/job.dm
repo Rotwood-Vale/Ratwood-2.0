@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
-	init_order = INIT_ORDER_JOBS
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
@@ -15,13 +14,13 @@ SUBSYSTEM_DEF(job)
 	var/overflow_role = "Fuckyou"
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
-/datum/controller/subsystem/job/Initialize(timeofday)
+/datum/controller/subsystem/job/Initialize()
 	SSmapping.HACK_LoadMapConfig()
 	if(!occupations.len)
 		SetupOccupations()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
 	build_townie_contract_gate_exempt_cache() // AP Quest 2: cache townie-gate-exempt role names
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
 	var/datum/job/new_overflow = GetJob(new_overflow_role)

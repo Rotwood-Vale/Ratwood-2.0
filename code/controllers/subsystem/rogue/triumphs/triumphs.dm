@@ -36,8 +36,7 @@ GLOBAL_VAR_INIT(triumph_wipe_season, get_triumph_wipe_season())
 // I need some shit early v early, so uhhh enjoy having lists on the define
 SUBSYSTEM_DEF(triumphs)
 	name = "Triumphs"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_TRIUMPHS
+	ss_flags = SS_NO_FIRE
 
 	// List of top ten for display in browser page on button click
 	var/list/triumph_leaderboard = list()
@@ -90,7 +89,6 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/post_equip_calls = list()
 
 /datum/controller/subsystem/triumphs/Initialize()
-	. = ..()
 
 	prep_the_triumphs_leaderboard()
 	load_triumph_sinks()
@@ -119,6 +117,7 @@ SUBSYSTEM_DEF(triumphs)
 					copy_list -= current_triumph_buy_datum
 				if(central_state_data[catty_key]["[page_numba]"].len == page_display_limit)
 					break
+	return SS_INIT_SUCCESS
 
 /*
 	This occurs when you try to buy a triumph condition and sets it up

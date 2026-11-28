@@ -22,12 +22,16 @@
 
 /atom/MouseEntered(location,control,params)
 	. = ..()
-	if(!nomouseover && name && ismob(usr))
-		handle_mouseover(location, control, params)
+	if(!nomouseover && name && ismob(usr) && usr.client)
+		SSmouse_entered.hovers[usr.client] = list(src, location, control, params)
 
 /atom/MouseExited(params)
 	. = ..()
 	if(!nomouseover && ismob(usr))
+		if(usr.client)
+			var/list/pending = SSmouse_entered.hovers[usr.client]
+			if(pending && pending[1] == src)
+				SSmouse_entered.hovers[usr.client] = null
 		handle_mouseexit(params)
 
 /atom/proc/handle_mouseover(location, control, params)

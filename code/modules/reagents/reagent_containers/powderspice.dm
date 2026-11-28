@@ -90,7 +90,7 @@
 			if(reagents.total_volume)
 				playsound(hit_carbon, 'sound/items/sniff.ogg', 100, FALSE)
 				record_round_statistic(STATS_DRUGS_SNORTED)
-				reagents.trans_to(hit_carbon, 1, transfered_by = thrownthing.thrower, method = "swallow")
+				reagents.trans_to(hit_carbon, 1, transfered_by = thrownthing.get_thrower(), method = "swallow")
 	qdel(src)
 
 /obj/item/reagent_containers/powder/attack(mob/M, mob/user, def_zone)

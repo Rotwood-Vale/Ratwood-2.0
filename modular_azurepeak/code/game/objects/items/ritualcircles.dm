@@ -703,7 +703,7 @@
 		marked_location = T
 		visible_message(span_warning("[src] shatters on impact!"))
 		playsound(src, 'sound/magic/lightning.ogg', 50, TRUE)
-		var/mob/thrower = throwingdatum?.thrower
+		var/mob/thrower = throwingdatum?.get_thrower()
 		if(thrower && HAS_TRAIT(thrower, TRAIT_HERESIARCH) && upgraded_rune_type)
 			rune_type = upgraded_rune_type
 		new rune_type(T)

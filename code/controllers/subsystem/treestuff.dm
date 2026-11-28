@@ -1,13 +1,12 @@
 SUBSYSTEM_DEF(treesetup)
 	name = "treesetup"
-	init_order = INIT_ORDER_TREES
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/initialize_me = list()
 
-/datum/controller/subsystem/treesetup/Initialize(timeofday)
+/datum/controller/subsystem/treesetup/Initialize()
 	InitializeTrees()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/treesetup/proc/InitializeTrees()
 	// some of these are actually newtreealt, which has the same procs

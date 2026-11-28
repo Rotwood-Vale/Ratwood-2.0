@@ -1,7 +1,14 @@
 SUBSYSTEM_DEF(economy)
 	name = "Economy"
-	init_order = INIT_ORDER_ECONOMY
-	flags = SS_NO_FIRE
+	// AP runs economy after SSatoms and SSquestpool so roundstart_blockades() fires after they
+	// have registered the quest landmarks its per-region checks need; the ES port ran it
+	// before any landmark existed, so no roundstart blockade could ever roll.
+	// SStreasury stays ahead of SSeconomy.
+	dependencies = list(
+		/datum/controller/subsystem/treasury,
+		/datum/controller/subsystem/questpool,
+	)
+	ss_flags = SS_NO_FIRE
 	var/last_processed_day = 0
 	var/roundstart_events_fired = FALSE
 	var/simulated_player_scalar = 0
@@ -47,7 +54,7 @@ SUBSYSTEM_DEF(economy)
 			SStreasury.stockpile_by_trade_good[S.trade_good_id] = S
 	roundstart_events()
 	roundstart_blockades()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/economy/proc/populate_standing_order_templates()
 	var/list/mapping = list(

@@ -104,6 +104,13 @@ Also added 'exclude' turf to avoid travelling over; defaults to null
 		if(start.Distance_cardinal_3d(end, caller) > maxnodes)
 			return FALSE
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
+	var/mob/living/cost_cache_owner
+	var/list/cost_cache
+	if(isliving(caller))
+		cost_cache_owner = caller
+		if(!cost_cache_owner.get_path_cost_cache())
+			cost_cache = list("expires" = world.time + 5 SECONDS)
+			cost_cache_owner.path_cost_cache = cost_cache
 	var/datum/path_minheap/open = new /datum/path_minheap() //the open list
 	var/list/openc = new() //open list for node check
 	var/list/path = null //the returned path, if any
@@ -171,6 +178,8 @@ Also added 'exclude' turf to avoid travelling over; defaults to null
 			path.Swap(i,path_len-i+1)
 	openc = null
 	//cleaning after us
+	if(cost_cache && cost_cache_owner?.path_cost_cache == cost_cache)
+		cost_cache_owner.path_cost_cache = null
 	return path
 
 /// returns TRUE if there exists a way for caller to (safely) move from src to T. non-z-aware
@@ -210,6 +219,52 @@ Also added 'exclude' turf to avoid travelling over; defaults to null
 		if(source_stairs?.get_target_loc(source_stairs.dir) == T)
 			return TRUE
 	return FALSE
+
+/mob/living
+	var/list/path_cost_cache
+
+/mob/living/proc/get_path_cost_cache()
+	var/list/cache = path_cost_cache
+	if(!cache)
+		return null
+	if(cache["expires"] < world.time)
+		path_cost_cache = null
+		return null
+	return cache
+
+/mob/living/proc/path_cached_floor_hazard_immune()
+	var/list/cache = get_path_cost_cache()
+	if(!cache)
+		return is_floor_hazard_immune()
+	. = cache["hazard_immune"]
+	if(isnull(.))
+		. = cache["hazard_immune"] = !!is_floor_hazard_immune()
+
+/mob/living/carbon/human/proc/path_cached_highest_ac_worn(check_hands)
+	var/list/cache = get_path_cost_cache()
+	if(!cache)
+		return highest_ac_worn(check_hands)
+	var/key = check_hands ? "ac_hands" : "ac"
+	. = cache[key]
+	if(isnull(.))
+		. = cache[key] = highest_ac_worn(check_hands)
+
+/mob/living/carbon/human/proc/path_cached_skill_level(skill)
+	var/list/cache = get_path_cost_cache()
+	if(!cache)
+		return get_skill_level(skill)
+	var/key = "skill [skill]"
+	. = cache[key]
+	if(isnull(.))
+		. = cache[key] = get_skill_level(skill)
+
+/mob/living/carbon/human/proc/path_cached_armor_skill()
+	var/list/cache = get_path_cost_cache()
+	if(!cache)
+		return check_armor_skill()
+	. = cache["armor_skill"]
+	if(isnull(.))
+		. = cache["armor_skill"] = !!check_armor_skill()
 
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	var/adir = get_dir(src, T)

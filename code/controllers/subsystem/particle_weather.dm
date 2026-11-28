@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(vanderlin_weather, list(PARTICLEWEATHER_RAIN, PARTICLEWEATHER_BLOODRAIN, PARTICLEWEATHER_LEAVES))
 SUBSYSTEM_DEF(ParticleWeather)
 	name = "Particle Weather"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 	var/list/elligble_weather = list()
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 
 
 //This has been mangled - currently only supports 1 weather effect serverwide so I can finish this
-/datum/controller/subsystem/ParticleWeather/Initialize(start_timeofday)
+/datum/controller/subsystem/ParticleWeather/Initialize()
 	for(var/V in subtypesof(/datum/particle_weather))
 		var/datum/particle_weather/W = V
 		var/probability = initial(W.probability)
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 			selected_forecast = new /datum/forecast/byos()
 		else
 			selected_forecast = new /datum/forecast/rockhill()	//Default to rockhill if no configs match so we have some weather
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ParticleWeather/proc/run_weather(datum/particle_weather/weather_datum_type, force = 0, color)
 
@@ -106,6 +106,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 
 /datum/controller/subsystem/ParticleWeather/proc/SetparticleEffect(particles/P, blend_type, filter_type, color, secondary_filter_type)
 	particleEffect = P
+	getweatherEffect()
 	weatherEffect.particles = particleEffect
 	if(color)
 		weatherEffect.color = color
@@ -125,7 +126,8 @@ SUBSYSTEM_DEF(ParticleWeather)
 		if(!act_on)	//guard against nulls from deletions
 			continue
 		act_on.weather = FALSE
-	weatherEffect.particles = null
+	if(weatherEffect)
+		weatherEffect.particles = null
 	QDEL_NULL(runningWeather)
 	QDEL_NULL(particleEffect)
 

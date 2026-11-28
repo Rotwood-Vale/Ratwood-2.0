@@ -2,7 +2,7 @@
 PROCESSING_SUBSYSTEM_DEF(roguemachine)
 	name = "roguemachine"
 	wait = 20
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = 1
 	var/list/hermailers = list()
 	var/list/cameras = list()

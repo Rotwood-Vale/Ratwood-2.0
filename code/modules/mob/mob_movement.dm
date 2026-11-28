@@ -191,6 +191,11 @@
 				// Reset our sprint counter if we change direction
 				L.sprinted_tiles = 0
 
+	var/glide_delay = add_delay
+	if(NSCOMPONENT(direct) && EWCOMPONENT(direct))
+		glide_delay *= 2
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(glide_delay))
+
 	. = ..()
 
 	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully

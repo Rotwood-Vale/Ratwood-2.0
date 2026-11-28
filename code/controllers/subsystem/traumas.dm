@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(traumas)
 	name = "Traumas"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/list/phobia_types
 	var/list/phobia_words
 	var/list/phobia_mobs
@@ -42,6 +42,6 @@ SUBSYSTEM_DEF(traumas)
 	phobia_species = list(
 	)
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 #undef PHOBIA_FILE

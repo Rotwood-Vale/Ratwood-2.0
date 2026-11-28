@@ -2,8 +2,8 @@
 
 SUBSYSTEM_DEF(sounds)
 	name = "Sounds"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_SOUNDS
+	ss_flags = SS_NO_FIRE
+	init_stage = INITSTAGE_EARLY
 	var/static/using_channels_max = CHANNEL_HIGHEST_AVAILABLE		//BYOND max channels
 	/// Amount of channels to reserve for random usage rather than reservations being allowed to reserve all channels. Also a nice safeguard for when someone screws up.
 	var/static/random_channels_min = 50
@@ -30,8 +30,8 @@ SUBSYSTEM_DEF(sounds)
 	GLOB.sound_storey_tiles = CONFIG_GET(number/sound_storey_tiles)
 	setup_available_channels()
 	all_music_sounds = pathwalk("sound/ambience/", ".ogg")
-	. = ..()
 	preload_music_for_clients()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/sounds/proc/preload_music_for_clients()
 	for(var/client/player as anything in GLOB.clients)

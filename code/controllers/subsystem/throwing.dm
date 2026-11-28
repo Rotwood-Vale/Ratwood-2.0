@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
 	priority = FIRE_PRIORITY_THROWING
 	wait = 1
-	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
+	ss_flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun
@@ -41,13 +41,15 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing
 	var/atom/movable/thrownthing
-	var/atom/target
+	///Weakref to the original intended target of the throw, to prevent hardDels
+	var/datum/weakref/initial_target
 	var/turf/target_turf
 	var/target_zone
 	var/init_dir
 	var/maxrange
 	var/speed
-	var/mob/thrower
+	///If a mob is the one who has thrown the object, then it's moved here. This can be null and must be null checked before trying to use it.
+	var/datum/weakref/thrower
 	var/diagonals_first
 	var/dist_travelled = 0
 	/// right now just used by the throwingarm trait, adds extra damage on hit, go figure
@@ -70,12 +72,14 @@ SUBSYSTEM_DEF(throwing)
 	. = ..()
 	src.thrownthing = thrownthing
 	RegisterSignal(thrownthing, COMSIG_QDELETING, PROC_REF(on_thrownthing_qdel))
-	src.target = target
+	if(target)
+		src.initial_target = WEAKREF(target)
 	src.target_turf = target_turf
 	src.init_dir = init_dir
 	src.maxrange = maxrange
 	src.speed = speed
-	src.thrower = thrower
+	if(thrower)
+		src.thrower = WEAKREF(thrower)
 	src.diagonals_first = diagonals_first
 	src.force = force
 	src.callback = callback
@@ -84,13 +88,20 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
+	SSthrowing.currentrun -= thrownthing
 	thrownthing.throwing = null
 	thrownthing = null
-	target = null
+	initial_target = null
 	thrower = null
 	if(callback)
 		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
 	return ..()
+
+/// Returns the thrower, or null
+/datum/thrownthing/proc/get_thrower()
+	. = thrower?.resolve()
+	if(isnull(.))
+		thrower = null
 
 /datum/thrownthing/proc/get_effective_throwforce()//total our throwface including trait bonuses
 	return thrownthing.throwforce + bonus_throwforce
@@ -193,6 +204,7 @@ SUBSYSTEM_DEF(throwing)
 	finalize(hit=TRUE, target=A)
 
 /datum/thrownthing/proc/hitcheck()
+	var/atom/thrower = get_thrower()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
 		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))

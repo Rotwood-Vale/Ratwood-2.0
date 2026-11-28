@@ -4,8 +4,7 @@
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 1 SECONDS
-	init_order = 65
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of all generated action buttons
@@ -21,8 +20,7 @@ SUBSYSTEM_DEF(vote)
 	/// World.time we started our last vote
 	var/last_vote_time = -INFINITY
 
-/datum/controller/subsystem/vote/Initialize(start_timeofday)
-	. = ..()
+/datum/controller/subsystem/vote/Initialize()
 
 	for(var/vote_type in subtypesof(/datum/vote))
 		var/datum/vote/vote = new vote_type()
@@ -31,6 +29,7 @@ SUBSYSTEM_DEF(vote)
 			continue
 
 		possible_votes[vote.name] = vote
+	return SS_INIT_SUCCESS
 
 
 // Called by master_controller
@@ -139,6 +138,10 @@ SUBSYSTEM_DEF(vote)
 	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
 		return
 
+	if(!(their_vote in current_vote.choices))
+		message_admins("POSSIBLE EXPLOIT: [key_name(voter)] tried to submit a vote for an option that didn't exist. They tried to call a vote for the following option: [sanitize(their_vote)]")
+		return
+
 	// If user has already voted, remove their specific vote
 	if(voter.ckey in current_vote.choices_by_ckey)
 		var/their_old_vote = current_vote.choices_by_ckey[voter.ckey]
@@ -165,6 +168,10 @@ SUBSYSTEM_DEF(vote)
 
 	else
 		voted += voter.ckey
+
+	if(!(their_vote in current_vote.choices))
+		message_admins("POSSIBLE EXPLOIT: [key_name(voter)] tried to submit a vote for an option that didn't exist. They tried to call a vote for the following option: [sanitize(their_vote)]")
+		return
 
 	if(current_vote.choices_by_ckey[voter.ckey + their_vote] == 1)
 		current_vote.choices_by_ckey[voter.ckey + their_vote] = 0

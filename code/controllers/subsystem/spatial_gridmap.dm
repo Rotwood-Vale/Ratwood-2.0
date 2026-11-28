@@ -77,7 +77,9 @@
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
 	name = "Spatial Grid"
-	init_order = INIT_ORDER_SPATIAL_GRID
+	dependencies = list(
+		/datum/controller/subsystem/dungeon_generator,
+	)
 	///list of the spatial_grid_cell datums per z level, arranged in the order of y index then x index
 	var/list/grids_by_z_level = list()
 	///everything that spawns before us is added to this list until we initialize
@@ -123,7 +125,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(propogate_spatial_grid_to_new_z))
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, PROC_REF(after_world_bounds_expanded))
-	return ..()
+	return SS_INIT_SUCCESS
 
 ///add a movable to the pre init queue for whichever type is specified so that when the subsystem initializes they get added to the grid
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)

@@ -20,7 +20,14 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 9
+#define DB_MINOR_VERSION 11
+
+/// When a query has been queued up for execution/is being executed
+#define DB_QUERY_STARTED 0
+/// When a query is finished executing
+#define DB_QUERY_FINISHED 1
+/// When there was a problem with the execution of a query.
+#define DB_QUERY_BROKEN 2
 
 
 //! ## Timing subsystem
@@ -107,69 +114,29 @@
 	}\
 }
 
-// Subsystem init_order, from highest priority to lowest priority
-// Subsystems shutdown in the reverse of the order they initialize in
-// The numbers just define the ordering, they are meaningless otherwise.
+//! ### SS initialization hints
+/**
+ * Negative values indicate a failure or warning of some kind, positive are good.
+ * 0 and 1 are unused so that TRUE and FALSE are guaranteed to be invalid values.
+ */
 
-#define INIT_ORDER_TITLE			100
-#define INIT_ORDER_GARBAGE			99
-#define INIT_ORDER_DBCORE			95
-#define INIT_ORDER_WHITELIST		94
-#define INIT_ORDER_BLACKBOX			93
-#define INIT_ORDER_SERVER_MAINT		92
-#define INIT_ORDER_INPUT			85
-#define INIT_ORDER_MATURITY_GUARD	84  // RATWOOD EDIT
-#define INIT_ORDER_VIS				80
-#define INIT_ORDER_SOUNDS 			79
-#define INIT_ORDER_ACHIEVEMENTS		77
-#define INIT_ORDER_MATERIALS		76
-#define INIT_ORDER_RESEARCH			75
-#define INIT_ORDER_EVENTS			70
-#define INIT_ORDER_JOBS				65
-#define INIT_ORDER_ROLE_CLASS_HANDLER 66
-#define INIT_ORDER_TRIUMPHS			67
-#define INIT_ORDER_QUIRKS			60
-#define INIT_ORDER_AI_MOVEMENT 		56 //We need the movement setup
-#define INIT_ORDER_AI_CONTROLLERS 	55 //So the controller can get the ref
-#define INIT_ORDER_TICKER			55
-#define INIT_ORDER_MAPPING			50
-#define INIT_ORDER_DUNGEON			49
-#define INIT_ORDER_NETWORKS			45
-#define INIT_ORDER_SPATIAL_GRID     43
-// AP runs economy at -2 so roundstart_blockades() fires after SSatoms (30) and SSquestpool
-// (default) have registered the quest landmarks its per-region checks need; the ES port's 40
-// ran it before any landmark existed, so no roundstart blockade could ever roll.
-// SStreasury rides at INIT_ORDER_ECONOMY + 1 and so stays ahead of SSeconomy.
-#define INIT_ORDER_ECONOMY			-2
-#define INIT_ORDER_OUTPUTS			35
-#define INIT_ORDER_PLAYER_ARCHIVES	32 // Before SSatoms, so mapped bookshelves and paintings can draw from the archives.
-#define INIT_ORDER_ATOMS			30
-#define INIT_ORDER_TREES			29
-#define INIT_ORDER_MAPGEN			28 //Can we possibly move this to BEFORE atom init in some way? I sure fuckin hope so.
-#define INIT_ORDER_LANGUAGE			25
-#define INIT_ORDER_MACHINES			20
-#define INIT_ORDER_SKILLS			15
-#define INIT_ORDER_TIMER			1
-#define INIT_ORDER_DEFAULT			0
-#define INIT_ORDER_AIR				-1
-#define INIT_ORDER_ASSETS			-4
-#define INIT_ORDER_ICON_SMOOTHING	-5
-#define INIT_ORDER_OVERLAY			-6
-#define INIT_ORDER_XKEYSCORE		-10
-#define INIT_ORDER_STICKY_BAN		-10
-#define INIT_ORDER_LIGHTING			-20
-#define INIT_ORDER_OUTDOOR_EFFECTS  -21
-#define INIT_ORDER_SHUTTLE			-22
-// AP parity: must init AFTER SSmerchant (INIT_ORDER_SHUTTLE, -22) — the day-1 trade ship pool
-// rolls cultural stock / victualling lines against SSmerchant.supply_packs at Initialize().
-#define INIT_ORDER_MERCHANT_TRADE	-23
-#define INIT_ORDER_MINOR_MAPPING	-40
-/// Initializes after map and template placement so river fill sees the completed terrain
-#define INIT_ORDER_POINT_AMBIENCE	-45
-#define INIT_ORDER_PATH				-50
-#define INIT_ORDER_DISCORD			-60
-#define INIT_ORDER_PERSISTENCE		-95
-#define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
+/// Subsystem failed to initialize entirely. Print a warning, log, and disable firing.
+#define SS_INIT_FAILURE -2
+
+/// The default return value which must be overridden. Will succeed with a warning.
+#define SS_INIT_NONE -1
+
+/// Subsystem initialized successfully.
+#define SS_INIT_SUCCESS 2
+
+/// If your system doesn't need to be initialized (by being disabled or something)
+#define SS_INIT_NO_NEED 3
+
+/// Successfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
+#define SS_INIT_NO_MESSAGE 4
+
+/// The timer key used to know how long subsystem initialization takes
+#define SS_INIT_TIMER_KEY "ss_init"
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
@@ -186,6 +153,7 @@
 #define FIRE_PRIORITY_AMBIENCE    10
 #define FIRE_PRIORITY_TRACKS		10
 #define FIRE_PRIORITY_GARBAGE		15
+#define FIRE_PRIORITY_DATABASE		16
 #define FIRE_PRIORITY_INCONE		19
 #define FIRE_PRIORITY_MOUSECHARGE	20
 #define FIRE_PRIORITY_HOTSPOTS		20
@@ -211,6 +179,7 @@
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
 #define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_RUNECHAT		410
+#define FIRE_PRIORITY_MOUSE_ENTERED	450
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 

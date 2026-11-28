@@ -12,7 +12,7 @@
  */
 SUBSYSTEM_DEF(crediticons)
 	name = "crediticons"
-	flags = SS_NO_INIT | SS_BACKGROUND
+	ss_flags = SS_NO_INIT | SS_BACKGROUND
 	wait = 1
 	var/mutable_appearance/building_portrait
 	var/list/building_overlays

@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(migrants)
 /datum/controller/subsystem/migrants/Initialize()
 	track_next_roll[MIGRANT_TRACK_REGULAR] = world.time + 2 MINUTES
 	track_next_roll[MIGRANT_TRACK_SPECIAL] = world.time + special_roll_interval
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/migrants/fire(resumed)
 	process_track(MIGRANT_TRACK_REGULAR, regular_roll_interval, FALSE)

@@ -3,7 +3,6 @@ GLOBAL_LIST_EMPTY(TodUpdate)
 SUBSYSTEM_DEF(nightshift)
 	name = "Night Shift"
 	wait = 10 SECONDS
-	flags = SS_NO_TICK_CHECK
 	priority = 1
 	var/current_tod = null
 
@@ -38,7 +37,7 @@ SUBSYSTEM_DEF(nightshift)
 	if(SSmapping?.current_map?.map_name == "Build Your Own Settlement")
 		apply_desert_times()
 	current_tod = settod()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
 	if(world.time - SSticker.round_start_time < nightshift_first_check)

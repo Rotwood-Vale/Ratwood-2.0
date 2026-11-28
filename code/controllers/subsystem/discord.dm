@@ -28,7 +28,7 @@ This is an absolute clusterfuck, but its my clusterfuck -aa07
 SUBSYSTEM_DEF(discord)
 	name = "Discord"
 	wait = 3000
-	init_order = INIT_ORDER_DISCORD
+	init_stage = INITSTAGE_EARLY
 
 	var/list/notify_members = list() // People to save to notify file
 	var/list/notify_members_cache = list() // Copy of previous list, so the SS doesnt have to fire if no new members have been added
@@ -37,13 +37,13 @@ SUBSYSTEM_DEF(discord)
 	var/notify_file = file("data/notify.json")
 	var/enabled = 0 // Is TGS enabled (If not we wont fire because otherwise this is useless)
 
-/datum/controller/subsystem/discord/Initialize(start_timeofday)
+/datum/controller/subsystem/discord/Initialize()
 	// Check for if we are using TGS, otherwise return and disabless firing
 	if(world.TgsAvailable())
 		enabled = 1 // Allows other procs to use this (Account linking, etc)
 	else
 		can_fire = 0 // We dont want excess firing
-		return ..() // Cancel 
+		return SS_INIT_SUCCESS // Cancel 
 
 	try
 		people_to_notify = json_decode(file2text(notify_file))
@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(discord)
 	if(notifymsg)
 		send2chat(new /datum/tgs_message_content("[notifymsg]"), CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
-	return ..()
+	return SS_INIT_SUCCESS
 	
 /datum/controller/subsystem/discord/fire()
 	if(!enabled)
@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(discord)
 
 // Returns ID from ckey
 /datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
-	var/datum/DBQuery/query_get_discord_id = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_discord_id = SSdbcore.NewQuery(
 		"SELECT discord_id FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = lookup_ckey)
 	)
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(discord)
 
 // Returns ckey from ID
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/datum/DBQuery/query_get_discord_ckey = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_discord_ckey = SSdbcore.NewQuery(
 		"SELECT ckey FROM [format_table_name("player")] WHERE discord_id = :discord_id",
 		list("discord_id" = lookup_id)
 	)
@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(discord)
 
 // Finalises link
 /datum/controller/subsystem/discord/proc/link_account(ckey)
-	var/datum/DBQuery/link_account = SSdbcore.NewQuery(
+	var/datum/db_query/link_account = SSdbcore.NewQuery(
 		"UPDATE [format_table_name("player")] SET discord_id = :discord_id WHERE ckey = :ckey",
 		list("discord_id" = account_link_cache[ckey], "ckey" = ckey)
 	)
@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(discord)
 
 // Unlink account (Admin verb used)
 /datum/controller/subsystem/discord/proc/unlink_account(ckey)
-	var/datum/DBQuery/unlink_account = SSdbcore.NewQuery(
+	var/datum/db_query/unlink_account = SSdbcore.NewQuery(
 		"UPDATE [format_table_name("player")] SET discord_id = NULL WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)

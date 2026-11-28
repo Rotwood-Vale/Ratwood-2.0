@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(pollution)
 	name = "Pollution"
-	init_order = INIT_ORDER_AIR //Before atoms, because the emitters may need to know the singletons
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 0.5 SECONDS //2 SECONDS -> 0.5 SECONDS
 	/// Currently active pollution
@@ -29,7 +28,7 @@ SUBSYSTEM_DEF(pollution)
 		if(!length(pollutant_cast::name))
 			continue
 		singletons[type] = new type()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/pollution/fire(resumed = FALSE)
 	var/list/current_run_cache = current_run

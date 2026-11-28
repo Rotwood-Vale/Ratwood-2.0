@@ -1,14 +1,13 @@
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
-	init_order = INIT_ORDER_PATH
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/datum/flowcache/mobs
 	var/datum/flowcache/circuits
 
 /datum/controller/subsystem/pathfinder/Initialize()
 	mobs = new(10)
 	circuits = new(3)
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/flowcache
 	var/lcount

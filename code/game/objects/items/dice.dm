@@ -228,7 +228,7 @@
 	diceroll(user)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	diceroll(thrownby)
+	diceroll(get_thrownby())
 	. = ..()
 
 /obj/item/dice/proc/diceroll(mob/user)

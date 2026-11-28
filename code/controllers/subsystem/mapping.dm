@@ -1,7 +1,29 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
-	init_order = INIT_ORDER_MAPPING
-	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/whitelist,
+		/datum/controller/subsystem/blackbox,
+		/datum/controller/subsystem/maturity_guard,
+		/datum/controller/subsystem/vis_overlays,
+		/datum/controller/subsystem/achievements,
+		/datum/controller/subsystem/events,
+		/datum/controller/subsystem/gamemode,
+		/datum/controller/subsystem/triumphs,
+		/datum/controller/subsystem/role_class_handler,
+		/datum/controller/subsystem/job,
+		/datum/controller/subsystem/vote,
+		/datum/controller/subsystem/processing/ai_movement,
+		/datum/controller/subsystem/ticker,
+		/datum/controller/subsystem/processing/ai_behaviors,
+		/datum/controller/subsystem/ai_controllers,
+	)
+	dependents = list(
+		/datum/controller/subsystem/dungeon_generator,
+		/datum/controller/subsystem/spatial_grid,
+		/datum/controller/subsystem/librarian,
+		/datum/controller/subsystem/paintings,
+	)
+	ss_flags = SS_NO_FIRE
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
@@ -73,10 +95,10 @@ SUBSYSTEM_DEF(mapping)
 		break
 	return ..()
 
-/datum/controller/subsystem/mapping/Initialize(timeofday)
+/datum/controller/subsystem/mapping/Initialize()
 	retainer = new
 	if(initialized)
-		return
+		return SS_INIT_SUCCESS
 	if(current_map.defaulted)
 		var/datum/map_config/old_config = current_map
 		current_map = global.config.defaultmap
@@ -96,7 +118,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	initialize_reserved_level(transit.z_value)
 	generate_z_level_linkages()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/mapping/proc/generate_z_level_linkages()
 	for(var/z_level in 1 to length(z_list))
@@ -118,7 +140,7 @@ SUBSYSTEM_DEF(mapping)
 	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
 
 /datum/controller/subsystem/mapping/Recover()
-	flags |= SS_NO_INIT
+	ss_flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
@@ -332,7 +354,7 @@ SUBSYSTEM_DEF(mapping)
 		LoadOtherZ(FailedZs, otherZ)
 
 	if(SSdbcore.Connect())
-		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery({"
+		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id
 		"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))
 		query_round_map_name.Execute()

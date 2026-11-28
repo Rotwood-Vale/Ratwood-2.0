@@ -20,7 +20,13 @@
 	///Delay between each move in deci-seconds
 	var/delay = 1
 	///The next time we should process
+	///Used primarially as a hint to be reasoned about by our [controller], and as the id of our bucket
 	var/timer = 0
+	///The time we are CURRENTLY queued for processing
+	///Do not modify this directly
+	var/queued_time = -1
+	/// Status bitfield for what state the move loop is currently in
+	var/status = NONE
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	src.owner = owner
@@ -71,6 +77,7 @@
 /datum/move_loop/proc/set_delay(new_delay)
 	delay =  max(new_delay, world.tick_lag)
 	timer = world.time + delay
+	controller?.reschedule_loop(src)
 
 /datum/move_loop/process()
 	var/old_delay = delay //The signal can sometimes change delay

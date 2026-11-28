@@ -1,4 +1,3 @@
-#define INIT_ORDER_GAMEMODE 70
 ///the duration into the round for which roundstart events are still valid to run
 #define ROUNDSTART_VALID_TIMEFRAME 3 MINUTES
 /// A town combatant role counts as 1 + this value towards effective population
@@ -6,12 +5,10 @@
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
-	init_order = INIT_ORDER_GAMEMODE
 	runlevels = RUNLEVEL_GAME
-	flags = SS_BACKGROUND | SS_KEEP_TIMING
+	ss_flags = SS_BACKGROUND | SS_KEEP_TIMING
 	priority = 20
 	wait = 2 SECONDS
-	lazy_load = FALSE
 
 	///world.time of our last devotion check we add 2 minutes to this to determine if we should switch storytellers
 	var/last_devotion_check = 0
@@ -188,10 +185,10 @@ SUBSYSTEM_DEF(gamemode)
 	var/roundvoteend = FALSE
 	var/reb_end_time = 0
 
-/datum/controller/subsystem/gamemode/Initialize(time, zlevel)
+/datum/controller/subsystem/gamemode/Initialize()
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
-	flags |= SS_NO_FIRE
-	return ..()
+	ss_flags |= SS_NO_FIRE
+	return SS_INIT_SUCCESS
 #endif
 
 	// Populate event pools
@@ -226,7 +223,7 @@ SUBSYSTEM_DEF(gamemode)
 	load_roundstart_data()
 
 	check_roundstart_gods_rankings()
-	. = ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
 	if(last_devotion_check < world.time)

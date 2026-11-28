@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(librarian)
 	name = "Librarian"
-	init_order = INIT_ORDER_PLAYER_ARCHIVES
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/list/books = list()
 	/// The archive of player books, kept across rounds.
 	var/datum/player_archive/books/archive
@@ -32,9 +31,9 @@ SUBSYSTEM_DEF(librarian)
 	testing("file4")
 	return list()
 
-/datum/controller/subsystem/librarian/Initialize(start_timeofday)
+/datum/controller/subsystem/librarian/Initialize()
 	archive = new
-	return ..()
+	return SS_INIT_SUCCESS
 
 /// Adds a newly bound player book to the archive. Returns TRUE on success.
 /datum/controller/subsystem/librarian/proc/playerbook2file(obj/item/book/rogue/playerbook/book, mob/user)

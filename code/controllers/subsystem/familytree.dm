@@ -10,8 +10,7 @@
 
 SUBSYSTEM_DEF(familytree)
 	name = "familytree"
-	flags = SS_NO_FIRE
-	lazy_load = FALSE
+	ss_flags = SS_NO_FIRE
 
 	/*
 	* The family that kings, queens, and princes
@@ -94,7 +93,7 @@ SUBSYSTEM_DEF(familytree)
 			for(var/client/C in GLOB.clients)
 				RestoreAd(C.prefs)
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/familytree/proc/AddLocal(mob/living/carbon/human/H)
 	if(!H || istype(H, /mob/living/carbon/human/dummy))

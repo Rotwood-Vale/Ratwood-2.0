@@ -250,20 +250,21 @@
 					if(affecting)
 						var/throwee = null
 						if(throwingdatum)
-							throwee = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
+							var/atom/throwing_mob = throwingdatum.get_thrower()
+							throwee = isliving(throwing_mob) ? throwing_mob : null
 						affecting.bodypart_attacked_by(I.thrown_bclass, effective_throwforce, throwee, affecting.body_zone, crit_message = TRUE, weapon = I)
-					I.do_special_attack_effect(I.thrownby, affecting, null, src, zone, thrown = TRUE)
+					I.do_special_attack_effect(I.get_thrownby(), affecting, null, src, zone, thrown = TRUE)
 				else
 					simple_woundcritroll(I.thrown_bclass, effective_throwforce, null, zone, crit_message = TRUE)
 					if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
 						if(can_embed(I) && prob(I.embedding.embed_chance) && HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 							simple_add_embedded_object(I, silent = FALSE, crit_message = TRUE)
-					I.do_special_attack_effect(I.thrownby, null, null, src, null, thrown = TRUE)
+					I.do_special_attack_effect(I.get_thrownby(), null, null, src, null, thrown = TRUE)
 			visible_message("<span class='danger'>[src] is hit by [I]![next_attack_msg.Join()]</span>", \
 							"<span class='danger'>I'm hit by [I]![next_attack_msg.Join()]</span>")
 			next_attack_msg.Cut()
-			if(I.thrownby)
-				log_combat(I.thrownby, src, "threw and hit", I)
+			if(I.get_thrownby())
+				log_combat(I.get_thrownby(), src, "threw and hit", I)
 			var/volume = I.get_volume_by_throwforce_and_or_w_class()
 			if (I.throwforce > 0)
 				if (I.mob_throw_hit_sound)

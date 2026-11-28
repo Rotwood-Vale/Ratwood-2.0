@@ -271,11 +271,11 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = throwingdatum ? throwingdatum.get_effective_throwforce() : I.throwforce
-		if(I.thrownby == src) //No throwing stuff at myself to trigger hit reactions
+		if(I.get_thrownby() == src) //No throwing stuff at myself to trigger hit reactions
 			return ..()
 		else
-			if(ismob(I.thrownby))
-				retaliate(I.thrownby)
+			if(ismob(I.get_thrownby()))
+				retaliate(I.get_thrownby())
 	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
 		hitpush = FALSE
 		skipcatch = TRUE

@@ -41,8 +41,7 @@ GLOBAL_LIST_EMPTY(SUNLIGHT_QUEUE_CORNER) /* turfs to have their color/lights/etc
 SUBSYSTEM_DEF(outdoor_effects)
 	name = "Outdoor Weather Calc"
 	wait = LIGHTING_INTERVAL
-	flags = SS_TICKER
-	init_order = INIT_ORDER_OUTDOOR_EFFECTS
+	ss_flags = SS_TICKER
 	var/list/atom/movable/screen/plane_master/weather_effect/weather_planes_need_vis = list()
 
 	var/list/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/sunlighting_planes = list()
@@ -68,14 +67,14 @@ SUBSYSTEM_DEF(outdoor_effects)
 			continue
 		GLOB.SUNLIGHT_QUEUE_WORK += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 
-/datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
+/datum/controller/subsystem/outdoor_effects/Initialize()
 	if(!initialized)
 		init_weather_overlay()
 		get_time_of_day()
 		InitializeTurfs()
 		initialized = TRUE
 	fire(FALSE, TRUE)
-	..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/outdoor_effects/stat_entry(msg)
 	msg = "W:[GLOB.SUNLIGHT_QUEUE_WORK.len]|U:[GLOB.SUNLIGHT_QUEUE_UPDATE.len]|C:[GLOB.SUNLIGHT_QUEUE_CORNER.len]"

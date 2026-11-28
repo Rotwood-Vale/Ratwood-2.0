@@ -163,11 +163,6 @@
 
 /datum/config_entry/flag/allow_holidays
 
-/datum/config_entry/number/tick_limit_mc_init	//SSinitialization throttling
-	config_entry_value = TICK_LIMIT_MC_INIT_DEFAULT
-	min_val = 0 //oranges warned us
-	integer = FALSE
-
 /datum/config_entry/flag/admin_legacy_system	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -494,7 +489,7 @@
 
 /datum/config_entry/flag/resume_after_initializations/ValidateAndSet(str_val)
 	. = ..()
-	if(. && Master.current_runlevel)
+	if(. && MC_RUNNING())
 		world.sleep_offline = !config_entry_value
 
 /datum/config_entry/number/rounds_until_hard_restart
@@ -544,3 +539,24 @@
 	default = 100
 	min_val = 0
 	max_val = 100
+
+/datum/config_entry/flag/auto_profile
+
+/datum/config_entry/number/profiler_interval
+	config_entry_value = 300 SECONDS
+
+/datum/config_entry/number/drift_dump_threshold
+	config_entry_value = 4 SECONDS
+
+/datum/config_entry/number/drift_profile_delay
+	config_entry_value = 15 SECONDS
+
+/datum/config_entry/number/sustained_td_threshold_pct
+	config_entry_value = 0
+	integer = FALSE
+
+/datum/config_entry/number/sustained_td_duration
+	config_entry_value = 20 SECONDS
+
+/datum/config_entry/number/sustained_td_delay
+	config_entry_value = 120 SECONDS

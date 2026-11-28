@@ -4,8 +4,7 @@ This subsystem mostly exists to populate and manage the skill singletons.
 
 SUBSYSTEM_DEF(skills)
 	name = "Skills"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_SKILLS
+	ss_flags = SS_NO_FIRE
 	///Dictionary of skill.type || skill ref
 	var/list/all_skills = list()
 	///Static assoc list of levels (ints) - strings
@@ -27,9 +26,9 @@ SUBSYSTEM_DEF(skills)
 		SKILL_LEVEL_LEGENDARY = "Legendary",
 	)
 
-/datum/controller/subsystem/skills/Initialize(timeofday)
+/datum/controller/subsystem/skills/Initialize()
 	InitializeSkills()
-	return ..()
+	return SS_INIT_SUCCESS
 
 ///Ran on initialize, populates the skills dictionary
 /datum/controller/subsystem/skills/proc/InitializeSkills(timeofday)

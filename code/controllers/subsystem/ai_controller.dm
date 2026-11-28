@@ -1,10 +1,13 @@
 /// The subsystem used to tick [/datum/ai_controllers] instances. Handling the re-checking of plans.
 SUBSYSTEM_DEF(ai_controllers)
 	name = "AI Controller Ticker"
-	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
+	//We need the movement setup, so the controller can get the ref
+	dependencies = list(
+		/datum/controller/subsystem/processing/ai_movement,
+	)
+	ss_flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	init_order = INIT_ORDER_AI_CONTROLLERS
 	wait = 0.5 SECONDS //Plan every half second if required, not great not terrible.
 	///type of status we are interested in running
 	var/planning_status = AI_STATUS_ON
@@ -13,9 +16,9 @@ SUBSYSTEM_DEF(ai_controllers)
 
 #define AI_STATUS_OFF_MAX_TIME 5 SECONDS
 
-/datum/controller/subsystem/ai_controllers/Initialize(timeofday)
+/datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
 	if(length(GLOB.ai_subtrees))

@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(achievements)
 	name = "Achievements"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_ACHIEVEMENTS
+	ss_flags = SS_NO_FIRE
 	var/hub_enabled = FALSE
 
 	///List of achievements
@@ -11,7 +10,7 @@ SUBSYSTEM_DEF(achievements)
 	///List of all awards
 	var/list/datum/award/awards = list()
 
-/datum/controller/subsystem/achievements/Initialize(timeofday)
+/datum/controller/subsystem/achievements/Initialize()
 	if(CONFIG_GET(string/medal_hub_address) && CONFIG_GET(string/medal_hub_password))
 		hub_enabled = TRUE
 	
@@ -30,7 +29,7 @@ SUBSYSTEM_DEF(achievements)
 		if(!C.player_details.achievements.initialized)
 			C.player_details.achievements.InitializeData()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/achievements/Shutdown()
 	save_achievements_to_hub()

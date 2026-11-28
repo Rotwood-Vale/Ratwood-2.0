@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(waterlevel)
 	name = "waterlevel"
 	wait = 30
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_WATER_LEVEL
 	var/list/currentrun = list()
 	var/list/processing = list()

@@ -9,8 +9,10 @@
 
 SUBSYSTEM_DEF(maturity_guard)
 	name = "Maturity guard"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_MATURITY_GUARD
+	dependencies = list(
+		/datum/controller/subsystem/dbcore,
+	)
+	ss_flags = SS_NO_FIRE
 	/// A list of currently active prompts.
 	var/list/prompt_cache = list()
 	/// A list of players that failed the age check this round. Stopgap only used if we don't have a db attached to ban people.
@@ -29,7 +31,7 @@ SUBSYSTEM_DEF(maturity_guard)
 	current_day = text2num(time2text(current_time, "DD"))
 	current_month = text2num(time2text(current_time, "MM"))
 	current_year = text2num(time2text(current_time, "YYYY"))
-	. = ..()
+	return SS_INIT_SUCCESS
 
 /**
  * Checks if the player is declared of age. Prompts the player for DoB if necessary.
@@ -111,7 +113,7 @@ SUBSYSTEM_DEF(maturity_guard)
 	if(!istype(user) || !user.ckey)
 		return FALSE
 
-	var/datum/DBQuery/query_age_from_db = SSdbcore.NewQuery(
+	var/datum/db_query/query_age_from_db = SSdbcore.NewQuery(
 		"SELECT dob_year, dob_month FROM [format_table_name("player_dob")] WHERE ckey = :ckey",
 		list("ckey" = user.ckey),
 	)
@@ -139,7 +141,7 @@ SUBSYSTEM_DEF(maturity_guard)
 	if(!isnum(year) || !isnum(month))
 		return FALSE
 
-	var/datum/DBQuery/add_age_to_db = SSdbcore.NewQuery(
+	var/datum/db_query/add_age_to_db = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("player_dob")] (ckey, dob_year, dob_month) VALUES(:ckey, :dob_year, :dob_month) \
 		 ON DUPLICATE KEY UPDATE dob_year = :dob_year, dob_month = :dob_month",
 		list("ckey" = user.ckey, "dob_year" = year, "dob_month" = month),

@@ -38,6 +38,9 @@ GLOBAL_VAR(restart_counter)
 
 /world/New()
 
+	Profile(PROFILE_RESTART)
+	Profile(PROFILE_RESTART, type = "sendmaps")
+
 	log_world("World loaded at [time_stamp()]!")
 
 	SetupExternalRSC()
@@ -55,8 +58,7 @@ GLOBAL_VAR(restart_counter)
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
-//	SSdbcore.CheckSchemaVersion()
-	SSdbcore.SetRoundID()
+	SSdbcore.InitializeRound()
 	var/timestamp = replacetext(time_stamp(), ":", ".")
 
 	if(!GLOB.round_id) // we do not have a db connected, back to pointless random numbers

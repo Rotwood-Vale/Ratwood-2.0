@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(merchant)
 	name = "Merchant Packs"
 	wait = 60 SECONDS
-	init_order = INIT_ORDER_SHUTTLE
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/supply_packs = list()
@@ -20,7 +19,7 @@ SUBSYSTEM_DEF(merchant)
 
 	var/list/staticly_setup_types = list()
 
-/datum/controller/subsystem/merchant/Initialize(timeofday)
+/datum/controller/subsystem/merchant/Initialize()
 	for(var/pack in subtypesof(/datum/supply_pack/rogue))
 		var/datum/supply_pack/P = new pack()
 		if(!P.contains)
@@ -31,7 +30,7 @@ SUBSYSTEM_DEF(merchant)
 	for(var/faction in typesof(/datum/world_faction))
 		var/datum/world_faction/made = new faction()
 		world_factions |= made
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/merchant/fire(resumed)
 	for(var/datum/world_faction/faction in world_factions)

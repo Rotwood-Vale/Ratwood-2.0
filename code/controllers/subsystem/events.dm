@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
-	init_order = INIT_ORDER_EVENTS
 	runlevels = RUNLEVEL_GAME
 
 
@@ -15,13 +14,13 @@ SUBSYSTEM_DEF(events)
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = FALSE
 
-/datum/controller/subsystem/events/Initialize(time, zlevel)
+/datum/controller/subsystem/events/Initialize()
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
 			continue				//don't want this one! leave it for the garbage collector
 		control += E				//add it to the list of all events (controls)
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/events/fire(resumed = 0)

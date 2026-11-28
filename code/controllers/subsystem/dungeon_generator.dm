@@ -2,9 +2,7 @@ SUBSYSTEM_DEF(dungeon_generator)
 	name = "Matthios Creation"
 	wait = 1 SECONDS
 
-	init_order = INIT_ORDER_DUNGEON
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_INIT | RUNLEVEL_LOBBY
-	lazy_load = FALSE
 
 	var/list/parent_types = list()
 	var/list/created_types = list()
@@ -17,7 +15,7 @@ SUBSYSTEM_DEF(dungeon_generator)
 	var/created_since = 0
 	var/unlinked_dungeon_length = 0
 
-/datum/controller/subsystem/dungeon_generator/Initialize(start_timeofday)
+/datum/controller/subsystem/dungeon_generator/Initialize()
 	unlinked_dungeon_length = length(GLOB.unlinked_dungeon_entries)
 	while(length(markers))
 		for(var/obj/effect/dungeon_directional_helper/helper as anything in markers)
@@ -25,7 +23,7 @@ SUBSYSTEM_DEF(dungeon_generator)
 				continue
 			find_soulmate(helper.dir, get_turf(helper), helper)
 			markers -= helper
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/dungeon_generator/fire(resumed)
 	var/current_run = 0

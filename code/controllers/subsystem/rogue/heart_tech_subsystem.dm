@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(chimeric_tech)
 	name = "Chimeric Tech Controller"
 	priority = FIRE_PRIORITY_DEFAULT
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	// The master list of all instantiated nodes, keyed by type path.
 	var/list/all_tech_nodes = list()
@@ -15,10 +15,9 @@ SUBSYSTEM_DEF(chimeric_tech)
 	cached_choices_paths = list()
 
 /datum/controller/subsystem/chimeric_tech/Initialize()
-	. = ..()
 	load_all_tech_nodes()
 	init_unlockable_recipes()
-	return
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/chimeric_tech/proc/load_all_tech_nodes()
 	for(var/T in typesof(/datum/chimeric_tech_node) - /datum/chimeric_tech_node)

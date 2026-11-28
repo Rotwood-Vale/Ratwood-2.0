@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(hunting)
 	name = "Hunting"
 	wait = 5 MINUTES
 	runlevels = RUNLEVEL_GAME
-	flags = 0
+	ss_flags = 0
 	/// List of landmark objects waiting to spawn a new trail
 	var/list/active_spawners = list()
 	/// List of key-value pairs that's an area, and a static list of linked areas that area belongs to.
@@ -106,7 +106,6 @@ SUBSYSTEM_DEF(hunting)
 		spawner.respawn_trail()
 
 /datum/controller/subsystem/hunting/Initialize()
-	. = ..()
 	for(var/group_type in subtypesof(/datum/hunting_area_group))
 		var/datum/hunting_area_group/GA = new group_type()
 		var/list/group_list = GA.get_areas()
@@ -118,6 +117,7 @@ SUBSYSTEM_DEF(hunting)
 		for(var/area_path in group_list)
 			area_lookup[area_path] = group_list
 		qdel(GA)
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/hunting/proc/get_linked_areas(area_type)
 	// Return the cached reference, or a unique list if it's a "solo" area

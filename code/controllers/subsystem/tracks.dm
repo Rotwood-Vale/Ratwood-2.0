@@ -2,7 +2,7 @@ PROCESSING_SUBSYSTEM_DEF(tracks)
 	name = "Tracks"
 	priority = FIRE_PRIORITY_TRACKS
 	wait = 100
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	// Object pooling
@@ -21,7 +21,7 @@ PROCESSING_SUBSYSTEM_DEF(tracks)
 	pool_max_size = 1000
 	tracks_recycled = 0
 	tracks_created = 0 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/processing/tracks/stat_entry()
 	if(processing)

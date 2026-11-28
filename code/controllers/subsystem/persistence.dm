@@ -4,8 +4,10 @@
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
-	init_order = INIT_ORDER_PERSISTENCE
-	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/minor_mapping,
+	)
+	ss_flags = SS_NO_FIRE
 
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
@@ -23,7 +25,7 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new

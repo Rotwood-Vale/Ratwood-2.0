@@ -54,7 +54,7 @@
 		holder.dropItemToGround(bound_weapon, TRUE)
 	else if(istype(bound_weapon.loc, /obj/item/rogueweapon/scabbard))
 		var/obj/item/rogueweapon/scabbard/sheath = bound_weapon.loc
-		sheath.sheathed = null
+		sheath.hol_comp?.sheathed = null
 		if(ismob(sheath.loc))
 			sheath.update_icon(sheath.loc)
 		else

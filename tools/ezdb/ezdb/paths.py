@@ -31,4 +31,4 @@ def get_initial_schema_path():
     return get_root_path() / 'SQL' / 'tgstation_schema.sql'
 
 def get_changelog_path():
-    return get_root_path() / 'SQL' / 'database_changelog.md'
+    return get_root_path() / 'SQL' / 'database_changelog.txt'

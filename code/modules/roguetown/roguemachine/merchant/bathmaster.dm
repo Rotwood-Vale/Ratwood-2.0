@@ -292,6 +292,7 @@
 
 SUBSYSTEM_DEF(BMtreasury)
 	name = "BMtreasury"
+	ss_flags = SS_NO_INIT
 	wait = 60 SECONDS // this should not need to run very often.
 	priority = FIRE_PRIORITY_WATER_LEVEL
 	var/treasury_value = 0

@@ -232,6 +232,9 @@
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
 
+	if(smooth & SMOOTH_QUEUED)
+		SSicon_smooth.remove_from_queues(src)
+
 	return ..()
 
 /atom/proc/handle_ricochet(obj/projectile/P)

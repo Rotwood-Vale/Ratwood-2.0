@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(treasury)
 	var/list/fined_today_names = list()
 	var/fined_today_day = -1
 
-/datum/controller/subsystem/treasury/Initialize(mapload)
+/datum/controller/subsystem/treasury/Initialize()
 	var/roundstart_pop = get_active_player_count()
 	var/seed = STOCKPILE_CROWN_PURCHASE_FLOOR_DEFAULT + rand(500, 1500) + (roundstart_pop * CROWN_PURSE_SEED_PER_PLAYER)
 	royal_custom_threshold = ROYAL_CUSTOM_VOLUME_BASE + (roundstart_pop * ROYAL_CUSTOM_VOLUME_PER_POP)
@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(treasury)
 		if(D.trade_good_id)
 			stockpile_by_trade_good[D.trade_good_id] = D
 	autoset_stockpile_limits()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/treasury/proc/autoset_stockpile_limits()
 	var/effective_pop = (SSeconomy && SSeconomy.simulated_player_scalar > 0) ? SSeconomy.simulated_player_scalar : AUTO_STOCKPILE_ASSUMED_POP

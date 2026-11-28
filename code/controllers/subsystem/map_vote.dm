@@ -1,5 +1,4 @@
 #define MAP_VOTE_CACHE_LOCATION "data/map_vote_cache.json"
-#define SS_INIT_SUCCESS 2
 
 // How much bonus a loss adds to a player's banked pity vote for that map.
 #define MAP_VOTE_BONUS_INCREMENT 1
@@ -10,7 +9,7 @@
 
 SUBSYSTEM_DEF(map_vote)
 	name = "Map Vote"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	// admin override flag
 	var/admin_override = FALSE
@@ -42,7 +41,7 @@ SUBSYSTEM_DEF(map_vote)
 	sanitize_cache()
 	update_tally_printout()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/map_vote/proc/write_cache()
 	rustg_file_write(json_encode(player_vote_bonus), MAP_VOTE_CACHE_LOCATION)
