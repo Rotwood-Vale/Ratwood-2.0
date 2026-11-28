@@ -4,6 +4,7 @@
 /datum/species/human/northern
 	name = "Humen"
 	id = "humen"
+	race_groups = list("Humen")
 	desc = "<b>Humen</b><br>\
 	Humens (or \"Humans\") are the eldest of the Weeping God's creations. Noted for their \
 	tenacity and overwhelming population, humens are the most commonly seen race across the lands, \
@@ -134,3 +135,15 @@
 	"red - blood" = "822b2b"
 
 	))
+
+
+/mob/living/carbon/human/species/human/northern/torso // i need to spawn chest as mob. HACKS FOR LIFE!!!
+
+/mob/living/carbon/human/species/human/northern/torso/Initialize(mapload)
+	. = ..()
+	for(var/obj/item/bodypart/B in bodyparts)
+		if(!istype(B,  /obj/item/bodypart/chest))
+			if(B)
+				B.drop_limb()
+				qdel(B)
+	update_body()

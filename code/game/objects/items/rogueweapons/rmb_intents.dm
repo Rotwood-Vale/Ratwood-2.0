@@ -36,6 +36,9 @@
 		return
 	if(user == target)
 		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning(pick("I will not lure another into violence.", "I refuse to tempt them into striking.", "I have no desire to coax another into violence.")))
+		return
 
 	var/mob/living/carbon/human/HT = target
 	var/mob/living/carbon/human/HU = user
@@ -180,6 +183,9 @@
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/feintcd))
 		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning(pick("I will not invite violence with false intent.", "I will not provoke bloodshed through trickery.", "I cannot bring myself to threaten another, even falsely.", "I will not pretend to attack another.")))
+		return
 	var/mob/living/L = target
 	if (L.client && !L.cmode && !L.has_status_effect(/datum/status_effect/buff/clash))
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
@@ -296,7 +302,7 @@
 	icon_state = "rmbweak"
 
 /datum/rmb_intent/weak/special_attack(mob/living/user, atom/target)
-	if(!target.Adjacent(user))
+	if(!target?.Adjacent(user))
 		return
 	if(!ishuman(user) || !ishuman(target))
 		return

@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/desc
 	/// if alien colors are disabled, this is the color that will be used by that race
 	var/default_color = "#FFF"
+	var/list/race_groups
 	var/limbs_icon_m
 	var/limbs_icon_f
 	var/icon_override
@@ -264,6 +265,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/New()
 	add_marking_sets_to_markings()
+	if(!length(race_groups))
+		race_groups = list(name)
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
 		limbs_id = name
 	if(!clothes_id)
@@ -769,6 +772,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(istype(H.cloak, I.type))
 					return FALSE
 			if(H.wear_shirt)
+				var/obj/item/clothing/incoming_armor = I
+				if((H.wear_shirt.blocking_behavior & BLOCKARMOR) && istype(incoming_armor) && (incoming_armor.armor_class != ARMOR_CLASS_NONE) && !((I.blocking_behavior & SAMEWEAR) && (H.wear_shirt.blocking_behavior & SAMEWEAR)))
+					return FALSE
+				if((I.blocking_behavior & BLOCKSHIRT) && (H.wear_shirt.armor_class != ARMOR_CLASS_NONE) && !((I.blocking_behavior & SAMEWEAR) && (H.wear_shirt.blocking_behavior & SAMEWEAR)))
+					return FALSE
 				if(H.wear_shirt.blocking_behavior & BULKYBLOCKS)
 					return FALSE
 				if(istype(H.wear_shirt, I.type))
@@ -856,11 +864,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(H.wear_armor)
 					return FALSE
 			if(H.wear_armor)
-				if(istype(H.wear_armor, I.type))
+				var/obj/item/clothing/incoming_shirt = I
+				if((H.wear_armor.blocking_behavior & BLOCKSHIRT) && istype(incoming_shirt) && (incoming_shirt.armor_class != ARMOR_CLASS_NONE) && !((I.blocking_behavior & SAMEWEAR) && (H.wear_armor.blocking_behavior & SAMEWEAR)))
 					return FALSE
+				if((I.blocking_behavior & BLOCKARMOR) && (H.wear_armor.armor_class != ARMOR_CLASS_NONE) && !((I.blocking_behavior & SAMEWEAR) && (H.wear_armor.blocking_behavior & SAMEWEAR)))
+					return FALSE
+				if(istype(H.wear_armor, I.type))
+					if(!(I.blocking_behavior & SAMEWEAR))
+						return FALSE
 				if(I.blocksound)
 					if(I.blocksound == H.wear_armor.blocksound)
 						return FALSE
+			var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS) // don't question what this is for...!
+			if(eggs && eggs.quantity >= 10)
+				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_SHIRT) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
@@ -1272,6 +1289,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("I don't want to harm [target]!"))
 		return FALSE
+	target.on_attacked_as_pacifist(user)
+
 	if(target.check_block())
 		target.visible_message(span_warning("[target] blocks [user]'s attack!"), \
 						span_danger("I block [user]'s attack!"), span_hear("I hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
@@ -1391,6 +1410,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_HAND, user)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
+
+			target.on_hit_as_pacifist(user)
+
 			if(istype(worn_gloves))
 				worn_gloves.apply_unarmed_weapon_effects(user, affecting, user.used_intent, target, selzone)
 		log_combat(user, target, "punched", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
@@ -1973,7 +1995,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			nodmg = TRUE
 			H.next_attack_msg += VISMSG_ARMOR_BLOCKED
 			var/obj/item/clothing/C = H.get_best_worn_armor(def_zone, I.d_type)	//this is kinda relying on the proc returnig the same as run_armor_check did. Clunky!
-			var/extra_msg = C.get_armor_integ()
+			var/extra_msg = C?.get_armor_integ()
 			if(extra_msg)
 				H.next_attack_msg += extra_msg
 			if(I)

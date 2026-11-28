@@ -153,7 +153,7 @@
 	attack_verb = list("gores", "rams", "skewers")
 	animname = "stab"
 	hitsound = 'sound/combat/rend_hit.ogg'
-	penfactor = 50
+	penfactor = PEN_BSTEEL
 	miss_text = "thrusts its antlers wildly!"
 	miss_sound = "bladewooshmed"
 

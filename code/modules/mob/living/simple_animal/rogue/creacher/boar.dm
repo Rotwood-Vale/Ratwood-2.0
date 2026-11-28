@@ -149,5 +149,5 @@
 	clickcd = BOAR_ATTACK_SPEED
 	name = "tusks"
 	attack_verb = list("gores", "impales", "eviscerates")
-	penfactor = 50
+	penfactor = PEN_HEAVY
 	blade_class = BCLASS_STAB

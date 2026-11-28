@@ -230,6 +230,8 @@
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 #define COMSIG_MOB_TRY_BARK "try_bark"
 #define COMSIG_MOB_TRY_EMOTE "try_emote"
+#define COMSIG_MOB_EMOTED "mob_emoted"							//from /mob/proc/emote() when a keyed emote is invoked: (act, intentional)
+#define COMSIG_MOB_MEDITATED "mob_meditated"						//from /datum/emote/living/meditate/run_emote() when a meditation focus completes uninterrupted: ()
 #define COMSIG_MOB_MODIFY_AGGRO_LINES "comsig_mob_modify_aggro_lines"
 #define COMSIG_MOB_MODIFY_DEATH_LINES "comsig_mob_modify_death_lines"
 #define COMSIG_COMBAT_TARGET_SET "comsig_combat_target_set"
@@ -519,7 +521,7 @@
 #define COMSIG_FORCE_UNDISGUISE "comsig_force_undisguise"
 
 #define COMSIG_ITEM_ATTACK_EFFECT "item_attack_effect"
-#define COMSIG_ITEM_ATTACK_EFFECT_SELF "item_attack_effect_self"
+#define COMSIG_ITEM_ATTACK_EFFECT_SELF "item_attack_effect_self" // (user, affecting, intent, victim, selzone, thrown)
 
 //S Smithing
 
@@ -531,4 +533,3 @@
 //Roguetown-specific
 #define  COMSIG_MOB_ON_KICK	"mob_on_kick"	//from /mob/living/proc/try_kick(atom/A). This is for when the src has done a kick.
 #define  COMSIG_MOB_KICKED	"mob_kicked"	//from /datum/species/proc/kicked(mob/living/carbon/human/user, mob/living/carbon/human/target). This is for when the mob has BEEN kicked.
-#define COMSIG_ITEM_ARMOR_BLOCKED "item_armor_blocked"	//from /mob/living/proc/run_armor_check(): sent to used_weapon when armor fully absorbs a hit

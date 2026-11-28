@@ -523,7 +523,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 				target = "themselves"
 			if(A.loc == src)
 				target = "[src.p_their()] [A.name]"
-			if(A.loc.loc == src)
+			if(A.loc?.loc == src)
 				message = "[src] looks into"
 				target = "[src.p_their()] [A.loc.name]"
 			if(isliving(A))
@@ -1487,11 +1487,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(customsayverb)
 		input = capitalize(copytext(input, customsayverb+1))
 	return "[message_spans_start(spans)][input]</span>"
-
-/mob/living/proc/can_smell()
-	if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
-		return FALSE
-	return TRUE
 
 /mob/proc/become_uncliented()
 	if(!canon_client)

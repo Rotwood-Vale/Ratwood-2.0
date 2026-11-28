@@ -4,6 +4,7 @@
 /datum/species/demihuman
 	name = "Half-Kin"
 	id = "demihuman"
+	race_groups = list("Humen", "Beastvolk")
 	desc = "<b>Half-kin</b><br>\
 	Half-kins are a highly diversified people. Half-kins are primarily \
 	a consequence of Beastling races mixing with a Humens and Elves, although some have \

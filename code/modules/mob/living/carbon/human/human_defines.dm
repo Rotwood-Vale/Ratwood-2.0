@@ -14,6 +14,8 @@
 	/// When TRUE, gear equipped via outfits gets marked as looted (sells at LOOTED_SELL_MULT).
 	/// Set automatically for clientless/mindless mobs, or explicitly on jobs whose gear shouldn't be farmed.
 	var/taints_loot = FALSE
+	/// Mount-owned permission, retained when passengers dismount.
+	var/allow_rider_steering = TRUE
 
 	ambushable = 1
 
@@ -106,16 +108,16 @@
 
 	//Familytree datum
 	//I dont know how to do UI huds so this will have to do for now.
-	var/family_UI = FALSE
 	var/mob/living/carbon/spouse_mob
 	var/image/spouse_indicator
-	var/setspouse
+	var/family_id
+	var/list/random_match = list()
 	var/gender_choice_pref = ANY_GENDER
-	var/familytree_pref = FAMILY_NONE
 	var/datum/heritage/family_datum
 	var/list/temp_ui_list = list()
-	var/xenophobe = FALSE
-	var/restricted_species = null
+	var/list/species_filter = list()
+	var/species_blacklist = TRUE
+	var/take_house_name = FALSE
 
 	var/marriedto
 
@@ -131,6 +133,14 @@
 	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_X_DEFAULT
+	var/headshot_y = HEADSHOT_Y_DEFAULT
+	var/headshot_framed = FALSE
+	var/headshot_frame_chat = FALSE
+	var/image_backdrop = GALLERY_BACKDROP_TAVERN
+	var/list/card_backgrounds = list()
+	var/list/art_view_settings = list()
 	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null

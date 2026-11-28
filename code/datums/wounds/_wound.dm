@@ -397,8 +397,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/cauterize_wound()
 	if(!can_cauterize)
 		return FALSE
-	if(!isnull(clotting_threshold) && bleed_rate > clotting_threshold)
-		set_bleed_rate(clotting_threshold)
+	set_bleed_rate(0)
 	heal_wound(40)
 	return TRUE
 

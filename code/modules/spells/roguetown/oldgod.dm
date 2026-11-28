@@ -436,7 +436,7 @@
 	// Notify the user and target
 	to_chat(user, span_warning("You pull on [H]'s lux, ABSOLVING them of their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(user, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
+		to_chat(H, span_notice("You feel a pull on your soul as [user], ABSOLVES you of your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm
 		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns lighten."))
@@ -521,9 +521,90 @@
 	// Notify the user and target
 	to_chat(user, span_warning("You pull on [H]'s lux, AMENDING their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(user, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
+		to_chat(H, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // someone just torn away something from your lux, that isn't calm
 		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burdens lighten."))
 
 	return TRUE
+
+
+/obj/effect/proc_holder/spell/self/psydonluxextract
+	name = "BESTOWAL"
+	desc = "By carefully manipulating my lux I can extract some of my own, or affect Lux already outside of my body."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "INSPIRE"
+	releasedrain = 20
+	chargedrain = 0
+	chargetime = 0
+	range = 2
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = null
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	recharge_time = 5 MINUTES
+	miracle = TRUE
+	devotion_cost = 100
+
+/obj/effect/proc_holder/spell/self/psydonluxextract/cast(mob/living/carbon/human/user) // It's a very tame self-heal. Nothing too special.
+	. = ..()
+	var/extractcast = FALSE
+	var/luxcast = FALSE
+	var/imluxcast = FALSE
+	if(!ishuman(user))
+		revert_cast()
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	
+	var/hand_item = H.get_active_held_item()
+	if(!hand_item)
+		extractcast = TRUE
+	else if (istype(hand_item, /obj/item/reagent_containers/lux))
+		luxcast = TRUE
+	else if (istype(hand_item, /obj/item/reagent_containers/lux_impure))
+		imluxcast = TRUE
+	else
+		to_chat(H, span_notice("You need an empty hand to extract pure lux, split impure lux or purify it."))
+		revert_cast()
+		return FALSE
+
+	if(extractcast)
+		if(H.has_status_effect(/datum/status_effect/debuff/devitalised) || H.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
+			to_chat(H, span_notice("My lux is strained, I cannot extract more yet."))
+			revert_cast()
+			return FALSE
+		to_chat(H, span_silver("Strand after strand, move myself from the heart to the palm..."))
+
+	if(luxcast)
+		to_chat(H, span_silver("Plant a seed, let it call for more, imbue the will into what has none..."))
+	if(imluxcast)
+		to_chat(H, span_silver("Reach inside, expunge the impure, kill the will lingering..."))
+
+	if(!do_after(H, 5 SECONDS))
+		to_chat(H, span_notice("This is a very precise task, I need my focus."))
+		revert_cast()
+		return FALSE
+
+	if(extractcast)
+		to_chat(H, span_silver("Gather the strands in the hand and remove myself from them, may they serve another as they served me."))
+		H.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		new /obj/item/reagent_containers/lux(H.loc)
+		return TRUE
+
+	if(luxcast)
+		to_chat(H, span_silver("GROW, COIL, DIVIDE, let the seed grow into another as my will transforms you."))
+		new /obj/item/reagent_containers/lux_impure(H.loc)
+		new /obj/item/reagent_containers/lux_impure(H.loc)
+		qdel(hand_item)
+		return TRUE
+
+	if(imluxcast)
+		to_chat(H, span_silver("Impurities removed, the lingering will is dead. This lux can now merge with another."))
+		new /obj/item/reagent_containers/lux(H.loc)
+		qdel(hand_item)
+		return TRUE
+
+	revert_cast()
+	return FALSE
