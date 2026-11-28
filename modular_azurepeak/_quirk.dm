@@ -8,6 +8,17 @@ GLOBAL_LIST_INIT(quirks, init_subtypes_assoc(/datum/quirk))
 	// set configurable to TRUE & then override da procs below. look @ redolent & linguist for guide
 	var/configurable = FALSE
 
+/datum/quirk/fits_preferences(datum/preferences/prefs)
+	if(length(allowed_species) && !(prefs.pref_species.type in allowed_species))
+		return FALSE
+	return ..()
+
+/datum/quirk/fits_or_warn(mob/living/carbon/human/recipient)
+	if(length(allowed_species) && !(recipient.dna.species.type in allowed_species))
+		to_chat(recipient, span_warning("[name] does not suit my body. It will not be applied."))
+		return FALSE
+	return ..()
+
 /datum/quirk/proc/configure(mob/user)
 	return
 

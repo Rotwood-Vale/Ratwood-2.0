@@ -92,7 +92,7 @@
 	var/fingers = TRUE
 	var/organ_slowdown = 0 // Its here because this is first shared definition between two leg organ paths
 	var/is_prosthetic = FALSE
-	var/limb_material = "flesh" //used for icon_state
+	var/limb_material = "flesh" //what the limb is made of, used to pick the look of prosthetics on mob
 
 	/// Visaul markings to be rendered alongside the bodypart
 	var/list/markings
@@ -286,7 +286,7 @@
 		playsound(get_turf(src), 'sound/blank.ogg', 50, TRUE, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
-	if(!skeletonized && owner && !(NOBLOOD in owner.dna?.species?.species_traits))
+	if(is_organic_limb() && !skeletonized && owner && !(NOBLOOD in owner.dna?.species?.species_traits))
 		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
 
 //empties the bodypart from its organs and other things inside it
@@ -670,6 +670,10 @@
 	limb_appearance_cache_key = null
 	cached_base_appearances = null
 
+#define PROSTHETIC_GREYSCALE_MATRIX list(0.3, 0.3, 0.3, 0.59, 0.59, 0.59, 0.11, 0.11, 0.11)
+#define PROSTHETIC_BRONZE_MATRIX list(0.42, 0.3, 0.15, 0.83, 0.59, 0.3, 0.15, 0.11, 0.06)
+#define PROSTHETIC_GOLD_MATRIX list(0.6, 0.5, 0.15, 1.18, 0.98, 0.3, 0.22, 0.18, 0.06)
+
 //Gives you a proper icon appearance for the dismembered limb
 /obj/item/bodypart/proc/get_limb_icon(dropped, hideaux = FALSE)
 	icon_state = ""
@@ -724,10 +728,22 @@
 				aux = image(limb.icon, "[aux_zone][skel]", -aux_layer, image_dir)
 				. += aux
 		else
+			var/state_prefix = prosthetic_prefix
+			var/limb_tint = (limb_material == "bronze") ? PROSTHETIC_BRONZE_MATRIX : null // bronze has no sprites of its own, so it recolours steel's
+			if(HARPY in species_flags_list) // harpy bodies only have wood and bronze prosthetic sprites
+				state_prefix = (limb_material == "wood") ? "pr_wood" : "pr_bronze"
+				if(limb_material == "steel" || limb_material == "iron")
+					limb_tint = PROSTHETIC_GREYSCALE_MATRIX
+				else if(limb_material == "gold")
+					limb_tint = PROSTHETIC_GOLD_MATRIX
+				else
+					limb_tint = null
 			limb.icon = species_icon
-			limb.icon_state = "[prosthetic_prefix]_[body_zone]"
+			limb.icon_state = "[state_prefix]_[body_zone]"
+			limb.color = limb_tint
 			if(aux_zone && !hideaux)
-				aux = image(limb.icon, "[prosthetic_prefix]_[aux_zone]", -aux_layer, image_dir)
+				aux = image(limb.icon, "[state_prefix]_[aux_zone]", -aux_layer, image_dir)
+				aux.color = limb_tint
 				. += aux
 
 		var/override_color = rotted ? SKIN_COLOR_ROT : null
@@ -772,6 +788,10 @@
 			var/overlays = feature.get_bodypart_overlay(src)
 			if(overlays)
 				. += overlays
+
+#undef PROSTHETIC_GREYSCALE_MATRIX
+#undef PROSTHETIC_BRONZE_MATRIX
+#undef PROSTHETIC_GOLD_MATRIX
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()

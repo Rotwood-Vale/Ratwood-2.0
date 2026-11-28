@@ -190,6 +190,10 @@
 		if(!affecting)
 			revert_cast()
 			return FALSE
+		if(!affecting.is_organic_limb())
+			to_chat(user, span_warning("There is no flesh in this limb to mend!"))
+			revert_cast()
+			return FALSE
 		if(length(affecting.embedded_objects))
 			var/no_embeds = TRUE
 			for(var/object in affecting.embedded_objects)

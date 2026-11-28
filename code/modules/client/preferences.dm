@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/lowest = 1
 	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
-		if(vice)
+		if(vice && vice.fits_preferences(src))
 			points += vice.point_value
 			lowest = min(lowest, vice.point_value)
 	return max(points - lowest, 0)

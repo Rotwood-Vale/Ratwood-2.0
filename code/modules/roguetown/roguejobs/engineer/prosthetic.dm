@@ -144,6 +144,9 @@
 
 /////     ARMS     /////
 
+/obj/item/bodypart/l_arm/prosthetic
+	dismember_wound = /datum/wound/bruise/large
+
 /obj/item/bodypart/l_arm/prosthetic/woodleft
 	name = "wooden left arm"
 	desc = "A left arm of wood."
@@ -157,13 +160,12 @@
 	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	brute_reduction = 0
 	burn_reduction = 0
-	max_damage = 20
+	max_damage = 40
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
 	sellprice = 30
 	fingers = FALSE //can't swing weapons but can pick stuff up and punch
 	anvilrepair = /datum/skill/craft/carpentry
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/l_arm/prosthetic/iron
 	name = "iron left arm"
@@ -171,6 +173,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -190,6 +193,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -216,14 +220,13 @@
 	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	brute_reduction = 0
 	burn_reduction = 0
-	max_damage = 110
+	max_damage = 220
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 350
 	sellprice = 30
 	fingers = TRUE // it acts like a normal arm
 	anvilrepair = /datum/skill/craft/engineering
 	smeltresult = /obj/item/ingot/bronze
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/l_arm/prosthetic/gold
 	name = "golden left arm"
@@ -231,6 +234,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -245,6 +249,9 @@
 
 /obj/item/bodypart/l_arm/prosthetic/attack(mob/living/M, mob/user)
 	prosthetic_attachment(M, user)
+
+/obj/item/bodypart/r_arm/prosthetic
+	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/woodright
 	name = "wooden right arm"
@@ -264,7 +271,6 @@
 	sellprice = 30
 	fingers = FALSE //can't swing weapons but can pick stuff up and punch
 	anvilrepair = /datum/skill/craft/carpentry
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/iron
 	name = "iron right arm"
@@ -272,6 +278,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -291,6 +298,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -310,7 +318,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
-	limb_material = "bronze" // still need a different onmob sprite for bronze limbs brah
+	limb_material = "bronze"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -324,7 +332,6 @@
 	fingers = TRUE // it acts like a normal arm
 	anvilrepair = /datum/skill/craft/engineering
 	smeltresult = /obj/item/ingot/bronze
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/gold
 	name = "golden right arm"
@@ -332,6 +339,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -354,9 +362,8 @@
 	desc = "A left leg made of wood."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_leg"
+	limb_material = "wood"
 	resistance_flags = FLAMMABLE
-	obj_flags = CAN_BE_HIT
-	status = BODYPART_ROBOTIC
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
 	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
@@ -375,9 +382,11 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	max_damage = 150
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
@@ -394,9 +403,11 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	max_damage = 200
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
@@ -417,6 +428,7 @@
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	brute_reduction = 0
 	burn_reduction = 0
 	max_damage = 220
@@ -432,9 +444,11 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	max_damage = 150
 	w_class = WEIGHT_CLASS_BULKY
 	max_integrity = 300
@@ -451,6 +465,7 @@
 	desc = "A right leg made of wood."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_leg"
+	limb_material = "wood"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -470,6 +485,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -490,6 +506,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -530,6 +547,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -544,3 +562,61 @@
 
 /obj/item/bodypart/r_leg/prosthetic/attack(mob/living/M, mob/user)
 	prosthetic_attachment(M, user)
+
+/////     FITTED LIMBS     /////
+
+// Given by the Bronze Arm and Bronze Leg quirks, the Bronze Golem virtue and the Wood Arm and Wood Leg vices.
+// They are worthless once removed so a free limb can't become coin or ingots.
+
+/obj/item/bodypart/l_arm/prosthetic/woodleft/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/r_arm/prosthetic/woodright/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/l_leg/prosthetic/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/r_leg/prosthetic/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/l_arm/prosthetic/bronzeleft/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/r_arm/prosthetic/bronzeright/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/l_leg/prosthetic/bronzeleft/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/r_leg/prosthetic/bronzeright/fitted
+	sellprice = 0
+	smeltresult = null
+
+/////     FITTING     /////
+
+// Constructs, dolls and oozes take no prosthetics at all.
+// Harpy talons and taur or lamia lower bodies don't take prosthetic legs.
+
+/// Whether this body can be fitted with prosthetics. Pass legs = TRUE when the prosthetic is a leg.
+/mob/living/carbon/human/proc/can_fit_prosthetics(legs = FALSE)
+	if(construct || isooze(src))
+		return FALSE
+	return !legs || (!get_taur_tail() && !isharpy(src))
+
+/// Whether the body set in these preferences can be fitted with prosthetics. Pass legs = TRUE when the prosthetic is a leg.
+/datum/preferences/proc/can_fit_prosthetics(legs = FALSE)
+	if(pref_species.construct || istype(pref_species, /datum/species/ooze))
+		return FALSE
+	return !legs || (!istype(pref_species, /datum/species/harpy) && !taur_type)
+
+/// Whether this limb type is a leg.
+/proc/is_leg_bodypart(obj/item/bodypart/limb_type)
+	return initial(limb_type.body_part) & (LEG_LEFT | LEG_RIGHT)

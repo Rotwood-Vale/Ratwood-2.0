@@ -209,6 +209,14 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		for(var/datum/quirk/Q in quirks.Copy())
 			if(Q.type in pref_species.restricted_quirks)
 				quirks -= Q
+	// Picks that no longer suit the body, e.g. prosthetics or species-locked quirks after a species change.
+	if(virtue && !virtue.fits_preferences(src))
+		virtue = GLOB.virtues[/datum/virtue/none]
+	if(virtuetwo && !virtuetwo.fits_preferences(src))
+		virtuetwo = GLOB.virtues[/datum/virtue/none]
+	for(var/datum/quirk/Q in quirks.Copy())
+		if(!Q.fits_preferences(src))
+			quirks -= Q
 	if(!second_virtue_allowed() || virtuetwo.type == virtue.type)
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
 	var/list/seen_quirks = list()
@@ -320,10 +328,14 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			vice_count++
-			var/vice_header = "<b>[vice.name]</b> (+[vice.point_value]) [bg_link("\[Remove\]", "vice_remove", i)]"
+			var/vice_fits = vice.fits_preferences(src)
+			var/vice_header = "<b>[vice.name]</b> (+[vice_fits ? vice.point_value : 0]) [bg_link("\[Remove\]", "vice_remove", i)]"
 			if(vice.configurable)
 				vice_header += " [bg_link("\[Configure\]", "vice_config", i)]<br>[vice.config_summary()]"
-			html += pref_box(vice_header, null, vice.desc, vice.name)
+			var/vice_body = vice.desc
+			if(!vice_fits)
+				vice_body += "<br><font color='#f44336'>This vice doesn't fit your current body. It has no effect and gives no Q-Points.</font>"
+			html += pref_box(vice_header, null, vice_body, vice.name)
 	if(vice_count < VICE_SLOTS)
 		html += pref_line(list(bg_link("Add Vice", "vice_add")))
 	return html
@@ -481,6 +493,8 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 					continue
 				if(V.type in pref_species.restricted_virtues)
 					continue
+				if(!V.fits_preferences(src))
+					continue
 				if(other && V.type == other.type)
 					continue
 				if(check_pick_vice_conflict(V.type, TRUE, user))
@@ -519,7 +533,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 					continue
 				if(Q.type in pref_species.restricted_quirks)
 					continue
-				if(length(Q.allowed_species) && !(pref_species.type in Q.allowed_species))
+				if(!Q.fits_preferences(src))
 					continue
 				if(check_quirk_virtue_conflict(Q.type, TRUE, user) || check_pick_vice_conflict(Q.type, TRUE, user) || check_pick_quirk_conflict(Q.type, TRUE, user))
 					continue
@@ -562,6 +576,9 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 			for(var/vice_name in all_vices)
 				var/vice_type = all_vices[vice_name]
 				if((vice_type in current_types) || check_vice_pick_conflict(vice_type) || check_vice_vice_conflict(vice_type, current_types))
+					continue
+				var/datum/charflaw/vice_singleton = GLOB.charflaw_singletons[vice_type]
+				if(vice_singleton && !vice_singleton.fits_preferences(src))
 					continue
 				if(length(current_types) && (vice_type == /datum/charflaw/noflaw || vice_type == /datum/charflaw/randflaw))
 					continue

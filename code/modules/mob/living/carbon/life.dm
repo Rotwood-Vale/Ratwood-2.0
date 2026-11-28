@@ -279,14 +279,14 @@
 		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
 			if(embedded.item_flags & SURGICAL_TOOL)
 				if(prob(2))
-					to_chat(src, span_danger("[embedded] in my [bodypart.name] hurts!"))
+					to_chat(src, span_danger(bodypart.get_embed_ache_message(embedded)))
 				continue // surgical tools embedded as part of an ongoing operation shouldn't tick damage, This makes surgery hellish to do.
 			if(embedded.on_embed_life(src, bodypart))
 				continue
 
 			if(prob(embedded.embedding.embedded_pain_chance))
 				bodypart.receive_damage(embedded.w_class*embedded.embedding.embedded_pain_multiplier)
-				to_chat(src, span_danger("[embedded] in my [bodypart.name] hurts!"))
+				to_chat(src, span_danger(bodypart.get_embed_ache_message(embedded)))
 
 			if(prob(embedded.embedding.embedded_fall_chance))
 				bodypart.receive_damage(embedded.w_class*embedded.embedding.embedded_fall_pain_multiplier)
