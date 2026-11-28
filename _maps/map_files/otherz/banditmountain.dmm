@@ -180,6 +180,9 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/banditcamp)
+"df" = (
+/turf/open/floor/rogue/concrete,
+/area/rogue/outdoors/banditcamp)
 "dh" = (
 /obj/structure/closet/crate/roguecloset{
 	keylock = 1;
@@ -9070,7 +9073,7 @@ MQ
 nm
 pM
 Nc
-DO
+df
 Nc
 SD
 kT
