@@ -767,7 +767,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/get_hover_examine_description()
 	if(!desc)
 		return null
-	return html_encode(desc)
+	return html_encode(html_decode(desc))
 
 /obj/item/proc/get_hover_examine_condition_text()
 	return null
@@ -834,7 +834,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(length(stat_lines))
 		sections += stat_lines.Join("<br>")
 	if(original_name && original_name != name)
-		sections += "<font color='#888888'>Originally: [html_encode(original_name)]</font>"
+		sections += "<font color='#888888'>Originally: [html_encode(html_decode(original_name))]</font>"
 	return sections.Join("<br>")
 
 

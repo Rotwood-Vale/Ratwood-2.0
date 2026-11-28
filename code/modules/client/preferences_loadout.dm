@@ -91,8 +91,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			GLOB.cached_loadout_icons[cache_key] = icon(icon_file, icon_state)
 		user << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_icon_[slot].png")
 		html += "<img src='loadout_icon_[slot].png' width='46' height='46'>"
-	html += "</div></td><td valign='top'><div class='name'>[custom_name || current_item.name]</div>"
-	html += "<div class='small'>[custom_desc || item_desc || current_item.desc]</div>"
+	html += "</div></td><td valign='top'><div class='name'>[custom_name ? html_encode(html_decode(custom_name)) : current_item.name]</div>"
+	html += "<div class='small'>[custom_desc ? html_encode(html_decode(custom_desc)) : (item_desc || current_item.desc)]</div>"
 	if(custom_name || custom_desc)
 		html += "<div class='small' style='font-size: 0.7em;'>✎ Customized</div>"
 	if(item_color)
@@ -122,13 +122,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		if("rename")
 			if(!current)
 				return
-			var/new_name = tgui_input_text(user, "Enter a custom name for this item (leave blank to use default):", "Rename Item", vars["loadout_[slot]_name"], MAX_NAME_LEN)
+			var/new_name = tgui_input_text(user, "Enter a custom name for this item (leave blank to use default):", "Rename Item", html_decode(vars["loadout_[slot]_name"]), MAX_NAME_LEN)
 			if(new_name != null)
 				vars["loadout_[slot]_name"] = new_name
 		if("describe")
 			if(!current)
 				return
-			var/new_desc = tgui_input_text(user, "Enter a custom description for this item (leave blank to use default):", "Describe Item", vars["loadout_[slot]_desc"], max_length = 500, multiline = TRUE)
+			var/new_desc = tgui_input_text(user, "Enter a custom description for this item (leave blank to use default):", "Describe Item", html_decode(vars["loadout_[slot]_desc"]), max_length = 500, multiline = TRUE)
 			if(new_desc != null)
 				vars["loadout_[slot]_desc"] = new_desc
 		if("color")
