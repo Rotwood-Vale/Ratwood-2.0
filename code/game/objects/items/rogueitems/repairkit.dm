@@ -4,7 +4,7 @@
 
 /obj/item/construction/repairkit/structure
 	name = "structure repair kit"
-	desc = "a structure repairkit, able to broken doors and windows. A skilled carpenter can use this to reinforce them as well"
+	desc = "A structure repair kit, able to repairbroken doors and windows. A skilled carpenter can use this to reinforce them as well"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	icon_state = "strucrepairkit"
 	grid_width = 32
@@ -21,7 +21,30 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	sellprice = 0
 
+/obj/item/construction/repairkit/structure/examine(mob/user)
+	. = ..()
+	if(obj_integrity > 0)
+		. += span_bold("It has [obj_integrity] left.")
+	else
+		. += span_bold("It has no uses left.")
+
+/obj/item/construction/repairkit/structure/proc/use_repair()
+	obj_integrity = max(obj_integrity - 1, 0)
+	if(obj_integrity <= 0)
+		qdel(src)
+
 /obj/item/construction/repairkit/structure/attack_obj(obj/O, mob/living/user)
+	if(istype(O, /obj/structure/handcart))
+		var/obj/structure/handcart/cart = O
+		if(cart.is_metal_handcart)
+			to_chat(user, span_warning("This kit can only repair wooden handcarts."))
+			return TRUE
+		if(!user.is_holding(src))
+			return TRUE
+		return cart.repair_with_structure_kit(src, user)
+	if(obj_integrity <= 0)
+		qdel(src)
+		return TRUE
 	. = ..()
 	if(!(isliving(user)))
 		return
@@ -37,7 +60,6 @@
 			span_notice("I start repairing [doorrepair.name]."))
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			if(do_after(user, (150 / user.get_skill_level(/datum/skill/craft/carpentry)), target = O)) // making this generic carpentry, even though it could be masonry
-				qdel(I)
 				playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 				doorrepair.icon_state = "[doorrepair.base_state]"
 				doorrepair.density = TRUE
@@ -53,7 +75,8 @@
 				else
 					doorrepair.obj_integrity = doorrepair.max_integrity							
 				user.visible_message(span_notice("[user] repaired [doorrepair.name]."), \
-				span_notice("I repaired [doorrepair.name]."))	
+				span_notice("I repaired [doorrepair.name]."))
+				I.use_repair()
 	if(istype(O, /obj/structure/roguewindow/))
 		var/obj/structure/roguewindow/windowrepair = O
 		if(windowrepair.obj_integrity < windowrepair.max_integrity)
@@ -62,7 +85,6 @@
 			span_notice("I start repairing [windowrepair.name]."))
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			if(do_after(user, (150 / user.get_skill_level(/datum/skill/craft/carpentry)), target = O)) // making this generic carpentry, even though it could be masonry
-				qdel(I)
 				playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 				windowrepair.icon_state = "[windowrepair.base_state]"
 				windowrepair.density = TRUE
@@ -75,4 +97,5 @@
 				else
 					windowrepair.obj_integrity = windowrepair.max_integrity						
 				user.visible_message(span_notice("[user] repaired [windowrepair.name]."), \
-				span_notice("I repaired [windowrepair.name]."))	
+				span_notice("I repaired [windowrepair.name]."))
+				I.use_repair()

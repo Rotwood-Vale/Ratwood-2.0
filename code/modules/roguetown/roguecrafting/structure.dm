@@ -25,9 +25,10 @@
 	name = "bronze handcart"
 	result = /obj/structure/handcart/bronze
 	reqs = list(/obj/item/natural/wood/plank = 3,
-				/obj/item/ingot/bronze = 2)
+				/obj/item/ingot/bronze = 4,
+				/obj/item/roguegear/bronze = 2)
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/handcart/iron
 	name = "iron handcart"
@@ -40,10 +41,10 @@
 /datum/crafting_recipe/roguetown/structure/handcart/steel
 	name = "steel handcart"
 	result = /obj/structure/handcart/steel
-	reqs = list(/obj/item/natural/wood/plank = 3,
-				/obj/item/ingot/steel = 2)
+	reqs = list(/obj/item/natural/wood/plank = 5,
+				/obj/item/ingot/steel = 5)
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/structure/noose
 	name = "noose"

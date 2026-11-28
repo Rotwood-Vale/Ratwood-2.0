@@ -202,6 +202,7 @@
 
 		for(var/atom/movable/remaining_item in cart_contents) // Any items that weren't sold (still exist) go to the ground
 			if(!QDELETED(remaining_item))
+				cart.remove_from(remaining_item)
 				remaining_item.forceMove(cart_location)
 		// Setting cart back to square 1
 		cart.stuff_shit = list()

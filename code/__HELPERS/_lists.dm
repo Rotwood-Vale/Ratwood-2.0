@@ -1218,8 +1218,9 @@ GLOBAL_LIST_EMPTY(string_lists)
 		if(isatom(item))
 			// atoms/items/objects can be pretty and whatnot.
 			var/atom/A = item
-			// Mobs tend to have unusable icons.
-			if(output_icons && isicon(A.icon) && !ismob(A))
+			if(output_icons && ismob(A))
+				item_str += "[costly_icon2html(A, viewers(get_turf(A)))]&nbsp;"
+			else if(output_icons && isicon(A.icon))
 				item_str += "[icon2html(A, viewers(get_turf(A)))]&nbsp;"
 			item_str += name
 
