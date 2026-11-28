@@ -66,7 +66,7 @@
 	head = /obj/item/clothing/head/roguetown/inqhat
 	mask = /obj/item/clothing/mask/rogue/spectacles/inq/spawnpair
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
-	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
+	wrists = /obj/item/clothing/wrists/roguetown/sheathebracers
 	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat
 	backpack_contents = list(
@@ -79,7 +79,8 @@
 		/obj/item/grapplinghook = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/paper/inqslip/arrival/inq = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/clothing/ring/signet/silver = 1,
+		/obj/item/clothing/neck/roguetown/psicross/silver = 1,
 		)
 
 

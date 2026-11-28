@@ -90,7 +90,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
-	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
+	wrists = /obj/item/clothing/wrists/roguetown/sheathebracers
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
@@ -110,6 +110,7 @@
 		/obj/item/paper/inqslip/arrival/ortho = 1,
 		/obj/item/inqhound = 1,
 		/obj/item/inqscanner = 1,
+		/obj/item/clothing/neck/roguetown/psicross/silver = 1,
 		)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
