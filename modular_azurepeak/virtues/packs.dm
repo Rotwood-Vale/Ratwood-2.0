@@ -53,7 +53,7 @@
 		/datum/virtue/utility/riding
 	)
 	custom_text = "Grants three virtues for the worldly traveler:\n\
-	- Intellectual: +1 INT, +3 Reading, choose 3 languages, assess with stats, book crafting kit stashed (INTELLECTUAL)\n\
+	- Intellectual: +3 Reading, choose 3 languages, assess with stats, book crafting kit stashed (INTELLECTUAL)\n\
 	- Rich and Shrewd: Appraise spell, see prices, coinpurse stashed (SEEPRICES)\n\
 	- Equestrian: Call and bond with a treasured mount, Apprentice Riding, saddle stashed, navigate doors while mounted (EQUESTRIAN)"
 
