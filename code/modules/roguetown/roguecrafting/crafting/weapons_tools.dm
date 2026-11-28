@@ -441,3 +441,14 @@
 				/obj/item/natural/stoneblock = 3)
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/survival/saigasplitter
+	name = "saigasplitter"
+	result = /obj/item/rogueweapon/greataxe/poleaxe/saigasplitter
+	reqs = list(
+		/obj/item/rogueweapon/woodstaff/implement/grand/naledi = 1,
+		/obj/item/natural/whetstone = 2,
+		/obj/item/rogueweapon/woodstaff/militia = 2,
+		/obj/item/rogueweapon/sword/sabre/steppesman = 1,
+		)
+	craftdiff = 5

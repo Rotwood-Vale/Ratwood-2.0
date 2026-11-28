@@ -851,3 +851,34 @@
 	desc = "Heavy, well worn armour featuring simple greys. Justice is impartial. Are you?"
 	ducal_color = FALSE
 	detail_color = "#36454F"
+
+/obj/item/clothing/suit/roguetown/armor/plate/iron/banded
+	name = "banded iron armor"
+	desc = "An iron chestplate, pauldrons and tassets worn over a fur vest and padded with heavy leathers. It's primarily worn in \
+	the cold north, where armor has to sometimes be cobbled together due to logistical shortages. It leaves the stomach exposed for \
+	maneuverability."
+	max_integrity = ARMOR_INT_CHEST_PLATE_IRON + 25
+	icon_state = "ibandedarmor"
+	item_state = "ibandedarmor"
+	armor_class = ARMOR_CLASS_HEAVY
+	body_parts_covered = CHEST | ARMS | LEGS | GROIN
+	smelt_bar_num = 1
+	drop_sound = 'sound/foley/dropsound/scrap_drop.ogg'
+	pickup_sound = 'sound/foley/equip/scrap_equip.ogg'
+	equip_sound = 'sound/foley/equip/scrap_equip.ogg'
+	min_cold_protection_temperature = 100
+
+/obj/item/clothing/suit/roguetown/armor/plate/iron/stolen
+	name = "foreign half-plate"
+	desc = "A magnificent iron cuirass, lightweight enough to be worn by an untrained soldier. The intricate fluting \
+	and interlocked plates are clear signs of its Hammerholdian heritage; there's no way that the wearer could afford \
+	such a masterful work of armor... right?"
+	item_state = "ighalfplate"
+	icon_state = "ighalfplate"
+	max_integrity = ARMOR_INT_CHEST_PLATE_IRON
+	armor_class = ARMOR_CLASS_MEDIUM
+	body_parts_covered = COVERAGE_ALL_BUT_ARMFEET
+	smelt_bar_num = 1
+	drop_sound = 'sound/foley/dropsound/scrap_drop.ogg'
+	pickup_sound = 'sound/foley/equip/scrap_equip.ogg'
+	equip_sound = 'sound/foley/equip/scrap_equip.ogg'

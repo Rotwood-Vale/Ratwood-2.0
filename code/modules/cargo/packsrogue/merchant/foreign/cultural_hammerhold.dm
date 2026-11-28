@@ -18,40 +18,129 @@
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/hammerhold/longbow
-	name = "Yew Longbow"
-	cost = 80
-	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow)
-	ship_qty_min = 1
-	ship_qty_max = 2
-
-/datum/supply_pack/rogue/hammerhold/iron_fullplate
-	name = "Hammerhold Iron Plate"
-	cost = 380
-	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/iron)
-	ship_qty_min = 1
-	ship_qty_max = 1
-
-/datum/supply_pack/rogue/hammerhold/snow_cloak
-	name = "Norwardine Forester Cloak"
-	cost = 60
-	contains = list(/obj/item/clothing/cloak/forrestercloak/snow)
+/datum/supply_pack/rogue/hammerhold/battleaxe
+	name = "Varangian Battleaxe"
+	cost = 130
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi)
 	ship_qty_min = 1
 	ship_qty_max = 3
 
-/datum/supply_pack/rogue/hammerhold/ironclad_kit
-	name = "Hammerhold Ironclad Harness"
+/datum/supply_pack/rogue/hammerhold/hammerholdarmor
+	name = "Hammerholdian Hardened Leather Armor"
+	cost = 60
+	contains = list (/obj/item/clothing/suit/roguetown/armor/leather/heavy/hammerhold)
+
+/datum/supply_pack/rogue/hammerhold/hammerholdpants
+	name = "Nomad Hardened Leather Pants"
+	cost = 50
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants)
+
+/datum/supply_pack/rogue/hammerhold/hammerholdpantsalt
+	name = "Hammerholdian Leather Pants"
+	cost = 40
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/hammerhold)
+
+/datum/supply_pack/rogue/hammerhold/hammerholdglovesleather
+	name = "Hammerholdian Fur-lined Heavy Leather Gloves"
+	cost = 40
+	contains = list (/obj/item/clothing/gloves/roguetown/angle/hammerhold)
+
+/datum/supply_pack/rogue/hammerhold/owl_helmet
+	name = "Owl Helmet"
+	cost = 150
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/hammerhold/moose_hood
+	name = "Moose Hood"
+	cost = 90
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/saiga/atgervi)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/hammerhold/varangian_hauberk
+	name = "Varangian Hauberk"
+	cost = 180
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/hammerhold/shamanic_coat
+	name = "Shamanic Coat"
+	cost = 110
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/atgervi)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/hammerhold/kite_shield
+	name = "Varangian Kite Shield"
+	cost = 90
+	contains = list(/obj/item/rogueweapon/shield/atgervi)
+	ship_qty_min = 1
+	ship_qty_max = 3
+
+/datum/supply_pack/rogue/hammerhold/fur_gloves
+	name = "Fur-Lined Leather Gloves"
+	cost = 40
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/atgervi)
+	ship_qty_min = 2
+	ship_qty_max = 4
+
+/datum/supply_pack/rogue/hammerhold/bone_gloves
+	name = "Fur-Lined Bone Gloves"
+	cost = 50
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/hammerholdfur)
+	ship_qty_min = 2
+	ship_qty_max = 4
+
+/datum/supply_pack/rogue/hammerhold/beast_claws
+	name = "Beast Claws Gauntlets"
+	cost = 140
+	contains = list(/obj/item/clothing/gloves/roguetown/plate/atgervi)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/hammerhold/fur_pants
+	name = "Hammerholdian Fur Pants"
+	cost = 50
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather/atgervi)
+	ship_qty_min = 2
+	ship_qty_max = 4
+
+/datum/supply_pack/rogue/hammerhold/leather_boots
+	name = "Atgervi Leather Boots"
+	cost = 45
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/reinforced/atgervi)
+	ship_qty_min = 2
+	ship_qty_max = 4
+
+/datum/supply_pack/rogue/hammerhold/atgervi_kit
+	name = "Atgervi Varangian Harness"
 	no_name_quantity = TRUE
-	cost = 410
+	cost = 540
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/gambeson,
-		/obj/item/clothing/suit/roguetown/armor/plate/full/iron,
-		/obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
-		/obj/item/clothing/neck/roguetown/chaincoif/iron,
-		/obj/item/clothing/gloves/roguetown/plate/iron,
-		/obj/item/clothing/wrists/roguetown/bracers/iron,
-		/obj/item/clothing/under/roguetown/platelegs/iron,
-		/obj/item/clothing/shoes/roguetown/boots/armor/iron,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi,
+		/obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold,
+		/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi,
+		/obj/item/clothing/gloves/roguetown/angle/atgervi,
+		/obj/item/clothing/under/roguetown/trou/leather/atgervi,
+		/obj/item/clothing/shoes/roguetown/boots/leather/reinforced/atgervi,
+		/obj/item/rogueweapon/shield/atgervi,
+	)
+	ship_qty_min = 1
+	ship_qty_max = 1
+
+/datum/supply_pack/rogue/hammerhold/iskarn_kit
+	name = "Iskarn Shaman Kit"
+	no_name_quantity = TRUE
+	cost = 380
+	contains = list(
+		/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/atgervi,
+		/obj/item/clothing/head/roguetown/helmet/leather/saiga/atgervi,
+		/obj/item/clothing/gloves/roguetown/angle/hammerholdfur,
+		/obj/item/clothing/under/roguetown/trou/leather/atgervi,
+		/obj/item/clothing/shoes/roguetown/boots/leather/reinforced/atgervi,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
@@ -78,34 +167,6 @@
 	ship_qty_min = 2
 	ship_qty_max = 5
 
-/datum/supply_pack/rogue/hammerhold/slayer_axe
-	name = "Slayer Axe"
-	cost = 600
-	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel)
-	ship_qty_min = 1
-	ship_qty_max = 1
-
-/datum/supply_pack/rogue/hammerhold/slayer_greataxe
-	name = "Slayer Greataxe"
-	cost = 750
-	contains = list(/obj/item/rogueweapon/stoneaxe/battle)
-	ship_qty_min = 1
-	ship_qty_max = 1
-
-/datum/supply_pack/rogue/hammerhold/slayer_belt
-	name = "Rugged Dwarven Belt"
-	cost = 80
-	contains = list(/obj/item/storage/belt/rogue/leather)
-	ship_qty_min = 1
-	ship_qty_max = 2
-
-/datum/supply_pack/rogue/hammerhold/dwarven_warpick
-	name = "Dwarven Warpick"
-	cost = 120
-	contains = list(/obj/item/rogueweapon/pick/militia/steel)
-	ship_qty_min = 1
-	ship_qty_max = 2
-
 /datum/supply_pack/rogue/hammerhold/grudgebearer_smith_kit
 	name = "Grudgebearer Smith Harness"
 	no_name_quantity = TRUE
@@ -129,6 +190,41 @@
 		/obj/item/clothing/gloves/roguetown/plate/dwarven,
 		/obj/item/clothing/shoes/roguetown/boots/armor/dwarven,
 		/obj/item/rogueweapon/shield/tower/metal,
+	)
+	ship_qty_min = 1
+	ship_qty_max = 1
+
+/datum/supply_pack/rogue/hammerhold/hammerholdian_norsii_plate
+	name = "Norsii Iron Plate"
+	cost = 360
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/iron/hammerhold)
+	ship_qty_min = 1
+	ship_qty_max = 1
+
+/datum/supply_pack/rogue/hammerhold/hammerholdian_norsii_helm
+	name = "Norsii Horned Helm"
+	cost = 90
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket/hammerhold)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/hammerhold/hammerholdian_brigandine
+	name = "Hammerholdian Brigandine"
+	cost = 200
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/hammerhold/norsii_kit
+	name = "Norsii Heavy Harness"
+	no_name_quantity = TRUE
+	cost = 620
+	contains = list(
+		/obj/item/clothing/suit/roguetown/armor/plate/iron/hammerhold,
+		/obj/item/clothing/head/roguetown/helmet/heavy/bucket/hammerhold,
+		/obj/item/clothing/gloves/roguetown/plate/iron/hammerhold,
+		/obj/item/clothing/under/roguetown/platelegs/iron/hammerhold,
+		/obj/item/clothing/shoes/roguetown/boots/armor/iron/hammerhold,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1

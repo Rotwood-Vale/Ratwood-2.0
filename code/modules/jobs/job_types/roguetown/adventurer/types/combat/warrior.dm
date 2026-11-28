@@ -391,6 +391,7 @@
 			"Armet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron,
 			"Snouted Armet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron/snouted,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
+			"Banded Iron Helmet"	= /obj/item/clothing/head/roguetown/helmet/sallet/iron/banded,
 			"None"
 			)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
@@ -399,7 +400,8 @@
 
 		var/armors = list(
 			"Breastplate + Hauberk",
-			"Half-Plate + Light Gambeson"
+			"Half-Plate + Light Gambeson",
+			"Banded Iron + Light Gambeson"
 			)
 		var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
 		switch(armorchoice)
@@ -409,6 +411,11 @@
 			if("Half-Plate + Light Gambeson")
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/iron
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/light
+			if("Banded Iron + Light Gambeson")
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/iron/banded
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/light
+				gloves = /obj/item/clothing/gloves/roguetown/plate/iron/banded
+				neck = /obj/item/clothing/neck/roguetown/gorget
 
 		var/legs = list(
 			"Chain Chausses"	= /obj/item/clothing/under/roguetown/chainlegs/iron,
@@ -430,7 +437,7 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Greatflail","Lucerne","Greataxe","DEFENSE IS ALL THAT MATTERS")
+		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Greatflail","Lucerne","Greataxe","DEFENSE IS ALL THAT MATTERS","Banded Sword + Shield")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Executioner's Sword")
@@ -461,6 +468,11 @@
 			if("DEFENSE IS ALL THAT MATTERS")
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/shield/atgervi
+			if("Banded Sword + Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				beltr = /obj/item/rogueweapon/sword/short/iron/banded
+				backr = /obj/item/rogueweapon/shield/iron
 
 /datum/advclass/sfighter/mhunter
 	name = "Exorcist"
@@ -566,7 +578,7 @@
 				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
 			if("Silver Poleaxe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/greataxe/silver
+				r_hand = /obj/item/rogueweapon/greataxe/poleaxe/silver
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Silver Spear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)

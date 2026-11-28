@@ -1209,29 +1209,29 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Amulet of Ten"
 	path = /obj/item/clothing/neck/roguetown/psicross/ten
 
-/datum/loadout_item/psicross/gronngraggar
+/datum/loadout_item/psicross/pagangraggar
 	name = "Amulet of the Moose"
-	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/pagan
 
-/datum/loadout_item/psicross/gronnmatthios
+/datum/loadout_item/psicross/paganmatthios
 	name = "Amulet of the Bear"
-	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/pagan
 
-/datum/loadout_item/psicross/gronnzizo
+/datum/loadout_item/psicross/paganzizo
 	name = "Amulet of the Wolf"
-	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/pagan
 
-/datum/loadout_item/psicross/gronnmbaotha
+/datum/loadout_item/psicross/paganmbaotha
 	name = "Amulet of the Leopard"
-	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/pagan
 
-/datum/loadout_item/psicross/gronnabyssor
+/datum/loadout_item/psicross/paganabyssor
 	name = "Amulet of the Kraken"
-	path = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
+	path = /obj/item/clothing/neck/roguetown/psicross/abyssor/pagan
 
-/datum/loadout_item/psicross/gronndendor
+/datum/loadout_item/psicross/pagandendor
 	name = "Amulet of the Volfskinned Man"
-	path = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
+	path = /obj/item/clothing/neck/roguetown/psicross/dendor/pagan
 
 /datum/loadout_item/wedding_band
 	name = "silver wedding band"
@@ -1809,29 +1809,29 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	triumph_cost = 3
 
-/datum/loadout_item/tri_gronn_byrine_chausses
+/datum/loadout_item/tri_hammerhold_byrine_chausses
 	name = "Byrine Chausses"
-	path = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
+	path = /obj/item/clothing/under/roguetown/chainlegs/hammerhold
 	triumph_cost = 4
 
-/datum/loadout_item/tri_gronn_byrine_gloves
+/datum/loadout_item/tri_hammerhold_byrine_gloves
 	name = "Byrine Gloves"
-	path = /obj/item/clothing/gloves/roguetown/chain/gronn
+	path = /obj/item/clothing/gloves/roguetown/chain/hammerhold
 	triumph_cost = 4
 
-/datum/loadout_item/tri_gronn_byrine_hauberk
+/datum/loadout_item/tri_hammerhold_byrine_hauberk
 	name = "Byrine"
-	path = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
+	path = /obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
 	triumph_cost = 6
 
-/datum/loadout_item/tri_gronn_fur_pants
+/datum/loadout_item/tri_hammerhold_fur_pants
 	name = "Fur Pants"
-	path = /obj/item/clothing/under/roguetown/trou/leather/gronn
+	path = /obj/item/clothing/under/roguetown/trou/leather/hammerhold
 	triumph_cost = 4
 
-/datum/loadout_item/tri_gronn_bone_gloves
+/datum/loadout_item/tri_hammerhold_bone_gloves
 	name = "Bone Gloves"
-	path = /obj/item/clothing/gloves/roguetown/angle/gronnfur
+	path = /obj/item/clothing/gloves/roguetown/angle/hammerholdfur
 	triumph_cost = 4
 
 /datum/loadout_item/tri_hierophant_gambeson
@@ -1839,9 +1839,9 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
 	triumph_cost = 6
 
-/datum/loadout_item/tri_gronn_ravager_mantle
+/datum/loadout_item/tri_hammerhold_ravager_mantle
 	name = "Ravager Mantle"
-	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/hammerhold
 	triumph_cost = 6
 
 /datum/loadout_item/tri_huus_quyaq
@@ -1916,7 +1916,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 
 /datum/loadout_item/tri_shamanic_coat
 	name = "Shamanic Coat"
-	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/atgervi
 	triumph_cost = 3
 
 /datum/loadout_item/tri_spellcaster_hat
@@ -1990,8 +1990,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 // BOOTS & SHOES (Alphabetically Ordered)
 /datum/loadout_item/tri_atgervi_boots
 	name = "Atgervi Boots"
-	path = /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
-
+	path = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/atgervi
 
 /datum/loadout_item/tri_grenzelhoft_boots
 	name = "Grenzelhoft Boots"

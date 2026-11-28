@@ -497,6 +497,13 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/iron
 	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
+/datum/anvil_recipe/armor/iron/bandedarmor
+	name = "Banded Armor, Iron (+1 Metal Scrap Kit, +2 Fur, +2 Cured Leather)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/repair_kit/metal/bad, /obj/item/natural/fur, /obj/item/natural/fur, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/iron/banded
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
 /datum/anvil_recipe/armor/iron/fullplate
 	name = "Full-Plate, Iron (+1 Iron Half-Plate, +2 Cured Leather)"
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/iron, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
@@ -512,6 +519,13 @@
 /datum/anvil_recipe/armor/iron/plategauntlets
 	name = "Plate Gauntlets, Iron"
 	created_item = /obj/item/clothing/gloves/roguetown/plate/iron
+	display_category = ITEM_CAT_ARMOR_GLOVES
+
+/datum/anvil_recipe/armor/iron/bandedgauntlets
+	name = "Banded Gauntlets, Iron (+2 Fur, + 1 Leather Gloves)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/natural/fur, /obj/item/natural/fur, /obj/item/clothing/gloves/roguetown/leather)
+	created_item = /obj/item/clothing/gloves/roguetown/plate/iron/banded
 	display_category = ITEM_CAT_ARMOR_GLOVES
 
 /datum/anvil_recipe/armor/iron/chainleg
@@ -601,6 +615,13 @@
 /datum/anvil_recipe/armor/iron/sallet
 	name = "Sallet Helmet, Iron"
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/iron
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/iron/todd
+	name = "Banded Helmet, Iron (+1 Metal Scrap Kit, +2 Bones)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/repair_kit/metal/bad, /obj/item/natural/bone, /obj/item/natural/bone)
+	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/iron/banded
 	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/iron/sallet/visor

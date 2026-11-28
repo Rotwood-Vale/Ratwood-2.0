@@ -1311,6 +1311,23 @@
 	max_blade_int = 300
 	wbalance = WBALANCE_SWIFT
 
+/obj/item/rogueweapon/sword/short/hammerhold
+	name = "hammerholdian hinterblade"
+	desc = "Due to the shortage of forged steel in the Highlands, their iron blades have become hardier and thicker than what one may see elsewhere. The \
+	favoured weapon of choice for any able-bodied northman of Hammerhold, the hinterblade is the heftier, unwieldy cousin of the arming sword."
+	possible_item_intents = list(/datum/intent/sword/cut/militia, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/short, /datum/intent/sword/strike/bad)
+	icon_state = "hammerholdsword"
+	sheathe_icon = "swordshort"
+	gripped_intents = null
+	minstr = 10 //NO TWINKS!!
+	wdefense = 3 // Use it with a shield jackass
+	wlength = WLENGTH_SHORT
+	w_class = WEIGHT_CLASS_NORMAL
+	wbalance = WBALANCE_HEAVY
+
+	grid_width = 32
+	grid_height = 96
+
 /obj/item/rogueweapon/sword/sabre
 	name = "sabre"
 	desc = "A very popular backsword made for cavalrymen that originated in Naledi and spread its influence further north, reaching Aavnr as a \"Szablya\" and notoriously cementing itself as the preferred weapon of the Potentate's Hussars."
@@ -2850,6 +2867,57 @@
 			I.afterchange()
 	user.update_a_intents()
 	update_icon()
+
+//Banded iron sword that I don't want to chuck in the middle of the file again
+/obj/item/rogueweapon/sword/short/iron/banded
+	name = "banded iron sword"
+	desc = "A rather heavy slab of iron for separating brigands from their ill-gotten gold. It's extremely heavy and only really allows for cutting, \
+	yet it swings surprisingly fast - at the cost of force output."
+	icon_state = "bandedsword"
+	possible_item_intents = list(
+		/datum/intent/sword/cut/short/banded,
+		/datum/intent/sword/chop/powerstrike
+		)
+	wdefense = 4
+	minstr = 10
+	force = 7	//This sword gets its real damage values from its intents. IYKYK.
+	blade_int = 350	//You're gonna cut. A lot.
+	max_integrity = 110	//Iron arming sword + 10
+	pickup_sound = 'sound/foley/equip/scrap_equip.ogg'
+	equip_sound = 'sound/foley/equip/scrap_equip.ogg'
+
+/obj/item/rogueweapon/sword/long/exe/sawtooth
+	name = "sawtoothed slab-sword"
+	desc = "A slab of steel with a set of jagged, serrated protrusions haphazardly melded into the blade; \
+	The perforations are irregular and uneven, suggesting that its length was hewn out of several mismatched blades melted and attached to a hefty hilt."
+	possible_item_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut/militia, /datum/intent/maul/spiked, /datum/intent/axe/split,	/datum/intent/sword/cut/rend)
+	alt_grips = null
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "sawtooth"
+	minstr = 12
+	wdefense_wbonus = 5
+	wbalance = WBALANCE_HEAVY
+	slot_flags = ITEM_SLOT_BACK
+	swingsound = BLADEWOOSH_HUGE
+	smeltresult = /obj/item/ingot/iron
+	max_blade_int = 330
+	special = /datum/special_intent/greatsword_swing
+
+/obj/item/rogueweapon/sword/long/exe/getonmobprop(tag)
+	. = ..()
+	if(tag == "altgrip" && .)
+		return .
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -14,"sy" = -10,"nx" = 15,"ny" = -7,"wx" = -10,"wy" = -5,"ex" = 7,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -13,"sturn" = 110,"wturn" = -60,"eturn" = -30,"nflip" = 1,"sflip" = 1,"wflip" = 8,"eflip" = 1)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = -4,"wx" = -9,"wy" = -4,"ex" = 10,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.6,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+			if("altgrip")
+				return list("shrink" = 0.45,"sx" = 2,"sy" = 3,"nx" = -7,"ny" = 1,"wx" = -8,"wy" = 0,"ex" = 8,"ey" = -1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -135,"sturn" = -35,"wturn" = 45,"eturn" = 145,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
 
 #undef LONGSWORD_STOCK_INTENTS
 #undef LONGSWORD_STOCK_GRIPPED_INTENTS

@@ -555,7 +555,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/dazed/longsword
 	name = "CAN'T FUCKING BREATHE"
-	desc = "How HOW THE FUCK DID THEY DO THAT?! MY EARS RING, MY BREATHING IS HEAVY."
+	desc = "HOW THE FUCK DID THEY DO THAT?! MY EARS RING, MY BREATHING IS HEAVY."
 	icon_state = "mstrike"
 
 /datum/status_effect/debuff/dazed/longsword2h
@@ -594,6 +594,17 @@
 	desc = "Urgh! My face! My grip is weakened!"
 	icon_state = "swiped"
 
+/datum/status_effect/debuff/dazed/saigasplitter
+	id = "saigasplitter"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/saigasplitter
+	effectedstats = list(STATKEY_LCK = -3, STATKEY_INT = -3)
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/saigasplitter
+	name = "THROAT-CHECKED"
+	desc = "THAT PIECE OF SHIT BARBARIAN! MY LUNGS ARE ON FIRE - I CAN'T THINK STRAIGHT."
+	icon_state = "mstrike"
 
 /datum/status_effect/debuff/staggered
 	id = "staggered"

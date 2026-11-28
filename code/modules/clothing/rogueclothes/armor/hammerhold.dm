@@ -1,0 +1,326 @@
+// LIGHT ARMORS
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/hammerhold
+	name = "hammerholdian ravager helm"
+	desc = "A helmet of hardened leather with a carved animal skull to appear similar to a human; a unique design of The Northern Empty. \
+			Its visage is said in Iskarn to scare the spirits of those defeated in the battlefield \
+			and preventing those of Necra and 'The Moose' from haunting them."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdleatherhelm"
+	item_state = "hammerholdleatherhelm"
+	block2add = null
+	body_parts_covered = HEAD|HAIR|EARS|EYES|NOSE
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/hammerhold
+	name = "hammerholdian ravager mantle"
+	desc = "A carefully created mantle of bone and hardened leather. It offers superior protection against the threats of the wild while remaining light, \
+			A popular design in Iskarn is to adorn a shoulder with a wolf pelt and skull. So that a great beast is always with you."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdleatherarmor"
+	item_state = "hammerholdleatherarmor"
+	armor = ARMOR_LEATHER
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/under/roguetown/trou/leather/hammerhold
+	name = "hammerholdian fur pants"
+	desc = "A pair of hardened leather pants with bone reinforcements along the legs; \
+			Those of Hammerhold adopt a design that offers superior protection against the blunted hits and slashing claws of beasts."
+	icon_state = "hammerholdleatherpants"
+	item_state = "hammerholdleatherpants"
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_LEG_HARDLEATHER
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/gloves/roguetown/angle/hammerhold
+	name = "hammerholdian fur-lined leather gloves"
+	desc = "Thick, padded gloves made for the harshest of climates and the wildest of beasts encountered in the untamed north."
+	icon_state = "hammerholdleathergloves"
+	item_state = "hammerholdleathergloves"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	color = "#ffffff"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/gloves/roguetown/angle/hammerholdfur
+	name = "hammerholdian fur-lined bone gloves"
+	desc = "A pair of hardened leather gloves with bone reinforcements across the wrists\
+			and the back of the hand, offering superior protection against\
+			the claws of beasts and plants alike. Commonly worn by gatherers."
+	icon_state = "hammerholdfurgloves"
+	item_state = "hammerholdfurgloves"
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	unarmed_bonus = 6
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
+	color = "#ffffff"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/gloves/roguetown/angle/hammerholdfur/cleric
+	name = "thin fur-lined bone gloves"
+	desc = "A pair of thinner leather gloves with some bone reinforcements across the wrists\
+			and the back of the hand, offering barely much protection against\
+			the claws of beasts and plants alike. Commonly worn by preachers."
+	max_integrity = ARMOR_INT_SIDE_LEATHER
+	armor = ARMOR_LEATHER
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
+	name = "moose hood"
+	desc = "A deceptively strong moosehide hood with a pair of large heavy antlers. It is the reward of the fourth trial of the Iskarn Shamans: To slay a Grinning Moose in the final hunt alone - and fashion a hood from its head."
+	body_parts_covered = HEAD|HAIR|EARS|NOSE
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/hammerhold.dmi'
+	icon_state = "hammerholdfurhood"
+	item_state = "hammerholdfurhood"
+	bloody_icon = 'icons/effects/blood64.dmi'
+	armor = ARMOR_LEATHER
+	flags_inv = HIDEEARS|HIDEFACE
+	worn_x_dimension = 32
+	worn_y_dimension = 48
+	sellprice = 10
+	anvilrepair = null
+	smeltresult = null
+	sewrepair = TRUE
+	blocksound = SOFTHIT
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
+	salvage_result = /obj/item/natural/hide/cured
+	var/on = FALSE
+	var/lux_consumed = FALSE
+	var/lux_color = LIGHT_COLOR_CYAN
+	adjustable = CAN_CADJUST
+	light_color = LIGHT_COLOR_ORANGE
+	light_system = MOVABLE_LIGHT
+	light_outer_range = 3
+	light_power = 1
+	toggle_icon_state = TRUE
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.remove_status_effect(/datum/status_effect/debuff/lost_shaman_hood)
+		H.remove_stress(/datum/stressevent/shamanhoodlost)
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/dropped(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.merctype == 1) //Atgervi
+			H.apply_status_effect(/datum/status_effect/debuff/lost_shaman_hood)
+			H.add_stress(/datum/stressevent/shamanhoodlost)
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/Initialize(mapload)
+	. = ..()
+	set_light_on(FALSE)
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/MiddleClick(mob/user)
+	if(.)
+		return
+	if(adjustable == CADJUSTED)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	toggle_helmet_light(user)
+	to_chat(user, span_info("I spark [src] [on ? "on" : "off"]."))
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/proc/toggle_helmet_light(mob/living/user)
+	on = !on
+	set_light_on(on)
+	if(on)
+		playsound(loc, 'sound/effects/hood_ignite.ogg', 100, TRUE)
+		do_sparks(2, FALSE, user)
+	else
+		playsound(loc, 'sound/misc/toggle_lamp.ogg', 100)
+	update_icon()
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/update_icon()
+	if(adjustable == CADJUSTED)
+		..()
+		return
+	if(on)
+		icon_state = "hammerholdfurhood_lit[lux_consumed ? "3" : "2"]"
+		item_state = "hammerholdfurhood_lit[lux_consumed ? "3" : "2"]"
+	else
+		icon_state = "hammerholdfurhood"
+		item_state = "hammerholdfurhood"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_head()
+	..()
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/lux))
+		if(adjustable == CADJUSTED)
+			to_chat(user, span_warning("The hood must be up for this to work!"))
+			return
+		if(lux_consumed)
+			to_chat(user, span_warning("It has already been infused."))
+			return
+		to_chat(user, span_warning("I infuse the hood with the soul energies!"))
+		lux_consumed = TRUE
+		set_light_range_power_color(6, 2, lux_color) //The light is doubled
+		if(!on)
+			toggle_helmet_light(user)
+		else
+			update_icon()
+		qdel(I)
+	. = ..()
+
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/AdjustClothes(mob/user)
+	if(loc == user)
+		if(adjustable == CAN_CADJUST)
+			playsound(src, 'sound/foley/equip/rummaging-03.ogg', 50, TRUE)
+			if(on)
+				toggle_helmet_light(user)
+			if(toggle_icon_state)
+				icon_state = "hammerholdfurhood_down"
+				item_state = "hammerholdfurhood_down"
+			adjustable = CADJUSTED
+			flags_inv = null
+			body_parts_covered = null
+		else if(adjustable == CADJUSTED)
+			playsound(src, 'sound/foley/equip/cloak (3).ogg', 50, TRUE)
+			ResetAdjust(user)
+		if(ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_neck()
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/ResetAdjust(mob/user)
+	. = ..()
+	if(on)
+		set_light_on(FALSE)
+	update_icon()
+
+
+// MEDIUM ARMOR -- Iron reskins
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/hammerhold/ownel
+	name = "hammerholdian ownel helmet"
+	desc = "A full helmet that adequately protect the eyes and head; \
+			The slits are decorated with a harsh gold dye - it is rumoured in Hammerhold to grant one the ability to see as keenly as an owl."
+	icon_state = "hammerholdhelm"
+	item_state = "hammerholdhelm"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/hammerhold
+	name = "varangian byrine hauberk"
+	desc = "A chain shirt of Hammerholdian design with a leather coat layered over, \
+			offering additional protection and superior movement. It is often used by privateers."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdchain"
+	item_state = "hammerholdchain"
+	smeltresult = /obj/item/ingot/iron
+	armor = ARMOR_BRIGANDINE
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/gloves/roguetown/chain/hammerhold
+	name = "varangian byrine gloves"
+	desc = "A pair of leather gloves with chain to protects the wrists and back of the hand."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdchaingloves"
+	item_state = "hammerholdchaingloves"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/under/roguetown/chainlegs/hammerhold
+	name = "varangian byrine chausses"
+	desc = "A pair of chain-wrapped pants with a leather subligar, ensuring both protection and comfort."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdchainpants"
+	item_state = "hammerholdchainpants"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+
+// HEAVY ARMOR -- ditto
+
+/obj/item/clothing/head/roguetown/helmet/heavy/bucket/hammerhold
+	name = "norsii horned helmet"
+	desc = "One of Hammerhold's infamous horned helms of solid iron. \
+		Styled after the appearance of invading knights of legend from the Northern Empty, \
+		brutal and bare, it is a reminder of a time before there was snow."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/hammerhold.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+	icon_state = "hammerholdplatehelm"
+	item_state = "hammerholdplatehelm"
+	emote_environment = 3
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	block2add = FOV_BEHIND
+	smeltresult = /obj/item/ingot/iron
+	smelt_bar_num = 1
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/suit/roguetown/armor/plate/iron/hammerhold
+	name = "norsii iron plate"
+	desc = "A suit of solid iron plate, adorned with tassets and roundels. \
+			The Northmen of Hammerhold rarely used plate, but when they did, \
+			it is said that whole armies would quake and shake in fear of what would ravage them."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplate"
+	item_state = "hammerholdplate"
+	boobed = FALSE
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
+	smeltresult = /obj/item/ingot/iron
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/gloves/roguetown/plate/iron/hammerhold
+	name = "norsii iron gauntlets"
+	desc = "Tough iron gauntlets, simple and protective in design. A single punch is said to leave a dozen bruises."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplategloves"
+	item_state = "hammerholdplategloves"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/under/roguetown/platelegs/iron/hammerhold
+	name = "norsii iron chausses"
+	desc = "Iron chausses with an added layer of leather for comfort and padding. The knees are adorned with a skull-like shape, reminiscent of the moon."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplatepants"
+	item_state = "hammerholdplatepants"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800
+
+/obj/item/clothing/shoes/roguetown/boots/armor/iron/hammerhold
+	name = "norsii iron boots"
+	desc = "Thick iron boots, tied with a leather cord; protective and sturdy. \
+			Hammerholdian legend tells of a great warrior who fought for aeons until a hero speared him through the foot. \
+			The Northmen have since followed through by protecting their feet heavily."
+	icon = 'icons/roguetown/clothing/special/hammerhold.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hammerhold.dmi'
+	icon_state = "hammerholdplateboots"
+	item_state = "hammerholdplateboots"
+	min_cold_protection_temperature = 100
+	max_heat_protection_temperature = 800

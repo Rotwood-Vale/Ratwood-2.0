@@ -75,8 +75,8 @@
 	switch(unarmed_choice)
 		if("I still use weapons")
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-			r_hand = /obj/item/rogueweapon/handclaw/gronn
-			l_hand = /obj/item/rogueweapon/handclaw/gronn
+			r_hand = /obj/item/rogueweapon/handclaw/hammerhold
+			l_hand = /obj/item/rogueweapon/handclaw/hammerhold
 		if("I forgo weapons")
 			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

@@ -105,7 +105,7 @@
 					if("Headbutt - Vulnerable Debuff")
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights- only expert
-				var/list/martial_options = list("Greatsword", "HUNK OF IRON", "Battle Axe", "Grand Mace", "Grand Maul, 15 STR MIN", "Broadsword")
+				var/list/martial_options = list("Greatsword", "HUNK OF IRON", "Battle Axe", "Grand Mace", "Grand Maul, 15 STR MIN", "SAWTOOTHED SLABSWORD")
 				var/weapon_choice = input(H, "Choose your WEAPONS of WAR!", "SPILL THEIR ENTRAILS.") as anything in martial_options
 				switch(weapon_choice)
 					if("Greatsword")
@@ -126,10 +126,10 @@
 						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 						r_hand = /obj/item/rogueweapon/mace/maul/grand
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
-					if("Broadsword") //Swapped out the falx for this, it's a primary weapon afterall
+					if("SAWTOOTHED SLABSWORD") //Swapped out the falx for this, it's a primary weapon afterall
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 						beltr = /obj/item/rogueweapon/scabbard/sword
-						r_hand = /obj/item/rogueweapon/sword/long/broadsword/steel
+						r_hand = /obj/item/rogueweapon/sword/long/exe/sawtooth
 				var/list/sidearm_options = list("An Arming Sword", "An Axe", "Mace")
 				var/sidearm_choice = input(H, "Choose your secondary WEAPON!", "SPILL THEIR ENTRAILS.") as anything in sidearm_options
 				switch(sidearm_choice)

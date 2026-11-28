@@ -155,9 +155,9 @@
 //Claws. God, I hate these.
 /obj/item/rogueweapon/handclaw
 	slot_flags = ITEM_SLOT_HIP
-	name = "Iron Hound Claws"
+	name = "iron hound claws"
 	desc = "A pair of heavily curved claws, styled after beasts of the wilds for rending bare flesh, \
-			A show of the continual worship and veneration of beasts of strength in Gronn."
+			A show of the continual worship and veneration of beasts of strength in Hammerhold."
 	icon_state = "ironclaws"
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	wdefense = 5
@@ -182,8 +182,8 @@
 	grid_width = 32
 
 /obj/item/rogueweapon/handclaw/steel
-	name = "Steel Mantis Claws"
-	desc = "A pair of steel claws, An uncommon sight in Gronn as they do not forge their own steel, \
+	name = "steel mantis claws"
+	desc = "A pair of steel claws, An uncommon sight in Hammerhold as they do not forge their own steel, \
 			Their longer blades offer a superior defence option but their added weight slows them down."
 	icon_state = "steelclaws"
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
@@ -196,16 +196,16 @@
 	smeltresult = /obj/item/ingot/steel
 	sharpness_mod = 2
 
-/obj/item/rogueweapon/handclaw/gronn
-	name = "Gronn Beast Claws"
+/obj/item/rogueweapon/handclaw/hammerhold
+	name = "ravager beast claws"
 	desc = "A pair of uniquely reinforced iron claws forged with the addition of bone by the Zayran shamans of the Northern Empty. \
 			Their unique design aids them in slipping between the plates in armor and their light weight supports rapid aggressive slashes. \
 			'To see the claws of the four, Is to see the true danger of the north. Not man, Not land but beast. We are all prey in their eyes.'"
-	icon_state = "gronnclaws"
+	icon_state = "hammerholdclaws"
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	wdefense = 3
 	force = 25
-	possible_item_intents = list(/datum/intent/claw/cut/gronn, /datum/intent/claw/lunge/gronn, /datum/intent/claw/rend)
+	possible_item_intents = list(/datum/intent/claw/cut/hammerhold, /datum/intent/claw/lunge/hammerhold, /datum/intent/claw/rend)
 	wbalance = WBALANCE_SWIFT
 	max_blade_int = 200
 	max_integrity = 200
@@ -229,7 +229,7 @@
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	wdefense = 8
 	force = 35
-	possible_item_intents = list(/datum/intent/claw/cut/gronn, /datum/intent/claw/lunge/gronn, /datum/intent/claw/rend)
+	possible_item_intents = list(/datum/intent/claw/cut/hammerhold, /datum/intent/claw/lunge/hammerhold, /datum/intent/claw/rend)
 	wbalance = WBALANCE_HEAVY
 	max_blade_int = 350
 	smeltresult = /obj/item/ingot/blacksteel
@@ -255,7 +255,7 @@
 	clickcd = CLICK_CD_HEAVY
 	penfactor = PEN_MEDIUM
 
-/datum/intent/claw/lunge/gronn
+/datum/intent/claw/lunge/hammerhold
 	damfactor = 1.1
 	swingdelay = 5
 	clickcd = 10
@@ -283,7 +283,7 @@
 	damfactor = 1.3
 	clickcd = CLICK_CD_HEAVY
 
-/datum/intent/claw/cut/gronn
+/datum/intent/claw/cut/hammerhold
 	penfactor = PEN_LIGHT
 	swingdelay = 0
 	damfactor = 1.1

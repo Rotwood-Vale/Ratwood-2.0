@@ -1077,3 +1077,13 @@
 	detail_color = CLOTHING_WHITE
 	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/head.dmi'
 	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/head.dmi'
+
+/obj/item/clothing/head/roguetown/headband/fur
+	name = "fur headband"
+	desc = "A rough, thick fur headband, worn by the more rugged folk - ideal for braving harsh weather, and popular in Gronn."
+	icon_state = "fur_headband"
+	item_state = "fur_headband"
+	armor = ARMOR_LEATHER
+	body_parts_covered = HEAD|HAIR|EARS
+	salvage_result = /obj/item/natural/hide/cured
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER

@@ -180,6 +180,26 @@ Balloon Alert / Floating Text defines
 	/datum/species/arachnid,\
 )
 
+// This mostly exists due to sprite limitations involved in hammerholdian armor, and also to blacklist races that already have their own culturally-relevant mercenary class.
+#define RACES_HAMMERHOLD list(\
+	/datum/species/human/northern,\
+	/datum/species/human/halfelf,\
+	/datum/species/aasimar,\
+	/datum/species/lizardfolk,\
+	/datum/species/vulpkanin,\
+	/datum/species/akula,\
+	/datum/species/anthromorph,\
+	/datum/species/goblinp,\
+	/datum/species/dwarf/gnome,\
+	/datum/species/dwarf/mountain,\
+	/datum/species/demihuman,\
+	/datum/species/halforc,\
+	/datum/species/harpy,\
+	/datum/species/construct/metal,\
+	/datum/species/construct/metal/porcelain,\
+)
+
+
 #define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Truely no restrictions
 
 #define ACCEPTED_RACES list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Allows all races except dallahun
@@ -302,6 +322,8 @@ Balloon Alert / Floating Text defines
 #define ALL_DIVINE_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
 
 #define ALL_GRONNIC_PATRONS list(/datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha, /datum/patron/divine/abyssor, /datum/patron/divine/dendor)
+
+#define ALL_ATGERVI_PATRONS list(/datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha, /datum/patron/divine/abyssor, /datum/patron/divine/dendor) //No functional difference outside of avoiding confusion on regional lore.
 
 #define ALL_INHUMEN_PATRONS list(/datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)
 

@@ -4,7 +4,7 @@
 	roll_weight = TRADE_REALM_WEIGHT_DISTANT
 	demanded_categories = list(NAVIGATOR_BUCKET_WEAPONS, NAVIGATOR_BUCKET_ARMOR_HEAVY, NAVIGATOR_BUCKET_POTTERY, NAVIGATOR_BUCKET_SEAFOOD, NAVIGATOR_BUCKET_ALCOHOL, NAVIGATOR_BUCKET_MISCELLANEOUS)
 	ship_name_words = list(
-		"Fjord", "Iskarn", "Volf", "Beorn", "Ravn",
+		"Fjord", "Nöküd", "Volf", "Beorn", "Ravn",
 		"Skuld", "Storm", "Aurora", "Glacier", "Ulfr",
 		"Drage", "Frosti", "Hrim", "Norn", "Saiga",
 	)
@@ -14,7 +14,7 @@
 		"Risten", "Máret", "Elle", "Sárá", "Inga",
 	)
 	captain_last_names = list(
-		"Iskarn", "Volfsson", "Saigahorn", "Glacierborn", "Stormbringer",
+		"Nöküd", "Volfsson", "Saigahorn", "Glacierborn", "Stormbringer",
 		"Ravnstrid", "Frostbearer", "Drageaette", "Norrsker", "Hrimskogr",
 	)
 	ship_types = list(
@@ -25,7 +25,7 @@
 		list("name" = "Fenrir", "tonnage" = 700, "weight" = 5),
 	)
 	city_tags = list(
-		"the Fjall", "Iskarn-By", "Volfshaven", "Saigahold",
+		"Nöküd-By", "Volfshaven", "Saigahold",
 		"Ravnskar",
 	)
 	city_tag_chance = 30
@@ -72,45 +72,28 @@
 	)
 	cultural_stock_pool = list(
 		/datum/supply_pack/rogue/food/honey,
-		/datum/supply_pack/rogue/merc_weapons/beardedaxe,
-		/datum/supply_pack/rogue/merc_weapons/handclaw_iron,
-		/datum/supply_pack/rogue/merc_weapons/handclaw_steel,
-		/datum/supply_pack/rogue/gronn/battleaxe,
 		/datum/supply_pack/rogue/gronn/gronnarmor,
 		/datum/supply_pack/rogue/gronn/gronnpants,
-		/datum/supply_pack/rogue/gronn/gronnpantsalt,
-		/datum/supply_pack/rogue/gronn/gronnglovesleather,
-		/datum/supply_pack/rogue/gronn/owl_helmet,
-		/datum/supply_pack/rogue/gronn/moose_hood,
-		/datum/supply_pack/rogue/gronn/varangian_hauberk,
-		/datum/supply_pack/rogue/gronn/shamanic_coat,
+		/datum/supply_pack/rogue/gronn/farhat,
+		/datum/supply_pack/rogue/gronn/nomadhelmet,
+		/datum/supply_pack/rogue/gronn/nomadscalemail,
+		/datum/supply_pack/rogue/gronn/kurche,
 		/datum/supply_pack/rogue/gronn/kite_shield,
-		/datum/supply_pack/rogue/gronn/fur_gloves,
-		/datum/supply_pack/rogue/gronn/bone_gloves,
-		/datum/supply_pack/rogue/gronn/beast_claws,
-		/datum/supply_pack/rogue/gronn/fur_pants,
-		/datum/supply_pack/rogue/gronn/leather_boots,
-		/datum/supply_pack/rogue/gronn/atgervi_kit,
-		/datum/supply_pack/rogue/gronn/iskarn_kit,
+		/datum/supply_pack/rogue/gronn/warrior_kit,
+		/datum/supply_pack/rogue/gronn/gronnic_heavy_plate,
+		/datum/supply_pack/rogue/gronn/gronnic_heavy_helm,
+		/datum/supply_pack/rogue/gronn/heavy_kit,
 		/datum/supply_pack/rogue/gronn/spider_honey,
 		/datum/supply_pack/rogue/gronn/cured_megafauna,
-		/datum/supply_pack/rogue/gronn/gronnic_norsii_plate,
-		/datum/supply_pack/rogue/gronn/gronnic_norsii_helm,
-		/datum/supply_pack/rogue/gronn/gronnic_brigandine,
-		/datum/supply_pack/rogue/gronn/norsii_kit,
 		/datum/supply_pack/rogue/gronn/ring_courage,
-		/datum/supply_pack/rogue/alcohol/gronnmead,
 	)
 	hail_lines = list(
 		"Southlander. Hide, iron, fur. Salt, coal, steel. The trade is simple. Do not complicate it.",
-		"The Fjall is two months under snow already. I wish to be home before the third.",
 		"My crew has not seen sun for a fortnight. Keep them on the pier; do not invite them inland.",
 		"I will sell my hides at a fair price. I will not sell my dogs. Three of your stevedores asked already.",
 		"Saigahold sends its finest iron. Take it with respect.",
 		"Last voyage's hold carried six of your countrymen home. They walked off freely at Volfshaven and bought drinks for my crew. This voyage carries hides. Keep your priests off my deck and we will speak prices.",
 		"These antlers will fetch a fine price south, I am told. Your priests have a particular name for the beast they came from. We do not use that name. Pay or do not, but do not preach.",
-		"An Iskarn shaman rides with us out of the snows. He speaks to none, eats nothing. Do not approach him - what he watches over does not care for southern eyes.",
-		"The clouds parted over the Fjall this season. The straits opened early. Buy quickly. When they close again, the next ship from us will not be a trader.",
 		"There is a totem under my sailcloth that is not for sale and not for your church to see. If your magistrate calls it idolatry, your magistrate has not seen real winter.",
 		"The aurora followed us south. The crew calls that a witness. Your Ten have nothing to do with it; do not bring your priests to argue otherwise.",
 		"We do not raid this season. The compact holds. Pray the next captain you meet from our shore says the same.",

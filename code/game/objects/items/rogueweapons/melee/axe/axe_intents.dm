@@ -99,6 +99,7 @@
 /datum/intent/axe/chop/long/woodcutter
 	reach = 2
 	demolition_mod = 3
+
 /datum/intent/axe/chop/long/woodcutter/pioneer
 	demolition_mod = 4.5
 

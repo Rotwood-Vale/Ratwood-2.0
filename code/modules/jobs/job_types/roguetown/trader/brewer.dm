@@ -40,7 +40,7 @@
 	beltr = /obj/item/rogueweapon/mace/cudgel
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
-		/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/beer/hammerholdmead = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer/voddena = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer/blackgoat = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/elfred = 1,
