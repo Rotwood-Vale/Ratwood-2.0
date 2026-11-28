@@ -159,12 +159,10 @@
 		var/dir = pick_n_take(cardinal_dirs)
 		chosen_dirs += dir
 	for(var/dir in chosen_dirs)
-		var/turf/target = get_ranged_target_turf(T, dir, 3)
 		var/obj/projectile/magic/gravel_blast/frag = new(T)
 		frag.damage = fragment_damage
 		frag.firer = owner
-		frag.preparePixelProjectile(target, T)
-		frag.fire()
+		frag.fire(dir2angle(dir))
 
 // Falling boulder visual - uses the boulder projectile sprite
 /obj/effect/temp_visual/falling_boulder

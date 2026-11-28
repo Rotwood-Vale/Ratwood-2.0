@@ -49,9 +49,7 @@
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize(mapload)
 	. = ..()
 	verbs += list(/mob/living/simple_animal/hostile/retaliate/bat/proc/fly_up,
-	/mob/living/simple_animal/hostile/retaliate/bat/proc/fly_down,
-	/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/emote_caw,
-	/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/change_stance)
+	/mob/living/simple_animal/hostile/retaliate/bat/proc/fly_down)
 
 
 /mob/living/simple_animal/hostile/retaliate/bat/crow/proc/change_stance()
@@ -124,6 +122,11 @@
 	remains_type = /obj/effect/decal/remains/crow
 	fly_time = 3 SECONDS // slowing down crow for witches
 	var/sitting = FALSE
+
+/mob/living/simple_animal/hostile/retaliate/bat/crow/Initialize(mapload)
+	. = ..()
+	verbs += list(/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/emote_caw,
+	/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/change_stance)
 
 /obj/effect/decal/remains/crow
 	name = "zad remains"

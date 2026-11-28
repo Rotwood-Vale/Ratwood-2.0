@@ -182,8 +182,10 @@
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
 	var/datum/status_effect/redolent/strong_smell = recipient.apply_status_effect(/datum/status_effect/redolent)
-	strong_smell.redolent_scent_type = recipient.client?.prefs?.redolent_type || REDOLENT_SMELL_NEUTRAL
-	strong_smell.redolent_scent = recipient.client?.prefs?.redolent_scent || ""
+	strong_smell.redolent_scent_type = scent_type
+	strong_smell.redolent_scent = scent
+	if(!length(scent))
+		strong_smell.redolent_scent = get_default_redolent_scent(scent_type)
 
 /datum/quirk/redolent/config_summary()
 	return "<b>[scent_type]</b>: [scent || get_default_redolent_scent(scent_type)]"

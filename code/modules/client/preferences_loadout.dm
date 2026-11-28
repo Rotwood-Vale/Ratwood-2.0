@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			vars[loadout_var(i)] = new loadout_type()
 		for(var/suffix in list("name", "desc", "hex"))
 			vars["loadout_[i]_[suffix]"] = preset["loadout_[i]_[suffix]"]
-	extra_language = preset["extra_language"]
+	extra_language = string_to_typepath(preset["extra_language"]) || "None"
 	return TRUE
 
 /datum/preferences/proc/get_preset_summary(preset_slot)

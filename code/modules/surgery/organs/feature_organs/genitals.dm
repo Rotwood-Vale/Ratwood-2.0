@@ -25,7 +25,14 @@
 		set_massive(TRUE)
 
 /obj/item/organ/penis/get_icon_cache_key(obj/item/bodypart/bodypart)
-	return "[..()]-[sheath_type]-[erect_state]-[penis_size]-[massive]"
+	. = "[..()]-[sheath_type]-[erect_state]-[penis_size]-[massive]"
+	var/obj/item/bodypart/taur/body = owner?.get_bodypart(BODY_ZONE_TAUR)
+	var/placement = get_taur_penis_placement(body?.type)
+	if(placement && ispath(get_render_accessory_type(), /datum/sprite_accessory/penis/taur))
+		. += "-[placement]"
+
+/obj/item/organ/penis/proc/get_sprite_size()
+	return massive ? penis_size : clamp(penis_size, SMALL_PENIS_SIZE, DEFAULT_PENIS_SIZE)
 
 /obj/item/organ/penis/proc/can_be_massive()
 	return penis_size == MAX_PENIS_SIZE
@@ -383,3 +390,14 @@
 	name = "internal testicles"
 	visible_organ = FALSE
 	accessory_type = /datum/sprite_accessory/none
+
+/obj/item/organ/penis/get_render_accessory_type()
+	var/obj/item/bodypart/taur/taur = owner?.get_bodypart(BODY_ZONE_TAUR)
+	return resolve_taur_genital_accessory(accessory_type, taur?.type)
+
+/obj/item/organ/testicles/get_render_accessory_type()
+	var/obj/item/bodypart/taur/taur = owner?.get_bodypart(BODY_ZONE_TAUR)
+	return resolve_taur_genital_accessory(accessory_type, taur?.type)
+
+/obj/item/organ/testicles/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return "[..()]-[ball_size]"

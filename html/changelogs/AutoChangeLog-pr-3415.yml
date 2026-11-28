@@ -1,0 +1,5 @@
+author: "Skuyno"
+delete-after: True
+changes:
+  - rscadd: "Ported Skyrat’s genital sprites for supported taur bodies."
+  - rscadd: "Added a Hidden option for the taur testicle sprite."

@@ -4,6 +4,7 @@
 /datum/species/kobold
 	name = "Kobold"
 	id = "kobold"
+	race_groups = list("Reptilian")
 	desc = "<b>Kobold</b><br>\
 	Kobolds are a nomadic tribal people known for their small stature and swift speed. \
 	They prefer mountainous terrain or underground cave systems, but they are adaptable \

@@ -282,13 +282,15 @@
 		return TRUE
 
 
-/mob/living/carbon/human/proc/MarryTo(mob/living/carbon/human/spouse)
+// this does more than marriage Technically
+/mob/living/carbon/human/proc/MarryTo(mob/living/carbon/human/spouse, relation = "spouse")
 	if(!ishuman(spouse))
 		return null
 
 	// Set basic spouse relationship
-	spouse_mob = spouse
-	spouse.spouse_mob = src
+	if(relation == "spouse")
+		spouse_mob = spouse
+		spouse.spouse_mob = src
 
 	// Handle family integration
 	var/datum/heritage/primary_family = null
@@ -317,13 +319,41 @@
 
 	else
 		// Neither has family - create new one
-		primary_family = new /datum/heritage(src)
+		primary_family = new /datum/heritage(src, null, null, spouse)
+		SSfamilytree.families += primary_family
 		primary_member = primary_family.founder
 		secondary_member = primary_family.CreateFamilyMember(spouse)
 
+	if(primary_family.housename && secondary_member?.person && secondary_member.person.take_house_name && (relation == "spouse" || relation == "sibling" || relation == "parent") && secondary_member.family == primary_family && secondary_member != primary_family.founder)
+		secondary_member.person.TakeHouseName(primary_family.housename)
+
 	// Add spouse relationship in family system
 	if(primary_member && secondary_member && primary_family)
-		primary_family.MarryMembers(primary_member, secondary_member)
+		switch(relation)
+			if("spouse")
+				primary_family.MarryMembers(primary_member, secondary_member)
+			if("sibling")
+				family_member_datum.AddSibling(spouse.family_member_datum)
+				if(!length(dna.species.race_groups & spouse.dna.species.race_groups))
+					secondary_member.adoption_status = TRUE
+				to_chat(src, span_love("[spouse.real_name] is now my sibling."))
+				to_chat(spouse, span_love("[real_name] is now my sibling."))
+			if("parent")
+				family_member_datum.AddChild(spouse.family_member_datum)
+				if(!length(dna.species.race_groups & spouse.dna.species.race_groups))
+					spouse.family_member_datum.adoption_status = TRUE
+				to_chat(src, span_love("[spouse.real_name] is now my offspring."))
+				to_chat(spouse, span_love("[real_name] is now my parent."))
+			if("lover", "friend", "cousin")
+				family_member_datum.other_relations[spouse.family_member_datum] = relation
+				spouse.family_member_datum.other_relations[family_member_datum] = relation
+				if(relation == "lover")
+					family_member_datum.lover = spouse.family_member_datum
+					spouse.family_member_datum.lover = family_member_datum
+				mind?.i_know_person(spouse)
+				spouse.mind?.i_know_person(src)
+				to_chat(src, span_love("[spouse.real_name] is now my [relation]."))
+				to_chat(spouse, span_love("[real_name] is now my [relation]."))
 
 	return primary_family
 
@@ -390,3 +420,34 @@
 
 /mob/living/carbon/human/proc/ReturnRelation(mob/living/carbon/human/stranger)
 	return family_datum.ReturnRelation(src, stranger)
+
+
+/mob/living/carbon/human/proc/social_rank_color()
+	if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4)
+		social_rank = SOCIAL_RANK_MINOR_NOBLE
+	switch(social_rank)
+		if(SOCIAL_RANK_PEASANT)
+			return "#91733B"
+		if(SOCIAL_RANK_YEOMAN)
+			return "#B1892A"
+		if(SOCIAL_RANK_MINOR_NOBLE)
+			return "#D09F19"
+		if(SOCIAL_RANK_NOBLE)
+			return "#ECB20A"
+		if(SOCIAL_RANK_ROYAL)
+			return "#FFBF00"
+	return "#725D4C"
+
+/mob/living/carbon/human/proc/TakeHouseName(housename)
+	var/old_name = real_name
+	var/first_name = real_name
+	var/space = findlasttext(real_name, " ")
+	if(space && !(copytext(real_name, 1, space) in GLOB.name_titles))
+		first_name = copytext(real_name, 1, space)
+	real_name = "[first_name] [trim(housename)]"
+	name = real_name
+	to_chat(src, span_notice("I am now known as [real_name]."))
+	for(var/mob/living/carbon/human/M in GLOB.human_list)
+		if(M.mind?.known_people?[old_name])
+			M.mind.known_people -= old_name
+			mind?.person_knows_me(M.mind)

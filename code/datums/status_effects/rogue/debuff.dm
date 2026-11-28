@@ -961,7 +961,7 @@
 	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 	harpy.flying = TRUE
 	init_signals()
-	if(isnull(harpy.buckled_mobs))
+	if(!length(harpy.buckled_mobs))
 		return
 	var/mob/buckled_rider = harpy.buckled_mobs[1]
 	buckled_mob = WEAKREF(buckled_rider)

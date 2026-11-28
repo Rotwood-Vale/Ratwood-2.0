@@ -78,7 +78,7 @@
 		var/datum/browser/popup = new(user, "BOUNTIES", "", 500, 300, src)
 		popup.set_content(consult_menu)
 		popup.open()
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved), override = TRUE)
 	else
 		say("No bounties are currently active.")
 

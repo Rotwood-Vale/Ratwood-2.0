@@ -1,0 +1,5 @@
+author: "trueroguan"
+delete-after: True
+changes:
+  - bugfix: "revenant soul no longer disappears when you take your head off a second time"
+  - bugfix: "revenant soul sprite now goes out when they die headless"
