@@ -9,10 +9,13 @@
 	/// Stores weapon
 	var/obj/item/rogueweapon/sheathed
 
+	var/locked_sheath = FALSE // stops drawing of blade while true
+	var/hidden_blade = FALSE // no examine giving away blade sheathed
+
 	var/sheathe_time = 0.1 SECONDS
 	var/sheathe_sound = 'sound/foley/equip/scabbard_holster.ogg'
 
-/datum/component/holster/Initialize(obj/item/rogueweapon/arg_validblade, list/arg_valid_blades, list/arg_invalid_blades, arg_sheathe_time)
+/datum/component/holster/Initialize(obj/item/rogueweapon/arg_validblade, list/arg_valid_blades, list/arg_invalid_blades, arg_sheathe_time, arg_locked_sheath, arg_hidden_blade)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -23,6 +26,10 @@
 		invalid_blades = arg_invalid_blades.Copy()
 	if(arg_sheathe_time)
 		sheathe_time = arg_sheathe_time
+	if(arg_locked_sheath)
+		locked_sheath = arg_locked_sheath
+	if(arg_hidden_blade)
+		hidden_blade = arg_hidden_blade
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine_check))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(update_sheathed_ref))
@@ -43,7 +50,7 @@
 
 /datum/component/holster/proc/examine_check(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(sheathed)
+	if(sheathed && !hidden_blade)
 		examine_list += span_notice("The sheath is occupied by [sheathed]. Left-click to pull it out.")
 
 /datum/component/holster/proc/weapon_check(mob/living/user, obj/A)
@@ -100,7 +107,7 @@
 	return TRUE
 
 /datum/component/holster/proc/puke_sword(mob/living/user)
-	if(!sheathed)
+	if(!sheathed || locked_sheath)
 		return FALSE
 	var/obj/item/I = parent
 	if(I.obj_broken)

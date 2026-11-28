@@ -101,7 +101,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	beltr = /obj/item/rogueweapon/scabbard/sheath/courtphysician
+	beltr = /obj/item/rogueweapon/scabbard/sword/royal/courtphysician
 	id = /obj/item/scomstone/bad
 	r_hand = /obj/item/rogueweapon/sword/rapier/courtphysician
 	backl = /obj/item/storage/backpack/rogue/satchel/black

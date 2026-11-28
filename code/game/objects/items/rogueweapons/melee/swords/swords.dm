@@ -1625,7 +1625,6 @@
 	desc = "A strange, cheap ring devoid of purpose, yet carrying an uncanny sense of nostalgia of grand upsets, felled short.\n<i>'You shall know his name. You shall know his purpose. You shall die.'</i>"
 	icon_state = "decrapier"
 	sheathe_icon = "decrapier"
-	no_loot_taint = TRUE
 
 /obj/item/rogueweapon/sword/rapier/blacksteel
 	name = "blacksteel rapier"
@@ -1787,9 +1786,10 @@
 	grid_height = 64
 	dropshrink = 0
 	bigboy = FALSE
-	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
 	gripped_intents = null
 	force_wielded = 0
+	force = 28 // High force but little to no defence
+	wdefense = 2 
 
 /obj/item/rogueweapon/sword/rapier/hand
 	name = "dark sister"
@@ -1801,6 +1801,10 @@
 	icon_state = "staffblade"
 	item_state = "staffblade"
 	sheathe_icon = "staffblade"
+	force = 28 // High force but little to no defence
+	wdefense = 2
+	implement_tier = IMPLEMENT_TIER_GREATER // arcane focuss
+	implement_refund = IMPLEMENT_REFUND_GREATER
 
 /obj/item/rogueweapon/sword/cutlass
 	name = "cutlass"

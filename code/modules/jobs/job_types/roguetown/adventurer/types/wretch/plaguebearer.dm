@@ -34,7 +34,7 @@
 		"Sewing Kit" =	/obj/item/repair_kit,
 	)
 /datum/outfit/job/roguetown/wretch/plaguebearer/pre_equip(mob/living/carbon/human/H)
-	head = /obj/item/clothing/head/roguetown/physician
+	head = /obj/item/clothing/head/roguetown/physician/plaguebearer
 	mask = /obj/item/clothing/mask/rogue/physician/plaguebearer
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -59,7 +59,7 @@
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.mind)
-		var/primary_weapons = list("A Poison Dagger", "A Rapier and Agility")
+		var/primary_weapons = list("A Poison Dagger", "A Cane-sword and Agility")
 		var/primary_weapon_choice = input(H, "Choose your signature weapon.", "TOOLS OF YOUR TRADE") as anything in primary_weapons
 		H.set_blindness(0)
 		switch(primary_weapon_choice)
@@ -78,18 +78,19 @@
 						ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
 						H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 2))
 						backr = /obj/item/rogueweapon/woodstaff/implement
-			if("A Rapier and Agility")
+			if("A Cane-sword and Agility")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/rapier
+				beltl = /obj/item/rogueweapon/scabbard/sword/royal/courtphysician
+				l_hand = /obj/item/rogueweapon/sword/rapier/courtphysician
 		wretch_select_bounty(H)
 
 /obj/item/clothing/mask/rogue/physician/plaguebearer
-	desc = "What better laboratory than the blood-soaked battlefield? This one seems to be uniquely armored."
+	desc = "What better laboratory than the blood-soaked battlefield?"
 	armor = ARMOR_PLATE
 	// Less than an actual steel mask.
-	max_integrity = 160
+	max_integrity = ARMOR_INT_MASK_STEEL
+	resistance_flags = FIRE_PROOF
 	// Consistency with other masks.
 	body_parts_covered = FACE
 	blocksound = PLATEHIT

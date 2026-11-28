@@ -38,10 +38,10 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	l_hand = /obj/item/rogueweapon/sword/rapier
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/rogueweapon/sword/rapier/courtphysician
+	beltr = /obj/item/rogueweapon/scabbard/sword/royal/courtphysician
 	pants = /obj/item/clothing/under/roguetown/trou
-	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/mattcoin
 	backpack_contents = list(
