@@ -9,14 +9,14 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/H = target
-		if(HAS_TRAIT(H, TRAIT_SILVER_WEAK) && !H.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+		if(HAS_TRAIT(H, TRAIT_SILVER_WEAK))
 			H.visible_message(span_silver("The unholy strike weakens the curse temporarily!"))
 			to_chat(H, span_silver("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
 			H.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
 
 /datum/magic_item/mundane/silver/on_equip(obj/item/i, mob/living/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_SILVER_WEAK) && !user.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+	if(HAS_TRAIT(user, TRAIT_SILVER_WEAK))
 		var/datum/antagonist/vampire/V_lord = user.mind?.has_antag_datum(/datum/antagonist/vampire)
 		if(V_lord.generation >= GENERATION_METHUSELAH)
 			return

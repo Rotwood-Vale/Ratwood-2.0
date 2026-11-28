@@ -305,7 +305,7 @@
 		if(prob(used))
 			attempted_wounds += /datum/wound/scarring
 	if((bclass in GLOB.sunder_bclasses))
-		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK))
 			used = round(damage_dividend * 20 + (dam / 2))
 			if(prob(used))
 				attempted_wounds += /datum/wound/sunder
@@ -401,7 +401,7 @@
 			else
 				attempted_wounds += /datum/wound/scarring
 	if(bclass in GLOB.sunder_bclasses)
-		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK))
 			used = round(damage_dividend * 20 + (dam / 2))
 			if(prob(used) && !owner.mind) //mindless always die to one critical sunder
 				attempted_wounds += /datum/wound/sunder/chest
@@ -532,7 +532,7 @@
 				else if(zone_precise in knockout_zones)
 					attempted_wounds += /datum/wound/fracture/head/brain
 	if(bclass in GLOB.sunder_bclasses)
-		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK))
 			used = round(damage_dividend * 20 + (dam / 2), 1)
 			if(prob(used) && !owner.mind) //mindless always die in one critical sunder
 				attempted_wounds += /datum/wound/sunder/head
@@ -608,7 +608,7 @@
 		if(crit_message)
 			owner.next_attack_msg += " <span class='userdanger'>[embedder] runs through [owner]'s [src]!</span>"
 		update_disabled()
-		if(embedder.is_silver && HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+		if(embedder.is_silver && HAS_TRAIT(owner, TRAIT_SILVER_WEAK))
 			var/datum/component/silverbless/psyblessed = embedder.GetComponent(/datum/component/silverbless)
 			owner.adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
 			to_chat(owner, span_danger("the [embedder] in your body painfully jostles!"))
