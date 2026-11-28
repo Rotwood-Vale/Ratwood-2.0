@@ -97,6 +97,9 @@
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	armor = /obj/item/clothing/suit/roguetown/armor/heartfelt/hand //Heartfelt armor w/o cloak. It's neat.
+	var/turf/TU = get_turf(H)
+	if(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt(TU)
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	beltr = /obj/item/rogueweapon/scabbard/sword/noble
 	l_hand = /obj/item/rogueweapon/sword/long
@@ -117,7 +120,7 @@
 	// IT WORKS :TM: still gives them a helm and grandmace, just not the choice
 	
 	H.adjust_blindness(-3)
-	var/weapons = list("Dec Sword + Shield","Zweihander","Greatsword","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne", "Partizan", "Glaive")
+	var/weapons = list("Dec Sword + Shield","Zweihander","Greatsword","Great Mace","Battle Axe","Greataxe","Estoc","Eaglebeak", "Partizan", "Glaive")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -137,8 +140,8 @@
 			r_hand = /obj/item/rogueweapon/greataxe/steel
 		if("Estoc")
 			r_hand = /obj/item/rogueweapon/estoc
-		if("Lucerne")
-			r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
+		if("Eaglebeak")
+			r_hand = /obj/item/rogueweapon/eaglebeak
 		if("Partizan")
 			r_hand = /obj/item/rogueweapon/spear/partizan
 		if("Glaive")

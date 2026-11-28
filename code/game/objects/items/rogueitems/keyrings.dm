@@ -416,3 +416,21 @@
 
 /obj/item/storage/keyring/rockhillslaves
 	keys = list(/obj/item/roguekey/slaverhouse)
+
+/obj/item/storage/keyring/heartfeltlord
+	keys = list(/obj/item/seal/heartfelt_lord, /obj/item/inqarticles/tallowpot)
+
+/obj/item/storage/keyring/heartfelthand
+	keys = list(/obj/item/seal/heartfelt_hand, /obj/item/inqarticles/tallowpot)
+
+/obj/item/storage/keyring/grenzelhoftenvoy
+	keys = list(/obj/item/seal/grenzelhoft_envoy, /obj/item/inqarticles/tallowpot)
+
+/obj/item/storage/keyring/zybantineenvoy
+	keys = list(/obj/item/seal/zybantine_envoy, /obj/item/inqarticles/tallowpot)
+
+/obj/item/storage/keyring/otavanenvoy
+	keys = list(/obj/item/seal/otavan_envoy, /obj/item/inqarticles/tallowpot)
+
+/obj/item/storage/keyring/czwartekilord
+	keys = list(/obj/item/seal/czwarteki_lord, /obj/item/inqarticles/tallowpot)

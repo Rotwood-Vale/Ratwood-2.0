@@ -137,3 +137,9 @@
 	desc = "A decorative piece of cloth meant to be used as a saddle decoration. It's adorned with ducal colours. This one fits on a Fogbeast."
 	caparison_state = "azure_caparison"
 	female_caparison_state = "azure_caparison"
+
+/obj/item/caparison/fogbeast/heartfelt
+	name = "Heartfelt caparison"
+	desc = "A decorative piece of cloth meant to be used as a saddle decoration. It's adorned with the colours of Heartfelt. This one fits on a Fogbeast."
+	caparison_state = "heartfelt_caparison"
+	female_caparison_state = "heartfelt_caparison"

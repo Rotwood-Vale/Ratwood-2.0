@@ -24,6 +24,18 @@
 		STATKEY_SPD = 1,
 	)
 
+	subclass_virtues = list(
+		/datum/virtue/utility/riding,
+	)
+
+	subclass_languages = list(
+		/datum/language/celestial,
+	)
+
+	subclass_stashed_items = list(
+		"Tallow" = /obj/item/reagent_containers/food/snacks/tallow/soft,
+	)
+
 /datum/outfit/job/roguetown/zybantine/emir/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
@@ -39,6 +51,9 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
+	var/turf/TU = get_turf(H)
+	if(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/camel/tame/saddled(TU)
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 	beltl = /obj/item/rogueweapon/scabbard/sword/royal
 	beltr = /obj/item/flashlight/flare/torch/lantern
@@ -50,9 +65,9 @@
 		/obj/item/paper/scroll = 2,
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
+		/obj/item/storage/keyring/zybantineenvoy = 1,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
-	H.grant_language(/datum/language/celestial)
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
@@ -65,7 +80,7 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
 
 /datum/migrant_role/zybantine/amirah
 	name = "Amirah"
@@ -83,6 +98,10 @@
 		STATKEY_CON = 1,
 		STATKEY_WIL = 3,
 		STATKEY_PER = 1,
+	)
+
+	subclass_languages = list(
+		/datum/language/celestial,
 	)
 
 /datum/outfit/job/roguetown/zybantine/amirah/pre_equip(mob/living/carbon/human/H)
@@ -103,6 +122,9 @@
 		backr = /obj/item/storage/backpack/rogue/satchel
 		id = /obj/item/clothing/ring/silver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
+	var/turf/TU = get_turf(H)
+	if(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/camel/tame/saddled(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
@@ -145,6 +167,28 @@
 		STATKEY_SPD = 1,
 	)
 
+	subclass_languages = list(
+		/datum/language/celestial,
+	)
+
+	subclass_skills = list(
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+	)
+
 /datum/outfit/job/roguetown/zybantine/janissary/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/sallet/zyb
@@ -158,10 +202,11 @@
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
-	backl = /obj/item/storage/backpack/rogue/satchel/short
+	var/turf/TU = get_turf(H)
+	if(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/camel/tame/saddled(TU)
+	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/tower/zyb
-	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	beltl = /obj/item/rogueweapon/scabbard/sword/noble
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
@@ -171,19 +216,22 @@
 		/obj/item/natural/bundle/cloth/bandage/full = 1,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
+	var/weapons = list("Mace and Shield","Shamshir and Shield","Spear and Shield","Axe and Shield")
+	if(H.mind)
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Mace and Shield")
+				l_hand = /obj/item/rogueweapon/mace/steel
+			if("Shamshir and Shield")
+				l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+				beltl = /obj/item/rogueweapon/scabbard/sword/noble
+			if("Spear and Shield")
+				l_hand = /obj/item/rogueweapon/spear/boar
+			if("Axe and Shield")
+				l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 	H.grant_language(/datum/language/celestial)
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+
 
 /datum/migrant_role/zybantine/advisor
 	name = "Advisor"
@@ -203,6 +251,14 @@
 		STATKEY_INT = 2,
 	)
 
+	subclass_virtues = list(
+		/datum/virtue/utility/riding,
+	)
+
+	subclass_languages = list(
+		/datum/language/celestial,
+	)
+
 /datum/outfit/job/roguetown/zybantine/advisor/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal
@@ -214,7 +270,10 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
-	backl = /obj/item/storage/backpack/rogue/satchel/short
+	backl = /obj/item/storage/backpack/rogue/satchel
+	var/turf/TU = get_turf(H)
+	if(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/camel/tame/saddled(TU)
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	beltr = /obj/item/quiver/bolts
@@ -228,7 +287,6 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
-	H.grant_language(/datum/language/celestial)
 	H.adjust_skillrank(/datum/skill/misc/tracking, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
@@ -237,6 +295,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)

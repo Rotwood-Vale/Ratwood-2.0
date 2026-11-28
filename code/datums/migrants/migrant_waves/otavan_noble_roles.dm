@@ -49,6 +49,11 @@
 		/datum/language/otavan,
 	)
 
+	subclass_stashed_items = list(
+		"Psydonite Caparison (Saiga)" = /obj/item/caparison/psy,
+		"Tallow" = /obj/item/reagent_containers/food/snacks/tallow/soft,
+	)
+
 /datum/outfit/job/roguetown/otavan/envoy/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
@@ -69,11 +74,12 @@
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/paper/scroll/writ_of_esteem/otavan = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2,
+		/obj/item/storage/keyring/otavanenvoy = 1,
 		)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
 
@@ -119,6 +125,10 @@
 		/datum/language/otavan,
 	)
 
+	subclass_stashed_items = list(
+		"Psydonite Caparison (Saiga)" = /obj/item/caparison/psy,
+	)
+
 /datum/outfit/job/roguetown/otavan/knight/pre_equip(mob/living/carbon/human/H)
 	..()
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -139,7 +149,7 @@
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
@@ -201,7 +211,7 @@
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	l_hand = /obj/item/rogueweapon/sword
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
@@ -312,6 +322,10 @@
 
 	subclass_languages = list(
 		/datum/language/otavan,
+	)
+
+	subclass_stashed_items = list(
+		"Psydonite Caparison (Saiga)" = /obj/item/caparison/psy,
 	)
 
 /datum/outfit/job/roguetown/otavan/scribe/pre_equip(mob/living/carbon/human/H)

@@ -62,7 +62,11 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
-	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
+	subclass_stashed_items = list(
+		"Heartfelt Caparison (Saiga)" = /obj/item/caparison/heartfelt,
+		"Heartfelt Caparison (Fogbeast)" = /obj/item/caparison/fogbeast/heartfelt,
+		"Tallow" = /obj/item/reagent_containers/food/snacks/tallow/soft,
+	)
 
 /datum/outfit/job/heartfelt/lord/lord/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -75,12 +79,12 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	beltl =/obj/item/rogueweapon/scabbard/sword/noble
 	r_hand = /obj/item/rogueweapon/sword/long/marlin
-	beltr = /obj/item/rogueweapon/huntingknife
+	beltr = /obj/item/flashlight/flare/torch/lantern
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	backl = /obj/item/storage/backpack/rogue/satchel // Paper and Feather
 	var/turf/TU = get_turf(H)
 	if(TU)
-		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
@@ -88,6 +92,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 1,
+		/obj/item/storage/keyring/heartfeltlord = 1,
 		)
 	id = /obj/item/scomstone
 	if(H.mind)
@@ -140,7 +145,11 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
-	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
+	subclass_stashed_items = list(
+		"Heartfelt Caparison (Saiga)" = /obj/item/caparison/heartfelt,
+		"Heartfelt Caparison (Fogbeast)" = /obj/item/caparison/fogbeast/heartfelt,
+		"Tallow" = /obj/item/reagent_containers/food/snacks/tallow/soft,
+	)
 
 
 /datum/outfit/job/heartfelt/lord/archmage/pre_equip(mob/living/carbon/human/H)
@@ -160,7 +169,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	var/turf/TU = get_turf(H)
 	if(TU)
-		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt(TU)
 	backpack_contents = list(
 		/obj/item/recipe_book/alchemy,
 		/obj/item/roguegem/amethyst,
@@ -170,6 +179,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/strongmanapot = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 1,
+		/obj/item/storage/keyring/heartfeltlord = 1,
 	)
 	id = /obj/item/scomstone
 	if(H.mind)
@@ -226,7 +236,11 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
-	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
+	subclass_stashed_items = list(
+		"Heartfelt Caparison (Saiga)" = /obj/item/caparison/heartfelt,
+		"Heartfelt Caparison (Fogbeast)" = /obj/item/caparison/fogbeast/heartfelt,
+		"Tallow" = /obj/item/reagent_containers/food/snacks/tallow/soft,
+	)
 
 /datum/outfit/job/heartfelt/lord/chief/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -238,12 +252,12 @@
 	cloak = /obj/item/clothing/cloak/darkcloak/minotaur/red
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt
 	neck = /obj/item/clothing/neck/roguetown/leather
-	beltr = /obj/item/rogueweapon/huntingknife
+	beltr = /obj/item/flashlight/flare/torch/lantern
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	backl = /obj/item/storage/backpack/rogue/satchel // Paper and Feather
 	var/turf/TU = get_turf(H)
 	if(TU)
-		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
+		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/heartfelt(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
@@ -251,6 +265,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 1,
+		/obj/item/storage/keyring/heartfeltlord = 1,
 		)
 	id = /obj/item/scomstone
 	if(H.mind)

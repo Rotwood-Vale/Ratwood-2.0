@@ -13,6 +13,10 @@
 		/datum/language/aavnic,
 	)
 
+	subclass_stashed_items = list(
+		"Tallow" = /obj/item/reagent_containers/food/snacks/tallow/soft,
+	)
+
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_INT = 2,
@@ -64,5 +68,6 @@
 		/obj/item/paper/scroll = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
+		/obj/item/storage/keyring/czwartekilord = 1,
 		)
 	H.cmode_music = 'sound/music/combat_czwarteki.ogg'
