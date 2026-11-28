@@ -20,7 +20,10 @@
 		/datum/job/roguetown/dtchaplain,
 		/datum/job/roguetown/guardsman,
 		/datum/job/roguetown/watchcaptain,
-		
+        /datum/job/roguetown/bogger,
+        /datum/job/roguetown/throwaway_highwayman,
+        /datum/job/roguetown/goblin/bog,
+        /datum/job/roguetown/greater_skeleton/bog,
 		/datum/job/roguetown/tribalchieftain,
 		/datum/job/roguetown/tribalshaman,
 		/datum/job/roguetown/tribalguard,

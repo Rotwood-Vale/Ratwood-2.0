@@ -101,6 +101,7 @@ GLOBAL_LIST_INIT(garrison_positions, list(
 	"Dungeoneer",
 	"Master Warden",
 	"Watch Captain",
+	"Bogger",
 	//desert
 	"Cataphract",
 	"Janissary",
@@ -187,11 +188,23 @@ GLOBAL_LIST_INIT(wanderer_positions, list(
 ))
 
 GLOBAL_LIST_INIT(villain_positions, list(
-	"Bandit",
-	"Wretch",
-	"Gnoll",
-	"Assassin",
+    "Bandit",
+    "Wretch",
+    "Gnoll",
+    "Assassin",
+    "Bog Highwayman",
+    "Bog Goblin",
+    "Bog Skeleton",
 ))
+
+GLOBAL_LIST_INIT(throwaway_antag_positions, list(
+    "Bog Highwayman",
+    "Bog Goblin",
+    "Bog Skeleton",
+))
+
+GLOBAL_LIST_EMPTY(throwaway_antag_cooldowns)
+
 
 GLOBAL_LIST_INIT(tribal_positions, list(
 	"Chieftain",
@@ -218,14 +231,17 @@ GLOBAL_LIST_INIT(roguefight_positions, list(
 
 //This list is used to prevent the duke from stripping nobility from certain jobs that aren't intrinsically a part of the town.
 GLOBAL_LIST_INIT(foreign_positions, list(
-	"Adventurer",
-	"Mercenary",
-	"Bandit",
-	"Wretch",
-	"Inquisitor",
-	"Suitor",
-	"Orthodoxist",
-	"Migrant",
+    "Adventurer",
+    "Mercenary",
+    "Bandit",
+    "Wretch",
+    "Inquisitor",
+    "Suitor",
+    "Orthodoxist",
+    "Migrant",
+    "Bog Highwayman",
+    "Bog Goblin",
+    "Bog Skeleton",
 ))
 
 GLOBAL_LIST_INIT(test_positions, list(
