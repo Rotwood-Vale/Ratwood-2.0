@@ -6,6 +6,28 @@ GLOBAL_LIST_EMPTY(zizo_reality_rends)
 GLOBAL_LIST_EMPTY(zizo_fuges)
 GLOBAL_LIST_EMPTY(zizo_summoned)
 GLOBAL_LIST_EMPTY(zizo_marks)
+GLOBAL_DATUM_INIT(garrison_jam, /obj/structure/roguemachine/scomm, null)
+GLOBAL_LIST_INIT(zizo_propaganda, list(
+	"PRAISE ZIZO!",
+	"DEATH TO THE TEN...",
+	"Astrata will fail!",
+	"The Ten cannot stop me!",
+	"Zizo shows the way!",
+	"The Dark Lady has shown me the truth!",
+	"My life for Zizo...",
+	"Curse your Beast God!",
+	"Noc's magick is nothing to Zizo!",
+	"Abyssor is but a grain of salt!",
+	"Pestra is the most foul of goddesses!",
+	"Ravox's justice is flawed and dull!",
+	"Rip the Sun Tyrant from the sky!",
+	"Xylix is the tongue that must be severed off!",
+	"Cast Malum into the fires of hell!",
+	"The only truth there is lies with the Dark Elves!",
+	"I will defile Necra's dead, a thousand times!",
+	"I will butcher the Ten like Necra butchered Psydon!",
+	"Snuff out the beating hearts of Eora!",
+))
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
@@ -23,16 +45,16 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/transmutation/silencerleech, /datum/ritual/servantry/darksunmark,
 	/datum/ritual/strand/dream_jaunt, /datum/ritual/strand/strandsend,
 	/datum/ritual/strand/strandrecall, /datum/ritual/toil/progress,
-	/datum/ritual/toil/summonysis, /datum/ritual/toil/fulmenor,
+	/datum/ritual/toil/summonysis, /datum/ritual/toil/rust,
 	/datum/ritual/bite/necromancy, /datum/ritual/bite/resurrection,
 	/datum/ritual/bite/thanatophobia,
 	/datum/ritual/rot/transfuse, /datum/ritual/rot/blight,
 	/datum/ritual/rot/plague, /datum/ritual/noise/thermalvis,
-	/datum/ritual/noise/forgettongue, /datum/ritual/servantry/witchery,
+	/datum/ritual/noise/jam, /datum/ritual/noise/madness, /datum/ritual/servantry/witchery,
 	/datum/ritual/pitch/fireresist, /datum/ritual/pitch/shadowform,
 	/datum/ritual/pitch/lightcurse, /datum/ritual/blood/transfuse,
 	/datum/ritual/blood/bloodsnare, /datum/ritual/blood/bloodbond,
-	/datum/ritual/transmutation/raiseshrine, /datum/ritual/servantry/guidance,
+	/datum/ritual/transmutation/raiseshrine, /datum/ritual/servantry/guidance, /datum/ritual/servantry/offering,
 	))
 
 GLOBAL_LIST_INIT(zizo_goals, list(
@@ -108,11 +130,11 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	new /obj/effect/temp_visual/cult/sac(get_turf(target))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(target))
-	target.Unconscious(4 MINUTES)
-	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, apply_status_effect), /datum/status_effect/buff/healing, 70, TRUE), 4 MINUTES)
+	target.Unconscious(3 MINUTES)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, apply_status_effect), /datum/status_effect/buff/healing, 70, TRUE), 30 SECONDS)
 	target.Jitter(4)
 	target.emote("scream")
-	target.visible_message(span_danger("[target]'s memory is wiped clean! They will completely forget what happened and who did it to them. In 4 minutes, they shall wake."))
+	target.visible_message(span_danger("[target]'s memory is wiped clean! They will completely forget what happened and who did it to them. In 3 minutes, they shall wake."))
 	var/obj/item/bodypart/chest/torso = target.get_bodypart(BODY_ZONE_CHEST)
 	if(torso)
 		torso.receive_damage(85)
@@ -906,8 +928,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	resistance_flags = INDESTRUCTIBLE
 	associated_skill = /datum/skill/combat/arcyne
 	max_blade_int = 9999
-	force = 25
-	force_wielded = 35
+	force = 32
+	force_wielded = 37
 	smeltresult = null
 	sheathe_icon = "hagsword"
 	special = /datum/special_intent/madman_delusion
@@ -1100,7 +1122,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	bigboy = TRUE
 	gripsprite = TRUE
 	walking_stick = TRUE
-	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/pick)
 	var/list/obj/structure/toilturret/turrets = list()
 	var/max_turrets = 3
 
@@ -1309,7 +1331,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	noaa = TRUE
 	no_attack = TRUE
 	warnie = "aimwarn"
-	chargetime = 3 SECONDS
+	chargetime = 2 SECONDS
 	chargedrain = 2
 	charging_slowdown = 3
 	no_early_release = TRUE
@@ -1322,7 +1344,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	tranged = TRUE
 	noaa = TRUE
 	no_attack = TRUE
-	chargetime = 1 SECONDS
+	chargetime = 0.5 SECONDS
 	chargedrain = 1
 	charging_slowdown = 2
 	no_early_release = TRUE
@@ -1342,7 +1364,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	movement_type = UNSTOPPABLE
 	guard_deflectable = TRUE
 	expose_caster_on_deflect = TRUE
-	damage = 100
+	damage = 120
 	damage_type = BRUTE
 	woundclass = BCLASS_STAB
 	nodamage = FALSE
@@ -1426,7 +1448,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	resistance_flags = INDESTRUCTIBLE
 	smeltresult = null
 	special = /datum/special_intent/dream_shroom
-	var/fling_damage = 40
+	var/fling_damage = 150
 	var/datum/weakref/flung
 
 /obj/item/rogueweapon/zizowand/Initialize(mapload)
@@ -1448,7 +1470,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	. = ..()
 	if(!isliving(user) || get_dist(user, target) > 7)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(CLICK_CD_FAST)
 	if(istype(user.used_intent, /datum/intent/dream_beam))
 		if(user.client?.chargedprog < 100)
 			return
@@ -1489,8 +1511,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	damfactor = 1
 
 /obj/item/rogueweapon/spear/bite
-	force = 20
-	force_wielded = 30
+	force = 32
+	force_wielded = 37
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE)
 	name = "snow scythe"
@@ -1556,6 +1578,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 // STRAND
 
 /obj/effect/proc_holder/spell/invoked/dream_jaunt
+	invocation_type = "none"
 	name = "Dream Jaunt"
 	desc = "Bring yourself and whoever you hold into the dream."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -1656,6 +1679,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Teleport yourself and your target into a pocket dimension for 3 minutes. Anyone you or your target grabs is brought with. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/strand/strandrecall/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -1681,6 +1705,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 // TOIL
 
 /obj/effect/proc_holder/spell/invoked/projectile/toil_mend
+	invocation_type = "none"
 	name = "Mend"
 	desc = "Shoot mending lightning that heals the target and fixes their equipment."
 	clothes_req = FALSE
@@ -1719,7 +1744,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
-		L.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
+		var/datum/status_effect/buff/healing/heal = L.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
+		heal?.healing_on_tick = 10
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			for(var/obj/item/I in H.get_equipped_items())
@@ -1817,8 +1843,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/datum/status_effect/buff/healing/heal = H.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
 	if(heal)
 		heal.duration = world.time + 5 SECONDS
+		heal.healing_on_tick = 20
 	for(var/obj/item/I in H.get_equipped_items())
-		I.obj_integrity = min(I.obj_integrity + (I.max_integrity * 0.2), I.max_integrity)
+		I.obj_integrity = min(I.obj_integrity + (I.max_integrity * 0.5), I.max_integrity)
 	to_chat(H, span_notice("YSIS MENDS ME."))
 	playsound(src, 'sound/magic/lightning.ogg', 60, TRUE)
 	ysis_effect(H, 8)
@@ -1828,15 +1855,15 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), cooldown_time)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ysis_effect), src, 0), cooldown_time)
 
-/datum/ritual/toil/fulmenor
-	name = "Curse of Fulmenor"
+/datum/ritual/toil/rust
+	name = "Curse of Rust"
 	icon_type = /obj/item/natural/worms/leech
-	desc = "Transform the target into a horrific, yet extremely strong and regenerative monster. It attacks people at random. Lasts one minute. Requires a leech that fed from your target."
+	desc = "Your target's weapon skills are reduced, and their equipment's durability is massively reduced. Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
-	research_cost = 5
+	research_cost = 3
 
-/datum/ritual/toil/fulmenor/invoke(mob/living/user, turf/center)
+/datum/ritual/toil/rust/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -1845,41 +1872,14 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
 		return
 	qdel(remnant)
-	victim.apply_status_effect(/datum/status_effect/fulmenor)
+	victim.apply_status_effect(/datum/status_effect/rust)
 	victim.emote("scream")
-	to_chat(victim, span_userdanger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
-	to_chat(user, span_notice("THEY SHALL WRECK HAVOC."))
+	to_chat(user, span_notice("MAY THEIR BLADES SNAP AND ARMOR CRUMBLE!"))
 
-/datum/status_effect/fulmenor
-	id = "fulmenor"
-	duration = 1 MINUTES
-	tick_interval = 5 SECONDS
+/datum/status_effect/rust
+	id = "rust"
+	duration = 10 MINUTES
 	alert_type = null
-
-/datum/status_effect/fulmenor/on_apply()
-	. = ..()
-	var/mob/living/carbon/human/H = owner
-	H.change_stat(STATKEY_STR, 6)
-	H.change_stat(STATKEY_CON, 6)
-	ADD_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_SILVER_WEAK, "fulmenor")
-	H.enter_frenzymod()
-	to_chat(H, span_notice("I WANT TO HURT PEOPLE!"))
-	return TRUE
-
-/datum/status_effect/fulmenor/tick()
-	var/mob/living/carbon/human/H = owner
-	H.heal_overall_damage(10, 10)
-
-/datum/status_effect/fulmenor/on_remove()
-	. = ..()
-	var/mob/living/carbon/human/H = owner
-	H.exit_frenzymod()
-	H.change_stat(STATKEY_STR, -6)
-	H.change_stat(STATKEY_CON, -6)
-	REMOVE_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
-	REMOVE_TRAIT(H, TRAIT_SILVER_WEAK, "fulmenor")
-	to_chat(H, span_notice("THE MONSTROUS HUNGER FADES FROM ME."))
 
 // BITE
 
@@ -1936,7 +1936,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "The target becomes extremely afraid of skeletons and corpses. Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
-	research_cost = 5
+	research_cost = 3
 
 /datum/ritual/bite/thanatophobia/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -2054,7 +2054,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/status_effect/debuff/rotground
 	id = "rotground"
 	duration = -1
-	tick_interval = 3 SECONDS
+	tick_interval = 2 SECONDS
 	alert_type = null
 	var/elapsed = 0
 	var/obj/effect/abstract/particle_holder/aura
@@ -2084,7 +2084,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		if(prob(10))
 			to_chat(H, span_notice("THE ROT'S AROMA REJUVENATES ME!"))
 		return
-	elapsed += 3
+	elapsed += 2
 	H.adjustOxyLoss(3)
 	H.adjustStaminaLoss(5)
 	if(prob(10))
@@ -2099,7 +2099,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	icon_state = "creation1"
 	anchored = TRUE
 	density = TRUE
-	max_integrity = 300
+	max_integrity = 400
 	var/radius = 3
 	var/list/turf_data = list()
 
@@ -2134,7 +2134,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/structure/blight_pillar/lesser
 	name = "lesser rotting pillar"
 	icon_state = "creation3"
-	max_integrity = 150
+	max_integrity = 200
 	radius = 1
 
 // weaker version of blight as spell, meant 2 emulate Rust heretic off TG. IDK if players will spam the terrain.
@@ -2179,6 +2179,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Curse your target with the black rot. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/rot/plague/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -2381,26 +2382,68 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/witch_possess)
 	return
 
-/datum/ritual/noise/forgettongue
-	name = "Curse of Babel"
-	icon_type = /obj/item/natural/worms/leech
-	desc = "Curse your target to forget the common tongue and become illiterate. Requires a leech that fed from your target."
-	center_requirement = /obj/item/natural/worms/leech
+/datum/ritual/noise/jam
+	name = "Hijack"
+	icon_type = /obj/structure/roguemachine/scomm
+	desc = "Temporarily convert the SCOM rats to heresy. The garrison's communications are interrupted for 15 minutes. Must be performed near a SCOM. Requires a dark crystal."
+	research_cost = 5
+	center_requirement = /obj/item/necro_relics/necro_crystal
 	keep_center = TRUE
 
-/datum/ritual/noise/forgettongue/invoke(mob/living/user, turf/center)
+/datum/ritual/noise/jam/invoke(mob/living/user, turf/center)
+	if(GLOB.garrison_jam)
+		to_chat(user, span_warning("THE RATS ARE YET UNDER OUR SPELL!"))
+		return
+	var/obj/structure/roguemachine/scomm/S = locate() in range(1, center)
+	if(!S)
+		to_chat(user, span_warning("SCOM must be next to the sigil's center!"))
+		return
+	qdel(locate(/obj/item/necro_relics/necro_crystal) in center)
+	GLOB.garrison_jam = S
+	S.max_integrity = 300
+	S.obj_integrity = 300
+	S.color = "#ff0000"
+	S.set_light(7, 2, 3, l_color = "#ff0000")
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), S, -1, 0, 2, 0), 15 MINUTES)
+	addtimer(CALLBACK(S, TYPE_PROC_REF(/obj, take_damage), 9999, BRUTE, "", FALSE), 15 MINUTES)
+	to_chat(user, span_notice("THE SCOM RATS FALL UNDER OUR SPELL!"))
+
+/datum/ritual/noise/madness
+	name = "Curse of Madness"
+	icon_type = /obj/item/natural/worms/leech
+	desc = "Send the target into a fit of madness, attacking the nearest person. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
+	research_cost = 3
+
+/datum/ritual/noise/madness/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
-	if(!curse_target(remnant.fed_from))
+	var/mob/living/carbon/human/victim = remnant.fed_from
+	if(!curse_target(victim))
 		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
 		return
-	remnant.fed_from.remove_language(/datum/language/common, source = LANGUAGE_SOURCE_ALL)
-	remnant.fed_from.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)
-	to_chat(remnant.fed_from, span_danger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
-	remnant.fed_from.emote("scream")
 	qdel(remnant)
-	to_chat(user, span_notice("IT EATS AWAY MEANING AND LEAVES NOTHING BUT NOISE."))
+	victim.apply_status_effect(/datum/status_effect/madness)
+	victim.emote("scream")
+	to_chat(user, span_notice("MAY THEY SLAY AND BE SLAIN IN TURN!"))
+
+/datum/status_effect/madness
+	id = "madness"
+	duration = 1 MINUTES
+	alert_type = null
+
+/datum/status_effect/madness/on_apply()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	H.enter_frenzymod()
+	return TRUE
+
+/datum/status_effect/madness/on_remove()
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	H.exit_frenzymod()
 
 // PITCH
 
@@ -2462,6 +2505,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	icon_state = "buff"
 
 /obj/effect/proc_holder/spell/invoked/shadow_snuff
+	invocation_type = "none"
 	name = "Snuff"
 	desc = "Snuff out a fire or light."
 	range = 7
@@ -2522,7 +2566,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Scadu Grip"
 	desc = "Requires an aggressive grab. Engulf your target in dark flame!"
 	recharge_time = 60 SECONDS
-	invocation_type = "emote"
+	invocation_type = "none"
 	overlay_icon = 'icons/mob/actions/vampspells.dmi'
 	action_icon = 'icons/mob/actions/vampspells.dmi'
 	overlay_state = "potence"
@@ -2637,6 +2681,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	ADD_TRAIT(target, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_MONSTROUS, TRAIT_GENERIC)
+	target.add_overlay(mutable_appearance('icons/roguetown/cult/halo.dmi', "halo1", ABOVE_ALL_MOB_LAYER))
 	ADD_TRAIT(target, TRAIT_NOFIRE, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_FIRE_RESIST, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_RESISTHEAT, TRAIT_GENERIC)
@@ -2651,6 +2696,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Curse a target to burn in the light. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/pitch/lightcurse/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -2789,6 +2835,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "Curse two targets to slowly die when apart from each other. Requires two leeches that fed from separate targets."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
+	research_cost = 3
 
 /datum/ritual/blood/bloodbond/invoke(mob/living/user, turf/center)
 	var/list/found = list()

@@ -3,6 +3,10 @@
 	damage_amount *= object_damage_multiplier
 	if(ismob(loc) && has_world_trait(/datum/world_trait/zizo_toil) && !is_zizo(loc))
 		damage_amount *= 1.5
+	if(isliving(loc))
+		var/mob/living/L = loc
+		if(L.has_status_effect(/datum/status_effect/rust))
+			damage_amount *= 5
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
 		return

@@ -191,6 +191,7 @@ GLOBAL_LIST_INIT(villain_positions, list(
 	"Wretch",
 	"Gnoll",
 	"Assassin",
+	"Cultist",
 ))
 
 GLOBAL_LIST_INIT(tribal_positions, list(

@@ -287,6 +287,8 @@
 			icon_state = "scomm3"
 
 /obj/structure/roguemachine/scomm/Destroy()
+	if(GLOB.garrison_jam == src)
+		GLOB.garrison_jam = null
 	lose_hearing_sensitivity()
 	SSroguemachine.scomm_machines -= src
 	STOP_PROCESSING(SSroguemachine, src)
@@ -354,6 +356,8 @@
 			raw_message = "[raw_message][message_affix]"
 
 		if(garrisonline)
+			if(GLOB.garrison_jam)
+				raw_message = pick(GLOB.zizo_propaganda)
 			raw_message = "<span style='color: [GARRISON_SCOM_COLOR]'>[raw_message]</span>" //Prettying up for Garrison line
 			for(var/obj/item/scomstone/garrison/S in SSroguemachine.scomm_machines)
 				S.repeat_message(raw_message, src, usedcolor, message_language)

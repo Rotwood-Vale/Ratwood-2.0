@@ -21,6 +21,10 @@
 		amt *= cleave_sharpness_mult
 	if(ismob(loc) && has_world_trait(/datum/world_trait/zizo_toil) && !is_zizo(loc))
 		amt *= 1.5
+	if(isliving(loc))
+		var/mob/living/holder = loc
+		if(holder.has_status_effect(/datum/status_effect/rust))
+			amt *= 5
 	if(user && HAS_TRAIT(user, TRAIT_SHARPER_BLADES))
 		amt = amt * 0.7
 
