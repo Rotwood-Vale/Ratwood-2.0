@@ -51,7 +51,7 @@
 /datum/supply_pack/rogue/Brigand/steelmask
 	name = "Steel Mask"
 	cost = 10
-	contains = list(/obj/item/clothing/mask/rogue/facemask/steel)
+	contains = list(/obj/item/clothing/mask/rogue/facemask/steel/maille)
 
 //////////
 // NECK //
@@ -243,26 +243,6 @@
 // WEAPONS //
 /////////////
 
-/datum/supply_pack/rogue/Brigand/placejapan
-	name = "Kazengunese Dagger"
-	cost = 35
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun)
-
-/datum/supply_pack/rogue/Brigand/parrydag
-	name = "Parry Dagger"
-	cost = 30
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying)
-
-/datum/supply_pack/rogue/Brigand/saildagger
-	name = "Etruscan Sail Dagger"
-	cost = 50
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero)
-
-/datum/supply_pack/rogue/Brigand/mace
-	name = "Iron Mace"
-	cost = 10
-	contains = list(/obj/item/rogueweapon/mace)
-
 /datum/supply_pack/rogue/Brigand/steelmace
 	name = "Steel Mace"
 	cost = 20
@@ -323,10 +303,10 @@
 	cost = 20
 	contains = list(/obj/item/rogueweapon/stoneaxe/battle)
 
-/datum/supply_pack/rogue/Brigand/silveraxe
-	name = "Silver War Axe"
+/datum/supply_pack/rogue/Brigand/silveraxe //hilarious
+	name = "Blessed Silver Shovelaxe"
 	cost = 80
-	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/silver)
+	contains = list(/obj/item/rogueweapon/greataxe/militia/silver/preblessed)
 
 /datum/supply_pack/rogue/Brigand/Gaxe
 	name = "Iron Greataxe"
@@ -343,11 +323,6 @@
 	cost = 30
 	contains = list(/obj/item/rogueweapon/greataxe/steel/doublehead)
 
-/datum/supply_pack/rogue/Brigand/silverpoleaxe
-	name = "Silver Poleaxe"
-	cost = 80
-	contains = list(/obj/item/rogueweapon/greataxe/silver)
-
 /datum/supply_pack/rogue/Brigand/maul
 	name = "Maul"
 	cost = 40
@@ -358,70 +333,45 @@
 	cost = 80
 	contains = list(/obj/item/rogueweapon/mace/maul/grand)
 
+/datum/supply_pack/rogue/Brigand/militiagoden
+	name = "Militia Godendag"
+	cost = 50
+	contains = list(/obj/item/rogueweapon/woodstaff/militia)
+
 /datum/supply_pack/rogue/Brigand/whip
 	name  = "Nagaika whip"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/whip)
 
-/datum/supply_pack/rogue/Brigand/steelspear
-	name = "Steel Spear"
-	cost = 65
-	contains = list(/obj/item/rogueweapon/spear/boar)
-
 /datum/supply_pack/rogue/Brigand/billhook
-	name = "Billhook"
+	name = "Militia Spear"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/spear/billhook)
+	contains = list(/obj/item/rogueweapon/spear/militia)
 
-/datum/supply_pack/rogue/Brigand/partizan
-	name = "Partizan"
+/datum/supply_pack/rogue/Brigand/bardiche
+	name = "Bardiche"
 	cost = 70
-	contains = list(/obj/item/rogueweapon/spear/partizan)
-
-/datum/supply_pack/rogue/Brigand/ebeak
-	name = "Lucerne"
-	cost = 70
-	contains = list(/obj/item/rogueweapon/eaglebeak)
+	contains = list(/obj/item/rogueweapon/halberd/bardiche)
 
 /datum/supply_pack/rogue/Brigand/halberd
 	name = "Halberd"
 	cost = 65
 	contains = list(/obj/item/rogueweapon/halberd)
 
-/datum/supply_pack/rogue/Brigand/lsword
-	name = "Longsword"
+/datum/supply_pack/rogue/Brigand/broadsword
+	name = "Broadsword"
 	cost = 45
-	contains = list(/obj/item/rogueweapon/sword/long)
+	contains = list(/obj/item/rogueweapon/sword/long/broadsword/steel)
 
-/datum/supply_pack/rogue/Brigand/krieg
-	name = "kriegmesser"
+/datum/supply_pack/rogue/Brigand/exe
+	name = "Berserker Sword"
 	cost = 45
-	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
+	contains = list(/obj/item/rogueweapon/sword/long/exe/berserk)
 
-/datum/supply_pack/rogue/Brigand/Zweihandersword
-	name = "Zweihander"
-	cost = 65
+/datum/supply_pack/rogue/Brigand/claymore
+	name = "Claymore"
+	cost = 70
 	contains = list(/obj/item/rogueweapon/greatsword/zwei)
-
-/datum/supply_pack/rogue/Brigand/SZweihandersword
-	name = "Steel Zweihander"
-	cost = 70
-	contains = list(/obj/item/rogueweapon/greatsword/grenz)
-
-/datum/supply_pack/rogue/Brigand/SFlamberge
-	name = "Steel Flamberge"
-	cost = 70
-	contains = list(/obj/item/rogueweapon/greatsword/grenz/flamberge)
-
-/datum/supply_pack/rogue/Brigand/greatsword
-	name = "Greatsword"
-	cost = 70
-	contains = list(/obj/item/rogueweapon/greatsword)
-
-/datum/supply_pack/rogue/Brigand/estoc
-	name = "Estoc"
-	cost = 70
-	contains = list(/obj/item/rogueweapon/estoc)
 
 /datum/supply_pack/rogue/Brigand/javelinsteel
 	name = "Steel Javelin Bag"
