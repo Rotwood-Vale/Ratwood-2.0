@@ -36,14 +36,14 @@
 	/// The throne's layer while nobody sits in it, restored when they get up
 	var/empty_layer
 	var/static/list/whispers = list(
-		"More. There is always more gold.",
-		"Their coffers groan while your belly does. Take what is owed.",
-		"What the few hoard belongs to all. Make it so.",
-		"The idol hungers. Feed it.",
-		"A crown is only gold someone else has not yet taken.",
-		"Count it again. It is not enough.",
-		"Every lock is a lie the rich tell themselves.",
-		"You sit where a king once sat. Kings fall. Gold remains.",
+		"There can ALWAYS be more...",
+		"It is NEVER enough...",
+		"They all have SO much, we must TAKE it...",
+		"They keep it all for themselves...",
+		"Once a King sat here. Power fades, only wealth remains...",
+		"Make HIM proud...",
+		"More gold, we need more...",
+		"You are HIS chosen. Take what is OURS...",
 	)
 
 /obj/structure/ruined_throne/Destroy()

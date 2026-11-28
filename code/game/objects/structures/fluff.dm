@@ -1329,8 +1329,8 @@
 	..()
 
 /**
- * Takes an accepted offering from user's hand. Coins vanish. Other treasure lands on a random floor
- * of the Bandit Hoard, anchored so it can be seen but never lifted. With no hoard to reach, it vanishes too.
+ * Takes an accepted offering from user's hand. Coins are accepted but don't go to the display. Other treasure lands on a random floor
+ * of the Bandit Hoard, anchored so it can be seen but never lifted. If there is no hoard mapped, it will still count, just not go anywhere.
  */
 /obj/structure/fluff/statue/evil/proc/send_to_hoard(obj/item/offering, mob/user)
 	to_chat(user, span_notice("The idol swallows [offering]."))
