@@ -771,15 +771,18 @@ Inquisitorial armory down here
 		loaded_inquisitorial_tallow = FALSE
 		update_icon()
 
+/obj/item/inqarticles/tallowpot/proc/load_tallow(var/obj/item/reagent_containers/food/snacks/tallow/T)
+	loaded_tallow = T
+	loaded_inquisitorial_tallow = istype(T, /obj/item/reagent_containers/food/snacks/tallow/red)
+	remaining = 300
+	update_icon()
+
 /obj/item/inqarticles/tallowpot/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(istype(I, /obj/item/reagent_containers/food/snacks/tallow))
 		if(!loaded_tallow)
 			if(user.transferItemToLoc(I, src, TRUE))
-				loaded_tallow = I
-				loaded_inquisitorial_tallow = istype(I, /obj/item/reagent_containers/food/snacks/tallow/red)
-				remaining = 300
-				update_icon()
+				load_tallow(I)
 		else
 			to_chat(user, span_info("The [src] already has [loaded_tallow] in it."))
 
@@ -839,6 +842,17 @@ Inquisitorial armory down here
 	else
 		icon_state = "[initial(icon_state)]"
 
+/obj/item/inqarticles/tallowpot/prefilled
+	var/obj/item/reagent_containers/food/snacks/tallow/prefilled_tallow_type = null
+
+/obj/item/inqarticles/tallowpot/prefilled/Initialize(mapload)
+	. = ..()
+	if(prefilled_tallow_type)
+		var/obj/item/reagent_containers/food/snacks/tallow/T = new prefilled_tallow_type(src)
+		load_tallow(T)
+	
+/obj/item/inqarticles/tallowpot/prefilled/soft
+	prefilled_tallow_type = /obj/item/reagent_containers/food/snacks/tallow/soft
 
 /obj/item/rope/inqarticles/inquirycord
 	name = "inquiry cordage"
