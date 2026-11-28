@@ -194,9 +194,11 @@ SUBSYSTEM_DEF(nightshift)
 	survived_cycles++
 	GLOB.carebox.human_cycle_progress(src)
 
-	if(HAS_TRAIT(mind.current, TRAIT_EXPLOSIVE_SUPPLY))
+	if(!mind)
+		return
+	if(HAS_TRAIT(src, TRAIT_EXPLOSIVE_SUPPLY))
 		mind.has_bomb = TRUE
-		to_chat(mind.current, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
-	if(HAS_TRAIT(mind.current, TRAIT_DRUG_SUPPLY))
+		to_chat(src, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
+	if(HAS_TRAIT(src, TRAIT_DRUG_SUPPLY))
 		mind.has_drug_delivery = TRUE
-		to_chat(mind.current, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
+		to_chat(src, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
