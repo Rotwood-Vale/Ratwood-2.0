@@ -256,3 +256,37 @@
 				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
 	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.
 	req_table = TRUE //If someone wants to add that in post, hwoever, I don't mind. You can easily do so by copy-pasting the format, here.
+
+///////// MAILLED GRENZEL CLOTHES /////////
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/grenzelhoft
+	name = "grenzelhoftian hip-shirt w/hauberk"
+	desc = "A maille-aketon of steel layered atop a vividly adorned Grenzelhoftian padded hip-shirt, uniting bold fashion with steadfast protection."
+	icon_state = "grenzelhauberk"
+	item_state = "grenzelhauberk"
+	icon = 'icons/roguetown/clothing/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
+	r_sleeve_status = SLEEVE_NORMAL
+	l_sleeve_status = SLEEVE_NORMAL
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	detail_color = "#1d1d22"
+	altdetail_color = "#FFFFFF"
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 10
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/grenzelhoft/update_icon_state()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)

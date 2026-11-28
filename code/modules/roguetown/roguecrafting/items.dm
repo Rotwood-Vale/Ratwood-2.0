@@ -566,3 +566,37 @@
 	craftdiff = 2
 	verbage_simple = "sew"
 	verbage = "sews"
+
+/datum/crafting_recipe/roguetown/survival/grenzelchain_legs
+	name = "layer grenzelhoftian paumpers atop chain chausses"
+	result = /obj/item/clothing/under/roguetown/chainlegs/grenzelhoft
+	reqs = list(/obj/item/clothing/under/roguetown/chainlegs = 1,
+				/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants = 1)
+	craftdiff = 0
+	req_table = TRUE
+	skip_quality = TRUE
+
+/datum/crafting_recipe/roguetown/survival/grenzelchain_legs/off
+	name = "take grenzelhoftian paumpers off the chain chausses"
+	result = list(/obj/item/clothing/under/roguetown/chainlegs = 1, /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants = 1)
+	reqs = list(/obj/item/clothing/under/roguetown/chainlegs/grenzelhoft = 1)
+	craftdiff = 0
+	req_table = TRUE
+	skip_quality = TRUE
+
+/datum/crafting_recipe/roguetown/survival/grenzelhauberk
+	name = "layer a grenzelhoftian hip-shirt atop hauberk"
+	result = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/grenzelhoft
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1,
+				/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft = 1)
+	craftdiff = 0
+	req_table = TRUE
+	skip_quality = TRUE
+
+/datum/crafting_recipe/roguetown/survival/grenzelhauberk/off
+	name = "take a grenzelhoftian hip-shirt off the hauberk"
+	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft = 1, /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/grenzelhoft = 1)
+	craftdiff = 0
+	req_table = TRUE
+	skip_quality = TRUE
