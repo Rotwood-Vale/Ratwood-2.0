@@ -193,7 +193,7 @@
 			continue
 
 		if(prob(embedded.embedding.embedded_pain_chance))
-			if(embedded.is_silver && HAS_TRAIT(src, TRAIT_SILVER_WEAK) && !has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+			if(embedded.is_silver && HAS_TRAIT(src, TRAIT_SILVER_WEAK))
 				var/datum/component/silverbless/psyblessed = embedded.GetComponent(/datum/component/silverbless)
 				adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
 			to_chat(src, span_danger("[embedded] in me hurts!"))

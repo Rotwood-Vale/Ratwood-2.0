@@ -502,7 +502,7 @@
 	)
 	to_chat(affected, span_userdanger(pick(goodbye)))
 	affected.apply_status_effect(/datum/status_effect/debuff/devitalised)
-	if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+	if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK))
 		affected.death()
 
 /datum/wound/sunder/head
@@ -532,7 +532,7 @@
 		"OH, SHIT!"\
 	)
 	to_chat(affected, span_userdanger(pick(goodbye)))
-	if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+	if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK))
 		affected.death()
 
 //Burn wounds. A sideclass of lashing, basically.

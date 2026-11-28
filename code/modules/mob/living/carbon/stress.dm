@@ -242,7 +242,7 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 /mob/living/carbon/get_stress_amount()
 	var/willpowerresistance = CLAMP((STAWIL - 10), 0, 10)
 	var/wpmodifier = willpowerresistance / 3
-	if(HAS_TRAIT(src, TRAIT_NOMOOD))
+	if(HAS_TRAIT(src, TRAIT_NOMOOD) && !src.has_stress_event(/datum/stressevent/soulchurner))
 		return 0
 	var/total_stress = 0
 	var/noise = has_world_trait(/datum/world_trait/zizo_noise) && !is_zizo(src)
@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 		var/stress_amt = event.get_stress(src)
 		if(stress_amt > 0 && HAS_TRAIT(src, TRAIT_BAD_MOOD))
 			stress_amt *= 2
-		if(stress_amt > 0 && HAS_TRAIT(src, TRAIT_EORAN_SERENE))
+		if(stress_amt > 0 && HAS_TRAIT(src, TRAIT_EORAN_SERENE) && !src.has_stress_event(/datum/stressevent/soulchurner))
 			stress_amt = (stress_amt * -1)	//We make the bad things feel good.
 		if((stress_amt >= 0) && (wpmodifier > 0))
 			stress_amt = CLAMP((stress_amt -= wpmodifier), 0, INFINITY)

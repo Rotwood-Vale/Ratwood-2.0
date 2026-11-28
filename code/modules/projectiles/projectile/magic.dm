@@ -268,19 +268,6 @@
 			return BULLET_ACT_BLOCK
 		L.apply_status_effect(STATUS_EFFECT_BOUNTY, firer)
 
-/obj/projectile/magic/antimagic
-	name = "bolt of antimagic"
-	icon_state = "antimagic"
-
-/obj/projectile/magic/antimagic/on_hit(target)
-	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check())
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		L.apply_status_effect(STATUS_EFFECT_ANTIMAGIC)
-
 /obj/projectile/magic/sickness
 	name = "Bolt of Sickness"
 	icon_state = "xray"
